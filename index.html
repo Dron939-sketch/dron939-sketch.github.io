@@ -83,11 +83,6 @@
       }
     }
 
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
     /* ===== ССЫЛКИ И КНОПКИ ===== */
     a {
       color: #3A86FF;
@@ -422,7 +417,7 @@
       border-bottom-color: #3A86FF;
     }
 
-    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ (НОВЫЙ БЛОК) ===== */
+    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== */
     .system-section {
       padding: 80px 0;
       background-color: #0C0C0C;
@@ -438,39 +433,38 @@
       letter-spacing: 0.1em;
     }
 
-    /* ===== ПРЕВЬЮ ЦИКЛА (ССЫЛКА НА SYSTEM.HTML) ===== */
-    .system-cycle-preview {
+    /* ===== СЕТКА ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (В СТИЛЕ SYSTEM.HTML) ===== */
+    .home-cycle-grid {
       position: relative;
-      background: rgba(255, 255, 255, 0.02);
-      border: 2px solid rgba(58, 134, 255, 0.3);
-      padding: 40px 20px;
-      margin-bottom: 60px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      gap: 30px;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid rgba(58, 134, 255, 0.3);
       transition: all 0.4s ease;
-      cursor: pointer;
       overflow: hidden;
+      margin-bottom: 60px;
     }
 
-    .system-cycle-preview:hover {
+    .home-cycle-grid:hover {
       border-color: #C6A43F;
       box-shadow: 0 0 50px rgba(198, 164, 63, 0.3);
       transform: scale(1.02);
     }
 
-    .preview-row {
-      display: flex;
-      justify-content: center;
+    .home-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 30px;
-      flex-wrap: wrap;
-      width: 100%;
+      justify-items: center;
+      align-items: center;
     }
 
-    .preview-item {
+    .home-item {
       text-align: center;
-      min-width: 140px;
+      width: 100%;
+      max-width: 200px;
       padding: 15px 10px;
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(58, 134, 255, 0.2);
@@ -478,18 +472,18 @@
       transition: all 0.3s ease;
     }
 
-    .preview-item:hover {
+    .home-item:hover {
       border-color: #3A86FF;
       background: rgba(58, 134, 255, 0.1);
     }
 
-    .preview-icon {
+    .home-icon {
       font-size: 2.5rem;
       margin-bottom: 10px;
       color: #3A86FF;
     }
 
-    .preview-label {
+    .home-label {
       font-size: 0.8rem;
       font-weight: 300;
       letter-spacing: 0.1em;
@@ -497,15 +491,10 @@
       text-transform: uppercase;
     }
 
-    .preview-center {
-      border: 2px solid #C6A43F;
-      background: rgba(198, 164, 63, 0.1);
-    }
-
-    .preview-center-icon {
+    .home-center-icon {
       width: 80px;
       height: 80px;
-      margin: 0 auto 10px;
+      margin: 0 auto;
       border: 2px solid #C6A43F;
       border-radius: 50%;
       display: flex;
@@ -515,28 +504,10 @@
       color: #C6A43F;
       text-transform: uppercase;
       letter-spacing: 0.2em;
+      background: rgba(198, 164, 63, 0.1);
     }
 
-    .preview-arrows {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      opacity: 0.3;
-    }
-
-    .arrow-circle {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      font-size: 2rem;
-      color: #C6A43F;
-      animation: rotate 10s linear infinite;
-    }
-
-    .preview-overlay {
+    .home-cycle-overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -551,7 +522,7 @@
       pointer-events: none;
     }
 
-    .preview-overlay span {
+    .home-cycle-overlay span {
       color: #C6A43F;
       font-size: 1.5rem;
       letter-spacing: 0.2em;
@@ -561,7 +532,7 @@
       background: rgba(0, 0, 0, 0.7);
     }
 
-    .system-cycle-preview:hover .preview-overlay {
+    .home-cycle-grid:hover .home-cycle-overlay {
       opacity: 1;
     }
 
@@ -681,19 +652,17 @@
         flex-direction: column;
         align-items: flex-start;
       }
-      
-      .preview-row {
-        flex-direction: column;
-        align-items: center;
+
+      .home-row {
+        grid-template-columns: 1fr;
         gap: 15px;
       }
       
-      .preview-item {
-        width: 100%;
-        max-width: 250px;
+      .home-item {
+        max-width: 100%;
       }
       
-      .preview-overlay span {
+      .home-cycle-overlay span {
         font-size: 1rem;
         padding: 10px 20px;
       }
@@ -806,70 +775,69 @@
   </div>
 </section>
 
-<!-- СИСТЕМНОЕ МЫШЛЕНИЕ (НОВЫЙ БЛОК) -->
+<!-- СИСТЕМНОЕ МЫШЛЕНИЕ (НОВЫЙ БЛОК В СТИЛЕ SYSTEM.HTML) -->
 <section class="system-section">
   <div class="container">
     <h2>СИСТЕМНОЕ МЫШЛЕНИЕ</h2>
     <p class="system-intro">Всё взаимосвязано. Изменение одного элемента влияет на все остальные.</p>
     
-    <!-- Красивый круговой цикл (ссылка на полную версию) -->
+    <!-- КРАСИВЫЙ ЦИКЛ В СЕТКЕ 3x3 (ССЫЛКА НА ИНТЕРАКТИВ) -->
     <a href="/https-meysternlp.ru-/system.html" style="text-decoration: none; display: block;">
-      <div class="system-cycle-preview">
-        <!-- Верхний ряд (Гормоны) -->
-        <div class="preview-row">
-          <div class="preview-item">
-            <div class="preview-icon">🧬</div>
-            <div class="preview-label">ГОРМОНАЛЬНЫЙ ФОН</div>
+      <div class="home-cycle-grid">
+        <!-- Ряд 1: Гормоны по центру -->
+        <div class="home-row">
+          <div class="home-item"></div>
+          <div class="home-item">
+            <div class="home-icon">🧬</div>
+            <div class="home-label">ГОРМОНАЛЬНЫЙ ФОН</div>
+          </div>
+          <div class="home-item"></div>
+        </div>
+
+        <!-- Ряд 2: Архитектура, Качество, Возможности -->
+        <div class="home-row">
+          <div class="home-item">
+            <div class="home-icon">⚙️</div>
+            <div class="home-label">АРХИТЕКТУРА ПРОГРЕССИИ</div>
+          </div>
+          <div class="home-item">
+            <div class="home-icon">🏆</div>
+            <div class="home-label">КАЧЕСТВО ЖИЗНИ</div>
+          </div>
+          <div class="home-item">
+            <div class="home-icon">🔑</div>
+            <div class="home-label">ВОЗМОЖНОСТИ</div>
           </div>
         </div>
-        
-        <!-- Второй ряд (Архитектура, Качество, Возможности) -->
-        <div class="preview-row">
-          <div class="preview-item">
-            <div class="preview-icon">⚙️</div>
-            <div class="preview-label">АРХИТЕКТУРА ПРОГРЕССИИ</div>
+
+        <!-- Ряд 3: Соцсвязи, СИСТЕМА, Мышление -->
+        <div class="home-row">
+          <div class="home-item">
+            <div class="home-icon">🤝</div>
+            <div class="home-label">СОЦИАЛЬНЫЕ СВЯЗИ</div>
           </div>
-          <div class="preview-item">
-            <div class="preview-icon">🏆</div>
-            <div class="preview-label">КАЧЕСТВО ЖИЗНИ</div>
+          <div class="home-item">
+            <div class="home-center-icon">СИСТЕМА</div>
           </div>
-          <div class="preview-item">
-            <div class="preview-icon">🔑</div>
-            <div class="preview-label">ВОЗМОЖНОСТИ</div>
-          </div>
-        </div>
-        
-        <!-- Третий ряд (Соцсвязи, Система, Мышление) -->
-        <div class="preview-row">
-          <div class="preview-item">
-            <div class="preview-icon">🤝</div>
-            <div class="preview-label">СОЦИАЛЬНЫЕ СВЯЗИ</div>
-          </div>
-          <div class="preview-item preview-center">
-            <div class="preview-center-icon">СИСТЕМА</div>
-          </div>
-          <div class="preview-item">
-            <div class="preview-icon">🧠</div>
-            <div class="preview-label">МЫШЛЕНИЕ</div>
+          <div class="home-item">
+            <div class="home-icon">🧠</div>
+            <div class="home-label">МЫШЛЕНИЕ</div>
           </div>
         </div>
-        
-        <!-- Нижний ряд (Речь) -->
-        <div class="preview-row">
-          <div class="preview-item">
-            <div class="preview-icon">🗣️</div>
-            <div class="preview-label">РЕЧЬ</div>
+
+        <!-- Ряд 4: Речь по центру -->
+        <div class="home-row">
+          <div class="home-item"></div>
+          <div class="home-item">
+            <div class="home-icon">🗣️</div>
+            <div class="home-label">РЕЧЬ</div>
           </div>
+          <div class="home-item"></div>
         </div>
-        
-        <!-- Оверлей с призывом -->
-        <div class="preview-overlay">
+
+        <!-- Оверлей с призывом при наведении -->
+        <div class="home-cycle-overlay">
           <span>Нажмите для интерактива →</span>
-        </div>
-        
-        <!-- Декоративная стрелка -->
-        <div class="preview-arrows">
-          <div class="arrow-circle">↻</div>
         </div>
       </div>
     </a>
