@@ -3,42 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Латеральное мышление: что это и как развить — Андрей Мейстер</title>
+  <meta name="description" content="Что такое латеральное мышление? Чем отличается от критического? 5 техник Эдварда де Боно и упражнения для развития нестандартного мышления.">
+  <meta name="keywords" content="латеральное мышление, эдвард де боно, техники мышления, креативность, нестандартное мышление">
+  <meta name="author" content="Андрей Мейстер">
+  
+  <!-- OPEN GRAPH ДЛЯ СОЦСЕТЕЙ -->
+  <meta property="og:title" content="Латеральное мышление: что это и как развить">
+  <meta property="og:description" content="5 техник латерального мышления от Эдварда де Боно и упражнения для развития нестандартного мышления.">
+  <meta property="og:image" content="/https-meysternlp.ru-/images/lateralnoe-myshlenie-preview.jpg">
+  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html">
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-03-15">
+  <meta property="article:author" content="Андрей Мейстер">
+  <meta property="article:section" content="Психология, Мышление">
+  
+  <!-- TWITTER CARDS -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Латеральное мышление: что это и как развить">
+  <meta name="twitter:description" content="5 техник Эдварда де Боно для развития нестандартного мышления">
+  <meta name="twitter:image" content="/https-meysternlp.ru-/images/lateralnoe-myshlenie-preview.jpg">
+  
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html">
+  
   <style>
-    /* Копируем те же стили, что и в списке статей */
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #0C0C0C;
-      color: #F0F0F0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #FFFFFF; /* БЕЛЫЙ ФОН */
+      color: #1D1D1F; /* Тёмный текст Apple */
       line-height: 1.6;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 800px; /* Узкая колонка для удобного чтения */
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    h1 {
-      font-size: 3rem;
-      font-weight: 200;
-      margin: 60px 0 20px;
-      color: #FFFFFF;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    /* ШАПКА */
+    /* ===== ШАПКА (тёмная) - стили для резерва ===== */
     .header {
-      padding: 30px 0;
+      padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      position: sticky;
+      top: 0;
       background-color: #0C0C0C;
+      z-index: 100;
     }
 
     .nav {
@@ -54,7 +77,6 @@
       font-weight: 300;
       letter-spacing: 0.3em;
       color: #FFFFFF;
-      text-decoration: none;
     }
 
     .logo span {
@@ -63,86 +85,104 @@
 
     .nav-links {
       display: flex;
-      gap: 30px;
+      gap: 25px;
       flex-wrap: wrap;
     }
 
     .nav-links a {
       color: #F0F0F0;
-      text-decoration: none;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      border-bottom: 1px solid transparent;
+      font-weight: 400;
+      letter-spacing: normal;
+      font-size: 1rem;
+      text-transform: none;
+      border-bottom: 2px solid transparent;
       padding-bottom: 5px;
+      transition: all 0.2s ease;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover,
+    .nav-links a.active {
       border-bottom-color: #3A86FF;
       color: #3A86FF;
     }
 
-    .btn {
+    .btn-header {
       display: inline-block;
-      padding: 14px 32px;
-      border: 1px solid #3A86FF;
-      background: transparent;
-      color: #FFFFFF;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
+      padding: 10px 24px;
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      color: white;
+      border-radius: 30px;
       font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+      border: none;
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
     }
 
-    .btn:hover {
-      background: #3A86FF;
-      color: #0C0C0C;
+    .btn-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+      color: white;
     }
 
-    /* Статья */
+    /* ===== СТАТЬЯ (Apple-стиль) ===== */
     .article-header {
-      margin: 40px 0;
+      margin: 60px 0 30px;
       padding-bottom: 30px;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      border-bottom: 1px solid #E0E0E0;
     }
 
     .article-meta {
       display: flex;
       gap: 30px;
-      color: #C6A43F;
+      color: #6E6E73;
       margin-bottom: 20px;
       font-size: 0.9rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1D1D1F;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      text-transform: none;
     }
 
     .article-content {
       font-size: 1.1rem;
       line-height: 1.8;
+      color: #1D1D1F;
     }
 
     .article-content h2 {
-      color: #3A86FF;
-      font-size: 1.8rem;
+      font-size: 2rem;
+      font-weight: 500;
       margin: 40px 0 20px;
-      font-weight: 300;
+      color: #1D1D1F;
+      letter-spacing: -0.01em;
+      text-transform: none;
     }
 
     .article-content h3 {
-      color: #FFFFFF;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
+      font-weight: 500;
       margin: 30px 0 15px;
+      color: #1D1D1F;
+      text-transform: none;
     }
 
     .article-content p {
       margin-bottom: 20px;
+      color: #1D1D1F;
     }
 
     .article-content ul, 
     .article-content ol {
       margin: 20px 0 20px 30px;
-      color: #CCCCCC;
+      color: #1D1D1F;
     }
 
     .article-content li {
@@ -150,26 +190,88 @@
     }
 
     .highlight {
-      background: rgba(58, 134, 255, 0.1);
-      border-left: 3px solid #C6A43F;
+      background: #F5F5F7;
+      border-left: 4px solid #3A86FF;
       padding: 20px;
       margin: 30px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .highlight p {
+      margin-bottom: 0;
+      color: #1D1D1F;
+    }
+
+    .technique-block {
+      background: #F5F5F7;
+      border: 1px solid #E0E0E0;
+      padding: 25px;
+      margin: 25px 0;
+      border-radius: 12px;
+    }
+
+    .technique-block h3 {
+      color: #3A86FF;
+      margin-bottom: 10px;
     }
 
     .back-link {
       display: inline-block;
-      margin: 40px 0;
+      margin: 40px 0 60px;
       color: #3A86FF;
       font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      font-weight: 500;
+      text-decoration: none;
     }
 
-    /* Подвал */
+    .back-link:hover {
+      color: #1D1D1F;
+    }
+
+    /* Блок "Читайте также" в стиле Apple */
+    .related-articles {
+      margin: 40px 0;
+      padding: 30px;
+      background: #F5F5F7;
+      border-radius: 12px;
+    }
+
+    .related-articles h3 {
+      color: #1D1D1F;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      font-weight: 500;
+    }
+
+    .related-articles ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .related-articles li {
+      margin-bottom: 10px;
+    }
+
+    .related-articles a {
+      color: #3A86FF;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .related-articles a:hover {
+      color: #1D1D1F;
+    }
+
+    /* ===== ПОДВАЛ (тёмный) - стили для резерва ===== */
     .footer {
       padding: 60px 0 30px;
       border-top: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: #0C0C0C;
       margin-top: 60px;
+    }
+
+    .footer .container {
+      max-width: 1200px;
     }
 
     .footer-content {
@@ -180,17 +282,23 @@
       gap: 20px;
     }
 
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      color: #F0F0F0;
+    }
+
     .social-links {
       display: flex;
       gap: 30px;
+      flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      text-decoration: none;
       font-size: 1rem;
-      letter-spacing: 0.1em;
       text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
     .social-links a:hover {
@@ -202,99 +310,162 @@
       margin-top: 40px;
       font-size: 0.8rem;
       opacity: 0.5;
+      color: #F0F0F0;
     }
 
     .text-blue { color: #3A86FF; }
 
+    /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .nav { flex-direction: column; align-items: flex-start; }
-      .article-meta { flex-direction: column; gap: 10px; }
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.6rem; }
+      
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        gap: 15px;
+      }
+      
+      .article-meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .technique-block {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="nav">
-        <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
-        <div class="nav-links">
-          <a href="/https-meysternlp.ru-/">Главная</a>
-          <a href="/https-meysternlp.ru-/blog/">Блог</a>
-          <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-          <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-          <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
-        </div>
+
+<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<div id="header-placeholder"></div>
+
+<script>
+  // Загружаем шапку из header.html
+  fetch('/https-meysternlp.ru-/header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки шапки:', error);
+      // Запасной вариант на случай ошибки
+      document.getElementById('header-placeholder').innerHTML = `
+        <header class="header">
+          <div class="container" style="max-width: 1200px;">
+            <div class="nav">
+              <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
+              <div class="nav-links">
+                <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
+                <a href="/https-meysternlp.ru-/knigi/" class="nav-link">Книги</a>
+                <a href="/https-meysternlp.ru-/igry/" class="nav-link">Игры</a>
+                <a href="/https-meysternlp.ru-/treningi/" class="nav-link">Тренинги</a>
+                <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
+                <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
+                <a href="/https-meysternlp.ru-/blog/" class="nav-link active">Статьи</a>
+              </div>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+            </div>
+          </div>
+        </header>
+      `;
+    });
+</script>
+
+<!-- ОСНОВНОЙ КОНТЕНТ СТАТЬИ (белый фон) -->
+<div class="container">
+  <article>
+    <div class="article-header">
+      <div class="article-meta">
+        <span>15 марта 2026</span>
+        <span>👁️ 1 245 просмотров</span>
+        <span>⏱️ 7 мин чтения</span>
       </div>
+      <h1>Что такое латеральное мышление и чем оно отличается от критического?</h1>
     </div>
-  </header>
 
-  <div class="container">
-    <article>
-      <div class="article-header">
-        <div class="article-meta">
-          <span>15 марта 2026</span>
-          <span>👁️ 1 245 просмотров</span>
-          <span>⏱️ 7 мин чтения</span>
-        </div>
-        <h1>Что такое латеральное мышление и чем оно отличается от критического?</h1>
+    <div class="article-content">
+      <p>Термин «латеральное мышление» ввел Эдвард де Боно в 1960-х годах. В отличие от вертикального (логического) мышления, которое движется последовательно, латеральное мышление ищет решения «сбоку» — неочевидными путями.</p>
+
+      <h2>Чем латеральное мышление отличается от критического?</h2>
+      <p>Критическое мышление анализирует и оценивает уже существующие идеи. Латеральное — генерирует новые. Это как разница между судьей и изобретателем. Первый говорит: «Здесь ошибка», второй предлагает: «А давайте попробуем вот так».</p>
+
+      <div class="highlight">
+        <p><strong>Пример:</strong> Критическое мышление скажет: «Этот бизнес-план не сработает, потому что рынок переполнен». Латеральное спросит: «А что если сделать продукт бесплатным, а зарабатывать на сервисе?».</p>
       </div>
 
-      <div class="article-content">
-        <p>Термин «латеральное мышление» ввел Эдвард де Боно в 1960-х годах. В отличие от вертикального (логического) мышления, которое движется последовательно, латеральное мышление ищет решения «сбоку» — неочевидными путями.</p>
-
-        <h2>Чем латеральное мышление отличается от критического?</h2>
-        <p>Критическое мышление анализирует и оценивает уже существующие идеи. Латеральное — генерирует новые. Это как разница между судьей и изобретателем. Первый говорит: «Здесь ошибка», второй предлагает: «А давайте попробуем вот так».</p>
-
-        <div class="highlight">
-          <p><strong>Пример:</strong> Критическое мышление скажет: «Этот бизнес-план не сработает, потому что рынок переполнен». Латеральное спросит: «А что если сделать продукт бесплатным, а зарабатывать на сервисе?».</p>
-        </div>
-
-        <h2>5 техник латерального мышления</h2>
-        
+      <h2>5 техник латерального мышления</h2>
+      
+      <div class="technique-block">
         <h3>1. Шесть шляп мышления</h3>
         <p>Примеряйте разные роли: белая шляпа (факты), красная (эмоции), черная (критика), желтая (оптимизм), зеленая (креатив), синяя (управление процессом).</p>
+      </div>
 
+      <div class="technique-block">
         <h3>2. Провокационные идеи</h3>
         <p>Сознательно выдвигайте абсурдные предположения. Например: «А что если продавать обувь по подписке?» Звучит странно, но это работает в некоторых нишах.</p>
+      </div>
 
+      <div class="technique-block">
         <h3>3. Случайное слово</h3>
         <p>Откройте словарь на любой странице, возьмите первое слово и попробуйте связать его с вашей задачей.</p>
+      </div>
 
+      <div class="technique-block">
         <h3>4. Выворачивание наизнанку</h3>
         <p>Сделайте наоборот тому, что считается нормой. Если все идут налево, подумайте — может, вам направо?</p>
+      </div>
 
+      <div class="technique-block">
         <h3>5. Мышление от желаемого результата</h3>
         <p>Представьте, что решение уже найдено. Опишите мир, в котором проблема решена, и работайте назад.</p>
-
-        <h2>Как тренировать латеральное мышление</h2>
-        <p>Вот несколько упражнений:</p>
-        <ul>
-          <li><strong>Задачи-загадки:</strong> «Человек живет на 10 этаже, но в дождливую погоду спускается на лифте до 5, а потом идет пешком. Почему?» (Ответ: он карлик и достает только до кнопки 5).</li>
-          <li><strong>Поиск 100 применений:</strong> Возьмите любой предмет (кирпич, скрепка) и придумайте 100 способов его использования.</li>
-          <li><strong>Смена контекста:</strong> Представьте, как вашу проблему решал бы ребенок, художник, инопланетянин.</li>
-        </ul>
-
-        <p>На моих тренингах мы отрабатываем эти техники на реальных кейсах. Если хотите научиться мыслить нестандартно — приходите на практикум «Разговорный гипноз», где мы используем латеральное мышление для влияния и убеждения.</p>
       </div>
 
-      <a href="/https-meysternlp.ru-/blog/" class="back-link">← К списку статей</a>
-    </article>
-  </div>
+      <h2>Как тренировать латеральное мышление</h2>
+      <p>Вот несколько упражнений:</p>
+      <ul>
+        <li><strong>Задачи-загадки:</strong> «Человек живет на 10 этаже, но в дождливую погоду спускается на лифте до 5, а потом идет пешком. Почему?» (Ответ: он карлик и достает только до кнопки 5).</li>
+        <li><strong>Поиск 100 применений:</strong> Возьмите любой предмет (кирпич, скрепка) и придумайте 100 способов его использования.</li>
+        <li><strong>Смена контекста:</strong> Представьте, как вашу проблему решал бы ребенок, художник, инопланетянин.</li>
+      </ul>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
-        <div class="social-links">
-          <a href="https://t.me/meysternlp" target="_blank">Tg</a>
-          <a href="https://vk.com/meysternlp" target="_blank">VK</a>
-          <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-          <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
-        </div>
-      </div>
-      <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+      <p>На моих тренингах мы отрабатываем эти техники на реальных кейсах. Если хотите научиться мыслить нестандартно — приходите на практикум «Разговорный гипноз», где мы используем латеральное мышление для влияния и убеждения.</p>
     </div>
-  </footer>
+
+    <!-- ССЫЛКИ НА СВЯЗАННЫЕ СТАТЬИ -->
+    <div class="related-articles">
+      <h3>Читайте также:</h3>
+      <ul>
+        <li>→ <a href="/https-meysternlp.ru-/blog/4-strategii-raboty-s-zaprosom-klienta.html">4 стратегии работы с запросом клиента</a></li>
+        <li>→ <a href="/https-meysternlp.ru-/blog/samogipnoz-dlya-nachinayushih.html">Самогипноз для начинающих</a></li>
+        <li>→ <a href="/https-meysternlp.ru-/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция</a></li>
+      </ul>
+    </div>
+
+    <!-- Ссылка назад к списку статей -->
+    <a href="/https-meysternlp.ru-/blog/" class="back-link">← К списку статей</a>
+  </article>
+</div>
+
+<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<div id="footer-placeholder"></div>
+
+<script>
+  // Загружаем подвал из footer.html
+  fetch('/https-meysternlp.ru-/footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки подвала:', error);
+    });
+</script>
+
 </body>
 </html>
