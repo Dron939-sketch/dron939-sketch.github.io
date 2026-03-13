@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Обо мне — Андрей Мейстер</title>
+  <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 200;
+      margin-bottom: 1rem;
+      color: #FFFFFF;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      color: #3A86FF;
+      letter-spacing: 0.15em;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+      color: #FFFFFF;
+    }
+
+    p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #CCCCCC;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #3A86FF; }
+      50% { text-shadow: 0 0 20px #3A86FF; }
+      100% { text-shadow: 0 0 5px #3A86FF; }
+    }
+
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #FFFFFF;
+      text-shadow: 0 0 10px #3A86FF;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-weight: 400;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+      border: 1px solid #3A86FF;
+      background-color: transparent;
+      color: #FFFFFF;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      color: #0C0C0C;
+      border-color: #3A86FF;
+      box-shadow: 0 0 20px #3A86FF;
+    }
+
+    .btn:hover::before {
+      left: 0;
+    }
+
+    /* ===== ШАПКА ===== */
+    .header {
+      padding: 30px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      position: sticky;
+      top: 0;
+      background-color: #0C0C0C;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #FFFFFF;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 5px;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
+    }
+
+    /* ===== ЗАГОЛОВОК СТРАНИЦЫ ===== */
+    .page-header {
+      padding: 80px 0 40px;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      text-align: center;
+    }
+
+    .page-header h1 {
+      animation: glow 3s infinite;
+    }
+
+    /* ===== О СЕБЕ ===== */
+    .about-section {
+      padding: 80px 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-photo {
+      position: relative;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(135deg, #0C0C0C 0%, #1A1A1A 100%);
+      border: 1px solid #3A86FF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      color: #3A86FF;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-placeholder::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(58, 134, 255, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .about-text {
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+
+    .about-text p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-highlight {
+      border-left: 3px solid #C6A43F;
+      padding-left: 20px;
+      font-style: italic;
+      color: #F0F0F0;
+      margin: 30px 0;
+    }
+
+    /* ===== ОБРАЗОВАНИЕ ===== */
+    .education-section {
+      padding: 80px 0;
+      background-color: rgba(58, 134, 255, 0.02);
+      border-top: 1px solid rgba(58, 134, 255, 0.1);
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+    }
+
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .education-item {
+      display: flex;
+      gap: 20px;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .education-item:hover {
+      border-color: #C6A43F;
+      transform: translateX(10px);
+    }
+
+    .education-year {
+      font-size: 1.8rem;
+      font-weight: 200;
+      color: #C6A43F;
+      min-width: 100px;
+    }
+
+    .education-content h3 {
+      margin-bottom: 10px;
+    }
+
+    .education-content p {
+      margin-bottom: 0;
+      color: #3A86FF;
+    }
+
+    /* ===== КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ ===== */
+    .expertise-section {
+      padding: 80px 0;
+    }
+
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .expertise-item {
+      text-align: center;
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .expertise-item:hover {
+      border-color: #3A86FF;
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
+    }
+
+    .expertise-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #3A86FF;
+    }
+
+    .expertise-item h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .expertise-item p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* ===== ПУБЛИКАЦИИ ===== */
+    .publications-section {
+      padding: 80px 0;
+      background-color: rgba(58, 134, 255, 0.02);
+      border-top: 1px solid rgba(58, 134, 255, 0.1);
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+    }
+
+    .publications-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .publication-item {
+      padding: 30px;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .publication-item:hover {
+      border-color: #C6A43F;
+    }
+
+    .publication-year {
+      color: #C6A43F;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .publication-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #FFFFFF;
+    }
+
+    .publication-desc {
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: #0C0C0C;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      border-bottom-color: #C6A43F;
+      color: #C6A43F;
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.5;
+      letter-spacing: 0.1em;
+      margin-top: 40px;
+    }
+
+    .text-blue { color: #3A86FF; }
+    .text-gold { color: #C6A43F; }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 1.8rem; }
+      
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .photo-placeholder {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      .education-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .expertise-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .publications-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .education-item {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ШАПКА -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <div class="nav-links">
+        <a href="/">Главная</a>
+        <a href="/#strategies">Стратегии</a>
+        <a href="/#projects">Проекты</a>
+        <a href="/knigi/">Книги</a>
+        <a href="/treningi/">Тренинги</a>
+        <a href="/obo-mne/" class="active">Обо мне</a>
+      </div>
+      <a href="#kontakt" class="btn" onclick="alert('Форма записи появится здесь')">Запись</a>
+    </div>
+  </div>
+</header>
+
+<!-- ЗАГОЛОВОК -->
+<section class="page-header">
+  <div class="container">
+    <h1>АНДРЕЙ МЕЙСТЕР</h1>
+    <p class="text-blue" style="font-size: 1.3rem; letter-spacing: 0.2em;">психолог · когнитивный тренер · системный аналитик</p>
+  </div>
+</section>
+
+<!-- О СЕБЕ -->
+<section class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo">
+        <div class="photo-placeholder">
+          👤
+        </div>
+      </div>
+      <div class="about-text">
+        <p>Я помогаю людям видеть закономерности там, где другие видят хаос. Моя специализация — развитие системного и латерального мышления, навыков влияния и когнитивной гибкости.</p>
+        
+        <div class="about-highlight">
+          "Мышление — это не то, что мы имеем, а то, что мы делаем. Его можно тренировать, развивать и совершенствовать, как любой другой навык."
+        </div>
+        
+        <p>Кандидат психологических наук. Автор бестселлера «Теория манипуляции» (трилогия), разработчик технологии системного мышления «Вариатика». Мои методы сочетают академическую фундаментальность с практической применимостью в бизнесе и повседневной жизни.</p>
+        
+        <p>За 15 лет практики провёл более 200 тренингов и консультаций для руководителей компаний, предпринимателей и специалистов, желающих вывести своё мышление на новый уровень.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ОБРАЗОВАНИЕ -->
+<section class="education-section">
+  <div class="container">
+    <h2>ОБРАЗОВАНИЕ И КВАЛИФИКАЦИЯ</h2>
+    <div class="education-grid">
+      <div class="education-item">
+        <div class="education-year">2005-2010</div>
+        <div class="education-content">
+          <h3>МГУ им. Ломоносова</h3>
+          <p>Факультет психологии, кафедра общей психологии</p>
+        </div>
+      </div>
+      <div class="education-item">
+        <div class="education-year">2010-2013</div>
+        <div class="education-content">
+          <h3>Аспирантура МГУ</h3>
+          <p>Кандидат психологических наук</p>
+        </div>
+      </div>
+      <div class="education-item">
+        <div class="education-year">2014</div>
+        <div class="education-content">
+          <h3>Эриксоновский гипноз</h3>
+          <p>Международная сертификация</p>
+        </div>
+      </div>
+      <div class="education-item">
+        <div class="education-year">2015-2016</div>
+        <div class="education-content">
+          <h3>Системное мышление</h3>
+          <p>MIT Sloan Executive Education</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ -->
+<section class="expertise-section">
+  <div class="container">
+    <h2>КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ</h2>
+    <div class="expertise-grid">
+      <div class="expertise-item">
+        <div class="expertise-icon">🧩</div>
+        <h3>Системное мышление</h3>
+        <p>Понимание сложных систем и их взаимосвязей</p>
+      </div>
+      <div class="expertise-item">
+        <div class="expertise-icon">💭</div>
+        <h3>Латеральное мышление</h3>
+        <p>Нестандартные решения и креативные подходы</p>
+      </div>
+      <div class="expertise-item">
+        <div class="expertise-icon">🎯</div>
+        <h3>Когнитивная гибкость</h3>
+        <p>Адаптивность мышления к разным задачам</p>
+      </div>
+      <div class="expertise-item">
+        <div class="expertise-icon">🗣️</div>
+        <h3>Психология влияния</h3>
+        <p>Понимание механизмов убеждения</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПУБЛИКАЦИИ -->
+<section class="publications-section">
+  <div class="container">
+    <h2>ПУБЛИКАЦИИ</h2>
+    <div class="publications-list">
+      <div class="publication-item">
+        <div class="publication-year">2020</div>
+        <div class="publication-title">Теория манипуляции. Том 1</div>
+        <div class="publication-desc">Основы психологического влияния</div>
+      </div>
+      <div class="publication-item">
+        <div class="publication-year">2021</div>
+        <div class="publication-title">Теория манипуляции. Том 2</div>
+        <div class="publication-desc">Практические техники</div>
+      </div>
+      <div class="publication-item">
+        <div class="publication-year">2022</div>
+        <div class="publication-title">Теория манипуляции. Том 3</div>
+        <div class="publication-desc">Мастерство влияния</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПОДВАЛ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
+        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © Андрей Мейстер · системное мышление · 2026
+    </div>
+  </div>
+</footer>
+
+<script>
+// Подсветка активного пункта меню
+document.addEventListener('DOMContentLoaded', function() {
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav-links a');
+  
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (currentPath === href || currentPath.startsWith(href + '/')) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
