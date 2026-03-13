@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO МЕТА-ТЕГИ -->
+  <title>Виртуальный психолог Фреди — Андрей Мейстер</title>
+  <meta name="description" content="Виртуальный психолог на основе матрицы поведения 4×6. Протестируйте свою конфигурацию восприятия, мышления и поведения. Получите точный психологический портрет.">
+  <meta name="keywords" content="виртуальный психолог, тест личности, матрица поведения, психологический портрет, фреди">
+  <meta name="author" content="Андрей Мейстер">
+  
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Виртуальный психолог Фреди">
+  <meta property="og:description" content="Тест личности по матрице поведения 4×6. Узнайте свой психологический портрет за 15 минут.">
+  <meta property="og:image" content="/https-meysternlp.ru-/images/fredi-preview.jpg">
+  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/virtual-psychologist/">
+  <meta property="og:type" content="website">
+  
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/virtual-psychologist/">
+  
+  <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== ТИПОГРАФИКА ===== */
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 200;
+      margin: 60px 0 20px;
+      color: #FFFFFF;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      color: #3A86FF;
+      letter-spacing: 0.15em;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #CCCCCC;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #FFFFFF;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border: 1px solid #3A86FF;
+      background: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+    }
+
+    .btn:hover {
+      background: #3A86FF;
+      color: #0C0C0C;
+      box-shadow: 0 0 20px #3A86FF;
+    }
+
+    .btn-large {
+      padding: 18px 40px;
+      font-size: 1.1rem;
+    }
+
+    .btn-telegram {
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      border: none;
+    }
+
+    /* ===== ШАПКА (как на главной) ===== */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      position: sticky;
+      top: 0;
+      background-color: #0C0C0C;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #FFFFFF;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      font-weight: 400;
+      letter-spacing: normal;
+      font-size: 1rem;
+      text-transform: none;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
+    }
+
+    /* Кнопка в шапке */
+    .btn-header {
+      display: inline-block;
+      padding: 10px 24px;
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      color: white;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+      border: none;
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+      color: white;
+    }
+
+    /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+    .hero-section {
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      color: #3A86FF;
+      margin-bottom: 20px;
+    }
+
+    .hero-section p {
+      font-size: 1.3rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 60px 0;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 40px 30px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: #3A86FF;
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #3A86FF;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+    }
+
+    .stages-section {
+      margin: 80px 0;
+    }
+
+    .stage-item {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 30px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .stage-item:hover {
+      border-color: #3A86FF;
+    }
+
+    .stage-number {
+      font-size: 2.5rem;
+      font-weight: 200;
+      color: #3A86FF;
+      min-width: 80px;
+    }
+
+    .stage-content h3 {
+      color: #C6A43F;
+      margin-bottom: 10px;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 60px 0;
+      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), transparent);
+      border-radius: 8px;
+      margin: 60px 0;
+    }
+
+    .telegram-info {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 40px;
+      border-radius: 8px;
+      margin: 60px 0;
+    }
+
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .social-links a:hover {
+      color: #C6A43F;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .text-blue { color: #3A86FF; }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 1.8rem; }
+      
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        gap: 15px;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stage-item {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ШАПКА -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <div class="nav-links">
+        <a href="/https-meysternlp.ru-/">Главная</a>
+        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/">Игры</a>
+        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
+        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
+        <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
+      </div>
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="container">
+  <!-- Герой-блок -->
+  <div class="hero-section">
+    <h1>🧠 ВИРТУАЛЬНЫЙ ПСИХОЛОГ ФРЕДИ</h1>
+    <p>Оцифрованная версия Андрея Мейстера — его цифровой слепок. Матрица поведения 4×6, 5 этапов тестирования, точный психологический портрет за 15 минут.</p>
+  </div>
+
+  <!-- Особенности -->
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🔮</div>
+      <div class="feature-title">Режим КОУЧ</div>
+      <p>Открытые вопросы, отражение мыслей, помощь в поиске собственных решений.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <div class="feature-title">Режим ПСИХОЛОГ</div>
+      <p>Исследование глубинных паттернов, защитных механизмов, прошлого опыта.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Режим ТРЕНЕР</div>
+      <p>Чёткие инструменты, навыки, алгоритмы и конкретные шаги к цели.</p>
+    </div>
+  </div>
+
+  <!-- 5 этапов тестирования -->
+  <div class="stages-section">
+    <h2>5 ЭТАПОВ ТЕСТИРОВАНИЯ</h2>
+    
+    <div class="stage-item">
+      <div class="stage-number">1️⃣</div>
+      <div class="stage-content">
+        <h3>Конфигурация восприятия</h3>
+        <p>Какую линзу вы носите — куда направлено ваше внимание и какая тревога доминирует.</p>
+      </div>
+    </div>
+
+    <div class="stage-item">
+      <div class="stage-number">2️⃣</div>
+      <div class="stage-content">
+        <h3>Конфигурация мышления</h3>
+        <p>Как ваш мозг перерабатывает информацию — уровень мышления от 1 до 9.</p>
+      </div>
+    </div>
+
+    <div class="stage-item">
+      <div class="stage-number">3️⃣</div>
+      <div class="stage-content">
+        <h3>Конфигурация поведения</h3>
+        <p>Что вы делаете на автопилоте — ваши автоматические реакции.</p>
+      </div>
+    </div>
+
+    <div class="stage-item">
+      <div class="stage-number">4️⃣</div>
+      <div class="stage-content">
+        <h3>Точка роста</h3>
+        <p>Где находится рычаг — место минимального усилия для максимальных изменений.</p>
+      </div>
+    </div>
+
+    <div class="stage-item">
+      <div class="stage-number">5️⃣</div>
+      <div class="stage-content">
+        <h3>Глубинные паттерны</h3>
+        <p>Тип привязанности, защитные механизмы, базовые убеждения из детства.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Призыв к действию -->
+  <div class="cta-section">
+    <h2>ГОТОВЫ УЗНАТЬ СЕБЯ?</h2>
+    <p style="font-size: 1.3rem; margin-bottom: 30px;">15 минут — и вы получите точный психологический портрет</p>
+    <a href="#" class="btn btn-large" onclick="alert('Бот запускается... Подождите немного')">🚀 НАЧАТЬ ТЕСТ</a>
+  </div>
+
+  <!-- Информация о Telegram-боте -->
+  <div class="telegram-info">
+    <h2>📱 Telegram-бот</h2>
+    <p>Полноценная версия виртуального психолога работает в Telegram. Там доступны:</p>
+    <ul style="color: #CCCCCC; margin-left: 20px; margin-top: 20px;">
+      <li>🎤 Голосовые сообщения и распознавание речи</li>
+      <li>🌍 Учёт погоды и контекста</li>
+      <li>🧠 5 этапов тестирования с динамической генерацией профиля</li>
+      <li>🔍 Проверка реальности целей</li>
+      <li>🧭 Навигатор по целям</li>
+      <li>📅 Напоминания и поддержка</li>
+      <li>🎭 Три режима: КОУЧ, ПСИХОЛОГ, ТРЕНЕР</li>
+    </ul>
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="https://t.me/meysternlp_bot" target="_blank" class="btn btn-telegram btn-large">👉 ПЕРЕЙТИ В TELEGRAM</a>
+    </div>
+    <p style="margin-top: 20px; font-size: 0.9rem; color: #999;">* Бот работает в Telegram — нажмите кнопку выше, чтобы открыть</p>
+  </div>
+</div>
+
+<!-- ПОДВАЛ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
+        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+  </div>
+</footer>
+
+<!-- Font Awesome для иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</body>
+</html>
