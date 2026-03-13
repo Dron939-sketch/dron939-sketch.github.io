@@ -307,7 +307,6 @@
       font-size: 1.2rem;
     }
 
-    /* Пирамида */
     .pyramid {
       display: flex;
       flex-direction: column;
@@ -376,7 +375,6 @@
       line-height: 1.3;
     }
 
-    /* Панель с текстом */
     .text-panel {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid #3A86FF;
@@ -417,6 +415,107 @@
       color: #3A86FF;
     }
 
+    /* ===== ПОСЛЕДНИЕ СТАТЬИ ===== */
+    .blog-preview-section {
+      padding: 80px 0;
+      background-color: rgba(58, 134, 255, 0.02);
+      border-top: 1px solid rgba(58, 134, 255, 0.1);
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+    }
+
+    .blog-preview-intro {
+      text-align: center;
+      color: #C6A43F;
+      margin-bottom: 50px;
+      font-size: 1.2rem;
+    }
+
+    .blog-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .blog-preview-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 30px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-preview-card:hover {
+      border-color: #3A86FF;
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.15);
+    }
+
+    .card-date {
+      color: #C6A43F;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    .card-excerpt {
+      color: #CCCCCC;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 15px;
+      border-top: 1px solid rgba(58, 134, 255, 0.1);
+    }
+
+    .card-views {
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .card-link {
+      color: #3A86FF;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .card-link:hover {
+      border-bottom: 1px solid #3A86FF;
+    }
+
+    .blog-preview-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn-outline {
+      border-color: #C6A43F;
+    }
+
+    .btn-outline:hover {
+      background: #C6A43F;
+      color: #0C0C0C;
+      box-shadow: 0 0 30px #C6A43F;
+    }
+
     /* ===== ПОДВАЛ ===== */
     .footer {
       padding: 60px 0 30px;
@@ -429,6 +528,11 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
     }
 
     .social-links {
@@ -468,7 +572,8 @@
       }
       
       .strategies-grid,
-      .projects-grid {
+      .projects-grid,
+      .blog-preview-grid {
         grid-template-columns: 1fr;
       }
       
@@ -485,11 +590,11 @@
       .top-row .pyramid-item,
       .bottom-row .pyramid-item {
         width: 100%;
-        max-width: 300px;
+        max-width: 280px;
       }
       
-      .pyramid-item {
-        min-height: 140px;
+      .blog-preview-card {
+        padding: 25px;
       }
     }
   </style>
@@ -507,6 +612,7 @@
         <a href="/https-meysternlp.ru-/#projects">Проекты</a>
         <a href="/https-meysternlp.ru-/knigi/">Книги</a>
         <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
+        <a href="/https-meysternlp.ru-/blog/">Блог</a>
         <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
       </div>
       <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Запись</a>
@@ -663,6 +769,54 @@
   </div>
 </section>
 
+<!-- ПОСЛЕДНИЕ СТАТЬИ В БЛОГЕ -->
+<section class="blog-preview-section">
+  <div class="container">
+    <h2>ПОСЛЕДНИЕ СТАТЬИ</h2>
+    <p class="blog-preview-intro">Регулярно делюсь мыслями о системном мышлении, психологии и методах влияния</p>
+    
+    <div class="blog-preview-grid">
+      <!-- Статья 1 - ФСБ -->
+      <div class="blog-preview-card">
+        <div class="card-date">20 марта 2026</div>
+        <h3 class="card-title">Как вербует ФСБ: методы, схемы и психологические приемы</h3>
+        <p class="card-excerpt">Системный анализ методов вербовки: от поиска жертвы до полного контроля. Реальные примеры и способы защиты...</p>
+        <div class="card-footer">
+          <span class="card-views">👁️ 3.8K просмотров</span>
+          <a href="/https-meysternlp.ru-/blog/kak-verbuet-fsb-metody.html" class="card-link">Читать →</a>
+        </div>
+      </div>
+
+      <!-- Статья 2 - Латеральное мышление -->
+      <div class="blog-preview-card">
+        <div class="card-date">15 марта 2026</div>
+        <h3 class="card-title">Латеральное мышление: что это, техники и упражнения</h3>
+        <p class="card-excerpt">5 техник Эдварда де Боно для развития нестандартного мышления. Упражнения для повседневной практики...</p>
+        <div class="card-footer">
+          <span class="card-views">👁️ 2.4K просмотров</span>
+          <a href="/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html" class="card-link">Читать →</a>
+        </div>
+      </div>
+
+      <!-- Статья 3 - Самогипноз -->
+      <div class="blog-preview-card">
+        <div class="card-date">2 марта 2026</div>
+        <h3 class="card-title">Самогипноз для начинающих: пошаговая инструкция</h3>
+        <p class="card-excerpt">Как работать с подсознанием без эзотерики. 5 простых шагов для входа в трансовое состояние...</p>
+        <div class="card-footer">
+          <span class="card-views">👁️ 2.3K просмотров</span>
+          <a href="/https-meysternlp.ru-/blog/samogipnoz-instrukciya.html" class="card-link">Читать →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ссылка на все статьи -->
+    <div class="blog-preview-footer">
+      <a href="/https-meysternlp.ru-/blog/" class="btn btn-outline">Все статьи блога →</a>
+    </div>
+  </div>
+</section>
+
 <!-- ПОДВАЛ -->
 <footer class="footer">
   <div class="container">
@@ -680,7 +834,7 @@
 </footer>
 
 <script>
-  // Данные для текста
+  // Данные для текста в пирамиде
   const texts = {
     hormones: {
       title: "ГОРМОНАЛЬНЫЙ ФОН",
@@ -719,21 +873,20 @@
     }
   };
 
-  // Функция обновления текста
+  // Функция обновления текста в пирамиде
   function updateText(id) {
     const data = texts[id];
     document.getElementById('panelTitle').textContent = data.title;
     document.getElementById('panelDesc').textContent = data.desc;
     document.getElementById('panelExample').textContent = data.example;
     
-    // Подсветка активного элемента
     document.querySelectorAll('.pyramid-item').forEach(item => {
       item.classList.remove('active');
     });
     document.querySelector(`[data-id="${id}"]`).classList.add('active');
   }
 
-  // Назначаем обработчики кликов
+  // Назначаем обработчики кликов на пирамиду
   document.querySelectorAll('.pyramid-item').forEach(item => {
     item.addEventListener('click', function() {
       const id = this.getAttribute('data-id');
@@ -751,7 +904,6 @@
       }
     });
     
-    // Показываем первый текст
     updateText('hormones');
   });
 </script>
