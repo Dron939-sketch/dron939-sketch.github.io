@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Блог — Статьи о системном мышлении — Андрей Мейстер</title>
   <style>
-    /* Копируем основные стили с главной страницы */
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
       margin: 0;
       padding: 0;
@@ -13,7 +13,7 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
@@ -42,57 +42,15 @@
       letter-spacing: 0.15em;
     }
 
-    /* ШАПКА (как на главной) */
-    .header {
-      padding: 30px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      background-color: #0C0C0C;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
     }
 
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
+    a:hover {
       color: #FFFFFF;
-      text-decoration: none;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      text-decoration: none;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 5px;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
     }
 
     .btn {
@@ -113,6 +71,79 @@
       background: #3A86FF;
       color: #0C0C0C;
       box-shadow: 0 0 20px #3A86FF;
+    }
+
+    /* Кнопка в шапке (градиентная) */
+    .btn-header {
+      display: inline-block;
+      padding: 10px 24px;
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      color: white;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+      border: none;
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+      color: white;
+    }
+
+    /* Стили для шапки (оставляем для резерва) */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      position: sticky;
+      top: 0;
+      background-color: #0C0C0C;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #FFFFFF;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      font-weight: 400;
+      letter-spacing: normal;
+      font-size: 1rem;
+      text-transform: none;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
     }
 
     /* Список статей */
@@ -225,17 +256,22 @@
       gap: 20px;
     }
 
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+    }
+
     .social-links {
       display: flex;
       gap: 30px;
+      flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      text-decoration: none;
       font-size: 1rem;
-      letter-spacing: 0.1em;
       text-transform: uppercase;
+      letter-spacing: 0.1em;
     }
 
     .social-links a:hover {
@@ -259,6 +295,10 @@
         align-items: flex-start;
       }
       
+      .nav-links {
+        gap: 15px;
+      }
+      
       .article-preview {
         grid-template-columns: 1fr;
         gap: 15px;
@@ -267,118 +307,139 @@
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="nav">
-        <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
-        <div class="nav-links">
-          <a href="/https-meysternlp.ru-/">Главная</a>
-          <a href="/https-meysternlp.ru-/#strategies">Стратегии</a>
-          <a href="/https-meysternlp.ru-/#projects">Проекты</a>
-          <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-          <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-          <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
-        </div>
-        <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Запись</a>
+
+<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<div id="header-placeholder"></div>
+
+<script>
+  // Загружаем шапку из header.html
+  fetch('/https-meysternlp.ru-/header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки шапки:', error);
+      // Запасной вариант на случай ошибки
+      document.getElementById('header-placeholder').innerHTML = `
+        <header class="header">
+          <div class="container">
+            <div class="nav">
+              <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
+              <div class="nav-links">
+                <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
+                <a href="/https-meysternlp.ru-/knigi/" class="nav-link">Книги</a>
+                <a href="/https-meysternlp.ru-/igry/" class="nav-link">Игры</a>
+                <a href="/https-meysternlp.ru-/treningi/" class="nav-link">Тренинги</a>
+                <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
+                <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
+                <a href="/https-meysternlp.ru-/blog/" class="nav-link active">Статьи</a>
+              </div>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+            </div>
+          </div>
+        </header>
+      `;
+    });
+</script>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="container">
+  <div class="blog-header">
+    <h1>БЛОГ</h1>
+    <p class="blog-description">Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков</p>
+  </div>
+
+  <div class="articles-list">
+    <!-- Статья 1 -->
+    <div class="article-preview">
+      <div class="article-meta">
+        <span>15.03.2026</span>
+        <span>👁️ 1 245</span>
       </div>
-    </div>
-  </header>
-
-  <div class="container">
-    <div class="blog-header">
-      <h1>БЛОГ</h1>
-      <p class="blog-description">Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков</p>
-    </div>
-
-    <div class="articles-list">
-      <!-- Статья 1 -->
-      <div class="article-preview">
-        <div class="article-meta">
-          <span>15.03.2026</span>
-          <span>👁️ 1 245</span>
-        </div>
-        <div class="article-content">
-          <h3>Что такое латеральное мышление и чем оно отличается от критического?</h3>
-          <p>Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...</p>
-          <a href="lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>
-        </div>
-      </div>
-
-      <!-- Статья 2 -->
-      <div class="article-preview">
-        <div class="article-meta">
-          <span>02.03.2026</span>
-          <span>👁️ 2 389</span>
-        </div>
-        <div class="article-content">
-          <h3>Самогипноз для начинающих: пошаговая инструкция</h3>
-          <p>Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...</p>
-          <a href="samogipnoz-instrukciya.html" class="article-link">Читать полностью →</a>
-        </div>
-      </div>
-
-      <!-- Статья 3 -->
-      <div class="article-preview">
-        <div class="article-meta">
-          <span>18.02.2026</span>
-          <span>👁️ 3 567</span>
-        </div>
-        <div class="article-content">
-          <h3>Теория манипуляции: как распознать скрытое воздействие</h3>
-          <p>5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...</p>
-          <a href="teoriya-manipulyacii-priznaki.html" class="article-link">Читать полностью →</a>
-        </div>
-      </div>
-
-      <!-- Статья 4 -->
-      <div class="article-preview">
-        <div class="article-meta">
-          <span>05.02.2026</span>
-          <span>👁️ 1 892</span>
-        </div>
-        <div class="article-content">
-          <h3>Упражнения для развития когнитивной гибкости</h3>
-          <p>Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...</p>
-          <a href="kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>
-        </div>
-      </div>
-
-      <!-- Статья 5 -->
-      <div class="article-preview">
-        <div class="article-meta">
-          <span>20.01.2026</span>
-          <span>👁️ 956</span>
-        </div>
-        <div class="article-content">
-          <h3>Как системное мышление помогает в бизнесе</h3>
-          <p>Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...</p>
-          <a href="sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>
-        </div>
+      <div class="article-content">
+        <h3>Что такое латеральное мышление и чем оно отличается от критического?</h3>
+        <p>Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...</p>
+        <a href="lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>
       </div>
     </div>
 
-    <!-- Пагинация -->
-    <div class="pagination">
-      <a href="#" class="active">1</a>
-      <a href="#" onclick="alert('Следующая страница появится позже')">2</a>
-      <a href="#" onclick="alert('Следующая страница появится позже')">3</a>
-      <a href="#" onclick="alert('Следующая страница появится позже')">→</a>
+    <!-- Статья 2 -->
+    <div class="article-preview">
+      <div class="article-meta">
+        <span>02.03.2026</span>
+        <span>👁️ 2 389</span>
+      </div>
+      <div class="article-content">
+        <h3>Самогипноз для начинающих: пошаговая инструкция</h3>
+        <p>Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...</p>
+        <a href="samogipnoz-instrukciya.html" class="article-link">Читать полностью →</a>
+      </div>
+    </div>
+
+    <!-- Статья 3 -->
+    <div class="article-preview">
+      <div class="article-meta">
+        <span>18.02.2026</span>
+        <span>👁️ 3 567</span>
+      </div>
+      <div class="article-content">
+        <h3>Теория манипуляции: как распознать скрытое воздействие</h3>
+        <p>5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...</p>
+        <a href="teoriya-manipulyacii-priznaki.html" class="article-link">Читать полностью →</a>
+      </div>
+    </div>
+
+    <!-- Статья 4 -->
+    <div class="article-preview">
+      <div class="article-meta">
+        <span>05.02.2026</span>
+        <span>👁️ 1 892</span>
+      </div>
+      <div class="article-content">
+        <h3>Упражнения для развития когнитивной гибкости</h3>
+        <p>Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...</p>
+        <a href="kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>
+      </div>
+    </div>
+
+    <!-- Статья 5 -->
+    <div class="article-preview">
+      <div class="article-meta">
+        <span>20.01.2026</span>
+        <span>👁️ 956</span>
+      </div>
+      <div class="article-content">
+        <h3>Как системное мышление помогает в бизнесе</h3>
+        <p>Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...</p>
+        <a href="sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>
+      </div>
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
-        <div class="social-links">
-          <a href="https://t.me/meysternlp" target="_blank">Tg</a>
-          <a href="https://vk.com/meysternlp" target="_blank">VK</a>
-          <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-          <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
-        </div>
-      </div>
-      <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
-    </div>
-  </footer>
+  <!-- Пагинация -->
+  <div class="pagination">
+    <a href="#" class="active">1</a>
+    <a href="#" onclick="alert('Следующая страница появится позже')">2</a>
+    <a href="#" onclick="alert('Следующая страница появится позже')">3</a>
+    <a href="#" onclick="alert('Следующая страница появится позже')">→</a>
+  </div>
+</div>
+
+<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<div id="footer-placeholder"></div>
+
+<script>
+  // Загружаем подвал из footer.html
+  fetch('/https-meysternlp.ru-/footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки подвала:', error);
+    });
+</script>
+
 </body>
 </html>
