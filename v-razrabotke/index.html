@@ -55,7 +55,7 @@
     h1 {
       font-size: 3.5rem;
       font-weight: 200;
-      margin-bottom: 1rem;
+      margin: 60px 0 20px;
       color: #FFFFFF;
     }
 
@@ -71,6 +71,7 @@
       font-size: 1.5rem;
       font-weight: 400;
       margin-bottom: 1rem;
+      color: #FFFFFF;
     }
 
     p {
@@ -154,7 +155,7 @@
       display: none;
     }
 
-    /* ===== ШАПКА (как на главной) ===== */
+    /* ===== ШАПКА (НОВЫЙ СТИЛЬ) ===== */
     .header {
       padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
@@ -206,15 +207,16 @@
       color: #3A86FF;
     }
 
-    /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+    /* ===== СТРАНИЦА В РАЗРАБОТКЕ ===== */
     .page-header {
-      padding: 80px 0 40px;
+      padding: 60px 0 30px;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      margin-bottom: 40px;
     }
 
     .page-header h1 {
       color: #3A86FF;
-      font-size: 2.8rem;
+      margin-bottom: 15px;
     }
 
     .page-header p {
@@ -222,151 +224,66 @@
       max-width: 800px;
     }
 
-    /* Герой-блок с иконкой */
+    /* Герой-блок */
     .hero-block {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 60px;
-      margin: 40px 0;
+      padding: 50px;
+      margin-bottom: 60px;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
     }
 
-    .hero-icon {
-      font-size: 5rem;
-      color: #3A86FF;
-    }
-
-    .hero-text {
-      flex: 1;
-    }
-
-    .hero-text h2 {
+    .hero-block h2 {
+      color: #FFFFFF;
       margin-bottom: 20px;
     }
 
-    /* Секция с 5 шагами */
+    /* Шаги */
     .steps-section {
-      padding: 60px 0;
+      margin-bottom: 60px;
     }
 
-    .steps-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-top: 40px;
+    .steps-section h2 {
+      margin-bottom: 40px;
     }
 
     .step-item {
       display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-
-    .step-number {
-      font-size: 2.5rem;
-      font-weight: 200;
-      color: #3A86FF;
-      min-width: 60px;
-    }
-
-    .step-content h3 {
-      color: #C6A43F;
-      margin-bottom: 10px;
-    }
-
-    /* Процесс разработки */
-    .process-section {
-      padding: 60px 0;
-      background: rgba(58, 134, 255, 0.02);
-      border-top: 1px solid rgba(58, 134, 255, 0.1);
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
-    }
-
-    /* Что вы получите */
-    .benefits-section {
-      padding: 60px 0;
-    }
-
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
       gap: 30px;
-      margin-top: 40px;
-    }
-
-    .benefit-item {
-      display: flex;
-      gap: 20px;
+      margin-bottom: 40px;
       padding: 30px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
       transition: all 0.3s ease;
     }
 
-    .benefit-item:hover {
+    .step-item:hover {
       border-color: #3A86FF;
       transform: translateX(10px);
     }
 
-    .benefit-number {
-      font-size: 2rem;
+    .step-number {
+      font-size: 3rem;
       font-weight: 200;
       color: #3A86FF;
-      min-width: 50px;
+      min-width: 100px;
     }
 
-    .benefit-text h3 {
+    .step-content h3 {
       color: #C6A43F;
       margin-bottom: 10px;
+      font-size: 1.3rem;
     }
 
-    /* Карточка с фото (как на главной) */
-    .photo-card {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 40px;
-      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), transparent);
-      border: 1px solid rgba(58, 134, 255, 0.3);
-      padding: 40px;
-      margin: 40px 0;
-      border-radius: 8px;
+    .step-content p {
+      margin-bottom: 0;
     }
 
-    .photo-frame {
-      position: relative;
-    }
-
-    .photo {
-      width: 100%;
-      max-width: 300px;
-      border: 2px solid #3A86FF;
-    }
-
-    .photo-sticker {
-      position: absolute;
-      bottom: -10px;
-      right: -10px;
-      background: #C6A43F;
-      color: #0C0C0C;
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-    }
-
-    /* Кнопка в конце */
-    .cta-section {
-      text-align: center;
-      padding: 60px 0;
-    }
-
-    /* ===== ПОДВАЛ (как на главной) ===== */
+    /* ===== ПОДВАЛ ===== */
     .footer {
       padding: 60px 0 30px;
       border-top: 1px solid rgba(58, 134, 255, 0.2);
+      margin-top: 60px;
     }
 
     .footer-content {
@@ -422,37 +339,20 @@
         gap: 15px;
       }
       
-      .hero-block {
+      .step-item {
         flex-direction: column;
-        text-align: center;
+        gap: 15px;
       }
       
-      .steps-grid,
-      .benefits-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .photo-card {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      
-      .photo-frame {
-        display: flex;
-        justify-content: center;
-      }
-      
-      .step-item,
-      .benefit-item {
-        flex-direction: column;
-        text-align: center;
+      .step-number {
+        min-width: auto;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- ШАПКА (как на главной) -->
+<!-- ШАПКА (НОВЫЙ СТИЛЬ) -->
 <header class="header">
   <div class="container">
     <div class="nav">
@@ -467,7 +367,7 @@
         <a href="/https-meysternlp.ru-/blog/">Статьи</a>
         <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
       </div>
-      <a href="#" class="btn btn-header" onclick="alert('Форма записи появится здесь')">Запись на консультацию</a>
+      <a href="#" class="btn-header" onclick="alert('Форма записи появится здесь')">Запись на консультацию</a>
     </div>
   </div>
 </header>
@@ -482,126 +382,57 @@
 
   <!-- Герой-блок -->
   <div class="hero-block">
-    <div class="hero-icon">
-      <i class="fas fa-project-diagram" style="font-family: 'Font Awesome 5 Free';"></i>
-    </div>
-    <div class="hero-text">
-      <h2>Разработка дидактических упражнений под запрос</h2>
-      <p>Быстро достичь личных и профессиональных целей можно только с помощью индивидуального подхода к обучению. Андрей Мейстер, кандидат психологических наук, НЛП-тренер международного уровня, разработает для вас комплекс теоретических и практических упражнений, который будет идеально соответствовать вашим потребностям и желаемым результатам.</p>
-    </div>
+    <h2>Разработка дидактических упражнений под запрос</h2>
+    <p>Быстро достичь личных и профессиональных целей можно только с помощью индивидуального подхода к обучению. Андрей Мейстер, кандидат психологических наук, НЛП-тренер международного уровня, разработает для вас комплекс теоретических и практических упражнений, который будет идеально соответствовать вашим потребностям и желаемым результатам.</p>
   </div>
 
-  <!-- Карточка с фото (как на главной) -->
-  <div class="photo-card">
-    <div class="photo-frame">
-      <img src="/https-meysternlp.ru-/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" class="photo" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Андрей+Мейстер'">
-      <div class="photo-sticker">ЭКСПЕРТ</div>
-    </div>
-    <div>
-      <h2 style="margin-top: 0;">До жизни мечты всего 5 шагов</h2>
-      
-      <!-- Шаг 1 -->
-      <div style="margin: 30px 0;">
-        <h3 style="color: #3A86FF; margin-bottom: 5px;">ШАГ 1</h3>
+  <!-- 5 шагов -->
+  <div class="steps-section">
+    <h2>До жизни мечты всего 5 шагов</h2>
+    
+    <div class="step-item">
+      <div class="step-number">ШАГ 1</div>
+      <div class="step-content">
         <p>Опишите свой образ жизни с использованием терминов моделей «Вариатика. BASIC»</p>
       </div>
-      
-      <!-- Шаг 2 -->
-      <div style="margin: 30px 0;">
-        <h3 style="color: #3A86FF; margin-bottom: 5px;">ШАГ 2</h3>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">ШАГ 2</div>
+      <div class="step-content">
         <p>Сформулируйте конкретные результаты, к которым должно привести ваше поведение после формирования желаемого навыка.</p>
       </div>
-      
-      <!-- Шаг 3 -->
-      <div style="margin: 30px 0;">
-        <h3 style="color: #3A86FF; margin-bottom: 5px;">ШАГ 3</h3>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">ШАГ 3</div>
+      <div class="step-content">
         <p>Отправьте запрос через форму обратной связи на сайте или по указанным контактам.</p>
       </div>
-      
-      <!-- Шаг 4 -->
-      <div style="margin: 30px 0;">
-        <h3 style="color: #3A86FF; margin-bottom: 5px;">ШАГ 4</h3>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">ШАГ 4</div>
+      <div class="step-content">
         <p>Получите персональный набор дидактических упражнений.</p>
       </div>
-      
-      <!-- Шаг 5 -->
-      <div style="margin: 30px 0;">
-        <h3 style="color: #3A86FF; margin-bottom: 5px;">ШАГ 5</h3>
+    </div>
+
+    <div class="step-item">
+      <div class="step-number">ШАГ 5</div>
+      <div class="step-content">
         <p>Пройдите обучение и станьте идеальной версией себя!</p>
       </div>
     </div>
   </div>
 
-  <!-- Процесс разработки -->
-  <div class="process-section">
-    <h2>Процесс разработки заданий</h2>
-    <p style="font-size: 1.2rem; max-width: 800px;">На основе описания Андрей Мейстер подберет контекст для отработки разработанного упражнения, обеспечивая интеграцию навыка в вашу повседневную жизнь. Каждое задание будет направлено на развитие определенного аспекта поведения или умения.</p>
-  </div>
-
-  <!-- Что вы получите -->
-  <div class="benefits-section">
-    <h2>Что вы получите</h2>
-    
-    <div class="benefits-grid">
-      <!-- 1 -->
-      <div class="benefit-item">
-        <div class="benefit-number">1</div>
-        <div class="benefit-text">
-          <h3>Индивидуальный набор упражнений</h3>
-          <p>Индивидуально разработанный набор упражнений, который будет ориентирован на ваши цели и стиль жизни.</p>
-        </div>
-      </div>
-      
-      <!-- 2 -->
-      <div class="benefit-item">
-        <div class="benefit-number">2</div>
-        <div class="benefit-text">
-          <h3>Сопроводительные материалы</h3>
-          <p>Для каждого упражнения, включая инструкции по выполнению заданий и рекомендации для повышения эффективности обучения.</p>
-        </div>
-      </div>
-      
-      <!-- 3 -->
-      <div class="benefit-item">
-        <div class="benefit-number">3</div>
-        <div class="benefit-text">
-          <h3>План интеграции навыка</h3>
-          <p>План интеграции навыка в повседневную жизнь, гарантирующий плавное внедрение нового скилла без существенных изменений привычного для вас уклада.</p>
-        </div>
-      </div>
-      
-      <!-- 4 -->
-      <div class="benefit-item">
-        <div class="benefit-number">4</div>
-        <div class="benefit-text">
-          <h3>Консультации</h3>
-          <p>Консультации по вопросам применения упражнений.</p>
-        </div>
-      </div>
-      
-      <!-- 5 -->
-      <div class="benefit-item">
-        <div class="benefit-number">5</div>
-        <div class="benefit-text">
-          <h3>Корректировка плана</h3>
-          <p>Корректировку плана развития навыков по мере необходимости.</p>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Заключительный текст -->
-    <div style="margin-top: 60px; padding: 30px; background: rgba(255,255,255,0.02); border: 1px solid rgba(58,134,255,0.2); text-align: center;">
-      <p style="font-size: 1.2rem;">Для заказа разработки уникального комплекса упражнения свяжитесь с нами через форму обратной связи на сайте или по указанным контактам. Мы готовы начать работу над вашим будущим уже сегодня!</p>
-    </div>
-  </div>
-
   <!-- Кнопка действия -->
-  <div class="cta-section">
+  <div style="text-align: center; margin: 60px 0;">
     <a href="#" class="btn" onclick="alert('Форма связи появится здесь')">Отправить запрос</a>
   </div>
 </div>
 
-<!-- ПОДВАЛ (как на главной) -->
+<!-- ПОДВАЛ -->
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
@@ -617,7 +448,7 @@
   </div>
 </footer>
 
-<!-- Font Awesome для иконок (если нужно) -->
+<!-- Font Awesome для иконок (если понадобятся) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <script>
