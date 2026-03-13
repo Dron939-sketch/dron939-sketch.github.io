@@ -17,7 +17,7 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
@@ -95,9 +95,9 @@
       box-shadow: 0 0 20px #3A86FF;
     }
 
-    /* ===== ШАПКА ===== */
+    /* ===== ШАПКА (как на оригинальном сайте) ===== */
     .header {
-      padding: 30px 0;
+      padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
       position: sticky;
       top: 0;
@@ -126,24 +126,46 @@
 
     .nav-links {
       display: flex;
-      gap: 30px;
+      gap: 25px;
       flex-wrap: wrap;
     }
 
     .nav-links a {
       color: #F0F0F0;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      border-bottom: 1px solid transparent;
+      font-weight: 400;
+      letter-spacing: normal;
+      font-size: 1rem;
+      text-transform: none;
+      border-bottom: 2px solid transparent;
       padding-bottom: 5px;
+      transition: all 0.2s ease;
     }
 
     .nav-links a:hover,
     .nav-links a.active {
       border-bottom-color: #3A86FF;
       color: #3A86FF;
+    }
+
+    /* Кнопка "Запись на консультацию" */
+    .btn-header {
+      display: inline-block;
+      padding: 10px 24px;
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      color: white;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+      border: none;
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+      color: white;
     }
 
     /* ===== ГЕРОЙ ===== */
@@ -415,19 +437,24 @@
       color: #3A86FF;
     }
 
-    /* ===== ПОСЛЕДНИЕ СТАТЬИ ===== */
+    /* ===== ПОСЛЕДНИЕ СТАТЬИ (В СТИЛЕ APPLE) ===== */
     .blog-preview-section {
       padding: 80px 0;
-      background-color: rgba(58, 134, 255, 0.02);
-      border-top: 1px solid rgba(58, 134, 255, 0.1);
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      background-color: #F5F5F7; /* Светлый фон как у Apple */
+      border-top: 1px solid #E0E0E0;
+      border-bottom: 1px solid #E0E0E0;
+    }
+
+    .blog-preview-section h2 {
+      color: #1D1D1F; /* Тёмный текст */
     }
 
     .blog-preview-intro {
       text-align: center;
-      color: #C6A43F;
+      color: #6E6E73; /* Серый текст как у Apple */
       margin-bottom: 50px;
       font-size: 1.2rem;
+      font-weight: 400;
     }
 
     .blog-preview-grid {
@@ -438,42 +465,46 @@
     }
 
     .blog-preview-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
+      background: #FFFFFF; /* Белый фон карточек */
+      border: none;
+      border-radius: 18px; /* Скругления как у Apple */
       padding: 30px;
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     .blog-preview-card:hover {
-      border-color: #3A86FF;
       transform: translateY(-5px);
-      box-shadow: 0 0 30px rgba(58, 134, 255, 0.15);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
     }
 
     .card-date {
-      color: #C6A43F;
+      color: #6E6E73; /* Серый Apple */
       font-size: 0.85rem;
-      letter-spacing: 0.1em;
+      letter-spacing: normal;
       margin-bottom: 15px;
       text-transform: uppercase;
     }
 
     .card-title {
-      font-size: 1.2rem;
-      color: #FFFFFF;
+      font-size: 1.3rem;
+      color: #1D1D1F; /* Чёрный текст */
       margin-bottom: 15px;
       line-height: 1.4;
-      font-weight: 300;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
     }
 
     .card-excerpt {
-      color: #CCCCCC;
+      color: #3A3A3C; /* Тёмно-серый */
       font-size: 0.95rem;
       margin-bottom: 20px;
       line-height: 1.6;
       flex-grow: 1;
+      font-weight: 400;
     }
 
     .card-footer {
@@ -482,23 +513,24 @@
       align-items: center;
       margin-top: auto;
       padding-top: 15px;
-      border-top: 1px solid rgba(58, 134, 255, 0.1);
+      border-top: 1px solid #E0E0E0;
     }
 
     .card-views {
-      color: #999;
+      color: #6E6E73;
       font-size: 0.85rem;
     }
 
     .card-link {
       color: #3A86FF;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      font-size: 0.95rem;
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 500;
     }
 
     .card-link:hover {
-      border-bottom: 1px solid #3A86FF;
+      color: #1D1D1F;
     }
 
     .blog-preview-footer {
@@ -507,13 +539,16 @@
     }
 
     .btn-outline {
-      border-color: #C6A43F;
+      border-color: #3A86FF;
+      color: #3A86FF;
+      background: transparent;
+      border-radius: 30px;
+      padding: 12px 30px;
     }
 
     .btn-outline:hover {
-      background: #C6A43F;
-      color: #0C0C0C;
-      box-shadow: 0 0 30px #C6A43F;
+      background: #3A86FF;
+      color: #FFFFFF;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -582,6 +617,10 @@
         align-items: flex-start;
       }
       
+      .nav-links {
+        gap: 15px;
+      }
+      
       .row {
         flex-direction: column;
         align-items: center;
@@ -601,21 +640,22 @@
 </head>
 <body>
 
-<!-- ШАПКА -->
+<!-- ШАПКА (как на оригинальном сайте) -->
 <header class="header">
   <div class="container">
     <div class="nav">
       <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
       <div class="nav-links">
         <a href="/https-meysternlp.ru-/" class="active">Главная</a>
-        <a href="/https-meysternlp.ru-/#strategies">Стратегии</a>
-        <a href="/https-meysternlp.ru-/#projects">Проекты</a>
         <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/">Игры</a>
         <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/blog/">Блог</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
+        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
         <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
       </div>
-      <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Запись</a>
+      <a href="#" class="btn btn-header" onclick="alert('Форма записи появится здесь')">Запись на консультацию</a>
     </div>
   </div>
 </header>
@@ -769,7 +809,7 @@
   </div>
 </section>
 
-<!-- ПОСЛЕДНИЕ СТАТЬИ В БЛОГЕ -->
+<!-- ПОСЛЕДНИЕ СТАТЬИ В БЛОГЕ (В СТИЛЕ APPLE) -->
 <section class="blog-preview-section">
   <div class="container">
     <h2>ПОСЛЕДНИЕ СТАТЬИ</h2>
