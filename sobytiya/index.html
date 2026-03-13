@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO МЕТА-ТЕГИ -->
+  <title>События и мероприятия — Андрей Мейстер</title>
+  <meta name="description" content="События и мероприятия, набор в фокус группы, тестирование проектов - узнайте сейчас как и где вы можете познакомиться с Андреем Мейстером.">
+  <meta name="keywords" content="события, мероприятия, фокус-группа, практикум, разговорный гипноз, вариатика, тренинг">
+  <meta name="author" content="Андрей Мейстер">
+  
+  <!-- OPEN GRAPH ДЛЯ СОЦСЕТЕЙ -->
+  <meta property="og:title" content="События и мероприятия — Андрей Мейстер">
+  <meta property="og:description" content="Актуальные события, набор в фокус-группы, практикумы и интенсивы">
+  <meta property="og:image" content="/https-meysternlp.ru-/images/sobytiya-preview.jpg">
+  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/sobytiya/">
+  <meta property="og:type" content="website">
+  
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/sobytiya/">
+  
+  <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== ТИПОГРАФИКА ===== */
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 200;
+      margin-bottom: 1rem;
+      color: #FFFFFF;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      color: #3A86FF;
+      letter-spacing: 0.15em;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: #FFFFFF;
+    }
+
+    p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #CCCCCC;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #FFFFFF;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      border: 1px solid #3A86FF;
+      background: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      color: #0C0C0C;
+      border-color: #3A86FF;
+      box-shadow: 0 0 20px #3A86FF;
+    }
+
+    .btn:hover::before {
+      left: 0;
+    }
+
+    /* Кнопка в шапке (градиентная) */
+    .btn-header {
+      display: inline-block;
+      padding: 10px 24px;
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      color: white;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+      border: none;
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+      color: white;
+    }
+
+    .btn-header::before {
+      display: none;
+    }
+
+    /* ===== ШАПКА (как на главной) ===== */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      position: sticky;
+      top: 0;
+      background-color: #0C0C0C;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #FFFFFF;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      font-weight: 400;
+      letter-spacing: normal;
+      font-size: 1rem;
+      text-transform: none;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
+    }
+
+    /* ===== ЗАГОЛОВОК СТРАНИЦЫ ===== */
+    .page-header {
+      padding: 60px 0 30px;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      margin-bottom: 40px;
+    }
+
+    .page-header h1 {
+      color: #3A86FF;
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      max-width: 800px;
+    }
+
+    /* ===== КАРТОЧКИ СОБЫТИЙ ===== */
+    .events-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .event-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 40px;
+      transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+      border-color: #3A86FF;
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.15);
+    }
+
+    .event-title {
+      font-size: 1.8rem;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .event-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 20px 0;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #3A86FF;
+    }
+
+    .detail-item i {
+      font-size: 1.2rem;
+    }
+
+    .event-description {
+      margin: 20px 0;
+      line-height: 1.8;
+    }
+
+    .event-description p {
+      margin-bottom: 15px;
+    }
+
+    .event-conditions {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 3px solid #C6A43F;
+    }
+
+    .event-conditions h4 {
+      color: #C6A43F;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .event-conditions p {
+      margin-bottom: 5px;
+    }
+
+    .event-footer {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 30px;
+    }
+
+    /* Фокус-группа */
+    .focus-group {
+      background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), transparent);
+      border: 1px solid #3A86FF;
+    }
+
+    /* ===== ПОДВАЛ (как на главной) ===== */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .social-links a:hover {
+      color: #C6A43F;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .text-blue { color: #3A86FF; }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 1.8rem; }
+      
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        gap: 15px;
+      }
+      
+      .event-card {
+        padding: 25px;
+      }
+      
+      .event-details {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ШАПКА (как на главной) -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <div class="nav-links">
+        <a href="/https-meysternlp.ru-/">Главная</a>
+        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/">Игры</a>
+        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/" class="active">События</a>
+        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
+        <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
+      </div>
+      <a href="#" class="btn btn-header" onclick="alert('Форма записи появится здесь')">Запись на консультацию</a>
+    </div>
+  </div>
+</header>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="container">
+  <!-- Заголовок страницы -->
+  <div class="page-header">
+    <h1>СОБЫТИЯ</h1>
+    <p>В этом разделе будет информация обо всех актуальных событиях и мероприятиях.</p>
+  </div>
+
+  <!-- Список событий -->
+  <div class="events-grid">
+    
+    <!-- Событие 1: Фокус-группа -->
+    <div class="event-card focus-group">
+      <h2 class="event-title">Набор в фокус-группу</h2>
+      <div class="event-details">
+        <div class="detail-item">
+          <i class="fas fa-users"></i>
+          <span>Набор открыт</span>
+        </div>
+      </div>
+      <div class="event-description">
+        <p>Идет набор в фокус-группу для проверки результативности упражнения по формированию навыка.</p>
+      </div>
+      <div class="event-footer">
+        <a href="#" class="btn" onclick="alert('Запись в фокус-группу появится здесь')">Записаться</a>
+      </div>
+    </div>
+
+    <!-- Событие 2: Практикум "Разговорный гипноз" -->
+    <div class="event-card">
+      <h2 class="event-title">Практикум «Разговорный гипноз» в режиме интенсив</h2>
+      <div class="event-details">
+        <div class="detail-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>г. Сочи</span>
+        </div>
+        <div class="detail-item">
+          <i class="far fa-calendar-alt"></i>
+          <span>11-14 февраля 2026</span>
+        </div>
+      </div>
+      <div class="event-description">
+        <p>Приглашаем вас на интенсивный практикум, основанный на программе «Пакет Стандартный». Этот практикум предлагает углубленное изучение техник разговорного гипноза и их применение в различных жизненных ситуациях.</p>
+      </div>
+      <div class="event-conditions">
+        <h4>Что взять с собой:</h4>
+        <p>Для полноценного участия в программе мы рекомендуем иметь два комплекта одежды:</p>
+        <p>— Повседневная (комфортная и удобная, для занятий и упражнений).<br>
+        — Парадно-выходная (для особых мероприятий и упражнений, требующих более формального стиля).</p>
+      </div>
+      <div class="event-conditions">
+        <h4>Важное условие:</h4>
+        <p>Участники должны обладать начальными знаниями, полученными в курсе «РГ — пакет стандартный», чтобы максимально эффективно использовать возможности интенсива. Зарегистрируйтесь, чтобы забронировать место!</p>
+      </div>
+      <div class="event-footer">
+        <a href="#" class="btn" onclick="alert('Запись на интенсив появится здесь')">Записаться</a>
+      </div>
+    </div>
+
+    <!-- Событие 3: Практикум «Вариатика-progressive» -->
+    <div class="event-card">
+      <h2 class="event-title">Практикум «Вариатика-progressive»</h2>
+      <div class="event-details">
+        <div class="detail-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>г. Сочи</span>
+        </div>
+        <div class="detail-item">
+          <i class="far fa-calendar-alt"></i>
+          <span>17-19 февраля 2026</span>
+        </div>
+      </div>
+      <div class="event-conditions">
+        <h4>Обязательное условие:</h4>
+        <p>Для эффективного и продуктивного участия в практикуме участники должны иметь теоретическую осведомленность о методах и принципах «Вариатики-progressive». Это гарантирует, что каждый участник сможет максимально воспользоваться предлагаемой программой упражнения.</p>
+      </div>
+      <div class="event-footer">
+        <a href="#" class="btn" onclick="alert('Запись на практикум появится здесь')">Записаться</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ПОДВАЛ (как на главной) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
+        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+  </div>
+</footer>
+
+<!-- Font Awesome для иконок -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+  // Подсветка активного пункта меню
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname;
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (path.includes('sobytiya') && href.includes('sobytiya')) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
