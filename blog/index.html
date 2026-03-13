@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Блог — Статьи о системном мышлении — Андрей Мейстер</title>
+  <style>
+    /* Копируем основные стили с главной страницы */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 200;
+      margin: 60px 0 20px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      color: #3A86FF;
+      letter-spacing: 0.15em;
+    }
+
+    /* ШАПКА (как на главной) */
+    .header {
+      padding: 30px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: #0C0C0C;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #FFFFFF;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 5px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border: 1px solid #3A86FF;
+      background: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #3A86FF;
+      color: #0C0C0C;
+      box-shadow: 0 0 20px #3A86FF;
+    }
+
+    /* Список статей */
+    .blog-header {
+      padding: 40px 0 20px;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      margin-bottom: 40px;
+    }
+
+    .blog-description {
+      color: #C6A43F;
+      font-size: 1.2rem;
+      max-width: 700px;
+    }
+
+    .articles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .article-preview {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 30px;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .article-preview:hover {
+      border-color: #3A86FF;
+      transform: translateX(10px);
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.15);
+    }
+
+    .article-meta {
+      color: #C6A43F;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+
+    .article-meta span {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .article-content h3 {
+      font-size: 1.8rem;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    .article-content p {
+      color: #CCCCCC;
+      margin-bottom: 20px;
+    }
+
+    .article-link {
+      color: #3A86FF;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+    }
+
+    .article-link:hover {
+      border-bottom-color: #3A86FF;
+    }
+
+    /* Пагинация */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 60px 0;
+    }
+
+    .pagination a {
+      display: inline-block;
+      padding: 10px 15px;
+      border: 1px solid rgba(58, 134, 255, 0.3);
+      color: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .pagination a:hover,
+    .pagination a.active {
+      background: #3A86FF;
+      border-color: #3A86FF;
+      color: #0C0C0C;
+    }
+
+    /* Подвал */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .social-links a:hover {
+      color: #C6A43F;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .text-blue { color: #3A86FF; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .article-preview {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="nav">
+        <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
+        <div class="nav-links">
+          <a href="/https-meysternlp.ru-/">Главная</a>
+          <a href="/https-meysternlp.ru-/#strategies">Стратегии</a>
+          <a href="/https-meysternlp.ru-/#projects">Проекты</a>
+          <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+          <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
+          <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
+        </div>
+        <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Запись</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="blog-header">
+      <h1>БЛОГ</h1>
+      <p class="blog-description">Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков</p>
+    </div>
+
+    <div class="articles-list">
+      <!-- Статья 1 -->
+      <div class="article-preview">
+        <div class="article-meta">
+          <span>15.03.2026</span>
+          <span>👁️ 1 245</span>
+        </div>
+        <div class="article-content">
+          <h3>Что такое латеральное мышление и чем оно отличается от критического?</h3>
+          <p>Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...</p>
+          <a href="lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>
+        </div>
+      </div>
+
+      <!-- Статья 2 -->
+      <div class="article-preview">
+        <div class="article-meta">
+          <span>02.03.2026</span>
+          <span>👁️ 2 389</span>
+        </div>
+        <div class="article-content">
+          <h3>Самогипноз для начинающих: пошаговая инструкция</h3>
+          <p>Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...</p>
+          <a href="samogipnoz-instrukciya.html" class="article-link">Читать полностью →</a>
+        </div>
+      </div>
+
+      <!-- Статья 3 -->
+      <div class="article-preview">
+        <div class="article-meta">
+          <span>18.02.2026</span>
+          <span>👁️ 3 567</span>
+        </div>
+        <div class="article-content">
+          <h3>Теория манипуляции: как распознать скрытое воздействие</h3>
+          <p>5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...</p>
+          <a href="teoriya-manipulyacii-priznaki.html" class="article-link">Читать полностью →</a>
+        </div>
+      </div>
+
+      <!-- Статья 4 -->
+      <div class="article-preview">
+        <div class="article-meta">
+          <span>05.02.2026</span>
+          <span>👁️ 1 892</span>
+        </div>
+        <div class="article-content">
+          <h3>Упражнения для развития когнитивной гибкости</h3>
+          <p>Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...</p>
+          <a href="kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>
+        </div>
+      </div>
+
+      <!-- Статья 5 -->
+      <div class="article-preview">
+        <div class="article-meta">
+          <span>20.01.2026</span>
+          <span>👁️ 956</span>
+        </div>
+        <div class="article-content">
+          <h3>Как системное мышление помогает в бизнесе</h3>
+          <p>Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...</p>
+          <a href="sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+      <a href="#" class="active">1</a>
+      <a href="#" onclick="alert('Следующая страница появится позже')">2</a>
+      <a href="#" onclick="alert('Следующая страница появится позже')">3</a>
+      <a href="#" onclick="alert('Следующая страница появится позже')">→</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+        <div class="social-links">
+          <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+          <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+          <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
+          <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+        </div>
+      </div>
+      <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+    </div>
+  </footer>
+</body>
+</html>
