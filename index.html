@@ -83,6 +83,11 @@
       }
     }
 
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
     /* ===== ССЫЛКИ И КНОПКИ ===== */
     a {
       color: #3A86FF;
@@ -417,7 +422,7 @@
       border-bottom-color: #3A86FF;
     }
 
-    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== */
+    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ (НОВЫЙ БЛОК) ===== */
     .system-section {
       padding: 80px 0;
       background-color: #0C0C0C;
@@ -433,58 +438,131 @@
       letter-spacing: 0.1em;
     }
 
-    .system-cycle {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-bottom: 80px;
-    }
-
-    .cycle-item {
-      background-color: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 30px;
-      text-align: center;
+    /* ===== ПРЕВЬЮ ЦИКЛА (ССЫЛКА НА SYSTEM.HTML) ===== */
+    .system-cycle-preview {
       position: relative;
-      transition: all 0.3s ease;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid rgba(58, 134, 255, 0.3);
+      padding: 40px 20px;
+      margin-bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      overflow: hidden;
     }
 
-    .cycle-item:hover {
+    .system-cycle-preview:hover {
       border-color: #C6A43F;
-      box-shadow: 0 0 30px rgba(198, 164, 63, 0.2);
-      transform: translateY(-5px);
+      box-shadow: 0 0 50px rgba(198, 164, 63, 0.3);
+      transform: scale(1.02);
     }
 
-    .cycle-icon {
-      font-size: 3rem;
-      margin-bottom: 20px;
+    .preview-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .preview-item {
+      text-align: center;
+      min-width: 140px;
+      padding: 15px 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .preview-item:hover {
+      border-color: #3A86FF;
+      background: rgba(58, 134, 255, 0.1);
+    }
+
+    .preview-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
       color: #3A86FF;
-      transition: color 0.3s ease;
     }
 
-    .cycle-item:hover .cycle-icon {
-      color: #C6A43F;
-    }
-
-    .cycle-item h3 {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: #FFFFFF;
+    .preview-label {
+      font-size: 0.8rem;
+      font-weight: 300;
       letter-spacing: 0.1em;
+      color: #FFFFFF;
+      text-transform: uppercase;
     }
 
-    .cycle-item p {
-      font-size: 0.95rem;
-      color: #CCCCCC;
-      margin-bottom: 20px;
-      line-height: 1.5;
+    .preview-center {
+      border: 2px solid #C6A43F;
+      background: rgba(198, 164, 63, 0.1);
     }
 
-    .cycle-arrow {
+    .preview-center-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 10px;
+      border: 2px solid #C6A43F;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #C6A43F;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    .preview-arrows {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .arrow-circle {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: #C6A43F;
+      animation: rotate 10s linear infinite;
+    }
+
+    .preview-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(12, 12, 12, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .preview-overlay span {
+      color: #C6A43F;
       font-size: 1.5rem;
-      color: #3A86FF;
-      margin-top: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 2px solid #C6A43F;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .system-cycle-preview:hover .preview-overlay {
+      opacity: 1;
     }
 
     .about-author {
@@ -603,6 +681,22 @@
         flex-direction: column;
         align-items: flex-start;
       }
+      
+      .preview-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      
+      .preview-item {
+        width: 100%;
+        max-width: 250px;
+      }
+      
+      .preview-overlay span {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
@@ -712,62 +806,73 @@
   </div>
 </section>
 
-<!-- СИСТЕМНОЕ МЫШЛЕНИЕ -->
+<!-- СИСТЕМНОЕ МЫШЛЕНИЕ (НОВЫЙ БЛОК) -->
 <section class="system-section">
   <div class="container">
     <h2>СИСТЕМНОЕ МЫШЛЕНИЕ</h2>
     <p class="system-intro">Всё взаимосвязано. Изменение одного элемента влияет на все остальные.</p>
     
-    <div class="system-cycle">
-      <div class="cycle-item">
-        <div class="cycle-icon">🧪</div>
-        <h3>ГОРМОНАЛЬНЫЙ ФОН</h3>
-        <p>Определяет наше поведение и решения</p>
-        <div class="cycle-arrow">↓</div>
+    <!-- Красивый круговой цикл (ссылка на полную версию) -->
+    <a href="/https-meysternlp.ru-/system.html" style="text-decoration: none; display: block;">
+      <div class="system-cycle-preview">
+        <!-- Верхний ряд (Гормоны) -->
+        <div class="preview-row">
+          <div class="preview-item">
+            <div class="preview-icon">🧬</div>
+            <div class="preview-label">ГОРМОНАЛЬНЫЙ ФОН</div>
+          </div>
+        </div>
+        
+        <!-- Второй ряд (Архитектура, Качество, Возможности) -->
+        <div class="preview-row">
+          <div class="preview-item">
+            <div class="preview-icon">⚙️</div>
+            <div class="preview-label">АРХИТЕКТУРА ПРОГРЕССИИ</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-icon">🏆</div>
+            <div class="preview-label">КАЧЕСТВО ЖИЗНИ</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-icon">🔑</div>
+            <div class="preview-label">ВОЗМОЖНОСТИ</div>
+          </div>
+        </div>
+        
+        <!-- Третий ряд (Соцсвязи, Система, Мышление) -->
+        <div class="preview-row">
+          <div class="preview-item">
+            <div class="preview-icon">🤝</div>
+            <div class="preview-label">СОЦИАЛЬНЫЕ СВЯЗИ</div>
+          </div>
+          <div class="preview-item preview-center">
+            <div class="preview-center-icon">СИСТЕМА</div>
+          </div>
+          <div class="preview-item">
+            <div class="preview-icon">🧠</div>
+            <div class="preview-label">МЫШЛЕНИЕ</div>
+          </div>
+        </div>
+        
+        <!-- Нижний ряд (Речь) -->
+        <div class="preview-row">
+          <div class="preview-item">
+            <div class="preview-icon">🗣️</div>
+            <div class="preview-label">РЕЧЬ</div>
+          </div>
+        </div>
+        
+        <!-- Оверлей с призывом -->
+        <div class="preview-overlay">
+          <span>Нажмите для интерактива →</span>
+        </div>
+        
+        <!-- Декоративная стрелка -->
+        <div class="preview-arrows">
+          <div class="arrow-circle">↻</div>
+        </div>
       </div>
-      
-      <div class="cycle-item">
-        <div class="cycle-icon">🏗️</div>
-        <h3>АРХИТЕКТУРА ПРОГРЕССИИ</h3>
-        <p>Процессы деятельности влияют на мышление и восприятие мира</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      
-      <div class="cycle-item">
-        <div class="cycle-icon">🏆</div>
-        <h3>КАЧЕСТВО ЖИЗНИ</h3>
-        <p>Влияет на гормональный фон</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      
-      <div class="cycle-item">
-        <div class="cycle-icon">🔑</div>
-        <h3>ВОЗМОЖНОСТИ</h3>
-        <p>Определяют качество жизни</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      
-      <div class="cycle-item">
-        <div class="cycle-icon">👥</div>
-        <h3>СОЦИАЛЬНЫЕ СВЯЗИ</h3>
-        <p>Определяют возможности</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      
-      <div class="cycle-item">
-        <div class="cycle-icon">💬</div>
-        <h3>РЕЧЬ</h3>
-        <p>Влияет на социальные связи</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      
-      <div class="cycle-item">
-        <div class="cycle-icon">🧩</div>
-        <h3>МЫШЛЕНИЕ</h3>
-        <p>Отражается в речи и влияет на гормональный фон</p>
-        <div class="cycle-arrow">↻</div>
-      </div>
-    </div>
+    </a>
     
     <div class="about-author">
       <p><strong>Андрей Мейстер</strong> — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика». Специализируется на развитии латерального мышления, системного анализа и когнитивных навыков. Помогает людям видеть закономерности там, где другие видят хаос, и находить решения там, где другие видят тупик. Ведёт тренинги по темам: системное мышление, латеральное мышление, когнитивная гибкость, принятие решений.</p>
