@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Виртуальный психолог Фреди — Андрей Мейстер</title>
@@ -11,7 +11,7 @@
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Виртуальный психолог Фреди">
+  <meta property="og:title" content="Виртуальный психолог Фреди — Андрей Мейстер">
   <meta property="og:description" content="Тест личности по матрице поведения 4×6. Узнайте свой психологический портрет за 15 минут.">
   <meta property="og:image" content="/https-meysternlp.ru-/images/fredi-preview.jpg">
   <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/virtual-psychologist/">
@@ -19,6 +19,11 @@
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
   <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/virtual-psychologist/">
+  
+  <!-- Подключаем Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -33,16 +38,19 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
+      width: 100%;
     }
 
     /* ===== ТИПОГРАФИКА ===== */
@@ -50,13 +58,14 @@
       font-weight: 300;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      line-height: 1.2;
     }
 
     h1 {
       font-size: 3.5rem;
       font-weight: 200;
       margin: 60px 0 20px;
-      color: #FFFFFF;
+      color: #3A86FF;
     }
 
     h2 {
@@ -106,6 +115,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 30px;
+      text-align: center;
     }
 
     .btn:hover {
@@ -124,81 +134,16 @@
       border: none;
     }
 
-    /* Стили для шапки (оставляем для резерва) */
-    .header {
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      position: sticky;
-      top: 0;
-      background-color: #0C0C0C;
-      z-index: 100;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #FFFFFF;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      font-weight: 400;
-      letter-spacing: normal;
-      font-size: 1rem;
-      text-transform: none;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 5px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
-    }
-
-    .btn-header {
-      display: inline-block;
-      padding: 10px 24px;
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
+    .btn-telegram:hover {
+      background: linear-gradient(to right, #3A86FF, #00A8E8);
       color: white;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-      border: none;
-      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
-    }
-
-    .btn-header:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-      color: white;
+      box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
     }
 
     /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
     .hero-section {
-      padding: 60px 0;
+      padding: 40px 0 60px;
       text-align: center;
     }
 
@@ -211,6 +156,7 @@
       font-size: 1.3rem;
       max-width: 800px;
       margin: 0 auto;
+      color: #F0F0F0;
     }
 
     .features-grid {
@@ -231,6 +177,7 @@
     .feature-card:hover {
       border-color: #3A86FF;
       transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(58, 134, 255, 0.15);
     }
 
     .feature-icon {
@@ -245,6 +192,12 @@
       margin-bottom: 15px;
     }
 
+    .feature-card p {
+      color: #CCCCCC;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
     .stages-section {
       margin: 80px 0;
     }
@@ -257,10 +210,13 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
       transition: all 0.3s ease;
+      border-radius: 8px;
     }
 
     .stage-item:hover {
       border-color: #3A86FF;
+      transform: translateX(5px);
+      box-shadow: 0 5px 20px rgba(58, 134, 255, 0.1);
     }
 
     .stage-number {
@@ -271,8 +227,14 @@
     }
 
     .stage-content h3 {
-      color: #C6A43F;
+      color: #3A86FF;
       margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
+    .stage-content p {
+      color: #CCCCCC;
+      font-size: 1rem;
     }
 
     .cta-section {
@@ -281,6 +243,12 @@
       background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), transparent);
       border-radius: 8px;
       margin: 60px 0;
+    }
+
+    .cta-section p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      color: #F0F0F0;
     }
 
     .telegram-info {
@@ -295,10 +263,21 @@
       color: #CCCCCC;
       margin-left: 20px;
       margin-top: 20px;
+      list-style: none;
     }
 
     .telegram-info li {
       margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .telegram-info li::before {
+      content: "•";
+      color: #3A86FF;
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -335,7 +314,7 @@
     }
 
     .social-links a:hover {
-      color: #C6A43F;
+      color: #3A86FF;
     }
 
     .copyright {
@@ -348,26 +327,80 @@
     .text-blue { color: #3A86FF; }
 
     /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 992px) {
+      .features-grid {
+        gap: 20px;
+      }
+    }
+
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
       h2 { font-size: 1.8rem; }
       
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
+      .hero-section {
+        padding: 20px 0 40px;
       }
       
-      .nav-links {
-        gap: 15px;
+      .hero-section p {
+        font-size: 1.1rem;
       }
       
       .features-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
       }
       
       .stage-item {
         flex-direction: column;
         gap: 15px;
+        padding: 20px;
+      }
+      
+      .stage-number {
+        font-size: 2rem;
+        min-width: auto;
+      }
+      
+      .cta-section {
+        padding: 40px 20px;
+      }
+      
+      .btn-large {
+        padding: 14px 30px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .telegram-info {
+        padding: 25px;
+      }
+      
+      .telegram-info ul {
+        margin-left: 10px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      
+      .feature-card {
+        padding: 30px 20px;
+      }
+      
+      .feature-title {
+        font-size: 1.3rem;
+      }
+      
+      .stage-content h3 {
+        font-size: 1.2rem;
       }
     }
   </style>
@@ -383,25 +416,58 @@
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
+      
+      // После загрузки шапки инициализируем бургер и подсветку
+      setTimeout(() => {
+        // Подсветка активного пункта
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && href.includes('/virtual-psychologist/')) {
+            link.classList.add('active');
+          }
+        });
+        
+        // Бургер-меню
+        const burger = document.getElementById('burgerBtn');
+        const nav = document.getElementById('navLinks');
+        
+        if (burger && nav) {
+          burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+          });
+          
+          nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              burger.classList.remove('active');
+              nav.classList.remove('active');
+              document.body.style.overflow = '';
+            });
+          });
+          
+          window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+              burger.classList.remove('active');
+              nav.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+      }, 100);
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
       // Запасной вариант на случай ошибки
       document.getElementById('header-placeholder').innerHTML = `
-        <header class="header">
+        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
-            <div class="nav">
-              <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
-              <div class="nav-links">
-                <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
-                <a href="/https-meysternlp.ru-/knigi/" class="nav-link">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" class="nav-link">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" class="nav-link">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
-                <a href="/https-meysternlp.ru-/blog/" class="nav-link">Статьи</a>
-              </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -413,7 +479,7 @@
 <div class="container">
   <!-- Герой-блок -->
   <div class="hero-section">
-    <h1>🧠 ВИРТУАЛЬНЫЙ ПСИХОЛОГ ФРЕДИ</h1>
+    <h1>ВИРТУАЛЬНЫЙ ПСИХОЛОГ ФРЕДИ</h1>
     <p>Оцифрованная версия Андрея Мейстера — его цифровой слепок. Матрица поведения 4×6, 5 этапов тестирования, точный психологический портрет за 15 минут.</p>
   </div>
 
@@ -484,8 +550,8 @@
   <!-- Призыв к действию -->
   <div class="cta-section">
     <h2>ГОТОВЫ УЗНАТЬ СЕБЯ?</h2>
-    <p style="font-size: 1.3rem; margin-bottom: 30px;">15 минут — и вы получите точный психологический портрет</p>
-    <a href="#" class="btn btn-large" onclick="alert('Бот запускается... Подождите немного')">🚀 НАЧАТЬ ТЕСТ</a>
+    <p>15 минут — и вы получите точный психологический портрет</p>
+    <a href="https://t.me/Nanotech_varik_bot?start=test" class="btn btn-large" target="_blank">🚀 НАЧАТЬ ТЕСТ</a>
   </div>
 
   <!-- Информация о Telegram-боте -->
@@ -502,9 +568,10 @@
       <li>🎭 Три режима: КОУЧ, ПСИХОЛОГ, ТРЕНЕР</li>
     </ul>
     <div style="text-align: center; margin-top: 40px;">
-      <a href="https://t.me/meysternlp_bot" target="_blank" class="btn btn-telegram btn-large">👉 ПЕРЕЙТИ В TELEGRAM</a>
+      <a href="https://t.me/Nanotech_varik_bot" target="_blank" class="btn btn-telegram btn-large">👉 ПЕРЕЙТИ В TELEGRAM</a>
     </div>
     <p style="margin-top: 20px; font-size: 0.9rem; color: #999;">* Бот работает в Telegram — нажмите кнопку выше, чтобы открыть</p>
+    <p style="font-size: 0.9rem; color: #666;">Username: @Nanotech_varik_bot</p>
   </div>
 </div>
 
@@ -520,6 +587,21 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
+      // Запасной вариант
+      document.getElementById('footer-placeholder').innerHTML = `
+        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); margin-top: 40px;">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+              <div style="color: #FFFFFF; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0;">VK</a>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+          </div>
+        </footer>
+      `;
     });
 </script>
 
