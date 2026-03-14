@@ -172,7 +172,7 @@
       box-shadow: 0 0 20px #C6A43F;
     }
 
-    /* ===== ШАПКА (стили, если не подгрузится) ===== */
+    /* ===== ШАПКА ===== */
     .header {
       padding: 30px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
@@ -250,17 +250,33 @@
       animation: fadeUp 1s ease-out;
     }
 
-    .manifest-hero h1 {
-      margin-bottom: 20px;
-      font-size: 3.5rem;
+    .manifest-hero-god {
+      font-size: 4rem;
+      font-weight: 200;
+      line-height: 1.1;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
     }
 
-    .manifest-hero-sub {
+    .manifest-hero-alone {
+      font-size: 3rem;
+      font-weight: 300;
+      color: #3A86FF;
+      margin-bottom: 2rem;
+    }
+
+    .manifest-hero-stone {
       font-size: 2rem;
-      color: #C6A43F;
-      margin-bottom: 30px;
       font-weight: 200;
-      letter-spacing: 0.02em;
+      color: #C6A43F;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .manifest-hero-name {
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      color: #3A86FF;
     }
 
     .manifest-hero-line {
@@ -295,6 +311,27 @@
       line-height: 1.6;
     }
 
+    .manifest-list {
+      list-style: none;
+      margin: 30px 0;
+    }
+
+    .manifest-list li {
+      color: #CCCCCC;
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .manifest-list li::before {
+      content: "•";
+      color: #C6A43F;
+      position: absolute;
+      left: 0;
+    }
+
     .manifest-names {
       display: flex;
       justify-content: center;
@@ -326,6 +363,13 @@
     .manifest-highlight {
       color: #C6A43F;
       font-weight: 400;
+    }
+
+    .manifest-strong {
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin: 40px 0;
     }
 
     .manifest-invite {
@@ -370,18 +414,19 @@
       margin: 0 auto;
     }
 
-    /* Специальные стили для плавного чтения */
-    .manifest-block p:first-of-type {
-      font-size: 1.3rem;
-      color: #FFFFFF;
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+      font-size: 2rem;
+      color: #C6A43F;
     }
 
-    .manifest-block p:last-of-type {
-      margin-bottom: 0;
-    }
-
-    .manifest-section:first-of-type .manifest-block p {
-      animation: fadeUp 0.8s ease-out 0.2s both;
+    .tools-list span {
+      font-size: 1.2rem;
+      color: #CCCCCC;
+      margin-left: 10px;
     }
 
     /* ===== АДАПТИВНОСТЬ ===== */
@@ -389,11 +434,15 @@
       h1 { font-size: 2.5rem; }
       h2 { font-size: 1.8rem; }
       
-      .manifest-hero h1 {
-        font-size: 2.2rem;
+      .manifest-hero-god {
+        font-size: 2.5rem;
       }
       
-      .manifest-hero-sub {
+      .manifest-hero-alone {
+        font-size: 1.8rem;
+      }
+      
+      .manifest-hero-stone {
         font-size: 1.5rem;
       }
       
@@ -421,6 +470,12 @@
         flex-wrap: wrap;
         justify-content: center;
       }
+      
+      .tools-list {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
     }
   </style>
 </head>
@@ -443,46 +498,66 @@
   </div>
 </header>
 
-<!-- ГЕРОЙ МАНИФЕСТА -->
+<!-- ГЕРОЙ МАНИФЕСТА (ИЗМЕНЁН) -->
 <section class="manifest-hero">
   <div class="container">
-    <h1>АНДРЕЙ МЕЙСТЕР</h1>
-    <div class="manifest-hero-sub">Бог умер. Теперь мы сами по себе.</div>
+    <div class="manifest-hero-god">Бог умер.</div>
+    <div class="manifest-hero-alone">Теперь мы сами по себе.</div>
+    <div class="manifest-hero-stone">Я бросаю камень.</div>
     <div class="manifest-hero-line"></div>
-    <p style="font-size: 1.8rem; color: #FFFFFF; font-weight: 200; letter-spacing: 0.05em;">Я бросаю камень.</p>
+    <div class="manifest-hero-name">АНДРЕЙ МЕЙСТЕР</div>
   </div>
 </section>
 
-<!-- ЧТО ТАКОЕ НАРРАТИВ -->
+<!-- ЧТО ТАКОЕ НАРРАТИВ (ИЗМЕНЁН) -->
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Что такое нарратив</h2>
-    <p>Нарратив — это история, в которую ты веришь. Она определяет, что для тебя важно, а что нет. Куда ты идёшь и зачем просыпаешься утром.</p>
-    <p>Ты не выбирал свой нарратив. Его выбрали за тебя — семья, школа, культура, время, в которое ты родился.</p>
-    <p>Но рано или поздно наступает момент. Ты вдруг понимаешь: «Зачем я это делаю?» Или чувствуешь, что живёшь не свою жизнь. Или ловишь себя на том, что разные части тебя тянут в разные стороны.</p>
-    <div class="manifest-quote">
+    <p style="font-size: 1.5rem; color: #FFFFFF; margin-bottom: 30px;">Нарратив — это история, в которую ты веришь.</p>
+    <p style="margin-bottom: 20px;">Он определяет:</p>
+    <ul class="manifest-list">
+      <li>Что для тебя важно, а что — пустое</li>
+      <li>Куда ты идёшь, а куда — даже не смотришь</li>
+      <li>Зачем ты просыпаешься утром</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ПРОБЛЕМА (НОВЫЙ БЛОК) -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Твой нарратив</h2>
+    <p style="font-size: 1.3rem; color: #FFFFFF;">Ты не выбирал свой нарратив.</p>
+    <p>Его выбрали за тебя. Семья. Школа. Культура. Время.</p>
+    <p style="margin: 40px 0 20px; color: #C6A43F;">А потом — момент.</p>
+    <ul class="manifest-list">
+      <li>«Зачем я это делаю?»</li>
+      <li>«Почему мне так неуютно?»</li>
+      <li>«Это вообще моя жизнь?»</li>
+    </ul>
+    <div class="manifest-quote" style="margin-top: 40px;">
       Это момент встречи с нарративом.
     </div>
   </div>
 </section>
 
-<!-- СИЛА НАРРАТИВОВ -->
+<!-- СИЛА НАРРАТИВОВ (ИЗМЕНЁН) -->
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Сила нарративов</h2>
-    <p>Иисус создал нарратив. После его смерти этот нарратив разрушил Рим.</p>
-    <p>Маркс создал нарратив. После него этот нарратив построил империю, перекроившую мир.</p>
-    <p style="margin-top: 40px;"><span class="manifest-highlight">Нарратив сильнее любого человека.</span> Он живёт после тебя. Он меняет реальность.</p>
+    <p><strong style="color: #FFFFFF;">Иисус</strong> создал нарратив. После его смерти этот нарратив <span class="manifest-highlight">разрушил Рим.</span></p>
+    <p><strong style="color: #FFFFFF;">Маркс</strong> создал нарратив. Этот нарратив <span class="manifest-highlight">построил империю.</span></p>
+    <p style="margin-top: 40px; font-style: italic;">Нарратив сильнее любого человека. Он живёт после тебя.</p>
   </div>
 </section>
 
-<!-- ПЕРЕСЕЧЕНИЯ НАРРАТИВОВ -->
+<!-- ПЕРЕСЕЧЕНИЯ -->
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Пересечения</h2>
     <p>Мы редко живём в одном нарративе. Чаще — на пересечении нескольких.</p>
     <p>Семья говорит одно. Работа — другое. Среда — третье. Внутри тебя живут голоса, которые спорят друг с другом.</p>
-    <p>Эти несостыковки — <span class="manifest-highlight">источник боли.</span> Но они же — <span class="manifest-highlight">источник выбора.</span> Если ты их увидишь, ты сможешь их подружить. Или хотя бы понять, почему тебе так неуютно.</p>
+    <p>Эти несостыковки — <span class="manifest-highlight">источник боли.</span> Но они же — <span class="manifest-highlight">источник выбора.</span></p>
   </div>
 </section>
 
@@ -504,13 +579,16 @@
   </div>
 </section>
 
-<!-- МАНИФЕСТ -->
+<!-- МАНИФЕСТ (ИЗМЕНЁН) -->
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Манифест</h2>
-    <p>Старые нарративы рассыпались. Религия, идеология, великие цели — больше не работают. Человек остался один на один с пустотой.</p>
-    <p>Но человек — это единственное существо, которое живёт нарративами. Без истории, в которую он верит, он не живёт — он просто существует.</p>
-    <p style="font-size: 1.5rem; color: #FFFFFF; margin: 40px 0;">Я выбираю жить.</p>
+    <p><span class="manifest-highlight">Старые нарративы рассыпались.</span></p>
+    <p style="color: #666;">Религия — больше не держит.</p>
+    <p style="color: #666;">Идеология — больше не вдохновляет.</p>
+    <p style="margin: 40px 0; color: #C6A43F; font-size: 2rem; text-align: center;">Но.</p>
+    <p>Человек — единственное существо, которое живёт нарративами. Без истории, в которую он верит, он не живёт — он просто существует.</p>
+    <p style="font-size: 2rem; color: #FFFFFF; margin: 40px 0; text-align: center;">Я выбираю жить.</p>
     <p>Я бросаю камень. Я хочу, чтобы мой камень летел долго. Чтобы через сто лет кто-то сказал: «Андрей Мейстер? Да, его нарратив всё ещё работает».</p>
   </div>
 </section>
@@ -524,12 +602,29 @@
   </div>
 </section>
 
-<!-- МОЙ КАМЕНЬ (ИНСТРУМЕНТЫ) -->
+<!-- МОЙ КАМЕНЬ (ИНСТРУМЕНТЫ) (ИЗМЕНЁН) -->
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Мой камень</h2>
-    <p>Мой камень — это инструменты. Я не присутствую при вашем становлении. Я даю вам готовые инструменты — книги, игры, практикумы. Вы просто берете их и применяете.</p>
-    <p style="font-size: 1.3rem; color: #C6A43F; margin-top: 40px;">Потому что настоящий нарратив не нуждается в авторе. Он живёт сам.</p>
+    <p style="font-size: 1.5rem; color: #C6A43F; margin-bottom: 30px;">Мой камень — это инструменты.</p>
+    
+    <div style="text-align: center; margin: 40px 0;">
+      <div style="display: inline-block; margin: 0 20px; text-align: center;">
+        <div style="font-size: 3rem; color: #C6A43F;">📚</div>
+        <div style="color: #FFFFFF;">Книги</div>
+      </div>
+      <div style="display: inline-block; margin: 0 20px; text-align: center;">
+        <div style="font-size: 3rem; color: #C6A43F;">🎲</div>
+        <div style="color: #FFFFFF;">Игры</div>
+      </div>
+      <div style="display: inline-block; margin: 0 20px; text-align: center;">
+        <div style="font-size: 3rem; color: #C6A43F;">🧠</div>
+        <div style="color: #FFFFFF;">Практикумы</div>
+      </div>
+    </div>
+    
+    <p style="text-align: center; margin: 30px 0;">Я просто даю вам камень. А дальше — вы сами.</p>
+    <p style="text-align: center; font-style: italic; color: #666;">Потому что настоящий нарратив не нуждается в авторе. Он живёт сам.</p>
   </div>
 </section>
 
@@ -544,7 +639,7 @@
   </div>
 </section>
 
-<!-- РЕГАЛИИ (КОРОТКО) -->
+<!-- РЕГАЛИИ -->
 <section class="manifest-credentials">
   <div class="container">
     <p>Андрей Мейстер — психолог, когнитивный тренер, кандидат наук, автор бестселлера «Теория манипуляции», разработчик технологии системного мышления «Вариатика».</p>
@@ -629,7 +724,7 @@
   }
 </style>
 
-<!-- Font Awesome для иконок соцсетей (если нужны будут) -->
+<!-- Font Awesome для иконок -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </body>
