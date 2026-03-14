@@ -366,7 +366,7 @@
       box-shadow: 0 0 25px rgba(58, 134, 255, 0.5);
     }
 
-    /* ===== ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН (2×2) ===== */
+    /* ===== ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН ===== */
     .section {
       padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
@@ -406,8 +406,6 @@
       font-size: 1.8rem;
       font-weight: 200;
       color: #3A86FF;
-      margin-bottom: 10px;
-      letter-spacing: 0.02em;
     }
 
     .help-question-small {
@@ -430,7 +428,7 @@
       font-weight: 400;
     }
 
-    /* ===== МОИ ПРОЕКТЫ (с вопросами) ===== */
+    /* ===== МОИ ПРОЕКТЫ ===== */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -466,6 +464,9 @@
       color: #3A86FF;
       margin-bottom: 20px;
       opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .project-question {
@@ -495,7 +496,7 @@
       flex-grow: 1;
     }
 
-    /* ===== КАК ЭТО РАБОТАЕТ (НОВЫЙ БЛОК) ===== */
+    /* ===== КАК ЭТО РАБОТАЕТ ===== */
     .system-section {
       padding: 80px 0;
       background-color: #0C0C0C;
@@ -805,7 +806,10 @@
     <div class="help-grid">
       
       <div class="help-card">
-        <div class="help-question">ЗАЧЕМ?</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <span style="font-size: 2rem;">🎯</span>
+          <div class="help-question">ЗАЧЕМ?</div>
+        </div>
         <div class="help-question-small">Зачем я просыпаюсь утром?</div>
         <div class="help-answer">
           <strong>Найти свой нарратив.</strong> Понять, какая история движет именно вами. Отличить своё от навязанного.
@@ -813,7 +817,10 @@
       </div>
       
       <div class="help-card">
-        <div class="help-question">ПОЧЕМУ?</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <span style="font-size: 2rem;">🤔</span>
+          <div class="help-question">ПОЧЕМУ?</div>
+        </div>
         <div class="help-question-small">Почему мне так неуютно?</div>
         <div class="help-answer">
           <strong>Разобрать пересечения.</strong> Увидеть, где голоса семьи, работы и среды спорят друг с другом. Найти точку выбора.
@@ -821,7 +828,10 @@
       </div>
       
       <div class="help-card">
-        <div class="help-question">КАК?</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <span style="font-size: 2rem;">⚒️</span>
+          <div class="help-question">КАК?</div>
+        </div>
         <div class="help-question-small">Как создать свой камень?</div>
         <div class="help-answer">
           <strong>Инструменты.</strong> Книги, игры, практикумы — готовые способы бросить свой нарратив в мир.
@@ -829,7 +839,10 @@
       </div>
       
       <div class="help-card">
-        <div class="help-question">ЧТО ДАЛЬШЕ?</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+          <span style="font-size: 2rem;">🚀</span>
+          <div class="help-question">ЧТО ДАЛЬШЕ?</div>
+        </div>
         <div class="help-question-small">Как не исчезнуть?</div>
         <div class="help-answer">
           <strong>Сделать так, чтобы нарратив жил после тебя.</strong> Научиться создавать истории, которые не умирают.
@@ -849,7 +862,9 @@
       
       <!-- Карточка 1 - Книги -->
       <div class="project-card">
-        <div class="project-number">01</div>
+        <div class="project-number">
+          <span>📚</span>01
+        </div>
         <div class="project-question">ЧТО У МЕНЯ ВНУТРИ?</div>
         <div class="project-title">КНИГИ</div>
         <div class="project-desc">Увидеть свой нарратив, разобраться в его структуре</div>
@@ -857,7 +872,9 @@
       
       <!-- Карточка 2 - Игры -->
       <div class="project-card">
-        <div class="project-number">02</div>
+        <div class="project-number">
+          <span>🎲</span>02
+        </div>
         <div class="project-question">КАК ЭТО РАБОТАЕТ?</div>
         <div class="project-title">ИГРЫ</div>
         <div class="project-desc">Научиться менять нарративы, пробовать в безопасной среде</div>
@@ -865,7 +882,9 @@
       
       <!-- Карточка 3 - Практикум -->
       <div class="project-card">
-        <div class="project-number">03</div>
+        <div class="project-number">
+          <span>🧠</span>03
+        </div>
         <div class="project-question">ЗАЧЕМ ЭТО НУЖНО?</div>
         <div class="project-title">ПРАКТИКУМ</div>
         <div class="project-desc">Создать свой камень, чтобы он жил после тебя</div>
@@ -885,7 +904,10 @@
       
       <!-- Карточка 1: НАРРАТИВ -->
       <div class="cycle-item" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; animation-delay: 0.1s; text-align: left; padding: 35px;">
-        <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF; margin-bottom: 20px; letter-spacing: 0.2em;">01</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+          <span style="font-size: 2rem;">🧿</span>
+          <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF;">01</div>
+        </div>
         <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #FFFFFF;">НАРРАТИВ</h3>
         <p style="font-size: 1rem; color: #CCCCCC; line-height: 1.6; margin-bottom: 15px;">Определяет твои ценности и цели. Задает направление.</p>
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(58, 134, 255, 0.2);">
@@ -895,7 +917,10 @@
       
       <!-- Карточка 2: ДЕЙСТВИЯ -->
       <div class="cycle-item" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; animation-delay: 0.2s; text-align: left; padding: 35px;">
-        <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF; margin-bottom: 20px; letter-spacing: 0.2em;">02</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+          <span style="font-size: 2rem;">⚡</span>
+          <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF;">02</div>
+        </div>
         <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #FFFFFF;">ДЕЙСТВИЯ</h3>
         <p style="font-size: 1rem; color: #CCCCCC; line-height: 1.6; margin-bottom: 15px;">Ты делаешь то, что соответствует нарративу. Осознанно или нет.</p>
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(58, 134, 255, 0.2);">
@@ -905,7 +930,10 @@
       
       <!-- Карточка 3: РЕЗУЛЬТАТЫ -->
       <div class="cycle-item" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; animation-delay: 0.3s; text-align: left; padding: 35px;">
-        <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF; margin-bottom: 20px; letter-spacing: 0.2em;">03</div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+          <span style="font-size: 2rem;">🏆</span>
+          <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF;">03</div>
+        </div>
         <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #FFFFFF;">РЕЗУЛЬТАТЫ</h3>
         <p style="font-size: 1rem; color: #CCCCCC; line-height: 1.6; margin-bottom: 15px;">То, что ты получаешь в жизни. То, во что превращается твой нарратив.</p>
         <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(58, 134, 255, 0.2);">
@@ -918,7 +946,7 @@
     <!-- Блок ВЫБОР -->
     <div style="text-align: center; margin: 30px 0 60px;">
       <div style="display: inline-block; background-color: rgba(58, 134, 255, 0.1); border: 1px solid #3A86FF; padding: 20px 40px; border-radius: 50px;">
-        <div style="font-size: 1.5rem; font-weight: 200; color: #3A86FF; margin-bottom: 5px;">⬆︎</div>
+        <div style="font-size: 2rem; font-weight: 200; color: #3A86FF; margin-bottom: 5px;">⬆️</div>
         <div style="font-size: 1.5rem; font-weight: 300; color: #FFFFFF; letter-spacing: 0.1em;">ВЫБОР</div>
         <p style="font-size: 1rem; color: #CCCCCC; margin-top: 10px; max-width: 400px;">Ты можешь поменять нарратив. А можешь оставить всё как есть.</p>
       </div>
