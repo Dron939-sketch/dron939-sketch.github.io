@@ -40,13 +40,6 @@
       text-transform: uppercase;
     }
 
-    h1 {
-      font-size: 4.5rem;
-      font-weight: 200;
-      margin-bottom: 0.5rem;
-      color: #FFFFFF;
-    }
-
     h2 {
       font-size: 2.2rem;
       font-weight: 300;
@@ -95,7 +88,7 @@
       box-shadow: 0 0 20px #3A86FF;
     }
 
-    /* ===== ШАПКА (обновлённая) ===== */
+    /* ===== ШАПКА ===== */
     .header {
       padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
@@ -168,9 +161,9 @@
       color: white;
     }
 
-    /* ===== ГЕРОЙ (НОВАЯ ВЕРСИЯ) ===== */
+    /* ===== ГЕРОЙ (ФИНАЛЬНАЯ ВЕРСИЯ) ===== */
     .hero {
-      padding: 100px 0;
+      padding: 120px 0 100px;
     }
 
     .hero-grid {
@@ -180,31 +173,64 @@
       align-items: center;
     }
 
-    .hero-subtitle {
-      font-size: 1rem;
-      letter-spacing: 0.3em;
-      color: #3A86FF;
-      margin-bottom: 20px;
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 200;
+      margin-bottom: 2rem;
+      color: #FFFFFF;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
       text-transform: uppercase;
     }
 
-    .hero-quote {
+    .hero-promise {
       font-size: 2.2rem;
       font-weight: 200;
       line-height: 1.3;
       color: #FFFFFF;
-      margin: 30px 0 20px;
+      margin-bottom: 3rem;
       letter-spacing: -0.01em;
       border-left: 3px solid #C6A43F;
       padding-left: 25px;
     }
 
-    .hero-principle {
-      font-size: 1.2rem;
-      color: #CCCCCC;
-      margin: 20px 0;
-      padding-left: 28px;
-      position: relative;
+    .hero-result {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 2rem;
+    }
+
+    .gold-asterisk {
+      color: #C6A43F;
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .hero-result-text {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #F0F0F0;
+      line-height: 1.4;
+    }
+
+    .gold-text {
+      color: #C6A43F;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid rgba(198, 164, 63, 0.3);
+      padding-bottom: 2px;
+    }
+
+    .hero-how {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-top: 1rem;
+      opacity: 0.8;
     }
 
     .gold-dot {
@@ -213,43 +239,16 @@
       height: 8px;
       background: #C6A43F;
       border-radius: 50%;
-      position: absolute;
-      left: 8px;
-      top: 10px;
+      margin-top: 8px;
+      flex-shrink: 0;
       box-shadow: 0 0 10px #C6A43F;
     }
 
-    .hero-result {
-      font-size: 1.4rem;
-      font-weight: 300;
-      color: #F0F0F0;
-      margin: 30px 0 0;
-      padding-left: 28px;
-      position: relative;
-    }
-
-    .gold-asterisk {
-      position: absolute;
-      left: 8px;
-      top: 5px;
-      color: #C6A43F;
-      font-size: 1.8rem;
-      font-weight: 300;
-    }
-
-    .gold-text {
-      color: #C6A43F;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid rgba(198, 164, 63, 0.3);
-      padding-bottom: 2px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      margin-top: 40px;
+    .hero-how-text {
+      font-size: 1.1rem;
+      color: #AAAAAA;
+      line-height: 1.5;
+      max-width: 400px;
     }
 
     /* ===== ВИДЕО ===== */
@@ -649,7 +648,11 @@
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 3rem; }
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+      }
+      
       h2 { font-size: 1.8rem; }
       
       .hero-grid {
@@ -657,17 +660,21 @@
         gap: 40px;
       }
       
-      .hero-quote {
+      .hero {
+        padding: 80px 0 60px;
+      }
+      
+      .hero-promise {
         font-size: 1.6rem;
         padding-left: 15px;
       }
       
-      .hero-principle {
-        font-size: 1rem;
+      .hero-result-text {
+        font-size: 1.4rem;
       }
       
-      .hero-result {
-        font-size: 1.2rem;
+      .hero-how-text {
+        font-size: 1rem;
       }
       
       .strategies-grid,
@@ -723,36 +730,32 @@
   </div>
 </header>
 
-<!-- ГЕРОЙ (НОВАЯ ВЕРСИЯ) -->
+<!-- ГЕРОЙ (ФИНАЛЬНАЯ ВЕРСИЯ — БЕЗ КНОПОК) -->
 <section id="home" class="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="hero-subtitle">тренер системного и латерального мышления</div>
-        <h1>Андрей<br>Мейстер</h1>
+        <h1>Андрей Мейстер</h1>
         
-        <!-- НОВЫЙ ТЕКСТ -->
-        <div class="hero-quote">
+        <div class="hero-promise">
           «Хватит тонуть в хаосе и чужих советах.<br>
           Я даю вам мышление, которое само находит ответы».
         </div>
         
-        <div class="hero-principle">
-          <span class="gold-dot"></span>
-          Мои продукты работают без меня.<br>
-          Книги, игры, практикумы — это готовые инструменты. Вы просто берете их и применяете.
-        </div>
-        
         <div class="hero-result">
           <span class="gold-asterisk">*</span>
-          Вы будете знать, <span class="gold-text">ЗАЧЕМ</span> просыпаться утром 
-          и <span class="gold-text">КАК</span> сделать так, чтобы вечером был результат.
+          <span class="hero-result-text">
+            Вы будете знать <span class="gold-text">ЗАЧЕМ</span> просыпаться утром<br>
+            и <span class="gold-text">КАК</span> сделать так, чтобы вечером был результат.
+          </span>
         </div>
         
-        <div class="hero-buttons">
-          <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Консультация</a>
-          <a href="#projects" class="btn">Проекты</a>
+        <div class="hero-how">
+          <span class="gold-dot"></span>
+          <span class="hero-how-text">Мои продукты работают без меня — книги, игры, практикумы. Вы просто берете их и применяете.</span>
         </div>
+        
+        <!-- КНОПКИ ПОЛНОСТЬЮ УДАЛЕНЫ -->
       </div>
       <div class="hero-image">
         <div class="video-wrapper">
