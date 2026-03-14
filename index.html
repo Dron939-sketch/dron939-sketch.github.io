@@ -35,13 +35,26 @@
     }
 
     /* ===== ТИПОГРАФИКА ===== */
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 200;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+    }
+
     h2 {
       font-size: 2.2rem;
       font-weight: 300;
       margin-bottom: 2rem;
       color: #3A86FF;
       letter-spacing: 0.15em;
-      text-transform: uppercase;
     }
 
     p {
@@ -112,19 +125,6 @@
 
     .btn:hover::before {
       left: 0;
-    }
-
-    .btn-gold {
-      border-color: #C6A43F;
-    }
-
-    .btn-gold::before {
-      background-color: #C6A43F;
-    }
-
-    .btn-gold:hover {
-      border-color: #C6A43F;
-      box-shadow: 0 0 20px #C6A43F;
     }
 
     /* ===== ШАПКА ===== */
@@ -220,23 +220,48 @@
       justify-content: center;
     }
 
+    .hero-subtitle {
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #3A86FF;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 200;
+      margin-bottom: 1.5rem;
+      color: #FFFFFF;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      max-width: 90%;
+      border-left: 2px solid #3A86FF;
+      padding-left: 20px;
+      margin: 30px 0 40px;
+    }
+
     .hero-phrase-block {
-      margin: 0 0 20px;
+      margin: 30px 0 20px;
     }
 
     .hero-phrase-line1 {
       font-size: 4rem;
-      font-weight: 200;
+      font-weight: 700;
       line-height: 1.2;
-      color: #FFFFFF;
+      color: #3A86FF;
       letter-spacing: -0.01em;
+      text-transform: uppercase;
     }
 
     .hero-phrase-line2 {
       font-size: 4rem;
       font-weight: 300;
       line-height: 1.2;
-      color: #3A86FF;
+      color: #FFFFFF;
       letter-spacing: -0.01em;
       margin-top: 0.2rem;
     }
@@ -258,7 +283,7 @@
     .hero-buttons {
       display: flex;
       gap: 30px;
-      margin-top: 10px;
+      margin-top: 20px;
     }
 
     /* ===== ВИДЕО ===== */
@@ -592,6 +617,7 @@
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
+      h1 { font-size: 3rem; }
       h2 { font-size: 1.8rem; }
       
       .hero-grid {
@@ -634,17 +660,16 @@
 <header class="header">
   <div class="container">
     <div class="nav">
-      <!-- Логотип ведёт на главную -->
       <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
       <div class="nav-links">
+        <a href="/https-meysternlp.ru-/" class="active">Главная</a>
+        <a href="/https-meysternlp.ru-/strategies/">Стратегии</a>
+        <a href="/https-meysternlp.ru-/projects/">Проекты</a>
         <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-        <a href="/https-meysternlp.ru-/igry/">Игры</a>
         <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
-        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
-        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
+        <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
       </div>
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+      <a href="/https-meysternlp.ru-/consultation/" class="btn-header">Запись</a>
     </div>
   </div>
 </header>
@@ -655,21 +680,26 @@
     <div class="hero-grid">
       <!-- Левый блок с текстом -->
       <div class="hero-content">
-        <!-- Фраза -->
+        <div class="hero-subtitle">тренер системного и латерального мышления</div>
+        <h1>АНДРЕЙ МЕЙСТЕР</h1>
+        
         <div class="hero-phrase-block">
-          <div class="hero-phrase-line1">Бог умер.</div>
+          <div class="hero-phrase-line1">БОГ УМЕР.</div>
           <div class="hero-phrase-line2">Теперь мы сами по себе.</div>
         </div>
         
-        <!-- Звёздочка и сноска -->
         <div class="hero-footnote">
           <span class="gold-star">*</span>
           <span>короткая фраза, за которой час разговора</span>
         </div>
         
-        <!-- Кнопка -->
+        <div class="hero-description">
+          Автор бестселлера «Теория манипуляции», кандидат наук. Вижу закономерности там, где другие видят хаос.
+        </div>
+        
         <div class="hero-buttons">
-          <a href="/https-meysternlp.ru-/obo-mne/" class="btn btn-gold">УЗНАТЬ</a>
+          <a href="/https-meysternlp.ru-/obo-mne/" class="btn">УЗНАТЬ</a>
+          <a href="#projects" class="btn">ПРОЕКТЫ</a>
         </div>
       </div>
       
@@ -681,7 +711,7 @@
             Ваш браузер не поддерживает видео.
           </video>
         </div>
-        <div class="hero-sticker">НАРРАТИВ</div>
+        <div class="hero-sticker">СИСТЕМНО</div>
       </div>
     </div>
   </div>
@@ -812,7 +842,7 @@
         <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
       </div>
     </div>
-    <div class="copyright">© Андрей Мейстер · нарративы и мышление · 2026</div>
+    <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
   </div>
 </footer>
 
