@@ -186,7 +186,7 @@
 
     .nav-links a:hover {
       border-bottom-color: #3A86FF;
-      color: #F0F0F0; /* Не меняем цвет текста, только подчеркивание */
+      color: #F0F0F0;
       text-shadow: none;
     }
 
@@ -474,7 +474,7 @@
       border-bottom-color: #3A86FF;
     }
 
-    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ (НОВЫЙ БЛОК) ===== */
+    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== */
     .system-section {
       padding: 80px 0;
       background-color: #0C0C0C;
@@ -563,6 +563,120 @@
     .about-author strong {
       color: #3A86FF;
       font-weight: 400;
+    }
+
+    /* ===== ПОСЛЕДНИЕ СТАТЬИ (В СТИЛЕ APPLE) ===== */
+    .blog-preview-section {
+      padding: 80px 0;
+      background-color: #F5F5F7;
+      border-top: 1px solid #E0E0E0;
+      border-bottom: 1px solid #E0E0E0;
+    }
+
+    .blog-preview-section h2 {
+      color: #1D1D1F;
+    }
+
+    .blog-preview-intro {
+      text-align: center;
+      color: #6E6E73;
+      margin-bottom: 50px;
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+
+    .blog-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .blog-preview-card {
+      background: #FFFFFF;
+      border: none;
+      border-radius: 18px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .blog-preview-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-date {
+      color: #6E6E73;
+      font-size: 0.85rem;
+      letter-spacing: normal;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      color: #1D1D1F;
+      margin-bottom: 15px;
+      line-height: 1.4;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    .card-excerpt {
+      color: #3A3A3C;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      flex-grow: 1;
+      font-weight: 400;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 15px;
+      border-top: 1px solid #E0E0E0;
+    }
+
+    .card-views {
+      color: #6E6E73;
+      font-size: 0.85rem;
+    }
+
+    .card-link {
+      color: #3A86FF;
+      font-size: 0.95rem;
+      text-transform: none;
+      letter-spacing: normal;
+      font-weight: 500;
+    }
+
+    .card-link:hover {
+      color: #1D1D1F;
+    }
+
+    .blog-preview-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn-outline {
+      border-color: #3A86FF;
+      color: #3A86FF;
+      background: transparent;
+      border-radius: 30px;
+      padding: 12px 30px;
+    }
+
+    .btn-outline:hover {
+      background: #3A86FF;
+      color: #FFFFFF;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -664,7 +778,8 @@
       }
       
       .strategies-grid,
-      .projects-grid {
+      .projects-grid,
+      .blog-preview-grid {
         grid-template-columns: 1fr;
       }
       
@@ -839,6 +954,54 @@
     
     <div class="about-author">
       <p><strong>Андрей Мейстер</strong> — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика». Кандидат наук, автор бестселлера «Теория манипуляции».</p>
+    </div>
+  </div>
+</section>
+
+<!-- ПОСЛЕДНИЕ СТАТЬИ В БЛОГЕ -->
+<section class="blog-preview-section">
+  <div class="container">
+    <h2>ПОСЛЕДНИЕ СТАТЬИ</h2>
+    <p class="blog-preview-intro">Регулярно делюсь мыслями о системном мышлении, психологии и методах влияния</p>
+    
+    <div class="blog-preview-grid">
+      <!-- Статья 1 - ФСБ -->
+      <div class="blog-preview-card">
+        <div class="card-date">20 марта 2026</div>
+        <h3 class="card-title">Как вербует ФСБ: методы, схемы и психологические приемы</h3>
+        <p class="card-excerpt">Системный анализ методов вербовки: от поиска жертвы до полного контроля. Реальные примеры и способы защиты...</p>
+        <div class="card-footer">
+          <span class="card-views">👁️ 3.8K просмотров</span>
+          <a href="/https-meysternlp.ru-/blog/kak-verbuet-fsb-metody.html" class="card-link">Читать →</a>
+        </div>
+      </div>
+
+      <!-- Статья 2 - Латеральное мышление -->
+      <div class="blog-preview-card">
+        <div class="card-date">15 марта 2026</div>
+        <h3 class="card-title">Латеральное мышление: что это, техники и упражнения</h3>
+        <p class="card-excerpt">5 техник Эдварда де Боно для развития нестандартного мышления. Упражнения для повседневной практики...</p>
+        <div class="card-footer">
+          <span class="card-views">👁️ 2.4K просмотров</span>
+          <a href="/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html" class="card-link">Читать →</a>
+        </div>
+      </div>
+
+      <!-- Статья 3 - Самогипноз -->
+      <div class="blog-preview-card">
+        <div class="card-date">2 марта 2026</div>
+        <h3 class="card-title">Самогипноз для начинающих: пошаговая инструкция</h3>
+        <p class="card-excerpt">Как работать с подсознанием без эзотерики. 5 простых шагов для входа в трансовое состояние...</p>
+        <div class="card-footer">
+          <span class="card-views">👁️ 2.3K просмотров</span>
+          <a href="/https-meysternlp.ru-/blog/samogipnoz-dlya-nachinayushih.html" class="card-link">Читать →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ссылка на все статьи -->
+    <div class="blog-preview-footer">
+      <a href="/https-meysternlp.ru-/blog/" class="btn btn-outline">Все статьи блога →</a>
     </div>
   </div>
 </section>
