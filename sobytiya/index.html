@@ -493,8 +493,23 @@
 </head>
 <body>
 
-<!-- ШАПКА (подключается из header.html) -->
-<div id="header-placeholder"></div>
+<!-- ШАПКА -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <div class="nav-links">
+        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/">Игры</a>
+        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
+        <a href="/https-meysternlp.ru-/arhiv/" class="active">Архив</a>
+      </div>
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
 
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
@@ -542,62 +557,62 @@
         <div class="material-meta">PDF • Гайд 12</div>
         <div class="material-description">Практическое руководство по работе со страхами и тревожными состояниями.</div>
         <div class="material-actions">
-          <a href="/https-meysternlp.ru-/arhiv/PDF/Гайд%2012_гайд%20по%20страхам.pdf" class="btn btn-small">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд 12_гайд по страхам.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
       <!-- Гайд 7 -->
       <div class="material-card text-card">
-        <div class="material-icon">📘</div>
+        <div class="material-icon">📄</div>
         <div class="material-title">Гайд 7</div>
         <div class="material-meta">PDF • Гайд 7</div>
         <div class="material-description">Практические упражнения и техники.</div>
         <div class="material-actions">
-          <a href="/https-meysternlp.ru-/arhiv/PDF/Гайд%207.pdf" class="btn btn-small">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд 7.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
       <!-- Гайд: ЯДЫ -->
       <div class="material-card text-card">
-        <div class="material-icon">📘</div>
+        <div class="material-icon">⚠️</div>
         <div class="material-title">ЯДЫ</div>
         <div class="material-meta">PDF • Гайд</div>
         <div class="material-description">Анализ деструктивных паттернов и способы работы с ними.</div>
         <div class="material-actions">
-          <a href="/https-meysternlp.ru-/arhiv/PDF/Гайд%20_ЯДЫ.pdf" class="btn btn-small">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд _ЯДЫ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
       <!-- Гайд 10: Матрица контроля (приложение) -->
       <div class="material-card text-card">
-        <div class="material-icon">📘</div>
+        <div class="material-icon">📊</div>
         <div class="material-title">Матрица контроля (приложение)</div>
         <div class="material-meta">PDF • Гайд 10</div>
         <div class="material-description">Приложение к Матрице контроля — дополнительные материалы и упражнения.</div>
         <div class="material-actions">
-          <a href="/https-meysternlp.ru-/arhiv/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
       <!-- Гайд 15: Терапевтические сказки -->
       <div class="material-card text-card">
-        <div class="material-icon">📘</div>
+        <div class="material-icon">📖</div>
         <div class="material-title">Терапевтические сказки</div>
         <div class="material-meta">PDF • Гайд 15</div>
         <div class="material-description">Сборник терапевтических сказок для работы с подсознанием.</div>
         <div class="material-actions">
-          <a href="/https-meysternlp.ru-/arhiv/PDF/Гайд_15_Терапевтические%20сказки.pdf" class="btn btn-small">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд_15_Терапевтические сказки.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
       <!-- Матрица контроля (Теория манипуляции) -->
       <div class="material-card text-card">
-        <div class="material-icon">📘</div>
+        <div class="material-icon">🎯</div>
         <div class="material-title">Матрица контроля</div>
         <div class="material-meta">PDF • Теория манипуляции</div>
         <div class="material-description">Основной теоретический материал по Матрице контроля из курса «Теория манипуляции».</div>
         <div class="material-actions">
-          <a href="/https-meysternlp.ru-/arhiv/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
     </div>
@@ -623,24 +638,21 @@
   </div>
 </div>
 
-<!-- ПОДВАЛ (подключается из footer.html) -->
-<div id="footer-placeholder"></div>
-
-<script>
-  // Загружаем шапку
-  fetch('/https-meysternlp.ru-/header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-    });
-
-  // Загружаем подвал
-  fetch('/https-meysternlp.ru-/footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    });
-</script>
+<!-- ПОДВАЛ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
+        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
 
 </body>
 </html>
