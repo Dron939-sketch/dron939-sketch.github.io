@@ -2,8 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Книги — Андрей Мейстер</title>
+  
+  <!-- Подключаем Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
@@ -17,16 +23,19 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
+      width: 100%;
     }
 
     /* ===== ТИПОГРАФИКА ===== */
@@ -34,6 +43,7 @@
       font-weight: 300;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      line-height: 1.2;
     }
 
     h1 {
@@ -56,6 +66,7 @@
       font-size: 1.1rem;
       font-weight: 300;
       color: #CCCCCC;
+      margin-bottom: 1.5rem;
     }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
@@ -83,85 +94,30 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      border-radius: 30px;
+      text-align: center;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
     }
 
     .btn:hover {
-      background: #3A86FF;
       color: #0C0C0C;
+      border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
     }
 
-    /* Кнопка в шапке (градиентная) - стили остаются для header.html */
-    .btn-header {
-      display: inline-block;
-      padding: 10px 24px;
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
-      color: white;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-      border: none;
-      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
-    }
-
-    .btn-header:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-      color: white;
-    }
-
-    /* Стили для шапки и подвала (будут загружены из header.html, но оставляем для резерва) */
-    .header {
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      position: sticky;
-      top: 0;
-      background-color: #0C0C0C;
-      z-index: 100;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #FFFFFF;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      font-weight: 400;
-      letter-spacing: normal;
-      font-size: 1rem;
-      text-transform: none;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 5px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
+    .btn:hover::before {
+      left: 0;
     }
 
     /* ===== СЕТКА КНИГ ===== */
@@ -177,6 +133,9 @@
       border: 1px solid rgba(58, 134, 255, 0.2);
       padding: 30px;
       transition: all 0.3s ease;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
     }
 
     .book-card:hover {
@@ -191,6 +150,7 @@
       object-fit: contain;
       margin-bottom: 20px;
       border-radius: 4px;
+      background-color: #1A1A1A;
     }
 
     .book-title {
@@ -212,6 +172,8 @@
       color: #CCCCCC;
       margin-bottom: 20px;
       font-size: 0.95rem;
+      line-height: 1.6;
+      flex-grow: 1;
     }
 
     .book-meta {
@@ -224,7 +186,8 @@
 
     .book-price {
       font-size: 1.5rem;
-      color: #C6A43F;
+      color: #3A86FF; /* ИСПРАВЛЕНО: был золотой */
+      font-weight: 300;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -261,7 +224,7 @@
     }
 
     .social-links a:hover {
-      color: #C6A43F;
+      color: #3A86FF; /* ИСПРАВЛЕНО: был золотой */
     }
 
     .copyright {
@@ -269,25 +232,42 @@
       margin-top: 40px;
       font-size: 0.8rem;
       opacity: 0.5;
+      color: #666;
     }
 
     .text-blue { color: #3A86FF; }
 
     /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 992px) {
+      .books-grid {
+        gap: 30px;
+      }
+    }
+
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
       
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .nav-links {
-        gap: 15px;
-      }
-      
       .books-grid {
         grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .book-card {
+        padding: 25px;
+      }
+      
+      .book-title {
+        font-size: 1.3rem;
+      }
+      
+      .book-price {
+        font-size: 1.3rem;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
       }
     }
   </style>
@@ -303,25 +283,65 @@
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
+      
+      // После загрузки шапки инициализируем бургер и подсветку
+      setTimeout(() => {
+        // 1. Подсветка активного пункта (Книги)
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && href.includes('/knigi/')) {
+            link.classList.add('active');
+          }
+        });
+        
+        // 2. Бургер-меню
+        const burger = document.getElementById('burgerBtn');
+        const nav = document.getElementById('navLinks');
+        
+        if (burger && nav) {
+          burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+          });
+          
+          nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              burger.classList.remove('active');
+              nav.classList.remove('active');
+              document.body.style.overflow = '';
+            });
+          });
+          
+          window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+              burger.classList.remove('active');
+              nav.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+      }, 100);
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
       // Запасной вариант на случай ошибки
       document.getElementById('header-placeholder').innerHTML = `
-        <header class="header">
+        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
-            <div class="nav">
-              <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
-              <div class="nav-links">
-                <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
-                <a href="/https-meysternlp.ru-/knigi/" class="nav-link active">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" class="nav-link">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" class="nav-link">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
-                <a href="/https-meysternlp.ru-/blog/" class="nav-link">Статьи</a>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="/https-meysternlp.ru-/knigi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Книги</a>
+                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -332,7 +352,7 @@
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
   <h1>КНИГИ</h1>
-  <p style="color: #3A86FF; margin-bottom: 40px;">Трилогия «Теория манипуляции» — бестселлеры по психологии влияния</p>
+  <p style="color: #3A86FF; margin-bottom: 40px; font-size: 1.2rem;">Трилогия «Теория манипуляции» — бестселлеры по психологии влияния</p>
 
   <div class="books-grid">
     <!-- Том 1 -->
@@ -343,7 +363,7 @@
       <div class="book-description">Как нас обманывают и заставляют делать то, что нужно другим. Механизмы психологического воздействия и способы защиты.</div>
       <div class="book-meta">
         <span class="book-price">990 ₽</span>
-        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже')">Купить</a>
+        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже. Пожалуйста, напишите нам в Telegram: @meysternlp')">КУПИТЬ</a>
       </div>
     </div>
 
@@ -355,7 +375,7 @@
       <div class="book-description">Практические техники влияния и противостояния. Разбор реальных кейсов из бизнеса, политики и межличностных отношений.</div>
       <div class="book-meta">
         <span class="book-price">1 090 ₽</span>
-        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже')">Купить</a>
+        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже. Пожалуйста, напишите нам в Telegram: @meysternlp')">КУПИТЬ</a>
       </div>
     </div>
 
@@ -367,7 +387,7 @@
       <div class="book-description">Мастерство системного влияния. Как создавать долгосрочные стратегии и управлять сложными системами коммуникации.</div>
       <div class="book-meta">
         <span class="book-price">1 190 ₽</span>
-        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже')">Купить</a>
+        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже. Пожалуйста, напишите нам в Telegram: @meysternlp')">КУПИТЬ</a>
       </div>
     </div>
   </div>
@@ -385,6 +405,23 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
+      // Запасной вариант
+      document.getElementById('footer-placeholder').innerHTML = `
+        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); margin-top: 40px;">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+              <div style="color: #FFFFFF; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0;">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0;">Дзен</a>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+          </div>
+        </footer>
+      `;
     });
 </script>
 
