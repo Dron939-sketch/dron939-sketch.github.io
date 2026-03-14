@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dron939-sketch.github.io/sitemap.xml
