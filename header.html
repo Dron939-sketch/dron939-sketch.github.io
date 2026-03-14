@@ -32,7 +32,7 @@
 </header>
 
 <style>
-/* ===== СТИЛИ ДЛЯ БУРГЕР-МЕНЮ ===== */
+/* ===== СТИЛИ ДЛЯ ШАПКИ (КАК В ОРИГИНАЛЕ) ===== */
 
 /* Классы для адаптации */
 .desktop-only {
@@ -42,6 +42,92 @@
 .mobile-only {
   display: none;
 }
+
+/* Стили шапки как в оригинале */
+.header {
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+  position: sticky;
+  top: 0;
+  background-color: #0C0C0C;
+  z-index: 100;
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: #3A86FF;
+}
+
+/* Стили для навигации (как в оригинале) */
+.nav-links {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #F0F0F0;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 5px;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  border-bottom-color: #3A86FF;
+  color: #F0F0F0;
+  text-shadow: none;
+}
+
+.nav-links a.active {
+  border-bottom-color: #3A86FF;
+  color: #F0F0F0;
+}
+
+/* Кнопка в шапке (как в оригинале) */
+.btn-header {
+  display: inline-block;
+  padding: 10px 24px;
+  background: linear-gradient(to right, #00A8E8, #3A86FF);
+  color: white;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  border: none;
+  box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.btn-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+  color: white;
+  text-shadow: none;
+}
+
+/* ===== СТИЛИ ДЛЯ БУРГЕР-МЕНЮ ===== */
 
 /* Скрываем бургер на десктопе по умолчанию */
 .burger {
@@ -78,6 +164,12 @@
 }
 
 /* Мобильная адаптация */
+@media (max-width: 992px) {
+  .nav-links {
+    gap: 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .desktop-only {
     display: none;
@@ -93,17 +185,18 @@
   
   .nav-links {
     position: fixed;
-    top: 70px;
+    top: 80px;
     left: -100%;
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 80px);
     background-color: #0C0C0C;
     flex-direction: column;
     padding: 40px 20px;
     transition: left 0.3s ease;
     z-index: 100;
     overflow-y: auto;
-    gap: 20px;
+    gap: 10px;
+    border-top: 1px solid rgba(58, 134, 255, 0.2);
   }
   
   .nav-links.active {
@@ -116,22 +209,62 @@
     width: 100%;
     text-align: center;
     border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #F0F0F0;
+    font-weight: 300;
+  }
+  
+  .nav-links a:hover {
+    border-bottom-color: #3A86FF;
+    color: #F0F0F0;
+  }
+  
+  .nav-links a.active {
+    border-bottom-color: #3A86FF;
+    color: #F0F0F0;
   }
   
   .nav-links a:last-child {
     border-bottom: none;
-    margin-top: 10px;
+    margin-top: 20px;
     background: linear-gradient(to right, #00A8E8, #3A86FF);
     border-radius: 30px;
     color: white;
     border: none;
     padding: 15px 0;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: normal;
+    box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+  }
+  
+  .nav-links a:last-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+    border-bottom: none;
+  }
+  
+  .header {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+  }
+  
+  .burger {
+    width: 25px;
+    height: 18px;
   }
 }
 </style>
 
 <script>
-// Функция для подсветки активного пункта меню
+// Функция для подсветки активного пункта меню (как в оригинале)
 function highlightCurrentPage() {
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll('.nav-link');
@@ -162,6 +295,12 @@ function initBurger() {
     burger.addEventListener('click', () => {
       burger.classList.toggle('active');
       nav.classList.toggle('active');
+      // Блокируем скролл body при открытом меню
+      if (nav.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
     });
     
     // Закрываем меню при клике на ссылку
@@ -169,7 +308,17 @@ function initBurger() {
       link.addEventListener('click', () => {
         burger.classList.remove('active');
         nav.classList.remove('active');
+        document.body.style.overflow = '';
       });
+    });
+    
+    // Закрываем меню при изменении размера окна (если стали десктопом)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        document.body.style.overflow = '';
+      }
     });
   }
 }
