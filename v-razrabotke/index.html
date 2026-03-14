@@ -131,77 +131,7 @@
       left: 0;
     }
 
-    /* ===== ШАПКА ===== */
-    .header {
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      position: sticky;
-      top: 0;
-      background-color: #0C0C0C;
-      z-index: 100;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #FFFFFF;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      font-weight: 400;
-      letter-spacing: normal;
-      font-size: 1rem;
-      text-transform: none;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 5px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
-    }
-
-    .btn-header {
-      display: inline-block;
-      padding: 10px 24px;
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
-      color: white;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-      border: none;
-      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
-    }
-
-    .btn-header:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-      color: white;
-    }
+    /* ===== СТИЛИ ШАПКИ УДАЛЕНЫ - ЗАГРУЖАЮТСЯ ИЗ HEADER.HTML ===== */
 
     /* ===== СТРАНИЦА В РАЗРАБОТКЕ ===== */
     .page-header {
@@ -403,15 +333,6 @@
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
       
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .nav-links {
-        gap: 15px;
-      }
-      
       .project-title {
         flex-direction: column;
         align-items: flex-start;
@@ -444,23 +365,8 @@
 </head>
 <body>
 
-<!-- ШАПКА -->
-<header class="header">
-  <div class="container">
-    <div class="nav">
-      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
-      <div class="nav-links">
-        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-        <a href="/https-meysternlp.ru-/igry/">Игры</a>
-        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/v-razrabotke/" class="active">В разработке</a>
-        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
-        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
-      </div>
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
-    </div>
-  </div>
-</header>
+<!-- ШАПКА ПОДГРУЖАЕТСЯ ИЗ header.html -->
+<div id="header-placeholder"></div>
 
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
@@ -556,18 +462,54 @@
 </footer>
 
 <script>
-  // Подсветка активного пункта меню
-  document.addEventListener('DOMContentLoaded', function() {
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-links a');
-    
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      if (currentPath === href) {
-        link.classList.add('active');
+  // Загружаем шапку из header.html
+  fetch('/https-meysternlp.ru-/header.html')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка загрузки шапки');
       }
+      return response.text();
+    })
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+      
+      // После загрузки шапки подсвечиваем активный пункт
+      setTimeout(() => {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          // Сравниваем пути
+          if (currentPath === href || 
+              (href === '/https-meysternlp.ru-/v-razrabotke/' && currentPath.includes('/v-razrabotke/'))) {
+            link.classList.add('active');
+          }
+        });
+      }, 100);
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки шапки:', error);
+      // Заглушка на случай ошибки - минимальная шапка
+      document.getElementById('header-placeholder').innerHTML = `
+        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; position: sticky; top: 0; z-index: 100;">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 25px;">
+                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">В разработке</a>
+                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">События</a>
+                <a href="/https-meysternlp.ru-/blog/" style="color: #F0F0F0; text-decoration: none;">Статьи</a>
+              </div>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: 0.85rem;">🧠 Виртуальный психолог</a>
+            </div>
+          </div>
+        </header>
+      `;
     });
-  });
 </script>
 
 </body>
