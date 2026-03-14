@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Андрей Мейстер — системное мышление</title>
+  <title>Андрей Мейстер</title>
+  <!-- Montserrat для заголовков и фразы -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;700&display=swap" rel="stylesheet">
+  <!-- Inter для текста -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
@@ -35,26 +41,14 @@
     }
 
     /* ===== ТИПОГРАФИКА ===== */
-    h1, h2, h3 {
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: 4.5rem;
-      font-weight: 200;
-      margin-bottom: 0.5rem;
-      color: #FFFFFF;
-    }
-
     h2 {
+      font-family: 'Montserrat', sans-serif;
       font-size: 2.2rem;
       font-weight: 300;
       margin-bottom: 2rem;
       color: #3A86FF;
       letter-spacing: 0.15em;
+      text-transform: uppercase;
     }
 
     p {
@@ -62,6 +56,7 @@
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      font-family: 'Inter', sans-serif;
     }
 
     /* ===== АНИМАЦИИ ===== */
@@ -81,6 +76,7 @@
       color: #3A86FF;
       text-decoration: none;
       transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
     }
 
     a:hover {
@@ -103,6 +99,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .btn::before {
@@ -148,6 +145,7 @@
       font-weight: 300;
       letter-spacing: 0.3em;
       color: #FFFFFF;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .logo span {
@@ -167,6 +165,7 @@
       text-transform: uppercase;
       border-bottom: 1px solid transparent;
       padding-bottom: 5px;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .nav-links a:hover {
@@ -192,6 +191,7 @@
       letter-spacing: normal;
       border: none;
       box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+      font-family: 'Montserrat', sans-serif;
     }
 
     .btn-header:hover {
@@ -201,7 +201,7 @@
       text-shadow: none;
     }
 
-    /* ===== ГЕРОЙ ===== */
+    /* ===== ГЕРОЙ (ЧИСТЫЙ) ===== */
     .hero {
       padding: 100px 0;
       background-color: #0C0C0C;
@@ -220,35 +220,12 @@
       justify-content: center;
     }
 
-    .hero-subtitle {
-      font-size: 1rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #3A86FF;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 4.5rem;
-      font-weight: 200;
-      margin-bottom: 1.5rem;
-      color: #FFFFFF;
-    }
-
-    .hero-description {
-      font-size: 1.2rem;
-      max-width: 90%;
-      border-left: 2px solid #3A86FF;
-      padding-left: 20px;
-      margin: 30px 0 40px;
-    }
-
     .hero-phrase-block {
-      margin: 30px 0 20px;
+      margin: 0 0 20px;
     }
 
     .hero-phrase-line1 {
+      font-family: 'Montserrat', sans-serif;
       font-size: 4rem;
       font-weight: 700;
       line-height: 1.2;
@@ -258,6 +235,7 @@
     }
 
     .hero-phrase-line2 {
+      font-family: 'Montserrat', sans-serif;
       font-size: 4rem;
       font-weight: 300;
       line-height: 1.2;
@@ -273,6 +251,7 @@
       margin: 20px 0 30px;
       font-size: 0.9rem;
       color: #666;
+      font-family: 'Inter', sans-serif;
     }
 
     .gold-star {
@@ -361,6 +340,7 @@
       backdrop-filter: blur(5px);
       transition: all 0.3s ease;
       z-index: 10;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .hero-sticker:hover {
@@ -410,6 +390,7 @@
       color: #3A86FF;
       margin-bottom: 20px;
       opacity: 0.8;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .strategy-title {
@@ -418,6 +399,7 @@
       letter-spacing: 0.1em;
       margin-bottom: 15px;
       color: #FFFFFF;
+      font-family: 'Montserrat', sans-serif;
     }
 
     /* ===== ПРОЕКТЫ ===== */
@@ -461,6 +443,7 @@
       letter-spacing: 0.15em;
       margin-bottom: 15px;
       color: #FFFFFF;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .project-link {
@@ -470,101 +453,11 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       border-bottom: 1px solid transparent;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .project-link:hover {
       border-bottom-color: #3A86FF;
-    }
-
-    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== */
-    .system-section {
-      padding: 80px 0;
-      background-color: #0C0C0C;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
-    }
-
-    .system-intro {
-      text-align: center;
-      font-size: 1.3rem;
-      color: #3A86FF;
-      margin-bottom: 60px;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-    }
-
-    .system-cycle {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-bottom: 80px;
-    }
-
-    .cycle-item {
-      background-color: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 30px;
-      text-align: center;
-      position: relative;
-      transition: all 0.3s ease;
-      border-radius: 8px;
-    }
-
-    .cycle-item:hover {
-      border-color: #C6A43F;
-      box-shadow: 0 0 30px rgba(198, 164, 63, 0.2);
-      transform: translateY(-5px);
-    }
-
-    .cycle-icon {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #3A86FF;
-      transition: color 0.3s ease;
-    }
-
-    .cycle-item:hover .cycle-icon {
-      color: #C6A43F;
-    }
-
-    .cycle-item h3 {
-      font-size: 1.2rem;
-      margin-bottom: 15px;
-      color: #FFFFFF;
-      letter-spacing: 0.1em;
-    }
-
-    .cycle-item p {
-      font-size: 0.95rem;
-      color: #CCCCCC;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
-    .cycle-arrow {
-      font-size: 1.5rem;
-      color: #3A86FF;
-      margin-top: 10px;
-    }
-
-    .about-author {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px;
-      background-color: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .about-author p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #F0F0F0;
-    }
-
-    .about-author strong {
-      color: #3A86FF;
-      font-weight: 400;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -584,6 +477,7 @@
     .footer-logo {
       font-size: 1.2rem;
       letter-spacing: 0.3em;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .social-links {
@@ -599,6 +493,7 @@
       border-bottom: 1px solid transparent;
       padding-bottom: 5px;
       transition: all 0.3s ease;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .social-links a:hover {
@@ -613,11 +508,11 @@
       opacity: 0.5;
       letter-spacing: 0.1em;
       margin-top: 40px;
+      font-family: 'Inter', sans-serif;
     }
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 3rem; }
       h2 { font-size: 1.8rem; }
       
       .hero-grid {
@@ -663,40 +558,37 @@
       <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
       <div class="nav-links">
         <a href="/https-meysternlp.ru-/" class="active">Главная</a>
-        <a href="/https-meysternlp.ru-/strategies/">Стратегии</a>
-        <a href="/https-meysternlp.ru-/projects/">Проекты</a>
         <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/">Игры</a>
         <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
+        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
       </div>
-      <a href="/https-meysternlp.ru-/consultation/" class="btn-header">Запись</a>
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
     </div>
   </div>
 </header>
 
-<!-- ГЕРОЙ -->
+<!-- ГЕРОЙ (ЧИСТЫЙ) -->
 <section id="home" class="hero">
   <div class="container">
     <div class="hero-grid">
       <!-- Левый блок с текстом -->
       <div class="hero-content">
-        <div class="hero-subtitle">тренер системного и латерального мышления</div>
-        <h1>АНДРЕЙ МЕЙСТЕР</h1>
-        
+        <!-- ТОЛЬКО ФРАЗА -->
         <div class="hero-phrase-block">
           <div class="hero-phrase-line1">БОГ УМЕР.</div>
           <div class="hero-phrase-line2">Теперь мы сами по себе.</div>
         </div>
         
+        <!-- Звёздочка и сноска -->
         <div class="hero-footnote">
           <span class="gold-star">*</span>
           <span>короткая фраза, за которой час разговора</span>
         </div>
         
-        <div class="hero-description">
-          Автор бестселлера «Теория манипуляции», кандидат наук. Вижу закономерности там, где другие видят хаос.
-        </div>
-        
+        <!-- Две кнопки -->
         <div class="hero-buttons">
           <a href="/https-meysternlp.ru-/obo-mne/" class="btn">УЗНАТЬ</a>
           <a href="#projects" class="btn">ПРОЕКТЫ</a>
@@ -711,7 +603,7 @@
             Ваш браузер не поддерживает видео.
           </video>
         </div>
-        <div class="hero-sticker">СИСТЕМНО</div>
+        <div class="hero-sticker">НАРРАТИВ</div>
       </div>
     </div>
   </div>
@@ -773,63 +665,6 @@
   </div>
 </section>
 
-<!-- СИСТЕМНОЕ МЫШЛЕНИЕ -->
-<section class="system-section">
-  <div class="container">
-    <h2>СИСТЕМНОЕ МЫШЛЕНИЕ</h2>
-    <p class="system-intro">Всё взаимосвязано. Изменение одного элемента влияет на все остальные.</p>
-    
-    <div class="system-cycle">
-      <div class="cycle-item">
-        <div class="cycle-icon">🧬</div>
-        <h3>ГОРМОНАЛЬНЫЙ ФОН</h3>
-        <p>Определяет поведение и решения</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      <div class="cycle-item">
-        <div class="cycle-icon">⚙️</div>
-        <h3>АРХИТЕКТУРА ПРОГРЕССИИ</h3>
-        <p>Процессы деятельности</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      <div class="cycle-item">
-        <div class="cycle-icon">🏆</div>
-        <h3>КАЧЕСТВО ЖИЗНИ</h3>
-        <p>Влияет на гормональный фон</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      <div class="cycle-item">
-        <div class="cycle-icon">🔑</div>
-        <h3>ВОЗМОЖНОСТИ</h3>
-        <p>Определяют качество жизни</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      <div class="cycle-item">
-        <div class="cycle-icon">🤝</div>
-        <h3>СОЦИАЛЬНЫЕ СВЯЗИ</h3>
-        <p>Определяют возможности</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      <div class="cycle-item">
-        <div class="cycle-icon">🗣️</div>
-        <h3>РЕЧЬ</h3>
-        <p>Влияет на социальные связи</p>
-        <div class="cycle-arrow">↓</div>
-      </div>
-      <div class="cycle-item">
-        <div class="cycle-icon">🧠</div>
-        <h3>МЫШЛЕНИЕ</h3>
-        <p>Влияет на гормональный фон</p>
-        <div class="cycle-arrow">↻</div>
-      </div>
-    </div>
-    
-    <div class="about-author">
-      <p><strong>Андрей Мейстер</strong> — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика». Кандидат наук, автор бестселлера «Теория манипуляции».</p>
-    </div>
-  </div>
-</section>
-
 <!-- ПОДВАЛ -->
 <footer class="footer">
   <div class="container">
@@ -842,7 +677,7 @@
         <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
       </div>
     </div>
-    <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
 
