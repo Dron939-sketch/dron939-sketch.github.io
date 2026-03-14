@@ -7,9 +7,119 @@
         <a href="https://t.me/meysternlp" target="_blank">Tg</a>
         <a href="https://vk.com/meysternlp" target="_blank">VK</a>
         <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
       </div>
     </div>
     <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
   </div>
 </footer>
+
+<style>
+/* ===== СТИЛИ ДЛЯ ПОДВАЛА ===== */
+
+.footer {
+  padding: 60px 0 30px;
+  border-top: 1px solid rgba(58, 134, 255, 0.2);
+  background-color: #0C0C0C;
+  width: 100%;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-logo {
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.text-blue {
+  color: #3A86FF;
+}
+
+.social-links {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.social-links a {
+  color: #F0F0F0;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 5px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  border-bottom-color: #3A86FF;
+  color: #3A86FF;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  letter-spacing: 0.1em;
+  margin-top: 40px;
+  opacity: 0.5;
+}
+
+/* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ===== */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .social-links {
+    gap: 20px;
+  }
+  
+  .social-links a {
+    font-size: 0.9rem;
+  }
+  
+  .copyright {
+    font-size: 0.7rem;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-logo {
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+  }
+  
+  .social-links {
+    gap: 15px;
+  }
+  
+  .social-links a {
+    font-size: 0.8rem;
+  }
+}
+</style>
