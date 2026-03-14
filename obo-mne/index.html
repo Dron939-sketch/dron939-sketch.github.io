@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO МЕТА-ТЕГИ -->
-  <title>Обо мне — Андрей Мейстер</title>
-  <meta name="description" content="Андрей Мейстер — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика». Кандидат наук, автор трилогии «Теория манипуляции».">
-  <meta name="keywords" content="андрей мейстер, психолог, когнитивный тренер, системное мышление, вариатика">
+  <title>Андрей Мейстер — манифест</title>
+  <meta name="description" content="Бог умер. Теперь мы сами по себе. Я бросаю камень. Рассел, Щедровицкий, нарративы и инструменты для тех, кто хочет оставить след.">
+  <meta name="keywords" content="андрей мейстер, манифест, нарратив, системное мышление, рассел, щедровицкий">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Обо мне — Андрей Мейстер">
-  <meta property="og:description" content="Психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика»">
+  <meta property="og:title" content="Андрей Мейстер — манифест">
+  <meta property="og:description" content="Бог умер. Теперь мы сами по себе. Я бросаю камень.">
   <meta property="og:image" content="/https-meysternlp.ru-/Андрей%20Мейстер.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/obo-mne/">
-  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/manifest/">
+  <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/obo-mne/">
+  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/manifest/">
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -53,10 +53,12 @@
     }
 
     h1 {
-      font-size: 3.5rem;
+      font-size: 4.5rem;
       font-weight: 200;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       color: #FFFFFF;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
     }
 
     h2 {
@@ -76,10 +78,11 @@
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      line-height: 1.8;
     }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
@@ -131,398 +134,171 @@
       left: 0;
     }
 
-    /* Кнопка в шапке (градиентная) */
-    .btn-header {
-      display: inline-block;
-      padding: 10px 24px;
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
-      color: white;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-      border: none;
-      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    .btn-gold {
+      border-color: #C6A43F;
     }
 
-    .btn-header:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-      color: white;
+    .btn-gold::before {
+      background-color: #C6A43F;
     }
 
-    .btn-header::before {
-      display: none;
+    .btn-gold:hover {
+      color: #0C0C0C;
+      border-color: #C6A43F;
+      box-shadow: 0 0 20px #C6A43F;
     }
 
-    /* Стили для шапки (оставляем для резерва) */
-    .header {
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      position: sticky;
-      top: 0;
-      background-color: #0C0C0C;
-      z-index: 100;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #FFFFFF;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      font-weight: 400;
-      letter-spacing: normal;
-      font-size: 1rem;
-      text-transform: none;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 5px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
-    }
-
-    /* ===== СТРАНИЦА ОБО МНЕ ===== */
-    .page-header {
-      padding: 60px 0 30px;
+    /* ===== СТРАНИЦА МАНИФЕСТА ===== */
+    .manifest-hero {
+      padding: 100px 0 60px;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
       text-align: center;
     }
 
-    .page-header h1 {
-      margin-bottom: 15px;
+    .manifest-hero h1 {
+      margin-bottom: 20px;
     }
 
-    .page-header p {
-      font-size: 1.3rem;
-      color: #3A86FF;
-      letter-spacing: 0.2em;
+    .manifest-hero-sub {
+      font-size: 2rem;
+      color: #C6A43F;
+      margin-bottom: 30px;
+      font-weight: 200;
     }
 
-    /* Секция с фото и био */
-    .about-section {
+    .manifest-hero-line {
+      width: 100px;
+      height: 1px;
+      background: rgba(198, 164, 63, 0.3);
+      margin: 40px auto;
+    }
+
+    .manifest-section {
       padding: 60px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
     }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 60px;
-      align-items: start;
+    .manifest-section:last-of-type {
+      border-bottom: none;
     }
 
-    .photo-frame {
-      position: relative;
-      width: 100%;
-      max-width: 400px;
+    .manifest-block {
+      max-width: 800px;
       margin: 0 auto;
     }
 
-    .photo-frame::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      right: 10px;
-      bottom: 10px;
-      border: 2px solid #3A86FF;
-      z-index: 1;
-      transition: all 0.3s ease;
-    }
-
-    .photo-frame:hover::before {
-      top: -15px;
-      left: -15px;
-      border-color: #C6A43F;
-    }
-
-    .photo {
-      width: 100%;
-      height: auto;
-      display: block;
-      position: relative;
-      z-index: 2;
-      border: 1px solid rgba(58, 134, 255, 0.3);
-    }
-
-    .photo-sticker {
-      position: absolute;
-      bottom: 20px;
-      right: -10px;
-      background: #C6A43F;
-      color: #0C0C0C;
-      padding: 8px 16px;
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      z-index: 3;
-    }
-
-    .about-text {
-      animation: fadeIn 0.8s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateX(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .about-highlight {
-      border-left: 3px solid #C6A43F;
-      padding-left: 20px;
+    .manifest-quote {
+      font-size: 1.5rem;
       font-style: italic;
-      color: #F0F0F0;
-      margin: 30px 0;
-      font-size: 1.2rem;
+      color: #C6A43F;
+      border-left: 3px solid #C6A43F;
+      padding-left: 30px;
+      margin: 40px 0;
     }
 
-    /* Образование */
-    .education-section {
-      padding: 60px 0;
-      background-color: rgba(58, 134, 255, 0.02);
-      border-top: 1px solid rgba(58, 134, 255, 0.1);
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
-    }
-
-    .education-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    .education-item {
+    .manifest-names {
       display: flex;
-      gap: 20px;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      transition: all 0.3s ease;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+      flex-wrap: wrap;
     }
 
-    .education-item:hover {
-      border-color: #C6A43F;
-      transform: translateX(10px);
-    }
-
-    .education-year {
-      font-size: 1.8rem;
-      font-weight: 200;
-      color: #C6A43F;
-      min-width: 100px;
-    }
-
-    .education-content h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-    }
-
-    .education-content p {
-      color: #3A86FF;
-      margin-bottom: 0;
-    }
-
-    /* Экспертиза */
-    .expertise-section {
-      padding: 60px 0;
-    }
-
-    .expertise-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    .expertise-item {
+    .manifest-name {
       text-align: center;
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      transition: all 0.3s ease;
     }
 
-    .expertise-item:hover {
-      border-color: #3A86FF;
-      transform: translateY(-5px);
-      box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
-    }
-
-    .expertise-icon {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #3A86FF;
-    }
-
-    .expertise-item h3 {
+    .manifest-name span {
+      display: block;
       font-size: 1.2rem;
-      margin-bottom: 10px;
+      color: #3A86FF;
+      margin-top: 10px;
     }
 
-    .expertise-item p {
+    .manifest-highlight {
+      color: #C6A43F;
+      font-weight: 400;
+    }
+
+    .manifest-invite {
+      text-align: center;
+      padding: 60px 0;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+    }
+
+    .manifest-invite h2 {
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    .manifest-invite p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+
+    .manifest-credentials {
+      padding: 40px 0;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    .manifest-credentials p {
       font-size: 0.9rem;
       margin-bottom: 0;
-    }
-
-    /* Публикации */
-    .publications-section {
-      padding: 60px 0;
-      background-color: rgba(58, 134, 255, 0.02);
-      border-top: 1px solid rgba(58, 134, 255, 0.1);
-    }
-
-    .publications-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    .publication-item {
-      padding: 30px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .publication-item:hover {
-      border-color: #C6A43F;
-    }
-
-    .publication-year {
-      color: #C6A43F;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
-
-    .publication-title {
-      font-size: 1.2rem;
-      color: #FFFFFF;
-      margin-bottom: 10px;
-    }
-
-    .publication-desc {
-      font-size: 0.9rem;
       color: #999;
     }
 
-    /* ===== ПОДВАЛ ===== */
-    .footer {
-      padding: 60px 0 30px;
-      border-top: 1px solid rgba(58, 134, 255, 0.2);
-      background-color: #0C0C0C;
+    /* ===== ФОТО (небольшое, для контекста) ===== */
+    .manifest-photo {
+      max-width: 200px;
+      margin: 40px auto;
+      position: relative;
     }
 
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
+    .manifest-photo img {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+      border: 2px solid #3A86FF;
     }
 
-    .footer-logo {
-      font-size: 1.2rem;
-      letter-spacing: 0.3em;
+    .manifest-photo::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 1px solid #C6A43F;
+      border-radius: 50%;
+      opacity: 0.3;
     }
-
-    .social-links {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      color: #F0F0F0;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .social-links a:hover {
-      color: #C6A43F;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
-      opacity: 0.5;
-    }
-
-    .text-blue { color: #3A86FF; }
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
+      h1 { font-size: 2.8rem; }
       h2 { font-size: 1.8rem; }
       
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
+      .manifest-hero-sub {
+        font-size: 1.5rem;
       }
       
-      .nav-links {
-        gap: 15px;
+      p {
+        font-size: 1.1rem;
       }
       
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .education-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .expertise-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .publications-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .education-item {
-        flex-direction: column;
+      .manifest-quote {
+        font-size: 1.2rem;
+        padding-left: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ ШАБЛОНА -->
 <div id="header-placeholder"></div>
 
 <script>
@@ -534,154 +310,117 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант на случай ошибки
-      document.getElementById('header-placeholder').innerHTML = `
-        <header class="header">
-          <div class="container">
-            <div class="nav">
-              <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
-              <div class="nav-links">
-                <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
-                <a href="/https-meysternlp.ru-/knigi/" class="nav-link">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" class="nav-link">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" class="nav-link">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
-                <a href="/https-meysternlp.ru-/blog/" class="nav-link">Статьи</a>
-              </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
-            </div>
-          </div>
-        </header>
-      `;
     });
 </script>
 
-<!-- ЗАГОЛОВОК -->
-<section class="page-header">
+<!-- ГЕРОЙ МАНИФЕСТА -->
+<section class="manifest-hero">
   <div class="container">
     <h1>АНДРЕЙ МЕЙСТЕР</h1>
-    <p>ПСИХОЛОГ · КОГНИТИВНЫЙ ТРЕНЕР · СИСТЕМНЫЙ АНАЛИТИК</p>
+    <div class="manifest-hero-sub">Бог умер. Теперь мы сами по себе.</div>
+    <div class="manifest-hero-line"></div>
+    <p style="font-size: 1.5rem; color: #FFFFFF;">Я бросаю камень.</p>
   </div>
 </section>
 
-<!-- ОСНОВНОЙ БЛОК С ФОТО -->
-<section class="about-section">
-  <div class="container">
-    <div class="about-grid">
-      <!-- Фото -->
-      <div class="photo-frame">
-        <img src="/https-meysternlp.ru-/Андрей%20Мейстер.jpg" alt="Андрей Мейстер" class="photo" onerror="this.src='https://via.placeholder.com/400x500/0C0C0C/3A86FF?text=Андрей+Мейстер'">
-        <div class="photo-sticker">СИСТЕМНО</div>
-      </div>
-
-      <!-- Текст -->
-      <div class="about-text">
-        <p>Я помогаю людям видеть закономерности там, где другие видят хаос. Моя специализация — развитие системного и латерального мышления, навыков влияния и когнитивной гибкости.</p>
-        
-        <div class="about-highlight">
-          "Мышление — это не то, что мы имеем, а то, что мы делаем. Его можно тренировать, развивать и совершенствовать, как любой другой навык."
-        </div>
-        
-        <p>Кандидат психологических наук. Автор бестселлера «Теория манипуляции» (трилогия), разработчик технологии системного мышления «Вариатика». Мои методы сочетают академическую фундаментальность с практической применимостью в бизнесе и повседневной жизни.</p>
-        
-        <p>За 15 лет практики провёл более 200 тренингов и консультаций для руководителей компаний, предпринимателей и специалистов, желающих вывести своё мышление на новый уровень.</p>
-      </div>
+<!-- ЧТО ТАКОЕ НАРРАТИВ -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Что такое нарратив</h2>
+    <p>Нарратив — это история, в которую ты веришь. Она определяет, что для тебя важно, а что нет. Куда ты идёшь и зачем просыпаешься утром.</p>
+    <p>Ты не выбирал свой нарратив. Его выбрали за тебя — семья, школа, культура, время, в которое ты родился.</p>
+    <p>Но рано или поздно наступает момент. Ты вдруг понимаешь: «Зачем я это делаю?» Или чувствууешь, что живёшь не свою жизнь. Или ловишь себя на том, что разные части тебя тянут в разные стороны.</p>
+    <div class="manifest-quote">
+      Это момент встречи с нарративом.
     </div>
   </div>
 </section>
 
-<!-- ОБРАЗОВАНИЕ -->
-<section class="education-section">
-  <div class="container">
-    <h2>ОБРАЗОВАНИЕ И КВАЛИФИКАЦИЯ</h2>
-    <div class="education-grid">
-      <div class="education-item">
-        <div class="education-year">2005-2010</div>
-        <div class="education-content">
-          <h3>МГУ им. Ломоносова</h3>
-          <p>Факультет психологии, кафедра общей психологии</p>
-        </div>
-      </div>
-      <div class="education-item">
-        <div class="education-year">2010-2013</div>
-        <div class="education-content">
-          <h3>Аспирантура МГУ</h3>
-          <p>Кандидат психологических наук</p>
-        </div>
-      </div>
-      <div class="education-item">
-        <div class="education-year">2014</div>
-        <div class="education-content">
-          <h3>Эриксоновский гипноз</h3>
-          <p>Международная сертификация</p>
-        </div>
-      </div>
-      <div class="education-item">
-        <div class="education-year">2015-2016</div>
-        <div class="education-content">
-          <h3>Системное мышление</h3>
-          <p>MIT Sloan Executive Education</p>
-        </div>
-      </div>
-    </div>
+<!-- СИЛА НАРРАТИВОВ -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Сила нарративов</h2>
+    <p>Иисус создал нарратив. После его смерти этот нарратив разрушил Рим.</p>
+    <p>Маркс создал нарратив. После него этот нарратив построил империю, перекроившую мир.</p>
+    <p><span class="manifest-highlight">Нарратив сильнее любого человека.</span> Он живёт после тебя. Он меняет реальность.</p>
   </div>
 </section>
 
-<!-- ЭКСПЕРТИЗА -->
-<section class="expertise-section">
-  <div class="container">
-    <h2>КЛЮЧЕВЫЕ НАПРАВЛЕНИЯ</h2>
-    <div class="expertise-grid">
-      <div class="expertise-item">
-        <div class="expertise-icon">🧩</div>
-        <h3>Системное мышление</h3>
-        <p>Понимание сложных систем и их взаимосвязей</p>
-      </div>
-      <div class="expertise-item">
-        <div class="expertise-icon">💭</div>
-        <h3>Латеральное мышление</h3>
-        <p>Нестандартные решения и креативные подходы</p>
-      </div>
-      <div class="expertise-item">
-        <div class="expertise-icon">🎯</div>
-        <h3>Когнитивная гибкость</h3>
-        <p>Адаптивность мышления к разным задачам</p>
-      </div>
-      <div class="expertise-item">
-        <div class="expertise-icon">🗣️</div>
-        <h3>Психология влияния</h3>
-        <p>Понимание механизмов убеждения</p>
-      </div>
-    </div>
+<!-- ПЕРЕСЕЧЕНИЯ НАРРАТИВОВ -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Пересечения</h2>
+    <p>Мы редко живём в одном нарративе. Чаще — на пересечении нескольких.</p>
+    <p>Семья говорит одно. Работа — другое. Среда — третье. Внутри тебя живут голоса, которые спорят друг с другом.</p>
+    <p>Эти несостыковки — источник боли. Но они же — источник выбора. Если ты их увидишь, ты сможешь их подружить. Или хотя бы понять, почему тебе так неуютно.</p>
   </div>
 </section>
 
-<!-- ПУБЛИКАЦИИ -->
-<section class="publications-section">
-  <div class="container">
-    <h2>ПУБЛИКАЦИИ</h2>
-    <div class="publications-grid">
-      <div class="publication-item">
-        <div class="publication-year">2020</div>
-        <div class="publication-title">Теория манипуляции. Том 1</div>
-        <div class="publication-desc">Основы психологического влияния</div>
+<!-- МОИ КАМНИ -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Мои камни</h2>
+    <div class="manifest-names">
+      <div class="manifest-name">
+        <div style="font-size: 2rem; color: #C6A43F;">Бертран Рассел</div>
+        <span>научил меня ясности</span>
       </div>
-      <div class="publication-item">
-        <div class="publication-year">2021</div>
-        <div class="publication-title">Теория манипуляции. Том 2</div>
-        <div class="publication-desc">Практические техники</div>
-      </div>
-      <div class="publication-item">
-        <div class="publication-year">2022</div>
-        <div class="publication-title">Теория манипуляции. Том 3</div>
-        <div class="publication-desc">Мастерство влияния</div>
+      <div class="manifest-name">
+        <div style="font-size: 2rem; color: #C6A43F;">Георгий Щедровицкий</div>
+        <span>научил меня системе</span>
       </div>
     </div>
+    <p>Их камни всё ещё летят. Я подхватил и бросаю дальше.</p>
   </div>
 </section>
 
-<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<!-- МАНИФЕСТ -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Манифест</h2>
+    <p>Старые нарративы рассыпались. Религия, идеология, великие цели — больше не работают. Человек остался один на один с пустотой.</p>
+    <p>Но человек — это единственное существо, которое живёт нарративами. Без истории, в которую он верит, он не живёт — он просто существует.</p>
+    <p>Я выбираю жить.</p>
+    <p>Я бросаю камень. Я хочу, чтобы мой камень летел долго. Чтобы через сто лет кто-то сказал: «Андрей Мейстер? Да, его нарратив всё ещё работает».</p>
+  </div>
+</section>
+
+<!-- ЧТО Я ДЕЛАЮ -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Что я делаю</h2>
+    <p>Я учу видеть нарративы. Понимать, из чего они сделаны. Видеть, какие из них работают, а какие рассыпались. Замечать пересечения и несостыковки — и решать, что с ними делать.</p>
+    <p><span class="manifest-highlight">Зачем это нужно?</span> Чтобы перестать жить чужим сценарием. Чтобы понять, почему ты делаешь то, что делаешь. Чтобы осознанно выбрать — или создать — свой собственный нарратив. И бросить свой камень.</p>
+  </div>
+</section>
+
+<!-- МОЙ КАМЕНЬ (ИНСТРУМЕНТЫ) -->
+<section class="manifest-section">
+  <div class="container manifest-block">
+    <h2>Мой камень</h2>
+    <p>Мой камень — это инструменты. Я не присутствую при вашем становлении. Я даю вам готовые инструменты — книги, игры, практикумы. Вы просто берете их и применяете.</p>
+    <p>Потому что настоящий нарратив не нуждается в авторе. Он живёт сам.</p>
+  </div>
+</section>
+
+<!-- ПРИГЛАШЕНИЕ -->
+<section class="manifest-invite">
+  <div class="container">
+    <h2>А вы?</h2>
+    <p>В каком нарративе живёте вы? Где в вашей жизни несостыковки? Хотите бросить свой камень?</p>
+    <p style="color: #C6A43F; font-size: 1.5rem;">Я покажу, как.</p>
+    <a href="/https-meysternlp.ru-/" class="btn btn-gold" style="margin-top: 30px;">НАЧАТЬ ИССЛЕДОВАНИЕ</a>
+  </div>
+</section>
+
+<!-- РЕГАЛИИ (КОРОТКО) -->
+<section class="manifest-credentials">
+  <div class="container">
+    <p>Андрей Мейстер — психолог, когнитивный тренер, кандидат наук, автор бестселлера «Теория манипуляции», разработчик технологии системного мышления «Вариатика».</p>
+  </div>
+</section>
+
+<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ ШАБЛОНА -->
 <div id="footer-placeholder"></div>
 
 <script>
