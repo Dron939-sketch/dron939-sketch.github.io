@@ -126,7 +126,7 @@
       box-shadow: 0 0 20px #C6A43F;
     }
 
-    /* ===== ШАПКА (стили из header.html) ===== */
+    /* ===== ШАПКА ===== */
     .header {
       padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
@@ -199,43 +199,57 @@
       color: white;
     }
 
-    /* ===== ГЕРОЙ ===== */
+    /* ===== ГЕРОЙ (НОВЫЙ ДЗЕН-ВАРИАНТ) ===== */
     .hero {
-      padding: 100px 0;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      min-height: 80vh;
+      display: flex;
       align-items: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero-subtitle {
-      font-size: 0.9rem;
-      letter-spacing: 0.3em;
-      color: #3A86FF;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      opacity: 0.7;
+    .hero-video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero-video-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+    }
+
+    .hero-video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
     .hero-phrase {
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: 200;
       line-height: 1.2;
       color: #FFFFFF;
-      margin: 20px 0 20px;
+      margin-bottom: 2rem;
       letter-spacing: -0.01em;
-      position: relative;
-    }
-
-    .phrase-star {
-      color: #C6A43F;
-      font-size: 2rem;
-      position: relative;
-      top: -0.5rem;
-      margin-right: 5px;
     }
 
     .hero-phrase-gold {
@@ -243,73 +257,60 @@
       font-weight: 300;
     }
 
-    .hero-buttons {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin: 40px 0 20px;
-    }
-
-    .hero-footnote {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: #666;
+    .hero-star-container {
+      margin: 3rem 0 1rem;
     }
 
     .gold-star {
       color: #C6A43F;
-      font-size: 1rem;
+      font-size: 1.5rem;
     }
 
-    /* ===== ВИДЕО ===== */
-    .hero-image {
-      position: relative;
-      max-width: 600px;
-      margin: 0 auto;
+    .hero-footnote {
+      font-size: 0.9rem;
+      color: #999;
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
     }
 
-    .video-wrapper {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      position: relative;
+    .hero-button {
+      margin-top: 2rem;
     }
 
-    .video-wrapper video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    /* ===== ОСТАЛЬНЫЕ БЛОКИ (без изменений) ===== */
+    .strategies-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 40px;
     }
 
-    .video-wrapper::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid #3A86FF;
-      pointer-events: none;
-      z-index: 2;
+    .strategy-card {
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
     }
 
-    .hero-sticker {
-      position: absolute;
-      top: -10px;
-      right: 20px;
-      padding: 8px 16px;
-      border: 1px solid #3A86FF;
+    .strategy-card:hover {
+      border-color: #3A86FF;
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .strategy-number {
+      font-size: 2.5rem;
       color: #3A86FF;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      background: transparent;
-      z-index: 10;
+      margin-bottom: 20px;
+      opacity: 0.8;
     }
 
-    /* ===== ПУТИ ===== */
+    .strategy-title {
+      font-size: 1.5rem;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+    }
+
     .paths-section {
       padding: 60px 0;
     }
@@ -359,11 +360,6 @@
       letter-spacing: 0.1em;
     }
 
-    .path-link:hover {
-      color: #FFFFFF;
-    }
-
-    /* ===== ПРОЕКТЫ ===== */
     .section {
       padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
@@ -463,91 +459,6 @@
       letter-spacing: 0.1em;
     }
 
-    .project-buy:hover {
-      color: #FFFFFF;
-    }
-
-    /* ===== ПОДВАЛ (стили из footer.html) ===== */
-    .footer {
-      padding: 60px 0 30px;
-      border-top: 1px solid rgba(58, 134, 255, 0.2);
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-logo {
-      font-size: 1.2rem;
-      letter-spacing: 0.3em;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      color: #F0F0F0;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .social-links a:hover {
-      color: #C6A43F;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
-      opacity: 0.5;
-    }
-
-    .text-blue { color: #3A86FF; }
-    .text-gold { color: #C6A43F; }
-
-    /* ===== СТРАТЕГИИ (из оригинального стиля) ===== */
-    .strategies-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    .strategy-card {
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .strategy-card:hover {
-      border-color: #3A86FF;
-      box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
-      transform: translateY(-5px);
-    }
-
-    .strategy-number {
-      font-size: 2.5rem;
-      color: #3A86FF;
-      margin-bottom: 20px;
-      opacity: 0.8;
-    }
-
-    .strategy-title {
-      font-size: 1.5rem;
-      color: #FFFFFF;
-      margin-bottom: 15px;
-    }
-
-    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== */
     .system-section {
       padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
@@ -611,15 +522,56 @@
       color: #3A86FF;
     }
 
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .social-links a:hover {
+      color: #C6A43F;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .text-blue { color: #3A86FF; }
+    .text-gold { color: #C6A43F; }
+
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
       h1 { font-size: 3rem; }
       h2 { font-size: 1.8rem; }
-      
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
       
       .hero-phrase {
         font-size: 2.5rem;
@@ -662,11 +614,10 @@
 </head>
 <body>
 
-<!-- ===== ШАПКА ИЗ ШАБЛОНА ===== -->
+<!-- ===== ШАПКА ===== -->
 <header class="header">
   <div class="container">
     <div class="nav">
-      <!-- Логотип ведёт на страницу "Обо мне" (она же манифест) -->
       <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
       <div class="nav-links" id="main-nav">
         <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
@@ -676,7 +627,6 @@
         <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
         <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
         <a href="/https-meysternlp.ru-/blog/" class="nav-link">Статьи</a>
-        <!-- Пункт "Обо мне" отсутствует, как и требовалось -->
       </div>
       <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
     </div>
@@ -684,18 +634,15 @@
 </header>
 
 <script>
-// Функция для подсветки активного пункта меню
 function highlightCurrentPage() {
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll('.nav-link');
   
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
-    // Убираем базовый путь для сравнения
     const cleanHref = href.replace('/https-meysternlp.ru-', '');
     const cleanPath = currentPath.replace('/https-meysternlp.ru-', '');
     
-    // Проверяем точное совпадение или начало пути
     if (cleanPath === cleanHref || 
         (cleanHref !== '/' && cleanPath.startsWith(cleanHref + '/')) ||
         (cleanHref === '/' && cleanPath === '/')) {
@@ -705,43 +652,35 @@ function highlightCurrentPage() {
     }
   });
 }
-
-// Запускаем после загрузки страницы
 document.addEventListener('DOMContentLoaded', highlightCurrentPage);
 </script>
 
-<!-- ===== ГЕРОЙ ===== -->
+<!-- ===== ГЕРОЙ (ДЗЕН-ВАРИАНТ) ===== -->
 <section id="home" class="hero">
+  <!-- Видео на фоне -->
+  <div class="hero-video-bg">
+    <video autoplay loop muted playsinline>
+      <source src="/https-meysternlp.ru-/video.mp4" type="video/mp4">
+    </video>
+  </div>
+  
   <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <div class="hero-subtitle">тренер системного и латерального мышления</div>
-        <h1>АНДРЕЙ МЕЙСТЕР</h1>
-        
-        <div class="hero-phrase">
-          <span class="phrase-star">*</span> Бог умер.<br>
-          <span class="hero-phrase-gold">Теперь мы сами по себе.</span>
-        </div>
-        
-        <div class="hero-buttons">
-          <!-- Кнопка ведёт на страницу манифеста (она же обо мне) -->
-          <a href="/https-meysternlp.ru-/obo-mne/" class="btn btn-gold">ЧТО ЭТО ЗНАЧИТ?</a>
-          <a href="#projects" class="btn">СМОТРЕТЬ ИНСТРУМЕНТЫ</a>
-        </div>
-        
-        <div class="hero-footnote">
-          <span class="gold-star">*</span>
-          <span>короткая фраза, за которой час разговора</span>
-        </div>
+    <div class="hero-content">
+      <div class="hero-phrase">
+        Бог умер.<br>
+        <span class="hero-phrase-gold">Теперь мы сами по себе.</span>
       </div>
-      <div class="hero-image">
-        <div class="video-wrapper">
-          <video autoplay loop muted playsinline>
-            <source src="/https-meysternlp.ru-/video.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-          </video>
-        </div>
-        <div class="hero-sticker">системно</div>
+      
+      <div class="hero-star-container">
+        <span class="gold-star">*</span>
+      </div>
+      
+      <div class="hero-footnote">
+        короткая фраза, за которой час разговора
+      </div>
+      
+      <div class="hero-button">
+        <a href="/https-meysternlp.ru-/obo-mne/" class="btn btn-gold">УЗНАТЬ</a>
       </div>
     </div>
   </div>
