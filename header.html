@@ -12,7 +12,7 @@
         <span></span>
       </button>
       
-      <!-- Навигация -->
+      <!-- Навигация (на десктопе видна всегда, на мобильных — в бургере) -->
       <div class="nav-links" id="main-nav">
         <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
         <a href="/https-meysternlp.ru-/knigi/" class="nav-link">Книги</a>
@@ -21,17 +21,27 @@
         <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
         <a href="/https-meysternlp.ru-/arhiv/" class="nav-link">Архив</a>
         <a href="/https-meysternlp.ru-/blog/" class="nav-link">Статьи</a>
-        <!-- Пункт "Обо мне" УДАЛЁН, "События" заменён на "Архив" -->
+        <!-- Виртуальный психолог теперь в меню (на мобильных) -->
+        <a href="/https-meysternlp.ru-/virtual-psychologist/" class="nav-link mobile-only">Виртуальный психолог</a>
       </div>
       
-      <!-- Кнопка "Виртуальный психолог" -->
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+      <!-- Кнопка "Виртуальный психолог" (только на десктопе) -->
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
     </div>
   </div>
 </header>
 
 <style>
 /* ===== СТИЛИ ДЛЯ БУРГЕР-МЕНЮ ===== */
+
+/* Классы для адаптации */
+.desktop-only {
+  display: inline-block;
+}
+
+.mobile-only {
+  display: none;
+}
 
 /* Скрываем бургер на десктопе по умолчанию */
 .burger {
@@ -69,6 +79,14 @@
 
 /* Мобильная адаптация */
 @media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-only {
+    display: block;
+  }
+  
   .burger {
     display: flex;
   }
@@ -94,15 +112,20 @@
   
   .nav-links a {
     font-size: 1.2rem;
-    padding: 10px 0;
+    padding: 15px 0;
     width: 100%;
     text-align: center;
     border-bottom: 1px solid rgba(58, 134, 255, 0.2);
   }
   
-  /* Кнопка психолога на мобильных */
-  .btn-header {
-    margin-left: auto;
+  .nav-links a:last-child {
+    border-bottom: none;
+    margin-top: 10px;
+    background: linear-gradient(to right, #00A8E8, #3A86FF);
+    border-radius: 30px;
+    color: white;
+    border: none;
+    padding: 15px 0;
   }
 }
 </style>
