@@ -138,9 +138,9 @@
       left: 0;
     }
 
-    /* ===== ШАПКА ===== */
+    /* ===== ШАПКА С БУРГЕР-МЕНЮ ===== */
     .header {
-      padding: 30px 0;
+      padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
       position: sticky;
       top: 0;
@@ -153,6 +153,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      min-height: 60px;
     }
 
     .logo {
@@ -166,11 +167,44 @@
       color: #3A86FF;
     }
 
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 110;
+    }
+
+    .burger span {
+      width: 100%;
+      height: 2px;
+      background-color: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .burger.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Навигация */
     .nav-links {
       display: flex;
       gap: 50px;
       align-items: center;
-      flex-wrap: wrap;
     }
 
     .nav-links a {
@@ -182,6 +216,7 @@
       border-bottom: 1px solid transparent;
       padding-bottom: 5px;
       transition: border-color 0.3s ease;
+      white-space: nowrap;
     }
 
     .nav-links a:hover {
@@ -207,6 +242,7 @@
       letter-spacing: normal;
       border: none;
       box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+      white-space: nowrap;
     }
 
     .btn-header:hover {
@@ -214,6 +250,79 @@
       box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
       color: white;
       text-shadow: none;
+    }
+
+    /* Классы для адаптации */
+    .desktop-only {
+      display: inline-block;
+    }
+
+    .mobile-only {
+      display: none;
+    }
+
+    /* Мобильная версия */
+    @media (max-width: 992px) {
+      .nav-links {
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none;
+      }
+      
+      .mobile-only {
+        display: block;
+        background: linear-gradient(to right, #00A8E8, #3A86FF);
+        color: white;
+        border-radius: 30px;
+        margin-top: 20px;
+        text-transform: none !important;
+        font-weight: 500 !important;
+        border: none !important;
+        text-align: center;
+        padding: 15px 0;
+      }
+      
+      .mobile-only:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+        color: white !important;
+        border-bottom-color: transparent !important;
+      }
+
+      .burger {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        padding: 40px 20px;
+        transition: left 0.3s ease;
+        z-index: 100;
+        overflow-y: auto;
+        gap: 10px;
+      }
+      
+      .nav-links.active {
+        left: 0;
+      }
+      
+      .nav-links a {
+        font-size: 1.2rem;
+        padding: 15px 0;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      }
     }
 
     /* ===== ГЕРОЙ ===== */
@@ -696,33 +805,7 @@
     .text-blue { color: #3A86FF; }
 
     /* ===== АДАПТИВНОСТЬ ===== */
-    @media (max-width: 992px) {
-      .nav {
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-      
-      .nav-links {
-        gap: 30px;
-      }
-    }
-
     @media (max-width: 768px) {
-      .header {
-        padding: 20px 0;
-      }
-      
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .nav-links {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 20px;
-      }
-      
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -752,19 +835,30 @@
 </head>
 <body>
 
-<!-- ШАПКА -->
+<!-- ШАПКА С БУРГЕР-МЕНЮ -->
 <header class="header">
   <div class="container">
     <div class="nav">
       <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
-      <div class="nav-links">
+      
+      <!-- Кнопка-бургер -->
+      <button class="burger" id="burgerBtn" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <div class="nav-links" id="navLinks">
         <a href="/https-meysternlp.ru-/knigi/">Книги</a>
         <a href="/https-meysternlp.ru-/igry/">Игры</a>
         <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
         <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
         <a href="/https-meysternlp.ru-/sobytiya/">Архив</a>
+        <!-- Виртуальный психолог для мобильных -->
+        <a href="/https-meysternlp.ru-/virtual-psychologist/" class="mobile-only">🧠 Виртуальный психолог</a>
       </div>
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+      
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
     </div>
   </div>
 </header>
@@ -1009,8 +1103,9 @@
 </footer>
 
 <script>
-  // Подсветка активного пункта меню
+  // Единый обработчик для всего
   document.addEventListener('DOMContentLoaded', function() {
+    // 1. Подсветка активного пункта меню
     const currentPath = window.location.pathname;
     const navLinks = document.querySelectorAll('.nav-links a');
     
@@ -1027,6 +1122,40 @@
         link.classList.remove('active');
       }
     });
+    
+    // 2. Бургер-меню
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      burger.addEventListener('click', () => {
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        // Блокировка скролла
+        if (nav.classList.contains('active')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      });
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          burger.classList.remove('active');
+          nav.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+      
+      // Закрытие при ресайзе
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+          burger.classList.remove('active');
+          nav.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }
   });
 </script>
 
