@@ -20,6 +20,11 @@
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
   <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/manifest/">
   
+  <!-- Подключаем Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
@@ -33,10 +38,11 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
@@ -45,11 +51,16 @@
       padding: 0 20px;
     }
 
+    section {
+      scroll-margin-top: 100px;
+    }
+
     /* ===== ТИПОГРАФИКА ===== */
     h1, h2, h3 {
       font-weight: 300;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      line-height: 1.2;
     }
 
     h1 {
@@ -57,7 +68,6 @@
       font-weight: 200;
       margin-bottom: 0.5rem;
       color: #FFFFFF;
-      line-height: 1.1;
       letter-spacing: -0.02em;
     }
 
@@ -85,6 +95,18 @@
       line-height: 1.8;
     }
 
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* ===== ССЫЛКИ И КНОПКИ ===== */
     a {
       color: #3A86FF;
@@ -94,18 +116,20 @@
 
     a:hover {
       color: #FFFFFF;
+      text-shadow: 0 0 10px #3A86FF;
     }
 
     .btn {
       display: inline-block;
       padding: 14px 32px;
-      border: 1px solid #3A86FF;
-      background: transparent;
-      color: #FFFFFF;
-      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      font-size: 0.9rem;
+      text-decoration: none;
+      border: 1px solid #3A86FF;
+      background-color: transparent;
+      color: #FFFFFF;
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
@@ -148,15 +172,87 @@
       box-shadow: 0 0 20px #C6A43F;
     }
 
+    /* ===== ШАПКА (стили, если не подгрузится) ===== */
+    .header {
+      padding: 30px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      position: sticky;
+      top: 0;
+      background-color: #0C0C0C;
+      z-index: 100;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #FFFFFF;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 50px;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 5px;
+      transition: border-color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: #3A86FF;
+      color: #F0F0F0;
+      text-shadow: none;
+    }
+
+    .btn-header {
+      display: inline-block;
+      padding: 10px 24px;
+      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      color: white;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: normal;
+      border: none;
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-header:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+      color: white;
+      text-shadow: none;
+    }
+
     /* ===== СТРАНИЦА МАНИФЕСТА ===== */
     .manifest-hero {
       padding: 100px 0 60px;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
       text-align: center;
+      animation: fadeUp 1s ease-out;
     }
 
     .manifest-hero h1 {
       margin-bottom: 20px;
+      font-size: 3.5rem;
     }
 
     .manifest-hero-sub {
@@ -164,6 +260,7 @@
       color: #C6A43F;
       margin-bottom: 30px;
       font-weight: 200;
+      letter-spacing: 0.02em;
     }
 
     .manifest-hero-line {
@@ -174,7 +271,7 @@
     }
 
     .manifest-section {
-      padding: 60px 0;
+      padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
     }
 
@@ -189,18 +286,20 @@
 
     .manifest-quote {
       font-size: 1.5rem;
+      font-weight: 300;
       font-style: italic;
       color: #C6A43F;
       border-left: 3px solid #C6A43F;
       padding-left: 30px;
-      margin: 40px 0;
+      margin: 50px 0;
+      line-height: 1.6;
     }
 
     .manifest-names {
       display: flex;
       justify-content: center;
-      gap: 40px;
-      margin: 40px 0;
+      gap: 60px;
+      margin: 60px 0;
       flex-wrap: wrap;
     }
 
@@ -208,11 +307,20 @@
       text-align: center;
     }
 
+    .manifest-name .name {
+      font-size: 2rem;
+      color: #C6A43F;
+      font-weight: 200;
+      margin-bottom: 10px;
+      letter-spacing: 0.05em;
+    }
+
     .manifest-name span {
       display: block;
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #3A86FF;
-      margin-top: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     .manifest-highlight {
@@ -222,64 +330,68 @@
 
     .manifest-invite {
       text-align: center;
-      padding: 60px 0;
+      padding: 100px 0;
       background: rgba(255, 255, 255, 0.02);
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      margin: 40px 0;
     }
 
     .manifest-invite h2 {
       color: #FFFFFF;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .manifest-invite p {
       font-size: 1.3rem;
       margin-bottom: 30px;
+      color: #CCCCCC;
+    }
+
+    .manifest-invite .invite-strong {
+      color: #C6A43F;
+      font-size: 1.8rem;
+      font-weight: 200;
+      margin: 30px 0;
     }
 
     .manifest-credentials {
-      padding: 40px 0;
+      padding: 60px 0;
       text-align: center;
       opacity: 0.7;
+      border-top: 1px solid rgba(58, 134, 255, 0.1);
     }
 
     .manifest-credentials p {
       font-size: 0.9rem;
       margin-bottom: 0;
       color: #999;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    /* ===== ФОТО (небольшое, для контекста) ===== */
-    .manifest-photo {
-      max-width: 200px;
-      margin: 40px auto;
-      position: relative;
+    /* Специальные стили для плавного чтения */
+    .manifest-block p:first-of-type {
+      font-size: 1.3rem;
+      color: #FFFFFF;
     }
 
-    .manifest-photo img {
-      width: 100%;
-      height: auto;
-      border-radius: 50%;
-      border: 2px solid #3A86FF;
+    .manifest-block p:last-of-type {
+      margin-bottom: 0;
     }
 
-    .manifest-photo::after {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      border: 1px solid #C6A43F;
-      border-radius: 50%;
-      opacity: 0.3;
+    .manifest-section:first-of-type .manifest-block p {
+      animation: fadeUp 0.8s ease-out 0.2s both;
     }
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2.8rem; }
+      h1 { font-size: 2.5rem; }
       h2 { font-size: 1.8rem; }
+      
+      .manifest-hero h1 {
+        font-size: 2.2rem;
+      }
       
       .manifest-hero-sub {
         font-size: 1.5rem;
@@ -292,26 +404,44 @@
       .manifest-quote {
         font-size: 1.2rem;
         padding-left: 20px;
+        margin: 30px 0;
+      }
+      
+      .manifest-name .name {
+        font-size: 1.5rem;
+      }
+      
+      .nav {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .nav-links {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ ШАБЛОНА -->
-<div id="header-placeholder"></div>
-
-<script>
-  // Загружаем шапку из header.html
-  fetch('/https-meysternlp.ru-/header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки шапки:', error);
-    });
-</script>
+<!-- ШАПКА -->
+<header class="header">
+  <div class="container">
+    <div class="nav">
+      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <div class="nav-links">
+        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/">Игры</a>
+        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
+      </div>
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
 
 <!-- ГЕРОЙ МАНИФЕСТА -->
 <section class="manifest-hero">
@@ -319,7 +449,7 @@
     <h1>АНДРЕЙ МЕЙСТЕР</h1>
     <div class="manifest-hero-sub">Бог умер. Теперь мы сами по себе.</div>
     <div class="manifest-hero-line"></div>
-    <p style="font-size: 1.5rem; color: #FFFFFF;">Я бросаю камень.</p>
+    <p style="font-size: 1.8rem; color: #FFFFFF; font-weight: 200; letter-spacing: 0.05em;">Я бросаю камень.</p>
   </div>
 </section>
 
@@ -329,7 +459,7 @@
     <h2>Что такое нарратив</h2>
     <p>Нарратив — это история, в которую ты веришь. Она определяет, что для тебя важно, а что нет. Куда ты идёшь и зачем просыпаешься утром.</p>
     <p>Ты не выбирал свой нарратив. Его выбрали за тебя — семья, школа, культура, время, в которое ты родился.</p>
-    <p>Но рано или поздно наступает момент. Ты вдруг понимаешь: «Зачем я это делаю?» Или чувствууешь, что живёшь не свою жизнь. Или ловишь себя на том, что разные части тебя тянут в разные стороны.</p>
+    <p>Но рано или поздно наступает момент. Ты вдруг понимаешь: «Зачем я это делаю?» Или чувствуешь, что живёшь не свою жизнь. Или ловишь себя на том, что разные части тебя тянут в разные стороны.</p>
     <div class="manifest-quote">
       Это момент встречи с нарративом.
     </div>
@@ -342,7 +472,7 @@
     <h2>Сила нарративов</h2>
     <p>Иисус создал нарратив. После его смерти этот нарратив разрушил Рим.</p>
     <p>Маркс создал нарратив. После него этот нарратив построил империю, перекроившую мир.</p>
-    <p><span class="manifest-highlight">Нарратив сильнее любого человека.</span> Он живёт после тебя. Он меняет реальность.</p>
+    <p style="margin-top: 40px;"><span class="manifest-highlight">Нарратив сильнее любого человека.</span> Он живёт после тебя. Он меняет реальность.</p>
   </div>
 </section>
 
@@ -352,7 +482,7 @@
     <h2>Пересечения</h2>
     <p>Мы редко живём в одном нарративе. Чаще — на пересечении нескольких.</p>
     <p>Семья говорит одно. Работа — другое. Среда — третье. Внутри тебя живут голоса, которые спорят друг с другом.</p>
-    <p>Эти несостыковки — источник боли. Но они же — источник выбора. Если ты их увидишь, ты сможешь их подружить. Или хотя бы понять, почему тебе так неуютно.</p>
+    <p>Эти несостыковки — <span class="manifest-highlight">источник боли.</span> Но они же — <span class="manifest-highlight">источник выбора.</span> Если ты их увидишь, ты сможешь их подружить. Или хотя бы понять, почему тебе так неуютно.</p>
   </div>
 </section>
 
@@ -362,15 +492,15 @@
     <h2>Мои камни</h2>
     <div class="manifest-names">
       <div class="manifest-name">
-        <div style="font-size: 2rem; color: #C6A43F;">Бертран Рассел</div>
+        <div class="name">Бертран Рассел</div>
         <span>научил меня ясности</span>
       </div>
       <div class="manifest-name">
-        <div style="font-size: 2rem; color: #C6A43F;">Георгий Щедровицкий</div>
+        <div class="name">Георгий Щедровицкий</div>
         <span>научил меня системе</span>
       </div>
     </div>
-    <p>Их камни всё ещё летят. Я подхватил и бросаю дальше.</p>
+    <p style="text-align: center; font-style: italic;">Их камни всё ещё летят. Я подхватил и бросаю дальше.</p>
   </div>
 </section>
 
@@ -380,7 +510,7 @@
     <h2>Манифест</h2>
     <p>Старые нарративы рассыпались. Религия, идеология, великие цели — больше не работают. Человек остался один на один с пустотой.</p>
     <p>Но человек — это единственное существо, которое живёт нарративами. Без истории, в которую он верит, он не живёт — он просто существует.</p>
-    <p>Я выбираю жить.</p>
+    <p style="font-size: 1.5rem; color: #FFFFFF; margin: 40px 0;">Я выбираю жить.</p>
     <p>Я бросаю камень. Я хочу, чтобы мой камень летел долго. Чтобы через сто лет кто-то сказал: «Андрей Мейстер? Да, его нарратив всё ещё работает».</p>
   </div>
 </section>
@@ -399,7 +529,7 @@
   <div class="container manifest-block">
     <h2>Мой камень</h2>
     <p>Мой камень — это инструменты. Я не присутствую при вашем становлении. Я даю вам готовые инструменты — книги, игры, практикумы. Вы просто берете их и применяете.</p>
-    <p>Потому что настоящий нарратив не нуждается в авторе. Он живёт сам.</p>
+    <p style="font-size: 1.3rem; color: #C6A43F; margin-top: 40px;">Потому что настоящий нарратив не нуждается в авторе. Он живёт сам.</p>
   </div>
 </section>
 
@@ -407,9 +537,10 @@
 <section class="manifest-invite">
   <div class="container">
     <h2>А вы?</h2>
-    <p>В каком нарративе живёте вы? Где в вашей жизни несостыковки? Хотите бросить свой камень?</p>
-    <p style="color: #C6A43F; font-size: 1.5rem;">Я покажу, как.</p>
-    <a href="/https-meysternlp.ru-/" class="btn btn-gold" style="margin-top: 30px;">НАЧАТЬ ИССЛЕДОВАНИЕ</a>
+    <p>В каком нарративе живёте вы? Где в вашей жизни несостыковки?</p>
+    <p style="margin-bottom: 20px;">Хотите бросить свой камень?</p>
+    <div class="invite-strong">Я покажу, как.</div>
+    <a href="/https-meysternlp.ru-/" class="btn btn-gold" style="margin-top: 40px;">НАЧАТЬ ИССЛЕДОВАНИЕ</a>
   </div>
 </section>
 
@@ -420,22 +551,85 @@
   </div>
 </section>
 
-<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ ШАБЛОНА -->
-<div id="footer-placeholder"></div>
+<!-- ПОДВАЛ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
+        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
 
-<script>
-  // Загружаем подвал из footer.html
-  fetch('/https-meysternlp.ru-/footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки подвала:', error);
-    });
-</script>
+<style>
+  /* Стили подвала */
+  .footer {
+    padding: 60px 0 30px;
+    border-top: 1px solid rgba(58, 134, 255, 0.2);
+    background-color: #0C0C0C;
+  }
 
-<!-- Font Awesome для иконок соцсетей -->
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .footer-logo {
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 30px;
+  }
+
+  .social-links a {
+    color: #F0F0F0;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .social-links a:hover {
+    border-bottom-color: #C6A43F;
+    color: #C6A43F;
+    text-shadow: none;
+  }
+
+  .copyright {
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    margin-top: 40px;
+  }
+
+  .text-blue {
+    color: #3A86FF;
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+  }
+</style>
+
+<!-- Font Awesome для иконок соцсетей (если нужны будут) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </body>
