@@ -91,23 +91,42 @@
       overflow: hidden;
     }
 
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
     .btn:hover {
-      background: #3A86FF;
       color: #0C0C0C;
+      border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+    }
+
+    .btn:hover::before {
+      left: 0;
     }
 
     .btn-gold {
       border-color: #C6A43F;
     }
 
+    .btn-gold::before {
+      background-color: #C6A43F;
+    }
+
     .btn-gold:hover {
-      background: #C6A43F;
-      color: #0C0C0C;
+      border-color: #C6A43F;
       box-shadow: 0 0 20px #C6A43F;
     }
 
-    /* ===== ШАПКА ===== */
+    /* ===== ШАПКА (стили из header.html) ===== */
     .header {
       padding: 20px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
@@ -208,6 +227,15 @@
       color: #FFFFFF;
       margin: 20px 0 20px;
       letter-spacing: -0.01em;
+      position: relative;
+    }
+
+    .phrase-star {
+      color: #C6A43F;
+      font-size: 2rem;
+      position: relative;
+      top: -0.5rem;
+      margin-right: 5px;
     }
 
     .hero-phrase-gold {
@@ -281,25 +309,6 @@
       z-index: 10;
     }
 
-    /* ===== БЛОК РАСШИФРОВКИ ===== */
-    .manifest-preview {
-      padding: 60px 0;
-      background: rgba(255, 255, 255, 0.02);
-      border-top: 1px solid rgba(58, 134, 255, 0.1);
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
-      text-align: center;
-    }
-
-    .manifest-preview p {
-      font-size: 1.3rem;
-      max-width: 800px;
-      margin: 0 auto 20px;
-    }
-
-    .manifest-preview .gold-text {
-      color: #C6A43F;
-    }
-
     /* ===== ПУТИ ===== */
     .paths-section {
       padding: 60px 0;
@@ -341,6 +350,17 @@
       font-size: 0.95rem;
       color: #AAAAAA;
       margin-bottom: 20px;
+    }
+
+    .path-link {
+      color: #C6A43F;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .path-link:hover {
+      color: #FFFFFF;
     }
 
     /* ===== ПРОЕКТЫ ===== */
@@ -447,7 +467,7 @@
       color: #FFFFFF;
     }
 
-    /* ===== ПОДВАЛ ===== */
+    /* ===== ПОДВАЛ (стили из footer.html) ===== */
     .footer {
       padding: 60px 0 30px;
       border-top: 1px solid rgba(58, 134, 255, 0.2);
@@ -493,6 +513,104 @@
     .text-blue { color: #3A86FF; }
     .text-gold { color: #C6A43F; }
 
+    /* ===== СТРАТЕГИИ (из оригинального стиля) ===== */
+    .strategies-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .strategy-card {
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .strategy-card:hover {
+      border-color: #3A86FF;
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .strategy-number {
+      font-size: 2.5rem;
+      color: #3A86FF;
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .strategy-title {
+      font-size: 1.5rem;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+    }
+
+    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== */
+    .system-section {
+      padding: 80px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+    }
+
+    .system-intro {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #3A86FF;
+      margin-bottom: 60px;
+    }
+
+    .system-cycle {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 80px;
+    }
+
+    .cycle-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .cycle-item:hover {
+      border-color: #C6A43F;
+      transform: translateY(-5px);
+    }
+
+    .cycle-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #3A86FF;
+    }
+
+    .cycle-item h3 {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+      color: #FFFFFF;
+    }
+
+    .cycle-arrow {
+      font-size: 1.5rem;
+      color: #3A86FF;
+      margin-top: 10px;
+    }
+
+    .about-author {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      text-align: center;
+    }
+
+    .about-author strong {
+      color: #3A86FF;
+    }
+
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
       h1 { font-size: 3rem; }
@@ -507,6 +625,7 @@
         font-size: 2.5rem;
       }
       
+      .strategies-grid,
       .paths-grid,
       .projects-grid {
         grid-template-columns: 1fr;
@@ -543,25 +662,55 @@
 </head>
 <body>
 
-<!-- ШАПКА (логотип ведёт на манифест) -->
+<!-- ===== ШАПКА ИЗ ШАБЛОНА ===== -->
 <header class="header">
   <div class="container">
     <div class="nav">
-      <a href="/https-meysternlp.ru-/manifest/" class="logo"><span>А</span>МЕЙСТЕР</a>
-      <div class="nav-links">
-        <a href="/https-meysternlp.ru-/" class="active">Главная</a>
-        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-        <a href="/https-meysternlp.ru-/igry/">Игры</a>
-        <a href="/https-meysternlp.ru-/treningi/">Практикумы</a>
-        <a href="/https-meysternlp.ru-/manifest/">Манифест</a>
-        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
+      <!-- Логотип ведёт на страницу "Обо мне" (она же манифест) -->
+      <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <div class="nav-links" id="main-nav">
+        <a href="/https-meysternlp.ru-/" class="nav-link">Главная</a>
+        <a href="/https-meysternlp.ru-/knigi/" class="nav-link">Книги</a>
+        <a href="/https-meysternlp.ru-/igry/" class="nav-link">Игры</a>
+        <a href="/https-meysternlp.ru-/treningi/" class="nav-link">Тренинги</a>
+        <a href="/https-meysternlp.ru-/v-razrabotke/" class="nav-link">В разработке</a>
+        <a href="/https-meysternlp.ru-/sobytiya/" class="nav-link">События</a>
+        <a href="/https-meysternlp.ru-/blog/" class="nav-link">Статьи</a>
+        <!-- Пункт "Обо мне" отсутствует, как и требовалось -->
       </div>
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Задать вопрос</a>
+      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
     </div>
   </div>
 </header>
 
-<!-- ГЕРОЙ -->
+<script>
+// Функция для подсветки активного пункта меню
+function highlightCurrentPage() {
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    // Убираем базовый путь для сравнения
+    const cleanHref = href.replace('/https-meysternlp.ru-', '');
+    const cleanPath = currentPath.replace('/https-meysternlp.ru-', '');
+    
+    // Проверяем точное совпадение или начало пути
+    if (cleanPath === cleanHref || 
+        (cleanHref !== '/' && cleanPath.startsWith(cleanHref + '/')) ||
+        (cleanHref === '/' && cleanPath === '/')) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+// Запускаем после загрузки страницы
+document.addEventListener('DOMContentLoaded', highlightCurrentPage);
+</script>
+
+<!-- ===== ГЕРОЙ ===== -->
 <section id="home" class="hero">
   <div class="container">
     <div class="hero-grid">
@@ -570,12 +719,13 @@
         <h1>АНДРЕЙ МЕЙСТЕР</h1>
         
         <div class="hero-phrase">
-          Бог умер.<br>
+          <span class="phrase-star">*</span> Бог умер.<br>
           <span class="hero-phrase-gold">Теперь мы сами по себе.</span>
         </div>
         
         <div class="hero-buttons">
-          <a href="/https-meysternlp.ru-/manifest/" class="btn btn-gold">ЧТО ЭТО ЗНАЧИТ?</a>
+          <!-- Кнопка ведёт на страницу манифеста (она же обо мне) -->
+          <a href="/https-meysternlp.ru-/obo-mne/" class="btn btn-gold">ЧТО ЭТО ЗНАЧИТ?</a>
           <a href="#projects" class="btn">СМОТРЕТЬ ИНСТРУМЕНТЫ</a>
         </div>
         
@@ -587,7 +737,7 @@
       <div class="hero-image">
         <div class="video-wrapper">
           <video autoplay loop muted playsinline>
-            <source src="video.mp4" type="video/mp4">
+            <source src="/https-meysternlp.ru-/video.mp4" type="video/mp4">
             Ваш браузер не поддерживает видео.
           </video>
         </div>
@@ -597,19 +747,36 @@
   </div>
 </section>
 
-<!-- РАСШИФРОВКА -->
-<section class="manifest-preview">
+<!-- ===== СТРАТЕГИИ ===== -->
+<section id="strategies" class="section">
   <div class="container">
-    <p>Старые нарративы рассыпались.</p>
-    <p>Религия, идеология, великие цели — больше не работают.</p>
-    <p>Человек остался один.</p>
-    <p style="margin-top: 30px;">Но без нарратива он не живёт — он просто существует.</p>
-    <p><span class="gold-text">Я учу видеть нарративы, понимать их и создавать свои.</span></p>
-    <a href="/https-meysternlp.ru-/manifest/" class="btn btn-gold" style="margin-top: 40px;">ЧИТАТЬ МАНИФЕСТ</a>
+    <h2>ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН</h2>
+    <div class="strategies-grid">
+      <div class="strategy-card">
+        <div class="strategy-number">01</div>
+        <div class="strategy-title">Принятие</div>
+        <p>Снизить ожидания, смириться, принять реальность. Помогу сравнить ваши цели с возможностями и дать честную обратную связь.</p>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-number">02</div>
+        <div class="strategy-title">Магия</div>
+        <p>Научу самогипнозу и работе с подсознанием без эзотерики. «Посылать сигналы Вселенной» — теперь научно.</p>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-number">03</div>
+        <div class="strategy-title">Масштаб</div>
+        <p>Уйти от токсичных людей или создать компанию. Помогу с системным анализом бизнеса и маркетингом.</p>
+      </div>
+      <div class="strategy-card">
+        <div class="strategy-number">04</div>
+        <div class="strategy-title">Изменение</div>
+        <p>Изменить поведение, чтобы получить другую обратную связь. Здесь я — рациональный партнер.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ТРИ ПУТИ -->
+<!-- ===== ТРИ ПУТИ ===== -->
 <section class="paths-section">
   <div class="container">
     <h2>ВЫБЕРИТЕ СВОЙ ПУТЬ</h2>
@@ -618,25 +785,25 @@
         <div class="path-icon">🧠</div>
         <div class="path-title">ИССЛЕДОВАТЬ МЕТОД</div>
         <div class="path-desc">Понять, как работает мышление и нарративы</div>
-        <a href="#method" class="project-link">ПЕРЕЙТИ →</a>
+        <a href="#system" class="path-link">ПЕРЕЙТИ →</a>
       </div>
       <div class="path-card">
         <div class="path-icon">📘</div>
         <div class="path-title">ПОЛУЧИТЬ ИНСТРУМЕНТ</div>
         <div class="path-desc">Книги, игры, практикумы — бери и применяй</div>
-        <a href="#projects" class="project-link">ПЕРЕЙТИ →</a>
+        <a href="#projects" class="path-link">ПЕРЕЙТИ →</a>
       </div>
       <div class="path-card">
         <div class="path-icon">📚</div>
         <div class="path-title">ЧИТАТЬ СТАТЬИ</div>
         <div class="path-desc">Полевые заметки о мышлении и влиянии</div>
-        <a href="/https-meysternlp.ru-/blog/" class="project-link">ПЕРЕЙТИ →</a>
+        <a href="/https-meysternlp.ru-/blog/" class="path-link">ПЕРЕЙТИ →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ПРОЕКТЫ -->
+<!-- ===== ПРОЕКТЫ ===== -->
 <section id="projects" class="section">
   <div class="container">
     <h2>МОИ ПРОЕКТЫ</h2>
@@ -654,8 +821,8 @@
         <div class="project-title">Практикум</div>
         <div class="project-desc">«Разговорный гипноз» — навыки влияния в повседневной жизни.</div>
         <div class="project-actions">
-          <a href="/https-meysternlp.ru-/treningi/razgovornyy-gipnoz/" class="project-link">Исследовать →</a>
-          <a href="/https-meysternlp.ru-/buy/praktikum/" class="project-buy">Купить</a>
+          <a href="/https-meysternlp.ru-/treningi/" class="project-link">Исследовать →</a>
+          <a href="#" class="project-buy">Купить</a>
         </div>
       </div>
       <div class="project-card">
@@ -664,7 +831,7 @@
         <div class="project-desc">Трилогия «Теория манипуляции», «Концептикон» и другие.</div>
         <div class="project-actions">
           <a href="/https-meysternlp.ru-/knigi/" class="project-link">Исследовать →</a>
-          <a href="/https-meysternlp.ru-/buy/knigi/" class="project-buy">Купить</a>
+          <a href="#" class="project-buy">Купить</a>
         </div>
       </div>
       <div class="project-card">
@@ -672,15 +839,72 @@
         <div class="project-title">Игры</div>
         <div class="project-desc">Дидактическая игра «Маркетолог» — мыслить системно играя.</div>
         <div class="project-actions">
-          <a href="/https-meysternlp.ru-/igry/marketing/" class="project-link">Исследовать →</a>
-          <a href="/https-meysternlp.ru-/buy/igry/" class="project-buy">Купить</a>
+          <a href="/https-meysternlp.ru-/igry/" class="project-link">Исследовать →</a>
+          <a href="#" class="project-buy">Купить</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ПОДВАЛ -->
+<!-- ===== СИСТЕМНОЕ МЫШЛЕНИЕ ===== -->
+<section id="system" class="system-section">
+  <div class="container">
+    <h2>СИСТЕМНОЕ МЫШЛЕНИЕ</h2>
+    <p class="system-intro">Всё взаимосвязано. Изменение одного элемента влияет на все остальные.</p>
+    
+    <div class="system-cycle">
+      <div class="cycle-item">
+        <div class="cycle-icon">🧬</div>
+        <h3>ГОРМОНАЛЬНЫЙ ФОН</h3>
+        <p>Определяет поведение и решения</p>
+        <div class="cycle-arrow">↓</div>
+      </div>
+      <div class="cycle-item">
+        <div class="cycle-icon">⚙️</div>
+        <h3>АРХИТЕКТУРА ПРОГРЕССИИ</h3>
+        <p>Процессы деятельности</p>
+        <div class="cycle-arrow">↓</div>
+      </div>
+      <div class="cycle-item">
+        <div class="cycle-icon">🏆</div>
+        <h3>КАЧЕСТВО ЖИЗНИ</h3>
+        <p>Влияет на гормональный фон</p>
+        <div class="cycle-arrow">↓</div>
+      </div>
+      <div class="cycle-item">
+        <div class="cycle-icon">🔑</div>
+        <h3>ВОЗМОЖНОСТИ</h3>
+        <p>Определяют качество жизни</p>
+        <div class="cycle-arrow">↓</div>
+      </div>
+      <div class="cycle-item">
+        <div class="cycle-icon">🤝</div>
+        <h3>СОЦИАЛЬНЫЕ СВЯЗИ</h3>
+        <p>Определяют возможности</p>
+        <div class="cycle-arrow">↓</div>
+      </div>
+      <div class="cycle-item">
+        <div class="cycle-icon">🗣️</div>
+        <h3>РЕЧЬ</h3>
+        <p>Влияет на социальные связи</p>
+        <div class="cycle-arrow">↓</div>
+      </div>
+      <div class="cycle-item">
+        <div class="cycle-icon">🧠</div>
+        <h3>МЫШЛЕНИЕ</h3>
+        <p>Влияет на гормональный фон</p>
+        <div class="cycle-arrow">↻</div>
+      </div>
+    </div>
+    
+    <div class="about-author">
+      <p><strong>Андрей Мейстер</strong> — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика». Кандидат наук, автор бестселлера «Теория манипуляции».</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ПОДВАЛ ===== -->
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
