@@ -10,15 +10,15 @@
   <meta name="keywords" content="архив, видео, тексты, инструкции, pdf, материалы, системное мышление, нарратив">
   <meta name="author" content="Андрей Мейстер">
   
-  <!-- OPEN GRAPH -->
+  <!-- OPEN GRAPH (ИСПРАВЛЕНО) -->
   <meta property="og:title" content="Архив материалов — Андрей Мейстер">
   <meta property="og:description" content="Видео и тексты: лекции, инструкции, разборы. То, что можно скачать и использовать.">
   <meta property="og:image" content="/https-meysternlp.ru-/images/archive-preview.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/arhiv/">
+  <meta property="og:url" content="https://dron939-sketch.github.io/sobytiya/">
   <meta property="og:type" content="website">
   
-  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/arhiv/">
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА (ИСПРАВЛЕНО) -->
+  <link rel="canonical" href="https://dron939-sketch.github.io/sobytiya/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -468,7 +468,7 @@
     </div>
   </div>
 
-  <!-- ТЕКСТОВЫЙ РАЗДЕЛ -->
+  <!-- ТЕКСТОВЫЙ РАЗДЕЛ (ИСПРАВЛЕНЫ ПУТИ К PDF) -->
   <div class="archive-section">
     <div class="section-title">
       <span class="section-icon">📄</span>
@@ -483,7 +483,7 @@
         <div class="material-meta">PDF • Гайд 12</div>
         <div class="material-description">Практическое руководство по работе со страхами и тревожными состояниями.</div>
         <div class="material-actions">
-          <a href="PDF/Гайд 12_гайд по страхам.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд 12_гайд по страхам.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -494,7 +494,7 @@
         <div class="material-meta">PDF • Гайд 7</div>
         <div class="material-description">Практические упражнения и техники.</div>
         <div class="material-actions">
-          <a href="PDF/Гайд 7.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд 7.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -505,7 +505,7 @@
         <div class="material-meta">PDF • Гайд</div>
         <div class="material-description">Анализ деструктивных паттернов и способы работы с ними.</div>
         <div class="material-actions">
-          <a href="PDF/Гайд _ЯДЫ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд _ЯДЫ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -516,7 +516,7 @@
         <div class="material-meta">PDF • Гайд 10</div>
         <div class="material-description">Приложение к Матрице контроля — дополнительные материалы и упражнения.</div>
         <div class="material-actions">
-          <a href="PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -527,7 +527,7 @@
         <div class="material-meta">PDF • Гайд 15</div>
         <div class="material-description">Сборник терапевтических сказок для работы с подсознанием.</div>
         <div class="material-actions">
-          <a href="PDF/Гайд_15_Терапевтические сказки.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Гайд_15_Терапевтические сказки.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -538,7 +538,7 @@
         <div class="material-meta">PDF • Теория манипуляции</div>
         <div class="material-description">Основной теоретический материал по Матрице контроля из курса «Теория манипуляции».</div>
         <div class="material-actions">
-          <a href="PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="/sobytiya/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
     </div>
@@ -587,15 +587,18 @@
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
       
-      // После загрузки шапки подсвечиваем активный пункт
+      // После загрузки шапки подсвечиваем активный пункт (ИСПРАВЛЕНО)
       setTimeout(() => {
         const currentPath = window.location.pathname;
         const navLinks = document.querySelectorAll('.nav-links a');
         
         navLinks.forEach(link => {
           const href = link.getAttribute('href');
-          if (href === '/arhiv/') {
+          // Проверяем, что ссылка ведет на архив (содержит sobytiya)
+          if (href && href.includes('/sobytiya/')) {
             link.classList.add('active');
+          } else {
+            link.classList.remove('active');
           }
         });
       }, 100);
@@ -604,11 +607,11 @@
       console.error('Ошибка загрузки шапки:', error);
       // Заглушка на случай ошибки
       document.getElementById('header-placeholder').innerHTML = `
-        <header class="header" style="padding: 30px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2);">
+        <header style="padding: 30px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; position: sticky; top: 0; z-index: 100;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 10px 24px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px;">🧠 Виртуальный психолог</a>
+              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 10px 24px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: 0.9rem;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
