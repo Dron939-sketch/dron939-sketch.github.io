@@ -40,6 +40,15 @@
       text-transform: uppercase;
     }
 
+    h1 {
+      font-size: 4.5rem;
+      font-weight: 200;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
     h2 {
       font-size: 2.2rem;
       font-weight: 300;
@@ -161,9 +170,9 @@
       color: white;
     }
 
-    /* ===== ГЕРОЙ (ФИНАЛЬНАЯ ВЕРСИЯ) ===== */
+    /* ===== ГЕРОЙ ===== */
     .hero {
-      padding: 120px 0 100px;
+      padding: 100px 0;
     }
 
     .hero-grid {
@@ -173,13 +182,11 @@
       align-items: center;
     }
 
-    h1 {
-      font-size: 4.5rem;
-      font-weight: 200;
-      margin-bottom: 2rem;
-      color: #FFFFFF;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+    .hero-subtitle {
+      font-size: 1rem;
+      letter-spacing: 0.3em;
+      color: #3A86FF;
+      margin-bottom: 20px;
       text-transform: uppercase;
     }
 
@@ -188,7 +195,7 @@
       font-weight: 200;
       line-height: 1.3;
       color: #FFFFFF;
-      margin-bottom: 3rem;
+      margin: 30px 0 30px;
       letter-spacing: -0.01em;
       border-left: 3px solid #C6A43F;
       padding-left: 25px;
@@ -198,7 +205,7 @@
       display: flex;
       align-items: flex-start;
       gap: 15px;
-      margin-bottom: 2rem;
+      margin-bottom: 40px;
     }
 
     .gold-asterisk {
@@ -225,30 +232,10 @@
       padding-bottom: 2px;
     }
 
-    .hero-how {
+    .hero-buttons {
       display: flex;
-      align-items: flex-start;
-      gap: 15px;
-      margin-top: 1rem;
-      opacity: 0.8;
-    }
-
-    .gold-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background: #C6A43F;
-      border-radius: 50%;
-      margin-top: 8px;
-      flex-shrink: 0;
-      box-shadow: 0 0 10px #C6A43F;
-    }
-
-    .hero-how-text {
-      font-size: 1.1rem;
-      color: #AAAAAA;
-      line-height: 1.5;
-      max-width: 400px;
+      gap: 30px;
+      flex-wrap: wrap;
     }
 
     /* ===== ВИДЕО ===== */
@@ -329,6 +316,42 @@
     }
 
     /* ===== ПРОЕКТЫ ===== */
+    /* Новый блок с текстом про продукты */
+    .products-intro {
+      margin: 30px 0 50px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .products-intro-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      max-width: 700px;
+      padding: 20px 30px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    .gold-dot-large {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #C6A43F;
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 0 15px #C6A43F;
+    }
+
+    .products-intro p {
+      font-size: 1.2rem;
+      color: #F0F0F0;
+      margin: 0;
+      line-height: 1.5;
+    }
+
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -648,20 +671,12 @@
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 1.5rem;
-      }
-      
+      h1 { font-size: 3rem; }
       h2 { font-size: 1.8rem; }
       
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 40px;
-      }
-      
-      .hero {
-        padding: 80px 0 60px;
       }
       
       .hero-promise {
@@ -673,8 +688,8 @@
         font-size: 1.4rem;
       }
       
-      .hero-how-text {
-        font-size: 1rem;
+      .hero-buttons {
+        gap: 20px;
       }
       
       .strategies-grid,
@@ -706,6 +721,18 @@
       .blog-preview-card {
         padding: 25px;
       }
+      
+      .products-intro-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .gold-dot-large {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
     }
   </style>
 </head>
@@ -730,11 +757,12 @@
   </div>
 </header>
 
-<!-- ГЕРОЙ (ФИНАЛЬНАЯ ВЕРСИЯ — БЕЗ КНОПОК) -->
+<!-- ГЕРОЙ -->
 <section id="home" class="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
+        <div class="hero-subtitle">тренер системного и латерального мышления</div>
         <h1>Андрей Мейстер</h1>
         
         <div class="hero-promise">
@@ -750,12 +778,10 @@
           </span>
         </div>
         
-        <div class="hero-how">
-          <span class="gold-dot"></span>
-          <span class="hero-how-text">Мои продукты работают без меня — книги, игры, практикумы. Вы просто берете их и применяете.</span>
+        <div class="hero-buttons">
+          <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Консультация</a>
+          <a href="#projects" class="btn">Проекты</a>
         </div>
-        
-        <!-- КНОПКИ ПОЛНОСТЬЮ УДАЛЕНЫ -->
       </div>
       <div class="hero-image">
         <div class="video-wrapper">
@@ -803,6 +829,15 @@
 <section id="projects" class="section">
   <div class="container">
     <h2>МОИ ПРОЕКТЫ</h2>
+    
+    <!-- ПЕРЕНЕСЕННЫЙ ТЕКСТ ПРО ПРОДУКТЫ -->
+    <div class="products-intro">
+      <div class="products-intro-content">
+        <span class="gold-dot-large"></span>
+        <p>Мои продукты работают без меня. Книги, игры, практикумы — это готовые инструменты. Вы просто берете их и применяете.</p>
+      </div>
+    </div>
+    
     <div class="projects-grid">
       <div class="project-card">
         <div class="project-icon">🧠</div>
