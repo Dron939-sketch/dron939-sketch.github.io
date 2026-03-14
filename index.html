@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Андрей Мейстер — системное мышление</title>
-  <!-- Подключаем Inter (как в оригинале) -->
+  <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
@@ -26,12 +26,15 @@
       color: #F0F0F0;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
+      width: 100%;
     }
 
     section {
@@ -114,6 +117,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
 
     .btn::before {
@@ -145,7 +149,7 @@
       position: sticky;
       top: 0;
       background-color: #0C0C0C;
-      z-index: 100;
+      z-index: 1000;
       width: 100%;
     }
 
@@ -154,6 +158,7 @@
       justify-content: space-between;
       align-items: center;
       min-height: 60px;
+      width: 100%;
     }
 
     .logo {
@@ -161,6 +166,8 @@
       font-weight: 300;
       letter-spacing: 0.3em;
       color: #FFFFFF;
+      white-space: nowrap;
+      z-index: 1001;
     }
 
     .logo span {
@@ -178,7 +185,7 @@
       border: none;
       cursor: pointer;
       padding: 0;
-      z-index: 110;
+      z-index: 1001;
     }
 
     .burger span {
@@ -232,17 +239,19 @@
     /* Кнопка в шапке */
     .btn-header {
       display: inline-block;
-      padding: 10px 24px;
+      padding: 8px 20px;
       background: linear-gradient(to right, #00A8E8, #3A86FF);
       color: white;
       border-radius: 30px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
       text-transform: none;
       letter-spacing: normal;
       border: none;
       box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
       white-space: nowrap;
+      transition: all 0.3s ease;
+      z-index: 1001;
     }
 
     .btn-header:hover {
@@ -261,74 +270,11 @@
       display: none;
     }
 
-    /* Мобильная версия */
-    @media (max-width: 992px) {
-      .nav-links {
-        gap: 30px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .desktop-only {
-        display: none;
-      }
-      
-      .mobile-only {
-        display: block;
-        background: linear-gradient(to right, #00A8E8, #3A86FF);
-        color: white;
-        border-radius: 30px;
-        margin-top: 20px;
-        text-transform: none !important;
-        font-weight: 500 !important;
-        border: none !important;
-        text-align: center;
-        padding: 15px 0;
-      }
-      
-      .mobile-only:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-        color: white !important;
-        border-bottom-color: transparent !important;
-      }
-
-      .burger {
-        display: flex;
-      }
-      
-      .nav-links {
-        position: fixed;
-        top: 70px;
-        left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
-        background-color: #0C0C0C;
-        flex-direction: column;
-        padding: 40px 20px;
-        transition: left 0.3s ease;
-        z-index: 100;
-        overflow-y: auto;
-        gap: 10px;
-      }
-      
-      .nav-links.active {
-        left: 0;
-      }
-      
-      .nav-links a {
-        font-size: 1.2rem;
-        padding: 15px 0;
-        width: 100%;
-        text-align: center;
-        border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      }
-    }
-
     /* ===== ГЕРОЙ ===== */
     .hero {
       padding: 100px 0;
       background-color: #0C0C0C;
+      width: 100%;
     }
 
     .hero-grid {
@@ -356,6 +302,7 @@
       color: #FFFFFF;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      word-wrap: break-word;
     }
 
     .hero-phrase-line2 {
@@ -367,6 +314,7 @@
       letter-spacing: 0.02em;
       margin-top: 0.5rem;
       text-transform: none;
+      word-wrap: break-word;
     }
 
     .hero-divider {
@@ -389,6 +337,7 @@
       display: flex;
       gap: 30px;
       margin-top: 10px;
+      flex-wrap: wrap;
     }
 
     /* ===== ВИДЕО ===== */
@@ -479,6 +428,7 @@
     .section {
       padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      width: 100%;
     }
 
     .help-grid {
@@ -497,6 +447,7 @@
       opacity: 0;
       display: flex;
       flex-direction: column;
+      height: 100%;
     }
 
     .help-card:nth-child(1) { animation-delay: 0.1s; }
@@ -555,6 +506,7 @@
       opacity: 0;
       display: flex;
       flex-direction: column;
+      height: 100%;
     }
 
     .project-card:nth-child(1) { animation-delay: 0.2s; }
@@ -568,19 +520,9 @@
       transform: translateY(-5px);
     }
 
-    .project-number {
+    .project-icon {
       font-size: 2.5rem;
-      font-weight: 100;
-      color: #3A86FF;
       margin-bottom: 20px;
-      opacity: 0.8;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .project-number span {
-      font-size: 2rem;
     }
 
     .project-question {
@@ -615,6 +557,7 @@
       padding: 80px 0;
       background-color: #0C0C0C;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      width: 100%;
     }
 
     .system-intro {
@@ -626,18 +569,115 @@
       letter-spacing: 0.1em;
     }
 
+    .cycle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 60px 0;
+    }
+
     .cycle-item {
       background-color: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 30px;
+      padding: 35px;
       transition: all 0.3s ease;
       border-radius: 8px;
+      text-align: left;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
+
+    .cycle-item:nth-child(1) { animation-delay: 0.1s; }
+    .cycle-item:nth-child(2) { animation-delay: 0.2s; }
+    .cycle-item:nth-child(3) { animation-delay: 0.3s; }
 
     .cycle-item:hover {
       border-color: #3A86FF;
       box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
       transform: translateY(-5px);
+    }
+
+    .cycle-item h3 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #FFFFFF;
+    }
+
+    .cycle-item p {
+      font-size: 1rem;
+      color: #CCCCCC;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    .cycle-quote {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      font-size: 0.9rem;
+      color: #666;
+      font-style: italic;
+    }
+
+    /* Блок ВЫБОР */
+    .choice-block {
+      text-align: center;
+      margin: 30px 0 60px;
+    }
+
+    .choice-inner {
+      display: inline-block;
+      background-color: rgba(58, 134, 255, 0.1);
+      border: 1px solid #3A86FF;
+      padding: 20px 40px;
+      border-radius: 50px;
+      max-width: 100%;
+    }
+
+    .choice-arrow {
+      font-size: 1.5rem;
+      font-weight: 200;
+      color: #3A86FF;
+      margin-bottom: 5px;
+    }
+
+    .choice-title {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #FFFFFF;
+      letter-spacing: 0.1em;
+    }
+
+    .choice-text {
+      font-size: 1rem;
+      color: #CCCCCC;
+      margin-top: 10px;
+      max-width: 400px;
+    }
+
+    /* Мои продукты работают без меня */
+    .products-block {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 40px 0 20px;
+    }
+
+    .products-title {
+      font-size: 2rem;
+      font-weight: 200;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    .products-text {
+      font-size: 1.2rem;
+      color: #CCCCCC;
+      line-height: 1.6;
     }
 
     /* ===== ПОСЛЕДНИЕ СТАТЬИ ===== */
@@ -646,6 +686,7 @@
       background-color: #F5F5F7;
       border-top: 1px solid #E0E0E0;
       border-bottom: 1px solid #E0E0E0;
+      width: 100%;
     }
 
     .blog-preview-section h2 {
@@ -676,6 +717,7 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      height: 100%;
     }
 
     .blog-preview-card:hover {
@@ -759,6 +801,7 @@
       padding: 60px 0 30px;
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       background-color: #0C0C0C;
+      width: 100%;
     }
 
     .footer-content {
@@ -766,6 +809,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .footer-logo {
@@ -776,6 +821,7 @@
     .social-links {
       display: flex;
       gap: 30px;
+      flex-wrap: wrap;
     }
 
     .social-links a {
@@ -804,8 +850,86 @@
 
     .text-blue { color: #3A86FF; }
 
-    /* ===== АДАПТИВНОСТЬ ===== */
+    /* ===== МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+    @media (max-width: 992px) {
+      .nav-links {
+        gap: 30px;
+      }
+      
+      .cycle-grid {
+        gap: 20px;
+      }
+    }
+
     @media (max-width: 768px) {
+      /* Шапка */
+      .desktop-only {
+        display: none;
+      }
+      
+      .mobile-only {
+        display: block;
+        background: linear-gradient(to right, #00A8E8, #3A86FF);
+        color: white;
+        border-radius: 30px;
+        margin: 10px auto 0;
+        text-transform: none !important;
+        font-weight: 500 !important;
+        border: none !important;
+        text-align: center;
+        padding: 15px 0;
+        width: 90%;
+        max-width: 280px;
+        font-size: 1rem;
+      }
+      
+      .mobile-only:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
+        color: white !important;
+        border-bottom-color: transparent !important;
+      }
+
+      .burger {
+        display: flex;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        padding: 30px 20px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        overflow-y: auto;
+        gap: 5px;
+      }
+      
+      .nav-links.active {
+        left: 0;
+      }
+      
+      .nav-links a {
+        font-size: 1.2rem;
+        padding: 15px 0;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      }
+      
+      /* Основной контент */
+      h1 {
+        font-size: 3rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -819,16 +943,96 @@
         font-size: 1.8rem;
       }
       
-      .help-grid,
-      .projects-grid,
+      .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .hero-buttons .btn {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .help-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .cycle-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
       .blog-preview-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .choice-inner {
+        padding: 15px 20px;
+      }
+      
+      .choice-title {
+        font-size: 1.3rem;
+      }
+      
+      .products-title {
+        font-size: 1.8rem;
       }
       
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+      }
+      
+      .burger {
+        width: 25px;
+        height: 18px;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-phrase-line1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-phrase-line2 {
+        font-size: 1.5rem;
+      }
+      
+      .help-card {
+        padding: 25px;
+      }
+      
+      .project-card {
+        padding: 30px 20px;
+      }
+      
+      .project-question {
+        font-size: 1.3rem;
+      }
+      
+      .blog-preview-card {
+        padding: 20px;
       }
     }
   </style>
@@ -855,7 +1059,7 @@
         <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
         <a href="/https-meysternlp.ru-/sobytiya/">Архив</a>
         <!-- Виртуальный психолог для мобильных -->
-        <a href="/https-meysternlp.ru-/virtual-psychologist/" class="mobile-only">🧠 Виртуальный психолог</a>
+        <a href="/https-meysternlp.ru-/virtual-psychologist/" class="mobile-only">Виртуальный психолог</a>
       </div>
       
       <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
@@ -949,9 +1153,7 @@
       
       <!-- Карточка 1 - Книги -->
       <div class="project-card">
-        <div class="project-number">
-          <span>📘</span> 01
-        </div>
+        <div class="project-icon">📘</div>
         <div class="project-question">ЧТО У МЕНЯ ВНУТРИ?</div>
         <div class="project-title">КНИГИ</div>
         <div class="project-desc">Увидеть свой нарратив, разобраться в его структуре</div>
@@ -959,9 +1161,7 @@
       
       <!-- Карточка 2 - Игры -->
       <div class="project-card">
-        <div class="project-number">
-          <span>🎲</span> 02
-        </div>
+        <div class="project-icon">🎲</div>
         <div class="project-question">КАК ЭТО РАБОТАЕТ?</div>
         <div class="project-title">ИГРЫ</div>
         <div class="project-desc">Научиться менять нарративы, пробовать в безопасной среде</div>
@@ -969,9 +1169,7 @@
       
       <!-- Карточка 3 - Практикум -->
       <div class="project-card">
-        <div class="project-number">
-          <span>✏️</span> 03
-        </div>
+        <div class="project-icon">✏️</div>
         <div class="project-question">ЗАЧЕМ ЭТО НУЖНО?</div>
         <div class="project-title">ПРАКТИКУМ</div>
         <div class="project-desc">Создать свой камень, чтобы он жил после тебя</div>
@@ -987,53 +1185,44 @@
     <h2>КАК ЭТО РАБОТАЕТ</h2>
     <p class="system-intro">Нарратив → Действия → Результаты. Ты можешь выбрать.</p>
     
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 60px 0;">
+    <div class="cycle-grid">
       
       <!-- Карточка 1: НАРРАТИВ -->
-      <div class="cycle-item" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; animation-delay: 0.1s; text-align: left; padding: 35px;">
-        <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF; margin-bottom: 20px; letter-spacing: 0.2em;">01</div>
-        <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #FFFFFF;">НАРРАТИВ</h3>
-        <p style="font-size: 1rem; color: #CCCCCC; line-height: 1.6; margin-bottom: 15px;">Определяет твои ценности и цели. Задает направление.</p>
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(58, 134, 255, 0.2);">
-          <p style="font-size: 0.9rem; color: #666; font-style: italic;">«Зачем я просыпаюсь утром?»</p>
-        </div>
+      <div class="cycle-item">
+        <h3>НАРРАТИВ</h3>
+        <p>Определяет твои ценности и цели. Задает направление.</p>
+        <div class="cycle-quote">«Зачем я просыпаюсь утром?»</div>
       </div>
       
       <!-- Карточка 2: ДЕЙСТВИЯ -->
-      <div class="cycle-item" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; animation-delay: 0.2s; text-align: left; padding: 35px;">
-        <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF; margin-bottom: 20px; letter-spacing: 0.2em;">02</div>
-        <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #FFFFFF;">ДЕЙСТВИЯ</h3>
-        <p style="font-size: 1rem; color: #CCCCCC; line-height: 1.6; margin-bottom: 15px;">Ты делаешь то, что соответствует нарративу. Осознанно или нет.</p>
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(58, 134, 255, 0.2);">
-          <p style="font-size: 0.9rem; color: #666; font-style: italic;">«Почему я поступаю именно так?»</p>
-        </div>
+      <div class="cycle-item">
+        <h3>ДЕЙСТВИЯ</h3>
+        <p>Ты делаешь то, что соответствует нарративу. Осознанно или нет.</p>
+        <div class="cycle-quote">«Почему я поступаю именно так?»</div>
       </div>
       
       <!-- Карточка 3: РЕЗУЛЬТАТЫ -->
-      <div class="cycle-item" style="animation: fadeUp 0.6s ease-out forwards; opacity: 0; animation-delay: 0.3s; text-align: left; padding: 35px;">
-        <div style="font-size: 1.2rem; font-weight: 300; color: #3A86FF; margin-bottom: 20px; letter-spacing: 0.2em;">03</div>
-        <h3 style="font-size: 1.8rem; margin-bottom: 25px; color: #FFFFFF;">РЕЗУЛЬТАТЫ</h3>
-        <p style="font-size: 1rem; color: #CCCCCC; line-height: 1.6; margin-bottom: 15px;">То, что ты получаешь в жизни. То, во что превращается твой нарратив.</p>
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(58, 134, 255, 0.2);">
-          <p style="font-size: 0.9rem; color: #666; font-style: italic;">«Это вообще моя жизнь?»</p>
-        </div>
+      <div class="cycle-item">
+        <h3>РЕЗУЛЬТАТЫ</h3>
+        <p>То, что ты получаешь в жизни. То, во что превращается твой нарратив.</p>
+        <div class="cycle-quote">«Это вообще моя жизнь?»</div>
       </div>
       
     </div>
     
     <!-- Блок ВЫБОР -->
-    <div style="text-align: center; margin: 30px 0 60px;">
-      <div style="display: inline-block; background-color: rgba(58, 134, 255, 0.1); border: 1px solid #3A86FF; padding: 20px 40px; border-radius: 50px;">
-        <div style="font-size: 1.5rem; font-weight: 200; color: #3A86FF; margin-bottom: 5px;">⬆️</div>
-        <div style="font-size: 1.5rem; font-weight: 300; color: #FFFFFF; letter-spacing: 0.1em;">ВЫБОР</div>
-        <p style="font-size: 1rem; color: #CCCCCC; margin-top: 10px; max-width: 400px;">Ты можешь поменять нарратив. А можешь оставить всё как есть.</p>
+    <div class="choice-block">
+      <div class="choice-inner">
+        <div class="choice-arrow">⬆️</div>
+        <div class="choice-title">ВЫБОР</div>
+        <div class="choice-text">Ты можешь поменять нарратив. А можешь оставить всё как есть.</div>
       </div>
     </div>
     
     <!-- Мои продукты работают без меня -->
-    <div style="max-width: 700px; margin: 0 auto; text-align: center; padding: 40px 0 20px;">
-      <p style="font-size: 2rem; font-weight: 200; color: #FFFFFF; margin-bottom: 20px;">Мои продукты работают без меня</p>
-      <p style="font-size: 1.2rem; color: #CCCCCC; line-height: 1.6;">Книги, игры, практикумы — это готовые инструменты. Вы просто берёте их и применяете.</p>
+    <div class="products-block">
+      <div class="products-title">Мои продукты работают без меня</div>
+      <div class="products-text">Книги, игры, практикумы — это готовые инструменты. Вы просто берёте их и применяете.</div>
     </div>
     
   </div>
@@ -1111,7 +1300,7 @@
     
     navLinks.forEach(link => {
       const href = link.getAttribute('href');
-      const cleanHref = href.replace('/https-meysternlp.ru-', '');
+      const cleanHref = href ? href.replace('/https-meysternlp.ru-', '') : '';
       const cleanPath = currentPath.replace('/https-meysternlp.ru-', '');
       
       if (cleanPath === cleanHref || 
