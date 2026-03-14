@@ -14,11 +14,11 @@
   <meta property="og:title" content="Архив материалов — Андрей Мейстер">
   <meta property="og:description" content="Видео и тексты: лекции, инструкции, разборы. То, что можно скачать и использовать.">
   <meta property="og:image" content="/https-meysternlp.ru-/images/archive-preview.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/arhiv/">
+  <meta property="og:url" content="https://dron939-sketch.github.io/sobytiya/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/arhiv/">
+  <link rel="canonical" href="https://dron939-sketch.github.io/sobytiya/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -134,78 +134,6 @@
     .btn-small {
       padding: 8px 16px;
       font-size: 0.75rem;
-    }
-
-    /* ===== ШАПКА ===== */
-    .header {
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      position: sticky;
-      top: 0;
-      background-color: #0C0C0C;
-      z-index: 100;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #FFFFFF;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      font-weight: 400;
-      letter-spacing: normal;
-      font-size: 1rem;
-      text-transform: none;
-      border-bottom: 2px solid transparent;
-      padding-bottom: 5px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
-    }
-
-    .btn-header {
-      display: inline-block;
-      padding: 10px 24px;
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
-      color: white;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-      border: none;
-      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
-    }
-
-    .btn-header:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-      color: white;
     }
 
     /* ===== СТРАНИЦА АРХИВА ===== */
@@ -458,15 +386,6 @@
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
       
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .nav-links {
-        gap: 15px;
-      }
-      
       .section-name {
         font-size: 1.5rem;
       }
@@ -493,23 +412,8 @@
 </head>
 <body>
 
-<!-- ШАПКА -->
-<header class="header">
-  <div class="container">
-    <div class="nav">
-      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
-      <div class="nav-links">
-        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-        <a href="/https-meysternlp.ru-/igry/">Игры</a>
-        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
-        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
-        <a href="/https-meysternlp.ru-/arhiv/" class="active">Архив</a>
-      </div>
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
-    </div>
-  </div>
-</header>
+<!-- ШАПКА ПОДГРУЖАЕТСЯ ИЗ header.html -->
+<div id="header-placeholder"></div>
 
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
@@ -557,7 +461,7 @@
         <div class="material-meta">PDF • Гайд 12</div>
         <div class="material-description">Практическое руководство по работе со страхами и тревожными состояниями.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд 12_гайд по страхам.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="PDF/Гайд 12_гайд по страхам.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -568,7 +472,7 @@
         <div class="material-meta">PDF • Гайд 7</div>
         <div class="material-description">Практические упражнения и техники.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд 7.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="PDF/Гайд 7.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -579,7 +483,7 @@
         <div class="material-meta">PDF • Гайд</div>
         <div class="material-description">Анализ деструктивных паттернов и способы работы с ними.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд _ЯДЫ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="PDF/Гайд _ЯДЫ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -590,7 +494,7 @@
         <div class="material-meta">PDF • Гайд 10</div>
         <div class="material-description">Приложение к Матрице контроля — дополнительные материалы и упражнения.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -601,7 +505,7 @@
         <div class="material-meta">PDF • Гайд 15</div>
         <div class="material-description">Сборник терапевтических сказок для работы с подсознанием.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд_15_Терапевтические сказки.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="PDF/Гайд_15_Терапевтические сказки.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -612,7 +516,7 @@
         <div class="material-meta">PDF • Теория манипуляции</div>
         <div class="material-description">Основной теоретический материал по Матрице контроля из курса «Теория манипуляции».</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
+          <a href="PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>
         </div>
       </div>
     </div>
@@ -653,6 +557,42 @@
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
+
+<script>
+  // Загружаем шапку из header.html
+  fetch('/https-meysternlp.ru-/header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+      
+      // После загрузки шапки подсвечиваем активный пункт
+      setTimeout(() => {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+        
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === '/sobytiya/') {
+            link.classList.add('active');
+          }
+        });
+      }, 100);
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки шапки:', error);
+      // Заглушка на случай ошибки
+      document.getElementById('header-placeholder').innerHTML = `
+        <header class="header" style="padding: 30px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2);">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 10px 24px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px;">🧠 Виртуальный психолог</a>
+            </div>
+          </div>
+        </header>
+      `;
+    });
+</script>
 
 </body>
 </html>
