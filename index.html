@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Андрей Мейстер — системное мышление</title>
+  <title>Андрей Мейстер — нарративы и мышление</title>
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
@@ -97,6 +97,16 @@
       box-shadow: 0 0 20px #3A86FF;
     }
 
+    .btn-gold {
+      border-color: #C6A43F;
+    }
+
+    .btn-gold:hover {
+      background: #C6A43F;
+      color: #0C0C0C;
+      box-shadow: 0 0 20px #C6A43F;
+    }
+
     /* ===== ШАПКА ===== */
     .header {
       padding: 20px 0;
@@ -170,9 +180,9 @@
       color: white;
     }
 
-    /* ===== ГЕРОЙ (ОБНОВЛЕННЫЙ) ===== */
+    /* ===== ГЕРОЙ (НОВЫЙ — ФРАЗА-КРЮЧОК) ===== */
     .hero {
-      padding: 100px 0;
+      padding: 120px 0 100px;
     }
 
     .hero-grid {
@@ -191,37 +201,39 @@
       opacity: 0.7;
     }
 
-    .hero-promise {
-      font-size: 2.2rem;
+    .hero-phrase {
+      font-size: 3.5rem;
       font-weight: 200;
-      line-height: 1.3;
+      line-height: 1.2;
       color: #FFFFFF;
-      margin: 30px 0 30px;
+      margin: 20px 0 20px;
       letter-spacing: -0.01em;
-      border-left: 3px solid #C6A43F;
-      padding-left: 25px;
     }
 
-    .hero-result {
-      font-size: 1.8rem;
-      font-weight: 300;
-      color: #F0F0F0;
-      margin-bottom: 40px;
-      line-height: 1.4;
-    }
-
-    .gold-text {
+    .hero-phrase-gold {
       color: #C6A43F;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      border-bottom: 1px solid rgba(198, 164, 63, 0.3);
-      padding-bottom: 2px;
+      font-weight: 300;
+    }
+
+    .hero-name {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: #AAAAAA;
+      margin-bottom: 30px;
+      letter-spacing: 0.1em;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 30px;
+      gap: 20px;
       flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .hero-note {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 20px;
     }
 
     /* ===== ВИДЕО ===== */
@@ -270,44 +282,54 @@
       z-index: 10;
     }
 
-    /* ===== СТРАТЕГИИ ===== */
+    /* ===== СТРАТЕГИИ (ВОПРОСЫ) ===== */
     .section {
       padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
     }
 
-    .strategies-grid {
+    .section-light {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .questions-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
+      gap: 30px;
       margin-top: 40px;
     }
 
-    .strategy-card {
-      padding: 40px;
+    .question-card {
+      padding: 30px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
     }
 
-    .strategy-number {
-      font-size: 2.5rem;
-      color: #3A86FF;
-      margin-bottom: 20px;
-    }
-
-    .strategy-title {
+    .question-text {
       font-size: 1.5rem;
+      font-weight: 300;
       color: #FFFFFF;
       margin-bottom: 15px;
     }
 
-    .strategy-desc {
-      font-size: 0.95rem;
+    .question-desc {
+      font-size: 1rem;
       color: #AAAAAA;
-      margin-top: 10px;
+      margin-bottom: 20px;
     }
 
-    /* ===== ПРОЕКТЫ ===== */
+    .question-link {
+      color: #C6A43F;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .question-link:hover {
+      color: #FFFFFF;
+    }
+
+    /* ===== ПРОЕКТЫ (ДЛЯ ДВУХ АУДИТОРИЙ) ===== */
     .products-intro {
       margin: 30px 0 50px;
       display: flex;
@@ -354,6 +376,8 @@
       padding: 40px 30px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
+      display: flex;
+      flex-direction: column;
     }
 
     .project-icon {
@@ -368,19 +392,43 @@
       margin-bottom: 15px;
     }
 
-    .project-link {
-      display: inline-block;
+    .project-desc {
+      font-size: 0.95rem;
+      color: #AAAAAA;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .project-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-top: 20px;
+    }
+
+    .project-link {
+      color: #C6A43F;
       font-size: 0.9rem;
       text-transform: uppercase;
-      border-bottom: 1px solid transparent;
+      letter-spacing: 0.1em;
     }
 
     .project-link:hover {
-      border-bottom-color: #3A86FF;
+      color: #FFFFFF;
     }
 
-    /* ===== СИСТЕМНОЕ МЫШЛЕНИЕ - ПИРАМИДА ===== */
+    .project-buy {
+      color: #3A86FF;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .project-buy:hover {
+      color: #FFFFFF;
+    }
+
+    /* ===== ПИРАМИДА (ЛАБОРАТОРИЯ) ===== */
     .system-section {
       padding: 80px 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
@@ -389,8 +437,13 @@
     .system-intro {
       text-align: center;
       color: #3A86FF;
-      margin-bottom: 50px;
+      margin-bottom: 30px;
       font-size: 1.2rem;
+    }
+
+    .system-invite {
+      text-align: center;
+      margin-bottom: 50px;
     }
 
     .pyramid {
@@ -501,7 +554,7 @@
       color: #3A86FF;
     }
 
-    /* ===== ПОСЛЕДНИЕ СТАТЬИ (В СТИЛЕ APPLE) ===== */
+    /* ===== СТАТЬИ (ПОЛЕВЫЕ ЗАМЕТКИ) ===== */
     .blog-preview-section {
       padding: 80px 0;
       background-color: #F5F5F7;
@@ -615,6 +668,38 @@
       color: #FFFFFF;
     }
 
+    /* ===== ПРИГЛАШЕНИЕ ===== */
+    .invite-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .invite-title {
+      font-size: 2.5rem;
+      font-weight: 200;
+      color: #FFFFFF;
+      margin-bottom: 30px;
+    }
+
+    .invite-options {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .invite-option {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 20px 30px;
+      min-width: 200px;
+    }
+
+    .invite-option:hover {
+      border-color: #C6A43F;
+    }
+
     /* ===== ПОДВАЛ ===== */
     .footer {
       padding: 60px 0 30px;
@@ -659,6 +744,7 @@
     }
 
     .text-blue { color: #3A86FF; }
+    .text-gold { color: #C6A43F; }
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
@@ -670,20 +756,11 @@
         gap: 40px;
       }
       
-      .hero-promise {
-        font-size: 1.6rem;
-        padding-left: 15px;
+      .hero-phrase {
+        font-size: 2.5rem;
       }
       
-      .hero-result {
-        font-size: 1.4rem;
-      }
-      
-      .hero-buttons {
-        gap: 20px;
-      }
-      
-      .strategies-grid,
+      .questions-grid,
       .projects-grid,
       .blog-preview-grid {
         grid-template-columns: 1fr;
@@ -724,6 +801,12 @@
         margin-top: 0;
         margin-bottom: 10px;
       }
+      
+      .project-actions {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
@@ -733,43 +816,40 @@
 <header class="header">
   <div class="container">
     <div class="nav">
-      <a href="/https-meysternlp.ru-/obo-mne/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
       <div class="nav-links">
-        <a href="/https-meysternlp.ru-/" class="active">Главная</a>
-        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-        <a href="/https-meysternlp.ru-/igry/">Игры</a>
-        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
-        <a href="/https-meysternlp.ru-/sobytiya/">События</a>
-        <a href="/https-meysternlp.ru-/blog/">Статьи</a>
+        <a href="/" class="active">Главная</a>
+        <a href="/knigi/">Книги</a>
+        <a href="/igry/">Игры</a>
+        <a href="/treningi/">Практикумы</a>
+        <a href="/manifest/">Манифест</a>
+        <a href="/blog/">Статьи</a>
       </div>
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header">🧠 Виртуальный психолог</a>
+      <a href="/virtual-psychologist/" class="btn-header">🧠 Задать вопрос</a>
     </div>
   </div>
 </header>
 
-<!-- ГЕРОЙ (ОБНОВЛЕННЫЙ) -->
+<!-- ГЕРОЙ (ФРАЗА-КРЮЧОК) -->
 <section id="home" class="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="hero-subtitle">тренер системного и латерального мышления</div>
-        <h1>Андрей Мейстер</h1>
+        <div class="hero-subtitle">Андрей Мейстер</div>
         
-        <div class="hero-promise">
-          «Хватит тонуть в хаосе и чужих советах.<br>
-          Я даю вам мышление, которое само находит ответы».
+        <div class="hero-phrase">
+          Бог умер.<br>
+          <span class="hero-phrase-gold">Теперь мы сами по себе.</span>
         </div>
         
-        <div class="hero-result">
-          Вы будете знать <span class="gold-text">ЗАЧЕМ</span> просыпаться утром 
-          и <span class="gold-text">КАК</span> сделать результат
-        </div>
+        <div class="hero-name">или теперь я за него</div>
         
         <div class="hero-buttons">
-          <a href="#" class="btn" onclick="alert('Форма записи появится здесь')">Консультация</a>
-          <a href="#projects" class="btn">Проекты</a>
+          <a href="#method" class="btn btn-gold">Что это значит?</a>
+          <a href="#projects" class="btn">Смотреть инструменты</a>
         </div>
+        
+        <div class="hero-note">* короткая фраза, за которой час разговора</div>
       </div>
       <div class="hero-image">
         <div class="video-wrapper">
@@ -778,49 +858,58 @@
             Ваш браузер не поддерживает видео.
           </video>
         </div>
-        <div class="hero-sticker">системно</div>
+        <div class="hero-sticker">нарратив</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- СТРАТЕГИИ -->
-<section id="strategies" class="section">
+<!-- ЧТО ЭТО ЗНАЧИТ (короткая расшифровка) -->
+<section id="method" class="section section-light">
   <div class="container">
-    <h2>ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН</h2>
-    <div class="strategies-grid">
-      <div class="strategy-card">
-        <div class="strategy-number">01</div>
-        <div class="strategy-title">Принятие</div>
-        <p>Снизить ожидания, смириться, принять реальность. Помогу сравнить ваши цели с возможностями и дать честную обратную связь.</p>
-        <div class="strategy-desc">когда реальность не совпадает с ожиданиями</div>
+    <h2>Что это значит</h2>
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+      <p style="font-size: 1.4rem; color: #FFFFFF;">Старые нарративы рассыпались. Религия, идеология, великие цели — больше не работают.</p>
+      <p style="font-size: 1.2rem; margin-top: 20px;">Человек остался один. Но без нарратива он не живёт — он просто существует.</p>
+      <p style="font-size: 1.2rem; margin-top: 20px; color: #C6A43F;">Я учу видеть нарративы, понимать их и создавать свои. Чтобы ваш камень летел долго.</p>
+      <a href="/manifest/" class="btn btn-gold" style="margin-top: 40px;">Читать манифест</a>
+    </div>
+  </div>
+</section>
+
+<!-- ВОПРОСЫ (ДЛЯ ИССЛЕДОВАТЕЛЯ) -->
+<section class="section">
+  <div class="container">
+    <h2>Вопросы, которые вы себе задаёте</h2>
+    <div class="questions-grid">
+      <div class="question-card">
+        <div class="question-text">Как принять то, что нельзя изменить?</div>
+        <div class="question-desc">Реальность не совпадает с ожиданиями — и что дальше?</div>
+        <a href="/stati/prinyatie/" class="question-link">Исследовать →</a>
       </div>
-      <div class="strategy-card">
-        <div class="strategy-number">02</div>
-        <div class="strategy-title">Магия</div>
-        <p>Научу самогипнозу и работе с подсознанием без эзотерики. «Посылать сигналы Вселенной» — теперь научно.</p>
-        <div class="strategy-desc">когда хотите влиять на подсознание без эзотерики</div>
+      <div class="question-card">
+        <div class="question-text">Можно ли влиять на подсознание без эзотерики?</div>
+        <div class="question-desc">Научный подход к тому, что обычно называют «магией».</div>
+        <a href="/stati/magiya/" class="question-link">Исследовать →</a>
       </div>
-      <div class="strategy-card">
-        <div class="strategy-number">03</div>
-        <div class="strategy-title">Масштаб</div>
-        <p>Уйти от токсичных людей или создать компанию. Помогу с системным анализом бизнеса и маркетингом.</p>
-        <div class="strategy-desc">когда нужно вырасти или выйти из токсичных отношений</div>
+      <div class="question-card">
+        <div class="question-text">Как выйти из токсичных отношений?</div>
+        <div class="question-desc">Или масштабировать бизнес — системный подход.</div>
+        <a href="/stati/masshtab/" class="question-link">Исследовать →</a>
       </div>
-      <div class="strategy-card">
-        <div class="strategy-number">04</div>
-        <div class="strategy-title">Изменение</div>
-        <p>Изменить поведение, чтобы получить другую обратную связь. Здесь я — рациональный партнер.</p>
-        <div class="strategy-desc">когда хотите, чтобы люди вокруг реагировали иначе</div>
+      <div class="question-card">
+        <div class="question-text">Как изменить поведение, чтобы люди реагировали иначе?</div>
+        <div class="question-desc">Рациональный подход к изменениям.</div>
+        <a href="/stati/izmenenie/" class="question-link">Исследовать →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ПРОЕКТЫ -->
+<!-- ПРОЕКТЫ (ДВЕ ДОРОГИ) -->
 <section id="projects" class="section">
   <div class="container">
-    <h2>МОИ ПРОЕКТЫ</h2>
+    <h2>Мои проекты</h2>
     
     <div class="products-intro">
       <div class="products-intro-content">
@@ -833,30 +922,43 @@
       <div class="project-card">
         <div class="project-icon">🧠</div>
         <div class="project-title">Практикум</div>
-        <p>«Разговорный гипноз» — освоение навыков влияния в повседневной жизни.</p>
-        <a href="/https-meysternlp.ru-/treningi/" class="project-link">Подробнее →</a>
+        <div class="project-desc">«Разговорный гипноз» — навыки влияния в повседневной жизни.</div>
+        <div class="project-actions">
+          <a href="/treningi/razgovornyy-gipnoz/" class="project-link">Исследовать →</a>
+          <a href="/buy/praktikum/" class="project-buy">Купить</a>
+        </div>
       </div>
       <div class="project-card">
         <div class="project-icon">📘</div>
         <div class="project-title">Книги</div>
-        <p>Трилогия «Теория манипуляции» — бестселлеры по психологии влияния.</p>
-        <a href="/https-meysternlp.ru-/knigi/" class="project-link">Подробнее →</a>
+        <div class="project-desc">Трилогия «Теория манипуляции», «Концептикон» и другие.</div>
+        <div class="project-actions">
+          <a href="/knigi/" class="project-link">Исследовать →</a>
+          <a href="/buy/knigi/" class="project-buy">Купить</a>
+        </div>
       </div>
       <div class="project-card">
         <div class="project-icon">🎲</div>
         <div class="project-title">Игры</div>
-        <p>Дидактическая игра «Маркетолог» — учимся мыслить системно.</p>
-        <a href="/https-meysternlp.ru-/igry/" class="project-link">Подробнее →</a>
+        <div class="project-desc">Дидактическая игра «Маркетолог» — мыслить системно играя.</div>
+        <div class="project-actions">
+          <a href="/igry/marketing/" class="project-link">Исследовать →</a>
+          <a href="/buy/igry/" class="project-buy">Купить</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- СИСТЕМНОЕ МЫШЛЕНИЕ - ПИРАМИДА -->
+<!-- ПИРАМИДА (ЛАБОРАТОРИЯ) -->
 <section class="system-section">
   <div class="container">
-    <h2>СИСТЕМНОЕ МЫШЛЕНИЕ</h2>
+    <h2>Системное мышление</h2>
     <p class="system-intro">Всё взаимосвязано. Изменение одного элемента влияет на все остальные.</p>
+    
+    <div class="system-invite">
+      <p style="color: #AAAAAA;">Нажимайте на элементы пирамиды — увидите, как я анализирую реальность.</p>
+    </div>
     
     <div class="pyramid" id="pyramid">
       <div class="row top-row">
@@ -907,52 +1009,71 @@
       <div class="panel-example" id="panelExample">Пример: Высокий уровень кортизола (гормон стресса) заставляет нас видеть угрозы там, где их нет.</div>
     </div>
     
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="/metod/" class="btn btn-gold">Хочу научиться видеть так же</a>
+    </div>
+    
     <div class="about-author">
-      <p><strong>Андрей Мейстер</strong> — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика».</p>
+      <p><strong>Андрей Мейстер</strong> — психолог, когнитивный тренер, разработчик технологии системного мышления «Вариатика». Кандидат наук, автор бестселлера «Теория манипуляции».</p>
     </div>
   </div>
 </section>
 
-<!-- ПОСЛЕДНИЕ СТАТЬИ -->
+<!-- ПОСЛЕДНИЕ СТАТЬИ (ПОЛЕВЫЕ ЗАМЕТКИ) -->
 <section class="blog-preview-section">
   <div class="container">
-    <h2>ПОСЛЕДНИЕ СТАТЬИ</h2>
-    <p class="blog-preview-intro">Регулярно делюсь мыслями о системном мышлении, психологии и методах влияния</p>
+    <h2>Полевые заметки</h2>
+    <p class="blog-preview-intro">Регулярно исследую системное мышление, психологию и методы влияния. Вот свежие находки:</p>
     
     <div class="blog-preview-grid">
       <div class="blog-preview-card">
         <div class="card-date">20 марта 2026</div>
         <h3 class="card-title">Как вербует ФСБ: методы, схемы и психологические приемы</h3>
-        <p class="card-excerpt">Системный анализ методов вербовки: от поиска жертвы до полного контроля. Реальные примеры и способы защиты...</p>
+        <p class="card-excerpt">Системный анализ методов вербовки: от поиска жертвы до полного контроля...</p>
         <div class="card-footer">
-          <span class="card-views">👁️ 3.8K просмотров</span>
-          <a href="/https-meysternlp.ru-/blog/kak-verbuet-fsb-metody.html" class="card-link">Читать →</a>
+          <span class="card-views">👁️ 3.8K</span>
+          <a href="/blog/kak-verbuet-fsb/" class="card-link">Исследовать →</a>
         </div>
       </div>
 
       <div class="blog-preview-card">
         <div class="card-date">15 марта 2026</div>
-        <h3 class="card-title">Латеральное мышление: что это, техники и упражнения</h3>
-        <p class="card-excerpt">5 техник Эдварда де Боно для развития нестандартного мышления. Упражнения для повседневной практики...</p>
+        <h3 class="card-title">Латеральное мышление: техники и упражнения</h3>
+        <p class="card-excerpt">5 техник Эдварда де Боно для развития нестандартного мышления...</p>
         <div class="card-footer">
-          <span class="card-views">👁️ 2.4K просмотров</span>
-          <a href="/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html" class="card-link">Читать →</a>
+          <span class="card-views">👁️ 2.4K</span>
+          <a href="/blog/lateralnoe-myshlenie/" class="card-link">Исследовать →</a>
         </div>
       </div>
 
       <div class="blog-preview-card">
         <div class="card-date">2 марта 2026</div>
         <h3 class="card-title">Самогипноз для начинающих: пошаговая инструкция</h3>
-        <p class="card-excerpt">Как работать с подсознанием без эзотерики. 5 простых шагов для входа в трансовое состояние...</p>
+        <p class="card-excerpt">Как работать с подсознанием без эзотерики. 5 шагов для входа в трансовое состояние...</p>
         <div class="card-footer">
-          <span class="card-views">👁️ 2.3K просмотров</span>
-          <a href="/https-meysternlp.ru-/blog/samogipnoz-instrukciya.html" class="card-link">Читать →</a>
+          <span class="card-views">👁️ 2.3K</span>
+          <a href="/blog/samogipnoz/" class="card-link">Исследовать →</a>
         </div>
       </div>
     </div>
 
     <div class="blog-preview-footer">
-      <a href="/https-meysternlp.ru-/blog/" class="btn btn-outline">Все статьи блога →</a>
+      <a href="/blog/" class="btn btn-outline">Все заметки →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ПРИГЛАШЕНИЕ К ДИАЛОГУ -->
+<section class="invite-section">
+  <div class="container">
+    <h2 class="invite-title">Начать исследование</h2>
+    <p style="color: #AAAAAA; max-width: 600px; margin: 0 auto;">Выберите, что хотите изучить сегодня</p>
+    
+    <div class="invite-options">
+      <a href="/metod/" class="invite-option">Как работает мышление</a>
+      <a href="/knigi/" class="invite-option">Инструменты для влияния</a>
+      <a href="/igry/" class="invite-option">Системный анализ в игре</a>
+      <a href="/blog/" class="invite-option">Свежие статьи</a>
     </div>
   </div>
 </section>
@@ -969,7 +1090,7 @@
         <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
       </div>
     </div>
-    <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+    <div class="copyright">© Андрей Мейстер · нарративы и мышление · 2026</div>
   </div>
 </footer>
 
@@ -1032,14 +1153,6 @@
   });
 
   document.addEventListener('DOMContentLoaded', function() {
-    const path = window.location.pathname;
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      const href = link.getAttribute('href');
-      if (path === href || (href === '/https-meysternlp.ru-/' && path === '/https-meysternlp.ru-/')) {
-        link.classList.add('active');
-      }
-    });
-    
     updateText('hormones');
   });
 </script>
