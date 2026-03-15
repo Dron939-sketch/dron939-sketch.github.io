@@ -13,7 +13,7 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Разговорный гипноз. Пакет «Самостоятельный»">
   <meta property="og:description" content="38 видео с техниками речевого воздействия. Никакой магии — только алгоритмы.">
-  <meta property="og:image" content="/images/paket-samostoyatelnyy.jpg">
+  <meta property="og:image" content="/Пакет самостоятельный.jpg">
   <meta property="og:url" content="https://dron939-sketch.github.io/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
   <meta property="og:type" content="website">
   
@@ -230,9 +230,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: transparent; /* убран белый фон */
+      background-color: transparent;
       border-radius: 16px;
-      padding: 20px; /* уменьшен padding, так как нет белого фона */
+      padding: 20px;
       border: 1px solid rgba(58, 134, 255, 0.3);
       transition: all 0.3s ease;
     }
@@ -249,13 +249,13 @@
       height: auto;
       max-height: 300px;
       object-fit: contain;
-      transform: scale(1.2); /* увеличено на 10% (было 1.1) */
+      transform: scale(1.2);
       transition: transform 0.3s ease;
       filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
     }
 
     .product-image:hover img {
-      transform: scale(1.25); /* пропорциональное увеличение при наведении */
+      transform: scale(1.25);
     }
 
     /* ===== ЧТО ВХОДИТ ===== */
@@ -437,7 +437,7 @@
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/header.html')
+  fetch('header.html')  // ИСПРАВЛЕНО: убран слеш
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -534,7 +534,7 @@
     
     <!-- ФОТО ПРОДУКТА (БЕЗ БЕЛОГО ФОНА) -->
     <div class="product-image">
-      <img src="/images/paket-samostoyatelnyy.jpg" 
+      <img src="/Пакет самостоятельный.jpg"  <!-- ИСПРАВЛЕНО: прямой путь к файлу в корне -->
            alt="Разговорный гипноз Самостоятельный" 
            onerror="this.src='https://via.placeholder.com/500x400/0C0C0C/3A86FF?text=Разговорный+гипноз'">
     </div>
@@ -566,7 +566,9 @@
   <!-- ПРО АВТОРА -->
   <div class="author-section">
     <div class="author-image">
-      <img src="/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" onerror="this.src='https://via.placeholder.com/400x623/0C0C0C/3A86FF?text=Андрей+Мейстер'">
+      <img src="/Андрей Мейстер.jpg"  <!-- ИСПРАВЛЕНО: прямой путь к файлу в корне -->
+           alt="Андрей Мейстер" 
+           onerror="this.src='https://via.placeholder.com/400x623/0C0C0C/3A86FF?text=Андрей+Мейстер'">
     </div>
     <div class="author-info">
       <h3>Андрей Мейстер</h3>
@@ -585,7 +587,7 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/footer.html')
+  fetch('footer.html')  // ИСПРАВЛЕНО: убран слеш
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
