@@ -184,12 +184,6 @@
       border-top: 1px solid rgba(58, 134, 255, 0.2);
     }
 
-    .book-price {
-      font-size: 1.5rem;
-      color: #3A86FF; /* ИСПРАВЛЕНО: был золотой */
-      font-weight: 300;
-    }
-
     /* ===== ПОДВАЛ ===== */
     .footer {
       padding: 60px 0 30px;
@@ -224,7 +218,7 @@
     }
 
     .social-links a:hover {
-      color: #3A86FF; /* ИСПРАВЛЕНО: был золотой */
+      color: #3A86FF;
     }
 
     .copyright {
@@ -260,10 +254,6 @@
         font-size: 1.3rem;
       }
       
-      .book-price {
-        font-size: 1.3rem;
-      }
-      
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -284,12 +274,9 @@
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
       
-      // После загрузки шапки инициализируем бургер и подсветку
       setTimeout(() => {
-        // 1. Подсветка активного пункта (Книги)
-        const currentPath = window.location.pathname;
+        // Подсветка активного пункта (Книги)
         const navLinks = document.querySelectorAll('.nav-links a');
-        
         navLinks.forEach(link => {
           const href = link.getAttribute('href');
           if (href && href.includes('/knigi/')) {
@@ -297,7 +284,7 @@
           }
         });
         
-        // 2. Бургер-меню
+        // Бургер-меню
         const burger = document.getElementById('burgerBtn');
         const nav = document.getElementById('navLinks');
         
@@ -328,7 +315,6 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант на случай ошибки
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
@@ -362,8 +348,7 @@
       <div class="book-subtitle">Том 1 · Разговорный гипноз</div>
       <div class="book-description">Как нас обманывают и заставляют делать то, что нужно другим. Механизмы психологического воздействия и способы защиты.</div>
       <div class="book-meta">
-        <span class="book-price">990 ₽</span>
-        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже. Пожалуйста, напишите нам в Telegram: @meysternlp')">КУПИТЬ</a>
+        <a href="ССЫЛКА_НА_ТОМ_1" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.8rem;">КУПИТЬ НА OZON</a>
       </div>
     </div>
 
@@ -374,8 +359,7 @@
       <div class="book-subtitle">Том 2 · Проницательность</div>
       <div class="book-description">Практические техники влияния и противостояния. Разбор реальных кейсов из бизнеса, политики и межличностных отношений.</div>
       <div class="book-meta">
-        <span class="book-price">1 090 ₽</span>
-        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже. Пожалуйста, напишите нам в Telegram: @meysternlp')">КУПИТЬ</a>
+        <span style="color: #666; font-size: 0.9rem;">Скоро в продаже</span>
       </div>
     </div>
 
@@ -386,8 +370,7 @@
       <div class="book-subtitle">Том 3 · Стимульный контроль</div>
       <div class="book-description">Мастерство системного влияния. Как создавать долгосрочные стратегии и управлять сложными системами коммуникации.</div>
       <div class="book-meta">
-        <span class="book-price">1 190 ₽</span>
-        <a href="#" class="btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="alert('Покупка будет доступна позже. Пожалуйста, напишите нам в Telegram: @meysternlp')">КУПИТЬ</a>
+        <span style="color: #666; font-size: 0.9rem;">Скоро в продаже</span>
       </div>
     </div>
   </div>
@@ -405,7 +388,6 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
-      // Запасной вариант
       document.getElementById('footer-placeholder').innerHTML = `
         <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); margin-top: 40px;">
           <div class="container">
