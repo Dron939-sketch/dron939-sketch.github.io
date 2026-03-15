@@ -2,17 +2,17 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Системное мышление в бизнесе: как принимать решения | Андрей Мейстер</title>
-  <meta name="description" content="Как системное мышление помогает в бизнесе. Принципы системного подхода к управлению, анализ сложных ситуаций, точки рычага. Примеры из практики.">
+  <meta name="description" content="Как системное мышление помогает в бизнесе. 7 принципов системного подхода, 5 реальных кейсов, точки рычага и инструменты для руководителей. С примерами из практики.">
   <meta name="keywords" content="системное мышление, системный подход в бизнесе, управление, принятие решений, точки рычага, бизнес-анализ">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH ДЛЯ СОЦСЕТЕЙ -->
   <meta property="og:title" content="Системное мышление в бизнесе: как принимать решения">
-  <meta property="og:description" content="Принципы системного подхода к управлению. Как видеть картину целиком и находить неочевидные решения.">
+  <meta property="og:description" content="7 принципов системного подхода к управлению. Как видеть картину целиком и находить неочевидные решения. Реальные кейсы из бизнеса.">
   <meta property="og:image" content="/https-meysternlp.ru-/images/sistemnoe-myshlenie-biznes.jpg">
   <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/blog/sistemnoe-myshlenie-v-biznese.html">
   <meta property="og:type" content="article">
@@ -29,420 +29,1016 @@
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
   <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/blog/sistemnoe-myshlenie-v-biznese.html">
   
+  <!-- Подключаем Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
   <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #0C0C0C;
-      color: #F0F0F0;
-      line-height: 1.6;
+      background-color: #FFFFFF;
+      color: #1D1D1F;
+      line-height: 1.7;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 0 20px;
+      width: 100%;
     }
 
-    h1 {
-      font-size: 3rem;
-      font-weight: 200;
-      margin: 60px 0 20px;
-      color: #FFFFFF;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* ШАПКА */
-    .header {
-      padding: 30px 0;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-      background-color: #0C0C0C;
+    .section-block {
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
 
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      color: #FFFFFF;
-      text-decoration: none;
-    }
-
-    .logo span {
-      color: #3A86FF;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: #F0F0F0;
-      text-decoration: none;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 5px;
-    }
-
-    .nav-links a:hover {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
-      border: 1px solid #3A86FF;
-      background: transparent;
-      color: #FFFFFF;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn:hover {
-      background: #3A86FF;
-      color: #0C0C0C;
-    }
-
-    /* СТАТЬЯ */
+    /* ===== СТАТЬЯ ===== */
     .article-header {
-      margin: 40px 0;
+      margin: 60px 0 30px;
       padding-bottom: 30px;
-      border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      border-bottom: 1px solid #E0E0E0;
     }
 
     .article-meta {
       display: flex;
       gap: 30px;
-      color: #C6A43F;
+      color: #6E6E73;
       margin-bottom: 20px;
       font-size: 0.9rem;
+      flex-wrap: wrap;
     }
 
-    .article-content {
-      font-size: 1.1rem;
-      line-height: 1.8;
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1D1D1F;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      text-transform: none;
     }
 
-    .article-content h2 {
-      color: #3A86FF;
-      font-size: 1.8rem;
-      margin: 40px 0 20px;
-      font-weight: 300;
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      margin: 60px 0 25px;
+      color: #1D1D1F;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .article-content h3 {
-      color: #FFFFFF;
-      font-size: 1.3rem;
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 500;
       margin: 30px 0 15px;
+      color: #1D1D1F;
+      text-transform: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .article-content p {
+    p {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: #1D1D1F;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ===== СТАТИСТИКА ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin: 50px 0;
+    }
+
+    .stat-item {
+      background: #F5F5F7;
+      padding: 30px 20px;
+      text-align: center;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 600;
+      color: #3A86FF;
+      margin-bottom: 5px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      color: #6E6E73;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== ПРИНЦИПЫ ===== */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .principle-card {
+      background: #F5F5F7;
+      border: 1px solid #E0E0E0;
+      border-radius: 20px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .principle-card:hover {
+      border-color: #3A86FF;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(58, 134, 255, 0.1);
+    }
+
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #3A86FF;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .principle-card:hover::before {
+      opacity: 1;
+    }
+
+    .principle-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
       margin-bottom: 20px;
     }
 
-    .article-content ul, 
-    .article-content ol {
-      margin: 20px 0 20px 30px;
-      color: #CCCCCC;
+    .principle-icon {
+      font-size: 2.5rem;
     }
 
-    .article-content li {
-      margin-bottom: 10px;
-    }
-
-    .highlight {
+    .principle-number {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #3A86FF;
       background: rgba(58, 134, 255, 0.1);
-      border-left: 3px solid #C6A43F;
-      padding: 20px;
-      margin: 30px 0;
+      padding: 4px 12px;
+      border-radius: 30px;
     }
 
-    .case-block {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid #3A86FF;
-      padding: 25px;
-      margin: 25px 0;
-      border-radius: 8px;
+    .principle-card h3 {
+      margin: 0 0 15px 0;
+      font-size: 1.4rem;
     }
 
-    .case-title {
-      color: #C6A43F;
+    .principle-card p {
+      margin: 0;
+      color: #6E6E73;
+    }
+
+    /* ===== КЕЙСЫ ===== */
+    .case-study {
+      background: #FFFFFF;
+      border: 1px solid #E0E0E0;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 40px 0;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+
+    .case-study:hover {
+      border-color: #3A86FF;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(58, 134, 255, 0.1);
+    }
+
+    .case-study h4 {
+      color: #3A86FF;
+      margin-bottom: 15px;
       font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .case-study .case-tag {
+      background: #E8F1FF;
+      color: #3A86FF;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: inline-block;
       margin-bottom: 15px;
     }
 
-    .principle-item {
+    .case-study .case-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
       margin: 20px 0;
+    }
+
+    .case-study .linear {
+      background: #F5F5F7;
       padding: 15px;
-      border: 1px solid rgba(58, 134, 255, 0.2);
+      border-radius: 12px;
+      border-left: 3px solid #FF3B30;
+    }
+
+    .case-study .linear h5 {
+      color: #FF3B30;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .case-study .system {
+      background: #F5F5F7;
+      padding: 15px;
+      border-radius: 12px;
+      border-left: 3px solid #34C759;
+    }
+
+    .case-study .system h5 {
+      color: #34C759;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .case-study .result {
+      background: #E8F1FF;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 20px;
+      color: #1D1D1F;
+    }
+
+    /* ===== ЦИТАТЫ ===== */
+    .quote-block {
+      margin: 50px 0;
+      padding: 40px;
+      background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .quote-block::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 8rem;
+      color: #3A86FF;
+      opacity: 0.1;
+      font-family: Georgia, serif;
+    }
+
+    .quote-block blockquote {
+      font-size: 1.6rem;
+      line-height: 1.4;
+      color: #1D1D1F;
+      margin-bottom: 20px;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-block figcaption {
+      color: #6E6E73;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quote-block figcaption::before {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: #3A86FF;
+      display: inline-block;
+    }
+
+    /* ===== КЛЮЧЕВЫЕ МЫСЛИ ===== */
+    .key-takeaway {
+      margin: 40px 0;
+      padding: 30px;
+      background: linear-gradient(135deg, #E8F1FF 0%, #F0F8FF 100%);
+      border-radius: 20px;
+      border-left: 4px solid #3A86FF;
+    }
+
+    .takeaway-label {
+      display: block;
+      font-weight: 600;
+      color: #3A86FF;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+
+    .key-takeaway p {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    /* ===== ИНСТРУМЕНТЫ ===== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .tool-card {
+      background: #F5F5F7;
+      border: 1px solid #E0E0E0;
+      border-radius: 16px;
+      padding: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .tool-card:hover {
+      border-color: #3A86FF;
+      transform: translateY(-3px);
+    }
+
+    .tool-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .tool-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #1D1D1F;
+    }
+
+    .tool-card p {
+      font-size: 0.95rem;
+      color: #6E6E73;
+      margin: 0;
+    }
+
+    /* ===== ОШИБКИ ===== */
+    .errors-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .error-item {
+      background: #F5F5F7;
+      border: 1px solid #E0E0E0;
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .error-item .error-title {
+      color: #FF3B30;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .error-item p {
+      font-size: 0.95rem;
+      color: #6E6E73;
+      margin: 0;
+    }
+
+    /* ===== CTA-БЛОК ===== */
+    .cta-block {
+      background: linear-gradient(135deg, #F5F5F7 0%, #FFFFFF 100%);
+      border: 2px solid #3A86FF;
+      padding: 40px;
+      margin: 40px 0;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .cta-block h3 {
+      color: #1D1D1F;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+
+    .cta-block p {
+      color: #6E6E73;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-block .btn {
+      display: inline-block;
+      padding: 16px 32px;
+      background: #3A86FF;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .cta-block .btn-outline {
+      background: transparent;
+      border: 2px solid #3A86FF;
+      color: #3A86FF;
+    }
+
+    .cta-block .btn:hover {
+      background: #1D1D1F;
+      border-color: #1D1D1F;
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== ЧИТАЙТЕ ТАКЖЕ ===== */
+    .related-articles {
+      margin: 60px 0;
+      padding: 40px;
+      background: #F5F5F7;
+      border-radius: 20px;
+    }
+
+    .related-articles h3 {
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .related-item {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .related-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .related-item a {
+      color: #1D1D1F;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .related-item a:hover {
+      color: #3A86FF;
+    }
+
+    .related-item span {
+      color: #6E6E73;
+      font-size: 0.85rem;
     }
 
     .back-link {
       display: inline-block;
-      margin: 40px 0;
+      margin: 40px 0 60px;
       color: #3A86FF;
       font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    /* ПОДВАЛ */
-    .footer {
-      padding: 60px 0 30px;
-      border-top: 1px solid rgba(58, 134, 255, 0.2);
-      margin-top: 60px;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 30px;
-    }
-
-    .social-links a {
-      color: #F0F0F0;
+      font-weight: 500;
       text-decoration: none;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      padding: 12px 30px;
+      border: 1px solid #3A86FF;
+      border-radius: 30px;
+      transition: all 0.3s ease;
     }
 
-    .social-links a:hover {
-      color: #C6A43F;
+    .back-link:hover {
+      background: #3A86FF;
+      color: white;
     }
 
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
-      opacity: 0.5;
-    }
-
-    .text-blue { color: #3A86FF; }
-
+    /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .nav { flex-direction: column; align-items: flex-start; }
-      .article-meta { flex-direction: column; gap: 10px; }
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 1.8rem; }
+      
+      .article-meta {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .stats-grid,
+      .principles-grid,
+      .tools-grid,
+      .errors-grid,
+      .related-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .case-study .case-comparison {
+        grid-template-columns: 1fr;
+      }
+      
+      .quote-block {
+        padding: 30px 20px;
+      }
+      
+      .quote-block blockquote {
+        font-size: 1.3rem;
+      }
+      
+      .cta-block {
+        padding: 25px;
+      }
+      
+      .cta-block h3 {
+        font-size: 1.5rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-block .btn {
+        width: 100%;
+        max-width: 280px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- ШАПКА -->
-  <header class="header">
-    <div class="container">
-      <div class="nav">
-        <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
-        <div class="nav-links">
-          <a href="/https-meysternlp.ru-/">Главная</a>
-          <a href="/https-meysternlp.ru-/blog/">Блог</a>
-          <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-          <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-          <a href="/https-meysternlp.ru-/obo-mne/">Обо мне</a>
-        </div>
+
+<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ HEADER.HTML -->
+<div id="header-placeholder"></div>
+
+<script>
+  fetch('/https-meysternlp.ru-/header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('header-placeholder').innerHTML = data;
+      
+      setTimeout(() => {
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href && href.includes('/blog/')) {
+            link.classList.add('active');
+          }
+        });
+        
+        const burger = document.getElementById('burgerBtn');
+        const nav = document.getElementById('navLinks');
+        
+        if (burger && nav) {
+          burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            nav.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+          });
+          
+          nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              burger.classList.remove('active');
+              nav.classList.remove('active');
+              document.body.style.overflow = '';
+            });
+          });
+          
+          window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+              burger.classList.remove('active');
+              nav.classList.remove('active');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+      }, 100);
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки шапки:', error);
+      document.getElementById('header-placeholder').innerHTML = `
+        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
+          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/https-meysternlp.ru-/blog/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Статьи</a>
+              </div>
+              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+            </div>
+          </div>
+        </header>
+      `;
+    });
+</script>
+
+<!-- ОСНОВНОЙ КОНТЕНТ СТАТЬИ -->
+<div class="container">
+  <article>
+    <div class="article-header">
+      <div class="article-meta">
+        <span>📅 1 апреля 2026</span>
+        <span>👁️ 2 956 просмотров</span>
+        <span>⏱️ 12 мин чтения</span>
+        <span>📚 Рубрика: Бизнес, Системное мышление</span>
       </div>
+      <h1>Системное мышление в бизнесе: как принимать решения</h1>
     </div>
-  </header>
 
-  <div class="container">
-    <article>
-      <div class="article-header">
-        <div class="article-meta">
-          <span>1 апреля 2026</span>
-          <span>👁️ 2 956 просмотров</span>
-          <span>⏱️ 10 мин чтения</span>
-        </div>
-        <h1>Системное мышление в бизнесе: как принимать решения</h1>
+    <div class="article-content">
+      <!-- Введение -->
+      <p>Большинство проблем в бизнесе возникают из-за того, что руководители пытаются решать их линейно, не видя всей картины целиком. Системное мышление позволяет выйти за рамки очевидного и увидеть скрытые взаимосвязи, которые на самом деле определяют успех или провал.</p>
+
+      <!-- Ключевая мысль -->
+      <div class="key-takeaway">
+        <span class="takeaway-label">Ключевая идея</span>
+        <p>Бизнес — это живая система, где всё взаимосвязано. Изменение в одном отделе неизбежно влияет на другие. Системное мышление помогает предвидеть эти последствия и управлять ими.</p>
       </div>
 
-      <div class="article-content">
-        <p>Большинство проблем в бизнесе возникают из-за того, что руководители пытаются решать их линейно, не видя всей картины целиком. Системное мышление позволяет выйти за рамки очевидного и увидеть скрытые взаимосвязи, которые на самом деле определяют успех или провал.</p>
-
-        <div class="highlight">
-          <p><strong>Ключевая идея:</strong> Бизнес — это живая система, где всё взаимосвязано. Изменение в одном отделе неизбежно влияет на другие. Системное мышление помогает предвидеть эти последствия и управлять ими.</p>
+      <!-- Статистика -->
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">85%</div>
+          <div class="stat-label">Провалов связаны с линейным мышлением</div>
         </div>
+        <div class="stat-item">
+          <div class="stat-number">3x</div>
+          <div class="stat-label">Выше эффективность при системном подходе</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1971</div>
+          <div class="stat-label">Год выхода книги "Системное мышление"</div>
+        </div>
+      </div>
 
-        <h2>Что такое системное мышление в бизнесе</h2>
-        <p>Системное мышление — это способность видеть не отдельные события, а паттерны, структуры и циклы. Вместо того чтобы реагировать на проблемы по мере их возникновения, системный подход позволяет понять, почему эти проблемы вообще появляются .</p>
+      <!-- Цитата Питера Сенге -->
+      <figure class="quote-block">
+        <blockquote>
+          «Системное мышление — это дисциплина, позволяющая видеть структуры, которые лежат в основе сложных ситуаций, и отличать высоко- и низкодоходные воздействия.»
+        </blockquote>
+        <figcaption>— Питер Сенге, «Пятая дисциплина»</figcaption>
+      </figure>
 
-        <p>В контексте бизнеса это означает:</p>
-        <ul>
-          <li>Понимание, как связаны между собой отделы компании</li>
-          <li>Видение долгосрочных последствий решений</li>
-          <li>Умение находить точки, где небольшое усилие дает максимальный эффект</li>
-          <li>Способность отличать симптомы от истинных причин</li>
-        </ul>
+      <h2>🧠 Что такое системное мышление в бизнесе?</h2>
+      <p>Системное мышление — это способность видеть не отдельные события, а паттерны, структуры и циклы. Вместо того чтобы реагировать на проблемы по мере их возникновения, системный подход позволяет понять, почему эти проблемы вообще появляются.</p>
 
-        <h2>5 принципов системного мышления</h2>
+      <p>В контексте бизнеса это означает:</p>
+      <ul>
+        <li>Понимание, как связаны между собой отделы компании</li>
+        <li>Видение долгосрочных последствий решений</li>
+        <li>Умение находить точки, где небольшое усилие дает максимальный эффект</li>
+        <li>Способность отличать симптомы от истинных причин</li>
+      </ul>
 
-        <div class="principle-item">
-          <h3>1. Целостность</h3>
+      <!-- 7 принципов в карточках -->
+      <h2>⚙️ 7 принципов системного мышления</h2>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🧩</span>
+            <span class="principle-number">01</span>
+          </div>
+          <h3>Целостность</h3>
           <p>Система — это больше, чем сумма ее частей. Нельзя оптимизировать отделы по отдельности и ожидать, что компания в целом станет работать лучше. Иногда улучшение одного отдела ухудшает работу другого.</p>
         </div>
 
-        <div class="principle-item">
-          <h3>2. Взаимосвязи</h3>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🔄</span>
+            <span class="principle-number">02</span>
+          </div>
+          <h3>Взаимосвязи</h3>
           <p>Все элементы системы влияют друг на друга. Решение в маркетинге повлияет на продажи, на производство, на логистику и даже на HR. Важно просчитывать эти связи.</p>
         </div>
 
-        <div class="principle-item">
-          <h3>3. Обратная связь</h3>
-          <p>В бизнесе существуют петли обратной связи. Усиливающие (когда успех порождает еще больший успех) и уравновешивающие (когда система пытается вернуться в равновесие). Понимание этих петель позволяет управлять ростом.</p>
-        </div>
-
-        <div class="principle-item">
-          <h3>4. Задержки</h3>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">⏱️</span>
+            <span class="principle-number">03</span>
+          </div>
+          <h3>Задержки</h3>
           <p>Эффект от решений проявляется не сразу. Между действием и результатом всегда есть временной лаг. Системное мышление учит учитывать эти задержки и не делать поспешных выводов.</p>
         </div>
 
-        <div class="principle-item">
-          <h3>5. Точки рычага</h3>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🔄</span>
+            <span class="principle-number">04</span>
+          </div>
+          <h3>Обратная связь</h3>
+          <p>В бизнесе существуют петли обратной связи. Усиливающие (когда успех порождает еще больший успех) и уравновешивающие (когда система пытается вернуться в равновесие). Понимание этих петель позволяет управлять ростом.</p>
+        </div>
+
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🎯</span>
+            <span class="principle-number">05</span>
+          </div>
+          <h3>Точки рычага</h3>
           <p>В любой системе есть места, где небольшое изменение может привести к значительным результатам. Задача руководителя — найти эти точки.</p>
         </div>
 
-        <h2>Кейс 1: Проблема с текучкой кадров</h2>
-        <div class="case-block">
-          <div class="case-title">Ситуация</div>
-          <p>В компании высокая текучка среди менеджеров по продажам. HR предлагает повысить зарплату, чтобы удержать сотрудников.</p>
-          
-          <div class="case-title" style="margin-top: 20px;">Линейный подход</div>
-          <p>Повысить зарплату → текучка снизится. Просто и понятно.</p>
-          
-          <div class="case-title" style="margin-top: 20px;">Системный анализ</div>
-          <p>При системном анализе выясняется:</p>
-          <ul>
-            <li>Текучка высока не во всех отделах, а только в одном</li>
-            <li>В этом отделе плохой руководитель (микроменеджмент)</li>
-            <li>Процесс продаж построен так, что менеджеры тратят 70% времени на отчеты</li>
-            <li>CRM система неудобная, тормозит работу</li>
-          </ul>
-          
-          <p><strong>Решение:</strong> Заменить руководителя, оптимизировать отчетность, обновить CRM. Зарплату повысили только ключевым сотрудникам. Текучка снизилась на 80%, при этом затраты оказались ниже, чем простое повышение окладов всем.</p>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">📈</span>
+            <span class="principle-number">06</span>
+          </div>
+          <h3>Эмерджентность</h3>
+          <p>У системы появляются свойства, которых нет у отдельных частей. Корпоративная культура, репутация, бренд — это эмерджентные свойства, которые нельзя создать приказом.</p>
         </div>
 
-        <h2>Кейс 2: Падение продаж</h2>
-        <div class="case-block">
-          <div class="case-title">Ситуация</div>
-          <p>В розничной сети упали продажи. Отдел маркетинга предлагает запустить масштабную рекламную кампанию.</p>
-          
-          <div class="case-title" style="margin-top: 20px;">Линейный подход</div>
-          <p>Больше рекламы → больше продаж. Очевидно же?</p>
-          
-          <div class="case-title" style="margin-top: 20px;">Системный анализ</div>
-          <p>Анализ показывает:</p>
-          <ul>
-            <li>Продажи упали не во всех магазинах, а только в тех, где недавно сменился управляющий</li>
-            <li>Конкуренты открыли рядом точки с более удобным сервисом</li>
-            <li>Ассортимент в этих магазинах не обновлялся полгода</li>
-            <li>Персонал не мотивирован, так как изменилась система KPI</li>
-          </ul>
-          
-          <p><strong>Решение:</strong> Переобучить управляющих, скорректировать KPI, обновить ассортимент в проблемных точках, улучшить сервис. Рекламная кампания нужна, но точечная и по новому ассортименту. Затраты в 3 раза ниже, эффект — устойчивый рост на 25%.</p>
-        </div>
-
-        <h2>Инструменты системного мышления для бизнеса</h2>
-
-        <h3>1. Диаграммы因果 (причинно-следственные связи)</h3>
-        <p>Рисуйте карту того, как связаны разные элементы вашего бизнеса. Это помогает увидеть скрытые зависимости.</p>
-
-        <h3>2. Моделирование с задержками</h3>
-        <p>Учитывайте, что эффект от решений проявляется не сразу. Создавайте таблицы ожидаемых результатов по времени.</p>
-
-        <h3>3. Анализ точек рычага</h3>
-        <p>Ищите, где небольшое усилие дает максимальный результат. Это может быть обучение ключевых сотрудников, улучшение одного бизнес-процесса, изменение системы мотивации.</p>
-
-        <h3>4. Сценарное планирование</h3>
-        <p>Просчитывайте разные варианты развития событий. Что будет, если рынок вырастет? А если упадет? А если появится новый конкурент?</p>
-
-        <h2>Типичные ошибки линейного мышления</h2>
-        <ul>
-          <li><strong>Решение симптомов вместо причин:</strong> Лечите следствие, а болезнь остается</li>
-          <li><strong>Оптимизация частей без учета целого:</strong> Улучшили отдел, но компания в целом стала работать хуже</li>
-          <li><strong>Игнорирование временных задержек:</strong> Не видите результат сразу — считаете, что решение не работает</li>
-          <li><strong>Упрощение сложного:</strong> Сводите многомерную проблему к одной причине</li>
-        </ul>
-
-        <h2>Как развить системное мышление</h2>
-
-        <h3>1. Практикуйте системный анализ</h3>
-        <p>Берите любую бизнес-проблему и рассматривайте ее с точки зрения системы. Рисуйте схемы, ищите связи, задавайте вопросы «почему» 5 раз подряд.</p>
-
-        <h3>2. Изучайте разные дисциплины</h3>
-        <p>Системное мышление требует широкого кругозора. Читайте книги по биологии, физике, социологии — везде есть системы.</p>
-
-        <h3>3. Играйте в дидактические игры</h3>
-        <p>Моя игра «Маркетолог» как раз учит системному мышлению. Вы принимаете решения и видите их последствия в безопасной среде.</p>
-
-        <h3>4. Тренинг «Системный анализ бизнеса»</h3>
-        <p>Для собственников и топ-менеджеров я провожу индивидуальные тренинги по системному анализу. Разбираем реальные кейсы из вашего бизнеса.</p>
-
-        <div class="highlight">
-          <p><strong>Главная мысль:</strong> Системное мышление — это не врожденный талант, а навык. Его можно и нужно развивать. Начните с малого: в любой сложной ситуации спрашивайте себя не «кто виноват?», а «как система устроена так, что это произошло?».</p>
-        </div>
-
-        <div style="text-align: center; margin: 40px 0;">
-          <a href="/https-meysternlp.ru-/igry/" class="btn">Игра «Маркетолог»</a>
-          <a href="/https-meysternlp.ru-/treningi/" class="btn" style="margin-left: 20px;">Тренинг по системному анализу</a>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🌐</span>
+            <span class="principle-number">07</span>
+          </div>
+          <h3>Границы системы</h3>
+          <p>Важно понимать, где проходят границы вашей системы. Что внутри, а что снаружи? Как внешняя среда влияет на бизнес?</p>
         </div>
       </div>
 
-      <!-- ССЫЛКИ НА СВЯЗАННЫЕ СТАТЬИ -->
-      <div style="margin: 40px 0; padding: 20px; background: rgba(58,134,255,0.05); border: 1px solid rgba(58,134,255,0.2);">
-        <h3 style="color: #C6A43F; margin-bottom: 15px;">Читайте также:</h3>
-        <ul style="list-style: none; padding: 0;">
-          <li style="margin-bottom: 10px;">→ <a href="/https-meysternlp.ru-/blog/razgovornyy-gipnoz-tekhniki.html">Разговорный гипноз: техники влияния</a></li>
-          <li style="margin-bottom: 10px;">→ <a href="/https-meysternlp.ru-/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция</a></li>
-          <li style="margin-bottom: 10px;">→ <a href="/https-meysternlp.ru-/blog/4-strategii-raboty-s-zaprosom-klienta.html">4 стратегии работы с клиентом</a></li>
-        </ul>
-      </div>
-
-      <a href="/https-meysternlp.ru-/blog/" class="back-link">← К списку статей</a>
-    </article>
-  </div>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
-        <div class="social-links">
-          <a href="https://t.me/meysternlp" target="_blank">Tg</a>
-          <a href="https://vk.com/meysternlp" target="_blank">VK</a>
-          <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-          <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+      <!-- Кейс 1: Текучка кадров -->
+      <h2>📋 Кейс 1: Текучка кадров в отделе продаж</h2>
+      
+      <div class="case-study">
+        <span class="case-tag">Реальная ситуация</span>
+        <h4>👥 Проблема: высокая текучка среди менеджеров по продажам</h4>
+        
+        <div class="case-comparison">
+          <div class="linear">
+            <h5>🔴 Линейный подход</h5>
+            <p>Повысить зарплату → текучка снизится. Просто и понятно. HR предлагает поднять оклады всем.</p>
+          </div>
+          <div class="system">
+            <h5>🟢 Системный анализ</h5>
+            <p>При системном анализе выясняется:</p>
+            <ul style="margin-top: 10px; font-size: 0.9rem;">
+              <li>Текучка высока не во всех отделах, а только в одном</li>
+              <li>В этом отделе плохой руководитель (микроменеджмент)</li>
+              <li>Процесс продаж построен так, что менеджеры тратят 70% времени на отчеты</li>
+              <li>CRM система неудобная, тормозит работу</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="result">
+          <strong>✅ Решение:</strong> Заменить руководителя, оптимизировать отчетность, обновить CRM. Зарплату повысили только ключевым сотрудникам. Текучка снизилась на 80%, при этом затраты оказались ниже, чем простое повышение окладов всем.
         </div>
       </div>
-      <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
+
+      <!-- Кейс 2: Падение продаж -->
+      <h2>📋 Кейс 2: Падение продаж в розничной сети</h2>
+      
+      <div class="case-study">
+        <span class="case-tag">Реальная ситуация</span>
+        <h4>📉 Проблема: падение продаж в сети магазинов</h4>
+        
+        <div class="case-comparison">
+          <div class="linear">
+            <h5>🔴 Линейный подход</h5>
+            <p>Больше рекламы → больше продаж. Отдел маркетинга предлагает запустить масштабную кампанию за 3 млн рублей.</p>
+          </div>
+          <div class="system">
+            <h5>🟢 Системный анализ</h5>
+            <p>Анализ показывает:</p>
+            <ul style="margin-top: 10px; font-size: 0.9rem;">
+              <li>Продажи упали не во всех магазинах, а только в тех, где недавно сменился управляющий</li>
+              <li>Конкуренты открыли рядом точки с более удобным сервисом</li>
+              <li>Ассортимент в этих магазинах не обновлялся полгода</li>
+              <li>Персонал не мотивирован, так как изменилась система KPI</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="result">
+          <strong>✅ Решение:</strong> Переобучить управляющих, скорректировать KPI, обновить ассортимент в проблемных точках, улучшить сервис. Рекламная кампания — точечная и по новому ассортименту (1 млн рублей). Затраты в 3 раза ниже, эффект — устойчивый рост на 25%.
+        </div>
+      </div>
+
+      <!-- Инструменты -->
+      <h2>🔧 4 инструмента системного мышления</h2>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <span class="tool-icon">🗺️</span>
+          <h4>Карты взаимосвязей</h4>
+          <p>Рисуйте диаграммы, показывающие, как связаны элементы бизнеса. Это помогает увидеть скрытые зависимости и точки воздействия.</p>
+        </div>
+        <div class="tool-card">
+          <span class="tool-icon">⏳</span>
+          <h4>Моделирование задержек</h4>
+          <p>Учитывайте, что эффект от решений проявляется не сразу. Создавайте таблицы ожидаемых результатов по времени.</p>
+        </div>
+        <div class="tool-card">
+          <span class="tool-icon">⚡</span>
+          <h4>Поиск точек рычага</h4>
+          <p>Ищите, где небольшое усилие дает максимальный результат: обучение ключевых сотрудников, улучшение одного бизнес-процесса, изменение системы мотивации.</p>
+        </div>
+        <div class="tool-card">
+          <span class="tool-icon">🎲</span>
+          <h4>Сценарное планирование</h4>
+          <p>Просчитывайте разные варианты развития событий. Что будет, если рынок вырастет? А если упадет? А если появится новый конкурент?</p>
+        </div>
+      </div>
+
+      <!-- Ошибки линейного мышления -->
+      <h2>⚠️ 5 типичных ошибок линейного мышления</h2>
+
+      <div class="errors-grid">
+        <div class="error-item">
+          <div class="error-title"><span>❌</span> Симптомы вместо причин</div>
+          <p>Лечите следствие, а болезнь остается. Например, повышаете зарплату, а люди уходят из-за плохого руководителя.</p>
+        </div>
+        <div class="error-item">
+          <div class="error-title"><span>❌</span> Оптимизация частей</div>
+          <p>Улучшили отдел продаж, но производство не справляется. Компания в целом работает хуже.</p>
+        </div>
+        <div class="error-item">
+          <div class="error-title"><span>❌</span> Игнорирование задержек</div>
+          <p>Не видите результат сразу — считаете, что решение не работает. Отказываетесь от того, что могло бы сработать через месяц.</p>
+        </div>
+        <div class="error-item">
+          <div class="error-title"><span>❌</span> Упрощение сложного</div>
+          <p>Сводите многомерную проблему к одной причине. "Продажи упали, потому что отдел маркетинга плохо работает".</p>
+        </div>
+        <div class="error-item">
+          <div class="error-title"><span>❌</span> Реактивность</div>
+          <p>Реагируете на каждое событие, вместо того чтобы видеть паттерны и предотвращать проблемы.</p>
+        </div>
+      </div>
+
+      <!-- Как развить -->
+      <h2>💪 Как развить системное мышление</h2>
+
+      <div class="principles-grid" style="margin-top: 20px;">
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">📝</span>
+          </div>
+          <h3>Системный анализ</h3>
+          <p>Берите любую бизнес-проблему и рассматривайте ее с точки зрения системы. Рисуйте схемы, ищите связи, задавайте вопросы «почему» 5 раз подряд.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">📚</span>
+          </div>
+          <h3>Междисциплинарность</h3>
+          <p>Читайте книги по биологии, физике, социологии — везде есть системы. Это расширяет мышление.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🎲</span>
+          </div>
+          <h3>Игра «Маркетолог»</h3>
+          <p>Моя дидактическая игра как раз учит системному мышлению. Вы принимаете решения и видите их последствия в безопасной среде.</p>
+        </div>
+        <div class="principle-card">
+          <div class="principle-header">
+            <span class="principle-icon">🎯</span>
+          </div>
+          <h3>Тренинг</h3>
+          <p>Для собственников и топ-менеджеров я провожу индивидуальные тренинги по системному анализу. Разбираем реальные кейсы из вашего бизнеса.</p>
+        </div>
+      </div>
+
+      <!-- CTA-блок -->
+      <div class="cta-block">
+        <h3>🚀 Хотите внедрить системное мышление в своем бизнесе?</h3>
+        <p>На тренинге «Системный анализ бизнеса» мы разберем ваши реальные кейсы и найдем точки роста, которые вы не замечали. Индивидуально для собственников и топ-менеджеров.</p>
+        <div class="cta-buttons">
+          <a href="/https-meysternlp.ru-/treningi/" class="btn">ЗАПИСАТЬСЯ</a>
+          <a href="/https-meysternlp.ru-/igry/" class="btn btn-outline">ПОПРОБОВАТЬ ИГРУ</a>
+        </div>
+      </div>
+
+      <!-- Заключение -->
+      <p>Системное мышление — это не врожденный талант, а навык. Его можно и нужно развивать. Начните с малого: в любой сложной ситуации спрашивайте себя не «кто виноват?», а «как система устроена так, что это произошло?».</p>
+      
+      <p>В моих книгах и тренингах мы разбираем эти механизмы детально. А игра «Маркетолог» позволяет натренировать системное мышление в увлекательной форме.</p>
     </div>
-  </footer>
+
+    <!-- ССЫЛКИ НА СВЯЗАННЫЕ СТАТЬИ -->
+    <div class="related-articles">
+      <h3>📚 Читайте также:</h3>
+      <div class="related-grid">
+        <div class="related-item">
+          <a href="/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html">Латеральное мышление: что это и как развить</a>
+          <span>12 мин · 2.4K просмотров</span>
+        </div>
+        <div class="related-item">
+          <a href="/https-meysternlp.ru-/blog/gazlayting-chto-eto.html">Газлайтинг: что это и как противостоять</a>
+          <span>10 мин · 2.8K просмотров</span>
+        </div>
+        <div class="related-item">
+          <a href="/https-meysternlp.ru-/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция и как её распознать</a>
+          <span>10 мин · 3.2K просмотров</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ссылка назад к списку статей -->
+    <a href="/https-meysternlp.ru-/blog/" class="back-link">← Все статьи блога</a>
+  </article>
+</div>
+
+<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ FOOTER.HTML -->
+<div id="footer-placeholder"></div>
+
+<script>
+  fetch('/https-meysternlp.ru-/footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Ошибка загрузки подвала:', error);
+      document.getElementById('footer-placeholder').innerHTML = `
+        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
+          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+          </div>
+        </footer>
+      `;
+    });
+</script>
+
 </body>
 </html>
