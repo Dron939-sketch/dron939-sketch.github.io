@@ -6,13 +6,13 @@
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Дидактическая игра «Маркетолог» — Андрей Мейстер</title>
-  <meta name="description" content="Настольная игра для развития креативного мышления и навыков речевого воздействия. Учитесь создавать эффективные рекламные сообщения через игру.">
-  <meta name="keywords" content="дидактическая игра, маркетолог, настольная игра, креативное мышление, речевое воздействие">
+  <meta name="description" content="Инструмент для создания потребительских нарративов. Настольная игра для развития креативного мышления и навыков речевого воздействия.">
+  <meta name="keywords" content="дидактическая игра, маркетолог, настольная игра, креативное мышление, речевое воздействие, нарратив">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Дидактическая игра «Маркетолог»">
-  <meta property="og:description" content="Развитие креативного мышления и навыков речевого воздействия через игру.">
+  <meta property="og:description" content="Инструмент для создания потребительских нарративов. Учитесь влиять на историю потребителя через игру.">
   <meta property="og:image" content="/https-meysternlp.ru-/Маркетолог.png">
   <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/igry/marketolog.html">
   <meta property="og:type" content="website">
@@ -307,14 +307,38 @@
       font-weight: 400;
     }
 
-    /* ===== ПРАВИЛА ИГРЫ ===== */
-    .rules-text p {
+    /* ===== БЛОК ФИЛОСОФИИ ===== */
+    .philosophy-block {
+      margin: 60px 0;
+      padding: 40px;
+      border-left: 3px solid #3A86FF;
+      background: rgba(58, 134, 255, 0.02);
+    }
+
+    .philosophy-block p {
+      font-size: 1.2rem;
+      color: #FFFFFF;
       margin-bottom: 20px;
     }
 
-    .highlight {
+    .system-list {
+      list-style: none;
+      margin-top: 30px;
+    }
+
+    .system-list li {
+      color: #CCCCCC;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .system-list li::before {
+      content: "—";
       color: #3A86FF;
-      font-weight: 400;
+      position: absolute;
+      left: 0;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -490,7 +514,7 @@
     <div class="product-info">
       <span class="product-badge">Дидактическая игра</span>
       <h1 class="product-title">Маркетолог</h1>
-      <div class="product-package">Развитие креативного мышления</div>
+      <div class="product-package">Инструмент для создания потребительских нарративов</div>
       
       <div class="product-description">
         <p style="margin-bottom: 20px;">Тезис о том, что спрос рождает предложение, сегодня потерял свою актуальность. Чтобы человек искренне захотел что-то приобрести, совсем не обязательно ждать, когда у него реально возникнет в этом необходимость.</p>
@@ -532,9 +556,24 @@
     </div>
   </div>
 
+  <!-- БЛОК ФИЛОСОФИИ (СВЯЗЬ С НАРРАТИВОМ) -->
+  <div class="philosophy-block">
+    <p>«Маркетолог» — это инструмент, который учит создавать нарративы для других.</p>
+    <p style="color: #CCCCCC; font-size: 1rem;">Маркетинг — это не про товары. Это про истории, в которые люди хотят верить. Игра учит видеть структуру этих историй и создавать свои.</p>
+    
+    <div style="margin-top: 30px;">
+      <p style="color: #3A86FF; margin-bottom: 15px;">В системе моих проектов:</p>
+      <ul class="system-list">
+        <li>📘 <span class="text-blue">Книги</span> — увидеть свой нарратив</li>
+        <li>🎲 <span class="text-blue">Игры</span> — научиться менять (вы здесь)</li>
+        <li>✏️ <span class="text-blue">Практикумы</span> — создать свой камень</li>
+      </ul>
+    </div>
+  </div>
+
   <!-- ОБ ИГРЕ -->
   <h2 id="composition">Об игре</h2>
-  <p>Игра «Маркетолог» помогает сформировать креативное мышление и в частности навык мыслительного создания конструкции рекламного сообщения. Она была создана на основе материалов кандидатской диссертации Мейстера А. Ю. на тему: «Бессознательное формирование когнитивных связей для проявления феномена “Разговорный гипноз” со структуризацией рефлекса узнавания». Научный руководитель кандидатской диссертации — доктор психологических наук Величковский Б. М.</p>
+  <p>Игра «Маркетолог» помогает сформировать креативное мышление и в частности навык мыслительного создания конструкции рекламного сообщения. Она была создана на основе материалов кандидатской диссертации Мейстера А. Ю. на тему: «Бессознательное формирование когнитивных связей для проявления феномена “Разговорный гипноз” со структуризацией рефлекса узнавания». Научный руководитель — доктор психологических наук Величковский Б. М.</p>
 
   <!-- СОСТАВ ИГРЫ -->
   <h2>Состав игры</h2>
@@ -562,14 +601,11 @@
   <!-- ОСОБЕННОСТЬ -->
   <p>В каждой колоде есть по одному джокеру. Когда рассказчику выпадает такая карта, он, в зависимости от колоды, должен самостоятельно придумать обстоятельства действия истории, центральный предмет или вывод. Идеи для карт с джокером можно присылать автору игры.</p>
 
-  <!-- ВИДЕО С ПРАВИЛАМИ -->
-  <h2>Правила и ход игры</h2>
-  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 40px 0;">
-    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/VfAzQzMF46M" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </div>
-
   <!-- КНОПКА ВНИЗУ -->
   <div style="text-align: center; margin: 60px 0;">
+    <p style="text-align: center; color: #666; margin-bottom: 20px; font-style: italic;">
+      *Это один из моих камней. Берите и бросайте.
+    </p>
     <a href="https://www.ozon.ru/product/nastolnaya-igra-marketolog-910254721/" target="_blank" class="btn btn-large btn-ozon" style="font-size: 1.2rem; padding: 18px 50px;">Заказать игру на Ozon</a>
   </div>
 </div>
