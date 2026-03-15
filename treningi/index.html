@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   
   <!-- SEO МЕТА-ТЕГИ -->
-  <title>Тренинги — Разговорный гипноз | Андрей Мейстер</title>
-  <meta name="description" content="Практические курсы по разговорному гипнозу. Два пакета: самостоятельный и стандартный. Научитесь влиять на людей и управлять коммуникацией.">
-  <meta name="keywords" content="тренинги, разговорный гипноз, эриксоновский гипноз, речевые техники, влияние">
+  <title>Тренинги — упакованные курсы | Андрей Мейстер</title>
+  <meta name="description" content="Упакованные тренинги по разговорному гипнозу. Два формата: самостоятельный и стандартный. Все материалы на Ozon.">
+  <meta name="keywords" content="тренинги, разговорный гипноз, упакованные курсы">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Тренинги — Разговорный гипноз">
-  <meta property="og:description" content="Практические курсы по разговорному гипнозу. Два пакета участия.">
+  <meta property="og:title" content="Тренинги — упакованные курсы">
+  <meta property="og:description" content="Упакованные тренинги по разговорному гипнозу">
   <meta property="og:image" content="/https-meysternlp.ru-/images/trainings-preview.jpg">
   <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/">
   <meta property="og:type" content="website">
@@ -134,7 +134,47 @@
       left: 0;
     }
 
-    /* ===== КАРТОЧКИ ТРЕНИНГОВ ===== */
+    .btn-small {
+      padding: 10px 24px;
+      font-size: 0.8rem;
+    }
+
+    /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
+    .breadcrumbs {
+      display: flex;
+      gap: 10px;
+      margin: 30px 0 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .breadcrumbs a {
+      color: #666;
+    }
+
+    .breadcrumbs a:hover {
+      color: #3A86FF;
+    }
+
+    /* ===== ГЕРОЙ ===== */
+    .hero {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 60px;
+    }
+
+    .hero h1 {
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #3A86FF;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== СЕТКА ТРЕНИНГОВ ===== */
     .trainings-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -171,10 +211,22 @@
       align-self: flex-start;
     }
 
+    .training-image {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .training-image img {
+      max-width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: contain;
+    }
+
     .training-title {
       font-size: 2rem;
       color: #FFFFFF;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       font-weight: 300;
     }
 
@@ -190,13 +242,6 @@
       color: #CCCCCC;
       margin-bottom: 25px;
       flex-grow: 1;
-    }
-
-    .training-price {
-      font-size: 1.8rem;
-      color: #3A86FF;
-      margin-bottom: 25px;
-      font-weight: 300;
     }
 
     .training-features {
@@ -220,19 +265,12 @@
       font-size: 1.2rem;
     }
 
+    .training-features .bonus {
+      color: #3A86FF;
+    }
+
     .training-actions {
       margin-top: auto;
-    }
-
-    .hero-section {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 40px;
-    }
-
-    .hero-section p {
-      font-size: 1.2rem;
-      color: #CCCCCC;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -293,10 +331,6 @@
       
       .training-card {
         padding: 30px;
-      }
-      
-      .training-title {
-        font-size: 1.8rem;
       }
       
       .footer-content {
@@ -379,63 +413,68 @@
     });
 </script>
 
-<!-- ОСНОВНОЙ КОНТЕНТ -->
+<!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
-  <div class="hero-section">
-    <h1>ТРЕНИНГИ ПО РАЗГОВОРНОМУ ГИПНОЗУ</h1>
-    <p>Освойте техники речевого воздействия, которые помогут в работе, управлении, переговорах и личных отношениях. Выберите подходящий формат обучения.</p>
+  <div class="breadcrumbs">
+    <a href="/https-meysternlp.ru-/">Главная</a> / 
+    <span>Тренинги</span>
+  </div>
+</div>
+
+<!-- ГЕРОЙ -->
+<div class="container">
+  <div class="hero">
+    <h1>ТРЕНИНГИ</h1>
+    <p>УПАКОВАННЫЕ ТРЕНИНГИ</p>
   </div>
 
+  <!-- СЕТКА ТРЕНИНГОВ -->
   <div class="trainings-grid">
     <!-- Пакет "Самостоятельный" -->
     <div class="training-card">
       <span class="training-badge">Базовый уровень</span>
+      <div class="training-image">
+        <img src="/https-meysternlp.ru-/images/kurs-razgovornyj-gipnoz-ot-andreya-mejstera.png" alt="Разговорный гипноз Самостоятельный" onerror="this.src='https://via.placeholder.com/300x200/0C0C0C/3A86FF?text=Самостоятельный'">
+      </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Самостоятельный»</div>
-      <p class="training-description">Полный комплект материалов для самостоятельного изучения. Видеоуроки, практические задания, доступ в закрытый Telegram-канал.</p>
-      
+      <p class="training-description">Полный курс для самостоятельного изучения. Видеоуроки, практические задания, Telegram-чат.</p>
       <ul class="training-features">
-        <li>38 видеоуроков с примерами и объяснениями</li>
-        <li>Практические задания после каждого урока</li>
-        <li>Доступ в закрытый Telegram-канал</li>
-        <li>Доступ к материалам 12 месяцев</li>
-        <li>30-дневная гарантия возврата денег</li>
+        <li>38 видеоуроков с примерами</li>
+        <li>Практические задания</li>
+        <li>Закрытый Telegram-канал</li>
+        <li>Доступ 12 месяцев</li>
       </ul>
-      
-      <div class="training-price">12 500 ₽</div>
-      
       <div class="training-actions">
-        <a href="/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/" class="btn">Подробнее</a>
+        <a href="/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy.html" class="btn btn-small">ПОДРОБНЕЕ</a>
       </div>
     </div>
 
     <!-- Пакет "Стандартный" -->
     <div class="training-card">
       <span class="training-badge">Оптимальный выбор</span>
+      <div class="training-image">
+        <img src="/https-meysternlp.ru-/images/4534543.webp" alt="Разговорный гипноз Стандартный" onerror="this.src='https://via.placeholder.com/300x200/0C0C0C/3A86FF?text=Стандартный'">
+      </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Стандартный»</div>
-      <p class="training-description">Всё, что в самостоятельном пакете + дополнительные материалы и расширенная обратная связь.</p>
-      
+      <p class="training-description">Расширенная версия с дополнительными материалами и усиленной обратной связью.</p>
       <ul class="training-features">
-        <li>38 видеоуроков с примерами и объяснениями</li>
-        <li>Практические задания после каждого урока</li>
-        <li>Доступ в закрытый Telegram-канал</li>
-        <li>Доступ к материалам 12 месяцев</li>
-        <li>30-дневная гарантия возврата денег</li>
-        <li>➕ Дополнительные материалы</li>
-        <li>➕ Расширенная обратная связь</li>
+        <li>38 видеоуроков с примерами</li>
+        <li>Практические задания</li>
+        <li>Закрытый Telegram-канал</li>
+        <li>Доступ 12 месяцев</li>
+        <li class="bonus">➕ Дополнительные материалы</li>
+        <li class="bonus">➕ Расширенная обратная связь</li>
       </ul>
-      
-      <div class="training-price">7 200 ₽</div>
-      
       <div class="training-actions">
-        <a href="/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-standart/" class="btn">Подробнее</a>
+        <a href="/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-standart.html" class="btn btn-small">ПОДРОБНЕЕ</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ПОДВАЛ ПОДГРУЖАЕТСЯ ИЗ FOOTER.HTML -->
+<!-- ПОДВАЛ -->
 <div id="footer-placeholder"></div>
 
 <script>
@@ -446,21 +485,6 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
-      document.getElementById('footer-placeholder').innerHTML = `
-        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-              </div>
-            </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
-          </div>
-        </footer>
-      `;
     });
 </script>
 
