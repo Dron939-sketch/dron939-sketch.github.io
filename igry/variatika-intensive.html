@@ -6,13 +6,13 @@
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Дидактическая игра «Вариатика — Intensive» — Андрей Мейстер</title>
-  <meta name="description" content="Развитие системного, критического и латерального мышления. Анализ сложных систем и принятие эффективных решений через игру.">
-  <meta name="keywords" content="дидактическая игра, вариатика, intensive, системное мышление, критическое мышление, латеральное мышление, принятие решений">
+  <meta name="description" content="Инструмент для анализа сложных систем. Развитие системного, критического и латерального мышления через игру.">
+  <meta name="keywords" content="дидактическая игра, вариатика, intensive, системное мышление, критическое мышление, латеральное мышление, принятие решений, нарратив">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Дидактическая игра «Вариатика — Intensive»">
-  <meta property="og:description" content="Превратите процесс принятия решений в свою суперсилу. Развитие системного, критического и латерального мышления.">
+  <meta property="og:description" content="Инструмент для анализа сложных систем. Превратите процесс принятия решений в свою суперсилу.">
   <meta property="og:image" content="/https-meysternlp.ru-/интенсив.webp">
   <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/igry/variatika-intensive.html">
   <meta property="og:type" content="website">
@@ -310,19 +310,51 @@
       line-height: 1.6;
     }
 
-    /* ===== БЛОК С ИЗОБРАЖЕНИЯМИ ===== */
-    .image-text-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+    /* ===== БЛОК ФИЛОСОФИИ ===== */
+    .philosophy-block {
       margin: 60px 0;
-      align-items: center;
+      padding: 40px;
+      border-left: 3px solid #3A86FF;
+      background: rgba(58, 134, 255, 0.02);
     }
 
-    .image-block img {
-      width: 100%;
+    .philosophy-block p {
+      font-size: 1.2rem;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    .system-list {
+      list-style: none;
+      margin-top: 30px;
+    }
+
+    .system-list li {
+      color: #CCCCCC;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .system-list li::before {
+      content: "—";
+      color: #3A86FF;
+      position: absolute;
+      left: 0;
+    }
+
+    /* ===== БЛОК О МОЗГЕ ===== */
+    .brain-block {
+      margin: 60px 0;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
       border-radius: 8px;
-      border: 1px solid rgba(58, 134, 255, 0.3);
+    }
+
+    .brain-block h2 {
+      margin-top: 0;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -385,11 +417,6 @@
       
       .specialists-grid {
         grid-template-columns: 1fr;
-      }
-      
-      .image-text-block {
-        grid-template-columns: 1fr;
-        gap: 30px;
       }
     }
 
@@ -507,7 +534,7 @@
     <div class="product-info">
       <span class="product-badge">Дидактическая игра</span>
       <h1 class="product-title">Вариатика</h1>
-      <div class="product-subtitle">Intensive</div>
+      <div class="product-subtitle">Инструмент для анализа сложных систем</div>
       
       <div class="product-description">
         <p style="margin-bottom: 20px;">Вы готовы превратить процесс принятия решений в свою суперсилу? В современном мире скорость и качество принятия решений определяют наш успех в каждой сфере деятельности.</p>
@@ -550,6 +577,23 @@
     </div>
   </div>
 
+  <!-- БЛОК ФИЛОСОФИИ (СВЯЗЬ С НАРРАТИВОМ) -->
+  <div class="philosophy-block">
+    <p>«Вариатика — Intensive» учит видеть структуру сложных систем.</p>
+    <p style="color: #CCCCCC; font-size: 1rem;">Basic даёт инструменты для анализа поведения людей. Intensive позволяет понять, как устроены системы целиком — будь то организация, рынок или социальная структура. Это следующий шаг: от понимания отдельных нарративов к анализу их пересечений и взаимодействий.</p>
+    
+    <div style="margin-top: 30px;">
+      <p style="color: #3A86FF; margin-bottom: 15px;">В системе моих проектов:</p>
+      <ul class="system-list">
+        <li>📘 <span class="text-blue">Книги</span> — увидеть свой нарратив</li>
+        <li>🎲 <span class="text-blue">Basic</span> — анализ поведения</li>
+        <li>🎲 <span class="text-blue">Intensive</span> — анализ систем (вы здесь)</li>
+        <li>🎲 <span class="text-blue">Progressive</span> — создание "везения"</li>
+        <li>✏️ <span class="text-blue">Практикумы</span> — создать свой камень</li>
+      </ul>
+    </div>
+  </div>
+
   <!-- ДЛЯ КОГО -->
   <h2>Кому будет полезна игра</h2>
   <div class="specialists-grid">
@@ -587,39 +631,21 @@
     </div>
   </div>
 
-  <!-- БЛОК 1: ТЕКСТ + ИЗОБРАЖЕНИЕ -->
-  <div class="image-text-block">
-    <div class="image-block">
-      <img src="/https-meysternlp.ru-/images/32464788.webp" alt="Вариатика Intensive" onerror="this.style.display='none'">
-    </div>
-    <div>
-      <p>«Вариатика-Intensive» — это ваш ключ к мастерству в анализе и быстром принятии решений. Образовательная программа, которая специально разработана для формирования навыков системного, критического и латерального мышления. Это не просто учебная программа, это практический инструмент, который изменит ваш подход к решению задач.</p>
-    </div>
-  </div>
-
-  <!-- БЛОК О МОЗГЕ -->
-  <div style="margin: 60px 0;">
+  <!-- БЛОК О МОЗГЕ (ТЕКСТОВАЯ ВЕРСИЯ, БЕЗ ИЗОБРАЖЕНИЯ) -->
+  <div class="brain-block">
     <h2>Ваш мозг может стать суперсилой!</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
       <div>
         <p>Мозг — это сложный орган, который не только помогает нам выживать, но и улучшает качество нашей жизни. Он способен предсказывать возможные исходы событий, но для эффективной работы ему нужно научиться фильтровать и обрабатывать только наиболее значимую информацию.</p>
         <p>«Вариатика-Intensive» обучит ваш мозг быть более избирательным и превратит процесс обработки информации в вашу личную суперсилу — будь то в бизнесе, учебе или личной жизни, вы всегда будете на шаг впереди.</p>
       </div>
-      <div class="image-block">
-        <img src="/https-meysternlp.ru-/images/5754255.webp" alt="Мозг" onerror="this.style.display='none'">
-      </div>
     </div>
   </div>
 
-  <!-- БЛОК РАЗРАБОТЧИК -->
-  <div class="image-text-block">
-    <div class="image-block">
-      <img src="/https-meysternlp.ru-/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер">
-    </div>
-    <div>
-      <h2 style="margin-top: 0;">Кто разработчик?</h2>
-      <p>Мейстер А.Ю. – признанный эксперт в области психологии и образовательных технологий. Его методы преподавания практичны и ориентированы на результат, что доказано многочисленными отзывами успешных выпускников.</p>
-    </div>
+  <!-- БЛОК РАЗРАБОТЧИК (ТЕКСТОВАЯ ВЕРСИЯ) -->
+  <div style="margin: 60px 0;">
+    <h2 style="margin-top: 0;">Кто разработчик?</h2>
+    <p>Мейстер А.Ю. – признанный эксперт в области психологии и образовательных технологий. Его методы преподавания практичны и ориентированы на результат, что доказано многочисленными отзывами успешных выпускников.</p>
   </div>
 
   <!-- ЗАКЛЮЧЕНИЕ -->
@@ -627,6 +653,10 @@
     <p style="font-size: 1.2rem; margin-bottom: 30px;">Не упустите возможность получить ценные знания и навыки, которые помогут вам достичь успеха в любой сфере деятельности. Закажите «Вариатику — Intensive» прямо сейчас и станьте профессионалом в анализе и принятии решений!</p>
     
     <p style="color: #3A86FF; font-size: 1.3rem; margin-bottom: 30px;">Серия игры лимитирована!</p>
+    
+    <p style="text-align: center; color: #666; margin-bottom: 20px; font-style: italic;">
+      *Это один из моих камней. Берите и бросайте.
+    </p>
     
     <a href="https://ozon.ru/t/nbM4EJd" target="_blank" class="btn btn-large btn-ozon" style="font-size: 1.2rem; padding: 18px 50px;">Заказать игру на Ozon</a>
   </div>
