@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
-  <title>Разговорный гипноз. Пакет «Самостоятельный» | Андрей Мейстер</title>
-  <meta name="description" content="38 видео с техниками речевого воздействия. Без обещаний «стать миллионером». Только инструменты и их применение.">
-  <meta name="keywords" content="разговорный гипноз, эриксоновский гипноз, речевые техники">
+  <title>Разговорный гипноз. Пакет «Стандартный» | Андрей Мейстер</title>
+  <meta name="description" content="38 видео с техниками речевого воздействия + обратная связь от автора. Вместе разбираем стратегии, корректируем тактику, усиливаем результаты.">
+  <meta name="keywords" content="разговорный гипноз, эриксоновский гипноз, речевые техники, обратная связь">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Разговорный гипноз. Пакет «Самостоятельный»">
-  <meta property="og:description" content="38 видео с техниками речевого воздействия. Никакой магии — только алгоритмы.">
-  <meta property="og:image" content="/https-meysternlp.ru-/2.webp">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
+  <meta property="og:title" content="Разговорный гипноз. Пакет «Стандартный» — с обратной связью">
+  <meta property="og:description" content="38 видео + личная обратная связь. Вместо «проверять самому» — совместный разбор тактик и стратегий.">
+  <meta property="og:image" content="/https-meysternlp.ru-/3.webp">
+  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-standart/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
+  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-standart/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -224,7 +224,7 @@
       margin: 20px 0;
     }
 
-    /* ===== ФОТО ПРОДУКТА С ПРОЗРАЧНЫМ ФОНОМ ===== */
+    /* ===== ФОТО ПРОДУКТА ===== */
     .product-image {
       display: flex;
       justify-content: center;
@@ -243,6 +243,86 @@
     .product-image img:hover {
       transform: scale(1.05);
       filter: drop-shadow(0 15px 25px rgba(58, 134, 255, 0.3));
+    }
+
+    /* ===== БЛОК СРАВНЕНИЯ ===== */
+    .comparison-box {
+      background: rgba(58, 134, 255, 0.05);
+      border: 2px solid #3A86FF;
+      border-radius: 16px;
+      padding: 40px;
+      margin: 60px 0;
+    }
+
+    .comparison-title {
+      text-align: center;
+      font-size: 1.8rem;
+      color: #FFFFFF;
+      margin-bottom: 40px;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .comparison-col {
+      padding: 30px;
+      border-radius: 12px;
+    }
+
+    .comparison-col.self {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .comparison-col.standard {
+      background: rgba(58, 134, 255, 0.1);
+      border: 1px solid #3A86FF;
+    }
+
+    .comparison-col h3 {
+      color: #FFFFFF;
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .comparison-col.standard h3 {
+      color: #3A86FF;
+    }
+
+    .comparison-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .comparison-icon {
+      font-size: 1.5rem;
+      min-width: 30px;
+    }
+
+    .comparison-text h4 {
+      color: #FFFFFF;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+
+    .comparison-text p {
+      color: #999999;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .comparison-divider {
+      text-align: center;
+      margin: 30px 0;
+      font-size: 1.2rem;
+      color: #3A86FF;
+      font-weight: 300;
     }
 
     /* ===== ЧТО ВХОДИТ ===== */
@@ -267,6 +347,10 @@
       font-size: 1.5rem;
     }
 
+    .includes-list .bonus {
+      color: #3A86FF;
+    }
+
     /* ===== ТЕМЫ КУРСА ===== */
     .themes-grid {
       display: grid;
@@ -282,6 +366,39 @@
       border-radius: 8px;
       text-align: center;
       font-size: 1rem;
+    }
+
+    /* ===== БЛОК ПРЕИМУЩЕСТВ ОБРАТНОЙ СВЯЗИ ===== */
+    .feedback-benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .feedback-item {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      border-radius: 12px;
+    }
+
+    .feedback-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #3A86FF;
+    }
+
+    .feedback-item h4 {
+      color: #FFFFFF;
+      margin-bottom: 15px;
+    }
+
+    .feedback-item p {
+      color: #CCCCCC;
+      font-size: 0.95rem;
+      margin: 0;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -337,6 +454,16 @@
         grid-template-columns: 1fr;
         gap: 30px;
       }
+      
+      .comparison-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .feedback-benefits {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
     }
 
     @media (max-width: 768px) {
@@ -374,12 +501,16 @@
       .themes-grid {
         grid-template-columns: 1fr;
       }
+      
+      .comparison-box {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ HEADER.HTML -->
+<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
 <div id="header-placeholder"></div>
 
 <script>
@@ -452,7 +583,7 @@
   <div class="breadcrumbs">
     <a href="/https-meysternlp.ru-/">Главная</a> / 
     <a href="/https-meysternlp.ru-/treningi/">Тренинги</a> / 
-    <span>Разговорный гипноз (Самостоятельный)</span>
+    <span>Разговорный гипноз (Стандартный)</span>
   </div>
 </div>
 
@@ -461,37 +592,139 @@
   <!-- ГЕРОЙ ПРОДУКТА -->
   <div class="product-hero">
     <div class="product-info">
-      <span class="product-badge">38 видео</span>
+      <span class="product-badge">38 видео + обратная связь</span>
       <h1 class="product-title">Разговорный гипноз</h1>
-      <div class="product-package">Пакет «Самостоятельный»</div>
+      <div class="product-package">Пакет «Стандартный»</div>
       
       <div class="product-description">
-        <p style="margin-bottom: 20px;">Есть два способа получить от человека то, что вам нужно. Первый — объяснить, почему это выгодно ему. Второй — сделать так, чтобы он сам захотел. Разговорный гипноз про второе.</p>
+        <p style="margin-bottom: 20px;">В самостоятельном пакете вы проверяете всё сами. Находите ошибки, исправляете, снова пробуете. Это рабочий вариант, если у вас много времени и железные нервы.</p>
         
-        <p style="margin-bottom: 20px;">Это не манипуляция в бытовом смысле. Это понимание того, как устроено внимание, как работает подсознание и почему одни слова вызывают доверие, а другие — сопротивление.</p>
+        <p style="margin-bottom: 20px;">Стандартный пакет — это когда <span class="text-blue">проверяем вместе</span>. Вы показываете, что получилось, я указываю на слепые зоны, корректирую тактику, помогаю с выводами.</p>
         
-        <p>Никакой магии. Только алгоритмы, которые либо работают, либо нет. Проверять придётся самостоятельно.</p>
+        <p style="margin-bottom: 20px;">Разница простая: в одном случае вы идёте по минному полю самостоятельно. Во втором — у вас есть карта и проводник.</p>
+        
+        <p>Те же 38 видео. Те же техники. Но с обратной связью они работают быстрее и точнее.</p>
       </div>
       
       <div class="product-actions">
-        <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/" target="_blank" class="btn btn-large btn-ozon">Купить на Ozon</a>
+        <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" class="btn btn-large btn-ozon">Купить на Ozon</a>
       </div>
     </div>
     
-    <!-- НОВОЕ ФОТО 2.WEBP -->
+    <!-- ФОТО ПРОДУКТА -->
     <div class="product-image">
-      <img src="/https-meysternlp.ru-/2.webp" 
-           alt="Разговорный гипноз Самостоятельный">
+      <img src="/https-meysternlp.ru-/3.webp" 
+           alt="Разговорный гипноз Стандартный">
     </div>
   </div>
 
-  <!-- ЧТО ВНУТРИ -->
+  <!-- БЛОК СРАВНЕНИЯ -->
+  <div class="comparison-box">
+    <h2 class="comparison-title">Самостоятельный vs Стандартный</h2>
+    
+    <div class="comparison-grid">
+      <!-- Самостоятельный -->
+      <div class="comparison-col self">
+        <h3>Пакет «Самостоятельный»</h3>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">🧪</div>
+          <div class="comparison-text">
+            <h4>Проверяете сами</h4>
+            <p>Метод проб и ошибок. Сработало — хорошо. Нет — ищите причину самостоятельно.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">⏱️</div>
+          <div class="comparison-text">
+            <h4>Дольше</h4>
+            <p>На каждую ошибку уходит время. Иногда одно и то же можно делать неправильно месяцами.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">🎯</div>
+          <div class="comparison-text">
+            <h4>Риск закрепить ошибку</h4>
+            <p>Если делать неправильно достаточно долго, это становится привычкой. Отвыкать потом сложнее.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-divider">VS</div>
+      </div>
+      
+      <!-- Стандартный -->
+      <div class="comparison-col standard">
+        <h3>Пакет «Стандартный»</h3>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">👥</div>
+          <div class="comparison-text">
+            <h4>Проверяем вместе</h4>
+            <p>Вы показываете — я комментирую. Где надо подкрутить, где сменить тактику, где вообще не в ту сторону пошли.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">⚡</div>
+          <div class="comparison-text">
+            <h4>Быстрее</h4>
+            <p>Ошибки отсекаются сразу. Не тратите недели на то, что можно поправить за один диалог.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">📈</div>
+          <div class="comparison-text">
+            <h4>Корректировка стратегий</h4>
+            <p>Техники — это инструмент. Важно не только как им работать, но и когда, с кем, в каком контексте.</p>
+          </div>
+        </div>
+        
+        <div class="comparison-item">
+          <div class="comparison-icon">🧠</div>
+          <div class="comparison-text">
+            <h4>Выводы и аналитика</h4>
+            <p>Разбираем не только «что делать», но и «почему сработало или нет». Понимание важнее заучивания.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПРЕИМУЩЕСТВА ОБРАТНОЙ СВЯЗИ -->
+  <h2>Что даёт обратная связь</h2>
+  
+  <div class="feedback-benefits">
+    <div class="feedback-item">
+      <div class="feedback-icon">🔍</div>
+      <h4>Видите ошибки</h4>
+      <p>То, что вы не замечаете в своей речи, сразу видно со стороны. Обратная связь подсвечивает слепые зоны.</p>
+    </div>
+    
+    <div class="feedback-item">
+      <div class="feedback-icon">🔄</div>
+      <h4>Корректируете тактику</h4>
+      <p>Техника может быть правильной, но не подходить к ситуации. Вместе подбираем рабочие варианты.</p>
+    </div>
+    
+    <div class="feedback-item">
+      <div class="feedback-icon">📊</div>
+      <h4>Анализируете результаты</h4>
+      <p>Почему сработало? Почему нет? Разбор причин даёт понимание, а не механическое повторение.</p>
+    </div>
+  </div>
+
+  <!-- ЧТО ВХОДИТ -->
   <h2>Что внутри</h2>
   <ul class="includes-list">
-    <li>38 видео, в которых я без воды показываю конкретные конструкции</li>
-    <li>Никакой теории ради теории — каждый урок = одна техника</li>
-    <li>Доступ в закрытый Telegram-канал (обсуждать, спорить, задавать вопросы)</li>
-    <li>Доступ к материалам на 12 месяцев — возвращаться можно сколько угодно</li>
+    <li>38 видео с конкретными конструкциями и алгоритмами</li>
+    <li>Закрытый Telegram-канал для обратной связи</li>
+    <li>Личные ответы на ваши вопросы и разбор ваших ситуаций</li>
+    <li>Корректировка тактик и стратегий по ходу обучения</li>
+    <li>Доступ к материалам на 12 месяцев</li>
+    <li class="bonus">➕ Дополнительные материалы для углублённого изучения</li>
   </ul>
 
   <!-- ПРИМЕРЫ ТЕМ -->
@@ -506,6 +739,12 @@
     <div class="theme-item">Единая структура воздействия</div>
     <div class="theme-item">Самовнушение</div>
     <div class="theme-item">Фокусы языка</div>
+  </div>
+
+  <!-- ПОВТОРНАЯ КНОПКА -->
+  <div style="text-align: center; margin: 60px 0;">
+    <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" class="btn btn-large btn-ozon" style="font-size: 1.2rem; padding: 18px 50px;">Выбрать пакет с обратной связью</a>
+    <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">Проверять будем вместе — так быстрее и надёжнее</p>
   </div>
 </div>
 
