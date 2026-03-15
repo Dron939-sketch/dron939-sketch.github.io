@@ -68,9 +68,8 @@
 }
 
 /* ===== АДАПТИВНЫЙ КОНТЕЙНЕР ===== */
-/* Контейнер шапки подстраивается под ширину родителя */
 .header .header-container {
-  max-width: 100%; /* Будет подстраиваться под родительский контейнер */
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 20px;
   width: 100%;
@@ -82,8 +81,8 @@
   align-items: center;
   min-height: 60px;
   width: 100%;
-  flex-wrap: wrap; /* Разрешаем перенос при необходимости */
-  gap: 15px; /* Минимальный отступ между элементами */
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .logo {
@@ -93,7 +92,8 @@
   color: #FFFFFF;
   white-space: nowrap;
   z-index: 1001;
-  flex-shrink: 0; /* Запрещаем сжиматься */
+  flex-shrink: 0;
+  text-decoration: none;
 }
 
 .logo span {
@@ -105,9 +105,9 @@
   display: flex;
   gap: 50px;
   align-items: center;
-  flex-wrap: wrap; /* Разрешаем перенос при узкой ширине */
-  justify-content: center; /* Центрируем при переносе */
-  flex: 1 1 auto; /* Позволяем занимать доступное место */
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1 1 auto;
 }
 
 .nav-links a {
@@ -119,9 +119,9 @@
   border-bottom: 1px solid transparent;
   padding-bottom: 5px;
   transition: border-color 0.3s ease;
-  white-space: nowrap; /* Запрещаем перенос текста внутри ссылок */
+  white-space: nowrap;
   text-decoration: none;
-  flex-shrink: 0; /* Запрещаем сжиматься */
+  flex-shrink: 0;
 }
 
 .nav-links a:hover {
@@ -150,7 +150,7 @@
   transition: all 0.3s ease;
   z-index: 1001;
   text-decoration: none;
-  flex-shrink: 0; /* Запрещаем сжиматься */
+  flex-shrink: 0;
 }
 
 .btn-header:hover {
@@ -160,8 +160,6 @@
 }
 
 /* ===== СТИЛИ ДЛЯ БУРГЕР-МЕНЮ ===== */
-
-/* Скрываем бургер на десктопе */
 .burger {
   display: none;
   flex-direction: column;
@@ -196,22 +194,19 @@
 }
 
 /* ===== АДАПТАЦИЯ ПРОМЕЖУТОЧНЫХ ШИРИН ===== */
-
-/* Для экранов от 992px до 1100px (уменьшаем gap) */
 @media (max-width: 1100px) {
   .nav-links {
     gap: 30px;
   }
 }
 
-/* Для экранов от 768px до 992px (уменьшаем gap ещё) */
 @media (max-width: 992px) {
   .nav-links {
     gap: 20px;
   }
   
   .nav-links a {
-    font-size: 0.85rem; /* Чуть уменьшаем шрифт */
+    font-size: 0.85rem;
   }
   
   .btn-header {
@@ -266,7 +261,7 @@
     z-index: 999;
     overflow-y: auto;
     gap: 5px;
-    flex-wrap: nowrap; /* На мобильных запрещаем перенос */
+    flex-wrap: nowrap;
   }
   
   .nav-links.active {
@@ -279,14 +274,13 @@
     width: 100%;
     text-align: center;
     border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-    white-space: normal; /* На мобильных разрешаем перенос */
+    white-space: normal;
   }
   
   .header {
     padding: 15px 0;
   }
   
-  /* Убираем flex-свойства на мобильных */
   .nav {
     flex-wrap: nowrap;
   }
@@ -308,5 +302,3 @@
   }
 }
 </style>
-
-<!-- СКРИПТ УДАЛЕН - он будет на основных страницах -->
