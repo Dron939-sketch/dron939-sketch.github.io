@@ -6,13 +6,13 @@
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Дидактическая игра «Вариатика — Basic» — Андрей Мейстер</title>
-  <meta name="description" content="Развитие навыка анализа и прогнозирования поведения людей. Понимание характера, истинных желаний, способностей и ограничений через игру.">
-  <meta name="keywords" content="дидактическая игра, вариатика, basic, анализ поведения, прогнозирование, системное мышление">
+  <meta name="description" content="Инструмент для анализа чужих нарративов. Развитие навыка анализа и прогнозирования поведения людей через игру.">
+  <meta name="keywords" content="дидактическая игра, вариатика, basic, анализ поведения, прогнозирование, системное мышление, нарратив">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Дидактическая игра «Вариатика — Basic»">
-  <meta property="og:description" content="Научитесь понимать людей, предсказывать их реакции и эффективно общаться через игру.">
+  <meta property="og:description" content="Научитесь видеть структуру поведения других людей. Инструмент для анализа чужих нарративов.">
   <meta property="og:image" content="/https-meysternlp.ru-/Басик.webp">
   <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/igry/variatika-basic.html">
   <meta property="og:type" content="website">
@@ -303,19 +303,38 @@
       font-size: 1.5rem;
     }
 
-    /* ===== БЛОК С ИЗОБРАЖЕНИЯМИ ===== */
-    .image-text-block {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+    /* ===== БЛОК ФИЛОСОФИИ ===== */
+    .philosophy-block {
       margin: 60px 0;
-      align-items: center;
+      padding: 40px;
+      border-left: 3px solid #3A86FF;
+      background: rgba(58, 134, 255, 0.02);
     }
 
-    .image-block img {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid rgba(58, 134, 255, 0.3);
+    .philosophy-block p {
+      font-size: 1.2rem;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    .system-list {
+      list-style: none;
+      margin-top: 30px;
+    }
+
+    .system-list li {
+      color: #CCCCCC;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .system-list li::before {
+      content: "—";
+      color: #3A86FF;
+      position: absolute;
+      left: 0;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -378,11 +397,6 @@
       
       .specialists-list {
         grid-template-columns: 1fr;
-      }
-      
-      .image-text-block {
-        grid-template-columns: 1fr;
-        gap: 30px;
       }
     }
 
@@ -500,14 +514,14 @@
     <div class="product-info">
       <span class="product-badge">Дидактическая игра</span>
       <h1 class="product-title">Вариатика</h1>
-      <div class="product-subtitle">Basic</div>
+      <div class="product-subtitle">Инструмент для анализа чужих нарративов</div>
       
       <div class="product-description">
-        <p style="margin-bottom: 20px;">Хотите научиться понимать людей, предсказывать их реакции и эффективно общаться? Тогда дидактическая игра «Вариатика — Basic» именно то, что вам нужно!</p>
+        <p style="margin-bottom: 20px;">Прежде чем менять нарратив — его нужно увидеть. «Вариатика — Basic» учит видеть структуру поведения других людей, анализировать их характер, истинные желания, способности и ограничения.</p>
         
-        <p style="margin-bottom: 20px;">Эта уникальная игра поможет сформировать навык анализа и прогнозирования поведения людей. Вы научитесь понимать их характер, истинные желания, способности и ограничения. Вместе с «Вариатикой — Basic» вы сможете взглянуть на мир глазами другого человека и применять эти знания на практике.</p>
+        <p style="margin-bottom: 20px;">Эта уникальная игра поможет сформировать навык анализа и прогнозирования поведения людей. Вы научитесь понимать их мотивы и применять эти знания на практике. Вместе с «Вариатикой — Basic» вы сможете взглянуть на мир глазами другого человека.</p>
         
-        <p>«Вариатика — Basic» является не просто игрой, а мощным инструментом, который расширит ваши профессиональные возможности. Вы сможете оценивать поведение людей, развивать свой вербальный и эмоциональный интеллект, а также повысить уровень осознанности в коммуникации и стрессоустойчивости в переговорном процессе.</p>
+        <p>«Вариатика — Basic» является не просто игрой, а мощным инструментом, который расширит ваши профессиональные возможности. Вы сможете оценивать поведение людей, развивать свой вербальный и эмоциональный интеллект, а также повысить уровень осознанности в коммуникации.</p>
       </div>
       
       <div class="product-actions">
@@ -531,7 +545,7 @@
     </div>
     <div class="benefit-item">
       <div class="benefit-title">Практические упражнения</div>
-      <p class="benefit-text">Научитесь применять эти знания на практике для точного и быстрого анализа ситуаций. Специально разработанные упражнения помогут закрепить навыки аналитического мышления.</p>
+      <p class="benefit-text">Научитесь применять эти знания на практике для точного и быстрого анализа ситуаций. Специально разработанные упражнения помогут закрепить навыки.</p>
     </div>
     <div class="benefit-item">
       <div class="benefit-title">Профессиональное развитие</div>
@@ -540,6 +554,21 @@
     <div class="benefit-item">
       <div class="benefit-title">Понимание людей</div>
       <p class="benefit-text">Научитесь понимать характер, истинные желания, способности и ограничения людей, что позволит эффективнее выстраивать коммуникацию.</p>
+    </div>
+  </div>
+
+  <!-- БЛОК ФИЛОСОФИИ (СВЯЗЬ С НАРРАТИВОМ) -->
+  <div class="philosophy-block">
+    <p>«Вариатика — Basic» учит видеть нарративы других людей.</p>
+    <p style="color: #CCCCCC; font-size: 1rem;">Прежде чем менять историю — нужно понять, из чего она сделана. Basic даёт инструменты для анализа поведения, желаний и ограничений. Это первый шаг от хаоса к пониманию структуры.</p>
+    
+    <div style="margin-top: 30px;">
+      <p style="color: #3A86FF; margin-bottom: 15px;">В системе моих проектов:</p>
+      <ul class="system-list">
+        <li>📘 <span class="text-blue">Книги</span> — увидеть свой нарратив</li>
+        <li>🎲 <span class="text-blue">Игры</span> — научиться менять (вы здесь)</li>
+        <li>✏️ <span class="text-blue">Практикумы</span> — создать свой камень</li>
+      </ul>
     </div>
   </div>
 
@@ -556,29 +585,19 @@
     <div class="specialist-item">Тарологам</div>
   </div>
 
-  <!-- БЛОК 1: ТЕКСТ + ИЗОБРАЖЕНИЕ -->
-  <div class="image-text-block">
-    <div class="image-block">
-      <img src="/https-meysternlp.ru-/images/65756756767.webp" alt="Вариатика Basic" onerror="this.style.display='none'">
-    </div>
-    <div>
-      <p>Эта уникальная игра поможет сформировать навык анализа и прогнозирования поведения людей. Вы научитесь понимать их характер, истинные желания, способности и ограничения. Вместе с Вариатикой — Basic вы сможете взглянуть на мир глазами другого человека и применять эти знания на практике.</p>
-    </div>
-  </div>
-
   <!-- ЦИТАТА -->
   <div style="margin: 60px 0; padding: 40px; border-left: 3px solid #3A86FF; background: rgba(58, 134, 255, 0.02);">
     <p style="font-size: 1.3rem; font-style: italic; color: #FFFFFF;">«Вариатика — Basic является не просто игрой, а мощным инструментом, который расширит ваши профессиональные возможности.»</p>
   </div>
 
-  <!-- БЛОК 2: РАЗРАБОТЧИК -->
-  <div class="image-text-block">
+  <!-- БЛОК РАЗРАБОТЧИК -->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 60px 0; align-items: center;">
     <div>
       <h2 style="margin-top: 0;">Кто разработчик?</h2>
       <p>Мейстер А.Ю. – признанный эксперт в области психологии и образовательных технологий. Его методы преподавания практичны и ориентированы на результат, что доказано многочисленными отзывами успешных выпускников.</p>
     </div>
-    <div class="image-block">
-      <img src="/https-meysternlp.ru-/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер">
+    <div style="text-align: center;">
+      <img src="/https-meysternlp.ru-/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" style="max-width: 100%; border-radius: 8px; border: 1px solid rgba(58, 134, 255, 0.3);" onerror="this.style.display='none'">
     </div>
   </div>
 
@@ -587,6 +606,10 @@
     <p style="font-size: 1.2rem; margin-bottom: 30px;">Не упустите возможность получить ценные знания и навыки, которые помогут вам достичь успеха в любой сфере деятельности. Закажите «Вариатику — Basic» прямо сейчас и станьте профессионалом в анализе поведения и коммуникации!</p>
     
     <p style="color: #3A86FF; font-size: 1.3rem; margin-bottom: 30px;">Серия игры лимитирована!</p>
+    
+    <p style="text-align: center; color: #666; margin-bottom: 20px; font-style: italic;">
+      *Это один из моих камней. Берите и бросайте.
+    </p>
     
     <a href="https://www.ozon.ru/product/variatika-basic-chernyy-lebed-1263096092/" target="_blank" class="btn btn-large btn-ozon" style="font-size: 1.2rem; padding: 18px 50px;">Заказать игру на Ozon</a>
   </div>
