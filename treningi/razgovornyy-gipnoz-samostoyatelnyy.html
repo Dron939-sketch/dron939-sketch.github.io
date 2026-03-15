@@ -13,12 +13,12 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Разговорный гипноз. Пакет «Самостоятельный»">
   <meta property="og:description" content="38 видео с техниками речевого воздействия. Никакой магии — только алгоритмы.">
-  <meta property="og:image" content="/https-meysternlp.ru-/Пакет самостоятельный.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
+  <meta property="og:image" content="/images/paket-samostoyatelnyy.jpg">
+  <meta property="og:url" content="https://dron939-sketch.github.io/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
+  <link rel="canonical" href="https://dron939-sketch.github.io/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +79,7 @@
     p {
       font-size: 1.1rem;
       font-weight: 300;
-      color: #CCCCCC;
+      color: #E0E0E0;
       margin-bottom: 1.5rem;
     }
 
@@ -212,7 +212,7 @@
 
     .product-description {
       font-size: 1.1rem;
-      color: #CCCCCC;
+      color: #E0E0E0;
       margin-bottom: 30px;
       line-height: 1.8;
     }
@@ -224,23 +224,22 @@
       margin: 20px 0;
     }
 
-    /* ===== КОНТЕЙНЕР ДЛЯ ФОТО (ТОЛЬКО ОДНО) ===== */
+    /* ===== КОНТЕЙНЕР ДЛЯ ФОТО (БЕЗ БЕЛОГО ФОНА) ===== */
     .product-image {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #FFFFFF;
+      background-color: transparent; /* убран белый фон */
       border-radius: 16px;
-      padding: 40px;
+      padding: 20px; /* уменьшен padding, так как нет белого фона */
       border: 1px solid rgba(58, 134, 255, 0.3);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(58, 134, 255, 0.2) inset;
       transition: all 0.3s ease;
     }
 
     .product-image:hover {
       border-color: #3A86FF;
-      box-shadow: 0 15px 40px rgba(58, 134, 255, 0.3), 0 0 0 2px rgba(58, 134, 255, 0.3) inset;
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.3);
       transform: translateY(-5px);
     }
 
@@ -250,13 +249,13 @@
       height: auto;
       max-height: 300px;
       object-fit: contain;
-      transform: scale(1.1);
+      transform: scale(1.2); /* увеличено на 10% (было 1.1) */
       transition: transform 0.3s ease;
-      filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
     }
 
     .product-image:hover img {
-      transform: scale(1.15);
+      transform: scale(1.25); /* пропорциональное увеличение при наведении */
     }
 
     /* ===== ЧТО ВХОДИТ ===== */
@@ -266,7 +265,7 @@
     }
 
     .includes-list li {
-      color: #CCCCCC;
+      color: #E0E0E0;
       font-size: 1.1rem;
       margin-bottom: 15px;
       padding-left: 30px;
@@ -296,6 +295,7 @@
       border-radius: 8px;
       text-align: center;
       font-size: 1rem;
+      color: #E0E0E0;
     }
 
     /* ===== АВТОР ===== */
@@ -314,6 +314,12 @@
       width: 100%;
       max-width: 300px;
       border-radius: 8px;
+      border: 1px solid rgba(58, 134, 255, 0.3);
+    }
+
+    .author-info h3 {
+      color: #FFFFFF;
+      margin-bottom: 20px;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -418,16 +424,20 @@
       .themes-grid {
         grid-template-columns: 1fr;
       }
+      
+      .author-section {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ HEADER.HTML -->
+<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -475,15 +485,15 @@
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -494,8 +504,8 @@
 <!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
   <div class="breadcrumbs">
-    <a href="/https-meysternlp.ru-/">Главная</a> / 
-    <a href="/https-meysternlp.ru-/treningi/">Тренинги</a> / 
+    <a href="/">Главная</a> / 
+    <a href="/treningi/">Тренинги</a> / 
     <span>Разговорный гипноз (Самостоятельный)</span>
   </div>
 </div>
@@ -522,11 +532,11 @@
       </div>
     </div>
     
-    <!-- ТОЛЬКО ОДНО ФОТО ПРОДУКТА -->
+    <!-- ФОТО ПРОДУКТА (БЕЗ БЕЛОГО ФОНА) -->
     <div class="product-image">
-      <img src="/https-meysternlp.ru-/Пакет самостоятельный.jpg" 
+      <img src="/images/paket-samostoyatelnyy.jpg" 
            alt="Разговорный гипноз Самостоятельный" 
-           onerror="this.src='https://via.placeholder.com/500x400/FFFFFF/3A86FF?text=Разговорный+гипноз'">
+           onerror="this.src='https://via.placeholder.com/500x400/0C0C0C/3A86FF?text=Разговорный+гипноз'">
     </div>
   </div>
 
@@ -556,7 +566,7 @@
   <!-- ПРО АВТОРА -->
   <div class="author-section">
     <div class="author-image">
-      <img src="/https-meysternlp.ru-/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" onerror="this.src='https://via.placeholder.com/400x623/0C0C0C/3A86FF?text=Андрей+Мейстер'">
+      <img src="/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" onerror="this.src='https://via.placeholder.com/400x623/0C0C0C/3A86FF?text=Андрей+Мейстер'">
     </div>
     <div class="author-info">
       <h3>Андрей Мейстер</h3>
@@ -575,7 +585,7 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
