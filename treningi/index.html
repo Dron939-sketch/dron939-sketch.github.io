@@ -233,27 +233,29 @@
       align-self: flex-start;
     }
 
-    /* ===== УЛУЧШЕННЫЙ КОНТЕЙНЕР ДЛЯ ФОТО ===== */
+    /* ===== БЕЛЫЙ КОНТЕЙНЕР ДЛЯ ФОТО ===== */
     .training-image {
       margin-bottom: 25px;
       text-align: center;
-      background: rgba(0, 0, 0, 0.3);
+      background-color: #FFFFFF;
       border-radius: 12px;
-      padding: 20px;
-      border: 1px solid rgba(58, 134, 255, 0.1);
+      padding: 25px;
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
     .training-image img {
       max-width: 100%;
+      width: auto;
       height: auto;
-      max-height: 200px;
+      max-height: 240px; /* увеличен на 20% (было 200px) */
       object-fit: contain;
-      filter: drop-shadow(0 0 8px rgba(58, 134, 255, 0.3));
-      transition: all 0.3s ease;
+      transform: scale(1.2); /* дополнительное увеличение на 20% */
+      transition: transform 0.3s ease;
     }
 
     .training-card:hover .training-image img {
-      filter: drop-shadow(0 0 12px rgba(58, 134, 255, 0.5));
+      transform: scale(1.25); /* еще немного увеличивается при наведении */
     }
 
     .training-title {
@@ -367,6 +369,11 @@
         padding: 30px;
       }
       
+      .training-image img {
+        max-height: 200px;
+        transform: scale(1.1);
+      }
+      
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -473,7 +480,7 @@
     <div class="training-card">
       <span class="training-badge">38 видео</span>
       <div class="training-image">
-        <img src="/https-meysternlp.ru-/Пакет самостоятельный.jpg" alt="Разговорный гипноз Самостоятельный" onerror="this.src='https://via.placeholder.com/300x200/0C0C0C/3A86FF?text=Самостоятельный'">
+        <img src="/https-meysternlp.ru-/Пакет самостоятельный.jpg" alt="Разговорный гипноз Самостоятельный" onerror="this.src='https://via.placeholder.com/360x240/FFFFFF/3A86FF?text=Самостоятельный'">
       </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Самостоятельный»</div>
@@ -493,7 +500,7 @@
     <div class="training-card">
       <span class="training-badge">38 видео +</span>
       <div class="training-image">
-        <img src="/https-meysternlp.ru-/Пакет стандарт.jpg" alt="Разговорный гипноз Стандартный" onerror="this.src='https://via.placeholder.com/300x200/0C0C0C/3A86FF?text=Стандартный'">
+        <img src="/https-meysternlp.ru-/Пакет стандарт.jpg" alt="Разговорный гипноз Стандартный" onerror="this.src='https://via.placeholder.com/360x240/FFFFFF/3A86FF?text=Стандартный'">
       </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Стандартный»</div>
