@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Проекты в разработке — Концептикон, Фреди, виртуальный маркетолог | Андрей Мейстер</title>
@@ -13,12 +14,12 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Проекты в разработке — Андрей Мейстер">
   <meta property="og:description" content="Три проекта: книга «Концептикон», виртуальный психолог Фреди и виртуальный маркетолог">
-  <meta property="og:image" content="/https-meysternlp.ru-/images/projects-preview.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/v-razrabotke/">
+  <meta property="og:image" content="/images/projects-preview.jpg">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  <meta property="og:url" content="https://meysternlp.ru/v-razrabotke/">  <!-- Исправлено: на ваш домен -->
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/v-razrabotke/">
+  <link rel="canonical" href="https://meysternlp.ru/v-razrabotke/">  <!-- Исправлено: на ваш домен -->
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -240,7 +241,7 @@
     .project-status {
       margin-top: 20px;
       padding: 15px 0;
-      color: #3A86FF; /* ИСПРАВЛЕНО: был золотой */
+      color: #3A86FF;
       font-size: 0.95rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -342,7 +343,7 @@
     }
 
     .social-links a:hover {
-      color: #3A86FF; /* ИСПРАВЛЕНО: был золотой */
+      color: #3A86FF;
     }
 
     .copyright {
@@ -465,8 +466,8 @@
   <div class="actions-section">
     <div class="actions-title">А пока можете:</div>
     <div class="action-buttons">
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn">🧠 ПОПРОБОВАТЬ ФРЕДИ</a>
-      <a href="/https-meysternlp.ru-/blog/" class="btn">📖 ЧИТАТЬ БЛОГ</a>
+      <a href="/virtual-psychologist/" class="btn">🧠 ПОПРОБОВАТЬ ФРЕДИ</a>  <!-- Исправлено -->
+      <a href="/blog/" class="btn">📖 ЧИТАТЬ БЛОГ</a>  <!-- Исправлено -->
     </div>
   </div>
 </div>
@@ -476,7 +477,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
     .then(response => {
       if (!response.ok) {
         throw new Error('Ошибка загрузки шапки');
@@ -494,7 +495,7 @@
         
         navLinks.forEach(link => {
           const href = link.getAttribute('href');
-          if (href && href.includes('/v-razrabotke/')) {
+          if (href && (href.includes('/v-razrabotke/') || href === '/v-razrabotke/')) {
             link.classList.add('active');
           }
         });
@@ -530,20 +531,20 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Заглушка на случай ошибки
+      // Заглушка на случай ошибки с исправленными ссылками
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; position: sticky; top: 0; z-index: 100;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: 0.85rem;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: 0.85rem;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -551,7 +552,7 @@
     });
 
   // Загружаем подвал из footer.html
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
