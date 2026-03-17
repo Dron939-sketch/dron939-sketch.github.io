@@ -1,12 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Главная -->
   <url>
-    <loc>https://dron939-sketch.github.io/https-meysternlp.ru-/</loc>
+    <loc>https://meysternlp.ru/</loc>
     <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  
+  <!-- Книги -->
+  <url>
+    <loc>https://meysternlp.ru/knigi/</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <!-- Игры -->
+  <url>
+    <loc>https://meysternlp.ru/igry/</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://dron939-sketch.github.io/https-meysternlp.ru-/knigi/</loc>
-    <priority>0.9</priority>
+    <loc>https://meysternlp.ru/igry/marketolog.html</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
   </url>
-  <!-- и так далее для всех страниц -->
+  <url>
+    <loc>https://meysternlp.ru/igry/variatika-basic.html</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/igry/variatika-intensive.html</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/igry/variatika-progressive.html</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  
+  <!-- Тренинги -->
+  <url>
+    <loc>https://meysternlp.ru/treningi/</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/treningi/razgovornyy-gipnoz-samostoyatelnyy.html</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/treningi/razgovornyy-gipnoz-standart.html</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  
+  <!-- Блог -->
+  <url>
+    <loc>https://meysternlp.ru/blog/</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/4-strategii-raboty-s-zaprosom-klienta.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/gazlayting-chto-eto.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lateralnoe-myshlenie.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/chto-takoe-manipulyaciya.html</loc>
+    <priority>0.7</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  
+  <!-- Архив (События) -->
+  <url>
+    <loc>https://meysternlp.ru/sobytiya/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <!-- В разработке -->
+  <url>
+    <loc>https://meysternlp.ru/v-razrabotke/</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <!-- Виртуальный психолог -->
+  <url>
+    <loc>https://meysternlp.ru/virtual-psychologist/</loc>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
+  <!-- Обо мне -->
+  <url>
+    <loc>https://meysternlp.ru/obo-mne/</loc>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
 </urlset>
