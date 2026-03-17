@@ -1039,11 +1039,11 @@
 </head>
 <body>
 
-<!-- ШАПКА С БУРГЕР-МЕНЮ -->
+<!-- ШАПКА С БУРГЕР-МЕНЮ (ИСПРАВЛЕНО) -->
 <header class="header">
   <div class="container">
     <div class="nav">
-      <a href="/https-meysternlp.ru-/" class="logo"><span>А</span>МЕЙСТЕР</a>
+      <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
       
       <!-- Кнопка-бургер -->
       <button class="burger" id="burgerBtn" aria-label="Меню">
@@ -1053,16 +1053,16 @@
       </button>
       
       <div class="nav-links" id="navLinks">
-        <a href="/https-meysternlp.ru-/knigi/">Книги</a>
-        <a href="/https-meysternlp.ru-/igry/">Игры</a>
-        <a href="/https-meysternlp.ru-/treningi/">Тренинги</a>
-        <a href="/https-meysternlp.ru-/v-razrabotke/">В разработке</a>
-        <a href="/https-meysternlp.ru-/sobytiya/">Архив</a>
+        <a href="/knigi/">Книги</a>
+        <a href="/igry/">Игры</a>
+        <a href="/treningi/">Тренинги</a>
+        <a href="/v-razrabotke/">В разработке</a>
+        <a href="/sobytiya/">Архив</a>
         <!-- Виртуальный психолог для мобильных -->
-        <a href="/https-meysternlp.ru-/virtual-psychologist/" class="mobile-only">Виртуальный психолог</a>
+        <a href="/virtual-psychologist/" class="mobile-only">Виртуальный психолог</a>
       </div>
       
-      <a href="/https-meysternlp.ru-/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
+      <a href="/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
     </div>
   </div>
 </header>
@@ -1084,7 +1084,7 @@
         </div>
         
         <div class="hero-buttons">
-          <a href="/https-meysternlp.ru-/obo-mne/" class="btn">УЗНАТЬ</a>
+          <a href="/obo-mne/" class="btn">УЗНАТЬ</a>
           <a href="#projects" class="btn">ПРОЕКТЫ</a>
         </div>
       </div>
@@ -1092,7 +1092,7 @@
       <div class="hero-image">
         <div class="video-wrapper">
           <video autoplay loop muted playsinline>
-            <source src="/https-meysternlp.ru-/video.mp4" type="video/mp4">
+            <source src="/video.mp4" type="video/mp4">
             Ваш браузер не поддерживает видео.
           </video>
         </div>
@@ -1228,7 +1228,7 @@
   </div>
 </section>
 
-<!-- ПОСЛЕДНИЕ СТАТЬИ -->
+<!-- ПОСЛЕДНИЕ СТАТЬИ (ИСПРАВЛЕНО) -->
 <section class="blog-preview-section">
   <div class="container">
     <h2>ПОСЛЕДНИЕ СТАТЬИ</h2>
@@ -1242,7 +1242,7 @@
         <p class="card-excerpt">Тонкая психологическая манипуляция, заставляющая сомневаться в собственном восприятии реальности. 7 признаков и 5 способов защиты...</p>
         <div class="card-footer">
           <span class="card-views">👁️ 2.8K просмотров</span>
-          <a href="/https-meysternlp.ru-/blog/gazlayting-chto-eto.html" class="card-link">Читать →</a>
+          <a href="/blog/gazlayting-chto-eto.html" class="card-link">Читать →</a>
         </div>
       </div>
 
@@ -1253,7 +1253,7 @@
         <p class="card-excerpt">5 техник Эдварда де Боно для развития нестандартного мышления. Упражнения для повседневной практики...</p>
         <div class="card-footer">
           <span class="card-views">👁️ 2.4K просмотров</span>
-          <a href="/https-meysternlp.ru-/blog/lateralnoe-myshlenie.html" class="card-link">Читать →</a>
+          <a href="/blog/lateralnoe-myshlenie.html" class="card-link">Читать →</a>
         </div>
       </div>
 
@@ -1264,13 +1264,13 @@
         <p class="card-excerpt">Как работать с подсознанием без эзотерики. 5 простых шагов для входа в трансовое состояние...</p>
         <div class="card-footer">
           <span class="card-views">👁️ 2.3K просмотров</span>
-          <a href="/https-meysternlp.ru-/blog/samogipnoz-dlya-nachinayushih.html" class="card-link">Читать →</a>
+          <a href="/blog/samogipnoz-dlya-nachinayushih.html" class="card-link">Читать →</a>
         </div>
       </div>
     </div>
 
     <div class="blog-preview-footer">
-      <a href="/https-meysternlp.ru-/blog/" class="btn btn-outline">Все статьи блога →</a>
+      <a href="/blog/" class="btn btn-outline">Все статьи блога →</a>
     </div>
   </div>
 </section>
@@ -1300,12 +1300,10 @@
     
     navLinks.forEach(link => {
       const href = link.getAttribute('href');
-      const cleanHref = href ? href.replace('/https-meysternlp.ru-', '') : '';
-      const cleanPath = currentPath.replace('/https-meysternlp.ru-', '');
-      
-      if (cleanPath === cleanHref || 
-          (cleanHref !== '/' && cleanPath.startsWith(cleanHref + '/')) ||
-          (cleanHref === '/' && cleanPath === '/')) {
+      // Убираем старую логику с заменой, так как путей /https-meysternlp.ru-/ больше нет
+      if (currentPath === href || 
+          (href !== '/' && currentPath.startsWith(href + '/')) ||
+          (href === '/' && currentPath === '/')) {
         link.classList.add('active');
       } else {
         link.classList.remove('active');
