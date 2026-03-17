@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Андрей Мейстер — манифест</title>
@@ -13,12 +14,12 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Андрей Мейстер — манифест">
   <meta property="og:description" content="Бог умер. Теперь мы сами по себе. Я бросаю камень.">
-  <meta property="og:image" content="/https-meysternlp.ru-/Андрей%20Мейстер.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/manifest/">
+  <meta property="og:image" content="/Андрей%20Мейстер.jpg">  <!-- ИСПРАВЛЕНО -->
+  <meta property="og:url" content="https://meysternlp.ru/manifest/">  <!-- ИСПРАВЛЕНО -->
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/manifest/">
+  <link rel="canonical" href="https://meysternlp.ru/manifest/">  <!-- ИСПРАВЛЕНО -->
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -740,15 +741,15 @@
     
     <div class="tools-grid">
       <div class="tool-item">
-        <a href="/https-meysternlp.ru-/knigi/" class="tool-btn">КНИГИ</a>
+        <a href="/knigi/" class="tool-btn">КНИГИ</a>  <!-- ИСПРАВЛЕНО -->
         <div class="tool-desc">увидеть нарратив</div>
       </div>
       <div class="tool-item">
-        <a href="/https-meysternlp.ru-/igry/" class="tool-btn">ИГРЫ</a>
+        <a href="/igry/" class="tool-btn">ИГРЫ</a>  <!-- ИСПРАВЛЕНО -->
         <div class="tool-desc">научиться менять</div>
       </div>
       <div class="tool-item">
-        <a href="/https-meysternlp.ru-/treningi/" class="tool-btn">ПРАКТИКУМЫ</a>
+        <a href="/treningi/" class="tool-btn">ПРАКТИКУМЫ</a>  <!-- ИСПРАВЛЕНО -->
         <div class="tool-desc">создать свой камень</div>
       </div>
     </div>
@@ -766,7 +767,7 @@
     <p>В каком нарративе живёте вы? Где в вашей жизни несостыковки?</p>
     <p style="margin-bottom: 30px;">Хотите бросить свой камень?</p>
     <div class="invite-strong">Я покажу, как.</div>
-    <a href="/https-meysternlp.ru-/" class="btn" style="margin-top: 40px;">ИССЛЕДОВАТЬ</a>
+    <a href="/" class="btn" style="margin-top: 40px;">ИССЛЕДОВАТЬ</a>  <!-- ИСПРАВЛЕНО -->
   </div>
 </section>
 
@@ -795,7 +796,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -845,20 +846,20 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант на случай ошибки
+      // Запасной вариант с исправленными ссылками
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
