@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Виртуальный психолог Фреди — Андрей Мейстер</title>
@@ -13,12 +14,12 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Виртуальный психолог Фреди — Андрей Мейстер">
   <meta property="og:description" content="Тест личности по матрице поведения 4×6. Узнайте свой психологический портрет за 15 минут.">
-  <meta property="og:image" content="/https-meysternlp.ru-/images/fredi-preview.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/virtual-psychologist/">
+  <meta property="og:image" content="/images/fredi-preview.jpg">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  <meta property="og:url" content="https://meysternlp.ru/virtual-psychologist/">  <!-- Исправлено: на ваш домен -->
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/virtual-psychologist/">
+  <link rel="canonical" href="https://meysternlp.ru/virtual-psychologist/">  <!-- Исправлено: на ваш домен -->
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -412,7 +413,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -425,7 +426,7 @@
         
         navLinks.forEach(link => {
           const href = link.getAttribute('href');
-          if (href && href.includes('/virtual-psychologist/')) {
+          if (href && (href.includes('/virtual-psychologist/') || href === '/virtual-psychologist/')) {
             link.classList.add('active');
           }
         });
@@ -461,13 +462,13 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант на случай ошибки
+      // Запасной вариант с исправленными ссылками
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px;">🧠 Виртуальный психолог</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -580,7 +581,7 @@
 
 <script>
   // Загружаем подвал из footer.html
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
