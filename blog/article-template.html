@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
   
   <!-- SEO МЕТА-ТЕГИ (замените под статью) -->
   <title>Название статьи | Андрей Мейстер</title>
@@ -13,8 +14,8 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Название статьи">
   <meta property="og:description" content="Краткое описание">
-  <meta property="og:image" content="/https-meysternlp.ru-/images/article-preview.jpg">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/blog/nazvanie-stati.html">
+  <meta property="og:image" content="/images/article-preview.jpg">  <!-- ИСПРАВЛЕНО -->
+  <meta property="og:url" content="https://meysternlp.ru/blog/nazvanie-stati.html">  <!-- ИСПРАВЛЕНО -->
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="2026-04-15">
   <meta property="article:author" content="Андрей Мейстер">
@@ -24,10 +25,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Название статьи">
   <meta name="twitter:description" content="Краткое описание">
-  <meta name="twitter:image" content="/https-meysternlp.ru-/images/article-preview.jpg">
+  <meta name="twitter:image" content="/images/article-preview.jpg">  <!-- ИСПРАВЛЕНО -->
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/blog/nazvanie-stati.html">
+  <link rel="canonical" href="https://meysternlp.ru/blog/nazvanie-stati.html">  <!-- ИСПРАВЛЕНО -->
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -574,7 +575,7 @@
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -620,6 +621,25 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
+      // Запасной вариант шапки
+      document.getElementById('header-placeholder').innerHTML = `
+        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/blog/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Статьи</a>
+              </div>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+            </div>
+          </div>
+        </header>
+      `;
     });
 </script>
 
@@ -714,8 +734,8 @@
         <h3>Заголовок призыва</h3>
         <p>Текст призыва к действию.</p>
         <div class="cta-buttons">
-          <a href="/https-meysternlp.ru-/treningi/" class="btn">КНОПКА 1</a>
-          <a href="/https-meysternlp.ru-/knigi/" class="btn btn-outline">КНОПКА 2</a>
+          <a href="/treningi/" class="btn">КНОПКА 1</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/knigi/" class="btn btn-outline">КНОПКА 2</a>  <!-- ИСПРАВЛЕНО -->
         </div>
       </div>
 
@@ -726,22 +746,22 @@
       <h3>📚 Читайте также:</h3>
       <div class="related-grid">
         <div class="related-item">
-          <a href="/https-meysternlp.ru-/blog/statiya-1.html">Название статьи 1</a>
+          <a href="/blog/statiya-1.html">Название статьи 1</a>  <!-- ИСПРАВЛЕНО -->
           <span>10 мин · 2.8K просмотров</span>
         </div>
         <div class="related-item">
-          <a href="/https-meysternlp.ru-/blog/statiya-2.html">Название статьи 2</a>
+          <a href="/blog/statiya-2.html">Название статьи 2</a>  <!-- ИСПРАВЛЕНО -->
           <span>12 мин · 3.2K просмотров</span>
         </div>
         <div class="related-item">
-          <a href="/https-meysternlp.ru-/blog/statiya-3.html">Название статьи 3</a>
+          <a href="/blog/statiya-3.html">Название статьи 3</a>  <!-- ИСПРАВЛЕНО -->
           <span>8 мин · 1.9K просмотров</span>
         </div>
       </div>
     </div>
 
     <!-- Ссылка назад к списку статей -->
-    <a href="/https-meysternlp.ru-/blog/" class="back-link">← Все статьи блога</a>
+    <a href="/blog/" class="back-link">← Все статьи блога</a>  <!-- ИСПРАВЛЕНО -->
   </article>
 </div>
 
@@ -749,13 +769,30 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
+      // Запасной вариант подвала
+      document.getElementById('footer-placeholder').innerHTML = `
+        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); margin-top: 40px;">
+          <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+              <div style="color: #FFFFFF; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0;">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0;">Дзен</a>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+          </div>
+        </footer>
+      `;
     });
 </script>
 
