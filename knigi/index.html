@@ -269,7 +269,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -319,15 +319,15 @@
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/https-meysternlp.ru-/knigi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/knigi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -343,7 +343,7 @@
   <div class="books-grid">
     <!-- Том 1 - Разговорный гипноз -->
     <div class="book-card">
-      <img src="/https-meysternlp.ru-/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png" alt="Теория манипуляции Том 1" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+1'">
+      <img src="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png" alt="Теория манипуляции Том 1" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+1'">  <!-- ИСПРАВЛЕНО -->
       <div class="book-title">Теория манипуляции</div>
       <div class="book-subtitle">Том 1 · Разговорный гипноз</div>
       <div class="book-description"><strong>База. Начало.</strong> Практическое пособие по речевому воздействию. Вы узнаете, как устроены речевые конструкции, почему одни слова убеждают, а другие — нет. У всякого воздействия есть формула — в этой книге вы узнаете, как она работает и как применять её в повседневном общении. Без введения в транс.</div>
@@ -354,7 +354,7 @@
 
     <!-- Том 2 - Проницательность -->
     <div class="book-card">
-      <img src="/https-meysternlp.ru-/kniga-toriya-manipulyacii.-tom-ii-pronicatelnost-andrej-mejster.png" alt="Теория манипуляции Том 2" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+2'">
+      <img src="/kniga-toriya-manipulyacii.-tom-ii-pronicatelnost-andrej-mejster.png" alt="Теория манипуляции Том 2" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+2'">  <!-- ИСПРАВЛЕНО -->
       <div class="book-title">Теория манипуляции</div>
       <div class="book-subtitle">Том 2 · Проницательность</div>
       <div class="book-description">Умение видеть то, что скрыто. Как распознавать чужие речевые конструкции, понимать истинные мотивы собеседника и не попадать под влияние, когда вы этого не хотите.</div>
@@ -365,7 +365,7 @@
 
     <!-- Том 3 - Стимульный контроль -->
     <div class="book-card">
-      <img src="/https-meysternlp.ru-/kniga-teoriya-manipulyacii.-tom-iii-stimulnyj-kontrol.webp" alt="Теория манипуляции Том 3" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+3'">
+      <img src="/kniga-teoriya-manipulyacii.-tom-iii-stimulnyj-kontrol.webp" alt="Теория манипуляции Том 3" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+3'">  <!-- ИСПРАВЛЕНО -->
       <div class="book-title">Теория манипуляции</div>
       <div class="book-subtitle">Том 3 · Стимульный контроль</div>
       <div class="book-description">Мастерство управления реакциями. Как перестать быть заложником обстоятельств, создавать свои устойчивые речевые конструкции и выстраивать коммуникацию, в которой вы — автор.</div>
@@ -381,7 +381,7 @@
 
 <script>
   // Загружаем подвал из footer.html
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
