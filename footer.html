@@ -1,253 +1,125 @@
-<!-- ===== ШАПКА (общий файл для всех страниц) ===== -->
-<header class="header">
+<!-- ===== ПОДВАЛ (общий файл для всех страниц) ===== -->
+<footer class="footer">
   <div class="container">
-    <div class="nav">
-      <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
-      
-      <!-- Кнопка-бургер -->
-      <button class="burger" id="burgerBtn" aria-label="Меню">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      
-      <div class="nav-links" id="navLinks">
-        <a href="/knigi/">Книги</a>
-        <a href="/igry/">Игры</a>
-        <a href="/treningi/">Тренинги</a>
-        <a href="/v-razrabotke/">В разработке</a>
-        <a href="/sobytiya/">Архив</a>
-        <!-- Виртуальный психолог для мобильных -->
-        <a href="/virtual-psychologist/" class="mobile-only">Виртуальный психолог</a>
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
       </div>
-      
-      <a href="/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
     </div>
+    <div class="copyright">© Андрей Мейстер · системное мышление · 2026</div>
   </div>
-</header>
+</footer>
 
 <style>
-/* ===== СТИЛИ ШАПКИ ===== */
+/* ===== СТИЛИ ДЛЯ ПОДВАЛА ===== */
 
-.header {
-  padding: 20px 0;
-  border-bottom: 1px solid rgba(58, 134, 255, 0.2);
-  position: sticky;
-  top: 0;
+.footer {
+  padding: 60px 0 30px;
+  border-top: 1px solid rgba(58, 134, 255, 0.2);
   background-color: #0C0C0C;
-  z-index: 1000;
   width: 100%;
 }
 
-.nav {
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.footer-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 60px;
-  width: 100%;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 300;
+.footer-logo {
+  font-size: 1.2rem;
   letter-spacing: 0.3em;
   color: #FFFFFF;
   white-space: nowrap;
-  z-index: 1001;
-  text-decoration: none;
 }
 
-.logo span {
+.text-blue {
   color: #3A86FF;
 }
 
-/* Бургер-меню */
-.burger {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 20px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 1001;
-}
-
-.burger span {
-  width: 100%;
-  height: 2px;
-  background-color: #FFFFFF;
-  transition: all 0.3s ease;
-}
-
-.burger.active span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
-}
-
-.burger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.burger.active span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
-}
-
-/* Навигация */
-.nav-links {
+.social-links {
   display: flex;
-  gap: 50px;
-  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
-.nav-links a {
+.social-links a {
   color: #F0F0F0;
-  font-weight: 300;
+  font-size: 1rem;
   letter-spacing: 0.1em;
-  font-size: 0.9rem;
   text-transform: uppercase;
   border-bottom: 1px solid transparent;
   padding-bottom: 5px;
-  transition: border-color 0.3s ease;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.nav-links a:hover {
-  border-bottom-color: #3A86FF;
-  color: #F0F0F0;
-}
-
-.nav-links a.active {
-  border-bottom-color: #3A86FF;
-}
-
-/* Кнопка в шапке */
-.btn-header {
-  display: inline-block;
-  padding: 8px 20px;
-  background: linear-gradient(to right, #00A8E8, #3A86FF);
-  color: white;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  text-transform: none;
-  letter-spacing: normal;
-  border: none;
-  box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
-  white-space: nowrap;
   transition: all 0.3s ease;
-  z-index: 1001;
   text-decoration: none;
 }
 
-.btn-header:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-  color: white;
+.social-links a:hover {
+  border-bottom-color: #3A86FF;
+  color: #3A86FF;
 }
 
-/* Классы для адаптации */
-.desktop-only {
-  display: inline-block;
+.copyright {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  letter-spacing: 0.1em;
+  margin-top: 40px;
+  opacity: 0.5;
 }
 
-.mobile-only {
-  display: none;
-}
-
-/* ===== АДАПТАЦИЯ ДЛЯ РАЗНЫХ ЭКРАНОВ ===== */
-@media (max-width: 1100px) {
-  .nav-links {
-    gap: 30px;
+/* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ ===== */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px;
   }
-}
-
-@media (max-width: 992px) {
-  .nav-links {
+  
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .social-links {
     gap: 20px;
   }
   
-  .nav-links a {
-    font-size: 0.85rem;
+  .social-links a {
+    font-size: 0.9rem;
   }
   
-  .btn-header {
-    padding: 8px 16px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .desktop-only {
-    display: none;
-  }
-  
-  .mobile-only {
-    display: block;
-    background: linear-gradient(to right, #00A8E8, #3A86FF);
-    color: white;
-    border-radius: 30px;
-    margin: 10px auto 0;
-    text-transform: none !important;
-    font-weight: 500 !important;
-    border: none !important;
-    text-align: center;
-    padding: 15px 0;
-    width: 90%;
-    max-width: 280px;
-    font-size: 1rem;
-  }
-  
-  .mobile-only:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
-    color: white !important;
-    border-bottom-color: transparent !important;
-  }
-
-  .burger {
-    display: flex;
-  }
-  
-  .nav-links {
-    position: fixed;
-    top: 70px;
-    left: -100%;
-    width: 100%;
-    height: calc(100vh - 70px);
-    background-color: #0C0C0C;
-    flex-direction: column;
-    padding: 30px 20px;
-    transition: left 0.3s ease;
-    z-index: 999;
-    overflow-y: auto;
-    gap: 5px;
-  }
-  
-  .nav-links.active {
-    left: 0;
-  }
-  
-  .nav-links a {
-    font-size: 1.2rem;
-    padding: 15px 0;
-    width: 100%;
-    text-align: center;
-    border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+  .copyright {
+    font-size: 0.7rem;
+    margin-top: 30px;
   }
 }
 
 @media (max-width: 480px) {
-  .logo {
-    font-size: 1.2rem;
+  .footer-logo {
+    font-size: 1rem;
     letter-spacing: 0.2em;
   }
   
-  .burger {
-    width: 25px;
-    height: 18px;
+  .social-links {
+    gap: 15px;
+  }
+  
+  .social-links a {
+    font-size: 0.8rem;
   }
 }
 </style>
