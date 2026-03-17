@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  
+  <!-- SEO МЕТА-ТЕГИ -->
   <title>Блог — Статьи о системном мышлении — Андрей Мейстер</title>
+  <meta name="description" content="Блог Андрея Мейстера о системном мышлении, психологии влияния, когнитивных навыках и развитии мышления. Статьи, кейсы, практические техники.">
+  <meta name="keywords" content="блог, статьи, системное мышление, психология, манипуляция, когнитивные навыки">
+  <meta name="author" content="Андрей Мейстер">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -321,7 +327,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -370,21 +376,21 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант на случай ошибки
+      // Запасной вариант с правильными путями
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
-                <a href="/https-meysternlp.ru-/blog/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Статьи</a>
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/blog/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Статьи</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -400,7 +406,7 @@
   </div>
 
   <div class="articles-list">
-    <!-- Статья 1 -->
+    <!-- Статья 1 - Латеральное мышление -->
     <div class="article-preview">
       <div class="article-meta">
         <span>15.03.2026</span>
@@ -409,11 +415,11 @@
       <div class="article-content">
         <h3>Что такое латеральное мышление и чем оно отличается от критического?</h3>
         <p>Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...</p>
-        <a href="lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>
+        <a href="/blog/lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
       </div>
     </div>
 
-    <!-- Статья 2 -->
+    <!-- Статья 2 - Самогипноз -->
     <div class="article-preview">
       <div class="article-meta">
         <span>02.03.2026</span>
@@ -422,11 +428,11 @@
       <div class="article-content">
         <h3>Самогипноз для начинающих: пошаговая инструкция</h3>
         <p>Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...</p>
-        <a href="samogipnoz-instrukciya.html" class="article-link">Читать полностью →</a>
+        <a href="/blog/samogipnoz-dlya-nachinayushih.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
       </div>
     </div>
 
-    <!-- Статья 3 -->
+    <!-- Статья 3 - Теория манипуляции -->
     <div class="article-preview">
       <div class="article-meta">
         <span>18.02.2026</span>
@@ -435,11 +441,11 @@
       <div class="article-content">
         <h3>Теория манипуляции: как распознать скрытое воздействие</h3>
         <p>5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...</p>
-        <a href="teoriya-manipulyacii-priznaki.html" class="article-link">Читать полностью →</a>
+        <a href="/blog/chto-takoe-manipulyaciya.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
       </div>
     </div>
 
-    <!-- Статья 4 -->
+    <!-- Статья 4 - Когнитивная гибкость -->
     <div class="article-preview">
       <div class="article-meta">
         <span>05.02.2026</span>
@@ -448,11 +454,11 @@
       <div class="article-content">
         <h3>Упражнения для развития когнитивной гибкости</h3>
         <p>Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...</p>
-        <a href="kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>
+        <a href="/blog/kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
       </div>
     </div>
 
-    <!-- Статья 5 -->
+    <!-- Статья 5 - Системное мышление в бизнесе -->
     <div class="article-preview">
       <div class="article-meta">
         <span>20.01.2026</span>
@@ -461,7 +467,7 @@
       <div class="article-content">
         <h3>Как системное мышление помогает в бизнесе</h3>
         <p>Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...</p>
-        <a href="sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>
+        <a href="/blog/sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
       </div>
     </div>
   </div>
@@ -480,13 +486,30 @@
 
 <script>
   // Загружаем подвал из footer.html
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')  // ИСПРАВЛЕНО
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
+      // Запасной вариант подвала с правильными путями
+      document.getElementById('footer-placeholder').innerHTML = `
+        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
+          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+          </div>
+        </footer>
+      `;
     });
 </script>
 
