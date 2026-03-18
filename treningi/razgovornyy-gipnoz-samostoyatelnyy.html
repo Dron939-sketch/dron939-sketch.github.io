@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <base href="/">
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Разговорный гипноз. Пакет «Самостоятельный» | Андрей Мейстер</title>
@@ -13,12 +14,12 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Разговорный гипноз. Пакет «Самостоятельный»">
   <meta property="og:description" content="38 видео с техниками речевого воздействия. Никакой магии — только алгоритмы.">
-  <meta property="og:image" content="/https-meysternlp.ru-/kurs1.png">
-  <meta property="og:url" content="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
+  <meta property="og:image" content="/kurs1.png">
+  <meta property="og:url" content="https://meysternlp.ru/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://dron939-sketch.github.io/https-meysternlp.ru-/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
+  <link rel="canonical" href="https://meysternlp.ru/treningi/razgovornyy-gipnoz-samostoyatelnyy/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -237,7 +238,6 @@
       height: auto;
       border-radius: 8px;
       transition: transform 0.3s ease;
-      /* Добавим легкую тень для объема */
       filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
     }
 
@@ -402,11 +402,11 @@
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ HEADER.HTML -->
+<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/https-meysternlp.ru-/header.html')
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -454,15 +454,15 @@
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/https-meysternlp.ru-/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/https-meysternlp.ru-/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/https-meysternlp.ru-/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/https-meysternlp.ru-/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Тренинги</a>
-                <a href="/https-meysternlp.ru-/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/https-meysternlp.ru-/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
+                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/https-meysternlp.ru-/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -473,8 +473,8 @@
 <!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
   <div class="breadcrumbs">
-    <a href="/https-meysternlp.ru-/">Главная</a> / 
-    <a href="/https-meysternlp.ru-/treningi/">Тренинги</a> / 
+    <a href="/">Главная</a> / 
+    <a href="/treningi/">Тренинги</a> / 
     <span>Разговорный гипноз (Самостоятельный)</span>
   </div>
 </div>
@@ -501,10 +501,9 @@
       </div>
     </div>
     
-    <!-- ФОТО ПРОДУКТА - НОВОЕ С ПРОЗРАЧНЫМ ФОНОМ -->
+    <!-- ФОТО ПРОДУКТА -->
     <div class="product-image">
-      <img src="/https-meysternlp.ru-/kurs1.png" 
-           alt="Разговорный гипноз Самостоятельный">
+      <img src="/kurs1.png" alt="Разговорный гипноз Самостоятельный" onerror="this.src='https://via.placeholder.com/500x500/0C0C0C/3A86FF?text=Курс'">
     </div>
   </div>
 
@@ -534,7 +533,7 @@
   <!-- ПРО АВТОРА -->
   <div class="author-section">
     <div class="author-image">
-      <img src="/https-meysternlp.ru-/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер">
+      <img src="/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=А.Мейстер'">
     </div>
     <div class="author-info">
       <h3>Андрей Мейстер</h3>
@@ -553,7 +552,7 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/https-meysternlp.ru-/footer.html')
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
@@ -569,6 +568,7 @@
                 <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
                 <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
                 <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
               </div>
             </div>
             <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
