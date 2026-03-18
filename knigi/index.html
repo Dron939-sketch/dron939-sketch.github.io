@@ -10,6 +10,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
   
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
+
+    ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+  
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
@@ -269,7 +283,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/header.html')  // ИСПРАВЛЕНО
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -343,10 +357,10 @@
   <div class="books-grid">
     <!-- Том 1 - Разговорный гипноз -->
     <div class="book-card">
-      <img src="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png" alt="Теория манипуляции Том 1" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+1'">  <!-- ИСПРАВЛЕНО -->
+      <img src="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png" alt="Теория манипуляции Том 1" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+1'">
       <div class="book-title">Теория манипуляции</div>
       <div class="book-subtitle">Том 1 · Разговорный гипноз</div>
-      <div class="book-description"><strong>База. Начало.</strong> Практическое пособие по речевому воздействию. Вы узнаете, как устроены речевые конструкции, почему одни слова убеждают, а другие — нет. У всякого воздействия есть формула — в этой книге вы узнаете, как она работает и как применять её в повседневном общении. Без введения в транс.</div>
+      <div class="book-description"><strong>База. Начало.</strong> Практическое пособие по речевому воздействию. Как устроены речевые конструкции и почему одни слова убеждают, а другие — нет. У всякого воздействия есть формула.</div>
       <div class="book-meta">
         <a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.8rem;">КУПИТЬ НА OZON</a>
       </div>
@@ -354,7 +368,7 @@
 
     <!-- Том 2 - Проницательность -->
     <div class="book-card">
-      <img src="/kniga-toriya-manipulyacii.-tom-ii-pronicatelnost-andrej-mejster.png" alt="Теория манипуляции Том 2" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+2'">  <!-- ИСПРАВЛЕНО -->
+      <img src="/kniga-toriya-manipulyacii.-tom-ii-pronicatelnost-andrej-mejster.png" alt="Теория манипуляции Том 2" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+2'">
       <div class="book-title">Теория манипуляции</div>
       <div class="book-subtitle">Том 2 · Проницательность</div>
       <div class="book-description">Умение видеть то, что скрыто. Как распознавать чужие речевые конструкции, понимать истинные мотивы собеседника и не попадать под влияние, когда вы этого не хотите.</div>
@@ -365,7 +379,7 @@
 
     <!-- Том 3 - Стимульный контроль -->
     <div class="book-card">
-      <img src="/kniga-teoriya-manipulyacii.-tom-iii-stimulnyj-kontrol.webp" alt="Теория манипуляции Том 3" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+3'">  <!-- ИСПРАВЛЕНО -->
+      <img src="/kniga-teoriya-manipulyacii.-tom-iii-stimulnyj-kontrol.webp" alt="Теория манипуляции Том 3" class="book-cover" onerror="this.src='https://via.placeholder.com/300x400/0C0C0C/3A86FF?text=Том+3'">
       <div class="book-title">Теория манипуляции</div>
       <div class="book-subtitle">Том 3 · Стимульный контроль</div>
       <div class="book-description">Мастерство управления реакциями. Как перестать быть заложником обстоятельств, создавать свои устойчивые речевые конструкции и выстраивать коммуникацию, в которой вы — автор.</div>
@@ -381,7 +395,7 @@
 
 <script>
   // Загружаем подвал из footer.html
-  fetch('/footer.html')  // ИСПРАВЛЕНО
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
