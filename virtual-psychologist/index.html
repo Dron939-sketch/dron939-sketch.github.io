@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Виртуальный психолог Фреди — Андрей Мейстер</title>
@@ -14,17 +14,31 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Виртуальный психолог Фреди — Андрей Мейстер">
   <meta property="og:description" content="Тест личности по матрице поведения 4×6. Узнайте свой психологический портрет за 15 минут.">
-  <meta property="og:image" content="/images/fredi-preview.jpg">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
-  <meta property="og:url" content="https://meysternlp.ru/virtual-psychologist/">  <!-- Исправлено: на ваш домен -->
+  <meta property="og:image" content="/images/fredi-preview.jpg">
+  <meta property="og:url" content="https://meysternlp.ru/virtual-psychologist/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/virtual-psychologist/">  <!-- Исправлено: на ваш домен -->
+  <link rel="canonical" href="https://meysternlp.ru/virtual-psychologist/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
+
+    ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -142,6 +156,18 @@
       box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
     }
 
+    .btn-max {
+      background: linear-gradient(to right, #FF6B6B, #3A86FF);
+      border: none;
+    }
+
+    .btn-max:hover {
+      background: linear-gradient(to right, #3A86FF, #FF6B6B);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
+    }
+
     /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
     .hero-section {
       padding: 40px 0 60px;
@@ -252,7 +278,7 @@
       color: #F0F0F0;
     }
 
-    .telegram-info {
+    .bot-info {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(58, 134, 255, 0.2);
       padding: 40px;
@@ -260,25 +286,74 @@
       margin: 60px 0;
     }
 
-    .telegram-info ul {
-      color: #CCCCCC;
-      margin-left: 20px;
-      margin-top: 20px;
-      list-style: none;
+    .bot-info h2 {
+      margin-bottom: 30px;
+      text-align: center;
     }
 
-    .telegram-info li {
+    .bot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .bot-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .bot-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .bot-name {
+      font-size: 1.5rem;
+      color: #FFFFFF;
       margin-bottom: 10px;
-      padding-left: 25px;
-      position: relative;
     }
 
-    .telegram-info li::before {
-      content: "•";
+    .bot-platform {
       color: #3A86FF;
-      position: absolute;
-      left: 0;
-      font-size: 1.2rem;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .bot-description {
+      color: #CCCCCC;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+      min-height: 80px;
+    }
+
+    .bot-features {
+      text-align: left;
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+
+    .bot-features li {
+      color: #CCCCCC;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .bot-note {
+      color: #999;
+      font-size: 0.9rem;
+      margin-top: 20px;
+      font-style: italic;
+    }
+
+    .bot-username {
+      color: #666;
+      font-size: 0.85rem;
+      margin-top: 10px;
     }
 
     /* ===== ПОДВАЛ ===== */
@@ -332,6 +407,9 @@
       .features-grid {
         gap: 20px;
       }
+      .bot-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
@@ -373,11 +451,11 @@
         max-width: 300px;
       }
       
-      .telegram-info {
+      .bot-info {
         padding: 25px;
       }
       
-      .telegram-info ul {
+      .bot-info ul {
         margin-left: 10px;
       }
       
@@ -403,24 +481,25 @@
       .stage-content h3 {
         font-size: 1.2rem;
       }
+      
+      .bot-card {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
 <div id="header-placeholder"></div>
 
 <script>
-  // Загружаем шапку из header.html
-  fetch('/header.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
       
-      // После загрузки шапки инициализируем бургер и подсветку
       setTimeout(() => {
-        // Подсветка активного пункта
         const currentPath = window.location.pathname;
         const navLinks = document.querySelectorAll('.nav-links a');
         
@@ -431,7 +510,6 @@
           }
         });
         
-        // Бургер-меню
         const burger = document.getElementById('burgerBtn');
         const nav = document.getElementById('navLinks');
         
@@ -462,7 +540,6 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант с исправленными ссылками
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
@@ -548,47 +625,68 @@
     </div>
   </div>
 
+  <!-- Блок с двумя ботами -->
+  <div class="bot-info">
+    <h2>ВЫБЕРИТЕ ПЛАТФОРМУ</h2>
+    
+    <div class="bot-grid">
+      <!-- Telegram Bot -->
+      <div class="bot-card">
+        <div class="bot-icon">📱</div>
+        <div class="bot-name">Telegram-бот</div>
+        <div class="bot-platform">@Nanotech_varik_bot</div>
+        <p class="bot-description">Полноценная версия с голосовыми сообщениями, распознаванием речи, учётом погоды и динамической генерацией профиля.</p>
+        <ul class="bot-features">
+          <li>🎤 Голосовые сообщения</li>
+          <li>🌍 Учёт погоды</li>
+          <li>🧠 5 этапов тестирования</li>
+          <li>🔍 Проверка реальности целей</li>
+          <li>🧭 Навигатор по целям</li>
+          <li>📅 Напоминания</li>
+        </ul>
+        <a href="https://t.me/Nanotech_varik_bot" target="_blank" class="btn btn-telegram btn-large">👉 ОТКРЫТЬ В TELEGRAM</a>
+        <p class="bot-note">* Запустите бота и нажмите "Start"</p>
+      </div>
+
+      <!-- MAX Bot -->
+      <div class="bot-card">
+        <div class="bot-icon">🤖</div>
+        <div class="bot-name">MAX — Маркет</div>
+        <div class="bot-platform">ID: 502238728185_bot</div>
+        <p class="bot-description">Альтернативная платформа. Та же матрица поведения, те же этапы, другой интерфейс.</p>
+        <ul class="bot-features">
+          <li>🔮 Те же алгоритмы Фреди</li>
+          <li>⚡ Быстрый запуск</li>
+          <li>📊 Полный психологический портрет</li>
+          <li>🎭 Три режима работы</li>
+          <li>🔐 Безопасно и анонимно</li>
+        </ul>
+        <a href="https://max.ru/id502238728185_bot" target="_blank" class="btn btn-max btn-large">👉 ОТКРЫТЬ НА MAX</a>
+        <p class="bot-note">* Работает на платформе MAX</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Призыв к действию -->
   <div class="cta-section">
     <h2>ГОТОВЫ УЗНАТЬ СЕБЯ?</h2>
     <p>15 минут — и вы получите точный психологический портрет</p>
-    <a href="https://t.me/Nanotech_varik_bot?start=test" class="btn btn-large" target="_blank">🚀 НАЧАТЬ ТЕСТ</a>
-  </div>
-
-  <!-- Информация о Telegram-боте -->
-  <div class="telegram-info">
-    <h2>📱 Telegram-бот</h2>
-    <p>Полноценная версия виртуального психолога работает в Telegram. Там доступны:</p>
-    <ul>
-      <li>🎤 Голосовые сообщения и распознавание речи</li>
-      <li>🌍 Учёт погоды и контекста</li>
-      <li>🧠 5 этапов тестирования с динамической генерацией профиля</li>
-      <li>🔍 Проверка реальности целей</li>
-      <li>🧭 Навигатор по целям</li>
-      <li>📅 Напоминания и поддержка</li>
-      <li>🎭 Три режима: КОУЧ, ПСИХОЛОГ, ТРЕНЕР</li>
-    </ul>
-    <div style="text-align: center; margin-top: 40px;">
-      <a href="https://t.me/Nanotech_varik_bot" target="_blank" class="btn btn-telegram btn-large">👉 ПЕРЕЙТИ В TELEGRAM</a>
-    </div>
-    <p style="margin-top: 20px; font-size: 0.9rem; color: #999;">* Бот работает в Telegram — нажмите кнопку выше, чтобы открыть</p>
-    <p style="font-size: 0.9rem; color: #666;">Username: @Nanotech_varik_bot</p>
+    <a href="https://t.me/Nanotech_varik_bot?start=test" class="btn btn-large" target="_blank">🚀 НАЧАТЬ ТЕСТ В TELEGRAM</a>
+    <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">или выберите MAX в блоке выше</p>
   </div>
 </div>
 
-<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ ОТДЕЛЬНОГО ФАЙЛА -->
+<!-- ПОДКЛЮЧАЕМ ПОДВАЛ -->
 <div id="footer-placeholder"></div>
 
 <script>
-  // Загружаем подвал из footer.html
-  fetch('/footer.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
-      // Запасной вариант
       document.getElementById('footer-placeholder').innerHTML = `
         <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); margin-top: 40px;">
           <div class="container">
@@ -597,6 +695,8 @@
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
                 <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0;">Tg</a>
                 <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0;">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0;">Дзен</a>
               </div>
             </div>
             <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
@@ -606,5 +706,5 @@
     });
 </script>
 
-</body>
+</body> 
 </html>
