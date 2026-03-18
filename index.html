@@ -674,25 +674,21 @@
       max-width: 400px;
     }
 
-    /* Мои продукты работают без меня */
-    .products-block {
-      max-width: 700px;
-      margin: 0 auto;
+    /* ===== ФРАЗА ===== */
+    .statement-block {
       text-align: center;
-      padding: 40px 0 20px;
+      margin: 60px 0 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .products-title {
-      font-size: 2rem;
+    .statement-text {
+      font-size: 1.8rem;
       font-weight: 200;
       color: #FFFFFF;
-      margin-bottom: 20px;
-    }
-
-    .products-text {
-      font-size: 1.2rem;
-      color: #CCCCCC;
-      line-height: 1.6;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
     }
 
     /* ===== ПОСЛЕДНИЕ СТАТЬИ ===== */
@@ -996,10 +992,6 @@
         font-size: 1.3rem;
       }
       
-      .products-title {
-        font-size: 1.8rem;
-      }
-      
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -1008,6 +1000,10 @@
       
       .section {
         padding: 60px 0;
+      }
+      
+      .statement-text {
+        font-size: 1.5rem;
       }
     }
 
@@ -1054,7 +1050,7 @@
 </head>
 <body>
 
-<!-- ШАПКА С БУРГЕР-МЕНЮ (ИСПРАВЛЕНО) -->
+<!-- ШАПКА С БУРГЕР-МЕНЮ -->
 <header class="header">
   <div class="container">
     <div class="nav">
@@ -1234,23 +1230,53 @@
       </div>
     </div>
     
-    <!-- Мои продукты работают без меня -->
-    <div class="products-block">
-      <div class="products-title">Мои продукты работают без меня</div>
-      <div class="products-text">Книги, игры, практикумы — это готовые инструменты. Вы просто берёте их и применяете.</div>
+    <!-- ФРАЗА -->
+    <div class="statement-block">
+      <div class="statement-text">Я стремлюсь к тому, чтобы мои продукты работали без меня.</div>
+    </div>
+    
+    <!-- ТРИ КВАДРАТА С РАЗДЕЛИТЕЛЬНОЙ ЛИНИЕЙ -->
+    <div class="projects-grid" style="margin-top: 20px; margin-bottom: 10px;">
+      
+      <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">📘</div>
+        <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">КНИГИ</div>
+        <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">увидеть нарратив</div>
+        <a href="/knigi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
+      </div>
+      
+      <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">🎲</div>
+        <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">ИГРЫ</div>
+        <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">научиться менять</div>
+        <a href="/igry/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
+      </div>
+      
+      <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">✏️</div>
+        <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">ПРАКТИКУМЫ</div>
+        <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">создать свой камень</div>
+        <a href="/treningi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
+      </div>
+      
+    </div>
+    
+    <!-- МИНИМАЛИСТИЧНОЕ ПОЯСНЕНИЕ -->
+    <div style="text-align: center; margin: 10px 0 50px;">
+      <span style="color: #666; font-size: 0.9rem; letter-spacing: 0.2em; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 5px;">ВЫБЕРИ СВОЙ ИНСТРУМЕНТ</span>
     </div>
     
   </div>
 </section>
 
-<!-- ПОСЛЕДНИЕ СТАТЬИ (ИСПРАВЛЕНО) -->
+<!-- ПОСЛЕДНИЕ СТАТЬИ -->
 <section class="blog-preview-section">
   <div class="container">
     <h2>ПОСЛЕДНИЕ СТАТЬИ</h2>
     <p class="blog-preview-intro">Регулярно делюсь мыслями о системном мышлении, психологии и методах влияния</p>
     
     <div class="blog-preview-grid">
-      <!-- Статья 1 - Газлайтинг (НОВАЯ) -->
+      <!-- Статья 1 - Газлайтинг -->
       <div class="blog-preview-card">
         <div class="card-date">10 апреля 2026</div>
         <h3 class="card-title">Газлайтинг: что это, признаки и как противостоять</h3>
@@ -1315,7 +1341,6 @@
     
     navLinks.forEach(link => {
       const href = link.getAttribute('href');
-      // Убираем старую логику с заменой, так как путей /https-meysternlp.ru-/ больше нет
       if (currentPath === href || 
           (href !== '/' && currentPath.startsWith(href + '/')) ||
           (href === '/' && currentPath === '/')) {
@@ -1333,7 +1358,6 @@
       burger.addEventListener('click', () => {
         burger.classList.toggle('active');
         nav.classList.toggle('active');
-        // Блокировка скролла
         if (nav.classList.contains('active')) {
           document.body.style.overflow = 'hidden';
         } else {
@@ -1349,7 +1373,6 @@
         });
       });
       
-      // Закрытие при ресайзе
       window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
           burger.classList.remove('active');
