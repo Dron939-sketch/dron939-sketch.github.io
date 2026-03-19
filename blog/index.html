@@ -327,7 +327,7 @@
 
 <script>
   // Загружаем шапку из header.html
-  fetch('/header.html')  // ИСПРАВЛЕНО
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -415,7 +415,7 @@
       <div class="article-content">
         <h3>Что такое латеральное мышление и чем оно отличается от критического?</h3>
         <p>Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...</p>
-        <a href="/blog/lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/blog/lateralnoe-myshlenie.html" class="article-link">Читать полностью →</a>
       </div>
     </div>
 
@@ -428,7 +428,7 @@
       <div class="article-content">
         <h3>Самогипноз для начинающих: пошаговая инструкция</h3>
         <p>Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...</p>
-        <a href="/blog/samogipnoz-dlya-nachinayushih.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/blog/samogipnoz-dlya-nachinayushih.html" class="article-link">Читать полностью →</a>
       </div>
     </div>
 
@@ -441,7 +441,7 @@
       <div class="article-content">
         <h3>Теория манипуляции: как распознать скрытое воздействие</h3>
         <p>5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...</p>
-        <a href="/blog/chto-takoe-manipulyaciya.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/blog/chto-takoe-manipulyaciya.html" class="article-link">Читать полностью →</a>
       </div>
     </div>
 
@@ -454,7 +454,7 @@
       <div class="article-content">
         <h3>Упражнения для развития когнитивной гибкости</h3>
         <p>Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...</p>
-        <a href="/blog/kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/blog/kognitivnaya-gibkost-uprazhneniya.html" class="article-link">Читать полностью →</a>
       </div>
     </div>
 
@@ -467,7 +467,7 @@
       <div class="article-content">
         <h3>Как системное мышление помогает в бизнесе</h3>
         <p>Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...</p>
-        <a href="/blog/sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/blog/sistemnoe-myshlenie-v-biznese.html" class="article-link">Читать полностью →</a>
       </div>
     </div>
   </div>
@@ -486,7 +486,7 @@
 
 <script>
   // Загружаем подвал из footer.html
-  fetch('/footer.html')  // ИСПРАВЛЕНО
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
@@ -511,6 +511,92 @@
         </footer>
       `;
     });
+</script>
+
+<!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ========== -->
+<!-- Разметка автора (Person) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Андрей Мейстер",
+  "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
+  "url": "https://meysternlp.ru",
+  "sameAs": [
+    "https://t.me/meysternlp",
+    "https://vk.com/meysternlp",
+    "https://rutube.ru/channel/29916593/",
+    "https://dzen.ru/89857788588"
+  ]
+}
+</script>
+
+<!-- Разметка блога (Blog) и всех статей (BlogPosting) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Блог Андрея Мейстера",
+  "description": "Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков",
+  "url": "https://meysternlp.ru/blog/",
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Что такое латеральное мышление и чем оно отличается от критического?",
+      "datePublished": "2026-03-15",
+      "description": "Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/lateralnoe-myshlenie.html"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Самогипноз для начинающих: пошаговая инструкция",
+      "datePublished": "2026-03-02",
+      "description": "Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Теория манипуляции: как распознать скрытое воздействие",
+      "datePublished": "2026-02-18",
+      "description": "5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/chto-takoe-manipulyaciya.html"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Упражнения для развития когнитивной гибкости",
+      "datePublished": "2026-02-05",
+      "description": "Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/kognitivnaya-gibkost-uprazhneniya.html"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Как системное мышление помогает в бизнесе",
+      "datePublished": "2026-01-20",
+      "description": "Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html"
+    }
+  ]
+}
 </script>
 
 </body>
