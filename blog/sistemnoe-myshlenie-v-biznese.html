@@ -14,8 +14,8 @@
   <!-- OPEN GRAPH ДЛЯ СОЦСЕТЕЙ -->
   <meta property="og:title" content="Системное мышление в бизнесе: как принимать решения">
   <meta property="og:description" content="7 принципов системного подхода к управлению. Как видеть картину целиком и находить неочевидные решения. Реальные кейсы из бизнеса.">
-  <meta property="og:image" content="/images/sistemnoe-myshlenie-biznes.jpg">  <!-- ИСПРАВЛЕНО -->
-  <meta property="og:url" content="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">  <!-- ИСПРАВЛЕНО -->
+  <meta property="og:image" content="/images/sistemnoe-myshlenie-biznes.jpg">
+  <meta property="og:url" content="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="2026-04-01">
   <meta property="article:author" content="Андрей Мейстер">
@@ -25,10 +25,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Системное мышление в бизнесе">
   <meta name="twitter:description" content="Как видеть взаимосвязи и находить точки воздействия">
-  <meta name="twitter:image" content="/images/sistemnoe-myshlenie-biznes.jpg">  <!-- ИСПРАВЛЕНО -->
+  <meta name="twitter:image" content="/images/sistemnoe-myshlenie-biznes.jpg">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">  <!-- ИСПРАВЛЕНО -->
+  <link rel="canonical" href="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -637,7 +637,7 @@
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/header.html')  // ИСПРАВЛЕНО
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -978,8 +978,8 @@
         <h3>🚀 Хотите внедрить системное мышление в своем бизнесе?</h3>
         <p>На тренинге «Системный анализ бизнеса» мы разберем ваши реальные кейсы и найдем точки роста, которые вы не замечали. Индивидуально для собственников и топ-менеджеров.</p>
         <div class="cta-buttons">
-          <a href="/treningi/" class="btn">ЗАПИСАТЬСЯ</a>  <!-- ИСПРАВЛЕНО -->
-          <a href="/igry/" class="btn btn-outline">ПОПРОБОВАТЬ ИГРУ</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/treningi/" class="btn">ЗАПИСАТЬСЯ</a>
+          <a href="/igry/" class="btn btn-outline">ПОПРОБОВАТЬ ИГРУ</a>
         </div>
       </div>
 
@@ -994,22 +994,22 @@
       <h3>📚 Читайте также:</h3>
       <div class="related-grid">
         <div class="related-item">
-          <a href="/blog/lateralnoe-myshlenie.html">Латеральное мышление: что это и как развить</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/blog/lateralnoe-myshlenie.html">Латеральное мышление: что это и как развить</a>
           <span>12 мин · 2.4K просмотров</span>
         </div>
         <div class="related-item">
-          <a href="/blog/gazlayting-chto-eto.html">Газлайтинг: что это и как противостоять</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/blog/gazlayting-chto-eto.html">Газлайтинг: что это и как противостоять</a>
           <span>10 мин · 2.8K просмотров</span>
         </div>
         <div class="related-item">
-          <a href="/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция и как её распознать</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция и как её распознать</a>
           <span>10 мин · 3.2K просмотров</span>
         </div>
       </div>
     </div>
 
     <!-- Ссылка назад к списку статей -->
-    <a href="/blog/" class="back-link">← Все статьи блога</a>  <!-- ИСПРАВЛЕНО -->
+    <a href="/blog/" class="back-link">← Все статьи блога</a>
   </article>
 </div>
 
@@ -1017,7 +1017,7 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/footer.html')  // ИСПРАВЛЕНО
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
@@ -1042,6 +1042,50 @@
         </footer>
       `;
     });
+</script>
+
+<!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ДЛЯ СТАТЬИ ========== -->
+<!-- Разметка автора (Person) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Андрей Мейстер",
+  "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
+  "url": "https://meysternlp.ru",
+  "sameAs": [
+    "https://t.me/meysternlp",
+    "https://vk.com/meysternlp",
+    "https://rutube.ru/channel/29916593/",
+    "https://dzen.ru/89857788588"
+  ]
+}
+</script>
+
+<!-- Разметка статьи (Article) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Системное мышление в бизнесе: как принимать решения",
+  "description": "Как системное мышление помогает в бизнесе. 7 принципов системного подхода, 5 реальных кейсов, точки рычага и инструменты для руководителей. С примерами из практики.",
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-01",
+  "author": {
+    "@type": "Person",
+    "name": "Андрей Мейстер"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Андрей Мейстер"
+  },
+  "image": "https://meysternlp.ru/images/sistemnoe-myshlenie-biznes.jpg",
+  "url": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html",
+  "mainEntityOfPage": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html",
+  "keywords": "системное мышление, системный подход в бизнесе, управление, принятие решений, точки рычага, бизнес-анализ",
+  "articleSection": "Бизнес, Мышление",
+  "wordCount": "3200"
+}
 </script>
 
 </body>
