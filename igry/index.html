@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Дидактические игры для развития мышления | Андрей Мейстер</title>
@@ -14,17 +16,20 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Дидактические игры — Андрей Мейстер">
   <meta property="og:description" content="Инструменты для изменения реальности. Маркетолог + Вариатика (Basic, Intensive, Progressive).">
-  <meta property="og:image" content="/Маркетолог.png">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
-  <meta property="og:url" content="https://meysternlp.ru/igry/">  <!-- Исправлено: на ваш домен -->
+  <meta property="og:image" content="/Маркетолог.png">
+  <meta property="og:url" content="https://meysternlp.ru/igry/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/igry/">  <!-- Исправлено: на ваш домен -->
+  <link rel="canonical" href="https://meysternlp.ru/igry/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -32,6 +37,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -43,6 +49,8 @@
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
     }
@@ -60,17 +68,18 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       line-height: 1.2;
+      word-break: break-word;
     }
 
     h1 {
-      font-size: 3.5rem;
+      font-size: clamp(2rem, 8vw, 3.5rem);
       font-weight: 200;
-      margin: 60px 0 20px;
+      margin: 40px 0 20px;
       color: #FFFFFF;
     }
 
     h2 {
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
       font-weight: 300;
       margin: 40px 0 20px;
       color: #3A86FF;
@@ -78,19 +87,22 @@
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
     }
 
     /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
     .breadcrumbs {
       display: flex;
-      gap: 10px;
-      margin: 30px 0 20px;
-      font-size: 0.9rem;
+      gap: 8px;
+      margin: 20px 0 15px;
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
       color: #666;
+      flex-wrap: wrap;
     }
 
     .breadcrumbs a {
@@ -113,21 +125,25 @@
     }
 
     .btn {
-      display: inline-block;
-      padding: 12px 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px);
       border: 1px solid #3A86FF;
       background: transparent;
       color: #FFFFFF;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       border-radius: 30px;
       text-align: center;
+      min-height: 44px;
+      min-width: 160px;
     }
 
     .btn::before {
@@ -146,29 +162,35 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .btn:hover::before {
       left: 0;
     }
 
+    .btn:active {
+      transform: translateY(0);
+    }
+
     /* ===== БЛОК ФИЛОСОФИИ ===== */
     .philosophy-block {
-      margin: 40px 0 60px;
-      padding: 30px;
+      margin: 30px 0 50px;
+      padding: clamp(20px, 5vw, 30px);
       border-left: 3px solid #3A86FF;
       background: rgba(58, 134, 255, 0.02);
     }
 
-    .philosophy-block p {
-      font-size: 1.2rem;
+    .philosophy-block p:first-child {
+      font-size: clamp(1.1rem, 4vw, 1.2rem);
       color: #FFFFFF;
       margin-bottom: 10px;
+      font-weight: 400;
     }
 
     .philosophy-block .small {
       color: #CCCCCC;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
       margin: 0;
     }
 
@@ -177,42 +199,54 @@
       text-align: center;
       color: #666;
       margin-bottom: 30px;
-      font-size: 0.95rem;
+      font-size: clamp(0.8rem, 3vw, 0.95rem);
       letter-spacing: 0.05em;
+      word-break: keep-all;
+      flex-wrap: wrap;
     }
 
     .progression span {
       color: #3A86FF;
+      display: inline-block;
+      margin: 0 2px;
     }
 
     /* ===== СЕТКА ИГР ===== */
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
-      margin: 60px 0;
+      margin: 50px 0;
     }
 
     .game-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 30px;
+      padding: clamp(20px, 5vw, 30px);
       transition: all 0.3s ease;
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       height: 100%;
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .game-card:nth-child(1) { animation-delay: 0.1s; }
+    .game-card:nth-child(2) { animation-delay: 0.2s; }
+    .game-card:nth-child(3) { animation-delay: 0.3s; }
+    .game-card:nth-child(4) { animation-delay: 0.4s; }
 
     .game-card:hover {
       border-color: #3A86FF;
       transform: translateY(-5px);
       box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
+      background-color: rgba(58, 134, 255, 0.03);
     }
 
     .game-image {
       width: 100%;
-      height: 220px;
+      height: clamp(180px, 30vw, 220px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -227,7 +261,7 @@
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
     }
 
     .game-card:hover .game-image img {
@@ -236,7 +270,7 @@
     }
 
     .game-title {
-      font-size: 1.8rem;
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
       color: #FFFFFF;
       margin-bottom: 5px;
       font-weight: 300;
@@ -244,7 +278,7 @@
 
     .game-subtitle {
       color: #3A86FF;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 15px;
@@ -259,18 +293,21 @@
       color: #CCCCCC;
       margin-bottom: 20px;
       flex-grow: 1;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
       line-height: 1.6;
     }
 
     .game-actions {
       margin-top: auto;
+      text-align: center;
     }
 
     /* ===== ПРИЗЫВ ===== */
     .cta-block {
       text-align: center;
-      margin: 60px 0 40px;
+      margin: 50px 0 40px;
+      animation: fadeInUp 0.6s ease-out 0.5s forwards;
+      opacity: 0;
     }
 
     .cta-block p {
@@ -278,80 +315,93 @@
       margin-bottom: 20px;
     }
 
-    /* ===== ПОДВАЛ ===== */
-    .footer {
-      padding: 60px 0 30px;
-      border-top: 1px solid rgba(58, 134, 255, 0.2);
-      margin-top: 60px;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-logo {
-      font-size: 1.2rem;
-      letter-spacing: 0.3em;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      color: #F0F0F0;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .social-links a:hover {
-      color: #3A86FF;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
-      opacity: 0.5;
-      color: #666;
-    }
-
-    .text-blue { color: #3A86FF; }
-
-    /* ===== АДАПТИВНОСТЬ ===== */
-    @media (max-width: 992px) {
-      .games-grid {
-        grid-template-columns: repeat(2, 1fr);
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
+    /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
+      .container {
+        padding: 0 16px;
+      }
       
       .games-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 25px;
+        margin: 40px 0;
       }
       
       .game-card {
         padding: 25px;
       }
       
-      .game-title {
-        font-size: 1.5rem;
+      .game-actions .btn {
+        width: 100%;
+        max-width: 250px;
       }
       
-      .footer-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+      .cta-block .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .progression {
+        line-height: 1.8;
+      }
+      
+      .progression span {
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .philosophy-block {
+        padding: 20px;
+      }
+      
+      .game-image {
+        height: 160px;
+      }
+      
+      .game-title {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .games-grid {
+        gap: 20px;
+      }
+      
+      .game-card {
+        padding: 20px;
+      }
+      
+      .game-image {
+        height: 140px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .game-card {
+        cursor: pointer;
+      }
+      
+      .btn:active {
+        transform: scale(0.97);
+      }
+      
+      .game-card:active {
+        transform: translateY(-2px);
       }
     }
   </style>
@@ -362,7 +412,7 @@
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/header.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -406,20 +456,19 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант с исправленными ссылками
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/igry/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Игры</a>
-                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
-                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+              <a href="/" style="color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Книги</a>
+                <a href="/igry/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF; font-size: clamp(0.8rem, 3vw, 1rem);">Игры</a>
+                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Архив</a>
               </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 16px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: clamp(0.8rem, 3vw, 0.9rem);">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -430,7 +479,7 @@
 <!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
   <div class="breadcrumbs">
-    <a href="/">Главная</a> /  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+    <a href="/">Главная</a> / 
     <span>Игры</span>
   </div>
 </div>
@@ -438,7 +487,7 @@
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
   <h1>ДИДАКТИЧЕСКИЕ ИГРЫ</h1>
-  <p style="color: #3A86FF; margin-bottom: 20px; font-size: 1.2rem;">Инструменты для изменения реальности</p>
+  <p style="color: #3A86FF; margin-bottom: 20px; font-size: clamp(1rem, 4vw, 1.2rem);">Инструменты для изменения реальности</p>
 
   <!-- БЛОК ФИЛОСОФИИ (СВЯЗЬ С МАНИФЕСТОМ) -->
   <div class="philosophy-block">
@@ -456,52 +505,68 @@
     <!-- Маркетолог -->
     <div class="game-card">
       <div class="game-image">
-        <img src="/Маркетолог.png" alt="Маркетолог" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Маркетолог'">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+        <picture>
+          <source srcset="/Маркетолог-mobile.webp" media="(max-width: 768px)">
+          <source srcset="/Маркетолог.webp" type="image/webp">
+          <img src="/Маркетолог.png" alt="Маркетолог - игра для развития креативного мышления" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Маркетолог'">
+        </picture>
       </div>
       <div class="game-title">Маркетолог</div>
-      <div class="game-subtitle"><i>📢</i> Креативное мышление</div>
+      <div class="game-subtitle"><i class="fas fa-bullhorn"></i> Креативное мышление</div>
       <div class="game-description">Развитие креативного мышления и навыков речевого воздействия. Учитесь создавать эффективные рекламные сообщения через игру. 2-3 игрока.</div>
       <div class="game-actions">
-        <a href="/igry/marketolog.html" class="btn">ПОДРОБНЕЕ</a>  <!-- Исправлено -->
+        <a href="/igry/marketolog.html" class="btn" aria-label="Подробнее о игре Маркетолог">ПОДРОБНЕЕ</a>
       </div>
     </div>
 
     <!-- Вариатика Basic -->
     <div class="game-card">
       <div class="game-image">
-        <img src="/Басик.webp" alt="Вариатика Basic" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Basic'">  <!-- Исправлено -->
+        <picture>
+          <source srcset="/Басик-mobile.webp" media="(max-width: 768px)">
+          <source srcset="/Басик.webp" type="image/webp">
+          <img src="/Басик.webp" alt="Вариатика Basic - анализ поведения" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Basic'">
+        </picture>
       </div>
       <div class="game-title">Вариатика</div>
-      <div class="game-subtitle"><i>🔍</i> Basic</div>
+      <div class="game-subtitle"><i class="fas fa-search"></i> Basic</div>
       <div class="game-description">Анализ и прогнозирование поведения людей. Понимание характера, истинных желаний, способностей и ограничений.</div>
       <div class="game-actions">
-        <a href="/igry/variatika-basic.html" class="btn">ПОДРОБНЕЕ</a>  <!-- Исправлено -->
+        <a href="/igry/variatika-basic.html" class="btn" aria-label="Подробнее о игре Вариатика Basic">ПОДРОБНЕЕ</a>
       </div>
     </div>
 
     <!-- Вариатика Intensive -->
     <div class="game-card">
       <div class="game-image">
-        <img src="/интенсив.webp" alt="Вариатика Intensive" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Intensive'">  <!-- Исправлено -->
+        <picture>
+          <source srcset="/интенсив-mobile.webp" media="(max-width: 768px)">
+          <source srcset="/интенсив.webp" type="image/webp">
+          <img src="/интенсив.webp" alt="Вариатика Intensive - системное мышление" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Intensive'">
+        </picture>
       </div>
       <div class="game-title">Вариатика</div>
-      <div class="game-subtitle"><i>🧠</i> Intensive</div>
+      <div class="game-subtitle"><i class="fas fa-brain"></i> Intensive</div>
       <div class="game-description">Системное, критическое и латеральное мышление. Анализ сложных систем и принятие эффективных решений.</div>
       <div class="game-actions">
-        <a href="/igry/variatika-intensive.html" class="btn">ПОДРОБНЕЕ</a>  <!-- Исправлено -->
+        <a href="/igry/variatika-intensive.html" class="btn" aria-label="Подробнее о игре Вариатика Intensive">ПОДРОБНЕЕ</a>
       </div>
     </div>
 
     <!-- Вариатика Progressive -->
     <div class="game-card">
       <div class="game-image">
-        <img src="/progresive.webp" alt="Вариатика Progressive" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Progressive'">  <!-- Исправлено -->
+        <picture>
+          <source srcset="/progresive-mobile.webp" media="(max-width: 768px)">
+          <source srcset="/progresive.webp" type="image/webp">
+          <img src="/progresive.webp" alt="Вариатика Progressive - искусство везения" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=Progressive'">
+        </picture>
       </div>
       <div class="game-title">Вариатика</div>
-      <div class="game-subtitle"><i>✨</i> Progressive</div>
+      <div class="game-subtitle"><i class="fas fa-star"></i> Progressive</div>
       <div class="game-description">Искусство везения — превращение маловероятных позитивных исходов в реальность. Создание «счастливых случайностей».</div>
       <div class="game-actions">
-        <a href="/igry/variatika-progressive.html" class="btn">ПОДРОБНЕЕ</a>  <!-- Исправлено -->
+        <a href="/igry/variatika-progressive.html" class="btn" aria-label="Подробнее о игре Вариатика Progressive">ПОДРОБНЕЕ</a>
       </div>
     </div>
   </div>
@@ -509,7 +574,7 @@
   <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
   <div class="cta-block">
     <p>Выберите свой инструмент и начните менять свою реальность</p>
-    <a href="#header-placeholder" class="btn" style="padding: 12px 40px;">К ИГРАМ</a>
+    <a href="#header-placeholder" class="btn" style="padding: clamp(10px, 3vw, 12px) clamp(30px, 6vw, 40px);" aria-label="К играм">К ИГРАМ</a>
   </div>
 </div>
 
@@ -517,7 +582,7 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/footer.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
@@ -528,23 +593,63 @@
         <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="color: #F0F0F0; font-size: clamp(1rem, 4vw, 1.2rem); letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
+                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
               </div>
             </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+            <div class="copyright" style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
           </div>
         </footer>
       `;
     });
 </script>
 
-<!-- Font Awesome для иконок -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- JSON-LD микроразметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Дидактические игры",
+  "description": "Настольные игры для развития системного мышления",
+  "itemListElement": [
+    {
+      "@type": "Product",
+      "position": 1,
+      "name": "Маркетолог",
+      "description": "Развитие креативного мышления и навыков речевого воздействия",
+      "image": "https://meysternlp.ru/Маркетолог.png",
+      "url": "https://meysternlp.ru/igry/marketolog.html"
+    },
+    {
+      "@type": "Product",
+      "position": 2,
+      "name": "Вариатика Basic",
+      "description": "Анализ и прогнозирование поведения людей",
+      "image": "https://meysternlp.ru/Басик.webp",
+      "url": "https://meysternlp.ru/igry/variatika-basic.html"
+    },
+    {
+      "@type": "Product",
+      "position": 3,
+      "name": "Вариатика Intensive",
+      "description": "Системное, критическое и латеральное мышление",
+      "image": "https://meysternlp.ru/интенсив.webp",
+      "url": "https://meysternlp.ru/igry/variatika-intensive.html"
+    },
+    {
+      "@type": "Product",
+      "position": 4,
+      "name": "Вариатика Progressive",
+      "description": "Искусство везения — превращение маловероятных позитивных исходов в реальность",
+      "image": "https://meysternlp.ru/progresive.webp",
+      "url": "https://meysternlp.ru/igry/variatika-progressive.html"
+    }
+  ]
+}
+</script>
 
 </body>
 </html>
