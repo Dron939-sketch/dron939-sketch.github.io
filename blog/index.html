@@ -3,13 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <base href="/">
   
-  <!-- SEO МЕТА-ТЕГИ -->
+  <!-- ========== ROBOTS И FAVICON ========== -->
+  <link rel="robots" href="/robots.txt">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  
+  <!-- ========== CANONICAL ========== -->
+  <link rel="canonical" href="https://meysternlp.ru/blog/">
+  
+  <!-- ========== SEO МЕТА-ТЕГИ ========== -->
   <title>Блог — Статьи о системном мышлении — Андрей Мейстер</title>
   <meta name="description" content="Блог Андрея Мейстера о системном мышлении, психологии влияния, когнитивных навыках и развитии мышления. Статьи, кейсы, практические техники.">
-  <meta name="keywords" content="блог, статьи, системное мышление, психология, манипуляция, когнитивные навыки">
+  <meta name="keywords" content="блог, статьи, системное мышление, психология, манипуляция, когнитивные навыки, латеральное мышление, самогипноз">
   <meta name="author" content="Андрей Мейстер">
+  
+  <!-- ========== OPEN GRAPH (для соцсетей) ========== -->
+  <meta property="og:title" content="Блог — Статьи о системном мышлении — Андрей Мейстер">
+  <meta property="og:description" content="Блог Андрея Мейстера о системном мышлении, психологии влияния, когнитивных навыках и развитии мышления. Статьи, кейсы, практические техники.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://meysternlp.ru/blog/">
+  <meta property="og:image" content="https://meysternlp.ru/og-blog.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Андрей Мейстер">
+  <meta property="og:locale" content="ru_RU">
+  
+  <!-- ========== TWITTER CARD ========== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Блог — Статьи о системном мышлении — Андрей Мейстер">
+  <meta name="twitter:description" content="Блог Андрея Мейстера о системном мышлении, психологии влияния и развитии когнитивных навыков">
+  <meta name="twitter:image" content="https://meysternlp.ru/og-blog.jpg">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +58,7 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #FFFFFF; /* БЕЛЫЙ ФОН ОСТАВЛЯЕМ */
+      background-color: #FFFFFF;
       color: #1D1D1F;
       line-height: 1.6;
       overflow-x: hidden;
@@ -319,6 +347,124 @@
       }
     }
   </style>
+  
+  <!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ========== -->
+  <!-- Разметка Breadcrumb (хлебные крошки) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://meysternlp.ru/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Блог",
+        "item": "https://meysternlp.ru/blog/"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Разметка автора (Person) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Андрей Мейстер",
+    "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
+    "url": "https://meysternlp.ru/obo-mne/",
+    "sameAs": [
+      "https://t.me/meysternlp",
+      "https://vk.com/meysternlp",
+      "https://rutube.ru/channel/29916593/",
+      "https://dzen.ru/89857788588"
+    ]
+  }
+  </script>
+  
+  <!-- Разметка блога (Blog) и всех статей (BlogPosting) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Блог Андрея Мейстера",
+    "description": "Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков",
+    "url": "https://meysternlp.ru/blog/",
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "Что такое латеральное мышление и чем оно отличается от критического?",
+        "datePublished": "2026-03-15",
+        "dateModified": "2026-03-22",
+        "description": "Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...",
+        "author": {
+          "@type": "Person",
+          "name": "Андрей Мейстер",
+          "url": "https://meysternlp.ru/obo-mne/"
+        },
+        "url": "https://meysternlp.ru/blog/lateralnoe-myshlenie.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Самогипноз для начинающих: пошаговая инструкция",
+        "datePublished": "2026-03-02",
+        "dateModified": "2026-03-22",
+        "description": "Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...",
+        "author": {
+          "@type": "Person",
+          "name": "Андрей Мейстер",
+          "url": "https://meysternlp.ru/obo-mne/"
+        },
+        "url": "https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Теория манипуляции: как распознать скрытое воздействие",
+        "datePublished": "2026-02-18",
+        "dateModified": "2026-03-22",
+        "description": "5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...",
+        "author": {
+          "@type": "Person",
+          "name": "Андрей Мейстер",
+          "url": "https://meysternlp.ru/obo-mne/"
+        },
+        "url": "https://meysternlp.ru/blog/chto-takoe-manipulyaciya.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Упражнения для развития когнитивной гибкости",
+        "datePublished": "2026-02-05",
+        "dateModified": "2026-03-22",
+        "description": "Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...",
+        "author": {
+          "@type": "Person",
+          "name": "Андрей Мейстер",
+          "url": "https://meysternlp.ru/obo-mne/"
+        },
+        "url": "https://meysternlp.ru/blog/kognitivnaya-gibkost-uprazhneniya.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Как системное мышление помогает в бизнесе",
+        "datePublished": "2026-01-20",
+        "dateModified": "2026-03-22",
+        "description": "Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...",
+        "author": {
+          "@type": "Person",
+          "name": "Андрей Мейстер",
+          "url": "https://meysternlp.ru/obo-mne/"
+        },
+        "url": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -495,108 +641,22 @@
       console.error('Ошибка загрузки подвала:', error);
       // Запасной вариант подвала с правильными путями
       document.getElementById('footer-placeholder').innerHTML = `
-        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
+        <footer class="footer">
+          <div class="container">
+            <div class="footer-content">
+              <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+              <div class="social-links">
+                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
               </div>
             </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+            <div class="copyright">© Андрей Мейстер · 2026</div>
           </div>
         </footer>
       `;
     });
-</script>
-
-<!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ========== -->
-<!-- Разметка автора (Person) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Андрей Мейстер",
-  "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
-  "url": "https://meysternlp.ru",
-  "sameAs": [
-    "https://t.me/meysternlp",
-    "https://vk.com/meysternlp",
-    "https://rutube.ru/channel/29916593/",
-    "https://dzen.ru/89857788588"
-  ]
-}
-</script>
-
-<!-- Разметка блога (Blog) и всех статей (BlogPosting) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "name": "Блог Андрея Мейстера",
-  "description": "Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков",
-  "url": "https://meysternlp.ru/blog/",
-  "blogPost": [
-    {
-      "@type": "BlogPosting",
-      "headline": "Что такое латеральное мышление и чем оно отличается от критического?",
-      "datePublished": "2026-03-15",
-      "description": "Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/lateralnoe-myshlenie.html"
-    },
-    {
-      "@type": "BlogPosting",
-      "headline": "Самогипноз для начинающих: пошаговая инструкция",
-      "datePublished": "2026-03-02",
-      "description": "Как работать с подсознанием без эзотерики, используя научный подход и техники эриксоновского гипноза. 5 простых шагов для входа в трансовое состояние...",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html"
-    },
-    {
-      "@type": "BlogPosting",
-      "headline": "Теория манипуляции: как распознать скрытое воздействие",
-      "datePublished": "2026-02-18",
-      "description": "5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/chto-takoe-manipulyaciya.html"
-    },
-    {
-      "@type": "BlogPosting",
-      "headline": "Упражнения для развития когнитивной гибкости",
-      "datePublished": "2026-02-05",
-      "description": "Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/kognitivnaya-gibkost-uprazhneniya.html"
-    },
-    {
-      "@type": "BlogPosting",
-      "headline": "Как системное мышление помогает в бизнесе",
-      "datePublished": "2026-01-20",
-      "description": "Разбор кейсов: как понимание системных взаимосвязей помогает принимать стратегические решения, видеть точки рычага и избегать типичных ошибок управления...",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html"
-    }
-  ]
-}
 </script>
 
 </body>
