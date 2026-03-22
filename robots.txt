@@ -1,4 +1,55 @@
 User-agent: *
 Allow: /
 
+# Запрещаем индексацию служебных страниц
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /cgi-bin/
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /wp-includes/
+
+# Запрещаем индексацию дублей с параметрами
+Disallow: /*?*
+Disallow: /*&*
+
+# Запрещаем индексацию системных файлов
+Disallow: /*.log$
+Disallow: /*.bak$
+Disallow: /*.tmp$
+Disallow: /*.sql$
+Disallow: /*.gz$
+Disallow: /config/
+
+# Разрешаем поисковым ботам индексировать основной контент
+Allow: /knigi/
+Allow: /igry/
+Allow: /treningi/
+Allow: /sobytiya/
+Allow: /virtual-psychologist/
+
+# Указываем скорость обхода для Яндекса
+Host: https://meysternlp.ru
+
+# Карта сайта
 Sitemap: https://meysternlp.ru/sitemap.xml
+
+# Задержка для медленных ботов
+Crawl-delay: 1
+
+# Правила для конкретных ботов
+User-agent: Yandex
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 2
+
+User-agent: Googlebot
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 1
+
+User-agent: Bingbot
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 1
