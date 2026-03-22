@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <base href="/">
+  
+  <!-- ========== ROBOTS И FAVICON ========== -->
+  <link rel="robots" href="/robots.txt">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Самогипноз для начинающих: пошаговая инструкция и научные основы | Андрей Мейстер</title>
@@ -11,12 +19,17 @@
   <meta name="keywords" content="самогипноз, эриксоновский гипноз, трансовое состояние, нейробиология гипноза, работа с подсознанием, гипноз для начинающих">
   <meta name="author" content="Андрей Мейстер">
   
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html">
+  
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Самогипноз для начинающих: пошаговая инструкция и научные основы">
   <meta property="og:description" content="Как работает гипноз с точки зрения нейробиологии. 7 шагов для входа в транс и 5 техник работы с подсознанием.">
-  <meta property="og:image" content="/images/samogipnoz-preview.jpg">  <!-- ИСПРАВЛЕНО -->
-  <meta property="og:url" content="https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html">  <!-- ИСПРАВЛЕНО -->
+  <meta property="og:image" content="/images/samogipnoz-preview.jpg">
+  <meta property="og:url" content="https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Андрей Мейстер">
+  <meta property="og:locale" content="ru_RU">
   <meta property="article:published_time" content="2026-03-18">
   <meta property="article:author" content="Андрей Мейстер">
   <meta property="article:section" content="Психология, Гипноз">
@@ -25,15 +38,66 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Самогипноз для начинающих: пошаговая инструкция">
   <meta name="twitter:description" content="7 шагов для входа в трансовое состояние">
-  <meta name="twitter:image" content="/images/samogipnoz-preview.jpg">  <!-- ИСПРАВЛЕНО -->
-  
-  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html">  <!-- ИСПРАВЛЕНО -->
+  <meta name="twitter:image" content="/images/samogipnoz-preview.jpg">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ========== -->
+  <!-- Breadcrumb -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://meysternlp.ru/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Блог",
+        "item": "https://meysternlp.ru/blog/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Самогипноз для начинающих",
+        "item": "https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Article микроразметка -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Самогипноз для начинающих: пошаговая инструкция и научные основы",
+    "description": "Самогипноз с научной точки зрения: 7 шагов для входа в транс, 5 техник работы с подсознанием, нейробиология гипноза. Исследования и реальные кейсы.",
+    "datePublished": "2026-03-18",
+    "dateModified": "2026-03-22",
+    "author": {
+      "@type": "Person",
+      "name": "Андрей Мейстер",
+      "url": "https://meysternlp.ru/obo-mne/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Андрей Мейстер",
+      "url": "https://meysternlp.ru"
+    },
+    "image": "https://meysternlp.ru/images/samogipnoz-preview.jpg",
+    "url": "https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html",
+    "mainEntityOfPage": "https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html"
+  }
+  </script>
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -48,12 +112,13 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI Emoji', 'Segoe UI', 'Noto Color Emoji', 'Apple Color Emoji', 'Helvetica Neue', Arial, sans-serif !important;
       background-color: #FFFFFF;
       color: #1D1D1F;
       line-height: 1.7;
       overflow-x: hidden;
       width: 100%;
+      font-variant-emoji: emoji;
     }
 
     .container {
@@ -150,7 +215,13 @@
       text-align: center;
       border-radius: 20px;
       transition: all 0.3s ease;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .stat-item:nth-child(1) { animation-delay: 0.1s; }
+    .stat-item:nth-child(2) { animation-delay: 0.2s; }
+    .stat-item:nth-child(3) { animation-delay: 0.3s; }
 
     .stat-item:hover {
       transform: translateY(-5px);
@@ -182,7 +253,17 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .concept-block:nth-child(1) { animation-delay: 0.1s; }
+    .concept-block:nth-child(2) { animation-delay: 0.15s; }
+    .concept-block:nth-child(3) { animation-delay: 0.2s; }
+    .concept-block:nth-child(4) { animation-delay: 0.25s; }
+    .concept-block:nth-child(5) { animation-delay: 0.3s; }
+    .concept-block:nth-child(6) { animation-delay: 0.35s; }
+    .concept-block:nth-child(7) { animation-delay: 0.4s; }
 
     .concept-block:hover {
       border-color: #3A86FF;
@@ -215,6 +296,8 @@
 
     .concept-icon {
       font-size: 2.5rem;
+      font-family: inherit;
+      line-height: 1;
     }
 
     .concept-number {
@@ -240,7 +323,15 @@
       border-radius: 16px;
       padding: 25px;
       transition: all 0.3s ease;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .technique-card:nth-child(1) { animation-delay: 0.1s; }
+    .technique-card:nth-child(2) { animation-delay: 0.2s; }
+    .technique-card:nth-child(3) { animation-delay: 0.3s; }
+    .technique-card:nth-child(4) { animation-delay: 0.4s; }
+    .technique-card:nth-child(5) { animation-delay: 0.5s; }
 
     .technique-card:hover {
       border-color: #3A86FF;
@@ -251,6 +342,8 @@
       font-size: 2rem;
       display: block;
       margin-bottom: 15px;
+      font-family: inherit;
+      line-height: 1;
     }
 
     .technique-card h4 {
@@ -272,6 +365,9 @@
       background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
       border-radius: 20px;
       position: relative;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.15s;
     }
 
     .quote-block::before {
@@ -318,6 +414,9 @@
       background: linear-gradient(135deg, #E8F1FF 0%, #F0F8FF 100%);
       border-radius: 20px;
       border-left: 4px solid #3A86FF;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.1s;
     }
 
     .takeaway-label {
@@ -343,12 +442,24 @@
       padding: 30px;
       margin: 40px 0;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+
+    .case-study:hover {
+      border-color: #3A86FF;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(58, 134, 255, 0.1);
     }
 
     .case-study h4 {
       color: #3A86FF;
       margin-bottom: 15px;
       font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .case-study .result {
@@ -367,6 +478,9 @@
       margin: 40px 0;
       border-radius: 20px;
       text-align: center;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.4s;
     }
 
     .cta-block h3 {
@@ -391,6 +505,7 @@
       font-weight: 600;
       transition: all 0.3s ease;
       font-size: 1.1rem;
+      border: none;
     }
 
     .cta-block .btn:hover {
@@ -465,6 +580,66 @@
       color: white;
     }
 
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: #0C0C0C;
+      margin-top: 60px;
+    }
+
+    .footer .container {
+      max-width: 1200px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      color: #F0F0F0;
+    }
+
+    .text-blue {
+      color: #3A86FF;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.5;
+      color: #F0F0F0;
+    }
+
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
@@ -497,16 +672,22 @@
       .cta-block h3 {
         font-size: 1.5rem;
       }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ HEADER.HTML -->
+<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/header.html')  // ИСПРАВЛЕНО
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -550,7 +731,6 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант шапки с правильными путями
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
@@ -586,7 +766,7 @@
     </div>
 
     <div class="article-content">
-      <!-- Расширенное введение -->
+      <!-- Введение -->
       <p>Самогипноз — это не магия и не эзотерика, а вполне научный метод, основанный на понимании работы мозга. В трансовом состоянии замедляются ритмы мозга (альфа- и тета-ритмы), что позволяет обходить критическое мышление и напрямую работать с глубинными установками.</p>
 
       <p>Метод широко используется в психотерапии, спорте высших достижений, для снятия стресса и коррекции нежелательных привычек. В этой статье я дам не просто инструкцию, а понимание того, <strong>почему это работает и как добиться максимального эффекта</strong>.</p>
@@ -632,7 +812,7 @@
 
       <p>Исследования с использованием фМРТ показывают, что в трансе активируются те же зоны мозга, что и при реальном опыте. Если вы представляете, как спокойно выступаете на сцене, ваш мозг буквально «проигрывает» этот сценарий, формируя новые нейронные связи.</p>
 
-      <!-- 7 шагов (было 5) -->
+      <!-- 7 шагов -->
       <h2>📋 7 шагов для входа в трансовое состояние</h2>
 
       <div class="concept-block">
@@ -724,7 +904,7 @@
         <p>Потянитесь, как после сна, и только потом вставайте.</p>
       </div>
 
-      <!-- 5 техник в карточках -->
+      <!-- 5 техник -->
       <h2>🔧 5 техник самогипноза для начинающих</h2>
 
       <div class="techniques-grid">
@@ -755,11 +935,11 @@
         </div>
       </div>
 
-      <!-- Кейс из практики -->
+      <!-- Кейс -->
       <h2>📋 История из практики</h2>
       
       <div class="case-study">
-        <h4>Кейс: Елена, 42 года</h4>
+        <h4>👤 Кейс: Елена, 42 года</h4>
         <p>Обратилась с хронической бессонницей после развода. Два года пила снотворное, но без них заснуть не могла. Через 2 недели ежедневного самогипноза (техника «безопасное место» и «внутренний свет») сон начал восстанавливаться. Через месяц полностью отказалась от снотворных.</p>
         <p><strong>Что изменилось:</strong> В трансе она создала образ «внутреннего домика», куда могла приходить для отдыха. Этот образ стал якорем спокойствия, который срабатывал даже без формального входа в транс.</p>
         <div class="result">
@@ -767,7 +947,7 @@
         </div>
       </div>
 
-      <!-- Важные предупреждения -->
+      <!-- Предупреждения -->
       <h2>⚠️ Чего НЕ стоит делать в самогипнозе</h2>
       
       <div class="concept-block">
@@ -810,72 +990,64 @@
 
       <p>Лучшее время — утром (после пробуждения мозг еще в близком к трансу состоянии) или вечером перед сном. Не практикуйте после еды — сонливость будет мешать.</p>
 
-      <!-- Связь с продуктами -->
-      <h2>📚 Как углубить навык</h2>
-      
-      <p>На практикуме <strong>«Разговорный гипноз»</strong> мы учимся не только самогипнозу, но и техникам влияния на других людей. Эти навыки основаны на тех же механизмах работы мозга, что и самогипноз, но направлены вовне.</p>
-      
-      <p>В моей трилогии <strong>«Теория манипуляции»</strong> целый том посвящён работе с подсознанием. Там вы найдёте более 50 техник и упражнений.</p>
-
-      <!-- CTA-блок -->
+      <!-- CTA -->
       <div class="cta-block">
         <h3>🧠 Хотите освоить гипноз глубже?</h3>
         <p>На тренинге «Разговорный гипноз» вы научитесь влиять на себя и других, используя научный подход и техники эриксоновского гипноза. 3 дня, 24 часа практики.</p>
-        <a href="/treningi/" class="btn">УЗНАТЬ О ТРЕНИНГЕ</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/treningi/" class="btn">УЗНАТЬ О ТРЕНИНГЕ</a>
       </div>
 
       <p>Помните: самогипноз — это навык. Как езда на велосипеде: сначала кажется сложным, потом становится естественным. Практикуйтесь регулярно, и результаты не заставят себя ждать.</p>
     </div>
 
-    <!-- ССЫЛКИ НА СВЯЗАННЫЕ СТАТЬИ -->
+    <!-- Связанные статьи -->
     <div class="related-articles">
       <h3>📚 Читайте также:</h3>
       <div class="related-grid">
         <div class="related-item">
-          <a href="/blog/gazlayting-chto-eto.html">Газлайтинг: что это и как противостоять</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/blog/gazlayting-chto-eto.html">Газлайтинг: что это и как противостоять</a>
           <span>10 мин · 2.8K просмотров</span>
         </div>
         <div class="related-item">
-          <a href="/blog/lateralnoe-myshlenie.html">Латеральное мышление: что это и как развить</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/blog/lateralnoe-myshlenie.html">Латеральное мышление: что это и как развить</a>
           <span>12 мин · 2.4K просмотров</span>
         </div>
         <div class="related-item">
-          <a href="/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция и как её распознать</a>  <!-- ИСПРАВЛЕНО -->
+          <a href="/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция и как её распознать</a>
           <span>10 мин · 3.2K просмотров</span>
         </div>
       </div>
     </div>
 
-    <!-- Ссылка назад к списку статей -->
-    <a href="/blog/" class="back-link">← Все статьи блога</a>  <!-- ИСПРАВЛЕНО -->
+    <!-- Ссылка назад -->
+    <a href="/blog/" class="back-link">← Все статьи блога</a>
   </article>
 </div>
 
-<!-- ПОДКЛЮЧАЕМ ПОДВАЛ ИЗ FOOTER.HTML -->
+<!-- ПОДВАЛ -->
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/footer.html')  // ИСПРАВЛЕНО
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
-      // Запасной вариант подвала с правильными путями
       document.getElementById('footer-placeholder').innerHTML = `
-        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
+        <footer class="footer">
+          <div class="container">
+            <div class="footer-content">
+              <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+              <div class="social-links">
+                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
               </div>
             </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+            <div class="copyright">© Андрей Мейстер · 2026</div>
           </div>
         </footer>
       `;
