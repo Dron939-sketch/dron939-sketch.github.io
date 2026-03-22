@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0">
+  <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Тренинги — упакованные курсы | Андрей Мейстер</title>
@@ -14,12 +14,12 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Тренинги — упакованные курсы">
   <meta property="og:description" content="Купил — и пользуешься. Без сборищ, без онлайнов, без расписаний.">
-  <meta property="og:image" content="/kurs1.png">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
-  <meta property="og:url" content="https://meysternlp.ru/treningi/">  <!-- Исправлено: на ваш домен -->
+  <meta property="og:image" content="/kurs1.png">
+  <meta property="og:url" content="https://meysternlp.ru/treningi/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/treningi/">  <!-- Исправлено: на ваш домен -->
+  <link rel="canonical" href="https://meysternlp.ru/treningi/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,22 +63,22 @@
     }
 
     h1 {
-      font-size: 3.5rem;
+      font-size: clamp(2rem, 8vw, 3.5rem);
       font-weight: 200;
-      margin: 60px 0 20px;
+      margin: 40px 0 20px;
       color: #FFFFFF;
     }
 
     h2 {
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
       font-weight: 300;
-      margin: 40px 0 20px;
+      margin: 30px 0 15px;
       color: #3A86FF;
       letter-spacing: 0.15em;
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
@@ -97,20 +97,22 @@
 
     .btn {
       display: inline-block;
-      padding: 14px 32px;
+      padding: clamp(12px, 3vw, 14px) clamp(24px, 5vw, 32px);
       border: 1px solid #3A86FF;
       background: transparent;
       color: #FFFFFF;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       border-radius: 30px;
       text-align: center;
+      width: auto;
+      min-width: 180px;
     }
 
     .btn::before {
@@ -136,17 +138,19 @@
     }
 
     .btn-small {
-      padding: 10px 24px;
-      font-size: 0.8rem;
+      padding: clamp(8px, 2vw, 10px) clamp(16px, 4vw, 24px);
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      min-width: 140px;
     }
 
     /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
     .breadcrumbs {
       display: flex;
       gap: 10px;
-      margin: 30px 0 20px;
-      font-size: 0.9rem;
+      margin: 20px 0 15px;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       color: #666;
+      flex-wrap: wrap;
     }
 
     .breadcrumbs a {
@@ -161,15 +165,12 @@
     .hero {
       text-align: center;
       max-width: 800px;
-      margin: 0 auto 60px;
-    }
-
-    .hero h1 {
-      margin-bottom: 10px;
+      margin: 0 auto 40px;
+      padding: 0 15px;
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       color: #3A86FF;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -179,7 +180,7 @@
     .format-description {
       text-align: center;
       max-width: 700px;
-      margin: -20px auto 60px;
+      margin: -20px auto 40px;
       padding: 20px;
       border: 1px solid rgba(58, 134, 255, 0.2);
       border-radius: 8px;
@@ -189,7 +190,7 @@
     .format-description p {
       margin-bottom: 0;
       color: #FFFFFF;
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
     }
 
     .format-description span {
@@ -200,15 +201,15 @@
     /* ===== СЕТКА ТРЕНИНГОВ ===== */
     .trainings-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 40px;
-      margin: 60px 0;
+      margin: 40px 0;
     }
 
     .training-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 40px;
+      padding: clamp(25px, 5vw, 40px);
       transition: all 0.3s ease;
       border-radius: 8px;
       display: flex;
@@ -228,13 +229,13 @@
       background: rgba(58, 134, 255, 0.2);
       color: #3A86FF;
       border-radius: 30px;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       letter-spacing: 0.1em;
       margin-bottom: 20px;
       align-self: flex-start;
     }
 
-    /* ===== КОНТЕЙНЕР ДЛЯ ФОТО (БЕЗ БЕЛОГО ФОНА) ===== */
+    /* ===== КОНТЕЙНЕР ДЛЯ ФОТО ===== */
     .training-image {
       margin-bottom: 25px;
       text-align: center;
@@ -261,7 +262,7 @@
     }
 
     .training-title {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 6vw, 2rem);
       color: #FFFFFF;
       margin-bottom: 10px;
       font-weight: 300;
@@ -270,7 +271,7 @@
     .training-subtitle {
       color: #3A86FF;
       margin-bottom: 20px;
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
@@ -279,7 +280,8 @@
       color: #CCCCCC;
       margin-bottom: 25px;
       flex-grow: 1;
-      line-height: 1.8;
+      line-height: 1.6;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
     }
 
     .training-features {
@@ -289,8 +291,8 @@
 
     .training-features li {
       color: #CCCCCC;
-      font-size: 1rem;
-      margin-bottom: 10px;
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      margin-bottom: 8px;
       padding-left: 25px;
       position: relative;
     }
@@ -309,13 +311,14 @@
 
     .training-actions {
       margin-top: auto;
+      text-align: center;
     }
 
     /* ===== ПОДВАЛ ===== */
     .footer {
-      padding: 60px 0 30px;
+      padding: 40px 0 30px;
       border-top: 1px solid rgba(58, 134, 255, 0.2);
-      margin-top: 60px;
+      margin-top: 40px;
     }
 
     .footer-content {
@@ -327,19 +330,19 @@
     }
 
     .footer-logo {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       letter-spacing: 0.3em;
     }
 
     .social-links {
       display: flex;
-      gap: 30px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
@@ -350,8 +353,8 @@
 
     .copyright {
       text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
+      margin-top: 30px;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       opacity: 0.5;
       color: #666;
     }
@@ -360,25 +363,87 @@
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
+      .container {
+        padding: 0 16px;
+      }
       
       .trainings-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 25px;
       }
       
       .training-card {
-        padding: 30px;
+        padding: 25px;
       }
       
       .training-image img {
-        max-height: 200px;
+        max-height: 180px;
       }
       
       .footer-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
         gap: 15px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .btn, .btn-small {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .training-actions {
+        text-align: center;
+      }
+    }
+
+    /* Landscape режим для мобильных */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .trainings-grid {
+        gap: 20px;
+      }
+      
+      .training-card {
+        padding: 20px;
+      }
+      
+      h1 {
+        margin: 20px 0 15px;
+      }
+      
+      .hero {
+        margin-bottom: 20px;
+      }
+    }
+
+    /* Маленькие телефоны */
+    @media (max-width: 480px) {
+      .training-image img {
+        max-height: 150px;
+      }
+      
+      .training-features li {
+        font-size: 0.85rem;
+      }
+      
+      .breadcrumbs {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Улучшенная читаемость на мобильных */
+    @media (max-width: 768px) {
+      p, .training-description {
+        line-height: 1.5;
+      }
+      
+      .format-description {
+        margin: -10px auto 30px;
+        padding: 15px;
       }
     }
   </style>
@@ -389,7 +454,7 @@
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/header.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
@@ -435,20 +500,20 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант с исправленными ссылками
+      // Запасной вариант
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Тренинги</a>
-                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+              <a href="/" style="color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Игры</a>
+                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF; font-size: clamp(0.8rem, 3vw, 1rem);">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Архив</a>
               </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 16px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: clamp(0.8rem, 3vw, 0.9rem);">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -459,7 +524,7 @@
 <!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
   <div class="breadcrumbs">
-    <a href="/">Главная</a> /  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+    <a href="/">Главная</a> / 
     <span>Тренинги</span>
   </div>
 </div>
@@ -478,11 +543,15 @@
 
   <!-- СЕТКА ТРЕНИНГОВ -->
   <div class="trainings-grid">
-    <!-- Пакет "Самостоятельный" с фото kurs1.png -->
+    <!-- Пакет "Самостоятельный" -->
     <div class="training-card">
       <span class="training-badge">38 видео</span>
       <div class="training-image">
-        <img src="/kurs1.png" alt="Разговорный гипноз Самостоятельный" onerror="this.src='https://via.placeholder.com/360x240/0C0C0C/3A86FF?text=Самостоятельный'">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+        <picture>
+          <source srcset="/kurs1-mobile.webp" media="(max-width: 768px)">
+          <source srcset="/kurs1.webp" type="image/webp">
+          <img src="/kurs1.png" alt="Разговорный гипноз Самостоятельный" loading="lazy" onerror="this.src='https://via.placeholder.com/360x240/0C0C0C/3A86FF?text=Самостоятельный'">
+        </picture>
       </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Самостоятельный»</div>
@@ -494,15 +563,19 @@
         <li>Доступ 12 месяцев</li>
       </ul>
       <div class="training-actions">
-        <a href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html" class="btn btn-small">ПОДРОБНЕЕ</a>  <!-- Исправлено -->
+        <a href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html" class="btn btn-small">ПОДРОБНЕЕ</a>
       </div>
     </div>
 
-    <!-- Пакет "Стандартный" с фото 3.webp -->
+    <!-- Пакет "Стандартный" -->
     <div class="training-card">
       <span class="training-badge">38 видео +</span>
       <div class="training-image">
-        <img src="/3.webp" alt="Разговорный гипноз Стандартный" onerror="this.src='https://via.placeholder.com/360x240/0C0C0C/3A86FF?text=Стандартный'">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+        <picture>
+          <source srcset="/3-mobile.webp" media="(max-width: 768px)">
+          <source srcset="/3.webp" type="image/webp">
+          <img src="/3.webp" alt="Разговорный гипноз Стандартный" loading="lazy" onerror="this.src='https://via.placeholder.com/360x240/0C0C0C/3A86FF?text=Стандартный'">
+        </picture>
       </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Стандартный»</div>
@@ -516,7 +589,7 @@
         <li class="bonus">➕ Обратная связь от автора</li>
       </ul>
       <div class="training-actions">
-        <a href="/treningi/razgovornyy-gipnoz-standart.html" class="btn btn-small">ПОДРОБНЕЕ</a>  <!-- Исправлено -->
+        <a href="/treningi/razgovornyy-gipnoz-standart.html" class="btn btn-small">ПОДРОБНЕЕ</a>
       </div>
     </div>
   </div>
@@ -526,7 +599,7 @@
 <div id="footer-placeholder"></div>
 
 <script>
-  fetch('/footer.html')  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
+  fetch('/footer.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('footer-placeholder').innerHTML = data;
