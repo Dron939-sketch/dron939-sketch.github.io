@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Андрей Мейстер — манифест</title>
@@ -14,17 +16,20 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Андрей Мейстер — манифест">
   <meta property="og:description" content="Бог умер. Теперь мы сами по себе. Я бросаю камень.">
-  <meta property="og:image" content="/Андрей%20Мейстер.jpg">  <!-- ИСПРАВЛЕНО -->
-  <meta property="og:url" content="https://meysternlp.ru/manifest/">  <!-- ИСПРАВЛЕНО -->
+  <meta property="og:image" content="/Андрей%20Мейстер.jpg">
+  <meta property="og:url" content="https://meysternlp.ru/manifest/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/manifest/">  <!-- ИСПРАВЛЕНО -->
+  <link rel="canonical" href="https://meysternlp.ru/manifest/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -32,6 +37,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -44,12 +50,13 @@
       color: #F0F0F0;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
     }
 
     .container {
-      max-width: 1200px; /* УВЕЛИЧЕНО до стандарта главной страницы */
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
       width: 100%;
@@ -61,10 +68,11 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       line-height: 1.2;
+      word-break: break-word;
     }
 
     h1 {
-      font-size: 4.5rem;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
       font-weight: 200;
       margin-bottom: 0.5rem;
       color: #FFFFFF;
@@ -72,26 +80,27 @@
     }
 
     h2 {
-      font-size: 2.5rem;
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
       font-weight: 300;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
       color: #3A86FF;
       letter-spacing: 0.15em;
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       font-weight: 300;
       color: #F0F0F0;
       margin-bottom: 1.5rem;
       line-height: 1.7;
+      word-break: break-word;
     }
 
     /* ===== АНИМАЦИИ ===== */
     @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -100,8 +109,19 @@
     }
 
     .manifest-section {
-      animation: fadeUp 0.8s ease-out forwards;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .manifest-section:nth-child(1) { animation-delay: 0.1s; }
+    .manifest-section:nth-child(2) { animation-delay: 0.2s; }
+    .manifest-section:nth-child(3) { animation-delay: 0.3s; }
+    .manifest-section:nth-child(4) { animation-delay: 0.4s; }
+    .manifest-section:nth-child(5) { animation-delay: 0.5s; }
+    .manifest-section:nth-child(6) { animation-delay: 0.6s; }
+    .manifest-section:nth-child(7) { animation-delay: 0.7s; }
+    .manifest-section:nth-child(8) { animation-delay: 0.8s; }
+    .manifest-section:nth-child(9) { animation-delay: 0.9s; }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
     a {
@@ -115,10 +135,12 @@
     }
 
     .btn {
-      display: inline-block;
-      padding: 14px 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 3.5vw, 14px) clamp(24px, 5vw, 32px);
       font-weight: 400;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       text-transform: uppercase;
       letter-spacing: 0.2em;
       text-decoration: none;
@@ -131,6 +153,7 @@
       overflow: hidden;
       border-radius: 30px;
       text-align: center;
+      min-height: 48px;
     }
 
     .btn::before {
@@ -149,21 +172,26 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .btn:hover::before {
       left: 0;
     }
 
+    .btn:active {
+      transform: translateY(0);
+    }
+
     /* ===== СТРАНИЦА МАНИФЕСТА ===== */
     .manifest-hero {
-      padding: 80px 0 50px;
+      padding: clamp(50px, 10vw, 80px) 0 40px;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
       text-align: center;
     }
 
     .manifest-hero-god {
-      font-size: 4rem;
+      font-size: clamp(2.5rem, 8vw, 4rem);
       font-weight: 200;
       line-height: 1.1;
       color: #FFFFFF;
@@ -171,22 +199,22 @@
     }
 
     .manifest-hero-alone {
-      font-size: 3rem;
+      font-size: clamp(1.8rem, 6vw, 3rem);
       font-weight: 300;
       color: #3A86FF;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .manifest-hero-stone {
-      font-size: 2rem;
+      font-size: clamp(1.3rem, 5vw, 2rem);
       font-weight: 200;
       color: #FFFFFF;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       font-style: italic;
     }
 
     .manifest-hero-name {
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       letter-spacing: 0.3em;
       color: #3A86FF;
     }
@@ -195,11 +223,11 @@
       width: 60px;
       height: 1px;
       background: rgba(58, 134, 255, 0.3);
-      margin: 30px auto;
+      margin: 25px auto;
     }
 
     .manifest-section {
-      padding: 70px 0;
+      padding: clamp(50px, 8vw, 70px) 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
     }
 
@@ -208,12 +236,12 @@
     }
 
     .manifest-block {
-      max-width: 900px; /* УВЕЛИЧЕНО */
+      max-width: 900px;
       margin: 0 auto;
     }
 
     .manifest-quote {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 4.5vw, 1.5rem);
       font-weight: 400;
       color: #FFFFFF;
       margin: 40px 0;
@@ -229,7 +257,7 @@
 
     .manifest-list li {
       color: #F0F0F0;
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       font-weight: 300;
       margin-bottom: 12px;
       padding-left: 25px;
@@ -247,8 +275,8 @@
     .manifest-names {
       display: flex;
       justify-content: center;
-      gap: 60px;
-      margin: 50px 0;
+      gap: clamp(30px, 8vw, 60px);
+      margin: 40px 0;
       flex-wrap: wrap;
     }
 
@@ -257,7 +285,7 @@
     }
 
     .manifest-name .name {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 5vw, 2rem);
       font-weight: 300;
       color: #FFFFFF;
       margin-bottom: 10px;
@@ -265,7 +293,7 @@
     }
 
     .manifest-name .name-small {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
       font-weight: 300;
       color: #FFFFFF;
       margin-bottom: 10px;
@@ -274,7 +302,7 @@
 
     .manifest-name span {
       display: block;
-      font-size: 0.9rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
       color: #3A86FF;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -287,18 +315,18 @@
 
     .manifest-strong {
       color: #FFFFFF;
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
       font-weight: 400;
       margin: 40px 0;
     }
 
     .manifest-choice {
       text-align: center;
-      margin: 50px 0;
+      margin: 40px 0;
     }
 
     .manifest-choice p {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
       margin-bottom: 10px;
       color: #FFFFFF;
       font-weight: 300;
@@ -306,7 +334,7 @@
 
     .manifest-choice .or {
       color: #666;
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       margin: 20px 0;
       text-transform: uppercase;
       letter-spacing: 0.2em;
@@ -327,19 +355,19 @@
 
     .manifest-choice .no-third {
       color: #666;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       margin-top: 30px;
       font-style: italic;
     }
 
     .gray-text {
       color: #666;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
     }
 
     .manifest-invite {
       text-align: center;
-      padding: 70px 0;
+      padding: clamp(50px, 8vw, 70px) 0;
       background: rgba(255, 255, 255, 0.02);
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       border-bottom: 1px solid rgba(58, 134, 255, 0.2);
@@ -352,14 +380,14 @@
     }
 
     .manifest-invite p {
-      font-size: 1.3rem;
-      margin-bottom: 30px;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      margin-bottom: 25px;
       color: #F0F0F0;
     }
 
     .manifest-invite .invite-strong {
       color: #FFFFFF;
-      font-size: 1.8rem;
+      font-size: clamp(1.5rem, 6vw, 1.8rem);
       font-weight: 200;
       margin: 30px 0;
     }
@@ -371,7 +399,7 @@
     }
 
     .manifest-credentials p {
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       margin-bottom: 0;
       color: #666;
       max-width: 600px;
@@ -381,24 +409,26 @@
     .tools-grid {
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin: 60px 0 40px;
+      gap: clamp(20px, 5vw, 30px);
+      margin: 50px 0 40px;
       flex-wrap: wrap;
     }
 
     .tool-item {
       text-align: center;
-      min-width: 170px;
+      min-width: clamp(130px, 30vw, 170px);
     }
 
     .tool-btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
-      padding: 14px 20px;
+      padding: clamp(12px, 3vw, 14px) clamp(16px, 4vw, 20px);
       border: 1px solid #3A86FF;
       background: transparent;
       color: #FFFFFF;
-      font-size: 0.9rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.2em;
@@ -407,6 +437,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 30px;
+      min-height: 44px;
     }
 
     .tool-btn::before {
@@ -425,15 +456,20 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .tool-btn:hover::before {
       left: 0;
     }
 
+    .tool-btn:active {
+      transform: translateY(0);
+    }
+
     .tool-desc {
       margin-top: 10px;
-      font-size: 0.75rem;
+      font-size: clamp(0.65rem, 2.5vw, 0.75rem);
       color: #666;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -443,7 +479,7 @@
       text-align: center;
       margin: 30px 0;
       color: #3A86FF;
-      font-size: 1.2rem;
+      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       font-weight: 300;
       letter-spacing: 0.1em;
     }
@@ -454,7 +490,7 @@
 
     /* ===== ПОДВАЛ ===== */
     .footer {
-      padding: 50px 0 25px;
+      padding: clamp(40px, 8vw, 50px) 0 clamp(20px, 4vw, 25px);
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       background-color: #0C0C0C;
     }
@@ -469,19 +505,19 @@
     }
 
     .footer-logo {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       letter-spacing: 0.3em;
     }
 
     .social-links {
       display: flex;
-      gap: 25px;
+      gap: clamp(20px, 5vw, 25px);
       flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border-bottom: 1px solid transparent;
@@ -496,7 +532,7 @@
 
     .copyright {
       text-align: center;
-      font-size: 0.7rem;
+      font-size: clamp(0.65rem, 2.5vw, 0.7rem);
       color: #666;
       letter-spacing: 0.1em;
       margin-top: 30px;
@@ -509,78 +545,70 @@
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
       .container {
-        padding: 0 20px;
-      }
-      
-      h1 { font-size: 3rem; }
-      h2 { font-size: 2rem; }
-      
-      .manifest-hero-god {
-        font-size: 3rem;
-      }
-      
-      .manifest-hero-alone {
-        font-size: 2rem;
-      }
-      
-      .manifest-hero-stone {
-        font-size: 1.5rem;
-      }
-      
-      p {
-        font-size: 1.1rem;
+        padding: 0 16px;
       }
       
       .manifest-quote {
-        font-size: 1.3rem;
         padding-left: 15px;
       }
       
-      .manifest-name .name {
-        font-size: 1.8rem;
-      }
-      
-      .manifest-name .name-small {
-        font-size: 1.3rem;
-      }
-      
       .tools-grid {
-        gap: 20px;
+        flex-direction: column;
+        align-items: center;
       }
       
       .tool-item {
-        min-width: 130px;
-      }
-      
-      .tool-btn {
-        padding: 12px 16px;
-        font-size: 0.8rem;
+        width: 100%;
+        max-width: 280px;
       }
       
       .footer-content {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .three-actions span {
+        display: inline-block;
+        margin: 5px 10px;
+      }
+      
+      .manifest-names {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
       }
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 2.5rem; }
-      
-      .manifest-hero-god {
-        font-size: 2.5rem;
-      }
-      
-      .manifest-hero-alone {
-        font-size: 1.8rem;
-      }
-      
-      .manifest-hero-stone {
-        font-size: 1.3rem;
-      }
-      
       .manifest-block {
         padding: 0 10px;
+      }
+      
+      .manifest-list li {
+        padding-left: 20px;
+      }
+      
+      .manifest-choice .or::before,
+      .manifest-choice .or::after {
+        width: 20px;
+        margin: 0 10px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .tool-btn {
+        cursor: pointer;
+      }
+      
+      .btn:active, .tool-btn:active {
+        transform: scale(0.97);
       }
     }
   </style>
@@ -605,7 +633,7 @@
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Что такое нарратив</h2>
-    <p style="font-size: 1.5rem; color: #FFFFFF; margin-bottom: 30px;">Нарратив — это история, в которую ты веришь.</p>
+    <p style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #FFFFFF; margin-bottom: 30px;">Нарратив — это история, в которую ты веришь.</p>
     <p style="margin-bottom: 20px;">Он определяет:</p>
     <ul class="manifest-list">
       <li>Что для тебя важно, а что — пустое</li>
@@ -620,7 +648,7 @@
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Твой нарратив</h2>
-    <p style="font-size: 1.3rem; color: #FFFFFF;">Ты не выбирал свой нарратив.</p>
+    <p style="font-size: clamp(1.1rem, 4.5vw, 1.3rem); color: #FFFFFF;">Ты не выбирал свой нарратив.</p>
     <p>Его выбрали за тебя. Семья. Школа. Культура. Время.</p>
     <p style="margin: 30px 0 20px; color: #FFFFFF;">А потом — момент.</p>
     <ul class="manifest-list">
@@ -654,7 +682,7 @@
       <p class="or">либо</p>
       <p><strong style="color: #FFFFFF;">Либо транслируешь чужой.</strong></p>
       <p class="no-third">Третьего не дано.</p>
-      <p style="color: #666; font-size: 0.9rem; margin-top: 20px;">Можно не выбирать. Тогда выберут за тебя.</p>
+      <p style="color: #666; font-size: clamp(0.8rem, 3vw, 0.9rem); margin-top: 20px;">Можно не выбирать. Тогда выберут за тебя.</p>
     </div>
   </div>
 </section>
@@ -677,12 +705,12 @@
     
     <!-- Фалес отдельно и крупно -->
     <div style="text-align: center; margin: 40px 0 30px;">
-      <div style="font-size: 2.5rem; font-weight: 200; color: #FFFFFF; margin-bottom: 10px;">Фалес</div>
-      <div style="font-size: 1rem; color: #3A86FF; letter-spacing: 0.1em; text-transform: uppercase;">основал философскую школу</div>
+      <div style="font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 200; color: #FFFFFF; margin-bottom: 10px;">Фалес</div>
+      <div style="font-size: clamp(0.8rem, 3vw, 1rem); color: #3A86FF; letter-spacing: 0.1em; text-transform: uppercase;">основал философскую школу</div>
     </div>
     
     <!-- Рассел и Щедровицкий рядом -->
-    <div class="manifest-names" style="margin-top: 30px;">
+    <div class="manifest-names">
       <div class="manifest-name">
         <div class="name-small">Бертран Рассел</div>
         <span>научил меня ясности</span>
@@ -694,7 +722,7 @@
     </div>
     
     <div class="three-actions">
-      <span>Ясность видеть.</span> • <span>Систему строить.</span> • <span>Школу создавать.</span>
+      <span>Ясность видеть.</span> <span>Систему строить.</span> <span>Школу создавать.</span>
     </div>
     
     <p style="text-align: center; color: #666; font-style: italic; margin-top: 30px;">Их камни всё ещё летят. Я подхватил и бросаю дальше.</p>
@@ -708,10 +736,10 @@
     <p><strong style="color: #FFFFFF;">Старые нарративы рассыпались.</strong></p>
     <p class="gray-text">Религия — больше не держит.</p>
     <p class="gray-text">Идеология — больше не вдохновляет.</p>
-    <p style="margin: 40px 0; color: #3A86FF; font-size: 2.5rem; text-align: center; font-weight: 200;">Но.</p>
+    <p style="margin: 40px 0; color: #3A86FF; font-size: clamp(1.8rem, 6vw, 2.5rem); text-align: center; font-weight: 200;">Но.</p>
     <p>Человек — единственное существо, которое живёт нарративами. Без истории, в которую он верит, он не живёт — он просто существует.</p>
-    <p style="margin: 30px 0; color: #FFFFFF; font-size: 1.5rem; text-align: center;">Значит, я создам свою.</p>
-    <p style="font-size: 2rem; color: #FFFFFF; margin: 40px 0; text-align: center; font-weight: 200;">Я выбираю жить.</p>
+    <p style="margin: 30px 0; color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); text-align: center;">Значит, я создам свою.</p>
+    <p style="font-size: clamp(1.5rem, 6vw, 2rem); color: #FFFFFF; margin: 40px 0; text-align: center; font-weight: 200;">Я выбираю жить.</p>
     <p>Я бросаю камень. Я хочу, чтобы мой камень летел долго. Чтобы через сто лет кто-то сказал: «Андрей Мейстер? Да, его нарратив всё ещё работает».</p>
   </div>
 </section>
@@ -737,19 +765,19 @@
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Мой камень</h2>
-    <p style="font-size: 1.5rem; color: #FFFFFF; margin-bottom: 30px; text-align: center;">Мой камень — это инструменты.</p>
+    <p style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #FFFFFF; margin-bottom: 30px; text-align: center;">Мой камень — это инструменты.</p>
     
     <div class="tools-grid">
       <div class="tool-item">
-        <a href="/knigi/" class="tool-btn">КНИГИ</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/knigi/" class="tool-btn">КНИГИ</a>
         <div class="tool-desc">увидеть нарратив</div>
       </div>
       <div class="tool-item">
-        <a href="/igry/" class="tool-btn">ИГРЫ</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/igry/" class="tool-btn">ИГРЫ</a>
         <div class="tool-desc">научиться менять</div>
       </div>
       <div class="tool-item">
-        <a href="/treningi/" class="tool-btn">ПРАКТИКУМЫ</a>  <!-- ИСПРАВЛЕНО -->
+        <a href="/treningi/" class="tool-btn">ПРАКТИКУМЫ</a>
         <div class="tool-desc">создать свой камень</div>
       </div>
     </div>
@@ -767,7 +795,7 @@
     <p>В каком нарративе живёте вы? Где в вашей жизни несостыковки?</p>
     <p style="margin-bottom: 30px;">Хотите бросить свой камень?</p>
     <div class="invite-strong">Я покажу, как.</div>
-    <a href="/" class="btn" style="margin-top: 40px;">ИССЛЕДОВАТЬ</a>  <!-- ИСПРАВЛЕНО -->
+    <a href="/" class="btn" style="margin-top: 40px;">ИССЛЕДОВАТЬ</a>
   </div>
 </section>
 
@@ -784,10 +812,9 @@
     <div class="footer-content">
       <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
       <div class="social-links">
-        <a href="https://t.me/meysternlp" target="_blank">Tg</a>
-        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
-        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Tg</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
       </div>
     </div>
     <div class="copyright">© Андрей Мейстер · 2026</div>
@@ -795,50 +822,73 @@
 </footer>
 
 <script>
-  // Загружаем шапку из header.html
-  fetch('/header.html')  // ИСПРАВЛЕНО
+  // Загружаем шапку из header.html с улучшенным бургер-меню
+  fetch('/header.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('header-placeholder').innerHTML = data;
       
-      // После загрузки шапки инициализируем бургер и подсветку
       setTimeout(() => {
         // 1. Подсветка активного пункта (Манифест)
-        const currentPath = window.location.pathname;
         const navLinks = document.querySelectorAll('.nav-links a');
         
         navLinks.forEach(link => {
           const href = link.getAttribute('href');
-          // Проверяем, что это страница манифеста
           if (href && href.includes('/manifest/')) {
             link.classList.add('active');
           }
         });
         
-        // 2. Бургер-меню
+        // 2. Бургер-меню с оверлеем
         const burger = document.getElementById('burgerBtn');
         const nav = document.getElementById('navLinks');
         
         if (burger && nav) {
-          burger.addEventListener('click', () => {
+          // Создать оверлей
+          const overlay = document.createElement('div');
+          overlay.className = 'nav-overlay';
+          overlay.style.cssText = `
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+          `;
+          document.body.appendChild(overlay);
+          
+          function toggleMenu() {
+            const isActive = burger.classList.contains('active');
             burger.classList.toggle('active');
             nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-          });
+            overlay.classList.toggle('active');
+            burger.setAttribute('aria-expanded', !isActive);
+            document.body.style.overflow = !isActive ? 'hidden' : '';
+          }
+          
+          function closeMenu() {
+            burger.classList.remove('active');
+            nav.classList.remove('active');
+            overlay.classList.remove('active');
+            burger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+          
+          burger.addEventListener('click', toggleMenu);
+          overlay.addEventListener('click', closeMenu);
           
           nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeMenu);
           });
           
           window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
+            if (window.innerWidth > 768 && burger.classList.contains('active')) {
+              closeMenu();
             }
           });
         }
@@ -846,25 +896,41 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант с исправленными ссылками
+      // Запасной вариант
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+              <a href="/" style="color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
                 <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
                 <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
                 <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
                 <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
               </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 16px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
       `;
     });
+</script>
+
+<!-- JSON-LD микроразметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Манифест Андрея Мейстера",
+  "description": "Бог умер. Теперь мы сами по себе. Я бросаю камень.",
+  "author": {
+    "@type": "Person",
+    "name": "Андрей Юрьевич Мейстер"
+  },
+  "datePublished": "2026-03-22",
+  "url": "https://meysternlp.ru/manifest/"
+}
 </script>
 
 </body>
