@@ -2,7 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
   <title>Андрей Мейстер — системное мышление, Вариатика</title>
   
   <!-- SEO мета-теги -->
@@ -50,6 +52,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -62,6 +65,7 @@
       color: #F0F0F0;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
     }
@@ -83,17 +87,18 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       line-height: 1.2;
+      word-break: break-word;
     }
 
     h1 {
-      font-size: 4.5rem;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
       font-weight: 200;
       margin-bottom: 0.5rem;
       color: #FFFFFF;
     }
 
     h2 {
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
       font-weight: 300;
       margin-bottom: 2rem;
       color: #3A86FF;
@@ -101,17 +106,19 @@
     }
 
     h3 {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
       font-weight: 400;
       margin-bottom: 1rem;
       letter-spacing: 0.05em;
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
     }
 
     /* ===== АНИМАЦИИ ===== */
@@ -139,10 +146,12 @@
     }
 
     .btn {
-      display: inline-block;
-      padding: 14px 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 3.5vw, 14px) clamp(24px, 5vw, 32px);
       font-weight: 400;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       text-transform: uppercase;
       letter-spacing: 0.2em;
       text-decoration: none;
@@ -154,6 +163,8 @@
       position: relative;
       overflow: hidden;
       text-align: center;
+      min-height: 48px;
+      min-width: 160px;
     }
 
     .btn::before {
@@ -172,10 +183,15 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .btn:hover::before {
       left: 0;
+    }
+
+    .btn:active {
+      transform: translateY(0);
     }
 
     /* ===== ШАПКА С БУРГЕР-МЕНЮ ===== */
@@ -187,6 +203,8 @@
       background-color: #0C0C0C;
       z-index: 1000;
       width: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(12, 12, 12, 0.95);
     }
 
     .nav {
@@ -198,7 +216,7 @@
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
       font-weight: 300;
       letter-spacing: 0.3em;
       color: #FFFFFF;
@@ -243,6 +261,26 @@
       transform: translateY(-9px) rotate(-45deg);
     }
 
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
     /* Навигация */
     .nav-links {
       display: flex;
@@ -274,12 +312,14 @@
 
     /* Кнопка в шапке */
     .btn-header {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 8px 20px;
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
       color: white;
       border-radius: 30px;
-      font-size: 0.85rem;
+      font-size: clamp(0.8rem, 3vw, 0.85rem);
       font-weight: 500;
       text-transform: none;
       letter-spacing: normal;
@@ -288,6 +328,7 @@
       white-space: nowrap;
       transition: all 0.3s ease;
       z-index: 1001;
+      min-height: 40px;
     }
 
     .btn-header:hover {
@@ -297,9 +338,13 @@
       text-shadow: none;
     }
 
+    .btn-header:active {
+      transform: translateY(0);
+    }
+
     /* Классы для адаптации */
     .desktop-only {
-      display: inline-block;
+      display: inline-flex;
     }
 
     .mobile-only {
@@ -308,7 +353,7 @@
 
     /* ===== ГЕРОЙ ===== */
     .hero {
-      padding: 100px 0;
+      padding: clamp(60px, 10vw, 100px) 0;
       background-color: #0C0C0C;
       width: 100%;
     }
@@ -316,7 +361,7 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      gap: clamp(30px, 5vw, 60px);
       align-items: center;
     }
 
@@ -332,7 +377,7 @@
 
     .hero-phrase-line1 {
       font-family: 'Inter', sans-serif;
-      font-size: 4rem;
+      font-size: clamp(2rem, 7vw, 4rem);
       font-weight: 200;
       line-height: 1.2;
       color: #FFFFFF;
@@ -343,7 +388,7 @@
 
     .hero-phrase-line2 {
       font-family: 'Inter', sans-serif;
-      font-size: 2.5rem;
+      font-size: clamp(1.3rem, 5vw, 2.5rem);
       font-weight: 300;
       line-height: 1.2;
       color: #3A86FF;
@@ -361,7 +406,7 @@
     }
 
     .hero-footnote {
-      font-size: 0.9rem;
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
       font-weight: 300;
       color: #666;
       margin-bottom: 30px;
@@ -371,7 +416,7 @@
 
     .hero-buttons {
       display: flex;
-      gap: 30px;
+      gap: 20px;
       margin-top: 10px;
       flex-wrap: wrap;
     }
@@ -444,7 +489,7 @@
       background-color: transparent;
       color: #3A86FF;
       padding: 8px 16px;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       letter-spacing: 0.2em;
       border: 1px solid #3A86FF;
       text-transform: uppercase;
@@ -462,14 +507,14 @@
 
     /* ===== ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН ===== */
     .section {
-      padding: 80px 0;
+      padding: clamp(50px, 8vw, 80px) 0;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
       width: 100%;
     }
 
     .help-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
       margin-top: 40px;
     }
@@ -477,7 +522,7 @@
     .help-card {
       background-color: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 35px;
+      padding: clamp(25px, 5vw, 35px);
       transition: all 0.3s ease;
       animation: fadeUp 0.6s ease-out forwards;
       opacity: 0;
@@ -499,14 +544,14 @@
     }
 
     .help-question {
-      font-size: 1.8rem;
+      font-size: clamp(1.5rem, 5vw, 1.8rem);
       font-weight: 200;
       color: #3A86FF;
       margin-bottom: 10px;
     }
 
     .help-question-small {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       font-weight: 300;
       color: #FFFFFF;
       margin-bottom: 20px;
@@ -514,7 +559,7 @@
     }
 
     .help-answer {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
       color: #CCCCCC;
       line-height: 1.6;
       margin-top: auto;
@@ -528,7 +573,7 @@
     /* ===== МОИ ПРОЕКТЫ ===== */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
       margin-top: 40px;
     }
@@ -536,13 +581,14 @@
     .project-card {
       background-color: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 40px 30px;
+      padding: clamp(30px, 5vw, 40px) clamp(20px, 4vw, 30px);
       transition: all 0.3s ease;
       animation: fadeUp 0.6s ease-out forwards;
       opacity: 0;
       display: flex;
       flex-direction: column;
       height: 100%;
+      position: relative;
     }
 
     .project-card:nth-child(1) { animation-delay: 0.2s; }
@@ -557,12 +603,12 @@
     }
 
     .project-icon {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 6vw, 2.5rem);
       margin-bottom: 20px;
     }
 
     .project-question {
-      font-size: 1.5rem;
+      font-size: clamp(1rem, 4vw, 1.5rem);
       font-weight: 300;
       letter-spacing: 0.1em;
       margin-bottom: 15px;
@@ -571,7 +617,7 @@
     }
 
     .project-title {
-      font-size: 1.3rem;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
       font-weight: 300;
       letter-spacing: 0.15em;
       margin-bottom: 15px;
@@ -581,7 +627,7 @@
     }
 
     .project-desc {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
       color: #CCCCCC;
       line-height: 1.5;
       margin-bottom: 0;
@@ -590,7 +636,7 @@
 
     /* ===== КАК ЭТО РАБОТАЕТ ===== */
     .system-section {
-      padding: 80px 0;
+      padding: clamp(50px, 8vw, 80px) 0;
       background-color: #0C0C0C;
       border-bottom: 1px solid rgba(58, 134, 255, 0.1);
       width: 100%;
@@ -598,7 +644,7 @@
 
     .system-intro {
       text-align: center;
-      font-size: 1.3rem;
+      font-size: clamp(1rem, 4vw, 1.3rem);
       color: #3A86FF;
       margin-bottom: 60px;
       font-weight: 300;
@@ -607,7 +653,7 @@
 
     .cycle-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
       margin: 60px 0;
     }
@@ -615,7 +661,7 @@
     .cycle-item {
       background-color: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 35px;
+      padding: clamp(25px, 5vw, 35px);
       transition: all 0.3s ease;
       border-radius: 8px;
       text-align: left;
@@ -637,13 +683,13 @@
     }
 
     .cycle-item h3 {
-      font-size: 1.8rem;
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
       margin-bottom: 25px;
       color: #FFFFFF;
     }
 
     .cycle-item p {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
       color: #CCCCCC;
       line-height: 1.6;
       margin-bottom: 15px;
@@ -669,27 +715,27 @@
       display: inline-block;
       background-color: rgba(58, 134, 255, 0.1);
       border: 1px solid #3A86FF;
-      padding: 20px 40px;
+      padding: clamp(15px, 4vw, 20px) clamp(20px, 5vw, 40px);
       border-radius: 50px;
       max-width: 100%;
     }
 
     .choice-arrow {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
       font-weight: 200;
       color: #3A86FF;
       margin-bottom: 5px;
     }
 
     .choice-title {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
       font-weight: 300;
       color: #FFFFFF;
       letter-spacing: 0.1em;
     }
 
     .choice-text {
-      font-size: 1rem;
+      font-size: clamp(0.85rem, 3vw, 1rem);
       color: #CCCCCC;
       margin-top: 10px;
       max-width: 400px;
@@ -705,7 +751,7 @@
     }
 
     .statement-text {
-      font-size: 1.8rem;
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
       font-weight: 200;
       color: #FFFFFF;
       line-height: 1.4;
@@ -714,7 +760,7 @@
 
     /* ===== ПОСЛЕДНИЕ СТАТЬИ ===== */
     .blog-preview-section {
-      padding: 80px 0;
+      padding: clamp(50px, 8vw, 80px) 0;
       background-color: #F5F5F7;
       border-top: 1px solid #E0E0E0;
       border-bottom: 1px solid #E0E0E0;
@@ -729,13 +775,13 @@
       text-align: center;
       color: #6E6E73;
       margin-bottom: 50px;
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       font-weight: 400;
     }
 
     .blog-preview-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
       margin-bottom: 40px;
     }
@@ -744,7 +790,7 @@
       background: #FFFFFF;
       border: none;
       border-radius: 18px;
-      padding: 30px;
+      padding: clamp(20px, 4vw, 30px);
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
@@ -766,7 +812,7 @@
     }
 
     .card-title {
-      font-size: 1.3rem;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
       color: #1D1D1F;
       margin-bottom: 15px;
       line-height: 1.4;
@@ -777,7 +823,7 @@
 
     .card-excerpt {
       color: #3A3A3C;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
       margin-bottom: 20px;
       line-height: 1.6;
       flex-grow: 1;
@@ -820,7 +866,7 @@
       color: #3A86FF;
       background: transparent;
       border-radius: 30px;
-      padding: 12px 30px;
+      padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 30px);
     }
 
     .btn-outline:hover {
@@ -830,7 +876,7 @@
 
     /* ===== ПОДВАЛ ===== */
     .footer {
-      padding: 60px 0 30px;
+      padding: clamp(40px, 8vw, 60px) 0 clamp(20px, 4vw, 30px);
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       background-color: #0C0C0C;
       width: 100%;
@@ -846,19 +892,19 @@
     }
 
     .footer-logo {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       letter-spacing: 0.3em;
     }
 
     .social-links {
       display: flex;
-      gap: 30px;
+      gap: clamp(20px, 5vw, 30px);
       flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border-bottom: 1px solid transparent;
@@ -874,7 +920,7 @@
 
     .copyright {
       text-align: center;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       color: #666;
       letter-spacing: 0.1em;
       margin-top: 40px;
@@ -887,10 +933,6 @@
       .nav-links {
         gap: 30px;
       }
-      
-      .cycle-grid {
-        gap: 20px;
-      }
     }
 
     @media (max-width: 768px) {
@@ -900,8 +942,8 @@
       }
       
       .mobile-only {
-        display: block;
-        background: linear-gradient(to right, #00A8E8, #3A86FF);
+        display: flex;
+        background: linear-gradient(135deg, #00A8E8, #3A86FF);
         color: white;
         border-radius: 30px;
         margin: 10px auto 0;
@@ -913,6 +955,7 @@
         width: 90%;
         max-width: 280px;
         font-size: 1rem;
+        justify-content: center;
       }
       
       .mobile-only:hover {
@@ -930,7 +973,8 @@
         position: fixed;
         top: 70px;
         left: -100%;
-        width: 100%;
+        width: 85%;
+        max-width: 320px;
         height: calc(100vh - 70px);
         background-color: #0C0C0C;
         flex-direction: column;
@@ -939,6 +983,7 @@
         z-index: 999;
         overflow-y: auto;
         gap: 5px;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
       }
       
       .nav-links.active {
@@ -954,83 +999,64 @@
       }
       
       /* Основной контент */
-      h1 {
-        font-size: 3rem;
-      }
-      
-      h2 {
-        font-size: 1.8rem;
-      }
-      
       .hero-grid {
         grid-template-columns: 1fr;
         gap: 40px;
       }
       
-      .hero-phrase-line1 {
-        font-size: 2.8rem;
+      .hero-content {
+        text-align: center;
       }
       
-      .hero-phrase-line2 {
-        font-size: 1.8rem;
+      .hero-divider {
+        margin-left: auto;
+        margin-right: auto;
       }
       
       .hero-buttons {
         flex-direction: column;
-        gap: 15px;
+        align-items: center;
       }
       
       .hero-buttons .btn {
         width: 100%;
-        text-align: center;
+        max-width: 280px;
       }
       
       .help-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
       }
       
       .projects-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
       }
       
       .cycle-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
       }
       
       .blog-preview-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
       }
       
       .choice-inner {
         padding: 15px 20px;
       }
       
-      .choice-title {
-        font-size: 1.3rem;
-      }
-      
       .footer-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
         gap: 20px;
       }
       
-      .section {
-        padding: 60px 0;
-      }
-      
-      .statement-text {
-        font-size: 1.5rem;
+      .social-links {
+        justify-content: center;
       }
     }
 
     @media (max-width: 480px) {
       .logo {
-        font-size: 1.2rem;
         letter-spacing: 0.2em;
       }
       
@@ -1039,32 +1065,53 @@
         height: 18px;
       }
       
-      h1 {
-        font-size: 2.5rem;
-      }
-      
-      .hero-phrase-line1 {
-        font-size: 2.2rem;
-      }
-      
-      .hero-phrase-line2 {
-        font-size: 1.5rem;
-      }
-      
       .help-card {
-        padding: 25px;
+        padding: 20px;
       }
       
       .project-card {
-        padding: 30px 20px;
-      }
-      
-      .project-question {
-        font-size: 1.3rem;
+        padding: 25px 20px;
       }
       
       .blog-preview-card {
         padding: 20px;
+      }
+      
+      .hero-sticker {
+        top: -5px;
+        right: 10px;
+        padding: 4px 12px;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .hero {
+        padding: 40px 0;
+      }
+      
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+      
+      .cycle-item {
+        padding: 20px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .btn-header, .project-card, .help-card, .cycle-item, .blog-preview-card {
+        cursor: pointer;
+      }
+      
+      .btn:active, .btn-header:active {
+        transform: scale(0.98);
+      }
+      
+      .project-card:active, .help-card:active, .cycle-item:active {
+        transform: translateY(-2px);
       }
     }
   </style>
@@ -1078,7 +1125,7 @@
       <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
       
       <!-- Кнопка-бургер -->
-      <button class="burger" id="burgerBtn" aria-label="Меню">
+      <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -1091,7 +1138,7 @@
         <a href="/v-razrabotke/">В разработке</a>
         <a href="/sobytiya/">Архив</a>
         <!-- Виртуальный психолог для мобильных -->
-        <a href="/virtual-psychologist/" class="mobile-only">Виртуальный психолог</a>
+        <a href="/virtual-psychologist/" class="mobile-only">🧠 Виртуальный психолог</a>
       </div>
       
       <a href="/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
@@ -1123,7 +1170,7 @@
       
       <div class="hero-image">
         <div class="video-wrapper">
-          <video autoplay loop muted playsinline>
+          <video autoplay loop muted playsinline preload="metadata">
             <source src="/video.mp4" type="video/mp4">
             Ваш браузер не поддерживает видео.
           </video>
@@ -1189,6 +1236,7 @@
         <div class="project-question">ЧТО У МЕНЯ ВНУТРИ?</div>
         <div class="project-title">КНИГИ</div>
         <div class="project-desc">Увидеть свой нарратив, разобраться в его структуре</div>
+        <a href="/knigi/" aria-label="Перейти к книгам" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
       </div>
       
       <!-- Карточка 2 - Игры -->
@@ -1197,6 +1245,7 @@
         <div class="project-question">КАК ЭТО РАБОТАЕТ?</div>
         <div class="project-title">ИГРЫ</div>
         <div class="project-desc">Научиться менять нарративы, пробовать в безопасной среде</div>
+        <a href="/igry/" aria-label="Перейти к играм" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
       </div>
       
       <!-- Карточка 3 - Практикум -->
@@ -1205,6 +1254,7 @@
         <div class="project-question">ЗАЧЕМ ЭТО НУЖНО?</div>
         <div class="project-title">ПРАКТИКУМ</div>
         <div class="project-desc">Создать свой камень, чтобы он жил после тебя</div>
+        <a href="/treningi/" aria-label="Перейти к тренингам" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
       </div>
       
     </div>
@@ -1263,28 +1313,28 @@
         <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">📘</div>
         <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">КНИГИ</div>
         <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">увидеть нарратив</div>
-        <a href="/knigi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
+        <a href="/knigi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;" aria-label="Перейти к книгам"></a>
       </div>
       
       <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">🎲</div>
         <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">ИГРЫ</div>
         <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">научиться менять</div>
-        <a href="/igry/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
+        <a href="/igry/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;" aria-label="Перейти к играм"></a>
       </div>
       
       <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">✏️</div>
         <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">ПРАКТИКУМЫ</div>
         <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">создать свой камень</div>
-        <a href="/treningi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
+        <a href="/treningi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;" aria-label="Перейти к тренингам"></a>
       </div>
       
     </div>
     
     <!-- МИНИМАЛИСТИЧНОЕ ПОЯСНЕНИЕ -->
     <div style="text-align: center; margin: 10px 0 50px;">
-      <span style="color: #666; font-size: 0.9rem; letter-spacing: 0.2em; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 5px;">ВЫБЕРИ СВОЙ ИНСТРУМЕНТ</span>
+      <span style="color: #666; font-size: clamp(0.8rem, 3vw, 0.9rem); letter-spacing: 0.2em; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 5px;">ВЫБЕРИ СВОЙ ИНСТРУМЕНТ</span>
     </div>
     
   </div>
@@ -1343,10 +1393,10 @@
     <div class="footer-content">
       <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
       <div class="social-links">
-        <a href="https://t.me/meysternlp" target="_blank">Telegram</a>
-        <a href="https://vk.com/meysternlp" target="_blank">VK</a>
-        <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-        <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+        <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
       </div>
     </div>
     <div class="copyright">© Андрей Мейстер · 2026</div>
@@ -1467,34 +1517,43 @@
       }
     });
     
-    // 2. Бургер-меню
+    // 2. Бургер-меню с оверлеем
     const burger = document.getElementById('burgerBtn');
     const nav = document.getElementById('navLinks');
     
+    // Создать оверлей
+    const overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    document.body.appendChild(overlay);
+    
+    function toggleMenu() {
+      const isActive = burger.classList.contains('active');
+      burger.classList.toggle('active');
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      burger.setAttribute('aria-expanded', !isActive);
+      document.body.style.overflow = !isActive ? 'hidden' : '';
+    }
+    
+    function closeMenu() {
+      burger.classList.remove('active');
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    
     if (burger && nav) {
-      burger.addEventListener('click', () => {
-        burger.classList.toggle('active');
-        nav.classList.toggle('active');
-        if (nav.classList.contains('active')) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = '';
-        }
-      });
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
       
       nav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          burger.classList.remove('active');
-          nav.classList.remove('active');
-          document.body.style.overflow = '';
-        });
+        link.addEventListener('click', closeMenu);
       });
       
       window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-          burger.classList.remove('active');
-          nav.classList.remove('active');
-          document.body.style.overflow = '';
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
         }
       });
     }
