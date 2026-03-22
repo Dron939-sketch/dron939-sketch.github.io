@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <base href="/">
+  
+  <!-- ========== ROBOTS И FAVICON ========== -->
+  <link rel="robots" href="/robots.txt">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
   <title>Системное мышление в бизнесе: как принимать решения | Андрей Мейстер</title>
@@ -11,12 +19,17 @@
   <meta name="keywords" content="системное мышление, системный подход в бизнесе, управление, принятие решений, точки рычага, бизнес-анализ">
   <meta name="author" content="Андрей Мейстер">
   
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">
+  
   <!-- OPEN GRAPH ДЛЯ СОЦСЕТЕЙ -->
   <meta property="og:title" content="Системное мышление в бизнесе: как принимать решения">
   <meta property="og:description" content="7 принципов системного подхода к управлению. Как видеть картину целиком и находить неочевидные решения. Реальные кейсы из бизнеса.">
   <meta property="og:image" content="/images/sistemnoe-myshlenie-biznes.jpg">
   <meta property="og:url" content="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Андрей Мейстер">
+  <meta property="og:locale" content="ru_RU">
   <meta property="article:published_time" content="2026-04-01">
   <meta property="article:author" content="Андрей Мейстер">
   <meta property="article:section" content="Бизнес, Мышление">
@@ -27,13 +40,84 @@
   <meta name="twitter:description" content="Как видеть взаимосвязи и находить точки воздействия">
   <meta name="twitter:image" content="/images/sistemnoe-myshlenie-biznes.jpg">
   
-  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html">
-  
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ========== -->
+  <!-- Breadcrumb (хлебные крошки) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Главная",
+        "item": "https://meysternlp.ru/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Блог",
+        "item": "https://meysternlp.ru/blog/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Системное мышление в бизнесе",
+        "item": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Разметка автора (Person) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Андрей Мейстер",
+    "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
+    "url": "https://meysternlp.ru/obo-mne/",
+    "sameAs": [
+      "https://t.me/meysternlp",
+      "https://vk.com/meysternlp",
+      "https://rutube.ru/channel/29916593/",
+      "https://dzen.ru/89857788588"
+    ]
+  }
+  </script>
+  
+  <!-- Разметка статьи (Article) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Системное мышление в бизнесе: как принимать решения",
+    "description": "Как системное мышление помогает в бизнесе. 7 принципов системного подхода, 5 реальных кейсов, точки рычага и инструменты для руководителей. С примерами из практики.",
+    "datePublished": "2026-04-01",
+    "dateModified": "2026-04-01",
+    "author": {
+      "@type": "Person",
+      "name": "Андрей Мейстер",
+      "url": "https://meysternlp.ru/obo-mne/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Андрей Мейстер",
+      "url": "https://meysternlp.ru"
+    },
+    "image": "https://meysternlp.ru/images/sistemnoe-myshlenie-biznes.jpg",
+    "url": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html",
+    "mainEntityOfPage": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html",
+    "keywords": "системное мышление, системный подход в бизнесе, управление, принятие решений, точки рычага, бизнес-анализ",
+    "articleSection": "Бизнес, Мышление",
+    "wordCount": "3200"
+  }
+  </script>
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -48,12 +132,13 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI Emoji', 'Segoe UI', 'Noto Color Emoji', 'Apple Color Emoji', 'Helvetica Neue', Arial, sans-serif !important;
       background-color: #FFFFFF;
       color: #1D1D1F;
       line-height: 1.7;
       overflow-x: hidden;
       width: 100%;
+      font-variant-emoji: emoji;
     }
 
     .container {
@@ -150,7 +235,13 @@
       text-align: center;
       border-radius: 20px;
       transition: all 0.3s ease;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .stat-item:nth-child(1) { animation-delay: 0.1s; }
+    .stat-item:nth-child(2) { animation-delay: 0.2s; }
+    .stat-item:nth-child(3) { animation-delay: 0.3s; }
 
     .stat-item:hover {
       transform: translateY(-5px);
@@ -188,7 +279,17 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .principle-card:nth-child(1) { animation-delay: 0.1s; }
+    .principle-card:nth-child(2) { animation-delay: 0.2s; }
+    .principle-card:nth-child(3) { animation-delay: 0.3s; }
+    .principle-card:nth-child(4) { animation-delay: 0.4s; }
+    .principle-card:nth-child(5) { animation-delay: 0.5s; }
+    .principle-card:nth-child(6) { animation-delay: 0.6s; }
+    .principle-card:nth-child(7) { animation-delay: 0.7s; }
 
     .principle-card:hover {
       border-color: #3A86FF;
@@ -221,6 +322,8 @@
 
     .principle-icon {
       font-size: 2.5rem;
+      font-family: inherit;
+      line-height: 1;
     }
 
     .principle-number {
@@ -251,7 +354,12 @@
       margin: 40px 0;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
       transition: all 0.3s ease;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .case-study:nth-child(1) { animation-delay: 0.2s; }
+    .case-study:nth-child(2) { animation-delay: 0.3s; }
 
     .case-study:hover {
       border-color: #3A86FF;
@@ -327,6 +435,9 @@
       background: linear-gradient(135deg, #F5F5F7 0%, #FAFAFA 100%);
       border-radius: 20px;
       position: relative;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.15s;
     }
 
     .quote-block::before {
@@ -373,6 +484,9 @@
       background: linear-gradient(135deg, #E8F1FF 0%, #F0F8FF 100%);
       border-radius: 20px;
       border-left: 4px solid #3A86FF;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.1s;
     }
 
     .takeaway-label {
@@ -404,7 +518,14 @@
       border-radius: 16px;
       padding: 25px;
       transition: all 0.3s ease;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .tool-card:nth-child(1) { animation-delay: 0.1s; }
+    .tool-card:nth-child(2) { animation-delay: 0.2s; }
+    .tool-card:nth-child(3) { animation-delay: 0.3s; }
+    .tool-card:nth-child(4) { animation-delay: 0.4s; }
 
     .tool-card:hover {
       border-color: #3A86FF;
@@ -415,6 +536,8 @@
       font-size: 2rem;
       display: block;
       margin-bottom: 15px;
+      font-family: inherit;
+      line-height: 1;
     }
 
     .tool-card h4 {
@@ -442,7 +565,15 @@
       border: 1px solid #E0E0E0;
       border-radius: 16px;
       padding: 20px;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .error-item:nth-child(1) { animation-delay: 0.1s; }
+    .error-item:nth-child(2) { animation-delay: 0.2s; }
+    .error-item:nth-child(3) { animation-delay: 0.3s; }
+    .error-item:nth-child(4) { animation-delay: 0.4s; }
+    .error-item:nth-child(5) { animation-delay: 0.5s; }
 
     .error-item .error-title {
       color: #FF3B30;
@@ -467,6 +598,9 @@
       margin: 40px 0;
       border-radius: 20px;
       text-align: center;
+      animation: fadeUp 0.6s ease-out forwards;
+      opacity: 0;
+      animation-delay: 0.5s;
     }
 
     .cta-block h3 {
@@ -498,6 +632,7 @@
       font-weight: 600;
       transition: all 0.3s ease;
       font-size: 1rem;
+      border: none;
     }
 
     .cta-block .btn-outline {
@@ -580,6 +715,66 @@
       color: white;
     }
 
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: #0C0C0C;
+      margin-top: 60px;
+    }
+
+    .footer .container {
+      max-width: 1200px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: 1.2rem;
+      letter-spacing: 0.3em;
+      color: #F0F0F0;
+    }
+
+    .text-blue {
+      color: #3A86FF;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      border-bottom-color: #3A86FF;
+      color: #3A86FF;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.5;
+      color: #F0F0F0;
+    }
+
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
@@ -627,6 +822,12 @@
       .cta-block .btn {
         width: 100%;
         max-width: 280px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
       }
     }
   </style>
@@ -681,7 +882,6 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант шапки с правильными путями
       document.getElementById('header-placeholder').innerHTML = `
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
@@ -1024,68 +1224,23 @@
     })
     .catch(error => {
       console.error('Ошибка загрузки подвала:', error);
-      // Запасной вариант подвала с правильными путями
       document.getElementById('footer-placeholder').innerHTML = `
-        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
+        <footer class="footer">
+          <div class="container">
+            <div class="footer-content">
+              <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+              <div class="social-links">
+                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
               </div>
             </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+            <div class="copyright">© Андрей Мейстер · 2026</div>
           </div>
         </footer>
       `;
     });
-</script>
-
-<!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ДЛЯ СТАТЬИ ========== -->
-<!-- Разметка автора (Person) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Андрей Мейстер",
-  "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
-  "url": "https://meysternlp.ru",
-  "sameAs": [
-    "https://t.me/meysternlp",
-    "https://vk.com/meysternlp",
-    "https://rutube.ru/channel/29916593/",
-    "https://dzen.ru/89857788588"
-  ]
-}
-</script>
-
-<!-- Разметка статьи (Article) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Системное мышление в бизнесе: как принимать решения",
-  "description": "Как системное мышление помогает в бизнесе. 7 принципов системного подхода, 5 реальных кейсов, точки рычага и инструменты для руководителей. С примерами из практики.",
-  "datePublished": "2026-04-01",
-  "dateModified": "2026-04-01",
-  "author": {
-    "@type": "Person",
-    "name": "Андрей Мейстер"
-  },
-  "publisher": {
-    "@type": "Person",
-    "name": "Андрей Мейстер"
-  },
-  "image": "https://meysternlp.ru/images/sistemnoe-myshlenie-biznes.jpg",
-  "url": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html",
-  "mainEntityOfPage": "https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html",
-  "keywords": "системное мышление, системный подход в бизнесе, управление, принятие решений, точки рычага, бизнес-анализ",
-  "articleSection": "Бизнес, Мышление",
-  "wordCount": "3200"
-}
 </script>
 
 </body>
