@@ -2,7 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
   <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
@@ -26,12 +28,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
   
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -43,6 +49,8 @@
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
     }
@@ -60,6 +68,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       line-height: 1.2;
+      word-break: break-word;
     }
 
     h1 {
@@ -82,6 +91,171 @@
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ===== ХЕДЕР ===== */
+    .main-header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 1001;
+      background: transparent;
+      border: none;
+    }
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3A86FF;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3A86FF;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #3A86FF;
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .psychologist-btn {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      color: white !important;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .psychologist-btn::after {
+      display: none;
+    }
+
+    .psychologist-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+      color: white !important;
+    }
+
+    .psychologist-btn:active {
+      transform: translateY(0);
     }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
@@ -96,7 +270,9 @@
     }
 
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: clamp(12px, 3vw, 14px) clamp(24px, 5vw, 32px);
       border: 1px solid #3A86FF;
       background: transparent;
@@ -111,7 +287,7 @@
       overflow: hidden;
       border-radius: 30px;
       text-align: center;
-      width: auto;
+      min-height: 48px;
       min-width: 180px;
     }
 
@@ -131,24 +307,30 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .btn:hover::before {
       left: 0;
     }
 
+    .btn:active {
+      transform: translateY(0);
+    }
+
     .btn-small {
       padding: clamp(8px, 2vw, 10px) clamp(16px, 4vw, 24px);
       font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       min-width: 140px;
+      min-height: 40px;
     }
 
     /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
     .breadcrumbs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin: 20px 0 15px;
-      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
       color: #666;
       flex-wrap: wrap;
     }
@@ -201,7 +383,7 @@
     /* ===== СЕТКА ТРЕНИНГОВ ===== */
     .trainings-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
       margin: 40px 0;
     }
@@ -211,16 +393,22 @@
       border: 1px solid rgba(58, 134, 255, 0.2);
       padding: clamp(25px, 5vw, 40px);
       transition: all 0.3s ease;
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       height: 100%;
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .training-card:nth-child(1) { animation-delay: 0.1s; }
+    .training-card:nth-child(2) { animation-delay: 0.2s; }
 
     .training-card:hover {
       border-color: #3A86FF;
       transform: translateY(-5px);
       box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
+      background-color: rgba(58, 134, 255, 0.03);
     }
 
     .training-badge {
@@ -252,7 +440,7 @@
       height: auto;
       max-height: 240px;
       object-fit: contain;
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
       filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
     }
 
@@ -314,11 +502,23 @@
       text-align: center;
     }
 
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* ===== ПОДВАЛ ===== */
     .footer {
-      padding: 40px 0 30px;
+      padding: clamp(40px, 8vw, 60px) 0 clamp(20px, 4vw, 30px);
       border-top: 1px solid rgba(58, 134, 255, 0.2);
-      margin-top: 40px;
+      margin-top: 60px;
     }
 
     .footer-content {
@@ -336,7 +536,7 @@
 
     .social-links {
       display: flex;
-      gap: 20px;
+      gap: clamp(20px, 5vw, 30px);
       flex-wrap: wrap;
     }
 
@@ -345,6 +545,7 @@
       font-size: clamp(0.8rem, 3vw, 1rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      transition: all 0.3s ease;
     }
 
     .social-links a:hover {
@@ -353,7 +554,7 @@
 
     .copyright {
       text-align: center;
-      margin-top: 30px;
+      margin-top: 40px;
       font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       opacity: 0.5;
       color: #666;
@@ -365,6 +566,59 @@
     @media (max-width: 768px) {
       .container {
         padding: 0 16px;
+      }
+      
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .psychologist-btn {
+        margin-top: 15px;
+        text-align: center;
       }
       
       .trainings-grid {
@@ -384,7 +638,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: 15px;
+        gap: 20px;
       }
       
       .social-links {
@@ -395,33 +649,23 @@
         width: 100%;
         max-width: 280px;
       }
-      
-      .training-actions {
-        text-align: center;
-      }
     }
 
-    /* Landscape режим для мобильных */
-    @media (max-width: 768px) and (orientation: landscape) {
-      .trainings-grid {
-        gap: 20px;
-      }
-      
-      .training-card {
-        padding: 20px;
-      }
-      
-      h1 {
-        margin: 20px 0 15px;
-      }
-      
-      .hero {
-        margin-bottom: 20px;
-      }
-    }
-
-    /* Маленькие телефоны */
     @media (max-width: 480px) {
+      .logo {
+        letter-spacing: 0.2em;
+      }
+      
+      .burger {
+        width: 25px;
+        height: 18px;
+      }
+      
+      .burger.active span:nth-child(1),
+      .burger.active span:nth-child(3) {
+        top: 8px;
+      }
+      
       .training-image img {
         max-height: 150px;
       }
@@ -432,6 +676,30 @@
       
       .breadcrumbs {
         font-size: 0.75rem;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .trainings-grid {
+        gap: 20px;
+      }
+      
+      .training-card {
+        padding: 20px;
+      }
+      
+      .hero {
+        margin-bottom: 20px;
+      }
+      
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+      
+      .nav-links a {
+        padding: 8px 0;
       }
     }
 
@@ -446,80 +714,48 @@
         padding: 15px;
       }
     }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .psychologist-btn, .burger, .training-card {
+        cursor: pointer;
+      }
+      
+      .btn:active, .psychologist-btn:active {
+        transform: scale(0.97);
+      }
+      
+      .burger:active {
+        transform: scale(0.95);
+      }
+      
+      .training-card:active {
+        transform: scale(0.98);
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ ИЗ HEADER.HTML -->
-<div id="header-placeholder"></div>
-
-<script>
-  fetch('/header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-      
-      setTimeout(() => {
-        // Подсветка активного пункта
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-          const href = link.getAttribute('href');
-          if (href && (href.includes('/treningi/') || href === '/treningi/')) {
-            link.classList.add('active');
-          }
-        });
-        
-        // Бургер-меню
-        const burger = document.getElementById('burgerBtn');
-        const nav = document.getElementById('navLinks');
-        
-        if (burger && nav) {
-          burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-          });
-          
-          nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            });
-          });
-          
-          window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            }
-          });
-        }
-      }, 100);
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант
-      document.getElementById('header-placeholder').innerHTML = `
-        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Книги</a>
-                <a href="/igry/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Игры</a>
-                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF; font-size: clamp(0.8rem, 3vw, 1rem);">Тренинги</a>
-                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">В разработке</a>
-                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Архив</a>
-              </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 16px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: clamp(0.8rem, 3vw, 0.9rem);">🧠 Виртуальный психолог</a>
-            </div>
-          </div>
-        </header>
-      `;
-    });
-</script>
+<!-- ХЕДЕР (встроенный) -->
+<header class="main-header">
+  <div class="header-container">
+    <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/knigi/">Книги</a>
+      <a href="/igry/">Игры</a>
+      <a href="/treningi/" class="active">Тренинги</a>
+      <a href="/v-razrabotke/">В разработке</a>
+      <a href="/sobytiya/">Архив</a>
+      <a href="/virtual-psychologist/" class="psychologist-btn">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
 
 <!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
@@ -547,11 +783,7 @@
     <div class="training-card">
       <span class="training-badge">38 видео</span>
       <div class="training-image">
-        <picture>
-          <source srcset="/kurs1-mobile.webp" media="(max-width: 768px)">
-          <source srcset="/kurs1.webp" type="image/webp">
-          <img src="/kurs1.png" alt="Разговорный гипноз Самостоятельный" loading="lazy" onerror="this.src='https://via.placeholder.com/360x240/0C0C0C/3A86FF?text=Самостоятельный'">
-        </picture>
+        <img src="/kurs1.png" alt="Разговорный гипноз Самостоятельный" loading="lazy">
       </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Самостоятельный»</div>
@@ -571,11 +803,7 @@
     <div class="training-card">
       <span class="training-badge">38 видео +</span>
       <div class="training-image">
-        <picture>
-          <source srcset="/3-mobile.webp" media="(max-width: 768px)">
-          <source srcset="/3.webp" type="image/webp">
-          <img src="/3.webp" alt="Разговорный гипноз Стандартный" loading="lazy" onerror="this.src='https://via.placeholder.com/360x240/0C0C0C/3A86FF?text=Стандартный'">
-        </picture>
+        <img src="/3.webp" alt="Разговорный гипноз Стандартный" loading="lazy">
       </div>
       <h2 class="training-title">Разговорный гипноз</h2>
       <div class="training-subtitle">Пакет «Стандартный»</div>
@@ -595,18 +823,92 @@
   </div>
 </div>
 
-<!-- ПОДВАЛ -->
-<div id="footer-placeholder"></div>
+<!-- ПОДВАЛ (встроенный) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
 
 <script>
-  fetch('/footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки подвала:', error);
-    });
+  // Бургер-меню с оверлеем
+  document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      // Создать оверлей
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-overlay';
+      document.body.appendChild(overlay);
+      
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+      
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+    }
+  });
+</script>
+
+<!-- JSON-LD микроразметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Упакованные тренинги",
+  "description": "Тренинги по разговорному гипнозу",
+  "itemListElement": [
+    {
+      "@type": "Product",
+      "position": 1,
+      "name": "Разговорный гипноз. Пакет Самостоятельный",
+      "description": "38 видео с техниками речевого воздействия",
+      "image": "https://meysternlp.ru/kurs1.png",
+      "url": "https://meysternlp.ru/treningi/razgovornyy-gipnoz-samostoyatelnyy.html"
+    },
+    {
+      "@type": "Product",
+      "position": 2,
+      "name": "Разговорный гипноз. Пакет Стандартный",
+      "description": "38 видео + обратная связь от автора",
+      "image": "https://meysternlp.ru/3.webp",
+      "url": "https://meysternlp.ru/treningi/razgovornyy-gipnoz-standart.html"
+    }
+  ]
+}
 </script>
 
 </body>
