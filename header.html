@@ -5,7 +5,7 @@
       <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
       
       <!-- Кнопка-бургер -->
-      <button class="burger" id="burgerBtn" aria-label="Меню">
+      <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -18,7 +18,7 @@
         <a href="/v-razrabotke/">В разработке</a>
         <a href="/sobytiya/">Архив</a>
         <!-- Виртуальный психолог для мобильных -->
-        <a href="/virtual-psychologist/" class="mobile-only">Виртуальный психолог</a>
+        <a href="/virtual-psychologist/" class="mobile-only">🧠 Виртуальный психолог</a>
       </div>
       
       <a href="/virtual-psychologist/" class="btn-header desktop-only">🧠 Виртуальный психолог</a>
@@ -34,8 +34,16 @@
   border-bottom: 1px solid rgba(58, 134, 255, 0.2);
   position: sticky;
   top: 0;
-  background-color: #0C0C0C;
+  background-color: rgba(12, 12, 12, 0.95);
+  backdrop-filter: blur(10px);
   z-index: 1000;
+  width: 100%;
+}
+
+.header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
   width: 100%;
 }
 
@@ -48,13 +56,18 @@
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
   font-weight: 300;
   letter-spacing: 0.3em;
   color: #FFFFFF;
   white-space: nowrap;
   z-index: 1001;
   text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+  opacity: 0.8;
 }
 
 .logo span {
@@ -73,6 +86,7 @@
   cursor: pointer;
   padding: 0;
   z-index: 1001;
+  transition: all 0.3s ease;
 }
 
 .burger span {
@@ -94,6 +108,26 @@
   transform: translateY(-9px) rotate(-45deg);
 }
 
+/* Оверлей для меню */
+.nav-overlay {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 998;
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* Навигация */
 .nav-links {
   display: flex;
@@ -105,32 +139,54 @@
   color: #F0F0F0;
   font-weight: 300;
   letter-spacing: 0.1em;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 3vw, 0.9rem);
   text-transform: uppercase;
   border-bottom: 1px solid transparent;
   padding-bottom: 5px;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
   white-space: nowrap;
   text-decoration: none;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #3A86FF;
+  transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
-  border-bottom-color: #3A86FF;
   color: #F0F0F0;
 }
 
+.nav-links a:hover::after {
+  width: 100%;
+}
+
 .nav-links a.active {
-  border-bottom-color: #3A86FF;
+  color: #3A86FF;
+}
+
+.nav-links a.active::after {
+  width: 100%;
+  background-color: #3A86FF;
 }
 
 /* Кнопка в шапке */
 .btn-header {
-  display: inline-block;
-  padding: 8px 20px;
-  background: linear-gradient(to right, #00A8E8, #3A86FF);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(8px, 2.5vw, 8px) clamp(16px, 4vw, 20px);
+  background: linear-gradient(135deg, #00A8E8, #3A86FF);
   color: white;
   border-radius: 30px;
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
   font-weight: 500;
   text-transform: none;
   letter-spacing: normal;
@@ -140,6 +196,8 @@
   transition: all 0.3s ease;
   z-index: 1001;
   text-decoration: none;
+  min-height: 40px;
+  gap: 6px;
 }
 
 .btn-header:hover {
@@ -148,9 +206,13 @@
   color: white;
 }
 
+.btn-header:active {
+  transform: translateY(0);
+}
+
 /* Классы для адаптации */
 .desktop-only {
-  display: inline-block;
+  display: inline-flex;
 }
 
 .mobile-only {
@@ -168,15 +230,6 @@
   .nav-links {
     gap: 20px;
   }
-  
-  .nav-links a {
-    font-size: 0.85rem;
-  }
-  
-  .btn-header {
-    padding: 8px 16px;
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -185,8 +238,8 @@
   }
   
   .mobile-only {
-    display: block;
-    background: linear-gradient(to right, #00A8E8, #3A86FF);
+    display: flex;
+    background: linear-gradient(135deg, #00A8E8, #3A86FF);
     color: white;
     border-radius: 30px;
     margin: 10px auto 0;
@@ -198,13 +251,19 @@
     width: 90%;
     max-width: 280px;
     font-size: 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
   }
   
   .mobile-only:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(58, 134, 255, 0.4);
     color: white !important;
-    border-bottom-color: transparent !important;
+  }
+  
+  .mobile-only:active {
+    transform: translateY(0);
   }
 
   .burger {
@@ -215,7 +274,8 @@
     position: fixed;
     top: 70px;
     left: -100%;
-    width: 100%;
+    width: 85%;
+    max-width: 320px;
     height: calc(100vh - 70px);
     background-color: #0C0C0C;
     flex-direction: column;
@@ -224,6 +284,7 @@
     z-index: 999;
     overflow-y: auto;
     gap: 5px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
   }
   
   .nav-links.active {
@@ -231,17 +292,26 @@
   }
   
   .nav-links a {
-    font-size: 1.2rem;
-    padding: 15px 0;
+    font-size: 1.1rem;
+    padding: 14px 0;
     width: 100%;
     text-align: center;
     border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+    white-space: normal;
+  }
+  
+  .nav-links a::after {
+    display: none;
+  }
+  
+  .nav-links a:hover {
+    background-color: rgba(58, 134, 255, 0.1);
+    border-radius: 8px;
   }
 }
 
 @media (max-width: 480px) {
   .logo {
-    font-size: 1.2rem;
     letter-spacing: 0.2em;
   }
   
@@ -249,5 +319,134 @@
     width: 25px;
     height: 18px;
   }
+  
+  .burger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  
+  .burger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+  
+  .nav-links {
+    width: 90%;
+    padding: 25px 15px;
+  }
+  
+  .nav-links a {
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+}
+
+/* Landscape режим */
+@media (max-width: 768px) and (orientation: landscape) {
+  .nav-links {
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+  
+  .nav-links a {
+    padding: 10px 0;
+  }
+}
+
+/* Улучшенный таргет для тач-устройств */
+@media (hover: none) and (pointer: coarse) {
+  .btn-header, .burger, .nav-links a {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .btn-header:active {
+    transform: scale(0.97);
+  }
+  
+  .burger:active {
+    transform: scale(0.95);
+  }
+  
+  .nav-links a:active {
+    background-color: rgba(58, 134, 255, 0.15);
+    border-radius: 8px;
+  }
+}
+
+/* Анимация появления шапки */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  animation: slideDown 0.5s ease-out;
 }
 </style>
+
+<script>
+// Скрипт для работы бургер-меню с оверлеем
+document.addEventListener('DOMContentLoaded', function() {
+  const burger = document.getElementById('burgerBtn');
+  const nav = document.getElementById('navLinks');
+  
+  if (burger && nav) {
+    // Создать оверлей
+    const overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    document.body.appendChild(overlay);
+    
+    function toggleMenu() {
+      const isActive = burger.classList.contains('active');
+      burger.classList.toggle('active');
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      burger.setAttribute('aria-expanded', !isActive);
+      document.body.style.overflow = !isActive ? 'hidden' : '';
+    }
+    
+    function closeMenu() {
+      burger.classList.remove('active');
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    
+    burger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', closeMenu);
+    
+    // Закрыть меню при клике на ссылку
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+    
+    // Закрыть меню при изменении размера окна
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && burger.classList.contains('active')) {
+        closeMenu();
+      }
+    });
+  }
+  
+  // Подсветка активного пункта меню
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('.nav-links a');
+  
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href !== '#') {
+      if (currentPath === href || 
+          (href !== '/' && currentPath.startsWith(href + '/')) ||
+          (href === '/' && currentPath === '/')) {
+        link.classList.add('active');
+      }
+    }
+  });
+});
+</script>
