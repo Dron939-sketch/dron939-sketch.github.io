@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <base href="/">  <!-- Добавлено: все относительные ссылки от корня -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Архив материалов — видео и тексты | Андрей Мейстер</title>
@@ -14,17 +16,20 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Архив материалов — Андрей Мейстер">
   <meta property="og:description" content="Видео и тексты: лекции, инструкции, разборы. То, что можно скачать и использовать.">
-  <meta property="og:image" content="/images/archive-preview.jpg">  <!-- Исправлено: убрал /https-meysternlp.ru-/ -->
-  <meta property="og:url" content="https://meysternlp.ru/sobytiya/">  <!-- Исправлено: на ваш домен -->
+  <meta property="og:image" content="/images/archive-preview.jpg">
+  <meta property="og:url" content="https://meysternlp.ru/sobytiya/">
   <meta property="og:type" content="website">
   
   <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
-  <link rel="canonical" href="https://meysternlp.ru/sobytiya/">  <!-- Исправлено: на ваш домен -->
+  <link rel="canonical" href="https://meysternlp.ru/sobytiya/">
   
   <!-- Подключаем Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -32,6 +37,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -44,6 +50,7 @@
       color: #F0F0F0;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
     }
@@ -61,17 +68,18 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       line-height: 1.2;
+      word-break: break-word;
     }
 
     h1 {
-      font-size: 3.5rem;
+      font-size: clamp(2rem, 8vw, 3.5rem);
       font-weight: 200;
       margin-bottom: 0.5rem;
       color: #3A86FF;
     }
 
     h2 {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 6vw, 2rem);
       font-weight: 300;
       margin: 2rem 0 1.5rem;
       color: #FFFFFF;
@@ -79,10 +87,175 @@
     }
 
     p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ===== ХЕДЕР ===== */
+    .main-header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 1001;
+      background: transparent;
+      border: none;
+    }
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3A86FF;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3A86FF;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #3A86FF;
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .psychologist-btn {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      color: white !important;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .psychologist-btn::after {
+      display: none;
+    }
+
+    .psychologist-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+      color: white !important;
+    }
+
+    .psychologist-btn:active {
+      transform: translateY(0);
     }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
@@ -97,10 +270,12 @@
     }
 
     .btn {
-      display: inline-block;
-      padding: 12px 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px);
       font-weight: 400;
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
       text-transform: uppercase;
       letter-spacing: 0.2em;
       text-decoration: none;
@@ -113,6 +288,7 @@
       overflow: hidden;
       border-radius: 30px;
       text-align: center;
+      min-height: 40px;
     }
 
     .btn::before {
@@ -131,20 +307,26 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .btn:hover::before {
       left: 0;
     }
 
+    .btn:active {
+      transform: translateY(0);
+    }
+
     .btn-small {
-      padding: 8px 16px;
-      font-size: 0.75rem;
+      padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px);
+      font-size: clamp(0.65rem, 2vw, 0.75rem);
+      min-height: 32px;
     }
 
     /* ===== СТРАНИЦА АРХИВА ===== */
     .page-header {
-      padding: 60px 0 20px;
+      padding: clamp(40px, 8vw, 60px) 0 20px;
       text-align: center;
     }
 
@@ -153,7 +335,7 @@
     }
 
     .page-header .subtitle {
-      font-size: 1.2rem;
+      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       color: #FFFFFF;
       font-weight: 200;
       letter-spacing: 0.1em;
@@ -163,11 +345,11 @@
       width: 60px;
       height: 1px;
       background-color: #3A86FF;
-      margin: 30px auto;
+      margin: 25px auto;
     }
 
     .archive-section {
-      margin: 60px 0;
+      margin: 50px 0;
     }
 
     .section-title {
@@ -175,22 +357,23 @@
       align-items: center;
       gap: 15px;
       margin-bottom: 30px;
+      flex-wrap: wrap;
     }
 
     .section-icon {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 6vw, 2.5rem);
       line-height: 1;
     }
 
     .section-name {
-      font-size: 2rem;
+      font-size: clamp(1.3rem, 5vw, 2rem);
       font-weight: 200;
       color: #FFFFFF;
     }
 
     .materials-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 30px;
       margin: 30px 0;
     }
@@ -198,26 +381,32 @@
     .material-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 25px;
+      padding: clamp(20px, 4vw, 25px);
       transition: all 0.3s ease;
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
     }
+
+    .material-card:nth-child(1) { animation-delay: 0.1s; }
+    .material-card:nth-child(2) { animation-delay: 0.2s; }
+    .material-card:nth-child(3) { animation-delay: 0.3s; }
 
     .material-card:hover {
       border-color: #3A86FF;
       box-shadow: 0 0 30px rgba(58, 134, 255, 0.15);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
 
     .material-icon {
-      font-size: 2rem;
+      font-size: clamp(1.8rem, 5vw, 2rem);
       margin-bottom: 15px;
     }
 
     .material-title {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       font-weight: 400;
       color: #FFFFFF;
       margin-bottom: 10px;
@@ -225,13 +414,13 @@
 
     .material-meta {
       color: #666;
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
       margin-bottom: 15px;
     }
 
     .material-description {
       color: #CCCCCC;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
       margin-bottom: 20px;
       line-height: 1.5;
       flex-grow: 1;
@@ -244,26 +433,12 @@
       flex-wrap: wrap;
     }
 
-    .material-link {
-      color: #3A86FF;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-    }
-
-    .material-link:hover {
-      border-bottom-color: #3A86FF;
-      color: #FFFFFF;
-    }
-
     .video-embed {
       margin: 15px 0;
       width: 100%;
       aspect-ratio: 16/9;
       border: 1px solid rgba(58, 134, 255, 0.3);
-      border-radius: 4px;
+      border-radius: 8px;
       overflow: hidden;
     }
     
@@ -273,21 +448,19 @@
       border: none;
     }
 
-    .video-card .material-icon {
-      color: #C6A43F;
-    }
-
-    .text-card .material-icon {
-      color: #3A86FF;
+    audio {
+      width: 100%;
+      margin: 15px 0;
+      border-radius: 30px;
     }
 
     .email-section {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 40px;
-      margin: 60px 0;
+      padding: clamp(25px, 5vw, 40px);
+      margin: 50px 0;
       text-align: center;
-      border-radius: 8px;
+      border-radius: 12px;
     }
 
     .email-section p {
@@ -306,11 +479,13 @@
     .email-input {
       background-color: transparent;
       border: 1px solid rgba(58, 134, 255, 0.3);
-      padding: 14px 20px;
-      font-size: 1rem;
+      padding: clamp(12px, 3vw, 14px) clamp(15px, 4vw, 20px);
+      font-size: clamp(0.9rem, 3vw, 1rem);
       color: #FFFFFF;
       font-family: 'Inter', sans-serif;
-      min-width: 300px;
+      min-width: 280px;
+      border-radius: 30px;
+      transition: border-color 0.3s ease;
     }
 
     .email-input:focus {
@@ -319,17 +494,17 @@
     }
 
     .form-note {
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
       color: #666;
     }
 
     .actions-section {
       text-align: center;
-      margin: 50px 0 30px;
+      margin: 40px 0 30px;
     }
 
     .actions-title {
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 3.5vw, 1.1rem);
       color: #FFFFFF;
       margin-bottom: 20px;
       letter-spacing: 0.1em;
@@ -342,9 +517,21 @@
       flex-wrap: wrap;
     }
 
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* ===== ПОДВАЛ ===== */
     .footer {
-      padding: 60px 0 30px;
+      padding: clamp(40px, 8vw, 60px) 0 clamp(20px, 4vw, 30px);
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       margin-top: 60px;
     }
@@ -358,21 +545,22 @@
     }
 
     .footer-logo {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       letter-spacing: 0.3em;
     }
 
     .social-links {
       display: flex;
-      gap: 30px;
+      gap: clamp(20px, 5vw, 30px);
       flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      transition: all 0.3s ease;
     }
 
     .social-links a:hover {
@@ -382,7 +570,7 @@
     .copyright {
       text-align: center;
       margin-top: 40px;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       opacity: 0.5;
       color: #666;
     }
@@ -391,10 +579,61 @@
 
     /* ===== АДАПТИВНОСТЬ ===== */
     @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
+      .container {
+        padding: 0 16px;
+      }
       
-      .section-name {
-        font-size: 1.5rem;
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .psychologist-btn {
+        margin-top: 15px;
+        text-align: center;
       }
       
       .materials-grid {
@@ -414,13 +653,100 @@
         width: 100%;
         max-width: 280px;
       }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .section-title {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        letter-spacing: 0.2em;
+      }
+      
+      .burger {
+        width: 25px;
+        height: 18px;
+      }
+      
+      .burger.active span:nth-child(1),
+      .burger.active span:nth-child(3) {
+        top: 8px;
+      }
+      
+      .material-card {
+        padding: 20px;
+      }
+      
+      .video-embed {
+        margin: 12px 0;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+      
+      .nav-links a {
+        padding: 8px 0;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .psychologist-btn, .burger, .material-card {
+        cursor: pointer;
+      }
+      
+      .btn:active, .psychologist-btn:active {
+        transform: scale(0.97);
+      }
+      
+      .burger:active {
+        transform: scale(0.95);
+      }
+      
+      .material-card:active {
+        transform: scale(0.98);
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ШАПКА ПОДГРУЖАЕТСЯ ИЗ header.html -->
-<div id="header-placeholder"></div>
+<!-- ХЕДЕР (встроенный) -->
+<header class="main-header">
+  <div class="header-container">
+    <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/knigi/">Книги</a>
+      <a href="/igry/">Игры</a>
+      <a href="/treningi/">Тренинги</a>
+      <a href="/v-razrabotke/">В разработке</a>
+      <a href="/sobytiya/" class="active">Архив</a>
+      <a href="/virtual-psychologist/" class="psychologist-btn">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
 
 <!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
@@ -447,7 +773,7 @@
         <div class="material-meta">VK Видео • 45 мин</div>
         <div class="material-description">Базовое введение в систему Вариатика. Основные принципы, структура и первые шаги.</div>
         <div class="video-embed">
-          <iframe src="https://vk.com/video_ext.php?oid=469250200&id=456239357&hash=d5f4b9d3f8e2a1c7" allowfullscreen></iframe>
+          <iframe src="https://vk.com/video_ext.php?oid=469250200&id=456239357&hash=d5f4b9d3f8e2a1c7" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
       
@@ -458,7 +784,7 @@
         <div class="material-meta">VK Видео • 15 мин</div>
         <div class="material-description">Подробное руководство по игре «Маркетолог». Как играть, какие стратегии использовать, как достигать целей.</div>
         <div class="video-embed">
-          <iframe src="https://vk.com/video_ext.php?oid=469250200&id=456239291&hash=9b8f7e6d5c4a3b2a" allowfullscreen></iframe>
+          <iframe src="https://vk.com/video_ext.php?oid=469250200&id=456239291&hash=9b8f7e6d5c4a3b2a" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
       
@@ -469,7 +795,7 @@
         <div class="material-meta">VK Видео • Программа нейрокоррекции поведенческих паттернов</div>
         <div class="material-description">Программа нейрокоррекции поведенческих паттернов с использованием VR-очков.</div>
         <div class="video-embed">
-          <iframe src="https://vkvideo.ru/video_ext.php?oid=-234137703&id=456239019&hash=bbaf070220ef2f33&hd=2" width="100%" height="100%" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+          <iframe src="https://vkvideo.ru/video_ext.php?oid=-234137703&id=456239019&hash=bbaf070220ef2f33&hd=2" width="100%" height="100%" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
     </div>
@@ -490,7 +816,7 @@
         <div class="material-meta">PDF</div>
         <div class="material-description">Практическое руководство по работе со страхами и тревожными состояниями.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд%2012_гайд%20по%20страхам.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>  <!-- Исправлено -->
+          <a href="/sobytiya/PDF/Гайд%2012_гайд%20по%20страхам.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -501,7 +827,7 @@
         <div class="material-meta">PDF</div>
         <div class="material-description">Практические упражнения и техники для развития навыков.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд%207.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>  <!-- Исправлено -->
+          <a href="/sobytiya/PDF/Гайд%207.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -512,7 +838,7 @@
         <div class="material-meta">PDF</div>
         <div class="material-description">Анализ деструктивных паттернов поведения и способы работы с ними.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд%20_ЯДЫ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>  <!-- Исправлено -->
+          <a href="/sobytiya/PDF/Гайд%20_ЯДЫ.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -523,7 +849,7 @@
         <div class="material-meta">PDF</div>
         <div class="material-description">Приложение к Матрице контроля — дополнительные материалы и упражнения.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>  <!-- Исправлено -->
+          <a href="/sobytiya/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -534,7 +860,7 @@
         <div class="material-meta">PDF</div>
         <div class="material-description">Сборник терапевтических сказок для работы с подсознанием.</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Гайд_15_Терапевтические%20сказки.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>  <!-- Исправлено -->
+          <a href="/sobytiya/PDF/Гайд_15_Терапевтические%20сказки.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
         </div>
       </div>
 
@@ -545,7 +871,7 @@
         <div class="material-meta">PDF</div>
         <div class="material-description">Основной теоретический материал по Матрице контроля из курса «Теория манипуляции».</div>
         <div class="material-actions">
-          <a href="/sobytiya/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank">ОТКРЫТЬ PDF</a>  <!-- Исправлено -->
+          <a href="/sobytiya/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
         </div>
       </div>
     </div>
@@ -571,11 +897,12 @@
           <br>
           Метафора строительства башни для глубинной работы с убеждениями, ресурсами и целеполаганием. Встроенные команды на углубление транса и активацию бессознательного поиска решений.
         </div>
-        <audio controls style="width: 100%; margin: 15px 0;">
-          <source src="/sobytiya/AUDIO/Архитектор-Многоуровневая навигация бессознательного.mp3" type="audio/mpeg">  <!-- Исправлено -->
+        <audio controls preload="metadata">
+          <source src="/sobytiya/AUDIO/Архитектор-Многоуровневая навигация бессознательного.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает аудио.
         </audio>
         <div class="material-actions">
-          <a href="/sobytiya/AUDIO/Архитектор-Многоуровневая навигация бессознательного.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>  <!-- Исправлено -->
+          <a href="/sobytiya/AUDIO/Архитектор-Многоуровневая навигация бессознательного.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>
         </div>
       </div>
 
@@ -590,11 +917,12 @@
           <br>
           Работа с восприятием времени через метафоры движения — от реки до космоса. Гармонизация внутреннего ритма и снятие тревоги от ожидания.
         </div>
-        <audio controls style="width: 100%; margin: 15px 0;">
-          <source src="/sobytiya/AUDIO/Скорость-Управление темпом реальности.mp3" type="audio/mpeg">  <!-- Исправлено -->
+        <audio controls preload="metadata">
+          <source src="/sobytiya/AUDIO/Скорость-Управление темпом реальности.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает аудио.
         </audio>
         <div class="material-actions">
-          <a href="/sobytiya/AUDIO/Скорость-Управление темпом реальности.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>  <!-- Исправлено -->
+          <a href="/sobytiya/AUDIO/Скорость-Управление темпом реальности.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>
         </div>
       </div>
 
@@ -609,11 +937,12 @@
           <br>
           Фокус на восприятие микро-изменений через метафоры распускающихся цветов и спичечной искры. Формирование принятия и доверия к процессу.
         </div>
-        <audio controls style="width: 100%; margin: 15px 0;">
-          <source src="/sobytiya/AUDIO/Ткань реальности-Наблюдение за изменениями.mp3" type="audio/mpeg">  <!-- Исправлено -->
+        <audio controls preload="metadata">
+          <source src="/sobytiya/AUDIO/Ткань реальности-Наблюдение за изменениями.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает аудио.
         </audio>
         <div class="material-actions">
-          <a href="/sobytiya/AUDIO/Ткань реальности-Наблюдение за изменениями.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>  <!-- Исправлено -->
+          <a href="/sobytiya/AUDIO/Ткань реальности-Наблюдение за изменениями.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>
         </div>
       </div>
     </div>
@@ -622,7 +951,7 @@
   <!-- Подписка -->
   <div class="email-section">
     <p>Хотите получать новые материалы?</p>
-    <form action="/subscribe/" method="POST">  <!-- Исправлено: убрал лишний путь -->
+    <form action="/subscribe/" method="POST">
       <div class="form-group">
         <input type="email" name="email" class="email-input" placeholder="Ваш email" required>
         <button type="submit" class="btn">ПОДПИСАТЬСЯ</button>
@@ -635,112 +964,85 @@
   <div class="actions-section">
     <div class="actions-title">А пока можете:</div>
     <div class="action-buttons">
-      <a href="/virtual-psychologist/" class="btn">ПОПРОБОВАТЬ ФРЕДИ</a>  <!-- Исправлено -->
-      <a href="/blog/" class="btn">ЧИТАТЬ БЛОГ</a>  <!-- Исправлено -->
+      <a href="/virtual-psychologist/" class="btn">ПОПРОБОВАТЬ ФРЕДИ</a>
+      <a href="/blog/" class="btn">ЧИТАТЬ БЛОГ</a>
     </div>
   </div>
 </div>
 
-<!-- ПОДВАЛ ПОДГРУЖАЕТСЯ ИЗ footer.html -->
-<div id="footer-placeholder"></div>
+<!-- ПОДВАЛ (встроенный) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
 
 <script>
-  // Загружаем шапку из header.html
-  fetch('/header.html')  // Исправлено: убрал /https-meysternlp.ru-/
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
+  // Бургер-меню с оверлеем
+  document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      // Создать оверлей
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-overlay';
+      document.body.appendChild(overlay);
       
-      // После загрузки шапки инициализируем бургер и подсветку
-      setTimeout(() => {
-        // 1. Подсветка активного пункта
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.nav-links a');
-        
-        navLinks.forEach(link => {
-          const href = link.getAttribute('href');
-          if (href && (href.includes('/sobytiya/') || href === '/sobytiya/')) {
-            link.classList.add('active');
-          }
-        });
-        
-        // 2. Бургер-меню
-        const burger = document.getElementById('burgerBtn');
-        const nav = document.getElementById('navLinks');
-        
-        if (burger && nav) {
-          burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-          });
-          
-          nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            });
-          });
-          
-          window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            }
-          });
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+      
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
         }
-      }, 100);
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки шапки:', error);
-      // Запасной вариант на случай ошибки
-      document.getElementById('header-placeholder').innerHTML = `
-        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
-          <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/treningi/" style="color: #F0F0F0; text-decoration: none;">Тренинги</a>
-                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/sobytiya/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Архив</a>
-              </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
-            </div>
-          </div>
-        </header>
-      `;
-    });
+      });
+    }
+  });
+</script>
 
-  // Загружаем подвал из footer.html
-  fetch('/footer.html')  // Исправлено: убрал /https-meysternlp.ru-/
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки подвала:', error);
-      // Запасной вариант
-      document.getElementById('footer-placeholder').innerHTML = `
-        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); margin-top: 40px;">
-          <div class="container">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #FFFFFF; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0;">Дзен</a>
-              </div>
-            </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
-          </div>
-        </footer>
-      `;
-    });
+<!-- JSON-LD микроразметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Архив материалов",
+  "description": "Архив учебных материалов: видео-лекции, разборы, инструкции, PDF-документы",
+  "url": "https://meysternlp.ru/sobytiya/",
+  "author": {
+    "@type": "Person",
+    "name": "Андрей Юрьевич Мейстер"
+  }
+}
 </script>
 
 </body>
