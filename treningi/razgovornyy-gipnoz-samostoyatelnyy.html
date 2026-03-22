@@ -31,6 +31,20 @@
   <!-- Font Awesome для иконок -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
+
+    ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+  
   <!-- JSON-LD микроразметка -->
   <script type="application/ld+json">
   {
@@ -519,34 +533,6 @@
       transform: translateY(-2px);
     }
 
-    /* ===== АВТОР ===== */
-    .author-section {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: clamp(30px, 5vw, 60px);
-      margin: 60px 0;
-      padding: clamp(25px, 5vw, 40px);
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(58, 134, 255, 0.2);
-      border-radius: 12px;
-    }
-
-    .author-image {
-      text-align: center;
-    }
-
-    .author-image img {
-      width: 100%;
-      max-width: 280px;
-      height: auto;
-      border-radius: 12px;
-      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
-    }
-
-    .author-info p {
-      margin-bottom: 15px;
-    }
-
     /* ===== ПОДВАЛ ===== */
     .footer {
       padding: 50px 0 30px;
@@ -601,11 +587,6 @@
       .product-hero {
         grid-template-columns: 1fr;
         gap: 30px;
-      }
-      
-      .author-section {
-        grid-template-columns: 1fr;
-        text-align: center;
       }
       
       .product-badge {
@@ -693,10 +674,6 @@
         max-width: 320px;
       }
       
-      .author-section {
-        padding: 25px;
-      }
-      
       .footer-content {
         flex-direction: column;
         align-items: center;
@@ -741,10 +718,6 @@
       .product-image img {
         max-width: 280px;
       }
-      
-      .author-image img {
-        max-width: 200px;
-      }
     }
 
     /* Landscape режим */
@@ -765,10 +738,6 @@
       h2 {
         margin: 30px 0 20px;
       }
-      
-      .author-section {
-        margin: 40px 0;
-      }
     }
 
     /* Улучшенный таргет для тач-устройств */
@@ -784,6 +753,10 @@
       .burger:active {
         transform: scale(0.95);
       }
+      
+      .theme-item:active {
+        transform: scale(0.98);
+      }
     }
 
     /* Анимация появления */
@@ -798,16 +771,12 @@
       }
     }
 
-    .product-hero, .includes-list, .themes-grid, .author-section {
+    .product-hero, .includes-list, .themes-grid {
       animation: fadeInUp 0.6s ease-out forwards;
     }
 
     .themes-grid {
       animation-delay: 0.1s;
-    }
-
-    .author-section {
-      animation-delay: 0.2s;
     }
   </style>
 </head>
@@ -891,18 +860,6 @@
     <div class="theme-item">Единая структура воздействия</div>
     <div class="theme-item">Самовнушение</div>
     <div class="theme-item">Фокусы языка</div>
-  </div>
-
-  <!-- ПРО АВТОРА -->
-  <div class="author-section">
-    <div class="author-image">
-      <img src="/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер - автор курса по разговорному гипнозу" width="300" height="300" loading="lazy">
-    </div>
-    <div class="author-info">
-      <h3>Андрей Мейстер</h3>
-      <p>Автор трилогии «Теория манипуляции». Кандидат наук. 10 лет тренингов.</p>
-      <p>Специализация — бессознательное обучение. То есть формирование навыков без скучной теории.</p>
-    </div>
   </div>
 
   <!-- КНОПКА ВНИЗУ -->
