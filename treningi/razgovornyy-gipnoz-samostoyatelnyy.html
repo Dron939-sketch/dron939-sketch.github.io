@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0">
   <base href="/">
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
@@ -25,6 +25,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- JSON-LD микроразметка -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Разговорный гипноз. Пакет «Самостоятельный»",
+    "description": "38 видео с техниками речевого воздействия. Только инструменты и их применение.",
+    "image": "https://meysternlp.ru/kurs1.png",
+    "brand": {
+      "@type": "Brand",
+      "name": "Андрей Мейстер"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "3990",
+      "priceCurrency": "RUB",
+      "availability": "https://schema.org/OnlineOnly",
+      "url": "https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/"
+    }
+  }
+  </script>
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -54,34 +76,49 @@
       width: 100%;
     }
 
+    /* ===== ФОКУС ДЛЯ ДОСТУПНОСТИ ===== */
+    :focus-visible {
+      outline: 2px solid #3A86FF;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
     /* ===== ТИПОГРАФИКА ===== */
     h1, h2, h3 {
       font-weight: 300;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       line-height: 1.2;
+      word-break: break-word;
     }
 
     h1 {
-      font-size: 3.5rem;
+      font-size: clamp(2rem, 8vw, 3.5rem);
       font-weight: 200;
       margin-bottom: 0.5rem;
       color: #FFFFFF;
     }
 
     h2 {
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
       font-weight: 300;
-      margin: 60px 0 30px;
+      margin: 40px 0 25px;
       color: #3A86FF;
       letter-spacing: 0.15em;
     }
 
+    h3 {
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      margin-bottom: 20px;
+    }
+
     p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       font-weight: 300;
       color: #CCCCCC;
       margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
     }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
@@ -96,21 +133,26 @@
     }
 
     .btn {
-      display: inline-block;
-      padding: 14px 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 3.5vw, 14px) clamp(24px, 5vw, 32px);
       border: 1px solid #3A86FF;
       background: transparent;
       color: #FFFFFF;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       border-radius: 30px;
       text-align: center;
+      min-height: 48px;
+      min-width: 200px;
+      font-weight: 500;
     }
 
     .btn::before {
@@ -129,6 +171,7 @@
       color: #0C0C0C;
       border-color: #3A86FF;
       box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
     }
 
     .btn:hover::before {
@@ -136,29 +179,34 @@
     }
 
     .btn-large {
-      padding: 16px 40px;
-      font-size: 1rem;
+      padding: clamp(14px, 4vw, 16px) clamp(32px, 6vw, 40px);
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      min-width: 240px;
     }
 
     .btn-ozon {
-      background: linear-gradient(to right, #00A8E8, #3A86FF);
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
       border: none;
+      box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-ozon::before {
+      background: linear-gradient(135deg, #3A86FF, #00A8E8);
     }
 
     .btn-ozon:hover {
-      background: linear-gradient(to right, #3A86FF, #00A8E8);
-      color: white;
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
+      box-shadow: 0 8px 25px rgba(58, 134, 255, 0.5);
     }
 
     /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
     .breadcrumbs {
       display: flex;
-      gap: 10px;
-      margin: 30px 0 20px;
-      font-size: 0.9rem;
+      gap: 8px;
+      margin: 20px 0 15px;
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
       color: #666;
+      flex-wrap: wrap;
     }
 
     .breadcrumbs a {
@@ -173,8 +221,8 @@
     .product-hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin: 40px 0 60px;
+      gap: clamp(30px, 5vw, 60px);
+      margin: 30px 0 50px;
     }
 
     .product-info {
@@ -189,14 +237,14 @@
       background: rgba(58, 134, 255, 0.2);
       color: #3A86FF;
       border-radius: 30px;
-      font-size: 0.8rem;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       letter-spacing: 0.1em;
       margin-bottom: 20px;
       align-self: flex-start;
     }
 
     .product-title {
-      font-size: 2.5rem;
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
       font-weight: 200;
       color: #FFFFFF;
       margin-bottom: 10px;
@@ -205,17 +253,21 @@
 
     .product-package {
       color: #3A86FF;
-      font-size: 1.2rem;
-      margin-bottom: 30px;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      margin-bottom: 25px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
     .product-description {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       color: #CCCCCC;
       margin-bottom: 30px;
       line-height: 1.8;
+    }
+
+    .product-description p {
+      margin-bottom: 15px;
     }
 
     .product-actions {
@@ -225,53 +277,56 @@
       margin: 20px 0;
     }
 
-    /* ===== ФОТО ПРОДУКТА С ПРОЗРАЧНЫМ ФОНОМ ===== */
+    /* ===== ФОТО ПРОДУКТА ===== */
     .product-image {
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
     .product-image img {
       width: 100%;
       max-width: 500px;
       height: auto;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+      border-radius: 12px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
     }
 
     .product-image img:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 15px 25px rgba(58, 134, 255, 0.3));
+      transform: scale(1.02);
+      filter: drop-shadow(0 15px 30px rgba(58, 134, 255, 0.3));
     }
 
     /* ===== ЧТО ВХОДИТ ===== */
     .includes-list {
       list-style: none;
-      margin: 30px 0;
+      margin: 25px 0 30px;
     }
 
     .includes-list li {
       color: #CCCCCC;
-      font-size: 1.1rem;
-      margin-bottom: 15px;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      margin-bottom: 12px;
       padding-left: 30px;
       position: relative;
+      line-height: 1.5;
     }
 
     .includes-list li::before {
-      content: "•";
+      content: "✓";
       color: #3A86FF;
       position: absolute;
       left: 0;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
     }
 
     /* ===== ТЕМЫ КУРСА ===== */
     .themes-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 15px;
       margin: 30px 0;
     }
@@ -279,33 +334,51 @@
     .theme-item {
       background: rgba(58, 134, 255, 0.05);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      padding: 20px;
+      padding: clamp(15px, 4vw, 20px);
       border-radius: 8px;
       text-align: center;
-      font-size: 1rem;
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      transition: all 0.3s ease;
+      word-break: break-word;
+    }
+
+    .theme-item:hover {
+      background: rgba(58, 134, 255, 0.1);
+      border-color: #3A86FF;
+      transform: translateY(-2px);
     }
 
     /* ===== АВТОР ===== */
     .author-section {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 60px;
+      gap: clamp(30px, 5vw, 60px);
       margin: 60px 0;
-      padding: 40px;
+      padding: clamp(25px, 5vw, 40px);
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(58, 134, 255, 0.2);
-      border-radius: 8px;
+      border-radius: 12px;
+    }
+
+    .author-image {
+      text-align: center;
     }
 
     .author-image img {
       width: 100%;
-      max-width: 300px;
-      border-radius: 8px;
+      max-width: 280px;
+      height: auto;
+      border-radius: 12px;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+    }
+
+    .author-info p {
+      margin-bottom: 15px;
     }
 
     /* ===== ПОДВАЛ ===== */
     .footer {
-      padding: 60px 0 30px;
+      padding: 50px 0 30px;
       border-top: 1px solid rgba(58, 134, 255, 0.2);
       margin-top: 60px;
     }
@@ -319,21 +392,22 @@
     }
 
     .footer-logo {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       letter-spacing: 0.3em;
     }
 
     .social-links {
       display: flex;
-      gap: 30px;
+      gap: clamp(20px, 5vw, 30px);
       flex-wrap: wrap;
     }
 
     .social-links a {
       color: #F0F0F0;
-      font-size: 1rem;
+      font-size: clamp(0.8rem, 3vw, 1rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      padding: 5px 0;
     }
 
     .social-links a:hover {
@@ -342,8 +416,8 @@
 
     .copyright {
       text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
+      margin-top: 35px;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
       opacity: 0.5;
       color: #666;
     }
@@ -359,14 +433,6 @@
       
       .author-section {
         grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
-      h2 { font-size: 1.8rem; }
-      
-      .product-hero {
         text-align: center;
       }
       
@@ -374,29 +440,124 @@
         align-self: center;
       }
       
-      .themes-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .product-info {
+        text-align: center;
+      }
+      
+      .product-actions {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      .product-hero {
+        margin: 20px 0 40px;
       }
       
       .product-actions {
         flex-direction: column;
+        align-items: center;
       }
       
-      .product-actions .btn {
+      .btn, .btn-large {
         width: 100%;
+        max-width: 320px;
+      }
+      
+      .author-section {
+        padding: 25px;
       }
       
       .footer-content {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .themes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
       }
     }
 
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .product-hero {
+        gap: 20px;
+      }
+      
+      h2 {
+        margin: 30px 0 20px;
+      }
+      
+      .author-section {
+        margin: 40px 0;
+      }
+    }
+
+    /* Маленькие телефоны */
     @media (max-width: 480px) {
       .themes-grid {
         grid-template-columns: 1fr;
       }
+      
+      .includes-list li {
+        font-size: 0.9rem;
+        padding-left: 25px;
+      }
+      
+      .product-image img {
+        max-width: 280px;
+      }
+      
+      .author-image img {
+        max-width: 200px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .btn-large, .theme-item, .social-links a {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .btn:active {
+        transform: scale(0.98);
+      }
+    }
+
+    /* Анимация появления */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-hero, .includes-list, .themes-grid, .author-section {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .themes-grid {
+      animation-delay: 0.1s;
+    }
+
+    .author-section {
+      animation-delay: 0.2s;
     }
   </style>
 </head>
@@ -454,15 +615,15 @@
         <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: 1.5rem; letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none;">Книги</a>
-                <a href="/igry/" style="color: #F0F0F0; text-decoration: none;">Игры</a>
-                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF;">Тренинги</a>
-                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none;">В разработке</a>
-                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none;">Архив</a>
+              <a href="/" style="color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
+              <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Книги</a>
+                <a href="/igry/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Игры</a>
+                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF; font-size: clamp(0.8rem, 3vw, 1rem);">Тренинги</a>
+                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">В разработке</a>
+                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Архив</a>
               </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 20px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none;">🧠 Виртуальный психолог</a>
+              <a href="/virtual-psychologist/" style="padding: 8px 16px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: clamp(0.8rem, 3vw, 0.9rem);">🧠 Виртуальный психолог</a>
             </div>
           </div>
         </header>
@@ -484,26 +645,30 @@
   <!-- ГЕРОЙ ПРОДУКТА -->
   <div class="product-hero">
     <div class="product-info">
-      <span class="product-badge">38 видео</span>
+      <span class="product-badge" aria-label="38 видео уроков">38 видео</span>
       <h1 class="product-title">Разговорный гипноз</h1>
       <div class="product-package">Пакет «Самостоятельный»</div>
       
       <div class="product-description">
-        <p style="margin-bottom: 20px;">Есть два способа получить от человека то, что вам нужно. Первый — объяснить, почему это выгодно ему. Второй — сделать так, чтобы он сам захотел. Разговорный гипноз про второе.</p>
+        <p>Есть два способа получить от человека то, что вам нужно. Первый — объяснить, почему это выгодно ему. Второй — сделать так, чтобы он сам захотел. Разговорный гипноз про второе.</p>
         
-        <p style="margin-bottom: 20px;">Это не манипуляция в бытовом смысле. Это понимание того, как устроено внимание, как работает подсознание и почему одни слова вызывают доверие, а другие — сопротивление.</p>
+        <p>Это не манипуляция в бытовом смысле. Это понимание того, как устроено внимание, как работает подсознание и почему одни слова вызывают доверие, а другие — сопротивление.</p>
         
         <p>Никакой магии. Только алгоритмы, которые либо работают, либо нет. Проверять придётся самостоятельно.</p>
       </div>
       
       <div class="product-actions">
-        <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/" target="_blank" class="btn btn-large btn-ozon">Купить на Ozon</a>
+        <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon" aria-label="Купить курс на Ozon">Купить на Ozon</a>
       </div>
     </div>
     
     <!-- ФОТО ПРОДУКТА -->
     <div class="product-image">
-      <img src="/kurs1.png" alt="Разговорный гипноз Самостоятельный" onerror="this.src='https://via.placeholder.com/500x500/0C0C0C/3A86FF?text=Курс'">
+      <picture>
+        <source srcset="/kurs1-mobile.webp" media="(max-width: 768px)" type="image/webp">
+        <source srcset="/kurs1.webp" type="image/webp">
+        <img src="/kurs1.png" alt="Разговорный гипноз - пакет Самостоятельный" width="500" height="500" loading="eager" onerror="this.src='https://via.placeholder.com/500x500/0C0C0C/3A86FF?text=Разговорный+гипноз'">
+      </picture>
     </div>
   </div>
 
@@ -533,7 +698,10 @@
   <!-- ПРО АВТОРА -->
   <div class="author-section">
     <div class="author-image">
-      <img src="/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=А.Мейстер'">
+      <picture>
+        <source srcset="/images/andrej-mejster-filosofiya-mobile.webp" media="(max-width: 768px)">
+        <img src="/images/andrej-mejster-filosofiya.png" alt="Андрей Мейстер - автор курса по разговорному гипнозу" width="300" height="300" loading="lazy" onerror="this.src='https://via.placeholder.com/300x300/0C0C0C/3A86FF?text=А.Мейстер'">
+      </picture>
     </div>
     <div class="author-info">
       <h3>Андрей Мейстер</h3>
@@ -543,8 +711,8 @@
   </div>
 
   <!-- КНОПКА ВНИЗУ -->
-  <div style="text-align: center; margin: 60px 0;">
-    <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/" target="_blank" class="btn btn-large btn-ozon" style="font-size: 1.2rem; padding: 18px 50px;">Перейти к курсу на Ozon</a>
+  <div style="text-align: center; margin: 40px 0 60px;">
+    <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);" aria-label="Перейти к курсу на Ozon">Перейти к курсу на Ozon</a>
   </div>
 </div>
 
@@ -563,15 +731,15 @@
         <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
           <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: 1.2rem; letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
+              <div style="color: #F0F0F0; font-size: clamp(1rem, 4vw, 1.2rem); letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
               <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
+                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Tg</a>
+                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
               </div>
             </div>
-            <div style="text-align: center; margin-top: 30px; font-size: 0.8rem; color: #666;">© Андрей Мейстер · 2026</div>
+            <div class="copyright">© Андрей Мейстер · 2026</div>
           </div>
         </footer>
       `;
