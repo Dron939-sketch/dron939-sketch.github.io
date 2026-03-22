@@ -1,125 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Главная -->
+  <!-- ========== ГЛАВНАЯ ========== -->
   <url>
     <loc>https://meysternlp.ru/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
   
-  <!-- Книги -->
+  <!-- ========== КНИГИ ========== -->
   <url>
     <loc>https://meysternlp.ru/knigi/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-1-razgovornyy-gipnoz/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/knigi/variatika-biblioteka-chelovecheskih-patternov/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-3-stimulnyy-kontrol/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
   
-  <!-- Игры -->
+  <!-- ========== ИГРЫ ========== -->
   <url>
     <loc>https://meysternlp.ru/igry/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/igry/marketolog.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/igry/variatika-basic.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/igry/variatika-intensive.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/igry/variatika-progressive.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>yearly</changefreq>
   </url>
   
-  <!-- Тренинги -->
+  <!-- ========== ТРЕНИНГИ ========== -->
   <url>
     <loc>https://meysternlp.ru/treningi/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/treningi/razgovornyy-gipnoz-samostoyatelnyy.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/treningi/razgovornyy-gipnoz-standart.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>yearly</changefreq>
   </url>
   
-  <!-- Блог -->
+  <!-- ========== БЛОГ ========== -->
   <url>
     <loc>https://meysternlp.ru/blog/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/4-strategii-raboty-s-zaprosom-klienta.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.7</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/gazlayting-chto-eto.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.7</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/lateralnoe-myshlenie.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.7</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.7</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.7</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/chto-takoe-manipulyaciya.html</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.7</priority>
     <changefreq>yearly</changefreq>
   </url>
   
-  <!-- Архив (События) -->
+  <!-- ========== АРХИВ (СОБЫТИЯ) ========== -->
   <url>
     <loc>https://meysternlp.ru/sobytiya/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   
-  <!-- В разработке -->
+  <!-- ========== В РАЗРАБОТКЕ ========== -->
   <url>
     <loc>https://meysternlp.ru/v-razrabotke/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   
-  <!-- Виртуальный психолог -->
+  <!-- ========== ВИРТУАЛЬНЫЙ ПСИХОЛОГ ========== -->
   <url>
     <loc>https://meysternlp.ru/virtual-psychologist/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   
-  <!-- Обо мне -->
+  <!-- ========== ОБО МНЕ ========== -->
   <url>
     <loc>https://meysternlp.ru/obo-mne/</loc>
+    <lastmod>2026-03-22</lastmod>
     <priority>0.8</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  
+  <!-- ========== ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ ========== -->
+  <url>
+    <loc>https://meysternlp.ru/privacy/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <priority>0.5</priority>
     <changefreq>yearly</changefreq>
   </url>
 </urlset>
