@@ -2,7 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
   <base href="/">
   
   <!-- ОСНОВНЫЕ SEO ТЕГИ -->
@@ -25,6 +27,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
@@ -68,6 +73,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
@@ -79,6 +85,8 @@
       background-color: #0C0C0C;
       color: #F0F0F0;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
     }
@@ -88,6 +96,169 @@
       margin: 0 auto;
       padding: 0 20px;
       width: 100%;
+    }
+
+    /* ===== ХЕДЕР ===== */
+    .main-header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 1001;
+      background: transparent;
+      border: none;
+    }
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3A86FF;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3A86FF;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #3A86FF;
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .psychologist-btn {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      color: white !important;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .psychologist-btn::after {
+      display: none;
+    }
+
+    .psychologist-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+      color: white !important;
+    }
+
+    .psychologist-btn:active {
+      transform: translateY(0);
     }
 
     /* ===== ФОКУС ДЛЯ ДОСТУПНОСТИ ===== */
@@ -521,6 +692,7 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
       padding: 5px 0;
+      transition: all 0.3s ease;
     }
 
     .social-links a:hover {
@@ -567,6 +739,59 @@
         padding: 0 16px;
       }
       
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .psychologist-btn {
+        margin-top: 15px;
+        text-align: center;
+      }
+      
       .product-hero {
         margin: 20px 0 40px;
       }
@@ -607,19 +832,21 @@
       }
     }
 
-    /* Landscape режим */
-    @media (max-width: 768px) and (orientation: landscape) {
-      .product-hero {
-        gap: 20px;
+    @media (max-width: 480px) {
+      .logo {
+        letter-spacing: 0.2em;
       }
       
-      h2 {
-        margin: 30px 0 20px;
+      .burger {
+        width: 25px;
+        height: 18px;
       }
-    }
-
-    /* Маленькие телефоны */
-    @media (max-width: 480px) {
+      
+      .burger.active span:nth-child(1),
+      .burger.active span:nth-child(3) {
+        top: 8px;
+      }
+      
       .themes-grid {
         grid-template-columns: 1fr;
       }
@@ -642,15 +869,38 @@
       }
     }
 
-    /* Улучшенный таргет для тач-устройств */
-    @media (hover: none) and (pointer: coarse) {
-      .btn, .btn-large, .theme-item, .feedback-item, .social-links a {
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
       }
       
-      .btn:active {
+      .nav-links a {
+        padding: 8px 0;
+      }
+      
+      .product-hero {
+        gap: 20px;
+      }
+      
+      h2 {
+        margin: 30px 0 20px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .btn-large, .theme-item, .feedback-item, .social-links a, .burger {
+        cursor: pointer;
+      }
+      
+      .btn:active, .btn-large:active {
         transform: scale(0.98);
+      }
+      
+      .burger:active {
+        transform: scale(0.95);
       }
       
       .theme-item:active, .feedback-item:active {
@@ -685,73 +935,25 @@
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
-<div id="header-placeholder"></div>
-
-<script>
-  fetch('/header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-      
-      setTimeout(() => {
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-          const href = link.getAttribute('href');
-          if (href && href.includes('/treningi/')) {
-            link.classList.add('active');
-          }
-        });
-        
-        const burger = document.getElementById('burgerBtn');
-        const nav = document.getElementById('navLinks');
-        
-        if (burger && nav) {
-          burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-          });
-          
-          nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            });
-          });
-          
-          window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            }
-          });
-        }
-      }, 100);
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки шапки:', error);
-      document.getElementById('header-placeholder').innerHTML = `
-        <header style="padding: 20px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-              <a href="/" style="color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); letter-spacing: 0.3em; text-decoration: none;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</a>
-              <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                <a href="/knigi/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Книги</a>
-                <a href="/igry/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Игры</a>
-                <a href="/treningi/" style="color: #3A86FF; text-decoration: none; border-bottom: 2px solid #3A86FF; font-size: clamp(0.8rem, 3vw, 1rem);">Тренинги</a>
-                <a href="/v-razrabotke/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">В разработке</a>
-                <a href="/sobytiya/" style="color: #F0F0F0; text-decoration: none; font-size: clamp(0.8rem, 3vw, 1rem);">Архив</a>
-              </div>
-              <a href="/virtual-psychologist/" style="padding: 8px 16px; background: linear-gradient(to right, #00A8E8, #3A86FF); color: white; border-radius: 30px; text-decoration: none; font-size: clamp(0.8rem, 3vw, 0.9rem);">🧠 Виртуальный психолог</a>
-            </div>
-          </div>
-        </header>
-      `;
-    });
-</script>
+<!-- ХЕДЕР (встроенный) -->
+<header class="main-header">
+  <div class="header-container">
+    <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/knigi/">Книги</a>
+      <a href="/igry/">Игры</a>
+      <a href="/treningi/" class="active">Тренинги</a>
+      <a href="/v-razrabotke/">В разработке</a>
+      <a href="/sobytiya/">Архив</a>
+      <a href="/virtual-psychologist/" class="psychologist-btn">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
 
 <!-- ХЛЕБНЫЕ КРОШКИ -->
 <div class="container">
@@ -788,11 +990,7 @@
     
     <!-- ФОТО ПРОДУКТА -->
     <div class="product-image">
-      <picture>
-        <source srcset="/3-mobile.webp" media="(max-width: 768px)" type="image/webp">
-        <source srcset="/3.webp" type="image/webp">
-        <img src="/3.webp" alt="Разговорный гипноз - пакет Стандартный с обратной связью" width="500" height="500" loading="eager" onerror="this.src='https://via.placeholder.com/500x500/0C0C0C/3A86FF?text=Стандартный'">
-      </picture>
+      <img src="/3.webp" alt="Разговорный гипноз - пакет Стандартный с обратной связью" width="500" height="500" loading="eager">
     </div>
   </div>
 
@@ -926,34 +1124,64 @@
   </div>
 </div>
 
-<!-- ПОДВАЛ -->
-<div id="footer-placeholder"></div>
+<!-- ПОДВАЛ (встроенный) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
 
 <script>
-  fetch('/footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Ошибка загрузки подвала:', error);
-      document.getElementById('footer-placeholder').innerHTML = `
-        <footer style="padding: 40px 0 20px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 40px;">
-          <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-              <div style="color: #F0F0F0; font-size: clamp(1rem, 4vw, 1.2rem); letter-spacing: 0.3em;"><span style="color: #3A86FF;">А</span>МЕЙСТЕР</div>
-              <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Tg</a>
-                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer" style="color: #F0F0F0; text-decoration: none;">Дзен</a>
-              </div>
-            </div>
-            <div class="copyright">© Андрей Мейстер · 2026</div>
-          </div>
-        </footer>
-      `;
-    });
+  // Бургер-меню с оверлеем
+  document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      // Создать оверлей
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-overlay';
+      document.body.appendChild(overlay);
+      
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+      
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+    }
+  });
 </script>
 
 </body>
