@@ -380,6 +380,20 @@
       transition: transform 0.3s ease;
     }
 
+    /* fallback для отсутствующего изображения */
+    .book-cover[src=""] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+    }
+
+    .book-cover[src=""]::after {
+      content: "📘";
+      font-size: 4rem;
+      opacity: 0.5;
+    }
+
     .book-card:hover .book-cover {
       transform: scale(1.02);
     }
@@ -626,7 +640,7 @@
       "description": "Кандидат психологических наук, специалист в области когнитивной психологии и психологии коммуникации. Разработчик образовательной системы «Вариатика»."
     },
     "description": "Семь линз, которые меняют восприятие. Инструмент для анализа реальности и работы с паттернами.",
-    "image": "/konceptikon.png",
+    "image": "/Концептикон.png",
     "url": "https://meysternlp.ru/knigi/",
     "datePublished": "2026"
   }
@@ -667,6 +681,7 @@
         alt="Теория манипуляции Том 1 - Разговорный гипноз"
         class="book-cover"
         loading="lazy"
+        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 280\'%3E%3Crect width=\'200\' height=\'280\' fill=\'%231A1A2E\'/%3E%3Ctext x=\'100\' y=\'140\' text-anchor=\'middle\' fill=\'%233A86FF\' font-size=\'14\'%3E📘 Том 1%3C/text%3E%3C/svg%3E'"
       >
       <div class="book-title" itemprop="name">Теория манипуляции</div>
       <div class="book-subtitle">Том 1 · Разговорный гипноз</div>
@@ -683,6 +698,7 @@
         alt="Вариатика - библиотека человеческих паттернов"
         class="book-cover"
         loading="lazy"
+        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 280\'%3E%3Crect width=\'200\' height=\'280\' fill=\'%231A1A2E\'/%3E%3Ctext x=\'100\' y=\'140\' text-anchor=\'middle\' fill=\'%233A86FF\' font-size=\'14\'%3E📘 Вариатика%3C/text%3E%3C/svg%3E'"
       >
       <div class="book-title" itemprop="name">Вариатика</div>
       <div class="book-subtitle">Библиотека человеческих паттернов</div>
@@ -699,10 +715,11 @@
     <!-- Книга Концептикон -->
     <div class="book-card" itemscope itemtype="https://schema.org/Book">
       <img 
-        src="/konceptikon.png"
+        src="/Концептикон.png"
         alt="Концептикон - семь линз, которые меняют восприятие"
         class="book-cover"
         loading="lazy"
+        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 280\'%3E%3Crect width=\'200\' height=\'280\' fill=\'%231A1A2E\'/%3E%3Ctext x=\'100\' y=\'140\' text-anchor=\'middle\' fill=\'%233A86FF\' font-size=\'14\'%3E📘 Концептикон%3C/text%3E%3C/svg%3E'"
       >
       <div class="book-title" itemprop="name">Концептикон</div>
       <div class="book-subtitle">Семь линз, которые меняют восприятие</div>
