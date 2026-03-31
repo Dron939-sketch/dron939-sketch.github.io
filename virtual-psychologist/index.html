@@ -9,13 +9,13 @@
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Виртуальный психолог Фреди — Андрей Мейстер</title>
-  <meta name="description" content="Виртуальный психолог на основе матрицы поведения 4×6. Протестируйте свою конфигурацию восприятия, мышления и поведения. Получите точный психологический портрет.">
-  <meta name="keywords" content="виртуальный психолог, тест личности, матрица поведения, психологический портрет, фреди">
+  <meta name="description" content="Виртуальный психолог на основе матрицы поведения 4×6. Веб-версия, Telegram-бот и MAX. Протестируйте свою конфигурацию восприятия, мышления и поведения. Получите точный психологический портрет.">
+  <meta name="keywords" content="виртуальный психолог, тест личности, матрица поведения, психологический портрет, фреди, веб-приложение">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Виртуальный психолог Фреди — Андрей Мейстер">
-  <meta property="og:description" content="Тест личности по матрице поведения 4×6. Узнайте свой психологический портрет за 15 минут.">
+  <meta property="og:description" content="Тест личности по матрице поведения 4×6. Веб-версия, Telegram-бот и MAX. Узнайте свой психологический портрет за 15 минут.">
   <meta property="og:image" content="/images/fredi-preview.jpg">
   <meta property="og:url" content="https://meysternlp.ru/virtual-psychologist/">
   <meta property="og:type" content="website">
@@ -346,6 +346,18 @@
 
     .btn-max:hover {
       background: linear-gradient(135deg, #3A86FF, #FF6B6B);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
+    }
+
+    .btn-web {
+      background: linear-gradient(135deg, #9B59B6, #3A86FF);
+      border: none;
+    }
+
+    .btn-web:hover {
+      background: linear-gradient(135deg, #3A86FF, #9B59B6);
       color: white;
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(58, 134, 255, 0.4);
@@ -829,7 +841,7 @@
     </div>
   </div>
 
-  <!-- Блок с двумя ботами -->
+  <!-- Блок с тремя платформами -->
   <div class="bot-info">
     <h2>ВЫБЕРИТЕ ПЛАТФОРМУ</h2>
     
@@ -850,6 +862,24 @@
         </ul>
         <a href="https://t.me/Nanotech_varik_bot" target="_blank" rel="noopener noreferrer" class="btn btn-telegram btn-large">👉 ОТКРЫТЬ В TELEGRAM</a>
         <p class="bot-note">* Запустите бота и нажмите "Start"</p>
+      </div>
+
+      <!-- Веб-приложение -->
+      <div class="bot-card">
+        <div class="bot-icon">🌐</div>
+        <div class="bot-name">Веб-приложение</div>
+        <div class="bot-platform">meysternlp.ru/fredi</div>
+        <p class="bot-description">Полноценная веб-версия психолога Фреди. Работает в браузере на любом устройстве — компьютер, планшет, смартфон.</p>
+        <ul class="bot-features">
+          <li>💻 Работает без установки</li>
+          <li>📱 Адаптивный дизайн</li>
+          <li>🧠 5 этапов тестирования</li>
+          <li>⚡ Быстрая загрузка</li>
+          <li>🔒 Полная анонимность</li>
+          <li>🔄 Сохранение прогресса</li>
+        </ul>
+        <a href="/fredi/" class="btn btn-web btn-large">👉 ОТКРЫТЬ ВЕБ-ВЕРСИЮ</a>
+        <p class="bot-note">* Откроется в текущем окне</p>
       </div>
 
       <!-- MAX Bot -->
@@ -875,7 +905,10 @@
   <div class="cta-section">
     <h2>ГОТОВЫ УЗНАТЬ СЕБЯ?</h2>
     <p>15 минут — и вы получите точный психологический портрет</p>
-    <a href="https://t.me/Nanotech_varik_bot?start=test" target="_blank" rel="noopener noreferrer" class="btn btn-large">🚀 НАЧАТЬ ТЕСТ В TELEGRAM</a>
+    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+      <a href="https://t.me/Nanotech_varik_bot?start=test" target="_blank" rel="noopener noreferrer" class="btn btn-large">🚀 НАЧАТЬ В TELEGRAM</a>
+      <a href="/fredi/" class="btn btn-large">🌐 НАЧАТЬ ВЕБ-ВЕРСИЮ</a>
+    </div>
     <p style="margin-top: 20px; color: #666; font-size: clamp(0.8rem, 3vw, 0.9rem);">или выберите MAX в блоке выше</p>
   </div>
 </div>
@@ -891,7 +924,7 @@
         <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
       </div>
     </div>
-    <div class="copyright">© Андрей Мейстер · 2026</div>
+    <div class="copyright">© Андрей Мейстер • 2026</div>
   </div>
 </footer>
 
