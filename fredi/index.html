@@ -13,9 +13,9 @@
     <title>Фреди | Премиум виртуальный психолог</title>
    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
    
     <style>
+        /* ВСЕ СТИЛИ ОСТАЮТСЯ ЗДЕСЬ (те же самые, что были) */
         * {
             margin: 0;
             padding: 0;
@@ -791,11 +791,18 @@
         </div>
     </div>
 
-    <!-- Подключаем скрипты -->
-    <link rel="stylesheet" href="/fredi/styles.css">
-    <script src="/fredi/app.js"></script>
-    <script src="/fredi/test.js"></script>
-    <script src="/fredi/voice.js"></script>
+    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ - ИСПРАВЛЕННЫЕ ПУТИ -->
+    <script>
+        // Базовые переменные, которые могут понадобиться другим скриптам
+        window.API_BASE_URL = 'https://fredi-backend-flz2.onrender.com';
+        window.USER_ID = localStorage.getItem('fredi_user_id') || ('user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9));
+        localStorage.setItem('fredi_user_id', window.USER_ID);
+    </script>
+    
+    <!-- Используем правильные относительные пути -->
+    <script src="app.js"></script>
+    <script src="test.js"></script>
+    <script src="voice.js"></script>
    
     <script>
     (function() {
@@ -1024,17 +1031,11 @@
                 });
             });
            
-            // ==================== ОБРАБОТЧИКИ МОДУЛЕЙ ====================
+            // Обработчики модулей
             document.querySelectorAll('.module-card').forEach((card, index) => {
                 card.addEventListener('click', () => {
-                    switch(index) {
-                        case 0: openAnalysisScreen(); break;
-                        case 1: openEmotionsScreen(); break;
-                        case 2: openHealingScreen(); break;
-                        case 3: openRelationshipsScreen(); break;
-                        default:
-                            showToast('Этот модуль скоро будет доступен');
-                    }
+                    const modules = ['analysis', 'emotions', 'healing', 'relationships'];
+                    showToast(`🧠 Модуль "${modules[index]}" в разработке`);
                 });
             });
            
@@ -1081,11 +1082,24 @@
         }
 
         function startTest() {
-            if (window.Test && window.Test.start) {
+            // Проверяем, загружен ли Test модуль
+            if (window.Test && typeof window.Test.start === 'function') {
                 window.Test.init(USER_ID);
                 window.Test.start();
+            } else if (window.startTest) {
+                window.startTest(USER_ID);
             } else {
-                showToast('Тест загружается...');
+                showToast('📊 Тест загружается. Пожалуйста, подождите...');
+                // Пытаемся загрузить test.js динамически
+                const script = document.createElement('script');
+                script.src = 'test.js';
+                script.onload = () => {
+                    if (window.Test && window.Test.start) {
+                        window.Test.init(USER_ID);
+                        window.Test.start();
+                    }
+                };
+                document.head.appendChild(script);
             }
         }
 
@@ -1139,7 +1153,7 @@
         }
 
         // ============================================
-        // МОБИЛЬНОЕ МЕНЮ (исправлено и усилено)
+        // МОБИЛЬНОЕ МЕНЮ
         // ============================================
         function initMobileMenu() {
             const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -1147,35 +1161,18 @@
            
             if (!mobileBtn || !panel) return;
 
-            // Удаляем старые обработчики
-            mobileBtn.replaceWith(mobileBtn.cloneNode(true));
-            const newMobileBtn = document.getElementById('mobileMenuBtn');
-
-            newMobileBtn.addEventListener('click', function(e) {
+            mobileBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                e.stopImmediatePropagation();
+                e.stopPropagation();
                 panel.classList.toggle('open');
             });
 
             // Закрытие при клике вне меню
             document.addEventListener('click', function(e) {
                 if (panel.classList.contains('open')) {
-                    if (!panel.contains(e.target) && !newMobileBtn.contains(e.target)) {
+                    if (!panel.contains(e.target) && !mobileBtn.contains(e.target)) {
                         panel.classList.remove('open');
                     }
-                }
-            });
-
-            // Закрытие при свайпе влево
-            let touchStartX = 0;
-            panel.addEventListener('touchstart', function(e) {
-                touchStartX = e.touches[0].clientX;
-            }, { passive: true });
-
-            panel.addEventListener('touchend', function(e) {
-                const touchEndX = e.changedTouches[0].clientX;
-                if (touchEndX - touchStartX < -80) {
-                    panel.classList.remove('open');
                 }
             });
         }
