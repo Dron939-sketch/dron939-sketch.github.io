@@ -13,9 +13,9 @@
     <title>Фреди | Премиум виртуальный психолог</title>
    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
    
     <style>
-        /* ВСЕ СТИЛИ ОСТАЮТСЯ ЗДЕСЬ (те же самые, что были) */
         * {
             margin: 0;
             padding: 0;
@@ -806,6 +806,7 @@
    
     <script>
     (function() {
+
         // ============================================
         // КОНФИГУРАЦИЯ
         // ============================================
@@ -1031,11 +1032,17 @@
                 });
             });
            
-            // Обработчики модулей
+            // ==================== ОБРАБОТЧИКИ МОДУЛЕЙ ====================
             document.querySelectorAll('.module-card').forEach((card, index) => {
                 card.addEventListener('click', () => {
-                    const modules = ['analysis', 'emotions', 'healing', 'relationships'];
-                    showToast(`🧠 Модуль "${modules[index]}" в разработке`);
+                    switch(index) {
+                        case 0: openAnalysisScreen(); break;
+                        case 1: openEmotionsScreen(); break;
+                        case 2: openHealingScreen(); break;
+                        case 3: openRelationshipsScreen(); break;
+                        default:
+                            showToast('Этот модуль скоро будет доступен');
+                    }
                 });
             });
            
@@ -1082,24 +1089,11 @@
         }
 
         function startTest() {
-            // Проверяем, загружен ли Test модуль
-            if (window.Test && typeof window.Test.start === 'function') {
+            if (window.Test && window.Test.start) {
                 window.Test.init(USER_ID);
                 window.Test.start();
-            } else if (window.startTest) {
-                window.startTest(USER_ID);
             } else {
-                showToast('📊 Тест загружается. Пожалуйста, подождите...');
-                // Пытаемся загрузить test.js динамически
-                const script = document.createElement('script');
-                script.src = 'test.js';
-                script.onload = () => {
-                    if (window.Test && window.Test.start) {
-                        window.Test.init(USER_ID);
-                        window.Test.start();
-                    }
-                };
-                document.head.appendChild(script);
+                showToast('Тест загружается...');
             }
         }
 
@@ -1153,7 +1147,7 @@
         }
 
         // ============================================
-        // МОБИЛЬНОЕ МЕНЮ
+        // МОБИЛЬНОЕ МЕНЮ (исправлено и усилено)
         // ============================================
         function initMobileMenu() {
             const mobileBtn = document.getElementById('mobileMenuBtn');
@@ -1161,18 +1155,35 @@
            
             if (!mobileBtn || !panel) return;
 
-            mobileBtn.addEventListener('click', function(e) {
+            // Удаляем старые обработчики
+            mobileBtn.replaceWith(mobileBtn.cloneNode(true));
+            const newMobileBtn = document.getElementById('mobileMenuBtn');
+
+            newMobileBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                e.stopPropagation();
+                e.stopImmediatePropagation();
                 panel.classList.toggle('open');
             });
 
             // Закрытие при клике вне меню
             document.addEventListener('click', function(e) {
                 if (panel.classList.contains('open')) {
-                    if (!panel.contains(e.target) && !mobileBtn.contains(e.target)) {
+                    if (!panel.contains(e.target) && !newMobileBtn.contains(e.target)) {
                         panel.classList.remove('open');
                     }
+                }
+            });
+
+            // Закрытие при свайпе влево
+            let touchStartX = 0;
+            panel.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+
+            panel.addEventListener('touchend', function(e) {
+                const touchEndX = e.changedTouches[0].clientX;
+                if (touchEndX - touchStartX < -80) {
+                    panel.classList.remove('open');
                 }
             });
         }
