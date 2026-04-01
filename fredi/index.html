@@ -13,9 +13,12 @@
     <title>Фреди | Премиум виртуальный психолог</title>
    
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
-   
+    
+    <!-- Локальный CSS файл - создайте его на сервере -->
+    <link rel="stylesheet" href="/fredi/styles.css">
+    
     <style>
+        /* Резервные стили на случай, если CSS не загрузится */
         * {
             margin: 0;
             padding: 0;
@@ -89,7 +92,6 @@
             overflow: hidden;
             position: relative;
         }
-        /* Левая панель */
         .chats-panel {
             width: 280px;
             background: rgba(10, 10, 10, 0.85);
@@ -248,7 +250,6 @@
             font-size: 10px;
             color: var(--text-secondary);
         }
-        /* Правая панель */
         .chat-panel {
             flex: 1;
             display: flex;
@@ -335,7 +336,6 @@
             padding: 20px;
             -webkit-overflow-scrolling: touch;
         }
-        /* Dashboard Styles */
         .dashboard-container {
             max-width: 800px;
             margin: 0 auto;
@@ -501,7 +501,6 @@
             font-size: 11px;
             color: var(--text-secondary);
         }
-        /* Content Pages */
         .full-content-page {
             max-width: 800px;
             margin: 0 auto;
@@ -595,7 +594,6 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        /* Floating Toast */
         .floating-message {
             position: fixed;
             bottom: 20px;
@@ -632,7 +630,6 @@
             opacity: 0.7;
             font-size: 16px;
         }
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .quick-actions-grid {
                 grid-template-columns: repeat(4, 1fr);
@@ -791,41 +788,109 @@
         </div>
     </div>
 
-    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ - ИСПРАВЛЕННЫЕ ПУТИ -->
+    <!-- ============================================ -->
+    <!-- ГЛАВНЫЙ СКРИПТ - ИСПРАВЛЕННЫЙ -->
+    <!-- ============================================ -->
     <script>
-        // Базовые переменные, которые могут понадобиться другим скриптам
-        window.API_BASE_URL = 'https://fredi-backend-flz2.onrender.com';
-        window.USER_ID = localStorage.getItem('fredi_user_id') || ('user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9));
-        localStorage.setItem('fredi_user_id', window.USER_ID);
-    </script>
-    
-    <!-- Используем правильные относительные пути -->
-    <script src="app.js"></script>
-    <script src="test.js"></script>
-    <script src="voice.js"></script>
-   
-    <script>
-    (function() {
-
         // ============================================
-        // КОНФИГУРАЦИЯ
+        // 1. ИНИЦИАЛИЗАЦИЯ - ГЕНЕРИРУЕМ ЧИСЛОВОЙ ID
         // ============================================
-        const API_BASE_URL = 'https://fredi-backend-flz2.onrender.com';
-
-        function getUserId() {
-            let userId = localStorage.getItem('fredi_user_id');
-            if (!userId) {
-                userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        let userId = localStorage.getItem('fredi_user_id');
+        if (!userId) {
+            // Генерируем числовой ID из timestamp
+            userId = Date.now();
+            localStorage.setItem('fredi_user_id', userId);
+        } else {
+            userId = parseInt(userId);
+            if (isNaN(userId)) {
+                // Если старый ID был строкой, заменяем на новый
+                userId = Date.now();
                 localStorage.setItem('fredi_user_id', userId);
             }
-            return userId;
         }
-
-        const USER_ID = getUserId();
-        console.log('👤 User ID:', USER_ID);
-
+        
+        window.USER_ID = userId;
+        window.API_BASE_URL = 'https://fredi-backend-flz2.onrender.com';
+        
+        console.log('✅ Инициализация:', {
+            user_id: window.USER_ID,
+            type: typeof window.USER_ID,
+            api: window.API_BASE_URL
+        });
+        
         // ============================================
-        // ФУНКЦИИ ФОРМАТИРОВАНИЯ
+        // 2. ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // ============================================
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toastMessage');
+            const textEl = document.getElementById('toastText');
+            if (toast && textEl) {
+                textEl.innerHTML = message;
+                toast.style.display = 'flex';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, duration);
+                const closeBtn = document.getElementById('toastClose');
+                if (closeBtn) {
+                    closeBtn.onclick = () => toast.style.display = 'none';
+                }
+            } else {
+                console.log('Toast:', message);
+            }
+        }
+        
+        function showLoading(message) {
+            const container = document.getElementById('screenContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div class="loading-screen">
+                        <div class="loading-spinner">🧠</div>
+                        <div class="loading-text">${message}</div>
+                    </div>
+                `;
+            }
+        }
+        
+        // ============================================
+        // 3. API ВЫЗОВЫ С ОБРАБОТКОЙ ОШИБОК
+        // ============================================
+        async function apiCall(endpoint, options = {}) {
+            const url = endpoint.startsWith('http') ? endpoint : `${window.API_BASE_URL}${endpoint}`;
+            try {
+                const response = await fetch(url, {
+                    ...options,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...options.headers
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error(`API Error: ${endpoint}`, error);
+                throw error;
+            }
+        }
+        
+        async function isTestCompleted() {
+            try {
+                const data = await apiCall(`/api/user-status?user_id=${window.USER_ID}`);
+                return data.has_profile === true;
+            } catch (error) {
+                console.warn('isTestCompleted error:', error);
+                // Проверяем localStorage
+                const stored = localStorage.getItem(`test_results_${window.USER_ID}`);
+                return !!stored;
+            }
+        }
+        
+        // ============================================
+        // 4. ОСНОВНЫЕ ФУНКЦИИ ПРИЛОЖЕНИЯ
         // ============================================
         function formatProfileText(text) {
             if (!text) return '📊 Данные не найдены. Пройдите тест, чтобы получить психологический портрет.';
@@ -843,7 +908,7 @@
             text = text.replace(/\n/g, '<br>');
             return text;
         }
-       
+        
         function formatThoughtText(text) {
             if (!text) return '💭 Мысли психолога появятся после завершения теста.';
             text = text.replace(/\*\*(.*?)\*\*/g, '$1');
@@ -860,60 +925,22 @@
             text = text.replace(/\n/g, '<br>');
             return text;
         }
-
-        // ============================================
-        // API ВЫЗОВЫ
-        // ============================================
-        async function apiCall(endpoint, options = {}) {
-            const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
-            try {
-                const response = await fetch(url, {
-                    ...options,
-                    headers: { 'Content-Type': 'application/json', ...options.headers }
-                });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
-                return data;
-            } catch (error) {
-                console.error(`API Error: ${endpoint}`, error);
-                throw error;
-            }
-        }
-
-        async function isTestCompleted() {
-            try {
-                const data = await apiCall(`/api/user-status?user_id=${USER_ID}`);
-                if (data.has_profile) return true;
-                const stored = localStorage.getItem(`test_results_${USER_ID}`);
-                if (stored) {
-                    const results = JSON.parse(stored);
-                    if (results.profile || results.aiProfile) return true;
-                }
-                return false;
-            } catch (error) {
-                return false;
-            }
-        }
-
+        
         async function getAIGeneratedProfile() {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/generated-profile/${USER_ID}`);
+                const response = await fetch(`${window.API_BASE_URL}/api/generated-profile/${window.USER_ID}`);
                 const data = await response.json();
                 if (data.success && data.ai_profile) return data.ai_profile;
-                if (data.status === 'generating') {
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-                    return getAIGeneratedProfile();
-                }
                 return null;
             } catch (error) {
                 console.error('Error fetching AI profile:', error);
                 return null;
             }
         }
-
+        
         async function getPsychologistThought() {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/psychologist-thought/${USER_ID}`);
+                const response = await fetch(`${window.API_BASE_URL}/api/psychologist-thought/${window.USER_ID}`);
                 const data = await response.json();
                 return data.success ? data.thought : null;
             } catch (error) {
@@ -921,47 +948,105 @@
                 return null;
             }
         }
-
+        
         async function getWeekendIdeas() {
             try {
-                const data = await apiCall(`/api/ideas?user_id=${USER_ID}`);
+                const data = await apiCall(`/api/ideas/${window.USER_ID}`);
                 return data.ideas || [];
             } catch (error) {
                 return [];
             }
         }
-
-        // ============================================
-        // UI ФУНКЦИИ
-        // ============================================
-        function showToast(message) {
-            const toast = document.getElementById('toastMessage');
-            const textEl = document.getElementById('toastText');
-            if (!toast || !textEl) return;
-            textEl.innerHTML = message;
-            toast.style.display = 'flex';
-            setTimeout(() => { toast.style.display = 'none'; }, 3000);
-            if (document.getElementById('toastClose')) {
-                document.getElementById('toastClose').onclick = () => toast.style.display = 'none';
-            }
-        }
-
-        function showLoading(message) {
+        
+        function showFullContentScreen(title, content, contentType) {
             const container = document.getElementById('screenContainer');
-            if (container) {
-                container.innerHTML = `
-                    <div class="loading-screen">
-                        <div class="loading-spinner">🧠</div>
-                        <div class="loading-text">${message}</div>
+            let formattedContent = content;
+            if (contentType === 'profile') formattedContent = formatProfileText(content);
+            else if (contentType === 'thoughts') formattedContent = formatThoughtText(content);
+            else formattedContent = (content || '').replace(/\n/g, '<br>');
+            
+            const emojiMap = { profile: '🧠', thoughts: '💭', goals: '🎯' };
+            
+            container.innerHTML = `
+                <div class="full-content-page">
+                    <button class="back-btn" id="backBtn">◀️ НАЗАД</button>
+                    <div class="content-header">
+                        <div class="content-emoji">${emojiMap[contentType] || '📄'}</div>
+                        <h1>${title}</h1>
                     </div>
-                `;
+                    <div class="content-body">
+                        ${formattedContent || 'Данные не найдены'}
+                    </div>
+                </div>
+            `;
+            
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => renderDashboard());
             }
         }
-
+        
+        function startTest() {
+            if (window.Test && window.Test.start) {
+                if (window.Test.init) {
+                    window.Test.init(window.USER_ID);
+                }
+                window.Test.start();
+            } else {
+                showToast('📊 Тест загружается...');
+            }
+        }
+        
+        async function handleProfileClick() {
+            const completed = await isTestCompleted();
+            if (!completed) {
+                showToast('📊 Сначала пройдите психологический тест');
+                return;
+            }
+            showLoading('Загружаю психологический портрет...');
+            const profile = await getAIGeneratedProfile();
+            if (profile) {
+                showFullContentScreen('Мой портрет', profile, 'profile');
+            } else {
+                showFullContentScreen('Мой портрет', '🧠 Психологический портрет формируется. Подождите немного.', 'profile');
+            }
+        }
+        
+        async function handleThoughtsClick() {
+            const completed = await isTestCompleted();
+            if (!completed) {
+                showToast('📊 Сначала пройдите психологический тест');
+                return;
+            }
+            showLoading('Загружаю мысли психолога...');
+            const thought = await getPsychologistThought();
+            if (thought) {
+                showFullContentScreen('Мысли психолога', thought, 'thoughts');
+            } else {
+                showFullContentScreen('Мысли психолога', '💭 Мысли психолога появятся после завершения теста.', 'thoughts');
+            }
+        }
+        
+        async function handleWeekendClick() {
+            const completed = await isTestCompleted();
+            if (!completed) {
+                showToast('📊 Сначала пройдите психологический тест');
+                return;
+            }
+            showLoading('Подбираю идеи...');
+            const ideas = await getWeekendIdeas();
+            if (ideas && ideas.length > 0) {
+                const ideasText = ideas.map((idea, i) => `${i+1}. ${idea}`).join('\n\n');
+                showFullContentScreen('Идеи на выходные', ideasText, 'goals');
+            } else {
+                showFullContentScreen('Идеи на выходные', '🎨 Идеи появятся после завершения теста.', 'goals');
+            }
+        }
+        
         function renderDashboard() {
             const container = document.getElementById('screenContainer');
             const userName = localStorage.getItem('fredi_user_name') || 'друг';
-           
+            
             container.innerHTML = `
                 <div class="dashboard-container">
                     <div class="hero-section">
@@ -1020,7 +1105,7 @@
                     </div>
                 </div>
             `;
-           
+            
             // Обработчики быстрых действий
             document.querySelectorAll('.quick-action').forEach(el => {
                 el.addEventListener('click', async () => {
@@ -1031,26 +1116,24 @@
                     else if (action === 'test') startTest();
                 });
             });
-           
-            // ==================== ОБРАБОТЧИКИ МОДУЛЕЙ ====================
+            
+            // Обработчики модулей
             document.querySelectorAll('.module-card').forEach((card, index) => {
                 card.addEventListener('click', () => {
-                    switch(index) {
-                        case 0: openAnalysisScreen(); break;
-                        case 1: openEmotionsScreen(); break;
-                        case 2: openHealingScreen(); break;
-                        case 3: openRelationshipsScreen(); break;
-                        default:
-                            showToast('Этот модуль скоро будет доступен');
-                    }
+                    const modules = ['analysis', 'emotions', 'healing', 'relationships'];
+                    showToast(`Модуль "${modules[index]}" скоро будет доступен`);
                 });
             });
-           
-            // Обработчик голосовой кнопки
+            
+            // Голосовая кнопка
             document.getElementById('voiceBtn')?.addEventListener('click', () => {
-                showToast('🎤 Голосовой ввод будет доступен в следующем обновлении');
+                if (window.VoiceManager) {
+                    window.VoiceManager.startRecording();
+                } else {
+                    showToast('🎤 Голосовой ввод будет доступен в следующем обновлении');
+                }
             });
-           
+            
             // Загружаем статус профиля
             isTestCompleted().then(completed => {
                 const codeEl = document.getElementById('profileCode');
@@ -1059,138 +1142,34 @@
                 }
             });
         }
-
-        function showFullContentScreen(title, content, contentType) {
-            const container = document.getElementById('screenContainer');
-            let formattedContent = content;
-            if (contentType === 'profile') formattedContent = formatProfileText(content);
-            else if (contentType === 'thoughts') formattedContent = formatThoughtText(content);
-            else formattedContent = (content || '').replace(/\n/g, '<br>');
-           
-            const emojiMap = { profile: '🧠', thoughts: '💭', goals: '🎯' };
-           
-            container.innerHTML = `
-                <div class="full-content-page">
-                    <button class="back-btn" id="backBtn">◀️ НАЗАД</button>
-                    <div class="content-header">
-                        <div class="content-emoji">${emojiMap[contentType] || '📄'}</div>
-                        <h1>${title}</h1>
-                    </div>
-                    <div class="content-body">
-                        ${formattedContent || 'Данные не найдены'}
-                    </div>
-                </div>
-            `;
-           
-            const backBtn = document.getElementById('backBtn');
-            if (backBtn) {
-                backBtn.addEventListener('click', () => renderDashboard());
-            }
-        }
-
-        function startTest() {
-            if (window.Test && window.Test.start) {
-                window.Test.init(USER_ID);
-                window.Test.start();
-            } else {
-                showToast('Тест загружается...');
-            }
-        }
-
+        
         // ============================================
-        // ОСНОВНЫЕ ОБРАБОТЧИКИ
-        // ============================================
-        async function handleProfileClick() {
-            const completed = await isTestCompleted();
-            if (!completed) {
-                showToast('📊 Сначала пройдите психологический тест');
-                return;
-            }
-            showLoading('Загружаю психологический портрет...');
-            const profile = await getAIGeneratedProfile();
-            if (profile) {
-                showFullContentScreen('Мой портрет', profile, 'profile');
-            } else {
-                showFullContentScreen('Мой портрет', '🧠 Психологический портрет формируется. Подождите немного.', 'profile');
-            }
-        }
-
-        async function handleThoughtsClick() {
-            const completed = await isTestCompleted();
-            if (!completed) {
-                showToast('📊 Сначала пройдите психологический тест');
-                return;
-            }
-            showLoading('Загружаю мысли психолога...');
-            const thought = await getPsychologistThought();
-            if (thought) {
-                showFullContentScreen('Мысли психолога', thought, 'thoughts');
-            } else {
-                showFullContentScreen('Мысли психолога', '💭 Мысли психолога появятся после завершения теста.', 'thoughts');
-            }
-        }
-
-        async function handleWeekendClick() {
-            const completed = await isTestCompleted();
-            if (!completed) {
-                showToast('📊 Сначала пройдите психологический тест');
-                return;
-            }
-            showLoading('Подбираю идеи...');
-            const ideas = await getWeekendIdeas();
-            if (ideas && ideas.length > 0) {
-                const ideasText = ideas.map((idea, i) => `${i+1}. ${idea}`).join('\n\n');
-                showFullContentScreen('Идеи на выходные', ideasText, 'goals');
-            } else {
-                showFullContentScreen('Идеи на выходные', '🎨 Идеи появятся после завершения теста.', 'goals');
-            }
-        }
-
-        // ============================================
-        // МОБИЛЬНОЕ МЕНЮ (исправлено и усилено)
+        // 5. МОБИЛЬНОЕ МЕНЮ
         // ============================================
         function initMobileMenu() {
             const mobileBtn = document.getElementById('mobileMenuBtn');
             const panel = document.getElementById('chatsPanel');
-           
+            
             if (!mobileBtn || !panel) return;
-
-            // Удаляем старые обработчики
-            mobileBtn.replaceWith(mobileBtn.cloneNode(true));
-            const newMobileBtn = document.getElementById('mobileMenuBtn');
-
-            newMobileBtn.addEventListener('click', function(e) {
+            
+            mobileBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                e.stopImmediatePropagation();
+                e.stopPropagation();
                 panel.classList.toggle('open');
             });
-
-            // Закрытие при клике вне меню
+            
             document.addEventListener('click', function(e) {
                 if (panel.classList.contains('open')) {
-                    if (!panel.contains(e.target) && !newMobileBtn.contains(e.target)) {
+                    if (!panel.contains(e.target) && !mobileBtn.contains(e.target)) {
                         panel.classList.remove('open');
                     }
                 }
             });
-
-            // Закрытие при свайпе влево
-            let touchStartX = 0;
-            panel.addEventListener('touchstart', function(e) {
-                touchStartX = e.touches[0].clientX;
-            }, { passive: true });
-
-            panel.addEventListener('touchend', function(e) {
-                const touchEndX = e.changedTouches[0].clientX;
-                if (touchEndX - touchStartX < -80) {
-                    panel.classList.remove('open');
-                }
-            });
         }
-
+        
         function setupMenuHandlers() {
             document.getElementById('testChatItem')?.addEventListener('click', () => startTest());
-           
+            
             document.getElementById('chatSearchInput')?.addEventListener('input', (e) => {
                 const search = e.target.value.toLowerCase();
                 document.querySelectorAll('.chat-item').forEach(item => {
@@ -1199,13 +1178,16 @@
                 });
             });
         }
-
+        
+        // ============================================
+        // 6. ЗАПУСК ПРИЛОЖЕНИЯ
+        // ============================================
         function init() {
             console.log('🚀 FREDI запущен');
             initMobileMenu();
             setupMenuHandlers();
             renderDashboard();
-           
+            
             const userName = localStorage.getItem('fredi_user_name');
             if (!userName) {
                 setTimeout(() => {
@@ -1222,9 +1204,9 @@
                 document.getElementById('userMiniAvatar').textContent = userName.charAt(0).toUpperCase();
             }
         }
-
+        
+        // Ждем загрузки DOM
         document.addEventListener('DOMContentLoaded', init);
-    })();
     </script>
 </body>
 </html>
