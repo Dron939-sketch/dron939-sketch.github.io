@@ -1,5 +1,5 @@
 // ============================================
-// АУДИО ПЛЕЕР
+// АУДИО ПЛЕЕР (улучшенная версия)
 // ============================================
 
 class AudioPlayer {
@@ -9,10 +9,27 @@ class AudioPlayer {
         this.onPlayStart = null;
         this.onPlayEnd = null;
         this.onError = null;
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        this.userInteractionOccurred = false;
+        this.pendingPlay = null;
+        
+        // Отслеживаем взаимодействие с пользователем
+        this.setupUserInteractionTracking();
+    }
+    
+    setupUserInteractionTracking() {
+        const handleInteraction = () => {
+            this.userInteractionOccurred = true;
+            document.removeEventListener('touchstart', handleInteraction);
+            document.removeEventListener('click', handleInteraction);
+        };
+        
+        document.addEventListener('touchstart', handleInteraction);
+        document.addEventListener('click', handleInteraction);
     }
     
     play(audioData, mimeType = 'audio/mpeg') {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
                 this.stop();
                 
@@ -25,14 +42,20 @@ class AudioPlayer {
                         const detectedMimeType = matches[1];
                         const base64Data = matches[2];
                         
-                        const binaryString = atob(base64Data);
-                        const bytes = new Uint8Array(binaryString.length);
-                        for (let i = 0; i < binaryString.length; i++) {
-                            bytes[i] = binaryString.charCodeAt(i);
+                        try {
+                            const binaryString = atob(base64Data);
+                            const bytes = new Uint8Array(binaryString.length);
+                            for (let i = 0; i < binaryString.length; i++) {
+                                bytes[i] = binaryString.charCodeAt(i);
+                            }
+                            
+                            const blob = new Blob([bytes], { type: detectedMimeType });
+                            audioUrl = URL.createObjectURL(blob);
+                        } catch (e) {
+                            console.error('Base64 decode error:', e);
+                            reject(new Error('Ошибка декодирования аудио'));
+                            return;
                         }
-                        
-                        const blob = new Blob([bytes], { type: detectedMimeType });
-                        audioUrl = URL.createObjectURL(blob);
                     }
                 } 
                 else if (typeof audioData === 'string' && audioData.startsWith('http')) {
@@ -45,20 +68,55 @@ class AudioPlayer {
                 this.currentUrl = audioUrl;
                 this.audio.src = audioUrl;
                 this.audio.load();
+                this.audio.volume = 1.0;
+                
+                // Функция воспроизведения с обработкой ошибок
+                const playAudio = () => {
+                    const playPromise = this.audio.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            if (this.onPlayStart) {
+                                this.onPlayStart();
+                            }
+                            resolve();
+                        }).catch(error => {
+                            console.error('Play failed:', error);
+                            
+                            // Для iOS пробуем альтернативный метод
+                            if (this.isIOS && !this.userInteractionOccurred) {
+                                this.onError && this.onError('Для воспроизведения коснитесь экрана');
+                                reject(new Error('Требуется взаимодействие с пользователем'));
+                            } else {
+                                this.onError && this.onError(error);
+                                reject(error);
+                            }
+                        });
+                    }
+                };
+                
+                // Ожидаем загрузку с таймаутом
+                let loadTimeout = setTimeout(() => {
+                    if (this.audio && this.audio.readyState >= 2) {
+                        playAudio();
+                    } else if (this.audio) {
+                        console.warn('Audio load timeout, attempting to play anyway');
+                        playAudio();
+                    }
+                }, 3000);
                 
                 this.audio.oncanplaythrough = () => {
-                    if (this.onPlayStart) {
-                        this.onPlayStart();
-                    }
-                    
-                    this.audio.play().catch(error => {
-                        console.error('Play failed:', error);
-                        if (this.onError) {
-                            this.onError(error);
-                        }
-                        reject(error);
-                    });
+                    clearTimeout(loadTimeout);
+                    playAudio();
                 };
+                
+                // Fallback для iOS
+                setTimeout(() => {
+                    if (this.audio && this.audio.readyState >= 2 && !this.audio.played.length) {
+                        clearTimeout(loadTimeout);
+                        playAudio();
+                    }
+                }, 100);
                 
                 this.audio.onended = () => {
                     if (this.currentUrl && this.currentUrl.startsWith('blob:')) {
@@ -68,10 +126,10 @@ class AudioPlayer {
                     if (this.onPlayEnd) {
                         this.onPlayEnd();
                     }
-                    resolve();
                 };
                 
                 this.audio.onerror = (error) => {
+                    clearTimeout(loadTimeout);
                     console.error('Audio error:', error);
                     if (this.onError) {
                         this.onError(error);
@@ -126,31 +184,43 @@ class LoadingIndicator {
     }
     
     create() {
-        const messagesContainer = document.getElementById('testChatMessages');
+        const messagesContainer = document.getElementById('screenContainer');
         if (!messagesContainer) return;
         
         this.remove();
         
         this.container = document.createElement('div');
-        this.container.className = 'test-message test-message-bot loading-indicator';
-        
-        const bubble = document.createElement('div');
-        bubble.className = 'test-message-bubble test-message-bubble-bot';
+        this.container.className = 'loading-indicator';
+        this.container.style.cssText = `
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 12px 24px;
+            border: 1px solid rgba(224, 224, 224, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        `;
         
         this.messageElement = document.createElement('span');
         this.messageElement.className = 'loading-text';
+        this.messageElement.style.cssText = 'color: #ff6b3b; font-size: 14px;';
         this.messageElement.textContent = 'Фреди думает';
         
         this.dotsElement = document.createElement('span');
         this.dotsElement.className = 'loading-dots';
+        this.dotsElement.style.cssText = 'color: #ff6b3b; font-size: 14px;';
         this.dotsElement.textContent = '...';
         
-        bubble.appendChild(this.messageElement);
-        bubble.appendChild(this.dotsElement);
-        this.container.appendChild(bubble);
-        
+        this.container.appendChild(this.messageElement);
+        this.container.appendChild(this.dotsElement);
         messagesContainer.appendChild(this.container);
-        this.scrollToBottom();
         
         this.startAnimation();
         this.isShowing = true;
@@ -211,19 +281,10 @@ class LoadingIndicator {
         this.isShowing = false;
         this.dotsCount = 0;
     }
-    
-    scrollToBottom() {
-        setTimeout(() => {
-            const container = document.getElementById('testChatMessages');
-            if (container) {
-                container.scrollTop = container.scrollHeight;
-            }
-        }, 10);
-    }
 }
 
 // ============================================
-// КОНФИГУРАЦИЯ ГОЛОСА FREDI PREMIUM
+// КОНФИГУРАЦИЯ ГОЛОСА FREDI PREMIUM (расширенная)
 // ============================================
 
 const VoiceConfig = {
@@ -231,10 +292,10 @@ const VoiceConfig = {
     useWebSocket: true,
     
     recording: {
-        sampleRate: 16000,
+        sampleRate: /iPhone|iPad|iPod/.test(navigator.userAgent) ? 44100 : 16000,
         maxDuration: 60000,
         minDuration: 1000,
-        chunkSize: 4096,
+        chunkSize: /Android/.test(navigator.userAgent) ? 2048 : 4096,
         format: 'wav',
         mimeType: 'audio/wav'
     },
@@ -278,11 +339,20 @@ const VoiceConfig = {
         minVolumeToConsiderSpeech: 5
     },
     
-    debug: true
+    debug: true,
+    
+    // Диагностика поддержки браузера
+    diagnostics: {
+        browser: navigator.userAgent,
+        audioContextSupported: !!(window.AudioContext || window.webkitAudioContext),
+        mediaRecorderSupported: !!window.MediaRecorder,
+        webSocketSupported: !!window.WebSocket,
+        getUserMediaSupported: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+    }
 };
 
 // ============================================
-// VoiceWebSocket
+// VoiceWebSocket (улучшенная версия)
 // ============================================
 
 class VoiceWebSocket {
@@ -294,6 +364,8 @@ class VoiceWebSocket {
         this.currentMode = 'psychologist';
         this.useWebSocket = false;
         this.ws = null;
+        this.reconnectAttempts = 0;
+        this.maxReconnectAttempts = 3;
         
         this.onTranscript = null;
         this.onAIResponse = null;
@@ -306,9 +378,26 @@ class VoiceWebSocket {
         this.apiBaseUrl = this.config.apiBaseUrl;
         this.pendingRequest = null;
         this.lastRequestTime = 0;
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        
+        // На iOS отключаем WebSocket (проблемы с соединением)
+        if (this.isIOS) {
+            console.log('📱 iOS detected, using HTTP only');
+            this.useWebSocket = false;
+        }
+        
+        // Выводим диагностику
+        if (this.config.debug) {
+            console.log('🔍 VoiceWebSocket diagnostics:', this.config.diagnostics);
+        }
     }
     
     async connect() {
+        // На iOS всегда используем HTTP
+        if (this.isIOS || !this.config.useWebSocket) {
+            return this.initHTTP();
+        }
+        
         if (this.config.useWebSocket && window.WebSocket) {
             try {
                 const wsUrl = `wss://${new URL(this.apiBaseUrl).host}/ws/voice/${this.userId}`;
@@ -329,12 +418,14 @@ class VoiceWebSocket {
                     console.log('✅ WebSocket connected');
                     this.isConnected = true;
                     this.useWebSocket = true;
+                    this.reconnectAttempts = 0;
                     this.updateStatus('connected');
                     
                     this.ws.send(JSON.stringify({
                         type: 'init',
                         mode: this.currentMode,
-                        timestamp: Date.now()
+                        timestamp: Date.now(),
+                        userAgent: navigator.userAgent
                     }));
                 };
                 
@@ -351,7 +442,10 @@ class VoiceWebSocket {
                 
                 this.ws.onclose = () => {
                     console.log('WebSocket closed');
-                    if (this.useWebSocket) {
+                    if (this.useWebSocket && this.reconnectAttempts < this.maxReconnectAttempts) {
+                        this.reconnectAttempts++;
+                        setTimeout(() => this.connect(), 2000);
+                    } else if (this.useWebSocket) {
                         this.useWebSocket = false;
                         this.initHTTP();
                     }
@@ -524,9 +618,18 @@ class VoiceWebSocket {
         const formData = new FormData();
         formData.append('user_id', this.userId);
         
-        const audioFormat = this.config.recording.format;
+        // Для iOS используем правильный MIME тип
+        let audioFormat = this.config.recording.format;
+        if (this.isIOS && audioBlob.type) {
+            if (audioBlob.type.includes('mp4')) audioFormat = 'mp4';
+            else if (audioBlob.type.includes('aac')) audioFormat = 'aac';
+            else if (audioBlob.type.includes('webm')) audioFormat = 'webm';
+        }
+        
         formData.append('voice', audioBlob, `audio.${audioFormat}`);
         formData.append('mode', this.currentMode || 'psychologist');
+        formData.append('ios_device', this.isIOS ? 'true' : 'false');
+        formData.append('user_agent', navigator.userAgent);
         
         const voiceSettings = this.config.voices[this.currentMode];
         if (voiceSettings) {
@@ -544,11 +647,16 @@ class VoiceWebSocket {
         const startTime = Date.now();
         
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 45000);
+            
             const response = await fetch(`${this.apiBaseUrl}/api/voice/process`, {
                 method: 'POST',
                 body: formData,
-                signal: AbortSignal.timeout(30000)
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
             
             const elapsed = Date.now() - startTime;
             if (this.config.debug) {
@@ -557,7 +665,7 @@ class VoiceWebSocket {
             
             if (!response.ok && retryCount < maxRetries) {
                 console.log(`🔄 Повторная попытка ${retryCount + 1}/${maxRetries}`);
-                await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+                await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
                 return this.sendAudioViaHTTP(audioBlob, retryCount + 1, maxRetries);
             }
             
@@ -603,19 +711,21 @@ class VoiceWebSocket {
                 this.onThinking(false);
             }
             
-            if (retryCount < maxRetries) {
+            if (retryCount < maxRetries && error.name !== 'AbortError') {
                 console.log(`🔄 Повторная попытка ${retryCount + 1}/${maxRetries}`);
-                await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+                await new Promise(resolve => setTimeout(resolve, 2000 * (retryCount + 1)));
                 return this.sendAudioViaHTTP(audioBlob, retryCount + 1, maxRetries);
             }
             
             let errorMessage = 'Ошибка соединения';
-            if (error.name === 'TimeoutError') {
+            if (error.name === 'AbortError') {
                 errorMessage = 'Сервер не отвечает. Попробуйте позже.';
             } else if (error.message.includes('500')) {
                 errorMessage = 'Ошибка на сервере. Мы уже чиним.';
             } else if (error.message.includes('429')) {
                 errorMessage = 'Слишком много запросов. Подождите немного.';
+            } else if (error.message.includes('Network')) {
+                errorMessage = 'Проверьте интернет-соединение';
             }
             
             if (this.onError) {
@@ -643,10 +753,29 @@ class VoiceWebSocket {
                 audio.onerror = (error) => {
                     console.error('Playback error:', error);
                     this.updateStatus('idle');
-                    reject(error);
+                    
+                    // Для iOS пробуем альтернативный метод
+                    if (this.isIOS) {
+                        const audio2 = new Audio();
+                        audio2.src = `data:audio/mpeg;base64,${audioBase64}`;
+                        audio2.load();
+                        const playPromise = audio2.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                audio2.onended = resolve;
+                            }).catch(reject);
+                        } else {
+                            reject(error);
+                        }
+                    } else {
+                        reject(error);
+                    }
                 };
                 
-                audio.play().catch(reject);
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(reject);
+                }
                 
             } catch (error) {
                 console.error('Playback error:', error);
@@ -675,7 +804,10 @@ class VoiceWebSocket {
                     reject(error);
                 };
                 
-                audio.play().catch(reject);
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(reject);
+                }
                 
             } catch (error) {
                 reject(error);
@@ -758,7 +890,7 @@ class VoiceWebSocket {
 }
 
 // ============================================
-// VoiceRecorder (оставлен без изменений, т.к. уже полный)
+// VoiceRecorder (улучшенная версия с поддержкой iOS)
 // ============================================
 
 class VoiceRecorder {
@@ -777,12 +909,20 @@ class VoiceRecorder {
         this.speechDetected = false;
         this.lastVolume = 0;
         
+        // Для iOS
+        this.mediaRecorder = null;
+        this.audioChunks = [];
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        
         this.onDataAvailable = null;
         this.onRecordingStart = null;
         this.onRecordingStop = null;
         this.onVolumeChange = null;
         this.onError = null;
         this.onSpeechDetected = null;
+        
+        // Флаг для активации AudioContext
+        this.audioContextInitialized = false;
     }
     
     async startRecording() {
@@ -792,6 +932,7 @@ class VoiceRecorder {
         }
         
         try {
+            // Запрашиваем доступ к микрофону
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     echoCancellation: true,
@@ -804,74 +945,67 @@ class VoiceRecorder {
             
             this.mediaStream = stream;
             this.wavData = [];
+            this.audioChunks = [];
             this.speechDetected = false;
             this.silenceStartTime = null;
             this.lastVolume = 0;
             this.isRecording = true;
             
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)({
-                sampleRate: this.config.sampleRate
-            });
-            
-            const source = this.audioContext.createMediaStreamSource(stream);
-            this.analyser = this.audioContext.createAnalyser();
-            this.analyser.fftSize = 256;
-            source.connect(this.analyser);
-            
-            this.startVisualizer();
-            
-            this.processor = this.audioContext.createScriptProcessor(this.config.chunkSize, 1, 1);
-            
-            this.processor.onaudioprocess = (event) => {
-                if (!this.isRecording) return;
+            // Для iOS используем MediaRecorder если возможно
+            if (this.isIOS && window.MediaRecorder) {
+                const mimeTypes = [
+                    'audio/mp4',
+                    'audio/aac',
+                    'audio/wav',
+                    'audio/webm',
+                    'audio/mpeg'
+                ];
                 
-                const inputData = event.inputBuffer.getChannelData(0);
-                const int16Data = new Int16Array(inputData.length);
-                let sumAbs = 0;
-                
-                for (let i = 0; i < inputData.length; i++) {
-                    const sample = Math.max(-1, Math.min(1, inputData[i]));
-                    int16Data[i] = Math.floor(sample * 32767);
-                    sumAbs += Math.abs(int16Data[i]);
-                }
-                
-                this.wavData.push(int16Data);
-                const volume = Math.min(100, (sumAbs / int16Data.length / 32768) * 100);
-                this.lastVolume = volume;
-                
-                const isSpeech = volume > VoiceConfig.ui.minVolumeToConsiderSpeech;
-                
-                if (isSpeech) {
-                    if (!this.speechDetected) {
-                        this.speechDetected = true;
-                        if (this.onSpeechDetected) {
-                            this.onSpeechDetected(true);
+                let selectedMimeType = '';
+                for (const mimeType of mimeTypes) {
+                    try {
+                        if (MediaRecorder.isTypeSupported(mimeType)) {
+                            selectedMimeType = mimeType;
+                            break;
                         }
+                    } catch (e) {
+                        console.warn(`Type check failed for ${mimeType}:`, e);
                     }
-                    this.silenceStartTime = null;
-                } else if (this.speechDetected && !this.silenceStartTime) {
-                    this.silenceStartTime = Date.now();
                 }
                 
-                if (VoiceConfig.ui.autoStopAfterSilence && 
-                    this.speechDetected && 
-                    this.silenceStartTime && 
-                    (Date.now() - this.silenceStartTime) > VoiceConfig.ui.silenceTimeout) {
-                    console.log('🔇 Silence detected, auto-stopping');
-                    this.stopRecording();
+                if (selectedMimeType) {
+                    this.mediaRecorder = new MediaRecorder(stream, {
+                        mimeType: selectedMimeType,
+                        audioBitsPerSecond: 128000
+                    });
+                    
+                    this.mediaRecorder.ondataavailable = (event) => {
+                        if (event.data && event.data.size > 0) {
+                            this.audioChunks.push(event.data);
+                        }
+                    };
+                    
+                    this.mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(this.audioChunks, { 
+                            type: selectedMimeType 
+                        });
+                        
+                        if (this.onRecordingStop) {
+                            this.onRecordingStop(audioBlob);
+                        }
+                    };
+                    
+                    this.mediaRecorder.start(1000);
+                } else {
+                    console.warn('No supported MIME type found for MediaRecorder, using legacy method');
+                    await this.setupLegacyRecording(stream);
                 }
-                
-                if (this.onVolumeChange) {
-                    this.onVolumeChange(volume);
-                }
-            };
-            
-            source.connect(this.processor);
-            this.processor.connect(this.audioContext.destination);
-            
-            if (this.audioContext.state === 'suspended') {
-                await this.audioContext.resume();
+            } else {
+                await this.setupLegacyRecording(stream);
             }
+            
+            // Анализатор громкости для всех устройств
+            this.setupVolumeAnalyzer(stream);
             
             this.recordingTimeout = setTimeout(() => {
                 if (this.isRecording) {
@@ -884,7 +1018,7 @@ class VoiceRecorder {
                 this.onRecordingStart();
             }
             
-            console.log('🎙️ Recording started');
+            console.log('🎙️ Recording started on', this.isIOS ? 'iOS' : 'other');
             return true;
             
         } catch (error) {
@@ -895,6 +1029,8 @@ class VoiceRecorder {
                 errorMessage = 'Пожалуйста, разрешите доступ к микрофону';
             } else if (error.name === 'NotFoundError') {
                 errorMessage = 'Микрофон не найден';
+            } else if (error.name === 'NotReadableError') {
+                errorMessage = 'Микрофон используется другим приложением';
             }
             
             if (this.onError) {
@@ -902,6 +1038,135 @@ class VoiceRecorder {
             }
             this.isRecording = false;
             return false;
+        }
+    }
+    
+    async setupLegacyRecording(stream) {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)({
+            sampleRate: this.config.sampleRate
+        });
+        
+        // Функция для активации AudioContext
+        const resumeAudioContext = async () => {
+            if (this.audioContext && this.audioContext.state === 'suspended') {
+                try {
+                    await this.audioContext.resume();
+                    console.log('AudioContext resumed');
+                    this.audioContextInitialized = true;
+                } catch (e) {
+                    console.warn('Failed to resume AudioContext:', e);
+                }
+            }
+        };
+        
+        // Пытаемся активировать AudioContext
+        if (this.audioContext.state === 'suspended') {
+            // Для iOS нужно пользовательское взаимодействие
+            const handleUserInteraction = async () => {
+                await resumeAudioContext();
+                document.removeEventListener('touchstart', handleUserInteraction);
+                document.removeEventListener('click', handleUserInteraction);
+            };
+            
+            document.addEventListener('touchstart', handleUserInteraction);
+            document.addEventListener('click', handleUserInteraction);
+            
+            // Таймаут на случай, если взаимодействия не будет
+            setTimeout(async () => {
+                if (this.audioContext && this.audioContext.state === 'suspended') {
+                    await resumeAudioContext();
+                }
+            }, 1000);
+        } else {
+            await resumeAudioContext();
+        }
+        
+        const source = this.audioContext.createMediaStreamSource(stream);
+        this.analyser = this.audioContext.createAnalyser();
+        this.analyser.fftSize = 256;
+        source.connect(this.analyser);
+        
+        this.startVisualizer();
+        
+        this.processor = this.audioContext.createScriptProcessor(this.config.chunkSize, 1, 1);
+        
+        this.processor.onaudioprocess = (event) => {
+            if (!this.isRecording) return;
+            
+            const inputData = event.inputBuffer.getChannelData(0);
+            const int16Data = new Int16Array(inputData.length);
+            let sumAbs = 0;
+            
+            for (let i = 0; i < inputData.length; i++) {
+                const sample = Math.max(-1, Math.min(1, inputData[i]));
+                int16Data[i] = Math.floor(sample * 32767);
+                sumAbs += Math.abs(int16Data[i]);
+            }
+            
+            this.wavData.push(int16Data);
+            const volume = Math.min(100, (sumAbs / int16Data.length / 32768) * 100);
+            this.lastVolume = volume;
+            
+            const isSpeech = volume > VoiceConfig.ui.minVolumeToConsiderSpeech;
+            
+            if (isSpeech) {
+                if (!this.speechDetected) {
+                    this.speechDetected = true;
+                    if (this.onSpeechDetected) {
+                        this.onSpeechDetected(true);
+                    }
+                }
+                this.silenceStartTime = null;
+            } else if (this.speechDetected && !this.silenceStartTime) {
+                this.silenceStartTime = Date.now();
+            }
+            
+            if (VoiceConfig.ui.autoStopAfterSilence && 
+                this.speechDetected && 
+                this.silenceStartTime && 
+                (Date.now() - this.silenceStartTime) > VoiceConfig.ui.silenceTimeout) {
+                console.log('🔇 Silence detected, auto-stopping');
+                this.stopRecording();
+            }
+            
+            if (this.onVolumeChange) {
+                this.onVolumeChange(volume);
+            }
+        };
+        
+        source.connect(this.processor);
+        this.processor.connect(this.audioContext.destination);
+    }
+    
+    setupVolumeAnalyzer(stream) {
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaStreamSource(stream);
+            const analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            source.connect(analyser);
+            
+            const updateVolume = () => {
+                if (!this.isRecording) return;
+                
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                analyser.getByteFrequencyData(dataArray);
+                let average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+                let volume = Math.min(100, (average / 255) * 100);
+                
+                if (this.onVolumeChange && this.isRecording) {
+                    this.onVolumeChange(volume);
+                }
+                
+                this.visualizerAnimation = requestAnimationFrame(updateVolume);
+            };
+            
+            updateVolume();
+            
+            this.volumeAnalyser = analyser;
+            this.volumeContext = audioContext;
+        } catch (error) {
+            console.warn('Volume analyzer setup failed:', error);
         }
     }
     
@@ -920,10 +1185,25 @@ class VoiceRecorder {
             this.silenceTimer = null;
         }
         
-        this.stopVisualizer();
+        if (this.visualizerAnimation) {
+            cancelAnimationFrame(this.visualizerAnimation);
+            this.visualizerAnimation = null;
+        }
+        
+        let audioBlob = null;
+        
+        if (this.mediaRecorder && this.mediaRecorder.state === 'recording') {
+            this.mediaRecorder.stop();
+            audioBlob = new Blob(this.audioChunks, { type: this.mediaRecorder.mimeType });
+        } 
+        else if (this.wavData && this.wavData.length > 0) {
+            audioBlob = this.createWavBlob(this.wavData);
+        }
         
         if (this.processor) {
-            this.processor.disconnect();
+            try {
+                this.processor.disconnect();
+            } catch (e) {}
             this.processor = null;
         }
         
@@ -932,17 +1212,21 @@ class VoiceRecorder {
             this.audioContext = null;
         }
         
-        let audioBlob = null;
-        if (this.wavData && this.wavData.length > 0) {
-            audioBlob = this.createWavBlob(this.wavData);
+        if (this.volumeContext) {
+            this.volumeContext.close().catch(console.warn);
+            this.volumeContext = null;
         }
         
         if (this.mediaStream) {
-            this.mediaStream.getTracks().forEach(track => track.stop());
+            this.mediaStream.getTracks().forEach(track => {
+                try {
+                    track.stop();
+                } catch (e) {}
+            });
             this.mediaStream = null;
         }
         
-        if (this.onRecordingStop) {
+        if (this.onRecordingStop && audioBlob) {
             this.onRecordingStop(audioBlob);
         }
         
@@ -1049,7 +1333,7 @@ class VoiceRecorder {
 }
 
 // ============================================
-// VoiceManager
+// VoiceManager (улучшенная версия)
 // ============================================
 
 class VoiceManager {
@@ -1064,6 +1348,7 @@ class VoiceManager {
         this.isRecording = false;
         this.isAISpeaking = false;
         this.currentMode = 'psychologist';
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         
         this.onTranscript = null;
         this.onAIResponse = null;
@@ -1076,7 +1361,37 @@ class VoiceManager {
         this.onSpeechDetected = null;
         this.onWeather = null;
         
+        // Диагностика
+        this.diagnostics = this.checkBrowserSupport();
+        
         this.init();
+    }
+    
+    checkBrowserSupport() {
+        const diagnostics = {
+            userAgent: navigator.userAgent,
+            isIOS: this.isIOS,
+            isAndroid: /Android/.test(navigator.userAgent),
+            getUserMedia: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+            AudioContext: !!(window.AudioContext || window.webkitAudioContext),
+            MediaRecorder: !!window.MediaRecorder,
+            WebSocket: !!window.WebSocket,
+            supportedMimeTypes: []
+        };
+        
+        if (window.MediaRecorder) {
+            const types = ['audio/mp4', 'audio/aac', 'audio/wav', 'audio/webm', 'audio/mpeg'];
+            types.forEach(type => {
+                try {
+                    if (MediaRecorder.isTypeSupported(type)) {
+                        diagnostics.supportedMimeTypes.push(type);
+                    }
+                } catch (e) {}
+            });
+        }
+        
+        console.log('🔍 VoiceManager diagnostics:', diagnostics);
+        return diagnostics;
     }
     
     init() {
@@ -1327,6 +1642,10 @@ class VoiceManager {
         return this.config.voices[this.currentMode] || this.config.voices.psychologist;
     }
     
+    getDiagnostics() {
+        return this.diagnostics;
+    }
+    
     dispose() {
         if (this.loadingIndicator) {
             this.loadingIndicator.remove();
@@ -1344,6 +1663,20 @@ class VoiceManager {
 }
 
 // ============================================
+// ГЛОБАЛЬНЫЙ ОБРАБОТЧИК ОШИБОК
+// ============================================
+
+if (typeof window !== 'undefined') {
+    window.addEventListener('error', (event) => {
+        console.error('Global error:', event.error);
+    });
+    
+    window.addEventListener('unhandledrejection', (event) => {
+        console.error('Unhandled rejection:', event.reason);
+    });
+}
+
+// ============================================
 // ЭКСПОРТ
 // ============================================
 
@@ -1354,4 +1687,32 @@ if (typeof window !== 'undefined') {
     window.VoiceConfig = VoiceConfig;
     window.VoiceWebSocket = VoiceWebSocket;
     window.VoiceRecorder = VoiceRecorder;
+    
+    // Добавляем функцию проверки поддержки
+    window.checkVoiceSupport = function() {
+        const diagnostics = {
+            browser: navigator.userAgent,
+            isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
+            isAndroid: /Android/.test(navigator.userAgent),
+            getUserMedia: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+            AudioContext: !!(window.AudioContext || window.webkitAudioContext),
+            MediaRecorder: !!window.MediaRecorder,
+            WebSocket: !!window.WebSocket,
+            supportedMimeTypes: []
+        };
+        
+        if (window.MediaRecorder) {
+            const types = ['audio/mp4', 'audio/aac', 'audio/wav', 'audio/webm', 'audio/mpeg'];
+            types.forEach(type => {
+                try {
+                    if (MediaRecorder.isTypeSupported(type)) {
+                        diagnostics.supportedMimeTypes.push(type);
+                    }
+                } catch (e) {}
+            });
+        }
+        
+        console.log('📱 Voice support check:', diagnostics);
+        return diagnostics;
+    };
 }
