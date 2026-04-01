@@ -873,11 +873,55 @@
         </div>
     </div>
 
-    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ -->
+    <!-- ПОДКЛЮЧАЕМ СКРИПТЫ С МИГРАЦИЕЙ ID -->
     <script>
+        // ============================================
+        // МИГРАЦИЯ USER_ID (строковый → числовой)
+        // ============================================
         window.API_BASE_URL = 'https://fredi-backend-flz2.onrender.com';
-        window.USER_ID = localStorage.getItem('fredi_user_id') || ('user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9));
-        localStorage.setItem('fredi_user_id', window.USER_ID);
+        
+        let userId = localStorage.getItem('fredi_user_id');
+        
+        if (!userId) {
+            // Новый пользователь - создаем числовой ID
+            userId = Date.now();
+            localStorage.setItem('fredi_user_id', userId);
+            window.USER_ID = userId;
+            console.log('✅ Новый пользователь, ID:', userId);
+        } else if (!isNaN(parseInt(userId))) {
+            // Уже числовой
+            window.USER_ID = parseInt(userId);
+            console.log('✅ Существующий числовой ID:', window.USER_ID);
+        } else {
+            // Был строковый ID (user_xxx) - создаем числовой и мигрируем
+            const oldUserId = userId;
+            userId = Date.now();
+            localStorage.setItem('fredi_user_id', userId);
+            window.USER_ID = userId;
+            
+            console.log('🔄 Миграция ID:', oldUserId, '→', userId);
+            
+            // Отправляем запрос на миграцию
+            fetch(`${window.API_BASE_URL}/api/migrate-user`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    old_user_id: oldUserId,
+                    new_user_id: userId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('✅ Миграция успешна');
+                } else {
+                    console.warn('⚠️ Миграция не удалась:', data.error);
+                }
+            })
+            .catch(err => console.warn('Migration error:', err));
+        }
+        
+        console.log('✅ USER_ID установлен:', window.USER_ID);
     </script>
     
     <script src="app.js"></script>
@@ -1201,7 +1245,7 @@
         }
 
         // ============================================
-        // МОБИЛЬНОЕ МЕНЮ - ИСПРАВЛЕННОЕ
+        // МОБИЛЬНОЕ МЕНЮ
         // ============================================
         function initMobileMenu() {
             const mobileBtn = document.getElementById('mobileMenuBtn');
