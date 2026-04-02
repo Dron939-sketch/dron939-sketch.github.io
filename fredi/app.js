@@ -1550,10 +1550,42 @@ function renderDashboard() {
         btn.addEventListener('click', () => { const mode = btn.dataset.mode; if (mode) switchMode(mode); });
     });
     
-    document.querySelectorAll('.module-card').forEach(card => {
-        card.addEventListener('click', () => { const name = card.querySelector('.module-name')?.textContent; showToast(`Модуль "${name}" — скоро будет доступен`, 'info'); });
+   document.querySelectorAll('.module-card').forEach(card => {
+        // Клонируем и заменяем, чтобы удалить старые обработчики
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        newCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const moduleId = newCard.dataset.module;
+            
+            if (moduleId === 'analysis') {
+                console.log('🔍 Открываем анализ...');
+                if (typeof openAnalysisScreen === 'function') {
+                    openAnalysisScreen();
+                } else if (typeof window.openAnalysisScreen === 'function') {
+                    window.openAnalysisScreen();
+                } else {
+                    showToast('📊 Загрузка модуля анализа...', 'info');
+                    const script = document.createElement('script');
+                    script.src = 'analysis.js';
+                    script.onload = () => {
+                        if (typeof openAnalysisScreen === 'function') {
+                            openAnalysisScreen();
+                        }
+                    };
+                    document.head.appendChild(script);
+                }
+            } else {
+                const moduleName = newCard.querySelector('.module-name')?.textContent || moduleId;
+                showToast(`Модуль "${moduleName}" скоро будет доступен`, 'info');
+            }
+        });
     });
     
+    // ========== БЫСТРЫЕ ДЕЙСТВИЯ ==========
     document.querySelectorAll('.quick-action').forEach(action => {
         action.addEventListener('click', async () => {
             const actionType = action.dataset.action;
