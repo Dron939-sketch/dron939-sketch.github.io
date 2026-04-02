@@ -1290,48 +1290,38 @@
         });
     });
    
-    // МОДУЛИ - ИСПРАВЛЕННЫЙ ОБРАБОТЧИК
+    // ========== МОДУЛИ - ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ==========
     document.querySelectorAll('.module-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const moduleName = card.dataset.module;
+        // Клонируем и заменяем, чтобы удалить старые обработчики
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        newCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const moduleName = newCard.dataset.module;
             
             if (moduleName === 'analysis') {
                 console.log('🔍 Клик по Анализу');
-                console.log('openAnalysisScreen type:', typeof openAnalysisScreen);
-                console.log('window.openAnalysisScreen:', typeof window.openAnalysisScreen);
-                
-                // Проверяем наличие функции
                 if (typeof openAnalysisScreen === 'function') {
                     openAnalysisScreen();
                 } else if (typeof window.openAnalysisScreen === 'function') {
                     window.openAnalysisScreen();
                 } else {
-                    console.log('⚠️ Функция не найдена, загружаем analysis.js');
-                    showToast('📊 Загрузка модуля анализа...');
-                    
-                    // Динамически загружаем
+                    showToast('❌ Модуль анализа временно недоступен');
+                    // Попробуем загрузить заново
                     const script = document.createElement('script');
                     script.src = 'analysis.js';
                     script.onload = () => {
-                        console.log('✅ analysis.js загружен');
-                        setTimeout(() => {
-                            if (typeof openAnalysisScreen === 'function') {
-                                openAnalysisScreen();
-                            } else if (typeof window.openAnalysisScreen === 'function') {
-                                window.openAnalysisScreen();
-                            } else {
-                                showToast('❌ Не удалось загрузить модуль анализа');
-                            }
-                        }, 100);
-                    };
-                    script.onerror = () => {
-                        console.error('❌ Ошибка загрузки analysis.js');
-                        showToast('❌ Ошибка загрузки модуля анализа');
+                        if (typeof openAnalysisScreen === 'function') {
+                            openAnalysisScreen();
+                        }
                     };
                     document.head.appendChild(script);
                 }
             } else {
-                const moduleNameText = card.querySelector('.module-name')?.textContent || moduleName;
+                const moduleNameText = newCard.querySelector('.module-name')?.textContent || moduleName;
                 showToast(`Модуль "${moduleNameText}" скоро будет доступен`);
             }
         });
