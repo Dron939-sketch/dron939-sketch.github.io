@@ -1201,114 +1201,159 @@
         }
 
         function renderDashboard() {
-            const container = document.getElementById('screenContainer');
-            const userName = localStorage.getItem('fredi_user_name') || 'друг';
-           
-            container.innerHTML = `
-                <div class="dashboard-container">
-                    <div class="hero-section">
-                        <div class="user-greeting">
-                            <div class="greeting-text">
-                                <h2>🧠 Привет, ${userName}!</h2>
-                                <p>Я здесь, чтобы помочь разобраться в глубинных паттернах</p>
-                            </div>
-                            <div class="profile-badge">
-                                <div class="profile-code" id="profileCode">🎭</div>
-                                <div style="font-size: 10px;">ваш психотип</div>
-                            </div>
-                        </div>
+    const container = document.getElementById('screenContainer');
+    const userName = localStorage.getItem('fredi_user_name') || 'друг';
+   
+    container.innerHTML = `
+        <div class="dashboard-container">
+            <div class="hero-section">
+                <div class="user-greeting">
+                    <div class="greeting-text">
+                        <h2>🧠 Привет, ${userName}!</h2>
+                        <p>Я здесь, чтобы помочь разобраться в глубинных паттернах</p>
                     </div>
-                   
-                    <div class="mode-selector">
-                        <button class="mode-btn active" data-mode="psychologist">🧠 ПСИХОЛОГ</button>
-                    </div>
-                   
-                    <div class="voice-section">
-                        <div class="voice-card">
-                            <div class="voice-record-btn-premium" id="voiceBtn">
-                                <span class="voice-icon">🎤</span>
-                                <span class="voice-text">Расскажите, что вас беспокоит</span>
-                            </div>
-                        </div>
-                    </div>
-                   
-                    <div class="modules-grid">
-                        <div class="module-card"><div class="module-icon">🧠</div><div class="module-name">Анализ</div><div class="module-desc">Глубинные паттерны</div></div>
-                        <div class="module-card"><div class="module-icon">💭</div><div class="module-name">Эмоции</div><div class="module-desc">Работа с чувствами</div></div>
-                        <div class="module-card"><div class="module-icon">🕊️</div><div class="module-name">Исцеление</div><div class="module-desc">Проработка опыта</div></div>
-                        <div class="module-card"><div class="module-icon">💕</div><div class="module-name">Отношения</div><div class="module-desc">Коммуникация</div></div>
-                    </div>
-                   
-                    <div class="quick-actions">
-                        <div class="quick-actions-title">⚡ Быстрые действия</div>
-                        <div class="quick-actions-grid">
-                            <div class="quick-action" data-action="profile">
-                                <div class="action-icon">🧠</div>
-                                <div class="action-name">Мой портрет</div>
-                            </div>
-                            <div class="quick-action" data-action="thoughts">
-                                <div class="action-icon">💭</div>
-                                <div class="action-name">Мысли психолога</div>
-                            </div>
-                            <div class="quick-action" data-action="weekend">
-                                <div class="action-icon">🎨</div>
-                                <div class="action-name">Идеи на выходные</div>
-                            </div>
-                            <div class="quick-action" data-action="test">
-                                <div class="action-icon">📊</div>
-                                <div class="action-name">Пройти тест</div>
-                            </div>
-                        </div>
+                    <div class="profile-badge">
+                        <div class="profile-code" id="profileCode">🎭</div>
+                        <div style="font-size: 10px;">ваш психотип</div>
                     </div>
                 </div>
-            `;
+            </div>
            
-            document.querySelectorAll('.quick-action').forEach(el => {
-                el.addEventListener('click', async () => {
-                    const action = el.dataset.action;
-                    if (action === 'profile') await handleProfileClick();
-                    else if (action === 'thoughts') await handleThoughtsClick();
-                    else if (action === 'weekend') await handleWeekendClick();
-                    else if (action === 'test') startTest();
-                });
-            });
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="psychologist">🧠 ПСИХОЛОГ</button>
+            </div>
            
-            document.querySelectorAll('.module-card').forEach((card, index) => {
-                card.addEventListener('click', () => {
-                    const modules = ['analysis', 'emotions', 'healing', 'relationships'];
-                    const moduleName = modules[index];
-                    
-                    if (moduleName === 'analysis') {
-                        if (typeof openAnalysisScreen === 'function') {
-                            openAnalysisScreen();
-                        } else {
-                            showToast('📊 Модуль анализа загружается...');
-                            const script = document.createElement('script');
-                            script.src = 'analysis.js';
-                            script.onload = () => openAnalysisScreen();
-                            document.head.appendChild(script);
-                        }
-                    } else {
-                        showToast(`Модуль "${moduleName}" скоро будет доступен`);
-                    }
-                });
-            });
+            <div class="voice-section">
+                <div class="voice-card">
+                    <div class="voice-record-btn-premium" id="voiceBtn">
+                        <span class="voice-icon">🎤</span>
+                        <span class="voice-text">Расскажите, что вас беспокоит</span>
+                    </div>
+                </div>
+            </div>
            
-            document.getElementById('voiceBtn')?.addEventListener('click', () => {
-                if (window.VoiceManager && window.VoiceManager.startRecording) {
-                    window.VoiceManager.startRecording();
+            <div class="modules-grid">
+                <div class="module-card" data-module="analysis">
+                    <div class="module-icon">🧠</div>
+                    <div class="module-name">Анализ</div>
+                    <div class="module-desc">Глубинные паттерны</div>
+                </div>
+                <div class="module-card" data-module="emotions">
+                    <div class="module-icon">💭</div>
+                    <div class="module-name">Эмоции</div>
+                    <div class="module-desc">Работа с чувствами</div>
+                </div>
+                <div class="module-card" data-module="healing">
+                    <div class="module-icon">🕊️</div>
+                    <div class="module-name">Исцеление</div>
+                    <div class="module-desc">Проработка опыта</div>
+                </div>
+                <div class="module-card" data-module="relationships">
+                    <div class="module-icon">💕</div>
+                    <div class="module-name">Отношения</div>
+                    <div class="module-desc">Коммуникация</div>
+                </div>
+            </div>
+           
+            <div class="quick-actions">
+                <div class="quick-actions-title">⚡ Быстрые действия</div>
+                <div class="quick-actions-grid">
+                    <div class="quick-action" data-action="profile">
+                        <div class="action-icon">🧠</div>
+                        <div class="action-name">Мой портрет</div>
+                    </div>
+                    <div class="quick-action" data-action="thoughts">
+                        <div class="action-icon">💭</div>
+                        <div class="action-name">Мысли психолога</div>
+                    </div>
+                    <div class="quick-action" data-action="weekend">
+                        <div class="action-icon">🎨</div>
+                        <div class="action-name">Идеи на выходные</div>
+                    </div>
+                    <div class="quick-action" data-action="test">
+                        <div class="action-icon">📊</div>
+                        <div class="action-name">Пройти тест</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+   
+    // Быстрые действия
+    document.querySelectorAll('.quick-action').forEach(el => {
+        el.addEventListener('click', async () => {
+            const action = el.dataset.action;
+            if (action === 'profile') await handleProfileClick();
+            else if (action === 'thoughts') await handleThoughtsClick();
+            else if (action === 'weekend') await handleWeekendClick();
+            else if (action === 'test') startTest();
+        });
+    });
+   
+    // МОДУЛИ - ИСПРАВЛЕННЫЙ ОБРАБОТЧИК
+    document.querySelectorAll('.module-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const moduleName = card.dataset.module;
+            
+            if (moduleName === 'analysis') {
+                console.log('🔍 Клик по Анализу');
+                console.log('openAnalysisScreen type:', typeof openAnalysisScreen);
+                console.log('window.openAnalysisScreen:', typeof window.openAnalysisScreen);
+                
+                // Проверяем наличие функции
+                if (typeof openAnalysisScreen === 'function') {
+                    openAnalysisScreen();
+                } else if (typeof window.openAnalysisScreen === 'function') {
+                    window.openAnalysisScreen();
                 } else {
-                    showToast('🎤 Голосовой ввод будет доступен в следующем обновлении');
+                    console.log('⚠️ Функция не найдена, загружаем analysis.js');
+                    showToast('📊 Загрузка модуля анализа...');
+                    
+                    // Динамически загружаем
+                    const script = document.createElement('script');
+                    script.src = 'analysis.js';
+                    script.onload = () => {
+                        console.log('✅ analysis.js загружен');
+                        setTimeout(() => {
+                            if (typeof openAnalysisScreen === 'function') {
+                                openAnalysisScreen();
+                            } else if (typeof window.openAnalysisScreen === 'function') {
+                                window.openAnalysisScreen();
+                            } else {
+                                showToast('❌ Не удалось загрузить модуль анализа');
+                            }
+                        }, 100);
+                    };
+                    script.onerror = () => {
+                        console.error('❌ Ошибка загрузки analysis.js');
+                        showToast('❌ Ошибка загрузки модуля анализа');
+                    };
+                    document.head.appendChild(script);
                 }
-            });
-           
-            isTestCompleted().then(completed => {
-                const codeEl = document.getElementById('profileCode');
-                if (completed && codeEl) {
-                    codeEl.textContent = '✨';
-                }
-            });
+            } else {
+                const moduleNameText = card.querySelector('.module-name')?.textContent || moduleName;
+                showToast(`Модуль "${moduleNameText}" скоро будет доступен`);
+            }
+        });
+    });
+   
+    // Голосовая кнопка
+    document.getElementById('voiceBtn')?.addEventListener('click', () => {
+        if (window.VoiceManager && window.VoiceManager.startRecording) {
+            window.VoiceManager.startRecording();
+        } else {
+            showToast('🎤 Голосовой ввод будет доступен в следующем обновлении');
         }
+    });
+   
+    // Статус профиля
+    isTestCompleted().then(completed => {
+        const codeEl = document.getElementById('profileCode');
+        if (completed && codeEl) {
+            codeEl.textContent = '✨';
+        }
+    });
+}
 
         // ============================================
         // МОБИЛЬНОЕ МЕНЮ
