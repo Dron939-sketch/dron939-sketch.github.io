@@ -364,7 +364,7 @@ function navigateTo(screen, params = {}) {
         case 'intervention': showIntervention(params); break;
         case 'practices': showPractices(); break;
         case 'hypnosis': showHypnosis(); break;
-        case 'tales': showTales_screen(); break;
+        case 'tales': if (typeof showTalesScreen==='function') showTalesScreen(); else { const s=document.createElement('script'); s.src='tales.js'; s.onload=()=>{ if(typeof showTalesScreen==='function') showTalesScreen(); }; document.head.appendChild(s); } break;
         case 'anchors': showAnchors(); break;
         case 'statistics': showStatistics(); break;
         case 'analysis':
@@ -497,7 +497,7 @@ function showFullContentScreen(title, content, contentType) {
     const emojiMap = {
         profile: '🧠', thoughts: '💭', goals: '🎯', questions: '❓',
         challenges: '🏆', doubles: '👥', weekend: '🎨', confinement: '🔐',
-        practices: '🧘', hypnosis: '🌙', tales: '📚', anchors: '⚓', statistics: '📊'
+        practices: '🧘', hypnosis: '🌙', tales: '🧿', anchors: '⚓', statistics: '📊'
     };
     // Если content — уже HTML (содержит теги) — не прогоняем через форматтер
     const isHTML = typeof content === 'string' && /<[a-z][\s\S]*>/i.test(content);
@@ -1302,8 +1302,8 @@ function renderDashboard() {
                 challenges:       () => showToast('Челленджи — скоро', 'info'),
                 skill_diagnosis:  () => { if (typeof showSkillDiagnosisScreen==='function') showSkillDiagnosisScreen(); else { const s=document.createElement('script');s.src='skill_diagnosis.js';s.onload=()=>{if(typeof showSkillDiagnosisScreen==='function')showSkillDiagnosisScreen();};document.head.appendChild(s); } },
                 skill_choice:     () => { if (typeof showSkillChoiceScreen==='function') showSkillChoiceScreen(); else { const s=document.createElement('script');s.src='skill_choice.js';s.onload=()=>{if(typeof showSkillChoiceScreen==='function')showSkillChoiceScreen();};document.head.appendChild(s); } },
-                daily_training:   () => showToast('Тренировка дня — скоро', 'info'),
-                progress:         () => showToast('Прогресс и рефлексия — скоро', 'info'),
+                daily_training:   () => { if (typeof showDailyTrainingScreen==='function') showDailyTrainingScreen(); else { const s=document.createElement('script');s.src='daily_training.js';s.onload=()=>{if(typeof showDailyTrainingScreen==='function')showDailyTrainingScreen();};document.head.appendChild(s); } },
+                progress:         () => { if (typeof showProgressScreen==='function') showProgressScreen(); else { const s=document.createElement('script');s.src='progress_tracker.js';s.onload=()=>{if(typeof showProgressScreen==='function')showProgressScreen();};document.head.appendChild(s); } },
                 emotions:   () => showToast('Эмоции — скоро будут доступны', 'info'),
                 trauma:     () => showToast('Исцеление — скоро будет доступно', 'info'),
                 relations:  () => showToast('Отношения — скоро будут доступны', 'info')
@@ -1449,7 +1449,7 @@ async function init() {
                 confinement: () => showConfinementModel(),
                 practices: () => showPractices(),
                 hypnosis: () => showHypnosis(),
-                tales: () => showTales_screen(),
+                tales: () => { if (typeof showTalesScreen==='function') showTalesScreen(); else { const s=document.createElement('script'); s.src='tales.js'; s.onload=()=>{ if(typeof showTalesScreen==='function') showTalesScreen(); }; document.head.appendChild(s); } },
                 anchors: () => showAnchors(),
                 statistics: () => showStatistics()
             };
