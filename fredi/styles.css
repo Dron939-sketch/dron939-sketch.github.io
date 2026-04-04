@@ -669,7 +669,7 @@ body::after {
     outline: none;
 }
 
-.module-card:hover { border-color: var(--amg-orange); transform: translateY(-2px); }
+.module-card:hover { background: rgba(224,224,224,0.1); border-color: rgba(224,224,224,0.25); transform: translateY(-2px); }
 .module-card:active { transform: scale(0.98); }
 
 .module-icon { font-size: 28px; margin-bottom: 8px; display: block; line-height: 1.2; }
