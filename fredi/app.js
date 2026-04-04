@@ -69,10 +69,10 @@ const MODULES = {
         { id: 'relations', name: 'Отношения',  icon: '💕', desc: 'Коммуникация' }
     ],
     trainer: [
-        { id: 'goals',      name: 'Цели',      icon: '🎯', desc: 'Постановка и достижение' },
-        { id: 'habits',     name: 'Привычки',  icon: '🔄', desc: 'Формирование привычек' },
-        { id: 'motivation', name: 'Мотивация', icon: '🔥', desc: 'Заряд на результат' },
-        { id: 'challenges', name: 'Челленджи', icon: '💪', desc: 'Испытания и дисциплина' }
+        { id: 'skill_diagnosis', name: 'Диагностика навыков', icon: '🧠', desc: 'Анализ текущего уровня' },
+        { id: 'skill_choice',    name: 'Выбор навыка',        icon: '🎯', desc: 'Выбор + 21-дневный план' },
+        { id: 'daily_training',  name: 'Тренировка дня',      icon: '⚡', desc: 'Ежедневное задание' },
+        { id: 'progress',        name: 'Прогресс',            icon: '📊', desc: 'Статистика + дневник' }
     ]
 };
 
@@ -1298,8 +1298,12 @@ function renderDashboard() {
                 goals:      () => { if (typeof showGoalsScreen==='function') showGoalsScreen(); else { const s=document.createElement('script');s.src='goals.js';s.onload=()=>{if(typeof showGoalsScreen==='function')showGoalsScreen();};document.head.appendChild(s); } },
                 habits:     () => { if (typeof showHabitsScreen==='function') showHabitsScreen(); else { const s=document.createElement('script');s.src='habits.js';s.onload=()=>{if(typeof showHabitsScreen==='function')showHabitsScreen();};document.head.appendChild(s); } },
                 motivation: () => { if (typeof showMotivationScreen==='function') showMotivationScreen(); else { const s=document.createElement('script');s.src='motivation.js';s.onload=()=>{if(typeof showMotivationScreen==='function')showMotivationScreen();};document.head.appendChild(s); } },
-                strategy:   () => showToast('Стратегия — скоро будет доступна', 'info'),
-                challenges: () => showToast('Челленджи — скоро будут доступны', 'info'),
+                strategy:   () => { if (typeof showStrategyScreen==='function') showStrategyScreen(); else { const s=document.createElement('script');s.src='strategy.js';s.onload=()=>{if(typeof showStrategyScreen==='function')showStrategyScreen();};document.head.appendChild(s); } },
+                challenges:       () => showToast('Челленджи — скоро', 'info'),
+                skill_diagnosis:  () => showToast('Диагностика навыков — скоро', 'info'),
+                skill_choice:     () => showToast('Выбор навыка — скоро', 'info'),
+                daily_training:   () => showToast('Тренировка дня — скоро', 'info'),
+                progress:         () => showToast('Прогресс и рефлексия — скоро', 'info'),
                 emotions:   () => showToast('Эмоции — скоро будут доступны', 'info'),
                 trauma:     () => showToast('Исцеление — скоро будет доступно', 'info'),
                 relations:  () => showToast('Отношения — скоро будут доступны', 'info')
