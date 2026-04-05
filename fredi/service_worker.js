@@ -1,5 +1,4 @@
-// service_worker.js — Фреди PWA
-// Версия 1.0
+// service_worker.js — Fredi PWA v1.0
 
 const CACHE_NAME = 'fredi-v1';
 const STATIC_FILES = ['/', '/styles.css', '/app.js', '/mirrors.js', '/admin.js'];
@@ -20,9 +19,9 @@ self.addEventListener('activate', e => {
     self.clients.claim();
 });
 
-// ===== PUSH-УВЕДОМЛЕНИЯ =====
+// ===== PUSH =====
 self.addEventListener('push', e => {
-    let data = { title: 'Фреди', body: 'Есть новое событие', url: '/', icon: '/icon-192.png' };
+    let data = { title: 'Fredi', body: 'New event', url: '/', icon: '/icon-192.png' };
     try {
         if (e.data) data = { ...data, ...e.data.json() };
     } catch {}
@@ -37,20 +36,17 @@ self.addEventListener('push', e => {
             requireInteraction: false,
             data: { url: data.url || '/' },
             actions: [
-                { action: 'open', title: 'Открыть' },
-                { action: 'close', title: 'Закрыть' }
+                { action: 'open', title: 'Open' },
+                { action: 'close', title: 'Close' }
             ]
         })
     );
 });
 
-// Клик по уведомлению
 self.addEventListener('notificationclick', e => {
     e.notification.close();
     const url = e.notification.data?.url || '/';
-
     if (e.action === 'close') return;
-
     e.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true }).then(wins => {
             const match = wins.find(w => w.url.includes(self.location.origin));
@@ -63,7 +59,7 @@ self.addEventListener('notificationclick', e => {
 // Fetch — network first, fallback cache
 self.addEventListener('fetch', e => {
     if (e.request.method !== 'GET') return;
-    if (e.request.url.includes('/api/')) return; // API не кэшируем
+    if (e.request.url.includes('/api/')) return;
     e.respondWith(
         fetch(e.request).catch(() => caches.match(e.request))
     );
