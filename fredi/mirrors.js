@@ -8,7 +8,7 @@ const API_BASE = window.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com
 // ============================================
 // СТИЛИ
 // ============================================
-(function injectMirrorStyles() {
+function injectMirrorStyles() {
     if (document.getElementById('mirror-styles')) return;
     const style = document.createElement('style');
     style.id = 'mirror-styles';
@@ -167,7 +167,8 @@ const API_BASE = window.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com
         }
     `;
     document.head.appendChild(style);
-})();
+}
+injectMirrorStyles();
 
 // ============================================
 // API
