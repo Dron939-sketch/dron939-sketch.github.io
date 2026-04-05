@@ -404,6 +404,11 @@
         function dotsInstall() {
             dotsClose();
 
+            // Push разрешение — запрашиваем в момент клика пользователя
+            if (window.PushManager_Fredi && window.USER_ID) {
+                window.PushManager_Fredi.request(window.USER_ID);
+            }
+
             // Chrome / Android — нативный диалог
             if (_pwa) {
                 _pwa.prompt();
