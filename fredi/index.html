@@ -451,6 +451,11 @@
     <script>
         // Секретная комната — вешаем обработчик после загрузки всех скриптов
         window.addEventListener('load', function() {
+            // Инициализация push-уведомлений (тихо, без запроса)
+            if (window.PushManager_Fredi && window.USER_ID) {
+                window.PushManager_Fredi.init(window.USER_ID);
+            }
+
             var btn = document.getElementById('secretRoomBtn');
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -496,6 +501,7 @@
     <script src="practices.js"></script>
     <script src="mirrors.js"></script>
     <script src="admin.js"></script>
+    <script src="push.js"></script>
     <script src="app.js"></script>
 
     <!-- SEO-текст (скрыт от пользователей) -->
