@@ -129,7 +129,7 @@ async function subscribeToPushNotifications() {
         await fetch(`${apiUrl}/api/push/subscribe`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, subscription: subscription })
+            body: JSON.stringify({ user_id: userId, subscription: subscription, platform: 'web' })
         });
 
         showToast('✅ Push-уведомления включены! Буду присылать утренние сообщения.');

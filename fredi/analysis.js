@@ -573,7 +573,7 @@ async function generateDeepAnalysis() {
         const res  = await fetch(`${api}/api/deep-analysis`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, message: '', mode })
+            body: JSON.stringify({ user_id: userId, message: '', mode, platform: 'web' })
         });
         const data = await res.json();
         clearInterval(timer);

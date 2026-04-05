@@ -111,6 +111,7 @@ async function getSuggestedEmotionsByProfile() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: userId,
+                platform: 'web',
                 prompt: prompt,
                 model: 'deepseek',
                 max_tokens: 300,
@@ -190,6 +191,7 @@ async function analyzeEmotion(emotionId, emotionName, customText = null) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: userId,
+                platform: 'web',
                 prompt: prompt,
                 model: 'deepseek',
                 max_tokens: 1000,

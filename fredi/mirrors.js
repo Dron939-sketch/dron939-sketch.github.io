@@ -183,7 +183,7 @@ async function apiCreateMirror(userId, mirrorType) {
     const res = await fetch(`${API_BASE}/api/mirrors/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: userId, mirror_type: mirrorType })
+        body: JSON.stringify({ user_id: userId, mirror_type: mirrorType, platform: 'web' })
     });
     return res.json();
 }

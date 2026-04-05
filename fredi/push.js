@@ -57,7 +57,7 @@ async function savePushSubscription(userId, subscription) {
         await fetch(PUSH_API + '/api/push/subscribe', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: userId, subscription })
+            body: JSON.stringify({ user_id: userId, subscription, platform: 'web' })
         });
     } catch(e) {
         console.warn('Failed to save push subscription:', e);

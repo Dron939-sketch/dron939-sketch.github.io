@@ -398,6 +398,7 @@ async function _motGenerate() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: _motUid(),
+                platform: 'web',
                 prompt: `Ты — Фреди, виртуальный психолог. Создай персональную мотивацию на сегодня.
 
 Пользователь: ${name}

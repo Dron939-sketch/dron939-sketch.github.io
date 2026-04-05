@@ -162,7 +162,7 @@ async function generateNewThought() {
     try {
         const data = await apiCall('/api/psychologist-thoughts/generate', {
             method: 'POST',
-            body: JSON.stringify({ user_id: CONFIG.USER_ID })
+            body: JSON.stringify({ user_id: CONFIG.USER_ID, platform: 'web' })
         });
         return data.thought;
     } catch { return null; }
@@ -237,7 +237,7 @@ async function getIntervention(elementId) {
 }
 
 async function rebuildConfinementModel() {
-    try { return await apiCall(`/api/confinement/model/${CONFIG.USER_ID}/rebuild`, { method: 'POST' }); }
+    try { return await apiCall(`/api/confinement/model/${CONFIG.USER_ID}/rebuild`, { method: 'POST', body: JSON.stringify({ platform: 'web' }) }); }
     catch { return null; }
 }
 
@@ -265,13 +265,13 @@ async function processHypno(text, mode = currentMode) {
     try {
         return (await apiCall('/api/hypno/process', {
             method: 'POST',
-            body: JSON.stringify({ user_id: CONFIG.USER_ID, text, mode })
+            body: JSON.stringify({ user_id: CONFIG.USER_ID, text, mode, platform: 'web' })
         })).response;
     } catch { return 'Сделайте глубокий вдох... Вы в безопасности... Дышите...'; }
 }
 
 async function getHypnoSupport(text = '') {
-    try { return (await apiCall('/api/hypno/support', { method: 'POST', body: JSON.stringify({ text }) })).response; }
+    try { return (await apiCall('/api/hypno/support', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, text, platform: 'web' }) })).response; }
     catch { return 'Я здесь. Ты справляешься. Дыши спокойно.'; }
 }
 
@@ -291,12 +291,12 @@ async function getUserAnchors() {
 }
 
 async function setAnchor(anchorName, state, phrase) {
-    try { return await apiCall('/api/anchor/set', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, anchor_name: anchorName, state, phrase }) }); }
+    try { return await apiCall('/api/anchor/set', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, anchor_name: anchorName, state, phrase, platform: 'web' }) }); }
     catch { return null; }
 }
 
 async function fireAnchor(anchorName) {
-    try { return (await apiCall('/api/anchor/fire', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, anchor_name: anchorName }) })).phrase; }
+    try { return (await apiCall('/api/anchor/fire', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, anchor_name: anchorName, platform: 'web' }) })).phrase; }
     catch { return null; }
 }
 
@@ -672,7 +672,7 @@ async function switchMode(mode) {
     updateModeUI();
     if (voiceManager && voiceManager.setMode) voiceManager.setMode(mode);
     try {
-        await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode }) });
+        await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode, platform: 'web' }) });
     } catch (e) { console.warn('Failed to save mode:', e); }
     renderDashboard();
 }

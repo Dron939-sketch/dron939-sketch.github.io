@@ -123,6 +123,7 @@ async function generateHealingContent() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: userId,
+                platform: 'web',
                 prompt: buildHealingPrompt(),
                 max_tokens: 2000,
                 temperature: 0.7
