@@ -284,15 +284,13 @@
 
                 <div class="menu-divider"></div>
 
-                <div class="chat-item" data-chat="secret"
-                    onclick="if(typeof openSecretRoom==='function')openSecretRoom()"
+                <div class="chat-item" id="secretRoomBtn"
                     style="opacity:0.35;transition:opacity 0.2s;"
                     onmouseover="this.style.opacity='0.85'"
                     onmouseout="this.style.opacity='0.35'">
                     <div class="chat-avatar">🔐</div>
                     <div class="chat-info">
                         <div class="chat-name">Секретная комната</div>
-                        <div class="chat-preview">Панель управления</div>
                     </div>
                     <div class="chat-time"></div>
                 </div>
@@ -454,6 +452,23 @@
         }
     </script>
 
+    <script>
+        // Секретная комната — вешаем обработчик после загрузки всех скриптов
+        window.addEventListener('load', function() {
+            var btn = document.getElementById('secretRoomBtn');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    if (typeof openSecretRoom === 'function') {
+                        openSecretRoom();
+                    } else {
+                        console.warn('openSecretRoom не найдена');
+                    }
+                    // Закрываем мобильное меню
+                    document.getElementById('chatsPanel')?.classList.remove('open');
+                });
+            }
+        });
+    </script>
     <script src="test.js"></script>
     <script src="voice.js"></script>
     <script src="analysis.js"></script>
