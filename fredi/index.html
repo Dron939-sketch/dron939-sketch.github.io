@@ -281,23 +281,24 @@
                     </div>
                     <div class="chat-time"></div>
                 </div>
-            </div>
 
-            <!-- ФУТЕР: только секретная комната -->
-            <div class="chats-footer">
-                <div onclick="if(typeof openSecretRoom==='function')openSecretRoom()"
-                    style="display:flex;align-items:center;gap:10px;padding:8px 10px;
-                           border-radius:12px;cursor:pointer;
-                           border:1px solid rgba(255,255,255,0.06);
-                           background:rgba(255,255,255,0.02);
-                           transition:all 0.2s;opacity:0.4;
-                           -webkit-tap-highlight-color:transparent;touch-action:manipulation;"
-                    onmouseover="this.style.opacity='1';this.style.borderColor='rgba(255,59,59,0.35)';this.style.background='rgba(255,59,59,0.05)'"
-                    onmouseout="this.style.opacity='0.4';this.style.borderColor='rgba(255,255,255,0.06)';this.style.background='rgba(255,255,255,0.02)'">
-                    <span style="font-size:16px;">🔐</span>
-                    <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);">Секретная комната</span>
+                <div class="menu-divider"></div>
+
+                <div class="chat-item" data-chat="secret"
+                    onclick="if(typeof openSecretRoom==='function')openSecretRoom()"
+                    style="opacity:0.35;transition:opacity 0.2s;"
+                    onmouseover="this.style.opacity='0.85'"
+                    onmouseout="this.style.opacity='0.35'">
+                    <div class="chat-avatar">🔐</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Секретная комната</div>
+                        <div class="chat-preview">Панель управления</div>
+                    </div>
+                    <div class="chat-time"></div>
                 </div>
             </div>
+
+
         </div>
 
         <!-- ===== ПРАВАЯ ПАНЕЛЬ ===== -->
