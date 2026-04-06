@@ -15,7 +15,12 @@ function urlBase64ToUint8Array(base64String) {
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return null;
     try {
-        const reg = await navigator.serviceWorker.register('/service_worker.js');
+        const swPath = window.location.pathname.includes('/fredi/')
+            ? '/fredi/service_worker.js'
+            : '/service_worker.js';
+        const reg = await navigator.serviceWorker.register(swPath, {
+            scope: window.location.pathname.includes('/fredi/') ? '/fredi/' : '/'
+        });
         console.log('✅ Service Worker зарегистрирован');
         return reg;
     } catch(e) {
