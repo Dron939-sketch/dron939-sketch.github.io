@@ -1092,6 +1092,7 @@ const Test = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: parseInt(this.userId),
+                    platform: 'web',
                     context: { city:this.context.city, gender:this.context.gender, age:this.context.age }
                 })
             });
@@ -1497,7 +1498,7 @@ ${this.getStage5Interpretation()}
             const r = await fetch(TEST_API_BASE_URL+'/api/save-test-results', {
                 method:'POST', headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({
-                    user_id:parseInt(this.userId), context:this.context,
+                    user_id:parseInt(this.userId), platform: 'web', context:this.context,
                     results:{ perception_type:this.perceptionType, thinking_level:this.thinkingLevel, behavioral_levels:this.behavioralLevels, dilts_counts:this.diltsCounts, deep_patterns:deep, profile_data:profile, all_answers:this.answers, test_completed:true, test_completed_at:new Date().toISOString() }
                 })
             });
@@ -1525,6 +1526,7 @@ ${this.getStage5Interpretation()}
                 body: JSON.stringify({
                     mirror_code: mirrorCode,
                     friend_user_id: this.userId,
+                    platform: 'web',
                     friend_name: this.context?.name || 'Друг',
                     friend_profile_code: profile?.displayName || null,
                     friend_vectors: vectors,

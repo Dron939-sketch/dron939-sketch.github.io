@@ -822,6 +822,7 @@ class VoiceTransport {
         formData.append('mode', this.currentMode || 'psychologist');
         formData.append('ios_device', this.isIOS ? 'true' : 'false');
         formData.append('user_agent', navigator.userAgent);
+        formData.append('platform', 'web');
 
         const voiceConf = VoiceConfig.voices[this.currentMode];
         if (voiceConf) {

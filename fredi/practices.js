@@ -312,6 +312,7 @@ function _bindHandlers(container) {
                 method:'POST', headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({
                     user_id: userId,
+                    platform: 'web',
                     prompt: `Ты — Фреди, психолог. Пользователь ${practicesState.userName} хочет: "${prompt}".
 Профиль: СБ-${v.СБ}, ТФ-${v.ТФ}, УБ-${v.УБ}, ЧВ-${v.ЧВ}.
 

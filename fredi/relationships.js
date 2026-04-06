@@ -161,7 +161,7 @@ async function generateRelationshipAnalysis() {
     try {
         const response = await fetch(`${apiUrl}/api/ai/generate`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, prompt, max_tokens: 800, temperature: 0.7 })
+            body: JSON.stringify({ user_id: userId, prompt, max_tokens: 800, temperature: 0.7, platform: 'web' })
         });
         const data = await response.json();
         if (data.success && data.content) {
@@ -215,7 +215,7 @@ async function analyzeSituation(situationText, partnerProfile = null) {
     try {
         const response = await fetch(`${apiUrl}/api/ai/generate`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, prompt, max_tokens: 1000, temperature: 0.7 })
+            body: JSON.stringify({ user_id: userId, prompt, max_tokens: 1000, temperature: 0.7, platform: 'web' })
         });
         const data = await response.json();
         if (data.success && data.content) {
@@ -258,7 +258,7 @@ async function getCrisisHelp(scenarioId, scenarioName) {
     try {
         const response = await fetch(`${apiUrl}/api/ai/generate`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: userId, prompt, max_tokens: 500, temperature: 0.6 })
+            body: JSON.stringify({ user_id: userId, prompt, max_tokens: 500, temperature: 0.6, platform: 'web' })
         });
         const data = await response.json();
         if (data.success && data.content) {

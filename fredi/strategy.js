@@ -362,6 +362,7 @@ async function _strGenerate(goal) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: _strUid(),
+                platform: 'web',
                 prompt: `Ты — Фреди, виртуальный психолог-коуч. Создай персональную стратегию.
 
 Пользователь: ${_strName()}

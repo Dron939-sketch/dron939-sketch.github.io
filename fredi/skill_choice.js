@@ -306,6 +306,7 @@ async function _scGeneratePlan(skillName, skillDesc, profile) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: _scUid(),
+                platform: 'web',
                 prompt,
                 max_tokens: 2000
             })

@@ -420,6 +420,7 @@ async function _dyRunAnalysis() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: _dyUid(),
+                platform: 'web',
                 prompt: `Ты — Фреди, психолог-ассистент. Проанализируй дневниковые записи пользователя по имени ${_dyName()}.
 
 ЗАПИСИ (от старых к новым):

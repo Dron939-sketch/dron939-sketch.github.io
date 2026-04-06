@@ -666,6 +666,7 @@ ${genderNote}
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: _tlUid(),
+                    platform: 'web',
                     prompt,
                     max_tokens: 1800
                 })
