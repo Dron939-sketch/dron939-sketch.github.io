@@ -15,13 +15,7 @@ function urlBase64ToUint8Array(base64String) {
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return null;
     try {
-        // Определяем путь к SW относительно текущей страницы
-        const swPath = window.location.pathname.includes('/fredi/')
-            ? '/fredi/service_worker.js'
-            : '/service_worker.js';
-        const reg = await navigator.serviceWorker.register(swPath, {
-            scope: window.location.pathname.includes('/fredi/') ? '/fredi/' : '/'
-        });
+        const reg = await navigator.serviceWorker.register('/service_worker.js');
         console.log('✅ Service Worker зарегистрирован');
         return reg;
     } catch(e) {
