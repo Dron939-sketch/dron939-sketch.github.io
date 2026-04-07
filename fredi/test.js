@@ -1092,7 +1092,6 @@ const Test = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: parseInt(this.userId),
-                    platform: 'web',
                     context: { city:this.context.city, gender:this.context.gender, age:this.context.age }
                 })
             });
@@ -1498,7 +1497,7 @@ ${this.getStage5Interpretation()}
             const r = await fetch(TEST_API_BASE_URL+'/api/save-test-results', {
                 method:'POST', headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({
-                    user_id:parseInt(this.userId), platform: 'web', context:this.context,
+                    user_id:parseInt(this.userId), context:this.context,
                     results:{ perception_type:this.perceptionType, thinking_level:this.thinkingLevel, behavioral_levels:this.behavioralLevels, dilts_counts:this.diltsCounts, deep_patterns:deep, profile_data:profile, all_answers:this.answers, test_completed:true, test_completed_at:new Date().toISOString() }
                 })
             });
@@ -1526,7 +1525,6 @@ ${this.getStage5Interpretation()}
                 body: JSON.stringify({
                     mirror_code: mirrorCode,
                     friend_user_id: this.userId,
-                    platform: 'web',
                     friend_name: this.context?.name || 'Друг',
                     friend_profile_code: profile?.displayName || null,
                     friend_vectors: vectors,
@@ -1563,10 +1561,10 @@ ${this.getStage5Interpretation()}
         const ubD = {1:'Не думаете о сложном',2:'Верите в знаки',3:'Доверяете экспертам',4:'Ищете заговоры',5:'Анализируете факты',6:'Строите теории'}[p.ubLevel]||'—';
         const cvD = {1:'Сильно привязываетесь',2:'Подстраиваетесь',3:'Хотите нравиться',4:'Умеете влиять',5:'Строите равные отношения',6:'Создаёте сообщества'}[p.chvLevel]||'—';
 
-        let text = `🧠 **ВАШ ПСИХОЛОГИЧЕСКИЙ ПРОФИЛЬ**\n\n**Профиль:** ${p.displayName}\n**Тип восприятия:** ${p.perceptionType}\n**Уровень мышления:** ${p.thinkingLevel}/9\n\n---\n\n**📊 ВАШИ ВЕКТОРЫ:**\n\n**СБ ${p.sbLevel}/6:** ${sbD}\n**ТФ ${p.tfLevel}/6:** ${tfD}\n**УБ ${p.ubLevel}/6:** ${ubD}\n**ЧВ ${p.chvLevel}/6:** ${cvD}\n\n---\n\n**🧠 Глубинный паттерн:** ${deep.attachment}`;
+        let text = `🧠 **ВАШ ПСИХОЛОГИЧЕСКИЙ ПРОФИЛЬ**\n\n**Профиль:** ${p.displayName}\n**Тип восприятия:** ${p.perceptionType}\n**Уровень мышления:** ${p.thinkingLevel}/9\n\n**📊 ВАШИ ВЕКТОРЫ:**\n\n**СБ ${p.sbLevel}/6:** ${sbD}\n**ТФ ${p.tfLevel}/6:** ${tfD}\n**УБ ${p.ubLevel}/6:** ${ubD}\n**ЧВ ${p.chvLevel}/6:** ${cvD}\n\n**🧠 Глубинный паттерн:** ${deep.attachment}`;
 
         if (this.aiGeneratedProfile) {
-            text += '\n\n---\n\n**🧠 AI-СГЕНЕРИРОВАННЫЙ ПРОФИЛЬ:**\n\n' + this.aiGeneratedProfile.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+            text += '\n\n**🧠 AI-СГЕНЕРИРОВАННЫЙ ПРОФИЛЬ:**\n\n' + this.aiGeneratedProfile.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
         }
 
         this.addBotMessage(text, true);
