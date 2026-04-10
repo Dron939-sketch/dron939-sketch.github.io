@@ -65,102 +65,22 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        /* ===== ПОПАП ТРЁХ ТОЧЕК ===== */
-        .dots-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 998;
-        }
+        .dots-overlay { display: none; position: fixed; inset: 0; z-index: 998; }
         .dots-overlay.open { display: block; }
-
-        .dots-popup {
-            position: fixed;
-            right: 12px;
-            top: 60px;
-            background: rgba(16,16,16,0.97);
-            -webkit-backdrop-filter: blur(24px);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 6px;
-            min-width: 230px;
-            z-index: 999;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.7);
-            opacity: 0;
-            transform: scale(0.92) translateY(-8px);
-            transform-origin: top right;
-            transition: opacity 0.18s ease, transform 0.18s ease;
-            pointer-events: none;
-        }
-        .dots-popup.open {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-        }
-
-        @supports (top: max(0px)) {
-            .dots-popup {
-                top: max(60px, calc(env(safe-area-inset-top, 0px) + 60px));
-                right: max(12px, calc(env(safe-area-inset-right, 0px) + 12px));
-            }
-        }
-
-        .dots-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background 0.15s;
-            text-decoration: none;
-            color: #fff;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-        .dots-item:hover,
-        .dots-item:active { background: rgba(255,255,255,0.09); }
-
-        .dots-icon {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; flex-shrink: 0;
-        }
+        .dots-popup { position: fixed; right: 12px; top: 60px; background: rgba(16,16,16,0.97); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 6px; min-width: 230px; z-index: 999; box-shadow: 0 8px 40px rgba(0,0,0,0.7); opacity: 0; transform: scale(0.92) translateY(-8px); transform-origin: top right; transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none; }
+        .dots-popup.open { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+        @supports (top: max(0px)) { .dots-popup { top: max(60px, calc(env(safe-area-inset-top, 0px) + 60px)); right: max(12px, calc(env(safe-area-inset-right, 0px) + 12px)); } }
+        .dots-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; cursor: pointer; transition: background 0.15s; text-decoration: none; color: #fff; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        .dots-item:hover, .dots-item:active { background: rgba(255,255,255,0.09); }
+        .dots-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
         .dots-title { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.3; }
         .dots-sub { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 2px; }
         .dots-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 8px; }
-
-        .install-modal {
-            position: fixed; inset: 0; z-index: 9999;
-            display: flex; align-items: flex-end; justify-content: center;
-            background: rgba(0,0,0,0.65);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            padding: 16px;
-            padding-bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 16px));
-            box-sizing: border-box;
-        }
-        .install-modal-inner {
-            background: #1a1a1a;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 360px;
-            width: 100%;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-        }
+        .install-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: flex-end; justify-content: center; background: rgba(0,0,0,0.65); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); padding: 16px; padding-bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 16px)); box-sizing: border-box; }
+        .install-modal-inner { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 24px; max-width: 360px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,0.6); }
         .install-modal-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 12px; }
         .install-modal-text { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.75; }
-        .install-modal-btn {
-            margin-top: 18px; width: 100%; padding: 13px;
-            background: linear-gradient(135deg, #ff6b3b, #ff3b3b);
-            border: none; border-radius: 12px; color: #fff;
-            font-size: 14px; font-weight: 600; cursor: pointer;
-            font-family: inherit; touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
+        .install-modal-btn { margin-top: 18px; width: 100%; padding: 13px; background: linear-gradient(135deg, #ff6b3b, #ff3b3b); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body>
@@ -369,33 +289,24 @@
         })();
 
         var _pwa = null;
-        window.addEventListener('beforeinstallprompt', function(e) {
-            e.preventDefault(); _pwa = e;
-        });
+        window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); _pwa = e; });
 
         function dotsToggle(e) {
             if (e) e.stopPropagation();
             var p = document.getElementById('dotsPopup');
             var o = document.getElementById('dotsOverlay');
-            if (p.classList.contains('open')) {
-                p.classList.remove('open'); o.classList.remove('open');
-            } else {
-                p.classList.add('open'); o.classList.add('open');
-            }
+            if (p.classList.contains('open')) { p.classList.remove('open'); o.classList.remove('open'); }
+            else { p.classList.add('open'); o.classList.add('open'); }
         }
         function dotsClose() {
             document.getElementById('dotsPopup')?.classList.remove('open');
             document.getElementById('dotsOverlay')?.classList.remove('open');
         }
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') dotsClose();
-        });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') dotsClose(); });
 
         function dotsInstall() {
             dotsClose();
-            if (window.PushManager_Fredi && window.USER_ID) {
-                window.PushManager_Fredi.request(window.USER_ID);
-            }
+            if (window.PushManager_Fredi && window.USER_ID) window.PushManager_Fredi.request(window.USER_ID);
             if (_pwa) { _pwa.prompt(); _pwa.userChoice.then(function() { _pwa = null; }); return; }
             var ua = navigator.userAgent || '';
             var isIOS = /iphone|ipad|ipod/i.test(ua);
@@ -407,20 +318,14 @@
                 : 'В меню браузера нажмите <b>⋮</b> и выберите<br><b>«Установить приложение»</b><br>или <b>«Добавить на главный экран»</b>.';
             var modal = document.createElement('div');
             modal.className = 'install-modal';
-            modal.innerHTML = '<div class="install-modal-inner">'
-                + '<div class="install-modal-title">📲 На экран телефона</div>'
-                + '<div class="install-modal-text">' + text + '</div>'
-                + '<button class="install-modal-btn" id="installModalBtn">Понятно</button>'
-                + '</div>';
+            modal.innerHTML = '<div class="install-modal-inner"><div class="install-modal-title">📲 На экран телефона</div><div class="install-modal-text">' + text + '</div><button class="install-modal-btn" id="installModalBtn">Понятно</button></div>';
             document.body.appendChild(modal);
             document.getElementById('installModalBtn').addEventListener('click', function() { modal.remove(); });
             modal.addEventListener('click', function(e) { if (e.target === modal) modal.remove(); });
         }
 
         window.addEventListener('load', function() {
-            if (window.PushManager_Fredi && window.USER_ID) {
-                window.PushManager_Fredi.init(window.USER_ID);
-            }
+            if (window.PushManager_Fredi && window.USER_ID) window.PushManager_Fredi.init(window.USER_ID);
             var btn = document.getElementById('secretRoomBtn');
             if (btn) {
                 btn.addEventListener('click', function() {
@@ -463,6 +368,7 @@
     <script src="mirrors.js"></script>
     <script src="admin.js"></script>
     <script src="push.js"></script>
+    <script src="subscription.js"></script>
     <script src="settings.js"></script>
     <script src="app.js"></script>
 
