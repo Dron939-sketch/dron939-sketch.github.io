@@ -63,6 +63,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="theme-light.css">
+    <script src="theme.js"></script>
 
     <style>
         .dots-overlay { display: none; position: fixed; inset: 0; z-index: 998; }
@@ -81,6 +83,17 @@
         .install-modal-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 12px; }
         .install-modal-text { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.75; }
         .install-modal-btn { margin-top: 18px; width: 100%; padding: 13px; background: linear-gradient(135deg, #ff6b3b, #ff3b3b); border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+        /* Light theme overrides for dots popup */
+        [data-theme="light"] .dots-popup { background: rgba(255,255,255,0.97); border-color: rgba(0,0,0,0.1); box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
+        [data-theme="light"] .dots-item { color: #1c1c1e; }
+        [data-theme="light"] .dots-item:hover, [data-theme="light"] .dots-item:active { background: rgba(0,0,0,0.06); }
+        [data-theme="light"] .dots-title { color: #1c1c1e; }
+        [data-theme="light"] .dots-sub { color: rgba(0,0,0,0.4); }
+        [data-theme="light"] .dots-divider { background: rgba(0,0,0,0.06); }
+        [data-theme="light"] .install-modal-inner { background: #fff; border-color: rgba(0,0,0,0.1); }
+        [data-theme="light"] .install-modal-title { color: #1c1c1e; }
+        [data-theme="light"] .install-modal-text { color: rgba(0,0,0,0.55); }
     </style>
 </head>
 <body>
@@ -232,7 +245,10 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div style="display:flex;align-items:center;gap:4px">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+                        <span class="theme-icon">🌙</span>
+                    </button>
                     <button class="mode-btn" id="menuBtn"
                         onclick="dotsToggle(event)"
                         style="-webkit-tap-highlight-color:transparent;touch-action:manipulation;">⋮</button>
