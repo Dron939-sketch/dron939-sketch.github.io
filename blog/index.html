@@ -460,13 +460,10 @@
   </div>
 
   <div class="articles-list" id="articles-list-container">
-    <!-- Список статей будет отрисован через JS -->
     <div style="text-align:center; padding: 40px;">Загрузка статей...</div>
   </div>
 
-  <div class="pagination" id="pagination-container">
-    <!-- Пагинация будет отрисована через JS -->
-  </div>
+  <div class="pagination" id="pagination-container"></div>
 </div>
 
 <!-- ПОДКЛЮЧАЕМ ПОДВАЛ -->
@@ -476,7 +473,7 @@
   // БАЗА ДАННЫХ СТАТЕЙ (сортировка от новых к старым)
   const articlesDatabase = [
     {
-      id: 6,
+      id: 12,
       date: "2026-04-15",
       dateFormatted: "15.04.2026",
       views: "3 421",
@@ -485,16 +482,61 @@
       link: "/blog/cifrovye-dvojniki-soznaniya.html"
     },
     {
-      id: 1,
+      id: 11,
+      date: "2026-04-10",
+      dateFormatted: "10.04.2026",
+      views: "2 847",
+      title: "Газлайтинг: что это, признаки и как противостоять",
+      description: "7 признаков и 5 этапов газлайтинга — тонкой манипуляции, заставляющей сомневаться в собственном восприятии реальности...",
+      link: "/blog/gazlayting-chto-eto.html"
+    },
+    {
+      id: 10,
+      date: "2026-04-05",
+      dateFormatted: "05.04.2026",
+      views: "1 234",
+      title: "4 стратегии работы с запросами клиента",
+      description: "Как эффективно обрабатывать клиентские запросы, возражения и работать с разными типами клиентов...",
+      link: "/blog/4-strategii-raboty-s-zaprosom-klienta.html"
+    },
+    {
+      id: 9,
+      date: "2026-03-28",
+      dateFormatted: "28.03.2026",
+      views: "1 876",
+      title: "Почему умные люди часто несчастны",
+      description: "Разбор феномена: почему высокий интеллект часто сопровождается тревогой, одиночеством и неудовлетворённостью...",
+      link: "/blog/pochemu-umnye-lyudi-chasto-neschastny.html"
+    },
+    {
+      id: 8,
+      date: "2026-03-20",
+      dateFormatted: "20.03.2026",
+      views: "1 543",
+      title: "Почему знания не меняют поведение",
+      description: "Почему мы знаем, как надо, но продолжаем делать по-старому. Разрыв между знанием и действием...",
+      link: "/blog/pochemu-znaniya-ne-menyayut-povedenie.html"
+    },
+    {
+      id: 7,
       date: "2026-03-15",
       dateFormatted: "15.03.2026",
       views: "1 245",
       title: "Что такое латеральное мышление и чем оно отличается от критического?",
-      description: "Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов. Техники Эдварда де Боно и практические упражнения...",
+      description: "Разбираемся в типах мышления, учимся находить нестандартные решения и выходить за рамки привычных паттернов...",
       link: "/blog/lateralnoe-myshlenie.html"
     },
     {
-      id: 2,
+      id: 6,
+      date: "2026-03-10",
+      dateFormatted: "10.03.2026",
+      views: "2 101",
+      title: "Психология пользы денег",
+      description: "Как деньги влияют на психику, почему они не гарантируют счастье и как правильно относиться к финансовому успеху...",
+      link: "/blog/psihologiya-polzy-dengi.html"
+    },
+    {
+      id: 5,
       date: "2026-03-02",
       dateFormatted: "02.03.2026",
       views: "2 389",
@@ -503,25 +545,25 @@
       link: "/blog/samogipnoz-dlya-nachinayushih.html"
     },
     {
+      id: 4,
+      date: "2026-02-25",
+      dateFormatted: "25.02.2026",
+      views: "1 890",
+      title: "Разговорный гипноз: техники и применение",
+      description: "Основные техники разговорного гипноза, как они работают и где применяются в повседневной коммуникации...",
+      link: "/blog/razgovornyy-gipnoz-tekhniki.html"
+    },
+    {
       id: 3,
       date: "2026-02-18",
       dateFormatted: "18.02.2026",
       views: "3 567",
       title: "Теория манипуляции: как распознать скрытое воздействие",
-      description: "5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни. Разбор реальных ситуаций из моей практики...",
+      description: "5 признаков того, что вами манипулируют, и техники защиты от психологического давления в повседневной жизни...",
       link: "/blog/chto-takoe-manipulyaciya.html"
     },
     {
-      id: 4,
-      date: "2026-02-05",
-      dateFormatted: "05.02.2026",
-      views: "1 892",
-      title: "Упражнения для развития когнитивной гибкости",
-      description: "Простые практики, которые помогут мыслить шире, быстрее адаптироваться к изменениям и находить нестандартные решения. Ежедневные тренировки для мозга...",
-      link: "/blog/kognitivnaya-gibkost-uprazhneniya.html"
-    },
-    {
-      id: 5,
+      id: 2,
       date: "2026-01-20",
       dateFormatted: "20.01.2026",
       views: "956",
@@ -530,9 +572,6 @@
       link: "/blog/sistemnoe-myshlenie-v-biznese.html"
     }
   ];
-
-  // Сортировка от новых к старым
-  articlesDatabase.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   // Пагинация
   const ITEMS_PER_PAGE = 3;
@@ -553,9 +592,9 @@
     }
     
     let html = '';
-    pageArticles.forEach(article => {
+    pageArticles.forEach((article, index) => {
       html += `
-        <div class="article-preview" style="animation-delay: 0.1s;">
+        <div class="article-preview" style="animation-delay: ${index * 0.1}s;">
           <div class="article-meta">
             <span>${article.dateFormatted}</span>
             <span>👁️ ${article.views}</span>
@@ -633,10 +672,10 @@
             <div class="footer-content">
               <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
               <div class="social-links">
-                <a href="https://t.me/meysternlp" target="_blank">Telegram</a>
-                <a href="https://vk.com/meysternlp" target="_blank">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank">Дзен</a>
+                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
               </div>
             </div>
             <div class="copyright">© Андрей Мейстер · 2026</div>
