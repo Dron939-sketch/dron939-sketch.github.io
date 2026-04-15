@@ -1,5 +1,6 @@
 // ============================================
 // subscription.js — Платёжный модуль подписки (YooKassa)
+// Встраивается в экран настроек
 // ============================================
 
 (function () {
@@ -26,12 +27,14 @@
             .sub-price-period { font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; }
             .sub-features { list-style: none; padding: 0; margin: 0 0 20px 0; }
             .sub-features li { font-size: 13px; color: var(--text-secondary); padding: 6px 0; display: flex; align-items: center; gap: 8px; }
+            .sub-features li::before { content: ''; display: none; }
             .sub-feature-icon { flex-shrink: 0; width: 20px; text-align: center; }
-            .sub-btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 14px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; text-align: center; transition: transform 0.15s, opacity 0.15s; touch-action: manipulation; }
+            .sub-btn { display: block; width: 100%; padding: 14px; border: none; border-radius: 14px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; text-align: center; transition: transform 0.15s, opacity 0.15s; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
             .sub-btn:active { transform: scale(0.98); }
             .sub-btn-primary { background: linear-gradient(135deg, #3b82ff 0%, #6366f1 100%); color: #fff; }
             .sub-btn-primary:hover { opacity: 0.9; }
             .sub-btn-secondary { background: rgba(224,224,224,0.07); border: 1px solid rgba(224,224,224,0.18); color: var(--text-secondary); }
+            .sub-btn-secondary:hover { background: rgba(224,224,224,0.14); color: var(--text-primary); }
             .sub-btn-danger { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: rgba(239,68,68,0.85); }
             .sub-btn-small { display: inline-flex; padding: 6px 14px; border-radius: 10px; font-size: 12px; font-weight: 500; width: auto; }
             .sub-info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(224,224,224,0.06); font-size: 13px; }
@@ -57,59 +60,88 @@
     }
 
     async function _loadSubscriptionStatus() {
-        const uid = _uid(); if (!uid) return null;
-        try { const r = await fetch(`${_api()}/api/subscription/status/${uid}`); return await r.json(); }
-        catch (e) { console.error('subscription status error:', e); return null; }
+        const uid = _uid();
+        if (!uid) return null;
+        try {
+            const r = await fetch(`${_api()}/api/subscription/status/${uid}`);
+            return await r.json();
+        } catch (e) { console.error('subscription status error:', e); return null; }
     }
 
     async function _createPayment() {
-        const uid = _uid(); if (!uid) return;
+        const uid = _uid();
+        if (!uid) return;
+
+        const emailInput = document.getElementById('subEmailInput');
+        const email = emailInput ? emailInput.value.trim() : '';
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            _toast('Введите корректный email для чека', 'error');
+            if (emailInput) emailInput.focus();
+            return;
+        }
+
         _toast('Создаю платёж...', 'info');
         try {
             const r = await fetch(`${_api()}/api/subscription/create-payment`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: uid, return_url: window.location.origin + window.location.pathname })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: uid,
+                    return_url: window.location.origin + window.location.pathname,
+                    email: email,
+                })
             });
             const data = await r.json();
-            if (data.success && data.confirmation_url) window.location.href = data.confirmation_url;
-            else _toast(data.error || 'Не удалось создать платёж', 'error');
+            if (data.success && data.confirmation_url) { window.location.href = data.confirmation_url; }
+            else { _toast(data.error || 'Не удалось создать платёж', 'error'); }
         } catch (e) { _toast('Ошибка сети', 'error'); }
     }
 
     async function _toggleAutoRenew(enabled) {
-        const uid = _uid(); if (!uid) return;
+        const uid = _uid();
+        if (!uid) return;
         try {
             const r = await fetch(`${_api()}/api/subscription/toggle-auto-renew`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: uid, enabled })
             });
             const data = await r.json();
-            if (data.success) _toast(enabled ? 'Автопродление включено' : 'Автопродление отключено', 'info');
-            else _toast('Не удалось изменить настройку', 'error');
+            if (data.success) { _toast(enabled ? 'Автопродление включено' : 'Автопродление отключено', 'info'); }
+            else { _toast('Не удалось изменить настройку', 'error'); }
         } catch (e) { _toast('Ошибка сети', 'error'); }
     }
 
     async function _deleteCard() {
-        const uid = _uid(); if (!uid) return;
+        const uid = _uid();
+        if (!uid) return;
         try {
             const r = await fetch(`${_api()}/api/subscription/delete-card`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: uid })
             });
             const data = await r.json();
-            if (data.success) _toast('Карта удалена. Автопродление отключено.', 'info');
-            else _toast('Не удалось удалить карту', 'error');
+            if (data.success) { _toast('Карта удалена. Автопродление отключено.', 'info'); }
+            else { _toast('Не удалось удалить карту', 'error'); }
         } catch (e) { _toast('Ошибка сети', 'error'); }
     }
 
     function _formatDate(dateStr) {
-        if (!dateStr) return '—';
+        if (!dateStr) return '\u2014';
         return new Date(dateStr).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
     }
+
     function _daysLeft(dateStr) {
         if (!dateStr) return 0;
-        return Math.max(0, Math.ceil((new Date(dateStr) - new Date()) / (1000*60*60*24)));
+        return Math.max(0, Math.ceil((new Date(dateStr) - new Date()) / (1000 * 60 * 60 * 24)));
     }
+
+    function _escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     function _cardTypeIcon(type) {
         const t = (type || '').toLowerCase();
         if (t.includes('visa')) return '&#x1F4B3;';
@@ -120,63 +152,76 @@
 
     function _renderSavedCardsSection(card) {
         if (card) {
-            return `<div class="sub-cards-section">
-                <div class="sub-cards-title">Привязанные карты</div>
-                <div class="sub-card-item">
-                    <div class="sub-card-item-check">&#x2713;</div>
-                    <div class="sub-card-item-info">
-                        <div class="sub-card-item-number">${_cardTypeIcon(card.type)} **** **** **** ${card.last4}</div>
-                        <div class="sub-card-item-type">${(card.type || 'Bank card').toUpperCase()} &middot; Сохранена для автоплатежей</div>
+            return `
+                <div class="sub-cards-section">
+                    <div class="sub-cards-title">Привязанные карты</div>
+                    <div class="sub-card-item">
+                        <div class="sub-card-item-check">&#x2713;</div>
+                        <div class="sub-card-item-info">
+                            <div class="sub-card-item-number">${_cardTypeIcon(card.type)} **** **** **** ${_escapeHtml(card.last4)}</div>
+                            <div class="sub-card-item-type">${_escapeHtml((card.type || 'Bank card').toUpperCase())} &middot; Сохранена для автоплатежей</div>
+                        </div>
+                        <button class="sub-btn sub-btn-danger sub-btn-small" id="subDeleteCard">Удалить</button>
                     </div>
-                    <button class="sub-btn sub-btn-danger sub-btn-small" id="subDeleteCard">Удалить</button>
-                </div>
-            </div>`;
+                </div>`;
         }
-        return `<div class="sub-cards-section">
-            <div class="sub-cards-title">Привязанные карты</div>
-            <div class="sub-no-cards">Нет привязанных карт. Карта сохранится автоматически при оплате подписки.</div>
-        </div>`;
+        return `
+            <div class="sub-cards-section">
+                <div class="sub-cards-title">Привязанные карты</div>
+                <div class="sub-no-cards">Нет привязанных карт. Карта сохранится автоматически при оплате подписки.</div>
+            </div>`;
     }
 
     function _renderActiveSubscription(sub) {
         const days = _daysLeft(sub.expires_at);
-        return `<div class="sub-card sub-card-premium">
-            <div class="sub-badge sub-badge-active">&#x2713; Активна</div>
-            <div class="sub-title">Подписка Фреди Premium</div>
-            <div class="sub-desc">Полный доступ ко всем возможностям</div>
-            <div class="sub-info-row"><span class="sub-info-label">Следующее списание</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
-            <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-            <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">690 &#8381;/мес</span></div>
-            <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew?'Включено':'Выключено'}</span></div>
-            <div class="sub-divider"></div>
-            <div class="sub-btn-group">
-                ${sub.auto_renew?'<button class="sub-btn sub-btn-danger" id="subToggleAutoRenew">Отключить автопродление</button>':'<button class="sub-btn sub-btn-secondary" id="subToggleAutoRenew">Включить автопродление</button>'}
+        return `
+            <div class="sub-card sub-card-premium">
+                <div class="sub-badge sub-badge-active">&#x2713; Активна</div>
+                <div class="sub-title">Подписка Фреди Premium</div>
+                <div class="sub-desc">Полный доступ ко всем возможностям</div>
+                <div class="sub-info-row"><span class="sub-info-label">Следующее списание</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">690 &#8381;/мес</span></div>
+                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew ? 'Включено' : 'Выключено'}</span></div>
+                <div class="sub-divider"></div>
+                <div class="sub-btn-group">
+                    ${sub.auto_renew
+                        ? '<button class="sub-btn sub-btn-danger" id="subToggleAutoRenew">Отключить автопродление</button>'
+                        : '<button class="sub-btn sub-btn-secondary" id="subToggleAutoRenew">Включить автопродление</button>'
+                    }
+                </div>
             </div>
-        </div>
-        ${_renderSavedCardsSection(sub.card)}`;
+            ${_renderSavedCardsSection(sub.card)}`;
     }
 
     function _renderNoSubscription(sub) {
         const isExpired = sub && sub.status === 'expired';
         const card = sub ? sub.card : null;
-        return `<div class="sub-card">
-            <div class="sub-badge sub-badge-inactive">${isExpired?'Истекла':'Нет подписки'}</div>
-            <div class="sub-title">Фреди Premium</div>
-            <div class="sub-desc">Разблокируйте полный доступ к виртуальному психологу</div>
-            <div class="sub-price">690 &#8381;</div>
-            <div class="sub-price-period">в месяц, автопродление</div>
-            <ul class="sub-features">
-                <li><span class="sub-feature-icon">&#x1F9E0;</span> Безлимитные сессии с Фреди</li>
-                <li><span class="sub-feature-icon">&#x1F3AF;</span> Персональный план развития</li>
-                <li><span class="sub-feature-icon">&#x1F4D3;</span> AI-дневник с глубокой рефлексией</li>
-                <li><span class="sub-feature-icon">&#x1F319;</span> Гипнотические сессии и практики</li>
-                <li><span class="sub-feature-icon">&#x1FA9E;</span> Зеркало — анализ отношений</li>
-                <li><span class="sub-feature-icon">&#x1F3AD;</span> Транзактный анализ по Берну</li>
-            </ul>
-            <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 690 &#8381;</button>
-            <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Карта сохраняется для автопродления.</div>
-        </div>
-        ${_renderSavedCardsSection(card)}`;
+        return `
+            <div class="sub-card">
+                <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
+                <div class="sub-title">Фреди Premium</div>
+                <div class="sub-desc">Разблокируйте полный доступ к виртуальному психологу</div>
+                <div class="sub-price">690 &#8381;</div>
+                <div class="sub-price-period">в месяц, автопродление</div>
+                <ul class="sub-features">
+                    <li><span class="sub-feature-icon">&#x1F9E0;</span> Безлимитные сессии с Фреди</li>
+                    <li><span class="sub-feature-icon">&#x1F3AF;</span> Персональный план развития</li>
+                    <li><span class="sub-feature-icon">&#x1F4D3;</span> AI-дневник с глубокой рефлексией</li>
+                    <li><span class="sub-feature-icon">&#x1F319;</span> Гипнотические сессии и практики</li>
+                    <li><span class="sub-feature-icon">&#x1FA9E;</span> Зеркало — анализ отношений</li>
+                    <li><span class="sub-feature-icon">&#x1F3AD;</span> Транзактный анализ по Берну</li>
+                </ul>
+                <div style="margin-bottom:14px">
+                    <label style="font-size:12px;color:var(--text-secondary);display:block;margin-bottom:6px">Email для чека</label>
+                    <input type="email" id="subEmailInput" placeholder="your@email.com"
+                        style="width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);font-size:14px;font-family:inherit;box-sizing:border-box;outline:none"
+                        onfocus="this.style.borderColor='rgba(59,130,255,0.5)'" onblur="this.style.borderColor='rgba(224,224,224,0.18)'" />
+                </div>
+                <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку \u2014 690 &#8381;</button>
+                <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
+            </div>
+            ${_renderSavedCardsSection(card)}`;
     }
 
     async function renderSubscriptionSection(container) {
@@ -186,23 +231,27 @@
         if (sub && sub.has_subscription) {
             container.innerHTML = _renderActiveSubscription(sub);
             const toggleBtn = document.getElementById('subToggleAutoRenew');
-            if (toggleBtn) toggleBtn.addEventListener('click', async () => {
-                const newState = !sub.auto_renew;
-                if (!newState && !confirm('Отключить автопродление?')) return;
-                await _toggleAutoRenew(newState);
-                await renderSubscriptionSection(container);
-            });
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', async () => {
+                    const newState = !sub.auto_renew;
+                    if (!newState && !confirm('Отключить автопродление? Подписка останется активной до конца оплаченного периода.')) return;
+                    await _toggleAutoRenew(newState);
+                    await renderSubscriptionSection(container);
+                });
+            }
         } else {
             container.innerHTML = _renderNoSubscription(sub);
             const payBtn = document.getElementById('subPayBtn');
-            if (payBtn) payBtn.addEventListener('click', _createPayment);
+            if (payBtn) { payBtn.addEventListener('click', _createPayment); }
         }
         const deleteBtn = document.getElementById('subDeleteCard');
-        if (deleteBtn) deleteBtn.addEventListener('click', async () => {
-            if (!confirm('Удалить привязанную карту? Автопродление будет отключено.')) return;
-            await _deleteCard();
-            await renderSubscriptionSection(container);
-        });
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', async () => {
+                if (!confirm('Удалить привязанную карту? Автопродление будет отключено.')) return;
+                await _deleteCard();
+                await renderSubscriptionSection(container);
+            });
+        }
     }
 
     window.renderSubscriptionSection = renderSubscriptionSection;
