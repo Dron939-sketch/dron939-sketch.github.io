@@ -114,7 +114,7 @@
     </div>
     <div id="toastMessage" class="floating-message"><div class="floating-message-content"><div class="floating-message-text" id="toastText"></div><div class="floating-message-close" id="toastClose">✕</div></div></div>
     <script>
-        (function(){window.API_BASE_URL='https://fredi-backend-flz2.onrender.com';var s=localStorage.getItem('fredi_user_id');var u=(s&&!isNaN(parseInt(s)))?parseInt(s):Date.now();localStorage.setItem('fredi_user_id',u);window.USER_ID=u;})();
+        (function(){window.API_BASE_URL='https://fredi-backend-flz2.onrender.com';function _gc(n){var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):null;}function _sc(n,v){document.cookie=n+'='+encodeURIComponent(v)+';path=/;max-age=315360000;SameSite=Lax';}var u=null;try{var s=localStorage.getItem('fredi_user_id');if(s&&!isNaN(parseInt(s)))u=parseInt(s);}catch(e){}if(!u){var c=_gc('fredi_uid');if(c&&!isNaN(parseInt(c)))u=parseInt(c);}if(!u)u=Date.now();try{localStorage.setItem('fredi_user_id',u);}catch(e){}_sc('fredi_uid',u);window.USER_ID=u;})();
         var _pwa=null;window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_pwa=e;});
         function dotsToggle(e){if(e)e.stopPropagation();var p=document.getElementById('dotsPopup'),o=document.getElementById('dotsOverlay');if(p.classList.contains('open')){p.classList.remove('open');o.classList.remove('open');}else{p.classList.add('open');o.classList.add('open');}}
         function dotsClose(){document.getElementById('dotsPopup')?.classList.remove('open');document.getElementById('dotsOverlay')?.classList.remove('open');}

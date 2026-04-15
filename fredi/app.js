@@ -5,14 +5,21 @@
 const CONFIG = {
     API_BASE_URL: 'https://fredi-backend-flz2.onrender.com',
 
-    // USER_ID: всегда числовой (совместимо с бэкендом)
+    // USER_ID: всегда числовой (localStorage + cookie fallback)
     get USER_ID() {
-        let id = localStorage.getItem('fredi_user_id');
+        let id = null;
+        try { id = localStorage.getItem('fredi_user_id'); } catch(e){}
         if (!id || isNaN(parseInt(id))) {
-            id = Date.now();
-            localStorage.setItem('fredi_user_id', id);
+            const m = document.cookie.match(/(?:^|; )fredi_uid=([^;]*)/);
+            if (m) id = decodeURIComponent(m[1]);
         }
-        return parseInt(id);
+        if (!id || isNaN(parseInt(id))) {
+            id = window.USER_ID || Date.now();
+        }
+        id = parseInt(id);
+        try { localStorage.setItem('fredi_user_id', id); } catch(e){}
+        document.cookie = 'fredi_uid=' + id + ';path=/;max-age=315360000;SameSite=Lax';
+        return id;
     },
 
     get USER_NAME() {
@@ -182,7 +189,7 @@ async function generateNewThought() {
     try {
         const data = await apiCall('/api/psychologist-thoughts/generate', {
             method: 'POST',
-            body: JSON.stringify({ user_id: CONFIG.USER_ID, platform: 'web' })
+            body: JSON.stringify({ user_id: CONFIG.USER_ID })
         });
         return data.thought;
     } catch { return null; }
@@ -257,7 +264,7 @@ async function getIntervention(elementId) {
 }
 
 async function rebuildConfinementModel() {
-    try { return await apiCall(`/api/confinement/model/${CONFIG.USER_ID}/rebuild`, { method: 'POST', body: JSON.stringify({ platform: 'web' }) }); }
+    try { return await apiCall(`/api/confinement/model/${CONFIG.USER_ID}/rebuild`, { method: 'POST' }); }
     catch { return null; }
 }
 
@@ -285,13 +292,13 @@ async function processHypno(text, mode = currentMode) {
     try {
         return (await apiCall('/api/hypno/process', {
             method: 'POST',
-            body: JSON.stringify({ user_id: CONFIG.USER_ID, text, mode, platform: 'web' })
+            body: JSON.stringify({ user_id: CONFIG.USER_ID, text, mode })
         })).response;
     } catch { return 'Сделайте глубокий вдох... Вы в безопасности... Дышите...'; }
 }
 
 async function getHypnoSupport(text = '') {
-    try { return (await apiCall('/api/hypno/support', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, text, platform: 'web' }) })).response; }
+    try { return (await apiCall('/api/hypno/support', { method: 'POST', body: JSON.stringify({ text }) })).response; }
     catch { return 'Я здесь. Ты справляешься. Дыши спокойно.'; }
 }
 
@@ -674,7 +681,7 @@ async function switchMode(mode) {
     updateModeUI();
     if (voiceManager && voiceManager.setMode) voiceManager.setMode(mode);
     try {
-        await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode, platform: 'web' }) });
+        await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode }) });
     } catch (e) { console.warn('Failed to save mode:', e); }
     renderDashboard();
 }
