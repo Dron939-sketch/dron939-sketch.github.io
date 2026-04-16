@@ -512,9 +512,12 @@ function _msEsc(text) {
 async function _msFetch(endpoint, opts = {}) {
     const url = endpoint.startsWith('http') ? endpoint : _msApi() + endpoint;
     const uid = _msUserId();
-    const r = await fetch(url, {
+    // Добавляем user_id в query string вместо кастомного заголовка (CORS preflight)
+    const sep = url.includes('?') ? '&' : '?';
+    const urlWithUid = url + sep + 'user_id=' + uid;
+    const r = await fetch(urlWithUid, {
         ...opts,
-        headers: { 'Content-Type': 'application/json', 'X-User-Id': String(uid), ...opts.headers }
+        headers: { 'Content-Type': 'application/json', ...opts.headers }
     });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || 'HTTP ' + r.status);
@@ -565,7 +568,7 @@ async function _sendMessage(chatId, text) {
 }
 
 async function _markRead(chatId) {
-    try { await _msFetch(`/api/chats/${chatId}/read`, { method: 'PUT' }); } catch {}
+    try { await _msFetch(`/api/chats/${chatId}/read`, { method: 'POST', body: JSON.stringify({ user_id: _msUserId() }) }); } catch {}
     const c = _msState.chats.find(x => x.id === chatId);
     if (c) { c.unreadCount = 0; }
     _msState.unreadCount = _msState.chats.reduce((s, c) => s + (c.unreadCount || 0), 0);
@@ -716,7 +719,7 @@ function _renderNotifTab() {
     c.innerHTML = html;
 
     document.getElementById('msReadAll')?.addEventListener('click', async () => {
-        try { await _msFetch('/api/notifications/read-all', { method: 'PUT' }); } catch {}
+        try { await _msFetch('/api/notifications/read-all', { method: 'POST', body: JSON.stringify({ user_id: _msUserId() }) }); } catch {}
         _msState.notifications.forEach(n => n.isRead = true);
         _updateBadge();
         _renderNotifTab();
