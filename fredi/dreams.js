@@ -182,8 +182,7 @@ function _drInjectStyles() {
             --dream-muted: #6C6890;
             --dream-text: #E4E0FF;
         }
-        /* Фиолетовая атмосфера применяется ТОЛЬКО внутри .dr-dreams-scope — чтобы не протекала на другие экраны */
-        .dr-dreams-scope { background: var(--dream-bg); min-height: 100vh; }
+        #screenContainer { background: var(--dream-bg); }
 
         .dr-tabs {
             display:flex;gap:4px;background:rgba(155,140,255,0.06);border:1px solid rgba(155,140,255,0.12);
@@ -323,30 +322,7 @@ function _drInjectStyles() {
         @media (max-width: 480px) {
             .dr-voice-btn { width: 80px; height: 80px; }
             .recording-timer { font-size: 18px; }
-            /* Чипы школ компактнее на узких экранах */
-            .dr-school-chip { padding: 5px 9px; font-size: 11px; }
-            .dr-school-chip-emoji { font-size: 12px; }
-            /* Композер: voice-btn компактнее, textarea не расплющивается */
-            .dr-chat-composer { padding: 12px !important; }
-            .dr-voice-btn-compact { width: 42px !important; height: 42px !important; flex-shrink: 0; }
-            .dr-btn-send { min-width: 44px; padding: 0 10px; flex-shrink: 0; }
-            .dr-textarea-chat { min-width: 0; font-size: 14px; }
-            /* Чтобы чат занимал доступный вертикальный экран */
-            .dr-chat-wrap { min-height: calc(100vh - 160px); }
-            /* Symbol-модалка — меньше паддинг на узких */
-            .dr-symbol-card { padding: 22px 18px 18px; }
-            .dr-symbol-title { font-size: 20px; }
-            .dr-symbol-emoji { font-size: 46px; }
         }
-        @media (max-width: 360px) {
-            /* Совсем узкие экраны — ещё компактнее */
-            .dr-school-chip { padding: 4px 7px; font-size: 10px; }
-            .dr-voice-btn-compact { width: 38px !important; height: 38px !important; }
-            .dr-voice-btn-compact .dr-voice-icon { font-size: 22px !important; }
-        }
-
-        /* Textarea в композере не должна распирать flex-контейнер */
-        .dr-textarea-chat { min-width: 0; }
 
         /* ===== Press-анимация для всех кнопок модуля ===== */
         .dr-btn, .dr-btn-ghost, .dr-interpretation-btn, .dr-history-item {
@@ -429,6 +405,102 @@ function _drInjectStyles() {
         }
         [data-theme="light"] .recording-indicator { background: rgba(255,255,255,0.9); color: #1c1c1e; }
         [data-theme="light"] .recording-hint { color: rgba(0,0,0,0.5); }
+
+        /* ===== Light theme: Dreams module overrides =====
+           Переопределяем oneiric-токены, чтобы текст читался на светлом фоне.
+           Палитра: мягкая лавандовая бумага, тёмный индиго-текст, глубокий янтарь у символов. */
+        [data-theme="light"] .dr-dreams-scope {
+            --dream-bg: #F5F2FF;
+            --dream-card: #FFFFFF;
+            --dream-card-soft: rgba(255,255,255,0.85);
+            --dream-accent: #5D4FB8;
+            --dream-accent-soft: rgba(93,79,184,0.12);
+            --dream-symbol: #9A4A00;
+            --dream-muted: #6B6690;
+            --dream-text: #2A1E4A;
+            color: #2A1E4A;
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-chat-bubble,
+        [data-theme="light"] .dr-dreams-scope .dr-record-card,
+        [data-theme="light"] .dr-dreams-scope .dr-interpretation {
+            background: #FFFFFF;
+            border-color: rgba(93,79,184,0.2);
+            color: #2A1E4A;
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-chat-label,
+        [data-theme="light"] .dr-dreams-scope .dr-interpretation-text,
+        [data-theme="light"] .dr-dreams-scope .dr-chat-text,
+        [data-theme="light"] .dr-dreams-scope .content-title,
+        [data-theme="light"] .dr-dreams-scope h1,
+        [data-theme="light"] .dr-dreams-scope h2,
+        [data-theme="light"] .dr-dreams-scope h3 { color: #2A1E4A; }
+        [data-theme="light"] .dr-dreams-scope p,
+        [data-theme="light"] .dr-dreams-scope .dr-chat-label { color: #5D4FB8; }
+        [data-theme="light"] .dr-dreams-scope .dream-symbol {
+            background: linear-gradient(180deg, transparent 60%, rgba(154,74,0,0.18) 60%);
+            border-bottom-color: rgba(154,74,0,0.5);
+        }
+        [data-theme="light"] .dr-dreams-scope .dream-symbol-pill {
+            background: rgba(154,74,0,0.08);
+            border-color: rgba(154,74,0,0.28);
+        }
+        [data-theme="light"] .dr-dreams-scope .dream-symbols-legend {
+            border-top-color: rgba(93,79,184,0.2);
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-school-chip {
+            background: rgba(93,79,184,0.08);
+            border-color: rgba(93,79,184,0.3);
+            color: #2A1E4A;
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-school-chip:hover { background: rgba(93,79,184,0.18); }
+        [data-theme="light"] .dr-dreams-scope .dr-school-chip.is-active {
+            background: linear-gradient(135deg, #5D4FB8, #7C6DD5);
+            border-color: #5D4FB8;
+            color: #FFFFFF;
+            box-shadow: 0 0 12px rgba(93,79,184,0.28);
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-textarea,
+        [data-theme="light"] .dr-dreams-scope .dr-textarea-chat {
+            background: #FFFFFF;
+            border-color: rgba(93,79,184,0.28);
+            color: #2A1E4A;
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-textarea::placeholder { color: #8A84B0; }
+        [data-theme="light"] .dr-dreams-scope .dr-chat-log { background: transparent; }
+        [data-theme="light"] .dr-dreams-scope .dr-chat-composer {
+            background: rgba(255,255,255,0.92);
+            border-color: rgba(93,79,184,0.22);
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-tab { color: #6B6690; }
+        [data-theme="light"] .dr-dreams-scope .dr-tab.active { background: rgba(93,79,184,0.14); color: #2A1E4A; }
+        [data-theme="light"] .dr-dreams-scope .dr-history-item {
+            background: #FFFFFF;
+            border-color: rgba(93,79,184,0.15);
+            color: #2A1E4A;
+        }
+        [data-theme="light"] .dr-dreams-scope .dr-history-preview { color: #2A1E4A; }
+        [data-theme="light"] .dr-dreams-scope .dr-history-date { color: #6B6690; }
+        /* Звёзды на светлом фоне выглядят некрасиво — просто скрываем */
+        [data-theme="light"] .dr-dreams-scope .dr-starfield { display: none; }
+
+        /* Модалка символа на светлой теме — белая карточка */
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-backdrop { background: rgba(42,30,74,0.5); }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-card {
+            background: #FFFFFF;
+            border-color: rgba(93,79,184,0.35);
+            color: #2A1E4A;
+            box-shadow: 0 20px 60px rgba(42,30,74,0.35), 0 0 30px rgba(93,79,184,0.18);
+        }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-close { color: #5D4FB8; }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-close:hover { color: #2A1E4A; }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-title { color: #9A4A00; }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-school { color: #6B6690; }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-meaning { color: #2A1E4A; }
+        [data-theme="light"] .dr-symbol-modal .dr-symbol-stat {
+            background: rgba(93,79,184,0.07);
+            border-color: rgba(93,79,184,0.3);
+            color: #6B6690;
+        }
 
         /* Подсветка textarea после успешного распознавания голоса */
         @keyframes drTextareaGlow {
@@ -529,7 +601,7 @@ function _drInjectStyles() {
 
         /* Dream symbols inline highlighting + legend */
         .dream-symbol {
-            color: #ffb871;
+            color: var(--dream-symbol);
             background: linear-gradient(180deg, transparent 60%, rgba(255,184,113,0.22) 60%);
             padding: 0 2px;
             border-radius: 3px;
@@ -546,7 +618,7 @@ function _drInjectStyles() {
             padding: 3px 10px;
             border-radius: 12px;
             background: rgba(255,184,113,0.12);
-            color: #ffb871;
+            color: var(--dream-symbol);
             border: 1px solid rgba(255,184,113,0.28);
             cursor: help;
             user-select: none;
@@ -566,14 +638,17 @@ function _drInjectStyles() {
         }
         .dr-chat-wrap { position: relative; z-index: 1; }
 
-        /* School chip row — на мобильных заворачивается в несколько строк */
+        /* School chip row */
         .dr-school-row {
             display: flex;
-            flex-wrap: wrap;
             gap: 6px;
             margin-bottom: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             padding-bottom: 2px;
         }
+        .dr-school-row::-webkit-scrollbar { display: none; }
         .dr-school-chip {
             flex-shrink: 0;
             display: inline-flex;
@@ -796,17 +871,15 @@ function _drRender(container, completed) {
     if (_drActiveTab === 'history') body = _drRenderHistoryTab(completed);
 
     container.innerHTML = `
-        <div class="dr-dreams-scope">
-            <div class="full-content-page">
-                <button class="back-btn" id="drBack">◀️ НАЗАД</button>
-                <div class="content-header">
-                    <div class="content-emoji">🌙</div>
-                    <h1 class="content-title">Толкование снов</h1>
-                    <p style="font-size:12px;color:var(--text-secondary);margin-top:4px">Фреди анализирует символику ваших снов</p>
-                </div>
-                <div class="dr-tabs">${tabsHtml}</div>
-                <div id="drBody">${body}</div>
+        <div class="full-content-page">
+            <button class="back-btn" id="drBack">◀️ НАЗАД</button>
+            <div class="content-header">
+                <div class="content-emoji">🌙</div>
+                <h1 class="content-title">Толкование снов</h1>
+                <p style="font-size:12px;color:var(--text-secondary);margin-top:4px">Фреди анализирует символику ваших снов</p>
             </div>
+            <div class="dr-tabs">${tabsHtml}</div>
+            <div id="drBody">${body}</div>
         </div>
     `;
 
@@ -1873,24 +1946,22 @@ function viewDreamDetails(index) {
     const formatted = escapedInterpretation.replace(/\n/g, '<br>');
     
     container.innerHTML = `
-        <div class="dr-dreams-scope">
-            <div class="full-content-page">
-                <button class="back-btn" id="drDetailBack">◀️ НАЗАД</button>
-                <div class="content-header">
-                    <div class="content-emoji">🌙</div>
-                    <h1 class="content-title">${_drEscapeHtml(dream.date)}</h1>
-                </div>
+        <div class="full-content-page">
+            <button class="back-btn" id="drDetailBack">◀️ НАЗАД</button>
+            <div class="content-header">
+                <div class="content-emoji">🌙</div>
+                <h1 class="content-title">${_drEscapeHtml(dream.date)}</h1>
+            </div>
 
-                <div class="dr-record-card" style="text-align: left;">
-                    <h3>Ваш сон:</h3>
-                    <div style="background:rgba(155,140,255,0.04);border-radius:16px;padding:16px;margin:12px 0;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap">${escapedText}</div>
+            <div class="dr-record-card" style="text-align: left;">
+                <h3>Ваш сон:</h3>
+                <div style="background:rgba(155,140,255,0.04);border-radius:16px;padding:16px;margin:12px 0;color:var(--text-secondary);line-height:1.6;white-space:pre-wrap">${escapedText}</div>
 
-                    <h3 style="margin-top: 20px;">Толкование Фреди:</h3>
-                    <div class="dr-interpretation" style="margin-top: 0;">
-                        <div class="dr-interpretation-text">${formatted}</div>
-                        <div class="dr-interpretation-actions">
-                            <button class="dr-interpretation-btn" onclick="speakText('${dream.interpretation.replace(/'/g, "\\'").replace(/\n/g, ' ')}')">🔊 Озвучить</button>
-                        </div>
+                <h3 style="margin-top: 20px;">Толкование Фреди:</h3>
+                <div class="dr-interpretation" style="margin-top: 0;">
+                    <div class="dr-interpretation-text">${formatted}</div>
+                    <div class="dr-interpretation-actions">
+                        <button class="dr-interpretation-btn" onclick="speakText('${dream.interpretation.replace(/'/g, "\\'").replace(/\n/g, ' ')}')">🔊 Озвучить</button>
                     </div>
                 </div>
             </div>
