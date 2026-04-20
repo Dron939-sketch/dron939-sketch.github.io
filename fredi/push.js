@@ -1,7 +1,35 @@
 // push.js — подписка на push-уведомления
-// VAPID Public Key (вставляется автоматически)
-const PUSH_PUBLIC_KEY = 'BP-yST0xJbEGx5qfPdkPn2IGcLRru41wwQUdj9vXUOS7DqKd2lxMU_aAcrwRwnp9ioItzKeRFR8NNUOQ9zb2XBY';
+// VAPID public key подтягивается с бэка из env (VAPID_PUBLIC_KEY), чтобы фронт
+// и бэкенд гарантированно использовали одну и ту же пару ключей.
 const PUSH_API = window.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+let _pushPublicKey = null;
+let _pushKeyPromise = null;
+
+async function getPushPublicKey() {
+    if (_pushPublicKey) return _pushPublicKey;
+    if (_pushKeyPromise) return _pushKeyPromise;
+    _pushKeyPromise = (async () => {
+        try {
+            const res = await fetch(PUSH_API + '/api/push/vapid-public-key', {
+                credentials: 'include'
+            });
+            if (!res.ok) return null;
+            const data = await res.json();
+            if (data && data.enabled && data.publicKey) {
+                _pushPublicKey = String(data.publicKey).trim();
+                return _pushPublicKey;
+            }
+            console.warn('Push отключён на сервере:', data && data.error);
+            return null;
+        } catch (e) {
+            console.warn('Не удалось получить VAPID public key:', e);
+            return null;
+        } finally {
+            _pushKeyPromise = null;
+        }
+    })();
+    return _pushKeyPromise;
+}
 
 // ===== УТИЛИТЫ =====
 function urlBase64ToUint8Array(base64String) {
@@ -15,12 +43,7 @@ function urlBase64ToUint8Array(base64String) {
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return null;
     try {
-        const swPath = window.location.pathname.includes('/fredi/')
-            ? '/fredi/service_worker.js'
-            : '/service_worker.js';
-        const reg = await navigator.serviceWorker.register(swPath, {
-            scope: window.location.pathname.includes('/fredi/') ? '/fredi/' : '/'
-        });
+        const reg = await navigator.serviceWorker.register('/service_worker.js');
         console.log('✅ Service Worker зарегистрирован');
         return reg;
     } catch(e) {
@@ -33,14 +56,34 @@ async function registerServiceWorker() {
 async function subscribeToPush(userId) {
     try {
         const reg = await navigator.serviceWorker.ready;
+        const publicKey = await getPushPublicKey();
+        if (!publicKey) {
+            console.warn('Push subscribe: VAPID publicKey недоступен');
+            return null;
+        }
         const existing = await reg.pushManager.getSubscription();
         if (existing) {
-            await savePushSubscription(userId, existing.toJSON());
-            return existing;
+            // Если ключ сменился (ротация) — отписываемся и пересоздаём подписку.
+            const existingKey = existing.options && existing.options.applicationServerKey;
+            let sameKey = true;
+            try {
+                if (existingKey) {
+                    const existingB64 = btoa(String.fromCharCode.apply(null, new Uint8Array(existingKey)))
+                        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+                    sameKey = existingB64 === publicKey;
+                }
+            } catch (e) { sameKey = true; }
+
+            if (sameKey) {
+                await savePushSubscription(userId, existing.toJSON());
+                return existing;
+            }
+            console.log('🔄 VAPID ключ сменился — пересоздаём подписку');
+            try { await existing.unsubscribe(); } catch (e) {}
         }
         const sub = await reg.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(PUSH_PUBLIC_KEY)
+            applicationServerKey: urlBase64ToUint8Array(publicKey)
         });
         await savePushSubscription(userId, sub.toJSON());
         console.log('✅ Push подписка создана');
@@ -56,7 +99,7 @@ async function savePushSubscription(userId, subscription) {
         await fetch(PUSH_API + '/api/push/subscribe', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_id: userId, subscription, platform: 'web' })
+            body: JSON.stringify({ user_id: userId, subscription })
         });
     } catch(e) {
         console.warn('Failed to save push subscription:', e);
