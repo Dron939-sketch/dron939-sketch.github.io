@@ -666,7 +666,6 @@ ${genderNote}
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: _tlUid(),
-                    platform: 'web',
                     prompt,
                     max_tokens: 1800
                 })
@@ -711,6 +710,7 @@ ${genderNote}
 // ПОДКЛЮЧЕНИЕ К ЛЕВОМУ МЕНЮ
 // ============================================
 async function showTalesScreen() {
+    try { window.FrediTracker?.openFeature?.('tales'); } catch (e) {}
     _tl.view = 'list';
     _tlRender();
 }
