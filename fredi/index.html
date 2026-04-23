@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+        ym(99999999, 'init', {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true,
+            ecommerce: "dataLayer"
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/99999999" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -95,6 +117,39 @@
             _setCookie('fredi_uid', u);
             window.USER_ID = u;
         })();
+        
+        // ========== ОТСЛЕЖИВАНИЕ ПЕРЕХОДОВ МЕЖДУ РАЗДЕЛАМИ ==========
+        function trackSectionOpen(sectionName) {
+            if (typeof ym !== 'undefined') {
+                ym(99999999, 'reachGoal', 'open_section', { section: sectionName });
+                console.log('[Metrika] Открыт раздел:', sectionName);
+            }
+        }
+
+        // Перехватываем клики по пунктам меню
+        document.addEventListener('DOMContentLoaded', function() {
+            // Отслеживаем все клики по chat-item
+            const chatItems = document.querySelectorAll('.chat-item');
+            chatItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const chatId = this.getAttribute('data-chat');
+                    if (chatId) {
+                        // Отправляем событие в метрику
+                        trackSectionOpen(chatId);
+                    }
+                });
+            });
+            
+            // Отдельно отслеживаем секретную комнату
+            const secretBtn = document.getElementById('secretRoomBtn');
+            if (secretBtn) {
+                secretBtn.addEventListener('click', function() {
+                    trackSectionOpen('secret_room');
+                });
+            }
+        });
+        // ============================================================
+        
         window.addEventListener('load',function(){if(window.PushManager_Fredi&&window.USER_ID)window.PushManager_Fredi.init(window.USER_ID);var _p=false;document.getElementById('chatsList')?.addEventListener('click',function(){if(_p)return;_p=true;if(window.PushManager_Fredi&&window.USER_ID)window.PushManager_Fredi.request(window.USER_ID);},{once:true});var btn=document.getElementById('secretRoomBtn');if(btn)btn.addEventListener('click',function(){if(typeof openSecretRoom==='function')openSecretRoom();document.getElementById('chatsPanel')?.classList.remove('open');});});
     </script>
     <script src="tracker.js"></script>
