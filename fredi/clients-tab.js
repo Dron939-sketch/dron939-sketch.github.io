@@ -157,6 +157,7 @@
         '<td style="font-size:12px;color:var(--text-dim)">'+esc(r.notes||'')+'</td>' +
         '<td style="text-align:right;white-space:nowrap">' +
           '<button data-act="profile" data-uid="'+r.user_id+'" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface-hi);color:var(--text);font:inherit;font-size:12px;cursor:pointer;margin-right:4px">📋 Образ</button>' +
+          '<button data-act="dig" data-uid="'+r.user_id+'" style="padding:5px 10px;border-radius:6px;border:1px solid rgba(167,139,250,0.4);background:transparent;color:var(--accent);font:inherit;font-size:12px;cursor:pointer;margin-right:4px" title="Парсить VK-страницу">🔍 Копать</button>' +
           '<button data-act="unlink" data-uid="'+r.user_id+'" style="padding:5px 10px;border-radius:6px;border:1px solid rgba(248,113,113,0.4);background:transparent;color:var(--error);font:inherit;font-size:12px;cursor:pointer">🗑</button>' +
         '</td></tr>';
     }).join('');
@@ -168,6 +169,7 @@
       b.addEventListener('click', function(){
         var uid = b.dataset.uid;
         if (b.dataset.act === 'profile') openProfile(uid);
+        else if (b.dataset.act === 'dig') dig(uid, b);
         else if (b.dataset.act === 'unlink') unlink(uid);
       });
     });
@@ -230,6 +232,31 @@
     } catch(e){ alert('Ошибка: ' + e.message); }
   }
 
+  async function dig(uid, btn){
+    if (!uid) return;
+    var prevHTML = btn ? btn.innerHTML : '';
+    if (btn){ btn.disabled = true; btn.innerHTML = '⏳ копаю…'; }
+    try {
+      var r = await api('/api/admin/vk/parse/'+encodeURIComponent(uid), { method: 'POST' });
+      var s = (r && r.summary) || {};
+      var msg = '✓ Спарсено';
+      if (s.name) msg += ': ' + s.name;
+      if (s.is_closed) msg += ' (профиль закрыт)';
+      else {
+        var bits = [];
+        if (typeof s.wall_posts === 'number') bits.push(s.wall_posts + ' постов');
+        if (typeof s.groups_count === 'number') bits.push(s.groups_count + ' групп');
+        if (s.city) bits.push(s.city);
+        if (bits.length) msg += ' — ' + bits.join(', ');
+      }
+      alert(msg);
+      await loadVkTab();
+    } catch(e){
+      alert('Ошибка парсинга: ' + (e.message || ''));
+      if (btn){ btn.disabled = false; btn.innerHTML = prevHTML; }
+    }
+  }
+
   async function openProfile(uid){
     var ov = document.getElementById('vkProfileOverlay');
     ov.style.display = 'flex';
@@ -266,6 +293,57 @@
         (v.notes ? ' · <i>'+esc(v.notes)+'</i>' : '') +
         (v.parsed_at ? ' · <span style="color:var(--success)">spar.</span>' : '') +
       '</div>';
+
+      // Блок «спарсенное» — то что притянул POST /api/admin/vk/parse/.
+      // Показываем компактно: имя+город+год рождения, топ-10 групп, кол-во постов на стене.
+      // Полный JSON прячем под details для тех, кому нужно копаться.
+      if (v.vk_data && typeof v.vk_data === 'object'){
+        var vd = v.vk_data;
+        var vu = vd.user || {};
+        var wall = vd.wall || {};
+        var groups = vd.groups || {};
+        var bits = [];
+        if (vu.first_name || vu.last_name) bits.push('<b>'+esc((vu.first_name||'') + ' ' + (vu.last_name||'')).trim()+'</b>');
+        if (vu.city && vu.city.title) bits.push('🏙 '+esc(vu.city.title));
+        if (vu.bdate) bits.push('🎂 '+esc(vu.bdate));
+        if (vu.status) bits.push('💬 '+esc(vu.status));
+        if (vu.is_closed) bits.push('<span style="color:var(--warning)">🔒 закрыт</span>');
+        var head = bits.join(' · ');
+
+        var grpRows = '';
+        var grpItems = (groups && groups.items) || [];
+        if (grpItems.length){
+          grpRows = '<div style="margin-top:8px;font-size:12px"><b style="color:var(--accent)">Группы (топ '+Math.min(grpItems.length,10)+' из '+(groups.count||grpItems.length)+'):</b><ul style="margin:4px 0 0 18px;padding:0">' +
+            grpItems.slice(0,10).map(function(g){
+              var name = esc(g.name||'—');
+              var act = g.activity ? ' <span style="color:var(--text-dim)">— '+esc(g.activity)+'</span>' : '';
+              var url = g.screen_name ? ('https://vk.com/'+g.screen_name) : (g.id ? 'https://vk.com/club'+g.id : '');
+              return '<li>' + (url?'<a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:var(--text)">'+name+'</a>':name) + act + '</li>';
+            }).join('') + '</ul></div>';
+        } else if (groups && groups.error){
+          grpRows = '<div style="margin-top:8px;font-size:12px;color:var(--text-dim)">Группы: '+esc(groups.error)+'</div>';
+        }
+
+        var wallLine = '';
+        if (typeof wall.count === 'number'){
+          wallLine = '<div style="margin-top:6px;font-size:12px"><b style="color:var(--accent)">Стена:</b> '+wall.count+' постов всего';
+          var wi = (wall.items||[]).filter(function(p){ return p && p.text; });
+          if (wi.length){
+            wallLine += ', последние тексты: <span style="color:var(--text-dim)">'+esc(wi.slice(0,3).map(function(p){return p.text.slice(0,60);}).join(' / '))+'…</span>';
+          }
+          wallLine += '</div>';
+        } else if (wall && wall.error){
+          wallLine = '<div style="margin-top:6px;font-size:12px;color:var(--text-dim)">Стена: '+esc(wall.error)+'</div>';
+        }
+
+        html += '<div style="background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.25);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px">' +
+          '<div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">🔍 Спарсено с VK</div>' +
+          (head ? '<div>'+head+'</div>' : '') +
+          wallLine + grpRows +
+          '<details style="margin-top:8px;background:transparent;border:0;padding:0"><summary style="cursor:pointer;color:var(--accent);font-size:11px">сырой JSON</summary>' +
+          '<pre style="margin:4px 0 0;font-size:10px;line-height:1.4;white-space:pre-wrap;word-wrap:break-word;color:var(--text-dim);max-height:400px;overflow:auto">'+esc(JSON.stringify(vd,null,2))+'</pre></details>' +
+        '</div>';
+      }
     }
 
     if (Object.keys(p).length){
