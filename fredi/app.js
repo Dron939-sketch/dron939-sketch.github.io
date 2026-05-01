@@ -845,28 +845,65 @@ function updateModeUI() {
     if (indicator) indicator.style.background = config.color;
 }
 
+function showPremiumLockPopup(modeName) {
+    // Удаляем предыдущее окно, если есть
+    document.getElementById('premiumLockPopup')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'premiumLockPopup';
+    popup.className = 'premium-lock-popup';
+    popup.innerHTML = `
+        <div class="plp-backdrop"></div>
+        <div class="plp-card" role="dialog" aria-modal="true" aria-labelledby="plpTitle">
+            <button class="plp-close" aria-label="Закрыть">×</button>
+            <div class="plp-emoji">💎</div>
+            <div class="plp-title" id="plpTitle">Роль «${modeName}» — с подпиской</div>
+            <div class="plp-text">Диалог сейчас идёт в базовом режиме. С подпиской Фреди начнёт говорить как психолог, коуч или тренер — на ваш выбор.</div>
+            <div class="plp-actions">
+                <button class="plp-btn plp-btn-primary" data-action="upgrade">Открыть Premium</button>
+                <button class="plp-btn plp-btn-secondary" data-action="close">Понятно</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(popup);
+
+    const close = () => popup.remove();
+    popup.querySelector('.plp-close')?.addEventListener('click', close);
+    popup.querySelector('.plp-backdrop')?.addEventListener('click', close);
+    popup.querySelector('[data-action="close"]')?.addEventListener('click', close);
+    popup.querySelector('[data-action="upgrade"]')?.addEventListener('click', () => {
+        close();
+        if (typeof showSettingsScreen === 'function') {
+            try { showSettingsScreen(); return; } catch {}
+        }
+        const s = document.createElement('script');
+        s.src = 'settings.js';
+        s.onload = () => { if (typeof showSettingsScreen === 'function') showSettingsScreen(); };
+        document.head.appendChild(s);
+    });
+}
+
 async function switchMode(mode) {
     if (mode === currentMode) return;
     const config = MODES[mode];
     if (!config) return;
 
-    // Гейтинг: коуч/психолог/тренер доступны только с премиум-подпиской.
-    if (config.premium && IS_PREMIUM !== true) {
-        showToast(`🔒 Режим "${config.name}" — для подписчиков. Без подписки общение идёт в базовом режиме.`, 'info');
-        if (typeof showSettingsScreen === 'function') {
-            try { showSettingsScreen(); } catch {}
-        }
-        return;
-    }
-
+    // Клик меняет визуальный выбор (active-кнопка, приветствие в hero) даже без подписки.
     currentMode = mode;
-    showToast(`Режим "${config.name}" активирован`, 'success');
     updateModeUI();
-    // Голосовому менеджеру всегда сообщаем эффективный режим (basic для не-премиум).
-    if (voiceManager && voiceManager.setMode) voiceManager.setMode(getDialogMode());
-    try {
-        await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode }) });
-    } catch (e) { console.warn('Failed to save mode:', e); }
+
+    if (IS_PREMIUM === true) {
+        showToast(`Режим "${config.name}" активирован`, 'success');
+        if (voiceManager && voiceManager.setMode) voiceManager.setMode(getDialogMode());
+        try {
+            await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode }) });
+        } catch (e) { console.warn('Failed to save mode:', e); }
+    } else {
+        // Без подписки: визуальное переключение есть, но диалог остаётся базовым.
+        // Показываем мягкое окно про премиум.
+        showPremiumLockPopup(config.name);
+        if (voiceManager && voiceManager.setMode) voiceManager.setMode('basic');
+    }
     renderDashboard();
 }
 
@@ -1590,15 +1627,14 @@ function renderDashboard() {
             </div>
 
             <div class="mode-selector">
-                <button class="mode-btn ${currentMode === 'basic' ? 'active' : ''}" data-mode="basic">💬 БАЗОВЫЙ</button>
-                <button class="mode-btn ${currentMode === 'coach' ? 'active' : ''}${IS_PREMIUM !== true ? ' mode-btn-locked' : ''}" data-mode="coach">${IS_PREMIUM !== true ? '🔒' : '🔮'} КОУЧ</button>
-                <button class="mode-btn ${currentMode === 'psychologist' ? 'active' : ''}${IS_PREMIUM !== true ? ' mode-btn-locked' : ''}" data-mode="psychologist">${IS_PREMIUM !== true ? '🔒' : '🧠'} ПСИХОЛОГ</button>
-                <button class="mode-btn ${currentMode === 'trainer' ? 'active' : ''}${IS_PREMIUM !== true ? ' mode-btn-locked' : ''}" data-mode="trainer">${IS_PREMIUM !== true ? '🔒' : '⚡'} ТРЕНЕР</button>
+                <button class="mode-btn ${currentMode === 'coach' ? 'active' : ''}" data-mode="coach">🔮 КОУЧ</button>
+                <button class="mode-btn ${currentMode === 'psychologist' ? 'active' : ''}" data-mode="psychologist">🧠 ПСИХОЛОГ</button>
+                <button class="mode-btn ${currentMode === 'trainer' ? 'active' : ''}" data-mode="trainer">⚡ ТРЕНЕР</button>
             </div>
             ${IS_PREMIUM !== true ? `
-            <div class="mode-hint" style="text-align:center;font-size:12px;color:var(--text-secondary);margin:-8px 0 16px;line-height:1.5">
-                Без подписки диалог идёт в базовом режиме.
-                <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">Открыть Premium →</a>
+            <div class="mode-hint" style="text-align:center;font-size:11px;color:var(--text-secondary);margin:-6px 0 16px;line-height:1.5;opacity:0.85">
+                Сейчас работает базовый режим. Выбор роли —
+                <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">с подпиской</a>.
             </div>` : ''}
 
             <div class="voice-section">
