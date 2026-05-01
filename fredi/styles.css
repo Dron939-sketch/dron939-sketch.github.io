@@ -596,6 +596,15 @@ body::after {
     color: var(--text-primary);
 }
 
+.mode-btn-locked {
+    opacity: 0.55;
+    position: relative;
+}
+
+.mode-btn-locked:hover {
+    opacity: 0.75;
+}
+
 /* ===== ГОЛОСОВАЯ КНОПКА ===== */
 .voice-section { margin-bottom: 24px; }
 
