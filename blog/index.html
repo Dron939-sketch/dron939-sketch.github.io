@@ -45,447 +45,123 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #FFFFFF;
-      color: #1D1D1F;
-      line-height: 1.6;
-      overflow-x: hidden;
-      width: 100%;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      width: 100%;
-    }
-
-    /* ===== ТИПОГРАФИКА ===== */
-    h1, h2, h3 {
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 200;
-      margin: 60px 0 20px;
-      color: #3A86FF;
-    }
-
-    h2 {
-      font-size: 2.2rem;
-      font-weight: 300;
-      margin-bottom: 2rem;
-      color: #3A86FF;
-      letter-spacing: 0.15em;
-    }
-
-    p {
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: #3A3A3C;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ===== АНИМАЦИИ ===== */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .article-preview {
-      animation: fadeUp 0.6s ease-out forwards;
-      opacity: 0;
-    }
-
-    /* ===== ССЫЛКИ И КНОПКИ ===== */
-    a {
-      color: #3A86FF;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    a:hover {
-      color: #1D1D1F;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 32px;
-      border: 1px solid #3A86FF;
-      background: transparent;
-      color: #3A86FF;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-radius: 30px;
-      text-align: center;
-    }
-
-    .btn:hover {
-      background: #3A86FF;
-      color: #FFFFFF;
-      box-shadow: 0 0 20px rgba(58, 134, 255, 0.3);
-    }
-
-    /* ===== СТРАНИЦА БЛОГА ===== */
-    .blog-header {
-      padding: 40px 0 20px;
-      border-bottom: 1px solid #E0E0E0;
-      margin-bottom: 40px;
-    }
-
-    .blog-header h1 {
-      margin-bottom: 10px;
-    }
-
-    .blog-description {
-      color: #6E6E73;
-      font-size: 1.2rem;
-      max-width: 700px;
-      font-weight: 300;
-    }
-
-    .articles-list {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      margin: 40px 0;
-      min-height: 600px;
-    }
-
-    .article-preview {
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      gap: 30px;
-      padding: 30px;
-      background: #F5F5F7;
-      border: 1px solid #E0E0E0;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-
-    .article-preview:hover {
-      border-color: #3A86FF;
-      transform: translateX(5px);
-      box-shadow: 0 10px 30px rgba(58, 134, 255, 0.15);
-    }
-
-    .article-meta {
-      color: #6E6E73;
-      font-size: 0.9rem;
-      letter-spacing: 0.1em;
-    }
-
-    .article-meta span {
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .article-content h3 {
-      font-size: 1.8rem;
-      color: #1D1D1F;
-      margin-bottom: 15px;
-      font-weight: 500;
-      text-transform: none;
-      letter-spacing: normal;
-    }
-
-    .article-content p {
-      color: #3A3A3C;
-      margin-bottom: 20px;
-    }
-
-    .article-link {
-      color: #3A86FF;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-    }
-
-    .article-link:hover {
-      border-bottom-color: #3A86FF;
-    }
-
-    /* Пагинация */
-    .pagination {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 60px 0;
-    }
-
-    .pagination a {
-      display: inline-block;
-      padding: 10px 15px;
-      border: 1px solid #E0E0E0;
-      color: #1D1D1F;
-      transition: all 0.3s ease;
-      border-radius: 8px;
-      text-decoration: none;
-      cursor: pointer;
-      background: #FFFFFF;
-    }
-
-    .pagination a:hover:not(.disabled) {
-      background: #3A86FF;
-      border-color: #3A86FF;
-      color: #FFFFFF;
-    }
-
-    .pagination a.active {
-      background: #3A86FF;
-      border-color: #3A86FF;
-      color: #FFFFFF;
-      pointer-events: none;
-    }
-    
-    .pagination a.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    /* ===== ПОДВАЛ ===== */
-    .footer {
-      padding: 60px 0 30px;
-      border-top: 1px solid rgba(58, 134, 255, 0.2);
-      background-color: #0C0C0C;
-      margin-top: 60px;
-    }
-
-    .footer .container {
-      max-width: 1200px;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .footer-logo {
-      font-size: 1.2rem;
-      letter-spacing: 0.3em;
-      color: #F0F0F0;
-    }
-
-    .text-blue {
-      color: #3A86FF;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      color: #F0F0F0;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      border-bottom-color: #3A86FF;
-      color: #3A86FF;
-    }
-
-    .copyright {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.8rem;
-      opacity: 0.5;
-      color: #F0F0F0;
-    }
-
-    /* ===== АДАПТИВНОСТЬ ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #FFFFFF; color: #1D1D1F; line-height: 1.6; overflow-x: hidden; width: 100%; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; }
+    h1, h2, h3 { font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.2; }
+    h1 { font-size: 3.5rem; font-weight: 200; margin: 60px 0 20px; color: #3A86FF; }
+    h2 { font-size: 2.2rem; font-weight: 300; margin-bottom: 2rem; color: #3A86FF; letter-spacing: 0.15em; }
+    p { font-size: 1.1rem; font-weight: 300; color: #3A3A3C; margin-bottom: 1.5rem; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .article-preview { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+    a { color: #3A86FF; text-decoration: none; transition: all 0.3s ease; }
+    a:hover { color: #1D1D1F; }
+    .btn { display: inline-block; padding: 14px 32px; border: 1px solid #3A86FF; background: transparent; color: #3A86FF; text-decoration: none; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; border-radius: 30px; text-align: center; }
+    .btn:hover { background: #3A86FF; color: #FFFFFF; box-shadow: 0 0 20px rgba(58, 134, 255, 0.3); }
+    .blog-header { padding: 40px 0 20px; border-bottom: 1px solid #E0E0E0; margin-bottom: 40px; }
+    .blog-header h1 { margin-bottom: 10px; }
+    .blog-description { color: #6E6E73; font-size: 1.2rem; max-width: 700px; font-weight: 300; }
+    .articles-list { display: flex; flex-direction: column; gap: 30px; margin: 40px 0; min-height: 600px; }
+    .article-preview { display: grid; grid-template-columns: 1fr 3fr; gap: 30px; padding: 30px; background: #F5F5F7; border: 1px solid #E0E0E0; border-radius: 8px; transition: all 0.3s ease; }
+    .article-preview:hover { border-color: #3A86FF; transform: translateX(5px); box-shadow: 0 10px 30px rgba(58, 134, 255, 0.15); }
+    .article-meta { color: #6E6E73; font-size: 0.9rem; letter-spacing: 0.1em; }
+    .article-meta span { display: block; margin-bottom: 10px; }
+    .article-content h3 { font-size: 1.8rem; color: #1D1D1F; margin-bottom: 15px; font-weight: 500; text-transform: none; letter-spacing: normal; }
+    .article-content p { color: #3A3A3C; margin-bottom: 20px; }
+    .article-link { color: #3A86FF; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+    .article-link:hover { border-bottom-color: #3A86FF; }
+    .pagination { display: flex; justify-content: center; gap: 15px; margin: 60px 0; }
+    .pagination a { display: inline-block; padding: 10px 15px; border: 1px solid #E0E0E0; color: #1D1D1F; transition: all 0.3s ease; border-radius: 8px; text-decoration: none; cursor: pointer; background: #FFFFFF; }
+    .pagination a:hover:not(.disabled) { background: #3A86FF; border-color: #3A86FF; color: #FFFFFF; }
+    .pagination a.active { background: #3A86FF; border-color: #3A86FF; color: #FFFFFF; pointer-events: none; }
+    .pagination a.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+    .footer { padding: 60px 0 30px; border-top: 1px solid rgba(58, 134, 255, 0.2); background-color: #0C0C0C; margin-top: 60px; }
+    .footer .container { max-width: 1200px; }
+    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+    .footer-logo { font-size: 1.2rem; letter-spacing: 0.3em; color: #F0F0F0; }
+    .text-blue { color: #3A86FF; }
+    .social-links { display: flex; gap: 30px; flex-wrap: wrap; }
+    .social-links a { color: #F0F0F0; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid transparent; padding-bottom: 3px; transition: all 0.3s ease; }
+    .social-links a:hover { border-bottom-color: #3A86FF; color: #3A86FF; }
+    .copyright { text-align: center; margin-top: 40px; font-size: 0.8rem; opacity: 0.5; color: #F0F0F0; }
     @media (max-width: 768px) {
       h1 { font-size: 2.5rem; }
-      
-      .article-preview {
-        grid-template-columns: 1fr;
-        gap: 15px;
-        padding: 20px;
-      }
-      
-      .article-content h3 {
-        font-size: 1.5rem;
-      }
-      
-      .pagination {
-        gap: 10px;
-      }
-      
-      .footer-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
+      .article-preview { grid-template-columns: 1fr; gap: 15px; padding: 20px; }
+      .article-content h3 { font-size: 1.5rem; }
+      .pagination { gap: 10px; }
+      .footer-content { flex-direction: column; align-items: flex-start; gap: 15px; }
     }
   </style>
   
-  <!-- ========== МИКРОРАЗМЕТКА SCHEMA.ORG ========== -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Главная",
-        "item": "https://meysternlp.ru/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Блог",
-        "item": "https://meysternlp.ru/blog/"
-      }
-    ]
-  }
+  { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{ "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/" }, { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/" }] }
   </script>
-  
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Андрей Мейстер",
-    "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению",
-    "url": "https://meysternlp.ru/obo-mne/",
-    "sameAs": [
-      "https://t.me/meysternlp",
-      "https://vk.com/meysternlp",
-      "https://rutube.ru/channel/29916593/",
-      "https://dzen.ru/89857788588"
-    ]
-  }
+  { "@context": "https://schema.org", "@type": "Person", "name": "Андрей Мейстер", "description": "Психолог, НЛП-тренер, автор книг по теории манипуляции и системному мышлению", "url": "https://meysternlp.ru/obo-mne/", "sameAs": ["https://t.me/meysternlp", "https://vk.com/meysternlp", "https://rutube.ru/channel/29916593/", "https://dzen.ru/89857788588"] }
   </script>
-  
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Блог Андрея Мейстера",
-    "description": "Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков",
-    "url": "https://meysternlp.ru/blog/"
-  }
+  { "@context": "https://schema.org", "@type": "Blog", "name": "Блог Андрея Мейстера", "description": "Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков", "url": "https://meysternlp.ru/blog/" }
   </script>
-  <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
-
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
     ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
 
 </head>
 <body>
 
-<!-- ПОДКЛЮЧАЕМ ШАПКУ -->
 <div id="header-placeholder"></div>
 
 <script>
-  fetch('/header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('header-placeholder').innerHTML = data;
-      setTimeout(() => {
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-          if (link.getAttribute('href') && link.getAttribute('href').includes('/blog/')) {
-            link.classList.add('active');
-          }
-        });
-        const burger = document.getElementById('burgerBtn');
-        const nav = document.getElementById('navLinks');
-        if (burger && nav) {
-          burger.addEventListener('click', () => {
-            burger.classList.toggle('active');
-            nav.classList.toggle('active');
-            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-          });
-          nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            });
-          });
-          window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-              burger.classList.remove('active');
-              nav.classList.remove('active');
-              document.body.style.overflow = '';
-            }
-          });
-        }
-      }, 100);
-    })
-    .catch(() => {
-      document.getElementById('header-placeholder').innerHTML = '<header style="padding:20px 0;background:#0C0C0C;border-bottom:1px solid #3A86FF33;text-align:center;"><a href="/" style="color:#fff;font-size:1.5rem;letter-spacing:0.3em;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</a></header>';
-    });
+  fetch('/header.html').then(response => response.text()).then(data => {
+    document.getElementById('header-placeholder').innerHTML = data;
+    setTimeout(() => {
+      const navLinks = document.querySelectorAll('.nav-links a');
+      navLinks.forEach(link => { if (link.getAttribute('href') && link.getAttribute('href').includes('/blog/')) link.classList.add('active'); });
+      const burger = document.getElementById('burgerBtn');
+      const nav = document.getElementById('navLinks');
+      if (burger && nav) {
+        burger.addEventListener('click', () => { burger.classList.toggle('active'); nav.classList.toggle('active'); document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : ''; });
+        nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { burger.classList.remove('active'); nav.classList.remove('active'); document.body.style.overflow = ''; }));
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) { burger.classList.remove('active'); nav.classList.remove('active'); document.body.style.overflow = ''; } });
+      }
+    }, 100);
+  }).catch(() => { document.getElementById('header-placeholder').innerHTML = '<header style="padding:20px 0;background:#0C0C0C;border-bottom:1px solid #3A86FF33;text-align:center;"><a href="/" style="color:#fff;font-size:1.5rem;letter-spacing:0.3em;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</a></header>'; });
 </script>
 
-<!-- ОСНОВНОЙ КОНТЕНТ -->
 <div class="container">
   <div class="blog-header">
     <h1>БЛОГ</h1>
     <p class="blog-description">Статьи о системном мышлении, психологии влияния и развитии когнитивных навыков</p>
   </div>
-
-  <div class="articles-list" id="articles-list-container">
-    <div style="text-align:center; padding: 40px;">Загрузка статей...</div>
-  </div>
-
+  <div class="articles-list" id="articles-list-container"><div style="text-align:center; padding: 40px;">Загрузка статей...</div></div>
   <div class="pagination" id="pagination-container"></div>
 </div>
 
-<!-- ПОДКЛЮЧАЕМ ПОДВАЛ -->
 <div id="footer-placeholder"></div>
 
 <script>
-  // БАЗА ДАННЫХ СТАТЕЙ (сортировка от новых к старым)
   const articlesDatabase = [
+    {
+      id: 18,
+      date: "2026-06-05",
+      dateFormatted: "05.06.2026",
+      views: "0",
+      title: "Андрей Мейстер: 20 лет в НЛП и почему я создал ИИ-психолога Фреди",
+      description: "Личный манифест автора. 20 лет практики, 5 главных уроков, логика проекта Фреди как продолжения авторской методологии. Книги, тренинги, игры и ИИ-психолог в единой системе...",
+      link: "/blog/andrej-mejster-20-let-i-pochemu-fredi.html"
+    },
+    {
+      id: 17,
+      date: "2026-05-29",
+      dateFormatted: "29.05.2026",
+      views: "0",
+      title: "Сказки-катарсис: как метафоры лечат то, к чему не подойти напрямую",
+      description: "Метод катарсиса от Аристотеля до Брейера и Фрейда. Почему сказка работает там, где разговор бесполезен. Виды терапевтических сказок, алгоритм самостоятельной работы и границы метода...",
+      link: "/blog/skazki-katarsis-terapiya-metafor.html"
+    },
     {
       id: 16,
       date: "2026-05-22",
@@ -623,7 +299,6 @@
     }
   ];
 
-  // Пагинация
   const ITEMS_PER_PAGE = 3;
   let currentPage = 1;
   const totalPages = Math.ceil(articlesDatabase.length / ITEMS_PER_PAGE);
@@ -632,15 +307,9 @@
     const start = (page - 1) * ITEMS_PER_PAGE;
     const end = start + ITEMS_PER_PAGE;
     const pageArticles = articlesDatabase.slice(start, end);
-    
     const container = document.getElementById('articles-list-container');
     if (!container) return;
-    
-    if (pageArticles.length === 0) {
-      container.innerHTML = '<div style="text-align:center; padding: 40px;">Статьи не найдены</div>';
-      return;
-    }
-    
+    if (pageArticles.length === 0) { container.innerHTML = '<div style="text-align:center; padding: 40px;">Статьи не найдены</div>'; return; }
     let html = '';
     pageArticles.forEach((article, index) => {
       html += `
@@ -663,37 +332,16 @@
   function renderPagination() {
     const container = document.getElementById('pagination-container');
     if (!container) return;
-    
-    if (totalPages <= 1) {
-      container.innerHTML = '';
-      return;
-    }
-    
+    if (totalPages <= 1) { container.innerHTML = ''; return; }
     let html = '';
-    
-    // Кнопка "Назад"
-    if (currentPage === 1) {
-      html += `<a class="disabled">← Назад</a>`;
-    } else {
-      html += `<a onclick="goToPage(${currentPage - 1})">← Назад</a>`;
-    }
-    
-    // Номера страниц
+    if (currentPage === 1) html += `<a class="disabled">← Назад</a>`;
+    else html += `<a onclick="goToPage(${currentPage - 1})">← Назад</a>`;
     for (let i = 1; i <= totalPages; i++) {
-      if (i === currentPage) {
-        html += `<a class="active">${i}</a>`;
-      } else {
-        html += `<a onclick="goToPage(${i})">${i}</a>`;
-      }
+      if (i === currentPage) html += `<a class="active">${i}</a>`;
+      else html += `<a onclick="goToPage(${i})">${i}</a>`;
     }
-    
-    // Кнопка "Вперёд"
-    if (currentPage === totalPages) {
-      html += `<a class="disabled">Вперёд →</a>`;
-    } else {
-      html += `<a onclick="goToPage(${currentPage + 1})">Вперёд →</a>`;
-    }
-    
+    if (currentPage === totalPages) html += `<a class="disabled">Вперёд →</a>`;
+    else html += `<a onclick="goToPage(${currentPage + 1})">Вперёд →</a>`;
     container.innerHTML = html;
   }
 
@@ -705,34 +353,27 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Инициализация
   renderArticles(1);
   renderPagination();
 
-  // Загрузка подвала
-  fetch('/footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
-    })
-    .catch(() => {
-      document.getElementById('footer-placeholder').innerHTML = `
-        <footer class="footer">
-          <div class="container">
-            <div class="footer-content">
-              <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
-              <div class="social-links">
-                <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
-                <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
-                <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
-                <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
-              </div>
+  fetch('/footer.html').then(response => response.text()).then(data => { document.getElementById('footer-placeholder').innerHTML = data; }).catch(() => {
+    document.getElementById('footer-placeholder').innerHTML = `
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+            <div class="social-links">
+              <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+              <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+              <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+              <a href="https://dzen.ru/89857788588" target="_blank" rel="noopener noreferrer">Дзен</a>
             </div>
-            <div class="copyright">© Андрей Мейстер · 2026</div>
           </div>
-        </footer>
-      `;
-    });
+          <div class="copyright">© Андрей Мейстер · 2026</div>
+        </div>
+      </footer>
+    `;
+  });
 </script>
 
 </body>
