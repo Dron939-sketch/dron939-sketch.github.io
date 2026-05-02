@@ -196,7 +196,6 @@
             <div class="chats-footer">
                 <div class="nav-divider"></div>
                 <div class="chat-item" data-chat="settings" id="settingsBtn"><span class="nav-icon">⚙️</span><span class="nav-name">Настройки</span></div>
-                <div class="chat-item" id="secretRoomBtn" style="opacity:0.3"><span class="nav-icon">🔐</span><span class="nav-name" style="font-size:11px;color:var(--text-secondary)">Секретная комната</span></div>
             </div>
         </div>
         <div class="chat-panel" id="chatPanel">
@@ -323,14 +322,8 @@
                 });
             });
             
-            const secretBtn = document.getElementById('secretRoomBtn');
-            if (secretBtn) {
-                secretBtn.addEventListener('click', function() {
-                    trackSectionOpen('secret_room');
-                });
-            }
         });
-        
+
         window.addEventListener('load',function(){
             if(window.PushManager_Fredi && window.USER_ID) window.PushManager_Fredi.init(window.USER_ID);
             var _p=false;
@@ -339,11 +332,6 @@
                 _p=true;
                 if(window.PushManager_Fredi && window.USER_ID) window.PushManager_Fredi.request(window.USER_ID);
             },{once:true});
-            var btn=document.getElementById('secretRoomBtn');
-            if(btn) btn.addEventListener('click',function(){
-                if(typeof openSecretRoom==='function') openSecretRoom();
-                document.getElementById('chatsPanel')?.classList.remove('open');
-            });
         });
     </script>
     
