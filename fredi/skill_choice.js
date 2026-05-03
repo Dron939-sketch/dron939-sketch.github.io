@@ -1,5 +1,6 @@
 // ============================================
-// skill_choice.js — v2.4 — Боевой режим + Кэш базового плана + Персонализация
+// skill_choice.js — Выбор навыка + план
+// Версия 3.0 — план по дням + промис + превью пути
 // ============================================
 
 function _scInjectStyles() {
@@ -7,343 +8,436 @@ function _scInjectStyles() {
     const s = document.createElement('style');
     s.id = 'sc-v2-styles';
     s.textContent = `
-        .sc-skill-card { background: rgba(224,224,224,0.04); border: 1px solid rgba(224,224,224,0.1); border-radius: 16px; padding: 14px; margin-bottom: 8px; cursor: pointer; transition: background 0.18s, border-color 0.18s, transform 0.12s; display: flex; align-items: center; gap: 12px; touch-action: manipulation; }
+        .sc-skill-card {
+            background: rgba(224,224,224,0.04);
+            border: 1px solid rgba(224,224,224,0.1);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.18s, border-color 0.18s, transform 0.12s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            touch-action: manipulation;
+        }
         .sc-skill-card:hover  { background: rgba(224,224,224,0.09); border-color: rgba(224,224,224,0.22); }
         .sc-skill-card:active { transform: scale(0.98); }
         .sc-skill-card.active { background: rgba(224,224,224,0.15); border-color: rgba(224,224,224,0.38); }
         .sc-skill-body  { flex: 1; min-width: 0; }
-        .sc-skill-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
-        .sc-skill-new   { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; background: rgba(255,107,53,0.15); color: #FF8B5C; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; }
+        .sc-skill-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
         .sc-skill-sub   { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
-        .sc-skill-arrow { font-size: 16px; color: var(--text-secondary); flex-shrink: 0; opacity: 0.5; }
-        .sc-skill-card:hover .sc-skill-arrow { opacity: 1; color: var(--chrome,#3A86FF); }
-        .sc-skill-score { font-size: 11px; font-weight: 700; color: var(--text-secondary); flex-shrink: 0; background: rgba(224,224,224,0.08); border: 1px solid rgba(224,224,224,0.14); border-radius: 20px; padding: 3px 9px; }
+        .sc-skill-score {
+            font-size: 11px; font-weight: 700; color: var(--text-secondary);
+            flex-shrink: 0; background: rgba(224,224,224,0.08);
+            border: 1px solid rgba(224,224,224,0.14); border-radius: 20px;
+            padding: 3px 9px;
+        }
         .sc-skill-bar-wrap { height: 3px; background: rgba(224,224,224,0.1); border-radius: 2px; margin-top: 6px; overflow: hidden; }
         .sc-skill-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--silver-brushed), var(--chrome)); }
 
-        .sc-input { width: 100%; background: rgba(224,224,224,0.07); border: 1px solid rgba(224,224,224,0.18); border-radius: 14px; padding: 12px 14px; color: var(--text-primary); font-family: inherit; font-size: 14px; outline: none; box-sizing: border-box; -webkit-appearance: none; }
+        .sc-input {
+            width: 100%;
+            background: rgba(224,224,224,0.07);
+            border: 1px solid rgba(224,224,224,0.18);
+            border-radius: 14px;
+            padding: 12px 14px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+        }
         .sc-input:focus { border-color: rgba(224,224,224,0.35); }
         .sc-input::placeholder { color: var(--text-secondary); }
 
-        .sc-btn { padding: 11px 20px; border-radius: 30px; font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; transition: background 0.2s, transform 0.15s; min-height: 42px; touch-action: manipulation; outline: none; }
+        .sc-btn {
+            padding: 11px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            min-height: 42px;
+            touch-action: manipulation;
+            outline: none;
+        }
         .sc-btn:active { transform: scale(0.97); }
-        .sc-btn-primary { background: linear-gradient(135deg, rgba(224,224,224,0.2), rgba(192,192,192,0.1)); border: 1px solid rgba(224,224,224,0.3); color: var(--text-primary); width: 100%; border-radius: 40px; padding: 13px; }
+        .sc-btn-primary {
+            background: linear-gradient(135deg, rgba(224,224,224,0.2), rgba(192,192,192,0.1));
+            border: 1px solid rgba(224,224,224,0.3);
+            color: var(--text-primary);
+            width: 100%;
+            border-radius: 40px;
+            padding: 13px;
+        }
         .sc-btn-primary:hover { background: linear-gradient(135deg, rgba(224,224,224,0.28), rgba(192,192,192,0.16)); }
         .sc-btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
-        .sc-btn-ghost { background: rgba(224,224,224,0.05); border: 1px solid rgba(224,224,224,0.14); color: var(--text-secondary); }
+        .sc-btn-ghost {
+            background: rgba(224,224,224,0.05);
+            border: 1px solid rgba(224,224,224,0.14);
+            color: var(--text-secondary);
+        }
         .sc-btn-ghost:hover { background: rgba(224,224,224,0.1); color: var(--text-primary); }
         .sc-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .sc-btn-combat {
-            background: linear-gradient(135deg, #FF6B35, #FF8B5C);
-            border: none; color: white; width: 100%;
-            border-radius: 40px; padding: 14px; font-weight: 600; font-size: 14px;
-            box-shadow: 0 4px 16px rgba(255,107,53,0.25);
-        }
-        .sc-btn-combat:hover { background: linear-gradient(135deg, #FF8B5C, #FF6B35); box-shadow: 0 6px 20px rgba(255,107,53,0.35); transform: translateY(-1px); }
 
-        .sc-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; margin-top: 18px; }
-        .sc-custom-block { background: rgba(224,224,224,0.03); border: 1px solid rgba(224,224,224,0.1); border-radius: 16px; padding: 14px; margin-top: 8px; }
+        .sc-section-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+            color: var(--text-secondary); margin-bottom: 10px; margin-top: 18px;
+        }
+        .sc-custom-block {
+            background: rgba(224,224,224,0.03);
+            border: 1px solid rgba(224,224,224,0.1);
+            border-radius: 16px;
+            padding: 14px;
+            margin-top: 8px;
+        }
         .sc-custom-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
 
-        /* ОПИСАНИЕ */
-        .sc-detail-hero { background: linear-gradient(135deg, rgba(58,134,255,0.10), rgba(99,102,241,0.04)); border: 1px solid rgba(58,134,255,0.25); border-radius: 20px; padding: 22px 22px 20px; margin-bottom: 16px; }
-        .sc-detail-cat { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--chrome,#3A86FF); margin-bottom: 10px; }
-        .sc-detail-title { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; line-height: 1.25; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-        .sc-detail-tag-new { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; background: rgba(255,107,53,0.18); color: #FF8B5C; padding: 3px 8px; border-radius: 8px; text-transform: uppercase; }
-        .sc-detail-short { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0; }
+        /* ===== ПРЕВЬЮ ПУТИ (после клика по навыку) ===== */
+        .sc-preview {
+            background: linear-gradient(135deg, rgba(224,224,224,0.09), rgba(192,192,192,0.03));
+            border: 1px solid rgba(224,224,224,0.22);
+            border-radius: 18px;
+            padding: 16px;
+            margin: 12px 0 4px;
+            animation: scFade .25s ease;
+        }
+        @keyframes scFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+        .sc-preview-promise-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+            color: var(--chrome); margin-bottom: 6px;
+        }
+        .sc-preview-promise {
+            font-size: 14px; line-height: 1.5; color: var(--text-primary); font-weight: 500;
+            margin-bottom: 14px;
+        }
+        .sc-phases { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+        .sc-phase {
+            display: flex; gap: 10px; align-items: flex-start;
+            padding: 10px 12px;
+            background: rgba(224,224,224,0.04);
+            border: 1px solid rgba(224,224,224,0.1);
+            border-radius: 12px;
+        }
+        .sc-phase-num {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: rgba(224,224,224,0.15); color: var(--chrome);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+        }
+        .sc-phase-body { min-width: 0; }
+        .sc-phase-theme  { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+        .sc-phase-mean   { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
 
-        .sc-detail-section { background: rgba(224,224,224,0.04); border: 1px solid rgba(224,224,224,0.1); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
-        .sc-detail-h { font-size: 12px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; }
-        .sc-detail-p { font-size: 13px; color: var(--text-primary); line-height: 1.6; margin: 0; }
+        .sc-preview-toggle {
+            font-size: 12px; color: var(--text-secondary); cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 0; user-select: none;
+        }
+        .sc-preview-toggle:hover { color: var(--chrome); }
+        .sc-preview-toggle .arr { transition: transform 0.2s; display: inline-block; }
+        .sc-preview-toggle.open .arr { transform: rotate(90deg); }
 
-        .sc-detail-outcomes { list-style: none; padding: 0; margin: 0; }
-        .sc-detail-outcomes li { font-size: 13px; color: var(--text-primary); line-height: 1.55; padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid rgba(224,224,224,0.06); }
-        .sc-detail-outcomes li:last-child { border-bottom: none; }
-        .sc-detail-outcomes li::before { content: '✓'; position: absolute; left: 0; top: 8px; color: #5EE0A8; font-weight: 700; font-size: 13px; }
+        .sc-preview-days {
+            margin-top: 8px;
+            border-top: 1px solid rgba(224,224,224,0.1); padding-top: 10px;
+            display: none;
+        }
+        .sc-preview-days.open { display: block; }
+        .sc-preview-week { margin-bottom: 10px; }
+        .sc-preview-week:last-child { margin-bottom: 0; }
+        .sc-preview-week-title {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+            color: var(--text-secondary); margin-bottom: 4px;
+        }
+        .sc-preview-day-row {
+            display: flex; gap: 8px; padding: 4px 0;
+            font-size: 12px; color: var(--text-secondary); line-height: 1.4;
+        }
+        .sc-preview-day-row .n {
+            color: var(--chrome); font-weight: 700; min-width: 22px;
+        }
+        .sc-preview-day-row .t { flex: 1; }
+        .sc-preview-day-row .d { font-size: 11px; opacity: 0.7; flex-shrink: 0; }
 
-        .sc-week-preview { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .sc-week-preview-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; background: rgba(224,224,224,0.04); border-radius: 12px; border-left: 3px solid rgba(58,134,255,0.4); }
-        .sc-week-preview-num { font-size: 11px; font-weight: 700; color: var(--chrome,#3A86FF); min-width: 60px; letter-spacing: 0.4px; }
-        .sc-week-preview-text { font-size: 12.5px; color: var(--text-primary); line-height: 1.45; flex: 1; }
-
-        .sc-detail-format { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-        .sc-detail-format-item { background: rgba(224,224,224,0.04); border: 1px solid rgba(224,224,224,0.1); border-radius: 12px; padding: 10px; text-align: center; }
-        .sc-detail-format-icon { font-size: 18px; margin-bottom: 4px; }
-        .sc-detail-format-text { font-size: 10px; color: var(--text-secondary); line-height: 1.3; }
-        .sc-detail-format-text strong { color: var(--text-primary); display: block; font-size: 11px; }
-
-        /* ПЛАН */
-        .sc-plan-header { background: linear-gradient(135deg, rgba(224,224,224,0.08), rgba(192,192,192,0.02)); border: 1px solid rgba(224,224,224,0.18); border-radius: 18px; padding: 16px 18px; margin-bottom: 14px; }
-        .sc-plan-skill { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-        .sc-plan-streak { font-size: 11px; font-weight: 600; background: rgba(255,107,53,0.15); color: #FF8B5C; padding: 4px 10px; border-radius: 12px; letter-spacing: 0.2px; }
+        /* ===== АКТИВНЫЙ ПЛАН ===== */
+        .sc-plan-header {
+            background: linear-gradient(135deg, rgba(224,224,224,0.08), rgba(192,192,192,0.02));
+            border: 1px solid rgba(224,224,224,0.18);
+            border-radius: 18px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+        }
+        .sc-plan-skill { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .sc-plan-promise { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px; }
         .sc-plan-meta  { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
         .sc-plan-progress { height: 4px; background: rgba(224,224,224,0.1); border-radius: 2px; margin-top: 10px; overflow: hidden; }
         .sc-plan-progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--silver-brushed), var(--chrome)); transition: width 0.4s; }
-        .sc-plan-channel { font-size: 11px; color: var(--text-secondary); margin-top: 8px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-        .sc-plan-channel strong { color: var(--text-primary); font-weight: 600; }
-        .sc-plan-channel a { color: var(--chrome); text-decoration: none; cursor: pointer; }
-        .sc-plan-channel a:hover { text-decoration: underline; }
 
-        /* БОЕВОЙ РЕЖИМ — карточка */
-        .sc-combat-card {
-            background: linear-gradient(135deg, rgba(255,107,53,0.10), rgba(255,139,92,0.04));
-            border: 1px solid rgba(255,107,53,0.30);
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 14px;
-        }
-        .sc-combat-card.on {
-            background: linear-gradient(135deg, rgba(61,220,151,0.10), rgba(61,220,151,0.03));
-            border-color: rgba(61,220,151,0.4);
-        }
-        .sc-combat-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-        .sc-combat-status { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 8px; letter-spacing: 0.4px; text-transform: uppercase; }
-        .sc-combat-status.off { background: rgba(255,107,53,0.18); color: #FF8B5C; }
-        .sc-combat-status.on  { background: rgba(61,220,151,0.18); color: #5EE0A8; }
-        .sc-combat-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.55; margin: 0 0 14px; }
-        .sc-combat-touchpoints { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; margin-bottom: 12px; }
-        .sc-combat-tp { font-size: 11px; color: var(--text-primary); display: flex; align-items: center; gap: 6px; padding: 6px 0; }
-        .sc-combat-tp-time { font-weight: 700; color: var(--chrome,#3A86FF); font-size: 10px; min-width: 36px; }
-        @media (max-width: 480px) { .sc-combat-touchpoints { grid-template-columns: 1fr; } }
-
-        /* Персонализация — карточка */
-        .sc-personalize-card {
-            background: rgba(58,134,255,0.06);
-            border: 1px solid rgba(58,134,255,0.25);
+        /* СЕГОДНЯ — крупная карточка */
+        .sc-today-card {
+            background: rgba(224,224,224,0.06);
+            border: 1px solid rgba(224,224,224,0.18);
             border-radius: 16px;
-            padding: 14px 16px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
         }
-        .sc-personalize-card-body { flex: 1; min-width: 0; }
-        .sc-personalize-card-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
-        .sc-personalize-card-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
-        .sc-personalize-btn {
-            flex-shrink: 0;
-            padding: 9px 16px;
-            border-radius: 24px;
-            background: rgba(58,134,255,0.15);
-            border: 1px solid rgba(58,134,255,0.4);
-            color: var(--chrome,#3A86FF);
-            font-size: 12px; font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            transition: background 0.18s;
-        }
-        .sc-personalize-btn:hover { background: rgba(58,134,255,0.25); }
-
-        .sc-week { margin-bottom: 20px; }
-        .sc-week-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
-        .sc-week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .sc-day { aspect-ratio: 1; border-radius: 8px; background: rgba(224,224,224,0.05); border: 1px solid rgba(224,224,224,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer; transition: background 0.15s; touch-action: manipulation; min-height: 38px; }
-        .sc-day:hover   { background: rgba(224,224,224,0.1); }
-        .sc-day.current { border-color: rgba(224,224,224,0.4); background: rgba(224,224,224,0.14); }
-        .sc-day.done    { background: rgba(224,224,224,0.12); border-color: rgba(224,224,224,0.25); }
-        .sc-day-num     { font-size: 10px; font-weight: 700; color: var(--text-secondary); }
-        .sc-day-dot     { width: 5px; height: 5px; border-radius: 50%; background: rgba(224,224,224,0.15); }
-        .sc-day.done .sc-day-dot, .sc-day.current .sc-day-dot { background: var(--chrome); }
-
-        .sc-today-card { background: rgba(224,224,224,0.04); border: 1px solid rgba(224,224,224,0.12); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
         .sc-today-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
-        .sc-today-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(224,224,224,0.12); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--chrome); flex-shrink: 0; }
+        .sc-today-num {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(224,224,224,0.18); display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; color: var(--chrome); flex-shrink: 0;
+        }
         .sc-today-task { font-size: 14px; font-weight: 600; color: var(--text-primary); flex: 1; line-height: 1.4; }
         .sc-today-dur  { font-size: 11px; color: var(--text-secondary); margin-bottom: 8px; }
         .sc-today-inst { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
 
-        .sc-generating { text-align: center; padding: 40px 20px; }
-        .sc-generating-icon { font-size: 48px; display: block; margin-bottom: 14px; animation: sc-pulse 1.5s ease-in-out infinite; }
-        @keyframes sc-pulse { 0%,100%{opacity:0.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.05)} }
-        .sc-generating-text { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
-        .sc-generating-sub  { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+        /* ЗАВТРА — короткая полоса */
+        .sc-tomorrow {
+            display: flex; gap: 10px; align-items: center;
+            background: rgba(224,224,224,0.03);
+            border: 1px dashed rgba(224,224,224,0.15);
+            border-radius: 12px; padding: 10px 14px;
+            margin-bottom: 22px;
+        }
+        .sc-tomorrow-label { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+            color: var(--text-secondary); }
+        .sc-tomorrow-task  { font-size: 12px; color: var(--text-primary); flex: 1; }
+        .sc-tomorrow-dur   { font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
 
-        .sc-tip { background: rgba(224,224,224,0.03); border: 1px solid rgba(224,224,224,0.08); border-radius: 14px; padding: 12px 14px; font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin-top: 14px; }
+        /* ВСЯ ДОРОГА — таймлайн по неделям */
+        .sc-week { margin-bottom: 14px; }
+        .sc-week-head {
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; padding: 10px 0; user-select: none;
+            border-bottom: 1px solid rgba(224,224,224,0.08);
+            margin-bottom: 8px;
+        }
+        .sc-week-head:hover .sc-week-theme { color: var(--chrome); }
+        .sc-week-info { min-width: 0; flex: 1; }
+        .sc-week-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
+            color: var(--text-secondary); margin-bottom: 2px;
+        }
+        .sc-week-theme { font-size: 13px; font-weight: 600; color: var(--text-primary); transition: color 0.15s; }
+        .sc-week-mean  { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
+        .sc-week-stats {
+            font-size: 11px; font-weight: 700; color: var(--text-secondary);
+            background: rgba(224,224,224,0.08); border-radius: 20px; padding: 3px 10px;
+            flex-shrink: 0; margin-left: 10px;
+        }
+        .sc-week-toggle {
+            color: var(--text-secondary); font-size: 14px; margin-left: 8px;
+            transition: transform 0.2s; display: inline-block;
+        }
+        .sc-week-head.open .sc-week-toggle { transform: rotate(90deg); }
+
+        .sc-week-list { display: none; flex-direction: column; gap: 4px; }
+        .sc-week-list.open { display: flex; }
+
+        .sc-day-row {
+            display: flex; gap: 10px; align-items: center;
+            padding: 10px 12px;
+            background: rgba(224,224,224,0.03);
+            border: 1px solid rgba(224,224,224,0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .sc-day-row:hover { background: rgba(224,224,224,0.07); }
+        .sc-day-row.done {
+            background: rgba(224,224,224,0.05);
+            border-color: rgba(224,224,224,0.12);
+        }
+        .sc-day-row.current {
+            background: rgba(224,224,224,0.1);
+            border-color: rgba(224,224,224,0.3);
+        }
+        .sc-day-row.locked { opacity: 0.55; }
+
+        .sc-day-num-pill {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: rgba(224,224,224,0.1); color: var(--text-secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; flex-shrink: 0;
+        }
+        .sc-day-row.done .sc-day-num-pill    { background: rgba(224,224,224,0.18); color: var(--chrome); }
+        .sc-day-row.current .sc-day-num-pill { background: var(--chrome); color: #000; }
+
+        .sc-day-info { flex: 1; min-width: 0; }
+        .sc-day-task { font-size: 13px; font-weight: 500; color: var(--text-primary); line-height: 1.35; }
+        .sc-day-row.done .sc-day-task { text-decoration: line-through; opacity: 0.7; }
+        .sc-day-dur { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+        .sc-day-status {
+            flex-shrink: 0; font-size: 14px; color: var(--text-secondary);
+            min-width: 18px; text-align: right;
+        }
+        .sc-day-row.done .sc-day-status { color: var(--chrome); }
+
+        .sc-day-detail {
+            grid-column: 1 / -1;
+            font-size: 12px; line-height: 1.55; color: var(--text-secondary);
+            padding: 10px 12px 4px;
+            border-top: 1px dashed rgba(224,224,224,0.12);
+            margin-top: 8px;
+            display: none;
+        }
+        .sc-day-row.expanded { flex-wrap: wrap; }
+        .sc-day-row.expanded .sc-day-detail { display: block; width: 100%; }
+        .sc-day-detail-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .sc-tip {
+            background: rgba(224,224,224,0.03); border: 1px solid rgba(224,224,224,0.08);
+            border-radius: 14px; padding: 12px 14px; font-size: 12px;
+            color: var(--text-secondary); line-height: 1.5; margin-top: 14px;
+        }
         .sc-tip strong { color: var(--chrome); }
-
-        /* КАНАЛЫ */
-        .sc-channel-intro { background: linear-gradient(135deg, rgba(224,224,224,0.08), rgba(192,192,192,0.02)); border: 1px solid rgba(224,224,224,0.18); border-radius: 18px; padding: 16px 18px; margin-bottom: 18px; }
-        .sc-channel-intro-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
-        .sc-channel-intro-text  { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
-        .sc-channel-card { background: rgba(224,224,224,0.04); border: 1px solid rgba(224,224,224,0.12); border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: background 0.18s, border-color 0.18s, transform 0.12s; touch-action: manipulation; }
-        .sc-channel-card:hover  { background: rgba(224,224,224,0.09); border-color: rgba(224,224,224,0.24); }
-        .sc-channel-card:active { transform: scale(0.985); }
-        .sc-channel-card.active { background: rgba(58,134,255,0.10); border-color: rgba(58,134,255,0.45); }
-        .sc-channel-icon { font-size: 26px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: rgba(224,224,224,0.06); flex-shrink: 0; }
-        .sc-channel-body { flex: 1; min-width: 0; }
-        .sc-channel-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .sc-channel-tag-recommended { font-size: 9px; font-weight: 700; letter-spacing: 0.4px; background: rgba(61,220,151,0.18); color: #5EE0A8; padding: 2px 7px; border-radius: 8px; text-transform: uppercase; }
-        .sc-channel-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
-        .sc-channel-radio { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(224,224,224,0.3); flex-shrink: 0; position: relative; transition: border-color 0.18s; }
-        .sc-channel-card.active .sc-channel-radio { border-color: var(--chrome,#3A86FF); }
-        .sc-channel-card.active .sc-channel-radio::after { content: ''; position: absolute; top: 3px; left: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--chrome,#3A86FF); }
-
-        .sc-time-block { background: rgba(224,224,224,0.03); border: 1px solid rgba(224,224,224,0.1); border-radius: 16px; padding: 14px; margin-top: 16px; }
-        .sc-time-label { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
-        .sc-time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .sc-time-btn { padding: 9px 8px; background: rgba(224,224,224,0.05); border: 1px solid rgba(224,224,224,0.12); border-radius: 10px; color: var(--text-secondary); font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.15s, border-color 0.15s; font-family: inherit; }
-        .sc-time-btn:hover { background: rgba(224,224,224,0.1); }
-        .sc-time-btn.active { background: rgba(58,134,255,0.12); border-color: rgba(58,134,255,0.4); color: var(--text-primary); font-weight: 600; }
 
         @media (max-width: 480px) {
             .sc-skill-name { font-size: 13px; }
             .sc-today-task { font-size: 13px; }
-            .sc-time-grid  { grid-template-columns: repeat(3, 1fr); }
-            .sc-detail-title { font-size: 19px; }
+            .sc-day-task   { font-size: 12px; }
+            .sc-week-theme { font-size: 12px; }
         }
     `;
     document.head.appendChild(s);
 }
 
 // ============================================
-// НАВЫКИ
+// ПРЕДОПРЕДЕЛЁННЫЕ НАВЫКИ
 // ============================================
 const SC_SKILLS = {
     personal: [
-        { id:'confidence', name:'Уверенность в себе', desc:'Действовать без одобрения извне, верить в свои силы',
-          longDesc:'Уверенность — это не отсутствие сомнений, а способность действовать вопреки им. Это навык доверия собственному опыту и решениям, даже когда вокруг неопределённость или давление со стороны.',
-          outcomes:['Замечаете моменты сомнения раньше, чем они становятся параличом','Действуете из своих ценностей, а не из страха оценки','Меньше нуждаетесь в подтверждении со стороны','Спокойнее реагируете на критику и отказы'],
-          weekThemes:['Замечание сомнений и автомыслей','Действие через сомнения','Опора без внешнего подтверждения'] },
-        { id:'discipline', name:'Дисциплина', desc:'Выполнять намеченное независимо от настроения',
-          longDesc:'Дисциплина — это умение делать то, что решил, даже когда не хочется. Не сила воли, а система: правильные триггеры, ритуалы и среда, в которой нужное действие становится естественным.',
-          outcomes:['Чёткая утренняя и вечерняя рутина','Выполнение запланированного без внутреннего торга','Меньше времени на «надо собраться»','Понимание, что вас сбивает, и как это устранить'],
-          weekThemes:['Триггеры и контекст','Микро-действия каждый день','Автономная привычка'] },
-        { id:'boundaries', name:'Личные границы', desc:'Говорить «нет» без чувства вины',
-          longDesc:'Личные границы — это умение ясно обозначать, что для вас приемлемо, а что нет. Без агрессии и без вины. Граница — это не стена, а ориентир для других.',
-          outcomes:['Говорите «нет» без оправданий','Распознаёте манипулятивные просьбы и давление','Меньше выгораете в отношениях и на работе','Сохраняете отношения даже при чётких отказах'],
-          weekThemes:['Распознавание границы','Озвучивание без вины','Удержание под давлением'] },
-        { id:'emotions', name:'Эмоциональный интеллект', desc:'Распознавать и управлять своими эмоциями',
-          longDesc:'Эмоциональный интеллект — навык распознавать свои эмоции в момент возникновения и направлять их, а не реагировать автоматически. Базовый уровень саморегуляции.',
-          outcomes:['Различаете 30+ оттенков эмоций — а не только «плохо/нормально»','Замечаете эмоцию до того, как она возьмёт верх','Понимаете, какая мысль её вызвала','Управляете реакцией, а не реактивностью'],
-          weekThemes:['Маркирование состояний','Различение оттенков','Регуляция в моменте'] },
-        { id:'communication', name:'Коммуникация', desc:'Ясно и честно выражать мысли и чувства',
-          longDesc:'Коммуникация — навык доносить мысли так, чтобы вас поняли, и слышать собеседника так, чтобы он чувствовал себя услышанным. База любых отношений.',
-          outcomes:['Чёткие просьбы вместо намёков','Перифразирование без раздражения собеседника','Конструктивные конфликты вместо разрушительных','Уверенность в сложных разговорах'],
-          weekThemes:['Чёткая просьба','Активное слушание','Сложные разговоры'] },
-        { id:'resilience', name:'Стрессоустойчивость', desc:'Восстанавливаться после трудностей',
-          longDesc:'Стрессоустойчивость — не отсутствие реакции на стресс, а скорость возвращения в баланс. Расширение «окна толерантности», в котором вы остаётесь функциональны.',
-          outcomes:['Окно толерантности шире — меньше срывов','Быстрое восстановление после плохих новостей','Меньше соматических симптомов от напряжения','Спокойный сон даже после трудного дня'],
-          weekThemes:['Окно толерантности','Техники возврата','Ежедневная гигиена'] },
-        { id:'focus', name:'Фокус и концентрация', desc:'Удерживать внимание на важном',
-          longDesc:'Фокус — навык удерживать внимание на одной задаче 25–90 минут без отвлечений. Базовый ресурс продуктивности и качественного мышления.',
-          outcomes:['Глубокая работа без переключений на телефон','Помодоро становится привычкой, а не насилием','Меньше «прокрутки в голове» во время задач','Качество результата выше при меньшем времени'],
-          weekThemes:['Удлинение интервала фокуса','Защита от отвлечений','Глубокая работа'] },
-        { id:'growth', name:'Установка на рост', desc:'Воспринимать трудности как возможности',
-          longDesc:'Установка на рост (mindset Кэрол Двек) — восприятие способностей как развиваемых, а не врождённых. Ошибка → информация, а не приговор.',
-          outcomes:['Воспринимаете трудности как возможности учиться','Меньше избегаете задач, в которых неуверены','Спокойнее реагируете на критику и провалы','Настойчивость без выгорания'],
-          weekThemes:['Замечание фиксированных мыслей','Переформулировка','Новая база отношения к ошибкам'] }
+        { id:'confidence',    name:'Уверенность в себе',    desc:'Действовать без одобрения извне, верить в свои силы',
+          promise:'Через 21 день вы будете действовать в важных ситуациях, не дожидаясь одобрения и не оглядываясь на оценку.' },
+        { id:'discipline',    name:'Дисциплина',             desc:'Выполнять намеченное независимо от настроения',
+          promise:'Через 21 день вы будете делать намеченное даже когда не хочется — без внутреннего торга и «соберусь завтра».' },
+        { id:'boundaries',    name:'Личные границы',         desc:'Говорить «нет» без чувства вины',
+          promise:'Через 21 день вы будете отказывать спокойно и без оправданий — и при этом сохранять отношения.' },
+        { id:'emotions',      name:'Эмоциональный интеллект',desc:'Распознавать и управлять своими эмоциями',
+          promise:'Через 21 день вы будете замечать эмоцию до того, как она возьмёт верх, и выбирать реакцию, а не «прорываться».' },
+        { id:'communication', name:'Коммуникация',           desc:'Ясно и честно выражать мысли и чувства',
+          promise:'Через 21 день вы будете говорить о важном напрямую — без намёков, обиняков и страха быть неправильно понятым.' },
+        { id:'resilience',    name:'Стрессоустойчивость',    desc:'Восстанавливаться после трудностей',
+          promise:'Через 21 день вы будете быстрее возвращаться в строй после ударов и не залипать в плохом настроении на дни.' },
+        { id:'focus',         name:'Фокус и концентрация',   desc:'Удерживать внимание на важном',
+          promise:'Через 21 день вы будете удерживать внимание на главном по 60–90 минут без скатывания в соцсети и переключения.' },
+        { id:'growth',        name:'Установка на рост',      desc:'Воспринимать трудности как возможности',
+          promise:'Через 21 день вы будете воспринимать неудачи как данные, а не как приговор себе — и быстрее идти дальше.' }
     ],
     professional: [
-        { id:'planning', name:'Планирование', desc:'Ставить цели и разбивать на конкретные шаги',
-          longDesc:'Планирование — навык переводить большие цели в конкретные действия. Без этого «хочу» остаётся «хочу». Метод следующего физического действия + GTD.',
-          outcomes:['Большие проекты разбиты на физические действия','Понятно, что делать в первый час каждого дня','Меньше «не знаю, с чего начать»','Реалистичная оценка сроков'],
-          weekThemes:['Декомпозиция целей','Следующее физическое действие','Реалистичные сроки'] },
-        { id:'decision', name:'Принятие решений', desc:'Действовать при неполной информации',
-          longDesc:'Принятие решений — навык действовать при неполной информации, не парализуясь поиском «идеального варианта». Различение важных и неважных решений.',
-          outcomes:['Быстрые решения по неважному (без лишнего анализа)','Глубокий анализ только важных решений','Меньше «перевзвешивания» уже принятых','Готовность нести ответственность за выбор'],
-          weekThemes:['Различение важности','Скорость + анализ','Решения без перевзвешивания'] },
-        { id:'delegation', name:'Делегирование', desc:'Передавать задачи и доверять другим',
-          longDesc:'Делегирование — навык передачи задачи и доверия результату. Не «приказ-исполнение», а партнёрство с правильной обратной связью.',
-          outcomes:['Передаёте задачи целиком, а не «посоветуйся со мной»','Не вмешиваетесь в процесс, если результат идёт','Команда растёт быстрее','У вас освобождается время на стратегию'],
-          weekThemes:['Постановка задачи','Доверие процессу','Развитие команды через задачи'] },
-        { id:'leadership', name:'Лидерство', desc:'Вести за собой и вдохновлять людей',
-          longDesc:'Лидерство — навык вести за собой через ясность смысла и внутреннюю опору. Не должность и не харизма — система поведения, которой можно научиться.',
-          outcomes:['Команда понимает, куда движется и зачем','Берёте ответственность в моменты неопределённости','Конструктивная обратная связь в обе стороны','Доверие коллектива растёт без усилий'],
-          weekThemes:['Ясность смысла и направления','Внутренняя опора','Доверие коллектива'] },
-        { id:'timemanage', name:'Управление временем', desc:'Расставлять приоритеты и не прокрастинировать',
-          longDesc:'Управление временем — навык расставлять приоритеты и не прокрастинировать. Не «успеть всё», а «успеть важное». Принцип Парето + защита фокусного времени.',
-          outcomes:['Понимание, какие 20% задач дают 80% результата','Меньше прокрастинации на сложных задачах','Регулярные перерывы без чувства вины','Завершение дня без хвостов'],
-          weekThemes:['Принцип Парето','Защита фокусного времени','Завершение дня'] },
-        { id:'feedback', name:'Обратная связь', desc:'Давать и принимать критику конструктивно',
-          longDesc:'Обратная связь — навык давать и принимать критику так, чтобы она вела к росту, а не к обиде. Сильно недооценённый, но определяющий навык в команде.',
-          outcomes:['Даёте конкретную, не личностную обратную связь','Принимаете критику без защитной реакции','Просите фидбек регулярно, а не от случая к случаю','Меньше скрытых обид и недопониманий в команде'],
-          weekThemes:['Конкретность критики','Принятие без защиты','Регулярные циклы фидбека'] },
-        { id:'networking', name:'Нетворкинг', desc:'Строить и поддерживать профессиональные связи',
-          longDesc:'Нетворкинг — навык строить и поддерживать профессиональные связи без манипуляций и социальной фальши. Принцип «дай раньше, чем попросишь».',
-          outcomes:['Регулярные касания с ключевыми контактами','Полезное знакомство в неделю — норма, не подвиг','Готовый круг для запросов и рекомендаций','Меньше тревоги при обращении за помощью'],
-          weekThemes:['Карта контактов','Регулярные касания','Правило «дай раньше»'] },
-        { id:'creativity', name:'Креативность', desc:'Находить нестандартные решения',
-          longDesc:'Креативность — навык находить нестандартные решения через комбинаторику и латеральное мышление. Тренируется, как мышца. Это не про «вдохновение».',
-          outcomes:['3–5 свежих идей в день из обычных ситуаций','Привычка задавать «а что если» в разговорах','Меньше шаблонных решений','Готовность пробовать без страха ошибки'],
-          weekThemes:['Латеральные ходы','Комбинаторика','Привычка вопроса «что если»'] }
-    ],
-    influence: [
-        { id:'speech_influence', name:'Речевое воздействие', desc:'Гипнотические языковые паттерны, метафоры, риторические структуры', isNew:true,
-          longDesc:'Речевое воздействие — арсенал из эриксоновского гипноза, НЛП и риторики. Метафоры, языковые паттерны, структура убеждения. Тот же навык, что у лучших спикеров и переговорщиков.',
-          outcomes:['Речь, которая удерживает внимание','Метафоры под конкретные ситуации','Гипнотические языковые паттерны в обычной речи','Понимание, как речью манипулируют — для защиты'],
-          weekThemes:['Базовые языковые паттерны','Метафоры под задачу','Гипнотические структуры в речи'] },
-        { id:'emotion_partner', name:'Управление эмоциями собеседника', desc:'Возвращать собеседника из реактивного состояния в ресурсное', isNew:true,
-          longDesc:'Не манипуляция — навык конструктивного диалога: возвращать собеседника из реактивного состояния в ресурсное, не подменяя его выбор. Нужен врачу, переговорщику, родителю, руководителю.',
-          outcomes:['Калибровка состояния партнёра по микро-сигналам','Деэскалация острых конфликтов в первые 30 секунд','Возврат собеседника к диалогу из «защиты»','Параллельно — распознавание манипуляций как защитный навык'],
-          weekThemes:['Калибровка по микро-сигналам','Деэскалация','Возврат к диалогу'] },
-        { id:'emotion_group', name:'Управление эмоциями группы', desc:'Эмоциональное заражение, работа с настроением команды или зала', isNew:true,
-          longDesc:'Эмоциональное заражение в коллективах — мощный механизм. Можно использовать для создания продуктивной атмосферы или для понимания, как массовое настроение формируется.',
-          outcomes:['Понимание динамики группы по 3–5 наблюдаемым признакам','Влияние на настроение команды через свою позицию','Работа с залом и публичными выступлениями','Распознавание токсичных групповых паттернов'],
-          weekThemes:['Динамика группы','Влияние через позицию','Работа с залом'] },
-        { id:'media_influence', name:'Информационное воздействие через СМИ', desc:'Как новостные циклы формируют гормональный фон у больших групп — для PR, маркетинга, критического мышления', isNew:true,
-          longDesc:'Как новостные циклы формируют гормональный фон у больших групп. Понимать механизм — для критического мышления; применять этично — для PR, маркетинга, политической коммуникации.',
-          outcomes:['Чтение новостной повестки на трёх уровнях смысла','Защита от информационной перегрузки и тревоги','Применение принципов в этичном PR и маркетинге','Распознавание целенаправленного манипулятивного контента'],
-          weekThemes:['Чтение повестки на 3 уровнях','Защита от перегрузки','Этичное применение'] }
+        { id:'planning',    name:'Планирование',         desc:'Ставить цели и разбивать на конкретные шаги',
+          promise:'Через 21 день вы будете превращать любую большую цель в конкретный недельный план и идти по нему.' },
+        { id:'decision',    name:'Принятие решений',     desc:'Действовать при неполной информации',
+          promise:'Через 21 день вы будете решать быстро даже без полной картины — и переставать зависать в раздумьях.' },
+        { id:'delegation',  name:'Делегирование',        desc:'Передавать задачи и доверять другим',
+          promise:'Через 21 день вы будете отпускать задачи команде без чувства «лучше сам» — и освобождать время на главное.' },
+        { id:'leadership',  name:'Лидерство',            desc:'Вести за собой и вдохновлять людей',
+          promise:'Через 21 день вы будете говорить так, что за вами хочется идти — и направлять других без давления.' },
+        { id:'timemanage',  name:'Управление временем',  desc:'Расставлять приоритеты и не прокрастинировать',
+          promise:'Через 21 день вы будете успевать важное за день — без переработок и чувства «снова ничего не сделал».' },
+        { id:'feedback',    name:'Обратная связь',       desc:'Давать и принимать критику конструктивно',
+          promise:'Через 21 день вы будете говорить и слышать критику без напряжения — и превращать её в реальные изменения.' },
+        { id:'networking',  name:'Нетворкинг',           desc:'Строить и поддерживать профессиональные связи',
+          promise:'Через 21 день вы будете заводить полезные контакты без неловкости и поддерживать связи без выгорания.' },
+        { id:'creativity',  name:'Креативность',         desc:'Находить нестандартные решения',
+          promise:'Через 21 день вы будете находить решения там, где другие видят тупик — за счёт устойчивых техник, а не вдохновения.' }
     ]
 };
 
-function _scFindSkill(id) {
-    if (!id) return null;
-    for (const cat of Object.values(SC_SKILLS)) {
-        const sk = cat.find(s => s.id === id);
-        if (sk) return sk;
-    }
-    return null;
+const _SC_CUSTOM_PROMISE = 'Через 21 день у вас будет рабочий навык, который вы тренировали ежедневно — устойчивая привычка, а не разовая попытка.';
+
+// ============================================
+// ХАРДКОДНЫЙ ШАБЛОН 21-ДНЕВНОГО ПЛАНА
+// ============================================
+const DEFAULT_TEMPLATE_PLAN = {
+    weeks: [
+        {
+            theme: 'Знакомство и калибровка',
+            meaning: 'Поймёте, где именно вас «ловит», и сделаете первый осторожный шаг по-другому.',
+            exercises: [
+                { day:1, task:'Зачем вам этот навык',     dur:'5 мин',  inst:'Запишите 3 конкретные ситуации, где этот навык изменил бы исход.' },
+                { day:2, task:'Замечание',                 dur:'10 мин', inst:'В течение дня замечайте моменты, где навык бы понадобился. Записывайте 1–3 ситуации без оценки.' },
+                { day:3, task:'Триггеры',                  dur:'7 мин',  inst:'Какие 3 ситуации запускают вашу старую реакцию? Конкретно: место, человек, время, ваша мысль.' },
+                { day:4, task:'Микро-эксперимент',         dur:'15 мин', inst:'В одной безопасной ситуации попробуйте действовать по-новому. Зафиксируйте, что произошло.' },
+                { day:5, task:'Рефлексия',                 dur:'5 мин',  inst:'Что было неудобно вчера? Назовите чувство одним словом — это точка роста.' },
+                { day:6, task:'Повтор с поправкой',        dur:'15 мин', inst:'Похожая ситуация, что и в день 4 — но с поправкой на вчерашнюю рефлексию.' },
+                { day:7, task:'Итог недели',               dur:'10 мин', inst:'Один главный инсайт за неделю. На сколько процентов продвинулись?' }
+            ]
+        },
+        {
+            theme: 'Активная тренировка',
+            meaning: 'Начнёте действовать по-новому даже там, где раньше избегали — и заметите, что получается.',
+            exercises: [
+                { day:8,  task:'Усложнение',           dur:'15 мин', inst:'Та же техника, но в более сложной ситуации. Где раньше избегали.' },
+                { day:9,  task:'Постановка якоря',     dur:'7 мин',  inst:'Когда сегодня получится — запомните телесное состояние и сожмите большой и указательный пальцы на 5 секунд.' },
+                { day:10, task:'Препятствие',          dur:'10 мин', inst:'Что в окружении мешает практике? Один конкретный фактор и один шаг по его устранению.' },
+                { day:11, task:'Поддержка',            dur:'5 мин',  inst:'Расскажите близкому, что проходите 21 день навыка. Попросите не оценивать прогресс.' },
+                { day:12, task:'Худший момент',        dur:'10 мин', inst:'Что было самым трудным? Опишите 3 предложениями. Что бы посоветовали другу?' },
+                { day:13, task:'Маленькая победа',     dur:'15 мин', inst:'Найдите ситуацию, где точно получится. Зафиксируйте успех — текстом, голосом, в дневнике.' },
+                { day:14, task:'Полу-итог',            dur:'10 мин', inst:'На сколько процентов продвинулись? Что главное изменилось? Что осталось на третью неделю?' }
+            ]
+        },
+        {
+            theme: 'Закрепление и интеграция',
+            meaning: 'Новое поведение перестаёт требовать усилий и становится тем, как вы действуете по умолчанию.',
+            exercises: [
+                { day:15, task:'Естественная среда',  dur:'12 мин', inst:'Применяйте навык без специальных условий — в обычном дне.' },
+                { day:16, task:'Без напоминаний',     dur:'10 мин', inst:'Сделайте без подсказки. К вечеру отметьте, удалось ли.' },
+                { day:17, task:'Перенос',             dur:'15 мин', inst:'Новая ситуация, где раньше не пробовали. Что переносится, что нет?' },
+                { day:18, task:'Глубже',              dur:'15 мин', inst:'Усложните: больше людей, выше ставки, дольше время.' },
+                { day:19, task:'Помощь другому',      dur:'10 мин', inst:'Объясните принцип кому-то ещё в 2–3 предложениях. Это закрепляет понимание.' },
+                { day:20, task:'Письмо себе',         dur:'15 мин', inst:'Напишите себе через год — что хотите помнить из этого 21 дня.' },
+                { day:21, task:'Итог цикла',          dur:'15 мин', inst:'Сравните: где были в день 1 и где сегодня. Что точно изменилось? Что дальше?' }
+            ]
+        }
+    ]
+};
+
+function _scLocalPlan() {
+    return JSON.parse(JSON.stringify(DEFAULT_TEMPLATE_PLAN));
 }
-
-function _scWeekThemes(skill) {
-    if (skill && Array.isArray(skill.weekThemes) && skill.weekThemes.length === 3) return skill.weekThemes;
-    return ['Знакомство и калибровка','Активная тренировка','Закрепление и интеграция'];
-}
-
-const SC_CHANNELS = [
-    { id:'telegram', icon:'📱', name:'Telegram', desc:'Все форматы — текст, голос, аудио-практики, видео-фрагменты', recommended:true,
-      buildLink: (uid) => `https://t.me/Nanotech_varik_bot?start=${uid || ''}` },
-    { id:'max',      icon:'🤖', name:'MAX',      desc:'Российский мессенджер от ВК. Те же форматы, что в Telegram.',
-      buildLink: (uid) => `https://max.ru/id502238728185_bot?start=${uid || ''}` },
-    { id:'web',      icon:'🌐', name:'Веб-уведомления', desc:'Push в браузере, если Фреди открыт в фоне. Для офисной работы.' },
-    { id:'email',    icon:'📧', name:'Email-дайджест',  desc:'Утренний email с заданием и ссылкой на материалы.' }
-];
-
-const SC_TIME_OPTIONS = ['07:00','08:00','09:00','10:00','12:00','18:00','20:00','21:00'];
 
 // ============================================
 // СОСТОЯНИЕ
 // ============================================
 if (!window._scState) window._scState = {
-    view: 'select', skillId: null, skillName: null, skillDesc: null,
-    plan: null, daysDone: [], startDate: null,
-    channel: null, notifyTime: '09:00',
-    isPersonalized: false,   // false = базовый план, true = AI-персональный под профиль
-    active: false            // false = пассивный режим (план + 1 утреннее напоминание), true = боевой режим (4 точки касания/день)
+    view:        'select',
+    skillId:     null,
+    skillName:   null,
+    skillDesc:   null,
+    skillPromise:null,
+    plan:        null,
+    daysDone:    [],
+    startDate:   null,
+    // UI-состояние — не сохраняется
+    expandedDay: null,
+    openWeeks:   null,
+    previewDays: false
 };
 const _sc = window._scState;
 
+// ============================================
+// УТИЛИТЫ
+// ============================================
 function _scToast(msg, t) { if (window.showToast) window.showToast(msg, t||'info'); }
 function _scHome()  { if (typeof renderDashboard==='function') renderDashboard(); else if (window.renderDashboard) window.renderDashboard(); }
-function _scApi()   { return window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com'; }
-function _scUid()   { return window.CONFIG?.USER_ID || window.USER_ID; }
-function _scName()  { return localStorage.getItem('fredi_user_name') || 'друг'; }
+function _scUid()   { return window.CONFIG?.USER_ID; }
 
 function _scSave() {
     try {
         const data = {
             skillId: _sc.skillId, skillName: _sc.skillName, skillDesc: _sc.skillDesc,
-            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate,
-            channel: _sc.channel, notifyTime: _sc.notifyTime,
-            isPersonalized: _sc.isPersonalized, active: _sc.active
+            skillPromise: _sc.skillPromise,
+            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate
         };
         localStorage.setItem('sc_plan_'+_scUid(), JSON.stringify(data));
         localStorage.setItem('trainer_skill_'+_scUid(), JSON.stringify({
-            skillId: _sc.skillId, skillName: _sc.skillName, plan: _sc.plan,
-            daysDone: _sc.daysDone, startDate: _sc.startDate,
-            channel: _sc.channel, notifyTime: _sc.notifyTime,
-            isPersonalized: _sc.isPersonalized, active: _sc.active
+            skillId: _sc.skillId, skillName: _sc.skillName,
+            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate
         }));
     } catch {}
 }
@@ -355,160 +449,27 @@ function _scLoad() {
     } catch {}
 }
 
-async function _scLoadSettingsFromBackend() {
-    if (!_scUid()) return;
-    try {
-        const r = await fetch(`${_scApi()}/api/notification-settings/${_scUid()}`);
-        if (!r.ok) return;
-        const d = await r.json();
-        let changed = false;
-        if (d.channel     && d.channel     !== _sc.channel)    { _sc.channel    = d.channel;     changed = true; }
-        if (d.notify_time && d.notify_time !== _sc.notifyTime) { _sc.notifyTime = d.notify_time; changed = true; }
-        if (typeof d.active === 'boolean' && d.active !== _sc.active) { _sc.active = d.active;   changed = true; }
-        if (changed) {
-            _scSave();
-            if (_sc.view === 'plan' || _sc.view === 'channel') _scRender();
-        }
-    } catch {}
-}
-
 function _scCurrentDay() {
     if (!_sc.startDate) return 1;
     const diff = Math.floor((Date.now() - new Date(_sc.startDate)) / 86400000) + 1;
     return Math.min(21, Math.max(1, diff));
 }
 
-function _scStreak() {
-    if (!_sc.daysDone || _sc.daysDone.length === 0) return 0;
-    const sorted = [...new Set(_sc.daysDone)].sort((a,b) => a-b);
-    let streak = 1;
-    for (let i = sorted.length - 1; i > 0; i--) {
-        if (sorted[i] - sorted[i-1] === 1) streak++;
-        else break;
-    }
-    return streak;
+function _scFindSkill(id) {
+    if (!id) return null;
+    return SC_SKILLS.personal.find(s => s.id === id)
+        || SC_SKILLS.professional.find(s => s.id === id)
+        || null;
 }
 
-function _scStreakLabel(n) {
-    if (n === 1) return '1 день подряд';
-    if (n >= 2 && n <= 4) return `${n} дня подряд`;
-    return `${n} дней подряд`;
+function _scAllExercises() {
+    return (_sc.plan?.weeks || []).flatMap(w => w.exercises);
 }
 
-function _scChannelMeta(id) { return SC_CHANNELS.find(c => c.id === id); }
-
-function _scCategoryLabel(id) {
-    if (SC_SKILLS.personal.some(s => s.id === id))     return '🧠 Личностный навык';
-    if (SC_SKILLS.professional.some(s => s.id === id)) return '💼 Профессиональный навык';
-    if (SC_SKILLS.influence.some(s => s.id === id))    return '🎙️ Влияние и коммуникация';
-    return '✏️ Свой навык';
-}
-
-async function _scSaveChannelToBackend() {
-    if (!_sc.channel || !_sc.skillId) return;
-    try {
-        await fetch(`${_scApi()}/api/notification-settings`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id:     _scUid(),
-                skill_id:    _sc.skillId,
-                skill_name:  _sc.skillName,
-                channel:     _sc.channel,
-                notify_time: _sc.notifyTime,
-                start_date:  _sc.startDate,
-                active:      _sc.active,
-                personalized: _sc.isPersonalized
-            })
-        });
-    } catch (e) {
-        console.warn('Notification settings: backend пока недоступен, сохранил локально', e);
-    }
-    if (_sc.channel === 'web' && window.PushManager_Fredi && _scUid()) {
-        try { await window.PushManager_Fredi.request(_scUid()); } catch {}
-    }
-}
-
-// Активация/деактивация боевого режима
-async function _scSetActive(active) {
-    _sc.active = !!active;
-    _scSave();
-    try {
-        await fetch(`${_scApi()}/api/notification-settings/${_scUid()}/activate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ active: _sc.active, skill_id: _sc.skillId })
-        });
-    } catch (e) {
-        console.warn('Activate endpoint: backend пока недоступен', e);
-    }
-}
-
-async function _scGetProfile() {
-    try {
-        const r = await fetch(`${_scApi()}/api/get-profile/${_scUid()}`);
-        const d = await r.json();
-        const bl = d.profile?.behavioral_levels || {};
-        const avg = x => Array.isArray(x) ? x[x.length-1] : (x||4);
-        return {
-            vectors: { СБ:avg(bl.СБ), ТФ:avg(bl.ТФ), УБ:avg(bl.УБ), ЧВ:avg(bl.ЧВ) },
-            type:    d.profile?.perception_type || '',
-            level:   d.profile?.thinking_level  || 5
-        };
-    } catch { return { vectors:{СБ:4,ТФ:4,УБ:4,ЧВ:4}, type:'', level:5 }; }
-}
-
-// ============================================
-// БАЗОВЫЙ ПЛАН ИЗ КЭША БЭКЕНДА (новое)
-// Возвращает план или null. Если null — фронт вызывает AI-генерацию.
-// ============================================
-async function _scLoadBasePlan(skillId) {
-    if (!skillId || skillId === 'custom') return null;
-    try {
-        const r = await fetch(`${_scApi()}/api/base-plan/${encodeURIComponent(skillId)}`);
-        if (!r.ok) return null;
-        const d = await r.json();
-        if (d && d.plan && d.plan.weeks) return d.plan;
-    } catch {}
-    return null;
-}
-
-// AI-генерация (как раньше — для персонализации или fallback)
-async function _scGeneratePlan(skillName, skillDesc, profile) {
-    const v = profile.vectors;
-    const prompt = `Ты — Фреди, психолог-тренер. Создай персональный 21-дневный план развития навыка.
-
-Пользователь: ${_scName()}
-Навык: "${skillName}" — ${skillDesc}
-Психологический профиль: СБ-${v.СБ} ТФ-${v.ТФ} УБ-${v.УБ} ЧВ-${v.ЧВ}
-Уровень мышления: ${profile.level}/9
-
-Требования:
-— 21 упражнение (по одному на день), разбить на 3 недели
-— Каждая неделя — своя тема (нарастающая сложность)
-— Упражнения конкретные: что делать, как долго, как именно
-— Учитывай профиль: для СБ — больше безопасности и опоры, для ТФ — результаты и цифры, для УБ — смыслы и системность, для ЧВ — отношения и эмоции
-— Каждое упражнение: 1-15 минут, выполнимо в обычный день
-
-Верни только JSON:
-{"weeks":[{"theme":"...","exercises":[{"day":1,"task":"...","dur":"...","inst":"..."},...7...]},...3...]}`;
-
-    try {
-        const r = await fetch(`${_scApi()}/api/ai/generate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: _scUid(), platform: 'web', prompt, max_tokens: 2000 })
-        });
-        const d = await r.json();
-        if (d.success && d.content) {
-            const clean = d.content.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
-            const parsed = JSON.parse(clean);
-            let dayNum = 0;
-            parsed.weeks.forEach(w => w.exercises.forEach(ex => { dayNum++; ex.day = dayNum; }));
-            return parsed;
-        }
-    } catch(e) { console.error('Plan generation error:', e); }
-    return null;
+function _scWeekOf(day) {
+    if (day <= 7)  return 0;
+    if (day <= 14) return 1;
+    return 2;
 }
 
 // ============================================
@@ -520,11 +481,8 @@ function _scRender() {
     if (!c) return;
 
     let body = '';
-    if (_sc.view === 'select')     body = _scRenderSelect();
-    if (_sc.view === 'detail')     body = _scRenderDetail();
-    if (_sc.view === 'generating') body = _scRenderGenerating();
-    if (_sc.view === 'channel')    body = _scRenderChannel();
-    if (_sc.view === 'plan')       body = _scRenderPlan();
+    if (_sc.view === 'select') body = _scRenderSelect();
+    if (_sc.view === 'plan')   body = _scRenderPlan();
 
     c.innerHTML = `
         <div class="full-content-page">
@@ -532,23 +490,38 @@ function _scRender() {
             <div class="content-header">
                 <div class="content-emoji">🎯</div>
                 <h1 class="content-title">Выбор навыка</h1>
-                <p style="font-size:12px;color:var(--text-secondary);margin-top:4px">AI строит план под ваш профиль</p>
+                <p style="font-size:12px;color:var(--text-secondary);margin-top:4px">21-дневный план развития</p>
             </div>
             <div id="scBody">${body}</div>
         </div>`;
 
     document.getElementById('scBack').onclick = () => {
-        if (_sc.view === 'plan')       { _sc.view = 'select'; _scRender(); return; }
-        if (_sc.view === 'channel')    { _sc.view = 'plan';   _scRender(); return; }
-        if (_sc.view === 'detail')     { _sc.view = 'select'; _scRender(); return; }
-        if (_sc.view === 'generating') return;
+        if (_sc.view === 'plan') { _sc.view = 'select'; _scRender(); return; }
         _scHome();
     };
 
     _scBindHandlers();
 }
 
+// ===== ЭКРАН ВЫБОРА =====
 function _scRenderSelect() {
+    // Превью (промис + 3 фазы + опционально 21 день)
+    const previewBlock = _sc.skillId ? _scRenderPreview() : '';
+
+    // Активный план — баннер
+    let activePlan = '';
+    if (_sc.plan) {
+        activePlan = `
+        <div style="background:rgba(224,224,224,0.06);border:1px solid rgba(224,224,224,0.18);border-radius:14px;padding:12px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+                <div style="font-size:13px;font-weight:600;color:var(--chrome)">${_sc.skillName}</div>
+                <div style="font-size:11px;color:var(--text-secondary)">День ${_scCurrentDay()} из 21 · выполнено ${_sc.daysDone.length}</div>
+            </div>
+            <button class="sc-btn sc-btn-ghost" id="scOpenPlan" style="flex-shrink:0">Открыть план →</button>
+        </div>`;
+    }
+
+    // Навыки из диагностики
     let diagBlock = '';
     try {
         const sdRaw = localStorage.getItem('sd_result_'+_scUid());
@@ -558,195 +531,123 @@ function _scRenderSelect() {
             const skills = SC_SKILLS[sphere] || SC_SKILLS.personal;
             const entries = Object.entries(sd.scores || {});
             if (entries.length > 0) {
-                const sorted = entries.map(([qi, score]) => ({ qi: parseInt(qi), score }))
-                    .sort((a,b) => a.score - b.score).slice(0, 3);
+                const sorted = entries
+                    .map(([qi, score]) => ({ qi: parseInt(qi), score }))
+                    .sort((a,b) => a.score - b.score)
+                    .slice(0, 3);
                 const cards = sorted.map(({qi, score}) => {
                     const skill = skills[qi];
                     if (!skill) return '';
                     const pct = Math.round(score/4*100);
-                    return `<div class="sc-skill-card" data-id="${skill.id}">
+                    return `
+                    <div class="sc-skill-card${_sc.skillId===skill.id?' active':''}" data-id="${skill.id}">
                         <div class="sc-skill-body">
                             <div class="sc-skill-name">${skill.name}</div>
                             <div class="sc-skill-sub">${skill.desc}</div>
-                            <div class="sc-skill-bar-wrap"><div class="sc-skill-bar-fill" style="width:${pct}%"></div></div>
+                            <div class="sc-skill-bar-wrap">
+                                <div class="sc-skill-bar-fill" style="width:${pct}%"></div>
+                            </div>
                         </div>
                         <div class="sc-skill-score">${score}/4</div>
-                        <div class="sc-skill-arrow">›</div>
                     </div>`;
                 }).filter(Boolean).join('');
-                if (cards) diagBlock = `<div class="sc-section-label">📊 Из диагностики — слабые места</div>${cards}`;
+                if (cards) diagBlock = `
+                    <div class="sc-section-label">📊 Из диагностики — слабые места</div>
+                    ${cards}`;
             }
         }
     } catch {}
 
-    const activePlan = _sc.plan ? `
-        <div style="background:rgba(224,224,224,0.06);border:1px solid rgba(224,224,224,0.18);border-radius:14px;padding:12px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-            <div>
-                <div style="font-size:13px;font-weight:600;color:var(--chrome)">${_sc.skillName}</div>
-                <div style="font-size:11px;color:var(--text-secondary)">День ${_scCurrentDay()} из 21 · выполнено ${_sc.daysDone.length}${_sc.active?' · 🚀 боевой режим':''}</div>
-            </div>
-            <button class="sc-btn sc-btn-ghost" id="scOpenPlan" style="flex-shrink:0">Открыть план →</button>
-        </div>` : '';
-
-    const renderSkillList = (arr) => arr.map(sk => `
-        <div class="sc-skill-card" data-id="${sk.id}">
+    const renderList = (arr) => arr.map(sk => `
+        <div class="sc-skill-card${_sc.skillId===sk.id?' active':''}" data-id="${sk.id}">
             <div class="sc-skill-body">
-                <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}</div>
+                <div class="sc-skill-name">${sk.name}</div>
                 <div class="sc-skill-sub">${sk.desc}</div>
             </div>
-            <div class="sc-skill-arrow">›</div>
         </div>`).join('');
 
     return `
         ${activePlan}
         ${diagBlock}
         <div class="sc-section-label" style="margin-top:${diagBlock?'18px':'0'}">🧠 Личностные навыки</div>
-        ${renderSkillList(SC_SKILLS.personal)}
+        ${renderList(SC_SKILLS.personal)}
         <div class="sc-section-label">💼 Профессиональные навыки</div>
-        ${renderSkillList(SC_SKILLS.professional)}
-        <div class="sc-section-label">🎙️ Влияние и коммуникация</div>
-        ${renderSkillList(SC_SKILLS.influence)}
+        ${renderList(SC_SKILLS.professional)}
 
         <div class="sc-custom-block">
             <div class="sc-custom-label">✏️ Или введите свой навык:</div>
-            <input class="sc-input" id="scCustomInput" placeholder="Например: публичные выступления, управление гневом...">
-            <button class="sc-btn sc-btn-primary" id="scStartCustomBtn" style="margin-top:10px">
-                🤖 Создать AI-план для своего навыка
-            </button>
+            <input class="sc-input" id="scCustomInput" placeholder="Например: публичные выступления, управление гневом..." value="${_sc.skillId==='custom'?(_sc.skillName||''):''}">
         </div>
 
-        <div class="sc-tip">
-            💡 Базовый план — мгновенно. Можно персонализировать под свой профиль уже на следующем шаге. И активировать <strong>боевой режим</strong>, когда Фреди ведёт каждый день.
-        </div>`;
-}
+        ${previewBlock}
 
-function _scRenderDetail() {
-    const sk = _scFindSkill(_sc.skillId);
-    if (!sk) return '<p style="color:var(--text-secondary)">Навык не найден</p>';
-
-    const cat = _scCategoryLabel(sk.id);
-    const newTag = sk.isNew ? '<span class="sc-detail-tag-new">NEW</span>' : '';
-    const outcomes = (sk.outcomes || []).map(o => `<li>${o}</li>`).join('');
-    const themes = _scWeekThemes(sk);
-    const weekRows = themes.map((t, i) => `
-        <div class="sc-week-preview-row">
-            <div class="sc-week-preview-num">НЕДЕЛЯ ${i+1}</div>
-            <div class="sc-week-preview-text">${t}</div>
-        </div>`).join('');
-
-    return `
-        <div class="sc-detail-hero">
-            <div class="sc-detail-cat">${cat}</div>
-            <div class="sc-detail-title">${sk.name}${newTag}</div>
-            <p class="sc-detail-short">${sk.longDesc || sk.desc}</p>
-        </div>
-
-        <div class="sc-detail-section">
-            <div class="sc-detail-h">🏆 Что вы получите за 21 день</div>
-            <ul class="sc-detail-outcomes">${outcomes}</ul>
-        </div>
-
-        <div class="sc-detail-section">
-            <div class="sc-detail-h">📅 Структура курса по неделям</div>
-            <div class="sc-week-preview">${weekRows}</div>
-            <p class="sc-detail-p" style="font-size:11px;color:var(--text-secondary);margin-top:10px">
-                После открытия плана можно персонализировать его под ваш профиль и активировать боевой режим.
-            </p>
-        </div>
-
-        <div class="sc-detail-section">
-            <div class="sc-detail-h">📋 Формат тренировки</div>
-            <div class="sc-detail-format">
-                <div class="sc-detail-format-item"><div class="sc-detail-format-icon">📅</div><div class="sc-detail-format-text"><strong>21 день</strong>3 фазы по 7 дней</div></div>
-                <div class="sc-detail-format-item"><div class="sc-detail-format-icon">⏱️</div><div class="sc-detail-format-text"><strong>10–15 мин</strong>в день</div></div>
-                <div class="sc-detail-format-item"><div class="sc-detail-format-icon">📲</div><div class="sc-detail-format-text"><strong>Напоминания</strong>в Telegram/MAX</div></div>
-            </div>
-        </div>
-
-        <button class="sc-btn sc-btn-primary" id="scShowPlan" style="margin-top:14px">
-            📋 Показать план
+        <button class="sc-btn sc-btn-primary" id="scStartBtn" style="margin-top:14px"${_sc.skillId?'':' disabled'}>
+            🚀 Начать 21 день
         </button>
-        <button class="sc-btn sc-btn-ghost" id="scBackToList" style="width:100%;margin-top:10px">
-            ← К списку навыков
-        </button>`;
-}
-
-function _scRenderGenerating() {
-    return `
-        <div class="sc-generating">
-            <span class="sc-generating-icon">🤖</span>
-            <div class="sc-generating-text">Фреди готовит план</div>
-            <div class="sc-generating-sub">
-                ${_sc.isPersonalized ? 'Персонализирую под ваш профиль...' : 'Подбираю план...'}<br>
-                <strong>${_sc.skillName}</strong>
-            </div>
+        <div class="sc-tip">
+            💡 Выберите навык — увидите, что вас ждёт каждый из 21 дня. Можно начать сразу.
         </div>`;
 }
 
-function _scRenderChannel() {
-    const channels = SC_CHANNELS.map(ch => `
-        <div class="sc-channel-card${_sc.channel===ch.id?' active':''}" data-channel="${ch.id}">
-            <div class="sc-channel-icon">${ch.icon}</div>
-            <div class="sc-channel-body">
-                <div class="sc-channel-name">${ch.name}${ch.recommended?'<span class="sc-channel-tag-recommended">Рекомендуется</span>':''}</div>
-                <div class="sc-channel-desc">${ch.desc}</div>
+function _scRenderPreview() {
+    const sk = _scFindSkill(_sc.skillId);
+    const promise = sk?.promise || _sc.skillPromise || _SC_CUSTOM_PROMISE;
+    const name    = sk?.name    || _sc.skillName    || 'свой навык';
+
+    const phases = DEFAULT_TEMPLATE_PLAN.weeks.map((w, i) => `
+        <div class="sc-phase">
+            <div class="sc-phase-num">${i+1}</div>
+            <div class="sc-phase-body">
+                <div class="sc-phase-theme">Неделя ${i+1}: ${w.theme}</div>
+                <div class="sc-phase-mean">${w.meaning}</div>
             </div>
-            <div class="sc-channel-radio"></div>
         </div>`).join('');
 
-    const timeButtons = SC_TIME_OPTIONS.map(t =>
-        `<button class="sc-time-btn${_sc.notifyTime===t?' active':''}" data-time="${t}">${t}</button>`
-    ).join('');
-
-    const skipBtn = _sc.plan ? `
-        <button class="sc-btn sc-btn-ghost" id="scSkipChannel" style="margin-top:10px;width:100%">Пропустить — без напоминаний</button>` : '';
+    const daysOpen = _sc.previewDays ? ' open' : '';
+    const daysHtml = DEFAULT_TEMPLATE_PLAN.weeks.map((w, i) => `
+        <div class="sc-preview-week">
+            <div class="sc-preview-week-title">Неделя ${i+1} · ${w.theme}</div>
+            ${w.exercises.map(e => `
+                <div class="sc-preview-day-row">
+                    <span class="n">${e.day}</span>
+                    <span class="t">${e.task}</span>
+                    <span class="d">${e.dur}</span>
+                </div>`).join('')}
+        </div>`).join('');
 
     return `
-        <div class="sc-channel-intro">
-            <div class="sc-channel-intro-title">📲 Куда присылать ежедневные задания?</div>
-            <div class="sc-channel-intro-text">
-                Каждый день Фреди будет присылать короткое задание дня по навыку <strong>«${_sc.skillName}»</strong>: текст, аудио-практика, инструкция.
+        <div class="sc-preview">
+            <div class="sc-preview-promise-label">Что вы получите · ${name}</div>
+            <div class="sc-preview-promise">${promise}</div>
+            <div class="sc-phases">${phases}</div>
+            <div class="sc-preview-toggle${daysOpen}" id="scPreviewToggle">
+                <span class="arr">▸</span> ${_sc.previewDays?'Скрыть план по дням':'Посмотреть план по дням'}
             </div>
-        </div>
-        <div class="sc-section-label">Канал связи</div>
-        ${channels}
-        <div class="sc-time-block">
-            <div class="sc-time-label">⏰ Время утреннего сообщения</div>
-            <div class="sc-time-grid">${timeButtons}</div>
-        </div>
-        <button class="sc-btn sc-btn-primary" id="scConfirmChannel" style="margin-top:16px">Сохранить и открыть план →</button>
-        ${skipBtn}
-        <div class="sc-tip">
-            💡 При выборе Telegram или MAX — мы откроем бот, и он автоматически свяжет вашу веб-учётку с чатом по deeplink.
+            <div class="sc-preview-days${daysOpen}" id="scPreviewDays">${daysHtml}</div>
         </div>`;
 }
 
+// ===== ЭКРАН ПЛАНА =====
 function _scRenderPlan() {
     if (!_sc.plan) return '<p style="color:var(--text-secondary)">Ошибка загрузки плана</p>';
 
     const day     = _scCurrentDay();
     const done    = _sc.daysDone;
     const pct     = Math.round((done.length / 21) * 100);
-    const chMeta  = _scChannelMeta(_sc.channel);
-    const streak  = _scStreak();
+    const all     = _scAllExercises();
+    const promise = _sc.skillPromise || _scFindSkill(_sc.skillId)?.promise || _SC_CUSTOM_PROMISE;
 
-    const calHtml = _sc.plan.weeks.map((week, wi) => {
-        const daysHtml = week.exercises.map(ex => {
-            const d = ex.day;
-            const isDone    = done.includes(d);
-            const isCurrent = d === day && !isDone;
-            return `<div class="sc-day${isDone?' done':''}${isCurrent?' current':''}" data-day="${d}">
-                <div class="sc-day-num">${d}</div><div class="sc-day-dot"></div>
-            </div>`;
-        }).join('');
-        return `<div class="sc-week"><div class="sc-week-label">Неделя ${wi+1} · ${week.theme}</div><div class="sc-week-grid">${daysHtml}</div></div>`;
-    }).join('');
+    // По умолчанию — раскрыта только текущая неделя
+    if (!_sc.openWeeks) {
+        _sc.openWeeks = [false, false, false];
+        _sc.openWeeks[_scWeekOf(day)] = true;
+    }
 
-    const curEx = _sc.plan.weeks.flatMap(w => w.exercises).find(e => e.day === day);
+    // СЕГОДНЯ
+    const curEx = all.find(e => e.day === day);
     const isDoneToday = done.includes(day);
-
     const todayHtml = curEx ? `
-        <div class="sc-section-label">⚡ День ${day} — сегодня</div>
+        <div class="sc-section-label">⚡ Сегодня</div>
         <div class="sc-today-card">
             <div class="sc-today-header">
                 <div class="sc-today-num">${day}</div>
@@ -759,69 +660,90 @@ function _scRenderPlan() {
                 : `<div style="font-size:12px;color:var(--text-secondary);text-align:center">✅ Выполнено сегодня — до завтра!</div>`}
         </div>` : '';
 
-    const channelInfo = chMeta ? `
-        <div class="sc-plan-channel">
-            <span>${chMeta.icon}</span>
-            <span>Уведомления в <strong>${chMeta.name}</strong> в <strong>${_sc.notifyTime}</strong></span>
-            <a id="scChangeChannel">изменить</a>
-        </div>` : `
-        <div class="sc-plan-channel">
-            <span>🔕</span>
-            <span>Без напоминаний</span>
-            <a id="scChangeChannel">подключить</a>
-        </div>`;
-
-    const streakBadge = streak >= 2 ? `<span class="sc-plan-streak">🔥 ${_scStreakLabel(streak)}</span>` : '';
-
-    // Карточка персонализации (показывается, если план базовый)
-    const personalizeCard = !_sc.isPersonalized && _sc.skillId !== 'custom' ? `
-        <div class="sc-personalize-card">
-            <div class="sc-personalize-card-body">
-                <div class="sc-personalize-card-title">✨ Персонализировать под ваш профиль</div>
-                <div class="sc-personalize-card-desc">AI пересоберёт план с учётом ваших векторов СБ/ТФ/УБ/ЧВ. ~25 секунд.</div>
+    // ЗАВТРА
+    const tomEx = all.find(e => e.day === day + 1);
+    const tomorrowHtml = tomEx ? `
+        <div class="sc-tomorrow">
+            <div>
+                <div class="sc-tomorrow-label">Завтра</div>
+                <div class="sc-tomorrow-task">${tomEx.task}</div>
             </div>
-            <button class="sc-personalize-btn" id="scPersonalize">Сделать</button>
+            <div style="flex:1"></div>
+            <div class="sc-tomorrow-dur">⏱ ${tomEx.dur}</div>
         </div>` : '';
 
-    // Карточка боевого режима
-    const combatCard = _sc.active ? `
-        <div class="sc-combat-card on">
-            <div class="sc-combat-title">🚀 Боевой режим <span class="sc-combat-status on">активен</span></div>
-            <p class="sc-combat-desc">Фреди ведёт вас по программе с 4 точками касания в день и адаптирует план под ваши ответы.</p>
-            <div class="sc-combat-touchpoints">
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">08:00</span>🌅 Задание дня</div>
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">13:00</span>🌤 Чек-ин «как идёт?»</div>
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">20:00</span>🌙 Рефлексия</div>
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">ВС</span>📊 Разбор недели</div>
+    // ВЕСЬ ПУТЬ — таймлайн
+    const weeksHtml = _sc.plan.weeks.map((week, wi) => {
+        const isOpen     = _sc.openWeeks[wi];
+        const weekDone   = week.exercises.filter(e => done.includes(e.day)).length;
+        const total      = week.exercises.length;
+
+        const rowsHtml = week.exercises.map(ex => {
+            const d         = ex.day;
+            const isDone    = done.includes(d);
+            const isCurrent = d === day && !isDone;
+            const isFuture  = d > day && !isDone;
+            const expanded  = _sc.expandedDay === d;
+            const status    = isDone ? '✓' : (isCurrent ? '●' : (isFuture ? '·' : ''));
+            const cls = [
+                'sc-day-row',
+                isDone    ? 'done'     : '',
+                isCurrent ? 'current'  : '',
+                expanded  ? 'expanded' : ''
+            ].filter(Boolean).join(' ');
+            const detail = expanded ? `
+                <div class="sc-day-detail">
+                    ${ex.inst}
+                    <div class="sc-day-detail-actions">
+                        <button class="sc-btn sc-btn-ghost sc-day-toggle-done" data-day="${d}">
+                            ${isDone ? '↩️ Снять отметку' : '✅ Отметить выполнение'}
+                        </button>
+                    </div>
+                </div>` : '';
+            return `
+                <div class="${cls}" data-day="${d}">
+                    <div class="sc-day-num-pill">${d}</div>
+                    <div class="sc-day-info">
+                        <div class="sc-day-task">${ex.task}</div>
+                        <div class="sc-day-dur">⏱ ${ex.dur}</div>
+                    </div>
+                    <div class="sc-day-status">${status}</div>
+                    ${detail}
+                </div>`;
+        }).join('');
+
+        return `
+        <div class="sc-week">
+            <div class="sc-week-head${isOpen?' open':''}" data-week="${wi}">
+                <div class="sc-week-info">
+                    <div class="sc-week-label">Неделя ${wi+1}</div>
+                    <div class="sc-week-theme">${week.theme}</div>
+                    <div class="sc-week-mean">${week.meaning || ''}</div>
+                </div>
+                <div class="sc-week-stats">${weekDone}/${total}</div>
+                <div class="sc-week-toggle">▸</div>
             </div>
-            <button class="sc-btn sc-btn-ghost" id="scDeactivateCombat" style="width:100%">Выключить боевой режим</button>
-        </div>` : `
-        <div class="sc-combat-card">
-            <div class="sc-combat-title">🚀 Боевой режим <span class="sc-combat-status off">выключен</span></div>
-            <p class="sc-combat-desc">Сейчас вы получаете один утренний месседж в день. <strong>Боевой режим</strong> превращает Фреди в активного тренера: 4 точки касания в день, адаптация плана по вашим ответам.</p>
-            <div class="sc-combat-touchpoints">
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">08:00</span>🌅 Задание дня + теория + аудио</div>
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">13:00</span>🌤 «Получилось начать? Что заметили?»</div>
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">20:00</span>🌙 «Опиши ситуацию дня»</div>
-                <div class="sc-combat-tp"><span class="sc-combat-tp-time">ВС</span>📊 AI-разбор недели + insights</div>
-            </div>
-            <button class="sc-btn-combat" id="scActivateCombat">🚀 Активировать боевой режим</button>
+            <div class="sc-week-list${isOpen?' open':''}">${rowsHtml}</div>
         </div>`;
+    }).join('');
 
     return `
         <div class="sc-plan-header">
-            <div class="sc-plan-skill"><span>🎯 ${_sc.skillName}</span>${streakBadge}</div>
+            <div class="sc-plan-skill">🎯 ${_sc.skillName}</div>
+            <div class="sc-plan-promise">${promise}</div>
             <div class="sc-plan-meta">
-                День ${day} из 21 · выполнено ${done.length} упражнений · прогресс ${pct}%${_sc.isPersonalized?' · персональный план':''}
+                День ${day} из 21 · выполнено ${done.length} упражнений · прогресс ${pct}%
             </div>
-            <div class="sc-plan-progress"><div class="sc-plan-progress-fill" style="width:${pct}%"></div></div>
-            ${channelInfo}
+            <div class="sc-plan-progress">
+                <div class="sc-plan-progress-fill" style="width:${pct}%"></div>
+            </div>
         </div>
 
-        ${personalizeCard}
-        ${combatCard}
-        ${calHtml}
         ${todayHtml}
+        ${tomorrowHtml}
+
+        <div class="sc-section-label">🗺 Весь путь</div>
+        ${weeksHtml}
 
         <div class="sc-btn-row" style="margin-top:20px">
             <button class="sc-btn sc-btn-ghost" id="scResetBtn">🔄 Новый навык</button>
@@ -830,171 +752,86 @@ function _scRenderPlan() {
 }
 
 // ============================================
-// СЦЕНАРИИ
-// ============================================
-async function _scShowPlanScenario() {
-    if (!_sc.skillId || !_sc.skillName) { _scToast('Выберите навык', 'error'); return; }
-
-    _sc.view = 'generating';
-    _scRender();
-
-    let plan = await _scLoadBasePlan(_sc.skillId);
-    let isPersonalized = false;
-
-    if (!plan) {
-        // Backend ещё не отдаёт базовый план — fallback на AI
-        const profile = await _scGetProfile();
-        plan = await _scGeneratePlan(_sc.skillName, _sc.skillDesc || '', profile);
-        isPersonalized = true; // AI генерация всегда персональная
-    }
-
-    if (plan) {
-        _sc.plan           = plan;
-        _sc.daysDone       = [];
-        _sc.startDate      = new Date().toISOString();
-        _sc.isPersonalized = isPersonalized;
-        if (!_sc.channel)    _sc.channel    = 'telegram';
-        if (!_sc.notifyTime) _sc.notifyTime = '09:00';
-        _scSave();
-        _sc.view = 'channel';
-    } else {
-        _scToast('Не удалось загрузить план. Попробуйте позже.', 'error');
-        _sc.view = 'detail';
-    }
-    _scRender();
-}
-
-async function _scPersonalizeScenario() {
-    if (!_sc.skillId || !_sc.skillName) return;
-    _sc.view = 'generating';
-    _sc.isPersonalized = true; // отображается в _scRenderGenerating
-    _scRender();
-
-    const profile = await _scGetProfile();
-    const plan    = await _scGeneratePlan(_sc.skillName, _sc.skillDesc || '', profile);
-
-    if (plan) {
-        _sc.plan = plan;
-        _sc.isPersonalized = true;
-        _scSave();
-        _scToast('✨ План пересобран под ваш профиль!', 'success');
-    } else {
-        _sc.isPersonalized = false;
-        _scToast('Не удалось пересобрать план.', 'error');
-    }
-    _sc.view = 'plan';
-    _scRender();
-}
-
-function _scShowCombatConfirm() {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';
-    overlay.innerHTML = `<div style="background:var(--carbon-fiber,#1a1a1a);border:1px solid rgba(255,107,53,0.3);border-radius:22px;padding:24px;max-width:380px;width:100%">
-        <div style="font-size:18px;color:var(--text-primary);margin-bottom:8px;font-weight:700">🚀 Активировать боевой режим</div>
-        <div style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin-bottom:16px">
-            Фреди станет активным тренером. Ежедневно вам будут приходить:
-        </div>
-        <div style="font-size:12px;color:var(--text-primary);line-height:1.7;margin-bottom:18px;padding-left:4px">
-            <div>🌅 <strong>Утром:</strong> задание + теория + аудио-практика</div>
-            <div>🌤 <strong>Днём:</strong> чек-ин «как идёт?»</div>
-            <div>🌙 <strong>Вечером:</strong> рефлексия — опиши ситуацию</div>
-            <div>📊 <strong>В воскресенье:</strong> AI-разбор недели</div>
-        </div>
-        <div style="font-size:12px;color:var(--text-secondary);line-height:1.55;margin-bottom:20px;padding:10px 12px;background:rgba(58,134,255,0.06);border-radius:10px;border-left:2px solid rgba(58,134,255,0.4)">
-            AI адаптирует план под ваши ответы: если трудно — упрощает, если легко — усложняет. Можно выключить в любой момент.
-        </div>
-        <div style="display:flex;gap:10px">
-            <button id="cbCancel" style="flex:1;padding:12px;border-radius:30px;background:rgba(224,224,224,0.07);border:1px solid rgba(224,224,224,0.15);color:var(--text-secondary);font-family:inherit;cursor:pointer;font-size:13px">Не сейчас</button>
-            <button id="cbActivate" style="flex:1.4;padding:12px;border-radius:30px;background:linear-gradient(135deg,#FF6B35,#FF8B5C);border:none;color:white;font-family:inherit;font-weight:600;cursor:pointer;font-size:13px;box-shadow:0 4px 14px rgba(255,107,53,0.3)">🚀 Активировать</button>
-        </div>
-    </div>`;
-    document.body.appendChild(overlay);
-    overlay.querySelector('#cbCancel').onclick = () => overlay.remove();
-    overlay.querySelector('#cbActivate').onclick = async () => {
-        overlay.remove();
-        await _scSetActive(true);
-        _scToast('🚀 Боевой режим активирован! Первое задание придёт утром.', 'success');
-        _scRender();
-    };
-}
-
-// ============================================
 // ОБРАБОТЧИКИ
 // ============================================
 function _scBindHandlers() {
+    // Выбор карточки навыка
     document.querySelectorAll('.sc-skill-card').forEach(card => {
         card.addEventListener('click', () => {
             const id = card.dataset.id;
             const sk = _scFindSkill(id);
             if (!sk) return;
-            _sc.skillId = sk.id; _sc.skillName = sk.name; _sc.skillDesc = sk.desc;
-            _sc.view = 'detail';
+            _sc.skillId      = sk.id;
+            _sc.skillName    = sk.name;
+            _sc.skillDesc    = sk.desc;
+            _sc.skillPromise = sk.promise;
+            _sc.previewDays  = false;
             _scRender();
+            // Прокрутить к превью
+            setTimeout(() => {
+                document.querySelector('.sc-preview')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 80);
         });
     });
 
-    document.getElementById('scOpenPlan')?.addEventListener('click', () => { _sc.view = 'plan'; _scRender(); });
-
-    document.getElementById('scStartCustomBtn')?.addEventListener('click', async () => {
-        const custom = (document.getElementById('scCustomInput')?.value || '').trim();
-        if (!custom) { _scToast('Введите свой навык', 'error'); return; }
-        _sc.skillId = 'custom'; _sc.skillName = custom; _sc.skillDesc = 'персональный навык пользователя';
-        await _scShowPlanScenario();
-    });
-
-    document.getElementById('scShowPlan')?.addEventListener('click', _scShowPlanScenario);
-    document.getElementById('scBackToList')?.addEventListener('click', () => { _sc.view = 'select'; _scRender(); });
-
-    document.querySelectorAll('.sc-channel-card').forEach(card => {
-        card.addEventListener('click', () => {
-            document.querySelectorAll('.sc-channel-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            _sc.channel = card.dataset.channel;
+    // Кастомный навык — отслеживаем ввод, чтобы активировать кнопку Старт
+    const customInput = document.getElementById('scCustomInput');
+    if (customInput) {
+        customInput.addEventListener('input', () => {
+            const v = customInput.value.trim();
+            if (v) {
+                _sc.skillId      = 'custom';
+                _sc.skillName    = v;
+                _sc.skillDesc    = 'персональный навык';
+                _sc.skillPromise = _SC_CUSTOM_PROMISE;
+                document.querySelectorAll('.sc-skill-card').forEach(c => c.classList.remove('active'));
+                document.getElementById('scStartBtn')?.removeAttribute('disabled');
+            }
         });
+    }
+
+    // Тоггл «План по дням» в превью
+    document.getElementById('scPreviewToggle')?.addEventListener('click', () => {
+        _sc.previewDays = !_sc.previewDays;
+        document.getElementById('scPreviewToggle').classList.toggle('open', _sc.previewDays);
+        document.getElementById('scPreviewDays').classList.toggle('open', _sc.previewDays);
+        document.querySelector('#scPreviewToggle').innerHTML =
+            `<span class="arr">▸</span> ${_sc.previewDays?'Скрыть план по дням':'Посмотреть план по дням'}`;
     });
 
-    document.querySelectorAll('.sc-time-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.sc-time-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            _sc.notifyTime = btn.dataset.time;
-        });
-    });
-
-    document.getElementById('scConfirmChannel')?.addEventListener('click', async () => {
-        if (!_sc.channel) { _scToast('Выберите канал связи', 'error'); return; }
-        _scSave();
-        await _scSaveChannelToBackend();
-        const meta = _scChannelMeta(_sc.channel);
-        if (meta && typeof meta.buildLink === 'function') {
-            const url = meta.buildLink(_scUid());
-            try { window.open(url, '_blank', 'noopener'); } catch {}
-            _scToast(`Откройте ${meta.name} и нажмите Start`, 'success');
-        } else {
-            _scToast('✅ Канал сохранён', 'success');
-        }
-        _sc.view = 'plan'; _scRender();
-    });
-
-    document.getElementById('scSkipChannel')?.addEventListener('click', () => {
-        _sc.channel = null; _scSave(); _sc.view = 'plan'; _scRender();
-    });
-
-    document.getElementById('scChangeChannel')?.addEventListener('click', () => {
-        _sc.view = 'channel'; _scRender();
-    });
-
-    // Персонализация
-    document.getElementById('scPersonalize')?.addEventListener('click', _scPersonalizeScenario);
-
-    // Боевой режим
-    document.getElementById('scActivateCombat')?.addEventListener('click', _scShowCombatConfirm);
-    document.getElementById('scDeactivateCombat')?.addEventListener('click', async () => {
-        await _scSetActive(false);
-        _scToast('Боевой режим выключен', 'info');
+    // Открыть существующий план
+    document.getElementById('scOpenPlan')?.addEventListener('click', () => {
+        _sc.view = 'plan';
+        _sc.openWeeks   = null;
+        _sc.expandedDay = null;
         _scRender();
     });
 
+    // Старт
+    document.getElementById('scStartBtn')?.addEventListener('click', () => {
+        const custom = (document.getElementById('scCustomInput')?.value || '').trim();
+        if (custom) {
+            _sc.skillId      = 'custom';
+            _sc.skillName    = custom;
+            _sc.skillDesc    = 'персональный навык';
+            _sc.skillPromise = _SC_CUSTOM_PROMISE;
+        }
+        if (!_sc.skillId || !_sc.skillName) {
+            _scToast('Выберите навык или введите свой', 'error');
+            return;
+        }
+
+        _sc.plan        = _scLocalPlan();
+        _sc.daysDone    = [];
+        _sc.startDate   = new Date().toISOString();
+        _sc.openWeeks   = null;
+        _sc.expandedDay = null;
+        _scSave();
+        _sc.view = 'plan';
+        _scRender();
+    });
+
+    // СЕГОДНЯ — отметить выполнение
     document.getElementById('scMarkDone')?.addEventListener('click', () => {
         const day = _scCurrentDay();
         if (!_sc.daysDone.includes(day)) {
@@ -1006,15 +843,40 @@ function _scBindHandlers() {
         }
     });
 
-    document.querySelectorAll('.sc-day').forEach(d => {
-        d.addEventListener('click', () => {
-            const n = parseInt(d.dataset.day);
-            if (_sc.daysDone.includes(n)) _sc.daysDone = _sc.daysDone.filter(x=>x!==n);
-            else _sc.daysDone.push(n);
-            _scSave(); _scRender();
+    // Тоггл недели
+    document.querySelectorAll('.sc-week-head').forEach(h => {
+        h.addEventListener('click', () => {
+            const wi = parseInt(h.dataset.week);
+            if (!_sc.openWeeks) _sc.openWeeks = [false, false, false];
+            _sc.openWeeks[wi] = !_sc.openWeeks[wi];
+            _scRender();
         });
     });
 
+    // Раскрыть день в таймлайне
+    document.querySelectorAll('.sc-day-row').forEach(row => {
+        row.addEventListener('click', (ev) => {
+            // Не реагируем, если кликнули по кнопке внутри
+            if (ev.target.closest('.sc-day-toggle-done')) return;
+            const d = parseInt(row.dataset.day);
+            _sc.expandedDay = (_sc.expandedDay === d) ? null : d;
+            _scRender();
+        });
+    });
+
+    // Кнопка отметки внутри развёрнутого дня
+    document.querySelectorAll('.sc-day-toggle-done').forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            const d = parseInt(btn.dataset.day);
+            if (_sc.daysDone.includes(d)) _sc.daysDone = _sc.daysDone.filter(x => x !== d);
+            else                          _sc.daysDone.push(d);
+            _scSave();
+            _scRender();
+        });
+    });
+
+    // Новый навык (с подтверждением)
     document.getElementById('scResetBtn')?.addEventListener('click', () => {
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';
@@ -1028,18 +890,19 @@ function _scBindHandlers() {
         </div>`;
         document.body.appendChild(overlay);
         overlay.querySelector('#cfNo').onclick  = () => overlay.remove();
-        overlay.querySelector('#cfYes').onclick = async () => {
+        overlay.querySelector('#cfYes').onclick = () => {
             overlay.remove();
-            // Деактивируем боевой режим перед сбросом
-            if (_sc.active) await _scSetActive(false);
-            _sc.skillId = _sc.skillName = _sc.skillDesc = _sc.plan = _sc.startDate = null;
-            _sc.daysDone = [];
-            _sc.isPersonalized = false;
+            _sc.skillId = _sc.skillName = _sc.skillDesc = _sc.skillPromise = _sc.plan = _sc.startDate = null;
+            _sc.daysDone    = [];
+            _sc.openWeeks   = null;
+            _sc.expandedDay = null;
             _sc.view = 'select';
-            _scSave(); _scRender();
+            _scSave();
+            _scRender();
         };
     });
 
+    // К тренировке дня
     document.getElementById('scGoTraining')?.addEventListener('click', () => {
         if (typeof showDailyTrainingScreen === 'function') {
             showDailyTrainingScreen();
@@ -1052,12 +915,17 @@ function _scBindHandlers() {
     });
 }
 
+// ============================================
+// ТОЧКА ВХОДА
+// ============================================
 async function showSkillChoiceScreen() {
     _scLoad();
-    _sc.view = 'select';
+    _sc.view        = 'select';
+    _sc.openWeeks   = null;
+    _sc.expandedDay = null;
+    _sc.previewDays = false;
     _scRender();
-    _scLoadSettingsFromBackend();
 }
 
 window.showSkillChoiceScreen = showSkillChoiceScreen;
-console.log('✅ skill_choice.js v2.4 загружен (базовый план + персонализация + боевой режим)');
+console.log('✅ skill_choice.js v3.0 загружен (план по дням + промис + превью пути)');
