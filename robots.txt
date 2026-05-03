@@ -10,10 +10,6 @@ Disallow: /wp-admin/
 Disallow: /wp-content/
 Disallow: /wp-includes/
 
-# Запрещаем индексацию дублей с параметрами
-Disallow: /*?*
-Disallow: /*&*
-
 # Запрещаем индексацию системных файлов
 Disallow: /*.log$
 Disallow: /*.bak$
@@ -22,18 +18,27 @@ Disallow: /*.sql$
 Disallow: /*.gz$
 Disallow: /config/
 
-# Разрешаем поисковым ботам индексировать основной контент
+# Параметры URL — фильтруем только трекинговые,
+# canonical-ссылки выручают остальные.
+Disallow: /*?utm_*
+Disallow: /*?fbclid=*
+Disallow: /*?gclid=*
+Disallow: /*?yclid=*
+
+# Явно разрешаем основные разделы (для прозрачности)
 Allow: /knigi/
 Allow: /igry/
 Allow: /treningi/
 Allow: /sobytiya/
 Allow: /virtual-psychologist/
+Allow: /fredi/
+Allow: /blog/
+Allow: /obo-mne/
+Allow: /about/
 
-# Указываем скорость обхода для Яндекса
-Host: https://meysternlp.ru
-
-# Карта сайта
+# Карты сайта
 Sitemap: https://meysternlp.ru/sitemap.xml
+Sitemap: https://meysternlp.ru/sitemap-images.xml
 
 # Задержка для медленных ботов
 Crawl-delay: 1
@@ -53,3 +58,17 @@ User-agent: Bingbot
 Disallow: /admin/
 Disallow: /private/
 Crawl-delay: 1
+
+# AI-краулеры — разрешаем, чтобы Фреди и Андрей Мейстер появлялись
+# в ответах ChatGPT, Claude, Perplexity и т. п.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: YandexAdditional
+Allow: /
