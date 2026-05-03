@@ -3,7 +3,7 @@
   <!-- ========== ГЛАВНАЯ ========== -->
   <url>
     <loc>https://meysternlp.ru/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-06-19</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -89,9 +89,15 @@
   <!-- ========== БЛОГ ========== -->
   <url>
     <loc>https://meysternlp.ru/blog/</loc>
-    <lastmod>2026-06-12</lastmod>
+    <lastmod>2026-06-19</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html</loc>
+    <lastmod>2026-06-19</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/prokrastinaciya-prichiny-i-tehniki.html</loc>
