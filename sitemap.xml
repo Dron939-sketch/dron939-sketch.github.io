@@ -3,7 +3,7 @@
   <!-- ========== ГЛАВНАЯ ========== -->
   <url>
     <loc>https://meysternlp.ru/</loc>
-    <lastmod>2026-07-03</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -89,9 +89,15 @@
   <!-- ========== БЛОГ ========== -->
   <url>
     <loc>https://meysternlp.ru/blog/</loc>
-    <lastmod>2026-07-03</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/trenirovka-navykov-za-21-den.html</loc>
+    <lastmod>2026-07-10</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/tolkovanie-snov-nauchnyj-podhod.html</loc>
