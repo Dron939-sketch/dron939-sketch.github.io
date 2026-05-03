@@ -4,4 +4,8 @@
     <loc>https://meysternlp.ru/sitemap.xml</loc>
     <lastmod>2026-05-22</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>https://meysternlp.ru/sitemap-images.xml</loc>
+    <lastmod>2026-05-22</lastmod>
+  </sitemap>
 </sitemapindex>
