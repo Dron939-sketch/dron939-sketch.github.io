@@ -1,6 +1,7 @@
 // ============================================
-// skill_choice.js — Выбор навыка + AI-план
-// Версия 2.0 — AI генерирует 21-дневный план
+// skill_choice.js — Выбор навыка + AI-план + Канал связи
+// Версия 2.1 — добавлен экран выбора канала уведомлений (Telegram/MAX/Web/Email)
+//             и категория «Влияние и коммуникация» (4 новых навыка)
 // ============================================
 
 function _scInjectStyles() {
@@ -25,7 +26,8 @@ function _scInjectStyles() {
         .sc-skill-card:active { transform: scale(0.98); }
         .sc-skill-card.active { background: rgba(224,224,224,0.15); border-color: rgba(224,224,224,0.38); }
         .sc-skill-body  { flex: 1; min-width: 0; }
-        .sc-skill-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+        .sc-skill-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+        .sc-skill-new   { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; background: rgba(255,107,53,0.15); color: #FF8B5C; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; }
         .sc-skill-sub   { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
         .sc-skill-score {
             font-size: 11px; font-weight: 700; color: var(--text-secondary);
@@ -108,6 +110,10 @@ function _scInjectStyles() {
         .sc-plan-meta  { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
         .sc-plan-progress { height: 4px; background: rgba(224,224,224,0.1); border-radius: 2px; margin-top: 10px; overflow: hidden; }
         .sc-plan-progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--silver-brushed), var(--chrome)); transition: width 0.4s; }
+        .sc-plan-channel { font-size: 11px; color: var(--text-secondary); margin-top: 8px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .sc-plan-channel strong { color: var(--text-primary); font-weight: 600; }
+        .sc-plan-channel a { color: var(--chrome); text-decoration: none; cursor: pointer; }
+        .sc-plan-channel a:hover { text-decoration: underline; }
 
         .sc-week { margin-bottom: 20px; }
         .sc-week-label {
@@ -164,9 +170,89 @@ function _scInjectStyles() {
         }
         .sc-tip strong { color: var(--chrome); }
 
+        /* ЭКРАН ВЫБОРА КАНАЛА */
+        .sc-channel-intro {
+            background: linear-gradient(135deg, rgba(224,224,224,0.08), rgba(192,192,192,0.02));
+            border: 1px solid rgba(224,224,224,0.18);
+            border-radius: 18px;
+            padding: 16px 18px;
+            margin-bottom: 18px;
+        }
+        .sc-channel-intro-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+        .sc-channel-intro-text  { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+
+        .sc-channel-card {
+            background: rgba(224,224,224,0.04);
+            border: 1px solid rgba(224,224,224,0.12);
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.18s, border-color 0.18s, transform 0.12s;
+            touch-action: manipulation;
+        }
+        .sc-channel-card:hover  { background: rgba(224,224,224,0.09); border-color: rgba(224,224,224,0.24); }
+        .sc-channel-card:active { transform: scale(0.985); }
+        .sc-channel-card.active {
+            background: rgba(58,134,255,0.10);
+            border-color: rgba(58,134,255,0.45);
+        }
+        .sc-channel-icon {
+            font-size: 26px;
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; background: rgba(224,224,224,0.06);
+            flex-shrink: 0;
+        }
+        .sc-channel-body { flex: 1; min-width: 0; }
+        .sc-channel-name { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .sc-channel-tag-recommended { font-size: 9px; font-weight: 700; letter-spacing: 0.4px; background: rgba(61,220,151,0.18); color: #5EE0A8; padding: 2px 7px; border-radius: 8px; text-transform: uppercase; }
+        .sc-channel-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+        .sc-channel-radio {
+            width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(224,224,224,0.3);
+            flex-shrink: 0; position: relative; transition: border-color 0.18s;
+        }
+        .sc-channel-card.active .sc-channel-radio { border-color: var(--chrome,#3A86FF); }
+        .sc-channel-card.active .sc-channel-radio::after {
+            content: ''; position: absolute; top: 3px; left: 3px;
+            width: 8px; height: 8px; border-radius: 50%; background: var(--chrome,#3A86FF);
+        }
+
+        .sc-time-block {
+            background: rgba(224,224,224,0.03);
+            border: 1px solid rgba(224,224,224,0.1);
+            border-radius: 16px;
+            padding: 14px;
+            margin-top: 16px;
+        }
+        .sc-time-label { font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; }
+        .sc-time-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .sc-time-btn {
+            padding: 9px 8px;
+            background: rgba(224,224,224,0.05);
+            border: 1px solid rgba(224,224,224,0.12);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-size: 12px; font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            font-family: inherit;
+        }
+        .sc-time-btn:hover { background: rgba(224,224,224,0.1); }
+        .sc-time-btn.active {
+            background: rgba(58,134,255,0.12);
+            border-color: rgba(58,134,255,0.4);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
         @media (max-width: 480px) {
             .sc-skill-name { font-size: 13px; }
             .sc-today-task { font-size: 13px; }
+            .sc-time-grid  { grid-template-columns: repeat(3, 1fr); }
         }
     `;
     document.head.appendChild(s);
@@ -195,20 +281,63 @@ const SC_SKILLS = {
         { id:'feedback',    name:'Обратная связь',       desc:'Давать и принимать критику конструктивно' },
         { id:'networking',  name:'Нетворкинг',           desc:'Строить и поддерживать профессиональные связи' },
         { id:'creativity',  name:'Креативность',         desc:'Находить нестандартные решения' }
+    ],
+    influence: [
+        { id:'speech_influence', name:'Речевое воздействие',           desc:'Гипнотические языковые паттерны, метафоры, риторические структуры', isNew:true },
+        { id:'emotion_partner',  name:'Управление эмоциями собеседника', desc:'Возвращать собеседника из реактивного состояния в ресурсное', isNew:true },
+        { id:'emotion_group',    name:'Управление эмоциями группы',     desc:'Эмоциональное заражение, работа с настроением команды или зала', isNew:true },
+        { id:'media_influence',  name:'Информационное воздействие через СМИ', desc:'Как новостные циклы формируют гормональный фон у больших групп — для PR, маркетинга, критического мышления', isNew:true }
     ]
 };
+
+// ============================================
+// КАНАЛЫ СВЯЗИ
+// ============================================
+const SC_CHANNELS = [
+    {
+        id:    'telegram',
+        icon:  '📱',
+        name:  'Telegram',
+        desc:  'Все форматы — текст, голос, аудио-практики, видео-фрагменты',
+        recommended: true,
+        link:  'https://t.me/Nanotech_varik_bot'
+    },
+    {
+        id:    'max',
+        icon:  '🤖',
+        name:  'MAX',
+        desc:  'Российский мессенджер от ВК. Те же форматы, что в Telegram.',
+        link:  'https://max.ru/id502238728185_bot'
+    },
+    {
+        id:    'web',
+        icon:  '🌐',
+        name:  'Веб-уведомления',
+        desc:  'Push в браузере, если Фреди открыт в фоне. Для офисной работы.'
+    },
+    {
+        id:    'email',
+        icon:  '📧',
+        name:  'Email-дайджест',
+        desc:  'Утренний email с заданием и ссылкой на материалы.'
+    }
+];
+
+const SC_TIME_OPTIONS = ['07:00','08:00','09:00','10:00','12:00','18:00','20:00','21:00'];
 
 // ============================================
 // СОСТОЯНИЕ
 // ============================================
 if (!window._scState) window._scState = {
-    view:      'select',  // 'select' | 'generating' | 'plan'
-    skillId:   null,
-    skillName: null,
-    skillDesc: null,
-    plan:      null,      // { weeks: [{theme, exercises:[{day,task,dur,inst}]}] }
-    daysDone:  [],
-    startDate: null
+    view:       'select',  // 'select' | 'generating' | 'channel' | 'plan'
+    skillId:    null,
+    skillName:  null,
+    skillDesc:  null,
+    plan:       null,      // { weeks: [{theme, exercises:[{day,task,dur,inst}]}] }
+    daysDone:   [],
+    startDate:  null,
+    channel:    null,      // 'telegram' | 'max' | 'web' | 'email'
+    notifyTime: '09:00'
 };
 const _sc = window._scState;
 
@@ -225,13 +354,15 @@ function _scSave() {
     try {
         const data = {
             skillId: _sc.skillId, skillName: _sc.skillName, skillDesc: _sc.skillDesc,
-            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate
+            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate,
+            channel: _sc.channel, notifyTime: _sc.notifyTime
         };
         localStorage.setItem('sc_plan_'+_scUid(), JSON.stringify(data));
         // Синхронизируем с daily_training
         localStorage.setItem('trainer_skill_'+_scUid(), JSON.stringify({
             skillId: _sc.skillId, skillName: _sc.skillName,
-            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate
+            plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate,
+            channel: _sc.channel, notifyTime: _sc.notifyTime
         }));
     } catch {}
 }
@@ -247,6 +378,38 @@ function _scCurrentDay() {
     if (!_sc.startDate) return 1;
     const diff = Math.floor((Date.now() - new Date(_sc.startDate)) / 86400000) + 1;
     return Math.min(21, Math.max(1, diff));
+}
+
+function _scChannelMeta(id) {
+    return SC_CHANNELS.find(c => c.id === id);
+}
+
+// Сохранение настроек канала на бэкенде. Graceful — если эндпоинт не готов,
+// настройки всё равно сохранены в localStorage, фронт работает.
+async function _scSaveChannelToBackend() {
+    if (!_sc.channel || !_sc.skillId) return;
+    try {
+        await fetch(`${_scApi()}/api/notification-settings`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id:     _scUid(),
+                skill_id:    _sc.skillId,
+                skill_name:  _sc.skillName,
+                channel:     _sc.channel,
+                notify_time: _sc.notifyTime,
+                start_date:  _sc.startDate
+            })
+        });
+    } catch (e) {
+        // Не критично — план уже работает, настройки в localStorage.
+        console.warn('Notification settings: backend пока недоступен, сохранил локально', e);
+    }
+
+    // Если выбран web push — пытаемся подписаться через PushManager_Fredi.
+    if (_sc.channel === 'web' && window.PushManager_Fredi && _scUid()) {
+        try { await window.PushManager_Fredi.request(_scUid()); } catch {}
+    }
 }
 
 // ============================================
@@ -340,6 +503,7 @@ function _scRender() {
     let body = '';
     if (_sc.view === 'select')     body = _scRenderSelect();
     if (_sc.view === 'generating') body = _scRenderGenerating();
+    if (_sc.view === 'channel')    body = _scRenderChannel();
     if (_sc.view === 'plan')       body = _scRenderPlan();
 
     c.innerHTML = `
@@ -355,6 +519,7 @@ function _scRender() {
 
     document.getElementById('scBack').onclick = () => {
         if (_sc.view === 'plan')       { _sc.view = 'select'; _scRender(); return; }
+        if (_sc.view === 'channel')    { _sc.view = 'plan';   _scRender(); return; }
         if (_sc.view === 'generating') return; // нельзя прервать
         _scHome();
     };
@@ -411,22 +576,17 @@ function _scRenderSelect() {
             <button class="sc-btn sc-btn-ghost" id="scOpenPlan" style="flex-shrink:0">Открыть план →</button>
         </div>` : '';
 
-    // Все навыки
-    const personal = SC_SKILLS.personal.map(sk => `
+    const renderSkillList = (arr) => arr.map(sk => `
         <div class="sc-skill-card${_sc.skillId===sk.id?' active':''}" data-id="${sk.id}" data-name="${sk.name}" data-desc="${sk.desc}">
             <div class="sc-skill-body">
-                <div class="sc-skill-name">${sk.name}</div>
+                <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}</div>
                 <div class="sc-skill-sub">${sk.desc}</div>
             </div>
         </div>`).join('');
 
-    const professional = SC_SKILLS.professional.map(sk => `
-        <div class="sc-skill-card${_sc.skillId===sk.id?' active':''}" data-id="${sk.id}" data-name="${sk.name}" data-desc="${sk.desc}">
-            <div class="sc-skill-body">
-                <div class="sc-skill-name">${sk.name}</div>
-                <div class="sc-skill-sub">${sk.desc}</div>
-            </div>
-        </div>`).join('');
+    const personal     = renderSkillList(SC_SKILLS.personal);
+    const professional = renderSkillList(SC_SKILLS.professional);
+    const influence    = renderSkillList(SC_SKILLS.influence);
 
     return `
         ${activePlan}
@@ -435,6 +595,8 @@ function _scRenderSelect() {
         ${personal}
         <div class="sc-section-label">💼 Профессиональные навыки</div>
         ${professional}
+        <div class="sc-section-label">🎙️ Влияние и коммуникация</div>
+        ${influence}
 
         <div class="sc-custom-block">
             <div class="sc-custom-label">✏️ Или введите свой навык:</div>
@@ -445,7 +607,7 @@ function _scRenderSelect() {
             🤖 Создать AI-план на 21 день
         </button>
         <div class="sc-tip">
-            💡 AI учтёт ваш психологический профиль и построит план с нарастающей сложностью. Займёт 15–30 секунд.
+            💡 AI учтёт ваш психологический профиль и построит план с нарастающей сложностью. После генерации вы выберете канал ежедневных напоминаний (Telegram, MAX, веб-уведомления или email). Займёт 15–30 секунд.
         </div>`;
 }
 
@@ -462,6 +624,50 @@ function _scRenderGenerating() {
         </div>`;
 }
 
+// ===== ЭКРАН ВЫБОРА КАНАЛА =====
+function _scRenderChannel() {
+    const channels = SC_CHANNELS.map(ch => `
+        <div class="sc-channel-card${_sc.channel===ch.id?' active':''}" data-channel="${ch.id}">
+            <div class="sc-channel-icon">${ch.icon}</div>
+            <div class="sc-channel-body">
+                <div class="sc-channel-name">${ch.name}${ch.recommended?'<span class="sc-channel-tag-recommended">Рекомендуется</span>':''}</div>
+                <div class="sc-channel-desc">${ch.desc}</div>
+            </div>
+            <div class="sc-channel-radio"></div>
+        </div>`).join('');
+
+    const timeButtons = SC_TIME_OPTIONS.map(t => `
+        <button class="sc-time-btn${_sc.notifyTime===t?' active':''}" data-time="${t}">${t}</button>
+    `).join('');
+
+    const skipBtn = _sc.plan ? `
+        <button class="sc-btn sc-btn-ghost" id="scSkipChannel" style="margin-top:10px;width:100%">Пропустить — без напоминаний</button>` : '';
+
+    return `
+        <div class="sc-channel-intro">
+            <div class="sc-channel-intro-title">📲 Куда присылать ежедневные задания?</div>
+            <div class="sc-channel-intro-text">
+                Каждый день Фреди будет присылать короткое задание дня по навыку <strong>«${_sc.skillName}»</strong>: текст, аудио-практика, инструкция. Это сильно повышает шанс довести 21 день до конца — не вы вспоминаете о курсе, а курс приходит к вам.
+            </div>
+        </div>
+
+        <div class="sc-section-label">Канал связи</div>
+        ${channels}
+
+        <div class="sc-time-block">
+            <div class="sc-time-label">⏰ Время утреннего сообщения</div>
+            <div class="sc-time-grid">${timeButtons}</div>
+        </div>
+
+        <button class="sc-btn sc-btn-primary" id="scConfirmChannel" style="margin-top:16px">
+            Сохранить и открыть план →
+        </button>
+        ${skipBtn}
+        <div class="sc-tip">
+            💡 Канал и время можно сменить в любой момент из экрана плана. Если выбран Telegram или MAX — нажмите кнопку «Открыть бот» после сохранения и отправьте боту команду <strong>/start</strong>, чтобы он вас узнал.
+        </div>`;
+}
+
 // ===== ЭКРАН ПЛАНА =====
 function _scRenderPlan() {
     if (!_sc.plan) return '<p style="color:var(--text-secondary)">Ошибка загрузки плана</p>';
@@ -469,6 +675,7 @@ function _scRenderPlan() {
     const day     = _scCurrentDay();
     const done    = _sc.daysDone;
     const pct     = Math.round((done.length / 21) * 100);
+    const chMeta  = _scChannelMeta(_sc.channel);
 
     // Календарь
     const calHtml = _sc.plan.weeks.map((week, wi) => {
@@ -509,6 +716,19 @@ function _scRenderPlan() {
                 : `<div style="font-size:12px;color:var(--text-secondary);text-align:center">✅ Выполнено сегодня — до завтра!</div>`}
         </div>` : '';
 
+    // Блок информации о канале связи
+    const channelInfo = chMeta ? `
+        <div class="sc-plan-channel">
+            <span>${chMeta.icon}</span>
+            <span>Уведомления в <strong>${chMeta.name}</strong> в <strong>${_sc.notifyTime}</strong></span>
+            <a id="scChangeChannel">изменить</a>
+        </div>` : `
+        <div class="sc-plan-channel">
+            <span>🔕</span>
+            <span>Без напоминаний</span>
+            <a id="scChangeChannel">подключить</a>
+        </div>`;
+
     return `
         <div class="sc-plan-header">
             <div class="sc-plan-skill">🎯 ${_sc.skillName}</div>
@@ -518,6 +738,7 @@ function _scRenderPlan() {
             <div class="sc-plan-progress">
                 <div class="sc-plan-progress-fill" style="width:${pct}%"></div>
             </div>
+            ${channelInfo}
         </div>
 
         ${calHtml}
@@ -533,7 +754,7 @@ function _scRenderPlan() {
 // ОБРАБОТЧИКИ
 // ============================================
 function _scBindHandlers() {
-    // Выбор карточки
+    // Выбор карточки навыка
     document.querySelectorAll('.sc-skill-card').forEach(card => {
         card.addEventListener('click', () => {
             document.querySelectorAll('.sc-skill-card').forEach(c => c.classList.remove('active'));
@@ -571,13 +792,69 @@ function _scBindHandlers() {
             _sc.plan      = plan;
             _sc.daysDone  = [];
             _sc.startDate = new Date().toISOString();
+            // Подставляем дефолтный канал/время если ещё не выбраны.
+            if (!_sc.channel)    _sc.channel    = 'telegram';
+            if (!_sc.notifyTime) _sc.notifyTime = '09:00';
             _scSave();
-            _sc.view = 'plan';
-            _scToast('✅ План готов!', 'success');
+            _sc.view = 'channel';
+            _scToast('✅ План готов! Выберите канал напоминаний.', 'success');
         } else {
             _scToast('Не удалось создать план. Попробуйте позже.', 'error');
             _sc.view = 'select';
         }
+        _scRender();
+    });
+
+    // ВЫБОР КАНАЛА
+    document.querySelectorAll('.sc-channel-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.sc-channel-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            _sc.channel = card.dataset.channel;
+        });
+    });
+
+    // ВЫБОР ВРЕМЕНИ
+    document.querySelectorAll('.sc-time-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.sc-time-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            _sc.notifyTime = btn.dataset.time;
+        });
+    });
+
+    // Подтвердить канал
+    document.getElementById('scConfirmChannel')?.addEventListener('click', async () => {
+        if (!_sc.channel) {
+            _scToast('Выберите канал связи', 'error'); return;
+        }
+        _scSave();
+        await _scSaveChannelToBackend();
+
+        // Если выбран Telegram/MAX — открываем бот в новой вкладке для регистрации.
+        const meta = _scChannelMeta(_sc.channel);
+        if (meta && meta.link) {
+            try { window.open(meta.link, '_blank', 'noopener'); } catch {}
+            _scToast(`Откройте ${meta.name} и отправьте /start`, 'success');
+        } else {
+            _scToast('✅ Канал сохранён', 'success');
+        }
+
+        _sc.view = 'plan';
+        _scRender();
+    });
+
+    // Пропустить настройку канала
+    document.getElementById('scSkipChannel')?.addEventListener('click', () => {
+        _sc.channel = null;
+        _scSave();
+        _sc.view = 'plan';
+        _scRender();
+    });
+
+    // Изменить канал из экрана плана
+    document.getElementById('scChangeChannel')?.addEventListener('click', () => {
+        _sc.view = 'channel';
         _scRender();
     });
 
@@ -622,6 +899,7 @@ function _scBindHandlers() {
             overlay.remove();
             _sc.skillId = _sc.skillName = _sc.skillDesc = _sc.plan = _sc.startDate = null;
             _sc.daysDone = [];
+            // Канал и время не сбрасываем — пользователь, скорее всего, оставит те же.
             _sc.view = 'select';
             _scSave();
             _scRender();
@@ -651,4 +929,4 @@ async function showSkillChoiceScreen() {
 }
 
 window.showSkillChoiceScreen = showSkillChoiceScreen;
-console.log('✅ skill_choice.js v2.0 загружен');
+console.log('✅ skill_choice.js v2.1 загружен (с каналами связи)');
