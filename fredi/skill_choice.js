@@ -1,7 +1,6 @@
 // ============================================
-// skill_choice.js — Выбор навыка + AI-план + Канал связи
-// Версия 2.1 — добавлен экран выбора канала уведомлений (Telegram/MAX/Web/Email)
-//             и категория «Влияние и коммуникация» (4 новых навыка)
+// skill_choice.js — Выбор навыка + Описание + AI-план + Канал связи
+// Версия 2.2 — добавлен экран описания навыка перед генерацией плана
 // ============================================
 
 function _scInjectStyles() {
@@ -29,6 +28,8 @@ function _scInjectStyles() {
         .sc-skill-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
         .sc-skill-new   { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; background: rgba(255,107,53,0.15); color: #FF8B5C; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; }
         .sc-skill-sub   { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+        .sc-skill-arrow { font-size: 16px; color: var(--text-secondary); flex-shrink: 0; opacity: 0.5; }
+        .sc-skill-card:hover .sc-skill-arrow { opacity: 1; color: var(--chrome,#3A86FF); }
         .sc-skill-score {
             font-size: 11px; font-weight: 700; color: var(--text-secondary);
             flex-shrink: 0; background: rgba(224,224,224,0.08);
@@ -97,6 +98,52 @@ function _scInjectStyles() {
             margin-top: 8px;
         }
         .sc-custom-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+
+        /* ЭКРАН ОПИСАНИЯ НАВЫКА */
+        .sc-detail-hero {
+            background: linear-gradient(135deg, rgba(58,134,255,0.10), rgba(99,102,241,0.04));
+            border: 1px solid rgba(58,134,255,0.25);
+            border-radius: 20px;
+            padding: 22px 22px 20px;
+            margin-bottom: 16px;
+        }
+        .sc-detail-cat { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--chrome,#3A86FF); margin-bottom: 10px; }
+        .sc-detail-title { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; line-height: 1.25; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .sc-detail-tag-new { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; background: rgba(255,107,53,0.18); color: #FF8B5C; padding: 3px 8px; border-radius: 8px; text-transform: uppercase; }
+        .sc-detail-short { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 0; }
+
+        .sc-detail-section {
+            background: rgba(224,224,224,0.04);
+            border: 1px solid rgba(224,224,224,0.1);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .sc-detail-h { font-size: 12px; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px; }
+        .sc-detail-p { font-size: 13px; color: var(--text-primary); line-height: 1.6; margin: 0; }
+
+        .sc-detail-outcomes { list-style: none; padding: 0; margin: 0; }
+        .sc-detail-outcomes li {
+            font-size: 13px; color: var(--text-primary); line-height: 1.55;
+            padding: 8px 0 8px 22px; position: relative;
+            border-bottom: 1px solid rgba(224,224,224,0.06);
+        }
+        .sc-detail-outcomes li:last-child { border-bottom: none; }
+        .sc-detail-outcomes li::before {
+            content: '✓'; position: absolute; left: 0; top: 8px;
+            color: #5EE0A8; font-weight: 700; font-size: 13px;
+        }
+
+        .sc-detail-format {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;
+        }
+        .sc-detail-format-item {
+            background: rgba(224,224,224,0.04); border: 1px solid rgba(224,224,224,0.1);
+            border-radius: 12px; padding: 10px; text-align: center;
+        }
+        .sc-detail-format-icon { font-size: 18px; margin-bottom: 4px; }
+        .sc-detail-format-text { font-size: 10px; color: var(--text-secondary); line-height: 1.3; }
+        .sc-detail-format-text strong { color: var(--text-primary); display: block; font-size: 11px; }
 
         /* ПЛАН */
         .sc-plan-header {
@@ -253,42 +300,113 @@ function _scInjectStyles() {
             .sc-skill-name { font-size: 13px; }
             .sc-today-task { font-size: 13px; }
             .sc-time-grid  { grid-template-columns: repeat(3, 1fr); }
+            .sc-detail-title { font-size: 19px; }
         }
     `;
     document.head.appendChild(s);
 }
 
 // ============================================
-// ПРЕДОПРЕДЕЛЁННЫЕ НАВЫКИ (с описаниями для AI)
+// ПРЕДОПРЕДЕЛЁННЫЕ НАВЫКИ (с описаниями для AI и для экрана детали)
 // ============================================
 const SC_SKILLS = {
     personal: [
-        { id:'confidence',    name:'Уверенность в себе',    desc:'Действовать без одобрения извне, верить в свои силы' },
-        { id:'discipline',    name:'Дисциплина',             desc:'Выполнять намеченное независимо от настроения' },
-        { id:'boundaries',    name:'Личные границы',         desc:'Говорить «нет» без чувства вины' },
-        { id:'emotions',      name:'Эмоциональный интеллект',desc:'Распознавать и управлять своими эмоциями' },
-        { id:'communication', name:'Коммуникация',           desc:'Ясно и честно выражать мысли и чувства' },
-        { id:'resilience',    name:'Стрессоустойчивость',    desc:'Восстанавливаться после трудностей' },
-        { id:'focus',         name:'Фокус и концентрация',   desc:'Удерживать внимание на важном' },
-        { id:'growth',        name:'Установка на рост',      desc:'Воспринимать трудности как возможности' }
+        { id:'confidence', name:'Уверенность в себе', desc:'Действовать без одобрения извне, верить в свои силы',
+          longDesc:'Уверенность — это не отсутствие сомнений, а способность действовать вопреки им. Это навык доверия собственному опыту и решениям, даже когда вокруг неопределённость или давление со стороны.',
+          outcomes:['Замечаете моменты сомнения раньше, чем они становятся параличом','Действуете из своих ценностей, а не из страха оценки','Меньше нуждаетесь в подтверждении со стороны','Спокойнее реагируете на критику и отказы']
+        },
+        { id:'discipline', name:'Дисциплина', desc:'Выполнять намеченное независимо от настроения',
+          longDesc:'Дисциплина — это умение делать то, что решил, даже когда не хочется. Не сила воли, а система: правильные триггеры, ритуалы и среда, в которой нужное действие становится естественным.',
+          outcomes:['Чёткая утренняя и вечерняя рутина','Выполнение запланированного без внутреннего торга','Меньше времени на «надо собраться»','Понимание, что вас сбивает, и как это устранить']
+        },
+        { id:'boundaries', name:'Личные границы', desc:'Говорить «нет» без чувства вины',
+          longDesc:'Личные границы — это умение ясно обозначать, что для вас приемлемо, а что нет. Без агрессии и без вины. Граница — это не стена, а ориентир для других.',
+          outcomes:['Говорите «нет» без оправданий','Распознаёте манипулятивные просьбы и давление','Меньше выгораете в отношениях и на работе','Сохраняете отношения даже при чётких отказах']
+        },
+        { id:'emotions', name:'Эмоциональный интеллект', desc:'Распознавать и управлять своими эмоциями',
+          longDesc:'Эмоциональный интеллект — навык распознавать свои эмоции в момент возникновения и направлять их, а не реагировать автоматически. Базовый уровень саморегуляции.',
+          outcomes:['Различаете 30+ оттенков эмоций — а не только «плохо/нормально»','Замечаете эмоцию до того, как она возьмёт верх','Понимаете, какая мысль её вызвала','Управляете реакцией, а не реактивностью']
+        },
+        { id:'communication', name:'Коммуникация', desc:'Ясно и честно выражать мысли и чувства',
+          longDesc:'Коммуникация — навык доносить мысли так, чтобы вас поняли, и слышать собеседника так, чтобы он чувствовал себя услышанным. База любых отношений.',
+          outcomes:['Чёткие просьбы вместо намёков','Перифразирование без раздражения собеседника','Конструктивные конфликты вместо разрушительных','Уверенность в сложных разговорах']
+        },
+        { id:'resilience', name:'Стрессоустойчивость', desc:'Восстанавливаться после трудностей',
+          longDesc:'Стрессоустойчивость — не отсутствие реакции на стресс, а скорость возвращения в баланс. Расширение «окна толерантности», в котором вы остаётесь функциональны.',
+          outcomes:['Окно толерантности шире — меньше срывов','Быстрое восстановление после плохих новостей','Меньше соматических симптомов от напряжения','Спокойный сон даже после трудного дня']
+        },
+        { id:'focus', name:'Фокус и концентрация', desc:'Удерживать внимание на важном',
+          longDesc:'Фокус — навык удерживать внимание на одной задаче 25–90 минут без отвлечений. Базовый ресурс продуктивности и качественного мышления.',
+          outcomes:['Глубокая работа без переключений на телефон','Помодоро становится привычкой, а не насилием','Меньше «прокрутки в голове» во время задач','Качество результата выше при меньшем времени']
+        },
+        { id:'growth', name:'Установка на рост', desc:'Воспринимать трудности как возможности',
+          longDesc:'Установка на рост (mindset Кэрол Двек) — восприятие способностей как развиваемых, а не врождённых. Ошибка → информация, а не приговор.',
+          outcomes:['Воспринимаете трудности как возможности учиться','Меньше избегаете задач, в которых неуверены','Спокойнее реагируете на критику и провалы','Настойчивость без выгорания']
+        }
     ],
     professional: [
-        { id:'planning',    name:'Планирование',         desc:'Ставить цели и разбивать на конкретные шаги' },
-        { id:'decision',    name:'Принятие решений',     desc:'Действовать при неполной информации' },
-        { id:'delegation',  name:'Делегирование',        desc:'Передавать задачи и доверять другим' },
-        { id:'leadership',  name:'Лидерство',            desc:'Вести за собой и вдохновлять людей' },
-        { id:'timemanage',  name:'Управление временем',  desc:'Расставлять приоритеты и не прокрастинировать' },
-        { id:'feedback',    name:'Обратная связь',       desc:'Давать и принимать критику конструктивно' },
-        { id:'networking',  name:'Нетворкинг',           desc:'Строить и поддерживать профессиональные связи' },
-        { id:'creativity',  name:'Креативность',         desc:'Находить нестандартные решения' }
+        { id:'planning', name:'Планирование', desc:'Ставить цели и разбивать на конкретные шаги',
+          longDesc:'Планирование — навык переводить большие цели в конкретные действия. Без этого «хочу» остаётся «хочу». Метод следующего физического действия + GTD.',
+          outcomes:['Большие проекты разбиты на физические действия','Понятно, что делать в первый час каждого дня','Меньше «не знаю, с чего начать»','Реалистичная оценка сроков']
+        },
+        { id:'decision', name:'Принятие решений', desc:'Действовать при неполной информации',
+          longDesc:'Принятие решений — навык действовать при неполной информации, не парализуясь поиском «идеального варианта». Различение важных и неважных решений.',
+          outcomes:['Быстрые решения по неважному (без лишнего анализа)','Глубокий анализ только важных решений','Меньше «перевзвешивания» уже принятых','Готовность нести ответственность за выбор']
+        },
+        { id:'delegation', name:'Делегирование', desc:'Передавать задачи и доверять другим',
+          longDesc:'Делегирование — навык передачи задачи и доверия результату. Не «приказ-исполнение», а партнёрство с правильной обратной связью.',
+          outcomes:['Передаёте задачи целиком, а не «посоветуйся со мной»','Не вмешиваетесь в процесс, если результат идёт','Команда растёт быстрее','У вас освобождается время на стратегию']
+        },
+        { id:'leadership', name:'Лидерство', desc:'Вести за собой и вдохновлять людей',
+          longDesc:'Лидерство — навык вести за собой через ясность смысла и внутреннюю опору. Не должность и не харизма — система поведения, которой можно научиться.',
+          outcomes:['Команда понимает, куда движется и зачем','Берёте ответственность в моменты неопределённости','Конструктивная обратная связь в обе стороны','Доверие коллектива растёт без усилий']
+        },
+        { id:'timemanage', name:'Управление временем', desc:'Расставлять приоритеты и не прокрастинировать',
+          longDesc:'Управление временем — навык расставлять приоритеты и не прокрастинировать. Не «успеть всё», а «успеть важное». Принцип Парето + защита фокусного времени.',
+          outcomes:['Понимание, какие 20% задач дают 80% результата','Меньше прокрастинации на сложных задачах','Регулярные перерывы без чувства вины','Завершение дня без хвостов']
+        },
+        { id:'feedback', name:'Обратная связь', desc:'Давать и принимать критику конструктивно',
+          longDesc:'Обратная связь — навык давать и принимать критику так, чтобы она вела к росту, а не к обиде. Сильно недооценённый, но определяющий навык в команде.',
+          outcomes:['Даёте конкретную, не личностную обратную связь','Принимаете критику без защитной реакции','Просите фидбек регулярно, а не от случая к случаю','Меньше скрытых обид и недопониманий в команде']
+        },
+        { id:'networking', name:'Нетворкинг', desc:'Строить и поддерживать профессиональные связи',
+          longDesc:'Нетворкинг — навык строить и поддерживать профессиональные связи без манипуляций и социальной фальши. Принцип «дай раньше, чем попросишь».',
+          outcomes:['Регулярные касания с ключевыми контактами','Полезное знакомство в неделю — норма, не подвиг','Готовый круг для запросов и рекомендаций','Меньше тревоги при обращении за помощью']
+        },
+        { id:'creativity', name:'Креативность', desc:'Находить нестандартные решения',
+          longDesc:'Креативность — навык находить нестандартные решения через комбинаторику и латеральное мышление. Тренируется, как мышца. Это не про «вдохновение».',
+          outcomes:['3–5 свежих идей в день из обычных ситуаций','Привычка задавать «а что если» в разговорах','Меньше шаблонных решений','Готовность пробовать без страха ошибки']
+        }
     ],
     influence: [
-        { id:'speech_influence', name:'Речевое воздействие',           desc:'Гипнотические языковые паттерны, метафоры, риторические структуры', isNew:true },
-        { id:'emotion_partner',  name:'Управление эмоциями собеседника', desc:'Возвращать собеседника из реактивного состояния в ресурсное', isNew:true },
-        { id:'emotion_group',    name:'Управление эмоциями группы',     desc:'Эмоциональное заражение, работа с настроением команды или зала', isNew:true },
-        { id:'media_influence',  name:'Информационное воздействие через СМИ', desc:'Как новостные циклы формируют гормональный фон у больших групп — для PR, маркетинга, критического мышления', isNew:true }
+        { id:'speech_influence', name:'Речевое воздействие', desc:'Гипнотические языковые паттерны, метафоры, риторические структуры', isNew:true,
+          longDesc:'Речевое воздействие — арсенал из эриксоновского гипноза, НЛП и риторики. Метафоры, языковые паттерны, структура убеждения. Тот же навык, что у лучших спикеров и переговорщиков.',
+          outcomes:['Речь, которая удерживает внимание','Метафоры под конкретные ситуации','Гипнотические языковые паттерны в обычной речи','Понимание, как речью манипулируют — для защиты']
+        },
+        { id:'emotion_partner', name:'Управление эмоциями собеседника', desc:'Возвращать собеседника из реактивного состояния в ресурсное', isNew:true,
+          longDesc:'Не манипуляция — навык конструктивного диалога: возвращать собеседника из реактивного состояния в ресурсное, не подменяя его выбор. Нужен врачу, переговорщику, родителю, руководителю.',
+          outcomes:['Калибровка состояния партнёра по микро-сигналам','Деэскалация острых конфликтов в первые 30 секунд','Возврат собеседника к диалогу из «защиты»','Параллельно — распознавание манипуляций как защитный навык']
+        },
+        { id:'emotion_group', name:'Управление эмоциями группы', desc:'Эмоциональное заражение, работа с настроением команды или зала', isNew:true,
+          longDesc:'Эмоциональное заражение в коллективах — мощный механизм. Можно использовать для создания продуктивной атмосферы или для понимания, как массовое настроение формируется.',
+          outcomes:['Понимание динамики группы по 3–5 наблюдаемым признакам','Влияние на настроение команды через свою позицию','Работа с залом и публичными выступлениями','Распознавание токсичных групповых паттернов']
+        },
+        { id:'media_influence', name:'Информационное воздействие через СМИ', desc:'Как новостные циклы формируют гормональный фон у больших групп — для PR, маркетинга, критического мышления', isNew:true,
+          longDesc:'Как новостные циклы формируют гормональный фон у больших групп. Понимать механизм — для критического мышления; применять этично — для PR, маркетинга, политической коммуникации.',
+          outcomes:['Чтение новостной повестки на трёх уровнях смысла','Защита от информационной перегрузки и тревоги','Применение принципов в этичном PR и маркетинге','Распознавание целенаправленного манипулятивного контента']
+        }
     ]
 };
+
+// Поиск навыка по id во всех категориях
+function _scFindSkill(id) {
+    if (!id) return null;
+    for (const cat of Object.values(SC_SKILLS)) {
+        const sk = cat.find(s => s.id === id);
+        if (sk) return sk;
+    }
+    return null;
+}
 
 // ============================================
 // КАНАЛЫ СВЯЗИ
@@ -329,14 +447,14 @@ const SC_TIME_OPTIONS = ['07:00','08:00','09:00','10:00','12:00','18:00','20:00'
 // СОСТОЯНИЕ
 // ============================================
 if (!window._scState) window._scState = {
-    view:       'select',  // 'select' | 'generating' | 'channel' | 'plan'
+    view:       'select',  // 'select' | 'detail' | 'generating' | 'channel' | 'plan'
     skillId:    null,
     skillName:  null,
     skillDesc:  null,
-    plan:       null,      // { weeks: [{theme, exercises:[{day,task,dur,inst}]}] }
+    plan:       null,
     daysDone:   [],
     startDate:  null,
-    channel:    null,      // 'telegram' | 'max' | 'web' | 'email'
+    channel:    null,
     notifyTime: '09:00'
 };
 const _sc = window._scState;
@@ -358,7 +476,6 @@ function _scSave() {
             channel: _sc.channel, notifyTime: _sc.notifyTime
         };
         localStorage.setItem('sc_plan_'+_scUid(), JSON.stringify(data));
-        // Синхронизируем с daily_training
         localStorage.setItem('trainer_skill_'+_scUid(), JSON.stringify({
             skillId: _sc.skillId, skillName: _sc.skillName,
             plan: _sc.plan, daysDone: _sc.daysDone, startDate: _sc.startDate,
@@ -384,8 +501,13 @@ function _scChannelMeta(id) {
     return SC_CHANNELS.find(c => c.id === id);
 }
 
-// Сохранение настроек канала на бэкенде. Graceful — если эндпоинт не готов,
-// настройки всё равно сохранены в localStorage, фронт работает.
+function _scCategoryLabel(id) {
+    if (SC_SKILLS.personal.some(s => s.id === id))     return '🧠 Личностный навык';
+    if (SC_SKILLS.professional.some(s => s.id === id)) return '💼 Профессиональный навык';
+    if (SC_SKILLS.influence.some(s => s.id === id))    return '🎙️ Влияние и коммуникация';
+    return '✏️ Свой навык';
+}
+
 async function _scSaveChannelToBackend() {
     if (!_sc.channel || !_sc.skillId) return;
     try {
@@ -402,11 +524,8 @@ async function _scSaveChannelToBackend() {
             })
         });
     } catch (e) {
-        // Не критично — план уже работает, настройки в localStorage.
         console.warn('Notification settings: backend пока недоступен, сохранил локально', e);
     }
-
-    // Если выбран web push — пытаемся подписаться через PushManager_Fredi.
     if (_sc.channel === 'web' && window.PushManager_Fredi && _scUid()) {
         try { await window.PushManager_Fredi.request(_scUid()); } catch {}
     }
@@ -478,7 +597,6 @@ async function _scGeneratePlan(skillName, skillDesc, profile) {
         if (d.success && d.content) {
             const clean = d.content.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
             const parsed = JSON.parse(clean);
-            // Нумерация дней
             let dayNum = 0;
             parsed.weeks.forEach(week => {
                 week.exercises.forEach(ex => {
@@ -502,6 +620,7 @@ function _scRender() {
 
     let body = '';
     if (_sc.view === 'select')     body = _scRenderSelect();
+    if (_sc.view === 'detail')     body = _scRenderDetail();
     if (_sc.view === 'generating') body = _scRenderGenerating();
     if (_sc.view === 'channel')    body = _scRenderChannel();
     if (_sc.view === 'plan')       body = _scRenderPlan();
@@ -520,7 +639,8 @@ function _scRender() {
     document.getElementById('scBack').onclick = () => {
         if (_sc.view === 'plan')       { _sc.view = 'select'; _scRender(); return; }
         if (_sc.view === 'channel')    { _sc.view = 'plan';   _scRender(); return; }
-        if (_sc.view === 'generating') return; // нельзя прервать
+        if (_sc.view === 'detail')     { _sc.view = 'select'; _scRender(); return; }
+        if (_sc.view === 'generating') return;
         _scHome();
     };
 
@@ -529,7 +649,6 @@ function _scRender() {
 
 // ===== ЭКРАН ВЫБОРА =====
 function _scRenderSelect() {
-    // Навыки из диагностики
     let diagBlock = '';
     try {
         const sdRaw = localStorage.getItem('sd_result_'+_scUid());
@@ -548,7 +667,7 @@ function _scRenderSelect() {
                     if (!skill) return '';
                     const pct = Math.round(score/4*100);
                     return `
-                    <div class="sc-skill-card${_sc.skillId===skill.id?' active':''}" data-id="${skill.id}" data-name="${skill.name}" data-desc="${skill.desc}">
+                    <div class="sc-skill-card" data-id="${skill.id}">
                         <div class="sc-skill-body">
                             <div class="sc-skill-name">${skill.name}</div>
                             <div class="sc-skill-sub">${skill.desc}</div>
@@ -557,6 +676,7 @@ function _scRenderSelect() {
                             </div>
                         </div>
                         <div class="sc-skill-score">${score}/4</div>
+                        <div class="sc-skill-arrow">›</div>
                     </div>`;
                 }).filter(Boolean).join('');
                 if (cards) diagBlock = `
@@ -566,7 +686,6 @@ function _scRenderSelect() {
         }
     } catch {}
 
-    // Активный план
     const activePlan = _sc.plan ? `
         <div style="background:rgba(224,224,224,0.06);border:1px solid rgba(224,224,224,0.18);border-radius:14px;padding:12px 14px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
             <div>
@@ -577,11 +696,12 @@ function _scRenderSelect() {
         </div>` : '';
 
     const renderSkillList = (arr) => arr.map(sk => `
-        <div class="sc-skill-card${_sc.skillId===sk.id?' active':''}" data-id="${sk.id}" data-name="${sk.name}" data-desc="${sk.desc}">
+        <div class="sc-skill-card" data-id="${sk.id}">
             <div class="sc-skill-body">
                 <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}</div>
                 <div class="sc-skill-sub">${sk.desc}</div>
             </div>
+            <div class="sc-skill-arrow">›</div>
         </div>`).join('');
 
     const personal     = renderSkillList(SC_SKILLS.personal);
@@ -601,14 +721,65 @@ function _scRenderSelect() {
         <div class="sc-custom-block">
             <div class="sc-custom-label">✏️ Или введите свой навык:</div>
             <input class="sc-input" id="scCustomInput" placeholder="Например: публичные выступления, управление гневом...">
+            <button class="sc-btn sc-btn-primary" id="scStartCustomBtn" style="margin-top:10px">
+                🤖 Создать AI-план для своего навыка
+            </button>
         </div>
 
-        <button class="sc-btn sc-btn-primary" id="scStartBtn" style="margin-top:14px">
+        <div class="sc-tip">
+            💡 Кликните на любой навык, чтобы увидеть подробное описание и создать план. AI учтёт ваш психологический профиль и построит 21 упражнение с нарастающей сложностью.
+        </div>`;
+}
+
+// ===== ЭКРАН ОПИСАНИЯ НАВЫКА =====
+function _scRenderDetail() {
+    const sk = _scFindSkill(_sc.skillId);
+    if (!sk) return '<p style="color:var(--text-secondary)">Навык не найден</p>';
+
+    const cat = _scCategoryLabel(sk.id);
+    const newTag = sk.isNew ? '<span class="sc-detail-tag-new">NEW</span>' : '';
+
+    const outcomes = (sk.outcomes || []).map(o => `<li>${o}</li>`).join('');
+
+    return `
+        <div class="sc-detail-hero">
+            <div class="sc-detail-cat">${cat}</div>
+            <div class="sc-detail-title">${sk.name}${newTag}</div>
+            <p class="sc-detail-short">${sk.longDesc || sk.desc}</p>
+        </div>
+
+        <div class="sc-detail-section">
+            <div class="sc-detail-h">🏆 Что вы получите за 21 день</div>
+            <ul class="sc-detail-outcomes">${outcomes}</ul>
+        </div>
+
+        <div class="sc-detail-section">
+            <div class="sc-detail-h">📋 Формат тренировки</div>
+            <div class="sc-detail-format">
+                <div class="sc-detail-format-item">
+                    <div class="sc-detail-format-icon">📅</div>
+                    <div class="sc-detail-format-text"><strong>21 день</strong>3 фазы по 7 дней</div>
+                </div>
+                <div class="sc-detail-format-item">
+                    <div class="sc-detail-format-icon">⏱️</div>
+                    <div class="sc-detail-format-text"><strong>10–15 мин</strong>в день</div>
+                </div>
+                <div class="sc-detail-format-item">
+                    <div class="sc-detail-format-icon">📲</div>
+                    <div class="sc-detail-format-text"><strong>Напоминания</strong>в Telegram/MAX</div>
+                </div>
+            </div>
+            <p class="sc-detail-p" style="font-size:12px;color:var(--text-secondary);margin-top:4px">
+                AI сгенерирует уникальный план с учётом вашего психологического профиля. После генерации — выбор канала ежедневных напоминаний.
+            </p>
+        </div>
+
+        <button class="sc-btn sc-btn-primary" id="scStartFromDetail" style="margin-top:14px">
             🤖 Создать AI-план на 21 день
         </button>
-        <div class="sc-tip">
-            💡 AI учтёт ваш психологический профиль и построит план с нарастающей сложностью. После генерации вы выберете канал ежедневных напоминаний (Telegram, MAX, веб-уведомления или email). Займёт 15–30 секунд.
-        </div>`;
+        <button class="sc-btn sc-btn-ghost" id="scBackToList" style="width:100%;margin-top:10px">
+            ← К списку навыков
+        </button>`;
 }
 
 // ===== ЭКРАН ГЕНЕРАЦИИ =====
@@ -677,7 +848,6 @@ function _scRenderPlan() {
     const pct     = Math.round((done.length / 21) * 100);
     const chMeta  = _scChannelMeta(_sc.channel);
 
-    // Календарь
     const calHtml = _sc.plan.weeks.map((week, wi) => {
         const daysHtml = week.exercises.map(ex => {
             const d         = ex.day;
@@ -695,7 +865,6 @@ function _scRenderPlan() {
         </div>`;
     }).join('');
 
-    // Упражнение текущего дня
     const curEx = _sc.plan.weeks
         .flatMap(w => w.exercises)
         .find(e => e.day === day);
@@ -716,7 +885,6 @@ function _scRenderPlan() {
                 : `<div style="font-size:12px;color:var(--text-secondary);text-align:center">✅ Выполнено сегодня — до завтра!</div>`}
         </div>` : '';
 
-    // Блок информации о канале связи
     const channelInfo = chMeta ? `
         <div class="sc-plan-channel">
             <span>${chMeta.icon}</span>
@@ -753,15 +921,45 @@ function _scRenderPlan() {
 // ============================================
 // ОБРАБОТЧИКИ
 // ============================================
+async function _scStartGeneration() {
+    if (!_sc.skillId || !_sc.skillName) {
+        _scToast('Выберите навык', 'error'); return;
+    }
+
+    _sc.view = 'generating';
+    _scRender();
+
+    const profile = await _scGetProfile();
+    const plan    = await _scGeneratePlan(_sc.skillName, _sc.skillDesc || '', profile);
+
+    if (plan) {
+        _sc.plan      = plan;
+        _sc.daysDone  = [];
+        _sc.startDate = new Date().toISOString();
+        if (!_sc.channel)    _sc.channel    = 'telegram';
+        if (!_sc.notifyTime) _sc.notifyTime = '09:00';
+        _scSave();
+        _sc.view = 'channel';
+        _scToast('✅ План готов! Выберите канал напоминаний.', 'success');
+    } else {
+        _scToast('Не удалось создать план. Попробуйте позже.', 'error');
+        _sc.view = 'detail';
+    }
+    _scRender();
+}
+
 function _scBindHandlers() {
-    // Выбор карточки навыка
+    // Клик по карточке навыка → открыть экран описания
     document.querySelectorAll('.sc-skill-card').forEach(card => {
         card.addEventListener('click', () => {
-            document.querySelectorAll('.sc-skill-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            _sc.skillId   = card.dataset.id;
-            _sc.skillName = card.dataset.name;
-            _sc.skillDesc = card.dataset.desc;
+            const id = card.dataset.id;
+            const sk = _scFindSkill(id);
+            if (!sk) return;
+            _sc.skillId   = sk.id;
+            _sc.skillName = sk.name;
+            _sc.skillDesc = sk.desc;
+            _sc.view      = 'detail';
+            _scRender();
         });
     });
 
@@ -770,38 +968,24 @@ function _scBindHandlers() {
         _sc.view = 'plan'; _scRender();
     });
 
-    // Старт
-    document.getElementById('scStartBtn')?.addEventListener('click', async () => {
+    // Создать план для своего навыка (custom)
+    document.getElementById('scStartCustomBtn')?.addEventListener('click', async () => {
         const custom = (document.getElementById('scCustomInput')?.value || '').trim();
-        if (custom) {
-            _sc.skillId   = 'custom';
-            _sc.skillName = custom;
-            _sc.skillDesc = 'персональный навык пользователя';
+        if (!custom) {
+            _scToast('Введите свой навык', 'error'); return;
         }
-        if (!_sc.skillId || !_sc.skillName) {
-            _scToast('Выберите навык или введите свой', 'error'); return;
-        }
+        _sc.skillId   = 'custom';
+        _sc.skillName = custom;
+        _sc.skillDesc = 'персональный навык пользователя';
+        await _scStartGeneration();
+    });
 
-        _sc.view = 'generating';
-        _scRender();
+    // Создать план с экрана описания
+    document.getElementById('scStartFromDetail')?.addEventListener('click', _scStartGeneration);
 
-        const profile = await _scGetProfile();
-        const plan    = await _scGeneratePlan(_sc.skillName, _sc.skillDesc || '', profile);
-
-        if (plan) {
-            _sc.plan      = plan;
-            _sc.daysDone  = [];
-            _sc.startDate = new Date().toISOString();
-            // Подставляем дефолтный канал/время если ещё не выбраны.
-            if (!_sc.channel)    _sc.channel    = 'telegram';
-            if (!_sc.notifyTime) _sc.notifyTime = '09:00';
-            _scSave();
-            _sc.view = 'channel';
-            _scToast('✅ План готов! Выберите канал напоминаний.', 'success');
-        } else {
-            _scToast('Не удалось создать план. Попробуйте позже.', 'error');
-            _sc.view = 'select';
-        }
+    // Назад к списку с экрана описания
+    document.getElementById('scBackToList')?.addEventListener('click', () => {
+        _sc.view = 'select';
         _scRender();
     });
 
@@ -814,7 +998,6 @@ function _scBindHandlers() {
         });
     });
 
-    // ВЫБОР ВРЕМЕНИ
     document.querySelectorAll('.sc-time-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.sc-time-btn').forEach(b => b.classList.remove('active'));
@@ -823,15 +1006,12 @@ function _scBindHandlers() {
         });
     });
 
-    // Подтвердить канал
     document.getElementById('scConfirmChannel')?.addEventListener('click', async () => {
         if (!_sc.channel) {
             _scToast('Выберите канал связи', 'error'); return;
         }
         _scSave();
         await _scSaveChannelToBackend();
-
-        // Если выбран Telegram/MAX — открываем бот в новой вкладке для регистрации.
         const meta = _scChannelMeta(_sc.channel);
         if (meta && meta.link) {
             try { window.open(meta.link, '_blank', 'noopener'); } catch {}
@@ -839,12 +1019,10 @@ function _scBindHandlers() {
         } else {
             _scToast('✅ Канал сохранён', 'success');
         }
-
         _sc.view = 'plan';
         _scRender();
     });
 
-    // Пропустить настройку канала
     document.getElementById('scSkipChannel')?.addEventListener('click', () => {
         _sc.channel = null;
         _scSave();
@@ -852,13 +1030,11 @@ function _scBindHandlers() {
         _scRender();
     });
 
-    // Изменить канал из экрана плана
     document.getElementById('scChangeChannel')?.addEventListener('click', () => {
         _sc.view = 'channel';
         _scRender();
     });
 
-    // Отметить день
     document.getElementById('scMarkDone')?.addEventListener('click', () => {
         const day = _scCurrentDay();
         if (!_sc.daysDone.includes(day)) {
@@ -870,7 +1046,6 @@ function _scBindHandlers() {
         }
     });
 
-    // Клик по дню в календаре
     document.querySelectorAll('.sc-day').forEach(d => {
         d.addEventListener('click', () => {
             const n = parseInt(d.dataset.day);
@@ -881,7 +1056,6 @@ function _scBindHandlers() {
         });
     });
 
-    // Новый навык (с подтверждением)
     document.getElementById('scResetBtn')?.addEventListener('click', () => {
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px';
@@ -899,14 +1073,12 @@ function _scBindHandlers() {
             overlay.remove();
             _sc.skillId = _sc.skillName = _sc.skillDesc = _sc.plan = _sc.startDate = null;
             _sc.daysDone = [];
-            // Канал и время не сбрасываем — пользователь, скорее всего, оставит те же.
             _sc.view = 'select';
             _scSave();
             _scRender();
         };
     });
 
-    // К тренировке дня
     document.getElementById('scGoTraining')?.addEventListener('click', () => {
         if (typeof showDailyTrainingScreen === 'function') {
             showDailyTrainingScreen();
@@ -929,4 +1101,4 @@ async function showSkillChoiceScreen() {
 }
 
 window.showSkillChoiceScreen = showSkillChoiceScreen;
-console.log('✅ skill_choice.js v2.1 загружен (с каналами связи)');
+console.log('✅ skill_choice.js v2.2 загружен (с экраном описания навыка)');
