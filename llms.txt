@@ -1,0 +1,82 @@
+# meysternlp.ru — Андрей Мейстер и Фреди
+
+> Сайт Андрея Юрьевича Мейстера, кандидата психологических наук, специалиста
+> по когнитивной психологии и психологии коммуникации. Автора книг по теории
+> манипуляции и разговорному гипнозу, разработчика образовательной системы
+> «Вариатика» и виртуального психолога Фреди — AI-ассистента для
+> психологической поддержки.
+
+## Об Андрее Мейстере
+
+- [Главная — обзор всех проектов](https://meysternlp.ru/): Имя, степень,
+  список книг, игр и тренингов, ссылки на соцсети.
+- [Манифест](https://meysternlp.ru/obo-mne/): Личная философия, миссия,
+  взгляды на психологию и нарративы.
+- [Биография](https://meysternlp.ru/about/): Подробная биография, научные
+  интересы, методология «Вариатика», список публикаций.
+
+## Проекты
+
+### Виртуальный психолог Фреди
+
+- [Фреди — открыть приложение](https://meysternlp.ru/fredi/): AI-психолог
+  на базе Claude/GPT с анонимным чатом, психологическим тестом, дневником
+  эмоций, КПТ-практиками, разговорным гипнозом и толкованием снов. Бесплатно,
+  без регистрации, 24/7.
+
+### Книги — серия «Теория манипуляции»
+
+- [Том I — Разговорный гипноз](https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-1-razgovornyy-gipnoz/)
+- [Том II — Проницательность](https://meysternlp.ru/knigi/): теория и
+  практика чтения людей, защиты от манипуляций, психологии коммуникации.
+- [Том III — Стимульный контроль](https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-3-stimulnyy-kontrol/)
+- [Вариатика — библиотека человеческих паттернов](https://meysternlp.ru/knigi/variatika-biblioteka-chelovecheskih-patternov/)
+
+### Дидактические игры
+
+- [Каталог игр](https://meysternlp.ru/igry/): «Маркетолог», «Вариатика Basic»,
+  «Вариатика Intensive», «Вариатика Progressive» — настольные и онлайн-игры
+  для тренировки системного мышления и коммуникации.
+
+### Тренинги
+
+- [Каталог тренингов](https://meysternlp.ru/treningi/): «Разговорный гипноз»
+  в форматах самостоятельного обучения и стандартного курса с обратной связью.
+
+### Архив событий
+
+- [Прошедшие мероприятия](https://meysternlp.ru/sobytiya/)
+- [В разработке](https://meysternlp.ru/v-razrabotke/)
+
+## Блог
+
+- [Все статьи](https://meysternlp.ru/blog/): практические разборы тревоги,
+  прокрастинации, когнитивных искажений, газлайтинга, разговорного гипноза,
+  системного мышления, цифровых двойников сознания, AI-психологов.
+
+Ключевые статьи:
+- [Как справиться с тревогой: 7 техник](https://meysternlp.ru/blog/kak-spravitsya-s-trevogoj.html)
+- [Когнитивные искажения: 12 ловушек](https://meysternlp.ru/blog/kognitivnye-iskazheniya-12-lovushek.html)
+- [AI-психологи 2026: практический гид](https://meysternlp.ru/blog/ai-psihologi-2026-prakticheskij-gid.html)
+- [Цифровые двойники сознания](https://meysternlp.ru/blog/cifrovye-dvojniki-soznaniya.html)
+- [Газлайтинг: что это, признаки и защита](https://meysternlp.ru/blog/gazlayting-chto-eto.html)
+- [Разговорный гипноз: техники](https://meysternlp.ru/blog/razgovornyy-gipnoz-tekhniki.html)
+- [Самогипноз для начинающих](https://meysternlp.ru/blog/samogipnoz-dlya-nachinayushih.html)
+- [Системное мышление в бизнесе](https://meysternlp.ru/blog/sistemnoe-myshlenie-v-biznese.html)
+
+## Контакты
+
+- Telegram: https://t.me/meysternlp
+- ВКонтакте: https://vk.com/meysternlp
+- RuTube: https://rutube.ru/channel/29916593/
+- Дзен: https://dzen.ru/89857788588
+
+## Privacy
+
+- [Политика конфиденциальности](https://meysternlp.ru/privacy/)
+
+## Optional
+
+- [Карта сайта (XML)](https://meysternlp.ru/sitemap.xml)
+- [Карта картинок (XML)](https://meysternlp.ru/sitemap-images.xml)
+- [robots.txt](https://meysternlp.ru/robots.txt)
