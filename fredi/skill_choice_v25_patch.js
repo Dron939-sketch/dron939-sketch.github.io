@@ -3,6 +3,9 @@
 // Накатывается ПОСЛЕ skill_choice.js (v2.4) и переключает поведение на v2.5:
 //   • «Показать план» — открывается мгновенно из захардкоренного шаблона
 //     (или из бэкенд-кэша, если он есть). AI больше не вызывается на этом шаге.
+//   • После показа плана пользователь СРАЗУ видит расписание по дням и может
+//     уйти, не настраивая канал. Канал/время выбираются только если он сам
+//     нажмёт «🔕 Без напоминаний → подключить» в карточке плана.
 //   • _scGeneratePlan (используется только при «Персонализировать»):
 //       - max_tokens: 2000 → 4000 (для 21 упражнения)
 //       - вместо JSON.parse — _scTryParseJSON, который ремонтирует обрезанный JSON
@@ -76,12 +79,14 @@
         return JSON.parse(JSON.stringify(window.DEFAULT_TEMPLATE_PLAN));
     };
 
-    // --- 3. Override: «Показать план» открывается мгновенно, без AI ---
+    // --- 3. Override: «Показать план» — мгновенно ведёт на экран плана ---
+    //     Канал/время уведомлений НЕ трогаем: пользователь сам решает,
+    //     подключать ли рассылку (через ссылку «подключить» в карточке плана).
+    //     Это разные вещи: план — справочник + чек-лист по дням; рассылка
+    //     через бот Telegram/MAX — отдельный опт-ин.
     window._scShowPlanScenario = async function () {
         if (!_sc.skillId || !_sc.skillName) { _scToast('Выберите навык', 'error'); return; }
 
-        // Хардкор: пытаемся подтянуть из кэша бэкенда — если нет, мгновенно даём локальный шаблон.
-        // AI используется ТОЛЬКО при нажатии «Персонализировать», а не при «Показать план».
         var plan = await _scLoadBasePlan(_sc.skillId);
         if (!plan) plan = window._scLocalPlan();
 
@@ -89,10 +94,10 @@
         _sc.daysDone       = [];
         _sc.startDate      = new Date().toISOString();
         _sc.isPersonalized = false;
-        if (!_sc.channel)    _sc.channel    = 'telegram';
-        if (!_sc.notifyTime) _sc.notifyTime = '09:00';
+        // _sc.channel и _sc.notifyTime не выставляем — пусть остаются null,
+        // в карточке плана отрисуется «🔕 Без напоминаний → подключить».
         _scSave();
-        _sc.view = 'channel';
+        _sc.view = 'plan';
         _scRender();
     };
 
@@ -135,5 +140,5 @@
         return null;
     };
 
-    console.log('✅ skill_choice v2.5 patch применён (мгновенный план + JSON repair, max_tokens 4000)');
+    console.log('✅ skill_choice v2.5 patch применён (план сразу + JSON repair, max_tokens 4000)');
 })();
