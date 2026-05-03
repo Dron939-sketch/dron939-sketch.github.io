@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://meysternlp.ru/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/Андрей%20Мейстер.jpg</image:loc>
+      <image:title>Андрей Юрьевич Мейстер — кандидат психологических наук</image:title>
+      <image:caption>Андрей Мейстер, автор образовательной системы «Вариатика»</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/Андрей%20Мейстер1.jpg</image:loc>
+      <image:title>Андрей Мейстер — портрет</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://meysternlp.ru/obo-mne/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/Андрей%20Мейстер.jpg</image:loc>
+      <image:title>Андрей Мейстер — манифест</image:title>
+      <image:caption>Личная страница Андрея Мейстера: о методологии, целях, философии</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://meysternlp.ru/about/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/Андрей%20Мейстер1.jpg</image:loc>
+      <image:title>Андрей Юрьевич Мейстер — биография</image:title>
+      <image:caption>Биография, проекты и научные интересы Андрея Мейстера</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://meysternlp.ru/knigi/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png</image:loc>
+      <image:title>Теория манипуляции. Том I — Разговорный гипноз</image:title>
+      <image:caption>Книга Андрея Мейстера о техниках разговорного гипноза</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/kniga-toriya-manipulyacii.-tom-ii-pronicatelnost-andrej-mejster.png</image:loc>
+      <image:title>Теория манипуляции. Том II — Проницательность</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/kniga-teoriya-manipulyacii.-tom-iii-stimulnyj-kontrol.webp</image:loc>
+      <image:title>Теория манипуляции. Том III — Стимульный контроль</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://meysternlp.ru/igry/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/didakticheskaya-igra-marketolog-andreya-mejstera.png</image:loc>
+      <image:title>Дидактическая игра «Маркетолог» Андрея Мейстера</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/didaktivnaya-igra-variatika-basic-anderj-mejster.webp</image:loc>
+      <image:title>Дидактическая игра «Вариатика Basic» Андрея Мейстера</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/variatika-progressive.webp</image:loc>
+      <image:title>Дидактическая игра «Вариатика Progressive»</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/progresive.webp</image:loc>
+      <image:title>Вариатика Progressive — продвинутая игра</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://meysternlp.ru/Концептикон.png</image:loc>
+      <image:title>Концептикон — игра Андрея Мейстера</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://meysternlp.ru/treningi/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/kurs-razgovornyj-gipnoz-ot-andreya-mejstera.png</image:loc>
+      <image:title>Курс «Разговорный гипноз» от Андрея Мейстера</image:title>
+      <image:caption>Онлайн-тренинг по разговорному гипнозу</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://meysternlp.ru/fredi/</loc>
+    <image:image>
+      <image:loc>https://meysternlp.ru/fredi/icon-512.png</image:loc>
+      <image:title>Фреди — виртуальный психолог</image:title>
+      <image:caption>Иконка приложения Фреди — AI-помощник для психологической поддержки</image:caption>
+    </image:image>
+  </url>
+
+</urlset>
