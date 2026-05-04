@@ -293,14 +293,59 @@
             function _setCookie(n,v){document.cookie=n+'='+encodeURIComponent(v)+';path=/;max-age=315360000;SameSite=Lax';}
 
             var u = null;
-            try { var s = localStorage.getItem('fredi_user_id'); if(s && !isNaN(parseInt(s))) u = parseInt(s); } catch(e){}
+
+            // 0. Авто-логин из мессенджера по подписанному URL (?fid=&t=).
+            try {
+                var params = new URLSearchParams(window.location.search);
+                var fid = parseInt(params.get('fid')||'');
+                var t = params.get('t');
+                if (fid && t && !isNaN(fid)) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', window.API_BASE_URL + '/api/auth/messenger-token?fid=' + fid + '&t=' + encodeURIComponent(t), false);
+                    try {
+                        xhr.send();
+                        if (xhr.status === 200) {
+                            var resp = JSON.parse(xhr.responseText || '{}');
+                            if (resp.success && resp.user_id) {
+                                u = parseInt(resp.user_id);
+                                console.log('[Fredi] Авто-логин из мессенджера: user_id=' + u);
+                                try { window.history.replaceState({}, '', window.location.pathname); } catch(e){}
+                            }
+                        }
+                    } catch(e){ console.warn('[Fredi] messenger-token verify failed:', e); }
+                }
+            } catch(e){}
+
+            if (!u) { try { var s = localStorage.getItem('fredi_user_id'); if(s && !isNaN(parseInt(s))) u = parseInt(s); } catch(e){} }
             if(!u){ var c = _getCookie('fredi_uid'); if(c && !isNaN(parseInt(c))) u = parseInt(c); }
             if(!u) u = Date.now();
             try { localStorage.setItem('fredi_user_id', u); } catch(e){}
             _setCookie('fredi_uid', u);
             window.USER_ID = u;
+
+            // Шлём IANA-таймзону юзера один раз — fire-and-forget.
+            // Бэк сохранит в fredi_users.user_tz; используется и
+            // skill-plan-планировщиком, и basic-chat-промптом, чтобы дата
+            // в общении совпадала с локальной у юзера, а не с UTC на Render.
+            // Повторно не шлём — флаг в localStorage с привязкой к tz.
+            try {
+                var _detectedTz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').trim();
+                var _sentTz = null;
+                try { _sentTz = localStorage.getItem('fredi_tz_sent'); } catch(e){}
+                if (_detectedTz && _detectedTz.indexOf('/') > 0 && _sentTz !== _detectedTz) {
+                    var _xhr = new XMLHttpRequest();
+                    _xhr.open('POST', window.API_BASE_URL + '/api/user/tz', true);
+                    _xhr.setRequestHeader('Content-Type', 'application/json');
+                    _xhr.onload = function(){
+                        if (_xhr.status === 200) {
+                            try { localStorage.setItem('fredi_tz_sent', _detectedTz); } catch(e){}
+                        }
+                    };
+                    _xhr.send(JSON.stringify({ user_id: u, tz: _detectedTz }));
+                }
+            } catch(e){ /* tz detect недоступен в старых браузерах — ок */ }
         })();
-        
+
         // Отслеживание переходов между разделами для Яндекс.Метрики
         function trackSectionOpen(sectionName) {
             if (typeof ym !== 'undefined') {
@@ -342,6 +387,7 @@
     <script src="strategy.js"></script>
     <script src="skill_diagnosis.js"></script>
     <script src="skill_choice.js"></script>
+    <script src="skill_choice_v25_patch.js"></script>
     <script src="daily_training.js"></script>
     <script src="progress_tracker.js"></script>
     <script src="freshthought.js"></script>
