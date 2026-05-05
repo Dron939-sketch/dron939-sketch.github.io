@@ -94,6 +94,12 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/uchitsya-uchitsya.html</loc>
+    <lastmod>2026-06-22</lastmod>
+    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/aktivnoe-slushanie.html</loc>
     <lastmod>2026-06-15</lastmod>
     <priority>0.9</priority>
