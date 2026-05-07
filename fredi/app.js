@@ -1715,6 +1715,20 @@ function renderDashboard() {
                 <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">с подпиской</a>.
             </div>` : ''}
 
+            <!-- В github.io кнопка записи стоит ВЫШЕ модулей (исторически, до Pass A).
+                 В Frederick она snap'ится к низу со sticky-стилями (.voice-section--bottom),
+                 которых на github.io нет в styles.css. Поэтому здесь возвращаем старую
+                 раскладку: кнопка сразу после селектора режима. -->
+            <div class="voice-section">
+                <div class="voice-card">
+                    <button class="voice-record-btn-premium" id="mainVoiceBtn">
+                        <span class="voice-icon">🎤</span>
+                        <span class="voice-text">${modeConfig.voicePrompt}</span>
+                    </button>
+                    <div style="text-align:center;font-size:11px;color:var(--text-secondary);margin-top:8px">🎙️ Нажмите и удерживайте для записи</div>
+                </div>
+            </div>
+
             <div class="modules-grid">
                 ${modules.map(m => `
                     <div class="module-card" data-module="${m.id}">
@@ -1738,20 +1752,8 @@ function renderDashboard() {
                 </div>
             </div>
 
-            <!-- Скроллящийся поток сообщений диалога — появляется снизу,
-                 над кнопкой записи, со своим скроллом, чтобы вся страница
-                 не превращалась в портянку. -->
+            <!-- Скроллящийся поток сообщений диалога. -->
             <div class="dashboard-chat-stream" id="dashChatStream"></div>
-
-            <div class="voice-section voice-section--bottom">
-                <div class="voice-card">
-                    <button class="voice-record-btn-premium" id="mainVoiceBtn">
-                        <span class="voice-icon">🎤</span>
-                        <span class="voice-text">${modeConfig.voicePrompt}</span>
-                    </button>
-                    <div style="text-align:center;font-size:11px;color:var(--text-secondary);margin-top:8px">🎙️ Нажмите и удерживайте для записи</div>
-                </div>
-            </div>
         </div>
     `;
 
