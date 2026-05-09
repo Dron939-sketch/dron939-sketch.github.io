@@ -146,6 +146,52 @@ function _ptInjectStyles() {
             color: var(--text-secondary); line-height: 1.5; margin-top: 12px;
         }
         .pt-tip strong { color: var(--chrome); }
+
+        /* ===== УЗЛЫ ПЕРЕХОДА ===== */
+        .pt-trans-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+        .pt-trans-card {
+            background: rgba(167,139,250,0.05);
+            border: 1px solid rgba(167,139,250,0.18);
+            border-radius: 14px;
+            padding: 12px 14px;
+            transition: border-color 0.18s, background 0.18s;
+        }
+        .pt-trans-card.active {
+            background: rgba(167,139,250,0.12);
+            border-color: rgba(167,139,250,0.45);
+        }
+        .pt-trans-card.done {
+            background: rgba(52,211,153,0.06);
+            border-color: rgba(52,211,153,0.25);
+        }
+        .pt-trans-head {
+            display: flex; align-items: baseline; gap: 8px;
+            margin-bottom: 4px;
+        }
+        .pt-trans-num {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: rgba(167,139,250,0.95);
+            flex-shrink: 0;
+        }
+        .pt-trans-card.done .pt-trans-num { color: rgba(52,211,153,0.95); }
+        .pt-trans-key {
+            font-size: 13px; font-weight: 600; color: var(--text-primary);
+            line-height: 1.35;
+        }
+        .pt-trans-explain {
+            font-size: 12px; color: var(--text-secondary);
+            line-height: 1.5; margin-bottom: 6px;
+        }
+        .pt-trans-meta {
+            display: flex; justify-content: space-between;
+            font-size: 11px; color: var(--text-secondary);
+        }
+        .pt-trans-status {
+            font-weight: 600;
+        }
+        .pt-trans-card.active .pt-trans-status { color: rgba(167,139,250,0.95); }
+        .pt-trans-card.done   .pt-trans-status { color: rgba(52,211,153,0.95); }
     `;
     document.head.appendChild(s);
 }
@@ -168,6 +214,31 @@ function _ptLoadPlan() {
         const raw = localStorage.getItem('trainer_skill_'+_ptUid());
         return raw ? JSON.parse(raw) : null;
     } catch { return null; }
+}
+
+// Кэш узлов перехода: тянем /api/skill-plan/details/{id} один раз на навык
+// и используем для мини-карты «4 узла» в Прогрессе.
+if (!window._ptTransCache) window._ptTransCache = { skillId: null, transitions: null };
+const _ptTC = window._ptTransCache;
+
+async function _ptFetchTransitions(skillId) {
+    if (!skillId) return null;
+    if (_ptTC.skillId === skillId && Array.isArray(_ptTC.transitions)) {
+        return _ptTC.transitions;
+    }
+    try {
+        const api = window.CONFIG?.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+        const r = await fetch(`${api}/api/skill-plan/details/${encodeURIComponent(skillId)}`,
+                              { cache: 'no-store' });
+        if (!r.ok) return null;
+        const j = await r.json();
+        if (j && j.success && Array.isArray(j.transitions)) {
+            _ptTC.skillId = skillId;
+            _ptTC.transitions = j.transitions;
+            return _ptTC.transitions;
+        }
+    } catch (e) { /* пусто — без узлов рендерим как было */ }
+    return null;
 }
 
 function _ptGetReflections() {
@@ -195,6 +266,15 @@ function _ptCurrentDay(startDate) {
 // ============================================
 // РЕНДЕР
 // ============================================
+// Если узлы перехода ещё не загружены под текущий навык — запускаем
+// фоновую загрузку и перерендериваем, когда придут. Без блокировки
+// первой отрисовки (как было).
+function _ptKickFetchTransitions(plan) {
+    if (!plan || !plan.skillId) return;
+    if (_ptTC.skillId === plan.skillId && Array.isArray(_ptTC.transitions)) return;
+    _ptFetchTransitions(plan.skillId).then(t => { if (t) _ptRender(); });
+}
+
 function _ptRender() {
     _ptInjectStyles();
     const c = document.getElementById('screenContainer');
@@ -222,6 +302,8 @@ function _ptRender() {
                 <button class="pt-btn pt-btn-primary" id="ptGoChoice">🎯 Выбрать навык</button>
             </div>`;
     } else {
+        // Запускаем фоновую подгрузку узлов — не блокируем первую отрисовку.
+        _ptKickFetchTransitions(plan);
         if      (_pt.tab === 'progress')   body = _ptProgress(plan);
         else if (_pt.tab === 'reflection') body = _ptReflection();
         else if (_pt.tab === 'stats')      body = _ptStats(plan);
@@ -254,6 +336,40 @@ function _ptProgress(plan) {
     const done     = plan.daysDone || [];
     const pct      = Math.round((done.length / 21) * 100);
     const allEx    = plan.plan.weeks.flatMap(w => w.exercises);
+
+    // Мини-карта 4 узлов перехода. Узел считается:
+    //   done  — все его дни в done
+    //   active — содержит текущий day (или несколько дней до него ещё в работе)
+    //   pending — все его дни > day
+    const transitions = (_ptTC.skillId === plan.skillId && Array.isArray(_ptTC.transitions))
+        ? _ptTC.transitions : null;
+    const transHtml = (transitions && transitions.length) ? `
+        <div class="pt-section-label">🔀 Узлы перехода (главные сдвиги)</div>
+        <div class="pt-trans-list">
+            ${transitions.map((t, i) => {
+                const days = Array.isArray(t.days) ? t.days : [];
+                const allDone = days.length > 0 && days.every(d => done.includes(d));
+                const isActive = days.includes(day) || (days.some(d => d <= day) && !allDone);
+                const cls = allDone ? 'done' : (isActive ? 'active' : '');
+                const status = allDone ? '✅ пройден' : (isActive ? '⚡ в работе' : '⏳ впереди');
+                const dayCount = days.length
+                    ? `дни ${days[0]}${days.length > 1 ? '–' + days[days.length-1] : ''}`
+                    : '';
+                return `
+                <div class="pt-trans-card ${cls}">
+                    <div class="pt-trans-head">
+                        <span class="pt-trans-num">Узел ${i + 1}/${transitions.length}</span>
+                    </div>
+                    <div class="pt-trans-key">${t.key || ''}</div>
+                    <div class="pt-trans-explain">${t.explain || ''}</div>
+                    <div class="pt-trans-meta">
+                        <span>${dayCount}</span>
+                        <span class="pt-trans-status">${status}</span>
+                    </div>
+                </div>`;
+            }).join('')}
+        </div>
+    ` : '';
 
     // Полная сетка 21 день
     const gridHtml = Array.from({length:21}, (_, i) => {
@@ -316,6 +432,8 @@ function _ptProgress(plan) {
 
         <div class="pt-section-label">21-дневный план</div>
         <div class="pt-grid">${gridHtml}</div>
+
+        ${transHtml}
 
         ${weeksHtml}
         ${curBlock}
