@@ -191,8 +191,19 @@
                   '<input id="faEmail" class="fa-input" type="email" autocomplete="email" value="' + lastEmail.replace(/"/g, '&quot;') + '" maxlength="254" />' +
                   '<div class="fa-err" id="faErrEmail"></div>' +
                 '</div>' +
-                '<div class="fa-field"><label class="fa-label" for="faPass">Пин-код (4 цифры)</label>' +
-                  '<input id="faPass" class="fa-input" type="password" autocomplete="' + (isRegister ? 'new-password' : 'current-password') + '" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" />' +
+                '<div class="fa-field"><label class="fa-label" for="faPass">' +
+                  (isRegister ? 'Пин-код (4 цифры)' : 'Пин-код') +
+                '</label>' +
+                  // На вкладке Вход НЕ ограничиваем длину пина: legacy-юзеры
+                  // зарегистрировались с 8-значным пином до смены правила.
+                  // Backend принимает password длиной 1-72 и argon2.verify
+                  // проверяет хеш любой длины корректно. На вкладке Регистрация
+                  // и при сбросе — оставляем строгое 4-значное правило.
+                  '<input id="faPass" class="fa-input" type="password"' +
+                    ' autocomplete="' + (isRegister ? 'new-password' : 'current-password') + '"' +
+                    ' inputmode="numeric"' +
+                    (isRegister ? ' pattern="[0-9]{4}" maxlength="4"' : ' maxlength="20"') +
+                  ' />' +
                   '<div class="fa-err" id="faErrPass"></div>' +
                 '</div>' +
                 passCheckField +
