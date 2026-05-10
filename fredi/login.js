@@ -298,7 +298,7 @@
                     reason: (data && data.detail && data.detail.error) || (data && data.error) || 'unknown',
                     status: res.status
                 });
-                _handleAuthError(data, 'register');
+                _handleAuthError(data, 'register', res.status);
                 return;
             }
             _safeSet(LS_LAST_EMAIL, email);
@@ -374,7 +374,7 @@
             var data = null;
             try { data = await res.json(); } catch (e) {}
             if (!res.ok) {
-                _handleAuthError(data, 'login');
+                _handleAuthError(data, 'login', res.status);
                 return;
             }
             _safeSet(LS_LAST_EMAIL, email);
@@ -400,22 +400,43 @@
         }
     }
 
-    function _handleAuthError(data, mode) {
-        var err = (data && data.detail && data.detail.error) || (data && data.error) || '';
-        var msg = (data && data.detail && data.detail.message) || '';
-        if (err === 'email_exists') {
-            _setErr('faErrEmail', 'Email уже зарегистрирован. Попробуйте войти.');
-        } else if (err === 'invalid_email') {
-            _setErr('faErrEmail', msg || 'Неверный формат email');
-        } else if (err === 'weak_password') {
-            _setErr('faErrPass', msg || 'Пин-код — ровно 4 цифры');
-        } else if (err === 'invalid_credentials') {
-            _setErr('faErrPass', 'Неверный email или пин-код');
-        } else if (err === 'rate_limited' || (data && data.detail && /rate/i.test(String(data.detail)))) {
-            _setErr('faErrEmail', 'Слишком много попыток. Подождите минуту.');
-        } else {
-            _setErr('faErrEmail', msg || 'Что-то пошло не так. Попробуйте ещё раз.');
+    function _handleAuthError(data, mode, status) {
+        // detail у FastAPI — это либо dict (наши кастомные ошибки),
+        // либо строка (slowapi отдаёт "Rate limit exceeded: ..."),
+        // либо null (если ответ совсем без body). Защищаемся от всех.
+        var detail = data && data.detail;
+        var err = (detail && typeof detail === 'object' && detail.error)
+            || (data && data.error) || '';
+        var msg = (detail && typeof detail === 'object' && detail.message) || '';
+
+        // Rate-limit — всегда HTTP 429. Ловим по статусу: это надёжнее,
+        // чем парсить строку detail. Раньше юзер видел «Что-то пошло
+        // не так» вместо понятного «подождите минуту».
+        if (status === 429 || err === 'rate_limited') {
+            _setErr('faErrEmail', 'Слишком много попыток. Подождите минуту и попробуйте снова.');
+            return;
         }
+        if (err === 'email_exists') {
+            _setErr('faErrEmail', 'Email уже зарегистрирован. Переключитесь на вкладку «Вход».');
+            return;
+        }
+        if (err === 'invalid_email') {
+            _setErr('faErrEmail', msg || 'Неверный формат email');
+            return;
+        }
+        if (err === 'weak_password') {
+            _setErr('faErrPass', msg || 'Пин-код — ровно 4 цифры');
+            return;
+        }
+        if (err === 'invalid_credentials') {
+            _setErr('faErrPass', 'Неверный email или пин-код');
+            return;
+        }
+        if (status >= 500) {
+            _setErr('faErrEmail', 'Сервер сейчас недоступен. Попробуйте через минуту.');
+            return;
+        }
+        _setErr('faErrEmail', msg || 'Что-то пошло не так. Попробуйте ещё раз.');
     }
 
     function _askMergeAnon(anonUid) {
@@ -657,7 +678,11 @@
         wrap.innerHTML = html;
         document.body.appendChild(wrap.firstChild);
 
-        document.getElementById('faClose').addEventListener('click', _closeReset);
+        // В reset-pin модалке кнопки #faClose нет (закрытие — через
+        // «Отмена», Escape или _closeReset). Без null-check это
+        // ломало весь forgot-pin flow — юзер не мог сохранить новый пин.
+        var faCloseR = document.getElementById('faClose');
+        if (faCloseR) faCloseR.addEventListener('click', _closeReset);
         document.getElementById('faResetSkip').addEventListener('click', _closeReset);
         document.getElementById('faAuthModal').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') { e.preventDefault(); _doReset(token); }
