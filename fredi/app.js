@@ -2489,3 +2489,87 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, 3000);
 });
+
+
+// ============================================================
+// Messenger warnings toast — показывается при первом заходе,
+// если юзер выбрал получать утренние skill-задания в Telegram/MAX,
+// но бот ещё не запущен (нет записи в fredi_messenger_links).
+// Один раз dismissed → больше не показываем для этого type.
+// Реальную проверку делает backend GET /api/user/messenger-warnings.
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        var uid = window.USER_ID;
+        if (!uid) return;
+        var API = window.API_BASE_URL;
+        if (!API) return;
+
+        // Не показываем сразу — даём странице прорисоваться, и
+        // не конфликтуем с welcome-voice toast (тот тоже на 3 сек).
+        setTimeout(async function() {
+            try {
+                var dismissed = {};
+                try { dismissed = JSON.parse(localStorage.getItem('fredi_warnings_dismissed') || '{}'); } catch (e) {}
+
+                var resp = await fetch(API + '/api/user/messenger-warnings?user_id=' + encodeURIComponent(uid));
+                if (!resp.ok) return;
+                var data = await resp.json();
+                var warnings = (data && data.warnings) || [];
+                if (!warnings.length) return;
+
+                // Берём первое не-dismissed
+                var w = null;
+                for (var i = 0; i < warnings.length; i++) {
+                    if (!dismissed[warnings[i].type]) { w = warnings[i]; break; }
+                }
+                if (!w) return;
+
+                var toast = document.getElementById('toastMessage');
+                var toastText = document.getElementById('toastText');
+                var toastClose = document.getElementById('toastClose');
+                if (!toast || !toastText) return;
+
+                // Если welcome-voice toast ещё открыт — подождём
+                if (toast.classList.contains('visible')) {
+                    setTimeout(arguments.callee, 8000);
+                    return;
+                }
+
+                // Безопасный экранировщик
+                function esc(s) {
+                    return String(s || '')
+                        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                }
+
+                var html =
+                    '<div style="font-weight:600;margin-bottom:4px">' + esc(w.title) + '</div>' +
+                    '<div style="font-size:12px;line-height:1.4;margin-bottom:8px">' + esc(w.text) + '</div>';
+                if (w.action_url && w.action_label) {
+                    html += '<a href="' + esc(w.action_url) + '" target="_blank" rel="noopener" ' +
+                        'style="display:inline-block;padding:6px 14px;border-radius:8px;' +
+                        'background:#0088cc;color:#fff;text-decoration:none;font-size:12px;font-weight:600">' +
+                        esc(w.action_label) + '</a>';
+                }
+                toastText.innerHTML = html;
+                toast.classList.add('visible');
+
+                if (toastClose) {
+                    toastClose.onclick = function() {
+                        toast.classList.remove('visible');
+                        dismissed[w.type] = Date.now();
+                        try { localStorage.setItem('fredi_warnings_dismissed', JSON.stringify(dismissed)); } catch (e) {}
+                    };
+                }
+                // Авто-скрытие через 30 сек (но без dismiss-флага — если
+                // юзер не успел прочитать, покажем ещё раз при следующем заходе)
+                setTimeout(function() {
+                    if (toast.classList.contains('visible')) toast.classList.remove('visible');
+                }, 30000);
+            } catch (e) {
+                console.warn('[Fredi] messenger-warnings:', e);
+            }
+        }, 8000); // через 8 сек после загрузки страницы — после welcome voice
+    } catch (e) {}
+});
