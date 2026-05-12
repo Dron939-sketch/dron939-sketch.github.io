@@ -197,6 +197,7 @@
         <button data-tab="control">🎛️ Пульт</button>
         <button data-tab="reeng">📨 Возврат</button>
         <button data-tab="tts">🔊 Озвучка</button>
+        <button data-tab="parse">🎣 Парсинг</button>
         <button id="exportClaudeBtn" style="background:#10b981;color:#fff;border-color:#10b981;flex:0 0 auto">📋 Экспорт для Claude</button>
     </div>
 
@@ -415,6 +416,134 @@
         </div>
     </section>
 
+    <!-- 🎣 PARSING + OUTREACH QUEUE -->
+    <section id="parseTab" style="display:none">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+            <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">🎣 Парсинг и очередь авто-аутрича</div>
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">
+                Парсит ВСЕ fisherman-категории (15 шт.) под фильтром (город / возраст / пол / только активные) → даёт уникальный список → можно добавить в очередь авто-аутрича. Воркер берёт по одному, делает B2C-анализ и шлёт голос+текст в VK.
+            </div>
+
+            <!-- Фильтры -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:10px">
+                <div>
+                    <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Город</label>
+                    <input id="parseCity" type="text" value="Коломна" placeholder="Коломна"
+                        style="width:100%;box-sizing:border-box;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Возраст от</label>
+                    <input id="parseAgeMin" type="number" value="30" min="14" max="80"
+                        style="width:100%;box-sizing:border-box;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Возраст до</label>
+                    <input id="parseAgeMax" type="number" value="0" min="0" max="80" placeholder="0 = без ограничения"
+                        style="width:100%;box-sizing:border-box;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Пол</label>
+                    <select id="parseSex" style="width:100%;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                        <option value="1" selected>Женский</option>
+                        <option value="2">Мужской</option>
+                        <option value="0">Любой</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Активность (дней)</label>
+                    <input id="parseInactivityDays" type="number" value="90" min="7" max="365"
+                        style="width:100%;box-sizing:border-box;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                </div>
+                <div>
+                    <label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Макс на категорию</label>
+                    <input id="parseMaxPerCat" type="number" value="100" min="10" max="500"
+                        style="width:100%;box-sizing:border-box;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                </div>
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-dim);margin-bottom:12px">
+                <input id="parseActiveOnly" type="checkbox" checked style="width:16px;height:16px">
+                Только активные (живые) страницы
+            </label>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+                <button id="parseRun"
+                    style="padding:11px 18px;border-radius:10px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:700;cursor:pointer">
+                    🎣 Найти всех
+                </button>
+                <button id="parseAddSelected" disabled
+                    style="padding:11px 18px;border-radius:10px;border:1px solid #10b981;background:transparent;color:#10b981;font:inherit;font-weight:600;cursor:pointer;opacity:0.4">
+                    ➕ Добавить выбранных в очередь
+                </button>
+            </div>
+
+            <div id="parseStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-bottom:10px"></div>
+
+            <!-- Результат поиска -->
+            <div id="parseResults" style="display:none">
+                <div id="parseResultsSummary" style="font-size:11px;color:var(--text-dim);margin-bottom:8px"></div>
+                <div style="max-height:400px;overflow:auto;border:1px solid var(--border);border-radius:8px">
+                    <table style="width:100%;border-collapse:collapse;font-size:12px">
+                        <thead style="position:sticky;top:0;background:var(--surface);z-index:1">
+                            <tr style="border-bottom:1px solid var(--border)">
+                                <th style="padding:8px;text-align:left;width:32px"><input id="parseSelectAll" type="checkbox" style="width:16px;height:16px"></th>
+                                <th style="padding:8px;text-align:left">Имя</th>
+                                <th style="padding:8px;text-align:left;width:80px">vk_id</th>
+                                <th style="padding:8px;text-align:left;width:80px">Год</th>
+                                <th style="padding:8px;text-align:left">Категория</th>
+                                <th style="padding:8px;text-align:left;width:50px"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="parseResultsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Очередь -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px">📋 Очередь авто-аутрича</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button id="queueRefresh" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-size:12px;cursor:pointer">🔄 Обновить</button>
+                    <button id="queueProcessOne" style="padding:7px 14px;border-radius:8px;border:none;background:#0088cc;color:#fff;font:inherit;font-size:12px;font-weight:600;cursor:pointer">▶ Обработать следующего</button>
+                    <button id="queueResetErrors" style="padding:7px 12px;border-radius:8px;border:1px solid #f59e0b;background:transparent;color:#f59e0b;font:inherit;font-size:12px;cursor:pointer">↺ Сброс error → queued</button>
+                </div>
+            </div>
+
+            <div id="queueStats" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:12px"></div>
+
+            <div style="margin-bottom:8px;font-size:11px;color:var(--text-dim)">
+                Фильтр:
+                <select id="queueFilter" style="padding:5px 9px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;color:var(--text);font:inherit;font-size:12px;margin-left:4px">
+                    <option value="">все</option>
+                    <option value="queued">queued</option>
+                    <option value="processing">processing</option>
+                    <option value="sent">sent</option>
+                    <option value="skipped">skipped</option>
+                    <option value="error">error</option>
+                </select>
+            </div>
+
+            <div style="max-height:500px;overflow:auto;border:1px solid var(--border);border-radius:8px">
+                <table style="width:100%;border-collapse:collapse;font-size:12px">
+                    <thead style="position:sticky;top:0;background:var(--surface);z-index:1">
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <th style="padding:8px;text-align:left">Имя</th>
+                            <th style="padding:8px;text-align:left;width:80px">vk_id</th>
+                            <th style="padding:8px;text-align:left">Категория</th>
+                            <th style="padding:8px;text-align:left;width:90px">Статус</th>
+                            <th style="padding:8px;text-align:left;width:140px">Когда</th>
+                            <th style="padding:8px;text-align:left;width:50px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="queueBody"></tbody>
+                </table>
+            </div>
+
+            <div id="queueStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-top:10px"></div>
+        </div>
+    </section>
+
     <!-- Dialog drawer -->
     <div id="dialogOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9998;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:720px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
@@ -499,6 +628,8 @@
         if (reengTab) reengTab.style.display = 'none';
         var ttsTab = document.getElementById('ttsTab');
         if (ttsTab) ttsTab.style.display = 'none';
+        var parseTab = document.getElementById('parseTab');
+        if (parseTab) parseTab.style.display = 'none';
         try {
             if (currentTab === 'summary') {
                 var d = await _fetch('/api/analytics/summary');
@@ -536,6 +667,10 @@
             } else if (currentTab === 'tts') {
                 // TTS — это форма, fetch не нужен. Просто показываем UI.
                 if (ttsTab) ttsTab.style.display = 'block';
+            } else if (currentTab === 'parse') {
+                if (parseTab) parseTab.style.display = 'block';
+                // Подгрузим очередь сразу при открытии
+                if (typeof _parseLoadQueue === 'function') _parseLoadQueue();
             }
         } catch (e) {
             _err(e.message || 'Ошибка');
@@ -1713,6 +1848,297 @@
             _ttsMaxLoadRecent();
         });
     });
+
+    // ============================================================
+    // 🎣 PARSE + OUTREACH QUEUE
+    // ============================================================
+    var _parseLastResults = [];   // последний batch с /parse-all
+    var _parseSelectedIds = new Set();
+
+    function _parseSetStatus(el, msg, kind) {
+        var s = document.getElementById(el);
+        if (!s) return;
+        s.textContent = msg || '';
+        s.style.color = kind === 'err' ? 'var(--err, #e11d48)'
+                      : kind === 'ok'  ? 'var(--success, #10b981)'
+                      : 'var(--text-dim)';
+    }
+
+    function _parseExtractYearFromBdate(bdate) {
+        // VK bdate: 'D.M' или 'D.M.YYYY' (год опционально)
+        if (!bdate) return '';
+        var parts = String(bdate).split('.');
+        if (parts.length >= 3) return parts[2];
+        return '';
+    }
+
+    async function _parseRun() {
+        var btn = document.getElementById('parseRun');
+        var city = (document.getElementById('parseCity').value || '').trim();
+        var ageMin = parseInt(document.getElementById('parseAgeMin').value || 0, 10);
+        var ageMax = parseInt(document.getElementById('parseAgeMax').value || 0, 10);
+        var sex = parseInt(document.getElementById('parseSex').value || 0, 10);
+        var inactDays = parseInt(document.getElementById('parseInactivityDays').value || 90, 10);
+        var maxPerCat = parseInt(document.getElementById('parseMaxPerCat').value || 100, 10);
+        var activeOnly = !!document.getElementById('parseActiveOnly').checked;
+
+        if (!token) { _parseSetStatus('parseStatus', '⚠ Введи ADMIN_TOKEN сверху', 'err'); return; }
+        if (!city && (!ageMin || ageMin <= 0)) {
+            _parseSetStatus('parseStatus', '⚠ Введи город или возраст', 'err');
+            return;
+        }
+        btn.disabled = true;
+        var orig = btn.textContent;
+        btn.textContent = '⏳ Парсю 15 категорий…';
+        _parseSetStatus('parseStatus', 'Это займёт 30-90 сек: 15 категорий × users.search…');
+        document.getElementById('parseResults').style.display = 'none';
+
+        try {
+            var resp = await fetch(API + '/api/admin/vk/outreach-queue/parse-all', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    city_name: city,
+                    age_min: ageMin || 0,
+                    age_max: ageMax || 0,
+                    sex: sex || 0,
+                    active_only: activeOnly,
+                    active_inactivity_days: inactDays,
+                    max_per_category: maxPerCat,
+                }),
+            });
+            if (!resp.ok) {
+                var msg = 'HTTP ' + resp.status;
+                try { var j = await resp.json(); msg = (j && j.detail && (j.detail.message || j.detail.error)) || msg; } catch(_){}
+                throw new Error(msg);
+            }
+            var data = await resp.json();
+            _parseLastResults = data.candidates || [];
+            _parseSelectedIds.clear();
+            _renderParseResults(data);
+            _parseSetStatus('parseStatus', '✓ Найдено уникальных: ' + (data.total_unique || 0), 'ok');
+        } catch (e) {
+            _parseSetStatus('parseStatus', '⚠ ' + (e.message || e), 'err');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+        }
+    }
+
+    function _renderParseResults(data) {
+        var box = document.getElementById('parseResults');
+        var tbody = document.getElementById('parseResultsBody');
+        var summary = document.getElementById('parseResultsSummary');
+        var byCat = data.by_category || {};
+        var catList = Object.entries(byCat).filter(function(e){return e[1]>0}).map(function(e){return e[0]+':'+e[1]});
+        summary.textContent = 'Всего уникальных: ' + (data.total_unique||0) + (catList.length?' · по категориям: '+catList.join(', '):'');
+
+        tbody.innerHTML = (_parseLastResults || []).map(function(c) {
+            var fullName = ((c.first_name || '') + ' ' + (c.last_name || '')).trim() || ('id'+c.vk_id);
+            var year = _parseExtractYearFromBdate(c.bdate);
+            var url = 'https://vk.com/id' + c.vk_id;
+            return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">' +
+                '<td style="padding:6px 8px"><input type="checkbox" class="parse-cb" data-vkid="'+c.vk_id+'" style="width:16px;height:16px"></td>' +
+                '<td style="padding:6px 8px">'+esc(fullName)+'</td>' +
+                '<td style="padding:6px 8px;font-family:monospace;font-size:11px">'+c.vk_id+'</td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim)">'+(year||'—')+'</td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+esc(c.matched_category||c.category||'')+'</td>' +
+                '<td style="padding:6px 8px"><a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:#0088cc;text-decoration:none">↗</a></td>' +
+            '</tr>';
+        }).join('');
+        box.style.display = (_parseLastResults.length ? 'block' : 'none');
+
+        // Чекбоксы → собираем _parseSelectedIds
+        tbody.querySelectorAll('.parse-cb').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                var vid = parseInt(cb.dataset.vkid, 10);
+                if (cb.checked) _parseSelectedIds.add(vid);
+                else _parseSelectedIds.delete(vid);
+                _parseUpdateAddBtn();
+            });
+        });
+        var sel = document.getElementById('parseSelectAll');
+        if (sel) {
+            sel.checked = false;
+            sel.onchange = function() {
+                tbody.querySelectorAll('.parse-cb').forEach(function(cb){
+                    cb.checked = sel.checked;
+                    var vid = parseInt(cb.dataset.vkid, 10);
+                    if (sel.checked) _parseSelectedIds.add(vid);
+                    else _parseSelectedIds.delete(vid);
+                });
+                _parseUpdateAddBtn();
+            };
+        }
+        _parseUpdateAddBtn();
+    }
+
+    function _parseUpdateAddBtn() {
+        var btn = document.getElementById('parseAddSelected');
+        if (!btn) return;
+        var n = _parseSelectedIds.size;
+        btn.disabled = n === 0;
+        btn.style.opacity = n === 0 ? '0.4' : '1';
+        btn.textContent = n ? ('➕ Добавить ' + n + ' в очередь') : '➕ Добавить выбранных в очередь';
+    }
+
+    async function _parseAddSelected() {
+        if (!_parseSelectedIds.size) return;
+        var chosen = (_parseLastResults || []).filter(function(c){
+            return _parseSelectedIds.has(parseInt(c.vk_id, 10));
+        });
+        var btn = document.getElementById('parseAddSelected');
+        btn.disabled = true;
+        var orig = btn.textContent;
+        btn.textContent = '⏳ Добавляю…';
+        _parseSetStatus('parseStatus', 'Добавляю в очередь…');
+        try {
+            var resp = await fetch(API + '/api/admin/vk/outreach-queue/add', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ candidates: chosen }),
+            });
+            if (!resp.ok) {
+                var msg = 'HTTP ' + resp.status;
+                try { var j = await resp.json(); msg = (j && j.detail && (j.detail.message || j.detail.error)) || msg; } catch(_){}
+                throw new Error(msg);
+            }
+            var data = await resp.json();
+            _parseSetStatus('parseStatus', '✓ Добавлено: ' + data.added + ' · пропущено (дубль): ' + data.skipped, 'ok');
+            _parseSelectedIds.clear();
+            _parseUpdateAddBtn();
+            _parseLoadQueue();
+        } catch (e) {
+            _parseSetStatus('parseStatus', '⚠ ' + (e.message || e), 'err');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+            _parseUpdateAddBtn();
+        }
+    }
+
+    async function _parseLoadQueue() {
+        var filter = (document.getElementById('queueFilter') || {}).value || '';
+        var url = '/api/admin/vk/outreach-queue/list?limit=100';
+        if (filter) url += '&status=' + encodeURIComponent(filter);
+        try {
+            var data = await _fetch(url);
+            _renderQueue(data);
+        } catch (e) {
+            _parseSetStatus('queueStatus', '⚠ ' + (e.message || e), 'err');
+        }
+    }
+
+    function _renderQueue(data) {
+        var stats = data.stats || {};
+        var statsEl = document.getElementById('queueStats');
+        var colors = { queued: '#0088cc', processing: '#f59e0b', sent: '#10b981', skipped: '#6c6c70', error: '#e11d48' };
+        statsEl.innerHTML = ['queued','processing','sent','skipped','error'].map(function(s){
+            var n = stats[s] || 0;
+            var c = colors[s];
+            return '<span style="padding:5px 11px;border-radius:20px;background:'+c+'14;color:'+c+';font-weight:600">'+
+                s + ': ' + n + '</span>';
+        }).join('');
+
+        var body = document.getElementById('queueBody');
+        body.innerHTML = (data.items || []).map(function(it) {
+            var c = colors[it.status] || 'var(--text)';
+            var when = it.added_at ? new Date(it.added_at).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+            return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">' +
+                '<td style="padding:6px 8px">'+esc(it.full_name || ('id'+it.vk_id))+'</td>' +
+                '<td style="padding:6px 8px;font-family:monospace;font-size:11px"><a href="'+esc(it.vk_url)+'" target="_blank" rel="noopener" style="color:#0088cc;text-decoration:none">'+it.vk_id+'</a></td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+esc(it.category||'')+'</td>' +
+                '<td style="padding:6px 8px"><span style="color:'+c+';font-weight:600">'+it.status+'</span>' +
+                  (it.error_message ? '<div style="font-size:10px;color:var(--text-dim);max-width:140px;overflow:hidden;text-overflow:ellipsis" title="'+esc(it.error_message)+'">'+esc(it.error_message)+'</div>' : '') +
+                '</td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+esc(when)+'</td>' +
+                '<td style="padding:6px 8px"><button class="queue-del-btn" data-id="'+it.id+'" style="padding:3px 8px;border-radius:6px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-size:11px;cursor:pointer">×</button></td>' +
+            '</tr>';
+        }).join('');
+
+        body.querySelectorAll('.queue-del-btn').forEach(function(b) {
+            b.addEventListener('click', async function() {
+                if (!confirm('Удалить запись из очереди?')) return;
+                var id = b.dataset.id;
+                try {
+                    var resp = await fetch(API + '/api/admin/vk/outreach-queue/' + id, {
+                        method: 'DELETE',
+                        headers: { 'X-Admin-Token': token },
+                    });
+                    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                    _parseLoadQueue();
+                } catch (e) {
+                    _parseSetStatus('queueStatus', '⚠ ' + (e.message || e), 'err');
+                }
+            });
+        });
+    }
+
+    async function _parseProcessOne() {
+        var btn = document.getElementById('queueProcessOne');
+        btn.disabled = true;
+        var orig = btn.textContent;
+        btn.textContent = '⏳ Обрабатываю…';
+        _parseSetStatus('queueStatus', 'Анализирую VK-страницу + генерю pitch + шлю в VK (30-60 сек)…');
+        try {
+            var resp = await fetch(API + '/api/admin/vk/outreach-queue/process-one', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token },
+            });
+            if (!resp.ok) {
+                var msg = 'HTTP ' + resp.status;
+                try { var j = await resp.json(); msg = (j && j.detail && (j.detail.message || j.detail.error)) || msg; } catch(_){}
+                throw new Error(msg);
+            }
+            var data = await resp.json();
+            var icon = { sent: '✅', skipped: '⏭', error: '⚠', empty: '∅' }[data.status] || '?';
+            var msg = icon + ' ' + data.status;
+            if (data.vk_id) msg += ' · vk_id=' + data.vk_id;
+            if (data.name) msg += ' · ' + data.name;
+            if (data.reason) msg += ' · ' + data.reason;
+            if (data.error) msg += ' · ' + data.error;
+            _parseSetStatus('queueStatus', msg, data.status === 'sent' ? 'ok' : (data.status === 'error' ? 'err' : ''));
+            _parseLoadQueue();
+        } catch (e) {
+            _parseSetStatus('queueStatus', '⚠ ' + (e.message || e), 'err');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+        }
+    }
+
+    async function _parseResetErrors() {
+        if (!confirm('Переместить все error → queued для повторной попытки?')) return;
+        try {
+            var resp = await fetch(API + '/api/admin/vk/outreach-queue/reset-errors', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token },
+            });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            var data = await resp.json();
+            _parseSetStatus('queueStatus', '✓ Переведено: ' + data.reset_count, 'ok');
+            _parseLoadQueue();
+        } catch (e) {
+            _parseSetStatus('queueStatus', '⚠ ' + (e.message || e), 'err');
+        }
+    }
+
+    // Привязка кнопок
+    [
+        ['parseRun', _parseRun],
+        ['parseAddSelected', _parseAddSelected],
+        ['queueRefresh', _parseLoadQueue],
+        ['queueProcessOne', _parseProcessOne],
+        ['queueResetErrors', _parseResetErrors],
+    ].forEach(function(pair) {
+        var el = document.getElementById(pair[0]);
+        if (el) el.addEventListener('click', pair[1]);
+    });
+    var qf = document.getElementById('queueFilter');
+    if (qf) qf.addEventListener('change', _parseLoadQueue);
+
+    // expose для refresh() — он вызывает _parseLoadQueue при открытии таба
+    window._parseLoadQueue = _parseLoadQueue;
 })();
 </script>
 <script src="clients-tab.js"></script>
