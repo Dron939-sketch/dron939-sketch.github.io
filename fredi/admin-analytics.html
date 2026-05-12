@@ -465,15 +465,31 @@
                 Только активные (живые) страницы
             </label>
 
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
                 <button id="parseRun"
                     style="padding:11px 18px;border-radius:10px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:700;cursor:pointer">
-                    🎣 Найти всех
+                    🎣 Найти всех (15 категорий)
                 </button>
                 <button id="parseAddSelected" disabled
                     style="padding:11px 18px;border-radius:10px;border:1px solid #10b981;background:transparent;color:#10b981;font:inherit;font-weight:600;cursor:pointer;opacity:0.4">
                     ➕ Добавить выбранных в очередь
                 </button>
+            </div>
+
+            <!-- Парсинг подписчиков VK-группы -->
+            <div style="border-top:1px solid var(--border);padding-top:14px;margin-bottom:10px">
+                <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px">📍 Альтернатива — спарсить подписчиков конкретной VK-группы:</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+                    <input id="parseGroup" type="text" placeholder="club12345 / id / vk.com/groupname / screen_name"
+                        style="flex:1;min-width:260px;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                    <input id="parseGroupMaxMembers" type="number" value="1000" min="100" max="10000" title="макс участников"
+                        style="width:110px;padding:9px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                    <button id="parseGroupRun"
+                        style="padding:10px 16px;border-radius:10px;border:none;background:#0088cc;color:#fff;font:inherit;font-weight:700;cursor:pointer">
+                        🎯 Парсить группу
+                    </button>
+                </div>
+                <div style="font-size:11px;color:var(--text-dim)">Используются те же фильтры выше (город / возраст / пол / активные).</div>
             </div>
 
             <div id="parseStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-bottom:10px"></div>
@@ -2123,9 +2139,78 @@
         }
     }
 
+    async function _parseGroupRun() {
+        var btn = document.getElementById('parseGroupRun');
+        var group = (document.getElementById('parseGroup').value || '').trim();
+        if (!group) {
+            _parseSetStatus('parseStatus', '⚠ Введи группу (id / screen_name / vk.com/...)', 'err');
+            return;
+        }
+        if (!token) { _parseSetStatus('parseStatus', '⚠ Введи ADMIN_TOKEN сверху', 'err'); return; }
+        // Берём те же фильтры что у parseRun
+        var city = (document.getElementById('parseCity').value || '').trim();
+        var ageMin = parseInt(document.getElementById('parseAgeMin').value || 0, 10);
+        var ageMax = parseInt(document.getElementById('parseAgeMax').value || 0, 10);
+        var sex = parseInt(document.getElementById('parseSex').value || 0, 10);
+        var inactDays = parseInt(document.getElementById('parseInactivityDays').value || 90, 10);
+        var activeOnly = !!document.getElementById('parseActiveOnly').checked;
+        var maxMembers = parseInt(document.getElementById('parseGroupMaxMembers').value || 1000, 10);
+
+        btn.disabled = true;
+        var orig = btn.textContent;
+        btn.textContent = '⏳ Парсю участников…';
+        _parseSetStatus('parseStatus', 'groups.getMembers (постранично, ~1000/сек)…');
+        document.getElementById('parseResults').style.display = 'none';
+
+        try {
+            var resp = await fetch(API + '/api/admin/vk/outreach-queue/parse-group', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    group: group,
+                    max_members: maxMembers,
+                    city_name: city || '',
+                    age_min: ageMin || 0,
+                    age_max: ageMax || 0,
+                    sex: sex || 0,
+                    active_only: activeOnly,
+                    active_inactivity_days: inactDays,
+                }),
+            });
+            if (!resp.ok) {
+                var msg = 'HTTP ' + resp.status;
+                try { var j = await resp.json(); msg = (j && j.detail && (j.detail.message || j.detail.error)) || msg; } catch(_){}
+                throw new Error(msg);
+            }
+            var data = await resp.json();
+            _parseLastResults = data.candidates || [];
+            _parseSelectedIds.clear();
+            // адаптируем под renderer (он смотрит by_category + total_unique)
+            var fakeByCat = {};
+            fakeByCat[(data.group && data.group.screen_name) || ('id'+(data.group && data.group.id))] = (_parseLastResults || []).length;
+            _renderParseResults({ by_category: fakeByCat, total_unique: (_parseLastResults||[]).length });
+            var gname = (data.group && data.group.name) || group;
+            var st = data.stats || {};
+            _parseSetStatus('parseStatus',
+                '✓ ' + gname + ' · fetched=' + (st.total_fetched||0) +
+                ' → alive=' + (st.after_alive||0) +
+                ' → sex=' + (st.after_sex||0) +
+                ' → age=' + (st.after_age||0) +
+                (city ? ' → city=' + (st.after_city||0) : '') +
+                ' → ' + (_parseLastResults.length) + ' к выбору',
+                'ok');
+        } catch (e) {
+            _parseSetStatus('parseStatus', '⚠ ' + (e.message || e), 'err');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+        }
+    }
+
     // Привязка кнопок
     [
         ['parseRun', _parseRun],
+        ['parseGroupRun', _parseGroupRun],
         ['parseAddSelected', _parseAddSelected],
         ['queueRefresh', _parseLoadQueue],
         ['queueProcessOne', _parseProcessOne],
