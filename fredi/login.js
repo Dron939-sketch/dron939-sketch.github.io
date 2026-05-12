@@ -320,6 +320,10 @@
             var hadAnon = !!(anonUidBefore && anonUidBefore !== newUid);
             try { localStorage.setItem('fredi_user_id', String(newUid)); } catch (e) {}
             _track('register_success', { had_anon: hadAnon, source: _lastSource });
+            // Welcome voice: первый раз после регистрации играем
+            // голосовое приветствие Фреди через 3 сек после reload.
+            // Триггер срабатывает ОДИН раз — флаг played в app.js.
+            try { localStorage.setItem('fredi_welcome_pending', '1'); } catch (e) {}
             _toast('Аккаунт создан ✓', 'success');
 
             // Если был возвращающийся anon — мержим его данные на новый

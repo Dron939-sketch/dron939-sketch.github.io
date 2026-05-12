@@ -1994,12 +1994,22 @@
     var pitchHtml = '';
     var pitch = r.pitch || null;
     if (pitch && pitch.message){
+      // pitch.message — короткое (5 строк) сообщение, что РЕАЛЬНО уйдёт в VK.
+      // pitch.preview_full — то же сообщение + анализ выше, для глаз админа.
+      // Бэкенд после b2c-personal-offer-recency возвращает оба поля; до него
+      // приходит только pitch.message — fallback оставит старое поведение.
+      var previewText = pitch.preview_full || pitch.message;
+      var sendText = pitch.message;
       pitchHtml =
         '<div style="background:rgba(0,136,204,0.06);border:1px solid rgba(0,136,204,0.25);border-radius:10px;padding:14px;margin-bottom:14px">' +
           '<div style="font-size:10px;color:#0088cc;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">📨 Готовое цепляющее обращение</div>' +
-          '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📝 Текст для VK</div>' +
-          '<div class="vk-b2c-pitch-msg" style="white-space:pre-wrap;line-height:1.55;font-size:12.5px;background:rgba(255,255,255,0.03);border-left:3px solid #0088cc;border-radius:6px;padding:10px 12px;margin-bottom:10px">' +
-            esc(pitch.message) +
+          '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📝 Превью (анализ + сообщение для VK)</div>' +
+          '<div class="vk-b2c-pitch-preview" style="white-space:pre-wrap;line-height:1.55;font-size:12.5px;background:rgba(255,255,255,0.03);border-left:3px solid #0088cc;border-radius:6px;padding:10px 12px;margin-bottom:8px;max-height:280px;overflow:auto">' +
+            esc(previewText) +
+          '</div>' +
+          '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">📤 Что уйдёт в VK</div>' +
+          '<div class="vk-b2c-pitch-msg" style="white-space:pre-wrap;line-height:1.55;font-size:12.5px;background:rgba(0,136,204,0.06);border-left:3px solid #0088cc;border-radius:6px;padding:10px 12px;margin-bottom:10px">' +
+            esc(sendText) +
           '</div>' +
           (pitch.voice_script
             ? '<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">🎙️ Скрипт для голоса · ~60 сек</div>' +
