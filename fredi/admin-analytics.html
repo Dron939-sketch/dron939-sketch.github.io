@@ -196,6 +196,7 @@
         <button data-tab="mirrors">🪞 Зеркала</button>
         <button data-tab="control">🎛️ Пульт</button>
         <button data-tab="reeng">📨 Возврат</button>
+        <button data-tab="tts">🔊 Озвучка</button>
         <button id="exportClaudeBtn" style="background:#10b981;color:#fff;border-color:#10b981;flex:0 0 auto">📋 Экспорт для Claude</button>
     </div>
 
@@ -348,6 +349,53 @@
         </div>
     </section>
 
+    <!-- 🔊 TTS Озвучка -->
+    <section id="ttsTab" style="display:none">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+            <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">🔊 Генератор голоса Фреди</div>
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">
+                Текст → MP3 через Fish Audio. Можно скачать или отправить в MAX-мессенджер.
+            </div>
+
+            <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:4px">Текст для озвучки (макс. 4000 символов)</label>
+            <textarea id="ttsText" rows="5" maxlength="4000"
+                style="width:100%;padding:12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:10px;color:var(--text);font:13px/1.55 inherit;resize:vertical;box-sizing:border-box;margin-bottom:10px"
+                placeholder="Введите текст…">Привет. Я Фреди. Если захочешь поговорить — нажимай и говори, я рядом.</textarea>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+                <label style="font-size:11px;color:var(--text-dim)">Голос:</label>
+                <select id="ttsMode" style="padding:8px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                    <option value="psychologist" selected>Психолог</option>
+                    <option value="coach">Коуч</option>
+                    <option value="trainer">Тренер</option>
+                </select>
+                <span id="ttsCharCount" style="font-size:11px;color:var(--text-dim);margin-left:auto">0 / 4000</span>
+            </div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+                <button id="ttsSynthesize"
+                    style="padding:11px 18px;border-radius:10px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:700;cursor:pointer">
+                    🔊 Озвучить
+                </button>
+                <button id="ttsDownload" disabled
+                    style="padding:11px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer;opacity:0.4">
+                    💾 Скачать MP3
+                </button>
+                <button id="ttsSendMax" disabled
+                    style="padding:11px 18px;border-radius:10px;border:1px solid #4f46e5;background:transparent;color:#4f46e5;font:inherit;font-weight:600;cursor:pointer;opacity:0.4">
+                    📨 Отправить в MAX
+                </button>
+            </div>
+
+            <div id="ttsAudioBox" style="display:none;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px">
+                <audio id="ttsAudio" controls style="width:100%"></audio>
+                <div id="ttsAudioInfo" style="font-size:11px;color:var(--text-dim);margin-top:6px"></div>
+            </div>
+
+            <div id="ttsStatus" style="font-size:12px;color:var(--text-dim);min-height:16px"></div>
+        </div>
+    </section>
+
     <!-- Dialog drawer -->
     <div id="dialogOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9998;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:720px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
@@ -430,6 +478,8 @@
         if (controlTab) controlTab.style.display = 'none';
         var reengTab = document.getElementById('reengTab');
         if (reengTab) reengTab.style.display = 'none';
+        var ttsTab = document.getElementById('ttsTab');
+        if (ttsTab) ttsTab.style.display = 'none';
         try {
             if (currentTab === 'summary') {
                 var d = await _fetch('/api/analytics/summary');
@@ -464,6 +514,9 @@
             } else if (currentTab === 'reeng') {
                 if (reengTab) reengTab.style.display = 'block';
                 await reengReload();
+            } else if (currentTab === 'tts') {
+                // TTS — это форма, fetch не нужен. Просто показываем UI.
+                if (ttsTab) ttsTab.style.display = 'block';
             }
         } catch (e) {
             _err(e.message || 'Ошибка');
@@ -1402,6 +1455,188 @@
     document.getElementById('reengReload').addEventListener('click', reengReload);
     document.getElementById('reengSendAll').addEventListener('click', function () { reengSend(false); });
     document.getElementById('reengDryRun').addEventListener('click', function () { reengSend(true); });
+
+    // ============================================================
+    // 🔊 TTS Озвучка — генератор голоса Фреди
+    // ============================================================
+    var _ttsBlob = null;       // последний сгенерённый Blob (mp3)
+    var _ttsBlobUrl = null;    // object URL для audio src и download
+    var _ttsLastText = '';     // текст из которого синтез — для имени файла
+
+    function _ttsSetStatus(msg, kind) {
+        var el = document.getElementById('ttsStatus');
+        if (!el) return;
+        el.textContent = msg || '';
+        el.style.color = kind === 'err' ? 'var(--err, #e11d48)'
+                       : kind === 'ok'  ? 'var(--success, #10b981)'
+                       : 'var(--text-dim)';
+    }
+
+    function _ttsToggleResultButtons(enabled) {
+        var dl = document.getElementById('ttsDownload');
+        var mx = document.getElementById('ttsSendMax');
+        [dl, mx].forEach(function (b) {
+            if (!b) return;
+            b.disabled = !enabled;
+            b.style.opacity = enabled ? '1' : '0.4';
+            b.style.cursor = enabled ? 'pointer' : 'not-allowed';
+        });
+    }
+
+    function _ttsCharCount() {
+        var ta = document.getElementById('ttsText');
+        var c  = document.getElementById('ttsCharCount');
+        if (!ta || !c) return;
+        var n = (ta.value || '').length;
+        c.textContent = n + ' / 4000';
+        c.style.color = n > 4000 ? '#e11d48' : 'var(--text-dim)';
+    }
+
+    var _ttsTextEl = document.getElementById('ttsText');
+    if (_ttsTextEl) {
+        _ttsCharCount();
+        _ttsTextEl.addEventListener('input', _ttsCharCount);
+    }
+
+    async function _ttsSynthesize() {
+        var btn = document.getElementById('ttsSynthesize');
+        var text = ((document.getElementById('ttsText') || {}).value || '').trim();
+        var mode = ((document.getElementById('ttsMode') || {}).value || 'psychologist').trim();
+        if (!text) {
+            _ttsSetStatus('⚠ Введи текст для озвучки', 'err');
+            return;
+        }
+        if (text.length > 4000) {
+            _ttsSetStatus('⚠ Максимум 4000 символов (сейчас ' + text.length + ')', 'err');
+            return;
+        }
+        if (!token) {
+            _ttsSetStatus('⚠ Сначала введи ADMIN_TOKEN сверху', 'err');
+            return;
+        }
+        btn.disabled = true;
+        var orig = btn.textContent;
+        btn.textContent = '⏳ Генерирую…';
+        _ttsSetStatus('Запрос в Fish Audio (5-15 сек)…');
+        _ttsToggleResultButtons(false);
+        // Сбросить предыдущий результат
+        if (_ttsBlobUrl) {
+            try { URL.revokeObjectURL(_ttsBlobUrl); } catch (e) {}
+            _ttsBlobUrl = null;
+        }
+        document.getElementById('ttsAudioBox').style.display = 'none';
+
+        try {
+            var resp = await fetch(API + '/api/admin/tts/synthesize', {
+                method: 'POST',
+                headers: {
+                    'X-Admin-Token': token,
+                    'Content-Type': 'application/json',
+                    'Accept': 'audio/mpeg',
+                },
+                body: JSON.stringify({ text: text, mode: mode }),
+            });
+            if (resp.status === 401) throw new Error('Неверный ADMIN_TOKEN');
+            if (resp.status === 503) throw new Error('TTS не настроен на сервере');
+            if (!resp.ok) {
+                var emsg = 'HTTP ' + resp.status;
+                try {
+                    var j = await resp.json();
+                    emsg = (j && j.detail && (j.detail.message || j.detail.error)) || emsg;
+                } catch (_) {}
+                throw new Error(emsg);
+            }
+            var blob = await resp.blob();
+            if (!blob || blob.size < 100) throw new Error('Пустой ответ TTS');
+
+            _ttsBlob = blob;
+            _ttsLastText = text;
+            _ttsBlobUrl = URL.createObjectURL(blob);
+
+            var audio = document.getElementById('ttsAudio');
+            audio.src = _ttsBlobUrl;
+            document.getElementById('ttsAudioBox').style.display = 'block';
+            var sizeKb = Math.round(blob.size / 1024);
+            document.getElementById('ttsAudioInfo').textContent =
+                '✓ MP3 готов · ' + sizeKb + ' КБ · ~' + Math.round(text.length / 15) + ' сек';
+            _ttsToggleResultButtons(true);
+            _ttsSetStatus('✓ Готово. Скачай или отправь в MAX', 'ok');
+        } catch (e) {
+            _ttsSetStatus('⚠ ' + (e.message || e), 'err');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+        }
+    }
+
+    function _ttsDownload() {
+        if (!_ttsBlob || !_ttsBlobUrl) {
+            _ttsSetStatus('⚠ Сначала озвучь текст', 'err');
+            return;
+        }
+        // Имя файла = первые 30 символов текста + дата
+        var slug = (_ttsLastText || 'fredi-voice')
+            .toLowerCase()
+            .replace(/[^a-zа-я0-9\s-]/gi, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .slice(0, 30) || 'fredi-voice';
+        var date = new Date().toISOString().slice(0, 10);
+        var a = document.createElement('a');
+        a.href = _ttsBlobUrl;
+        a.download = 'fredi-' + slug + '-' + date + '.mp3';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        _ttsSetStatus('✓ Скачано', 'ok');
+    }
+
+    async function _ttsSendMax() {
+        if (!_ttsBlob) {
+            _ttsSetStatus('⚠ Сначала озвучь текст', 'err');
+            return;
+        }
+        var btn = document.getElementById('ttsSendMax');
+        btn.disabled = true;
+        var orig = btn.textContent;
+        btn.textContent = '⏳ Отправляю…';
+        _ttsSetStatus('Отправляю файл в MAX…');
+        try {
+            var fd = new FormData();
+            fd.append('audio', _ttsBlob, 'fredi-voice.mp3');
+            fd.append('caption', (_ttsLastText || '').slice(0, 400));
+            var resp = await fetch(API + '/api/admin/max/send-audio', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token },
+                body: fd,
+            });
+            if (resp.status === 404) {
+                throw new Error('Endpoint /api/admin/max/send-audio пока не настроен на бэке. Скажи Клоду — добавит.');
+            }
+            if (resp.status === 401) throw new Error('Неверный ADMIN_TOKEN');
+            if (!resp.ok) {
+                var emsg = 'HTTP ' + resp.status;
+                try {
+                    var j = await resp.json();
+                    emsg = (j && j.detail && (j.detail.message || j.detail.error)) || emsg;
+                } catch (_) {}
+                throw new Error(emsg);
+            }
+            _ttsSetStatus('✓ Отправлено в MAX', 'ok');
+        } catch (e) {
+            _ttsSetStatus('⚠ ' + (e.message || e), 'err');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = orig;
+        }
+    }
+
+    var _ttsSynBtn = document.getElementById('ttsSynthesize');
+    if (_ttsSynBtn) _ttsSynBtn.addEventListener('click', _ttsSynthesize);
+    var _ttsDlBtn = document.getElementById('ttsDownload');
+    if (_ttsDlBtn) _ttsDlBtn.addEventListener('click', _ttsDownload);
+    var _ttsMaxBtn = document.getElementById('ttsSendMax');
+    if (_ttsMaxBtn) _ttsMaxBtn.addEventListener('click', _ttsSendMax);
 })();
 </script>
 <script src="clients-tab.js"></script>
