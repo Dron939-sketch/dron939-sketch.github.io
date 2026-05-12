@@ -1929,7 +1929,32 @@
     var ub = (r.vk_data || {}).user_basic || {};
     var chatUrl = ub.id ? ('https://vk.com/im?sel=' + ub.id) : '';
 
-    var profileHtml =
+    // Compensatory pattern badge — отдельная плашка для глаз админа.
+    // Бэк передаёт pain.compensatory_pattern + pain.is_target_audience.
+    var cpCode = (pain.compensatory_pattern || '').toLowerCase();
+    var cpMap = {
+      'peace_deficit':    { letter: 'А', name: 'Дефицит покоя',       color: '#0ea5e9', emoji: '🌙' },
+      'intimacy_deficit': { letter: 'Б', name: 'Дефицит близости',    color: '#a855f7', emoji: '💔' },
+      'body_deficit':     { letter: 'В', name: 'Дефицит телесности', color: '#ec4899', emoji: '🪞' }
+    };
+    var cpInfo = cpMap[cpCode];
+    var cpBadgeHtml = '';
+    if (cpInfo) {
+      cpBadgeHtml =
+        '<div style="background:' + cpInfo.color + '14;border-left:3px solid ' + cpInfo.color + ';padding:10px 12px;border-radius:6px;margin-bottom:12px">' +
+          '<div style="font-size:10px;color:' + cpInfo.color + ';text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px">' +
+            cpInfo.emoji + ' Компенсаторный паттерн: ' + cpInfo.letter + '. ' + esc(cpInfo.name) +
+          '</div>' +
+          '<div style="font-size:12px;color:var(--text-dim);font-style:italic">' + esc(cpCode) + (pain.is_target_audience ? ' · ✓ ЦА — бьюти 30+' : '') + '</div>' +
+        '</div>';
+    } else if (pain.is_target_audience) {
+      cpBadgeHtml =
+        '<div style="background:rgba(168,85,247,0.06);border-left:3px solid var(--accent);padding:8px 12px;border-radius:6px;margin-bottom:12px;font-size:11px;color:var(--text-dim)">' +
+          '🎯 ЦА — бьюти-предпринимательница 30+ (паттерн не определён)' +
+        '</div>';
+    }
+
+    var profileHtml = cpBadgeHtml +
       '<div style="background:rgba(167,139,250,0.06);border-left:3px solid var(--accent);padding:10px 12px;border-radius:6px;margin-bottom:12px">' +
         '<div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px">🧠 Психологический портрет</div>' +
         '<div style="font-size:13px;line-height:1.5">' + esc(p.profile || '—') + '</div>' +
