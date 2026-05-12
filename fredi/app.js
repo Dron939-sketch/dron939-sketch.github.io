@@ -2403,3 +2403,60 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+
+// ============================================================
+// Welcome voice — голосовое приветствие Фреди при ПЕРВОЙ
+// регистрации.
+// Триггер: login.js ставит localStorage.fredi_welcome_pending = 1
+// после успешного /api/auth/register, потом перезагружает страницу.
+// Сюда (на DOMContentLoaded) попадаем уже под новым user_id — через
+// 3 сек играем /fredi/sounds/welcome.mp3 (хардкод-приветствие,
+// одно на всех).
+// Защита от повтора: localStorage.fredi_welcome_played после play.
+// Если autoplay браузер заблокирует — silent fail (played НЕ
+// ставится, попробуем при следующем register, маловероятно).
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    try {
+        if (!localStorage.getItem('fredi_welcome_pending')) return;
+        // pending снимаем сразу — даже если play упадёт, не зацикливаемся
+        localStorage.removeItem('fredi_welcome_pending');
+        if (localStorage.getItem('fredi_welcome_played')) return;
+    } catch (e) { return; }
+
+    setTimeout(function() {
+        var audio = new Audio('/fredi/sounds/welcome.mp3');
+        audio.volume = 0.85;
+        var toast = document.getElementById('toastMessage');
+        var toastText = document.getElementById('toastText');
+        var toastClose = document.getElementById('toastClose');
+
+        var hide = function() {
+            if (toast) toast.classList.remove('visible');
+        };
+        var stop = function() {
+            try { audio.pause(); } catch (e) {}
+            hide();
+        };
+
+        if (toast && toastText) {
+            toastText.textContent = '🔊 Фреди говорит...';
+            toast.classList.add('visible');
+            if (toastClose) toastClose.onclick = stop;
+        }
+
+        audio.onended = hide;
+        audio.onerror = function() {
+            console.warn('[Fredi] welcome.mp3 not loaded — skipping');
+            hide();
+        };
+
+        audio.play().then(function() {
+            try { localStorage.setItem('fredi_welcome_played', '1'); } catch (e) {}
+        }).catch(function(e) {
+            console.warn('[Fredi] welcome autoplay blocked:', e);
+            hide();
+        });
+    }, 3000);
+});
