@@ -1939,11 +1939,11 @@
             var url = 'https://vk.com/id' + c.vk_id;
             return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">' +
                 '<td style="padding:6px 8px"><input type="checkbox" class="parse-cb" data-vkid="'+c.vk_id+'" style="width:16px;height:16px"></td>' +
-                '<td style="padding:6px 8px">'+esc(fullName)+'</td>' +
+                '<td style="padding:6px 8px">'+_esc(fullName)+'</td>' +
                 '<td style="padding:6px 8px;font-family:monospace;font-size:11px">'+c.vk_id+'</td>' +
                 '<td style="padding:6px 8px;color:var(--text-dim)">'+(year||'—')+'</td>' +
-                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+esc(c.matched_category||c.category||'')+'</td>' +
-                '<td style="padding:6px 8px"><a href="'+esc(url)+'" target="_blank" rel="noopener" style="color:#0088cc;text-decoration:none">↗</a></td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+_esc(c.matched_category||c.category||'')+'</td>' +
+                '<td style="padding:6px 8px"><a href="'+_esc(url)+'" target="_blank" rel="noopener" style="color:#0088cc;text-decoration:none">↗</a></td>' +
             '</tr>';
         }).join('');
         box.style.display = (_parseLastResults.length ? 'block' : 'none');
@@ -2045,13 +2045,13 @@
             var c = colors[it.status] || 'var(--text)';
             var when = it.added_at ? new Date(it.added_at).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
             return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">' +
-                '<td style="padding:6px 8px">'+esc(it.full_name || ('id'+it.vk_id))+'</td>' +
-                '<td style="padding:6px 8px;font-family:monospace;font-size:11px"><a href="'+esc(it.vk_url)+'" target="_blank" rel="noopener" style="color:#0088cc;text-decoration:none">'+it.vk_id+'</a></td>' +
-                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+esc(it.category||'')+'</td>' +
+                '<td style="padding:6px 8px">'+_esc(it.full_name || ('id'+it.vk_id))+'</td>' +
+                '<td style="padding:6px 8px;font-family:monospace;font-size:11px"><a href="'+_esc(it.vk_url)+'" target="_blank" rel="noopener" style="color:#0088cc;text-decoration:none">'+it.vk_id+'</a></td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+_esc(it.category||'')+'</td>' +
                 '<td style="padding:6px 8px"><span style="color:'+c+';font-weight:600">'+it.status+'</span>' +
-                  (it.error_message ? '<div style="font-size:10px;color:var(--text-dim);max-width:140px;overflow:hidden;text-overflow:ellipsis" title="'+esc(it.error_message)+'">'+esc(it.error_message)+'</div>' : '') +
+                  (it.error_message ? '<div style="font-size:10px;color:var(--text-dim);max-width:140px;overflow:hidden;text-overflow:ellipsis" title="'+_esc(it.error_message)+'">'+_esc(it.error_message)+'</div>' : '') +
                 '</td>' +
-                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+esc(when)+'</td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">'+_esc(when)+'</td>' +
                 '<td style="padding:6px 8px"><button class="queue-del-btn" data-id="'+it.id+'" style="padding:3px 8px;border-radius:6px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-size:11px;cursor:pointer">×</button></td>' +
             '</tr>';
         }).join('');
