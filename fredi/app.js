@@ -963,9 +963,13 @@ async function switchMode(mode) {
             await apiCall('/api/save-mode', { method: 'POST', body: JSON.stringify({ user_id: CONFIG.USER_ID, mode }) });
         } catch (e) { console.warn('Failed to save mode:', e); }
     } else {
-        // Без подписки: визуальное переключение есть, но диалог остаётся базовым.
-        // Показываем мягкое окно про премиум.
-        showPremiumLockPopup(config.name);
+        // Без подписки: визуальное переключение работает, диалог
+        // остаётся базовым (бэк сам понижает promt до basic через
+        // _enforce_premium_mode). Раньше тут вылазил popup —
+        // он отпугивал юзеров на этапе знакомства. Убрали:
+        // пусть пробует, ощутит ценность сам, и тогда сам пойдёт
+        // в подписку. Если упрётся в дневной лимит — meter
+        // покажет paywall в нужный момент.
         if (voiceManager && voiceManager.setMode) voiceManager.setMode('basic');
     }
     renderDashboard();
