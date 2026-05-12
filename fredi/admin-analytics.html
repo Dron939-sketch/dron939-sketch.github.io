@@ -588,6 +588,44 @@
                 </select>
                 <button id="msgRefresh" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-size:12px;cursor:pointer;margin-left:auto">🔄 Обновить</button>
                 <button id="msgExportCsv" style="padding:7px 12px;border-radius:8px;border:1px solid #10b981;background:transparent;color:#10b981;font:inherit;font-size:12px;cursor:pointer">💾 CSV</button>
+                <button id="msgBroadcastOpen" style="padding:7px 14px;border-radius:8px;border:none;background:#a855f7;color:#fff;font:inherit;font-size:12px;font-weight:600;cursor:pointer">📨 Рассылка от Фреди</button>
+            </div>
+
+            <div id="broadcastOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)">
+                <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;max-width:600px;width:100%;max-height:92vh;display:flex;flex-direction:column;padding:18px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                        <div style="font-weight:700;font-size:16px">📨 Рассылка от Фреди</div>
+                        <button id="broadcastClose" style="background:transparent;border:1px solid var(--border);border-radius:8px;padding:5px 10px;color:var(--text);cursor:pointer;font-size:12px">✕</button>
+                    </div>
+                    <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px">Текст сообщения (≤4000)</label>
+                    <textarea id="broadcastText" rows="6" maxlength="4000" style="width:100%;padding:10px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:13px/1.5 inherit;resize:vertical;box-sizing:border-box;margin-bottom:10px" placeholder="Привет! Я Фреди..."></textarea>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+                        <div>
+                            <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px">Платформа</label>
+                            <select id="broadcastPlatform" style="width:100%;padding:8px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                                <option value="max" selected>⚡ MAX</option>
+                                <option value="telegram">✈️ Telegram</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px">Кому</label>
+                            <select id="broadcastTarget" style="width:100%;padding:8px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                                <option value="last_7d">За последние 7 дней</option>
+                                <option value="last_30d" selected>За последние 30 дней</option>
+                                <option value="all">Всем активным</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px">Тестовый chat_id (опц. — только в один)</label>
+                        <input id="broadcastTestChatId" type="text" placeholder="например 123456789" style="width:100%;box-sizing:border-box;padding:8px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                    </div>
+                    <div style="display:flex;gap:10px;margin-top:6px">
+                        <button id="broadcastDryRun" style="flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer">🔍 Подсчитать (dry-run)</button>
+                        <button id="broadcastSend" style="flex:1;padding:11px;border-radius:10px;border:none;background:#a855f7;color:#fff;font:inherit;font-weight:700;cursor:pointer">📨 Отправить</button>
+                    </div>
+                    <div id="broadcastStatus" style="font-size:12px;color:var(--text-dim);min-height:30px;margin-top:10px;white-space:pre-wrap"></div>
+                </div>
             </div>
 
             <!-- Таблица последних -->
@@ -2394,6 +2432,81 @@
     if (_msgCsvBtn) _msgCsvBtn.addEventListener('click', _msgExportCsv);
 
     window._msgLoad = _msgLoad;
+
+    // ============================================================
+    // 📨 BROADCAST modal
+    // ============================================================
+    function _bcSetStatus(msg, kind) {
+        var s = document.getElementById('broadcastStatus');
+        if (!s) return;
+        s.textContent = msg || '';
+        s.style.color = kind === 'err' ? 'var(--err, #e11d48)'
+                      : kind === 'ok'  ? 'var(--success, #10b981)' : 'var(--text-dim)';
+    }
+    function _bcOpen() {
+        document.getElementById('broadcastOverlay').style.display = 'flex';
+        _bcSetStatus('', '');
+    }
+    function _bcClose() {
+        document.getElementById('broadcastOverlay').style.display = 'none';
+    }
+    async function _bcRequest(dryRun) {
+        var text = (document.getElementById('broadcastText').value || '').trim();
+        var platform = document.getElementById('broadcastPlatform').value || 'max';
+        var target = document.getElementById('broadcastTarget').value || 'last_30d';
+        var testChat = (document.getElementById('broadcastTestChatId').value || '').trim();
+        if (!text) { _bcSetStatus('⚠ Введи текст', 'err'); return; }
+        var payload = { text: text, platform: platform, target: target,
+                        dry_run: !!dryRun, cooldown_hours: 24 };
+        if (testChat) payload.test_chat_id = testChat;
+        if (!dryRun && !testChat) {
+            if (!confirm('Отправить «' + platform.toUpperCase() + '» всем «' + target + '»? Это необратимо.')) return;
+        }
+        var btnSend = document.getElementById('broadcastSend');
+        var btnDry = document.getElementById('broadcastDryRun');
+        [btnSend, btnDry].forEach(function(b){ if(b) b.disabled = true; });
+        _bcSetStatus(dryRun ? '🔍 Считаю получателей...' : '📨 Отправляю (≈1 сек на адресата)...');
+        try {
+            var resp = await fetch(API + '/api/analytics/messenger-broadcast', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (!resp.ok) {
+                var msg = 'HTTP ' + resp.status;
+                try { var j = await resp.json(); msg = (j && j.detail && (j.detail.message || j.detail.error)) || msg; } catch(_){}
+                throw new Error(msg);
+            }
+            var data = await resp.json();
+            if (data.dry_run) {
+                _bcSetStatus('🔍 Найдено получателей: ' + (data.would_send_to || 0) +
+                    '\nПлатформа: ' + (data.platform || platform) +
+                    '\nФильтр: ' + (data.target || target), 'ok');
+            } else if (testChat) {
+                if (data.sent) _bcSetStatus('✓ Отправлено в test_chat_id=' + testChat, 'ok');
+                else _bcSetStatus('⚠ Не удалось: ' + (data.error || 'неизвестно'), 'err');
+            } else {
+                _bcSetStatus(
+                    '✓ Отправлено: ' + (data.sent || 0) + ' / ' + (data.total || 0) +
+                    '\n⚠ Ошибок: ' + (data.failed || 0) +
+                    '\n⏸ Пропущено (cooldown 24ч): ' + (data.skipped_cooldown || 0),
+                    'ok'
+                );
+            }
+        } catch (e) {
+            _bcSetStatus('⚠ ' + (e.message || e), 'err');
+        } finally {
+            [btnSend, btnDry].forEach(function(b){ if(b) b.disabled = false; });
+        }
+    }
+    var _bcOpenBtn = document.getElementById('msgBroadcastOpen');
+    if (_bcOpenBtn) _bcOpenBtn.addEventListener('click', _bcOpen);
+    var _bcCloseBtn = document.getElementById('broadcastClose');
+    if (_bcCloseBtn) _bcCloseBtn.addEventListener('click', _bcClose);
+    var _bcDryBtn = document.getElementById('broadcastDryRun');
+    if (_bcDryBtn) _bcDryBtn.addEventListener('click', function(){ _bcRequest(true); });
+    var _bcSendBtn = document.getElementById('broadcastSend');
+    if (_bcSendBtn) _bcSendBtn.addEventListener('click', function(){ _bcRequest(false); });
 })();
 </script>
 <script src="clients-tab.js"></script>
