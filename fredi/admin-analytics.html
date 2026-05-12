@@ -616,6 +616,25 @@
                             </select>
                         </div>
                     </div>
+                    <div style="margin-bottom:10px;padding:10px;border:1px dashed var(--border);border-radius:8px;background:rgba(168,85,247,0.04)">
+                        <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);margin-bottom:6px;cursor:pointer;font-weight:600">
+                            <input id="broadcastVoiceOn" type="checkbox" style="margin:0">
+                            🎙 С голосом Фреди (только MAX)
+                        </label>
+                        <div id="broadcastVoiceBlock" style="display:none">
+                            <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px">Текст для озвучки (≤500, отдельный — может отличаться от текста-подписи выше)</label>
+                            <textarea id="broadcastVoiceText" rows="3" maxlength="500" style="width:100%;padding:8px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:13px/1.5 inherit;resize:vertical;box-sizing:border-box;margin-bottom:6px" placeholder="Привет, я Фреди..."></textarea>
+                            <div style="display:flex;gap:8px;align-items:center">
+                                <label style="font-size:11px;color:var(--text-dim)">Голос:</label>
+                                <select id="broadcastVoiceMode" style="padding:5px 9px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;color:var(--text);font:inherit;font-size:12px">
+                                    <option value="psychologist" selected>Психолог</option>
+                                    <option value="coach">Коуч</option>
+                                    <option value="trainer">Тренер</option>
+                                </select>
+                                <span style="font-size:10px;color:var(--text-dim)">TTS 1 раз → upload 1 раз → attach всем</span>
+                            </div>
+                        </div>
+                    </div>
                     <div style="margin-bottom:10px">
                         <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:3px">Тестовый chat_id (опц. — только в один)</label>
                         <input id="broadcastTestChatId" type="text" placeholder="например 123456789" style="width:100%;box-sizing:border-box;padding:8px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
@@ -2455,10 +2474,24 @@
         var platform = document.getElementById('broadcastPlatform').value || 'max';
         var target = document.getElementById('broadcastTarget').value || 'last_30d';
         var testChat = (document.getElementById('broadcastTestChatId').value || '').trim();
+        var voiceOn = !!(document.getElementById('broadcastVoiceOn') || {}).checked;
+        var voiceText = (document.getElementById('broadcastVoiceText') || {}).value || '';
+        var voiceMode = (document.getElementById('broadcastVoiceMode') || {}).value || 'psychologist';
+        voiceText = voiceText.trim();
         if (!text) { _bcSetStatus('⚠ Введи текст', 'err'); return; }
+        if (voiceOn && platform !== 'max') {
+            _bcSetStatus('⚠ Голос работает только для платформы MAX', 'err'); return;
+        }
+        if (voiceOn && !voiceText) {
+            _bcSetStatus('⚠ Введи текст для озвучки', 'err'); return;
+        }
         var payload = { text: text, platform: platform, target: target,
                         dry_run: !!dryRun, cooldown_hours: 24 };
         if (testChat) payload.test_chat_id = testChat;
+        if (voiceOn && voiceText && platform === 'max') {
+            payload.voice_text = voiceText;
+            payload.voice_mode = voiceMode;
+        }
         if (!dryRun && !testChat) {
             if (!confirm('Отправить «' + platform.toUpperCase() + '» всем «' + target + '»? Это необратимо.')) return;
         }
@@ -2483,13 +2516,17 @@
                     '\nПлатформа: ' + (data.platform || platform) +
                     '\nФильтр: ' + (data.target || target), 'ok');
             } else if (testChat) {
-                if (data.sent) _bcSetStatus('✓ Отправлено в test_chat_id=' + testChat, 'ok');
-                else _bcSetStatus('⚠ Не удалось: ' + (data.error || 'неизвестно'), 'err');
+                var vline = data.voice_used ? '\n🎙 Голос: прикреплён (' + (data.audio_size_bytes || 0) + ' байт)'
+                          : (data.voice_error ? '\n⚠ Голос: ' + data.voice_error : '');
+                if (data.sent) _bcSetStatus('✓ Отправлено в test_chat_id=' + testChat + vline, 'ok');
+                else _bcSetStatus('⚠ Не удалось: ' + (data.error || 'неизвестно') + vline, 'err');
             } else {
+                var vline2 = data.voice_used ? '\n🎙 Голос: прикреплён ко всем (' + (data.audio_size_bytes || 0) + ' байт, 1 TTS + 1 upload)'
+                           : (data.voice_error ? '\n⚠ Голос: ' + data.voice_error : '');
                 _bcSetStatus(
                     '✓ Отправлено: ' + (data.sent || 0) + ' / ' + (data.total || 0) +
                     '\n⚠ Ошибок: ' + (data.failed || 0) +
-                    '\n⏸ Пропущено (cooldown 24ч): ' + (data.skipped_cooldown || 0),
+                    '\n⏸ Пропущено (cooldown 24ч): ' + (data.skipped_cooldown || 0) + vline2,
                     'ok'
                 );
             }
@@ -2507,6 +2544,11 @@
     if (_bcDryBtn) _bcDryBtn.addEventListener('click', function(){ _bcRequest(true); });
     var _bcSendBtn = document.getElementById('broadcastSend');
     if (_bcSendBtn) _bcSendBtn.addEventListener('click', function(){ _bcRequest(false); });
+    var _bcVoiceChk = document.getElementById('broadcastVoiceOn');
+    if (_bcVoiceChk) _bcVoiceChk.addEventListener('change', function(){
+        var b = document.getElementById('broadcastVoiceBlock');
+        if (b) b.style.display = _bcVoiceChk.checked ? 'block' : 'none';
+    });
 })();
 </script>
 <script src="clients-tab.js"></script>
