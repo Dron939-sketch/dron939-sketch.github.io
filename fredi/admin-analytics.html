@@ -198,6 +198,7 @@
         <button data-tab="reeng">📨 Возврат</button>
         <button data-tab="tts">🔊 Озвучка</button>
         <button data-tab="parse">🎣 Парсинг</button>
+        <button data-tab="messengers">📱 Messenger</button>
         <button id="exportClaudeBtn" style="background:#10b981;color:#fff;border-color:#10b981;flex:0 0 auto">📋 Экспорт для Claude</button>
     </div>
 
@@ -566,6 +567,49 @@
         </div>
     </section>
 
+    <!-- 📱 MESSENGER LINKS STATS -->
+    <section id="messengersTab" style="display:none">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+            <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">📱 Привязки мессенджеров</div>
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px">
+                Юзеры, прошедшие тест и привязавшие MAX/Telegram-бота через «PDF в MAX». Каждый chat_id — потенциальная точка реактивации (можно слать через бота).
+            </div>
+
+            <!-- KPI карточки -->
+            <div id="msgKpi" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:14px"></div>
+
+            <!-- Фильтр + действия -->
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+                <label style="font-size:11px;color:var(--text-dim)">Платформа:</label>
+                <select id="msgFilter" style="padding:7px 11px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;color:var(--text);font:inherit;font-size:12px">
+                    <option value="">все</option>
+                    <option value="max">MAX</option>
+                    <option value="telegram">Telegram</option>
+                </select>
+                <button id="msgRefresh" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-size:12px;cursor:pointer;margin-left:auto">🔄 Обновить</button>
+                <button id="msgExportCsv" style="padding:7px 12px;border-radius:8px;border:1px solid #10b981;background:transparent;color:#10b981;font:inherit;font-size:12px;cursor:pointer">💾 CSV</button>
+            </div>
+
+            <!-- Таблица последних -->
+            <div style="max-height:600px;overflow:auto;border:1px solid var(--border);border-radius:8px">
+                <table style="width:100%;border-collapse:collapse;font-size:12px">
+                    <thead style="position:sticky;top:0;background:var(--surface);z-index:1">
+                        <tr style="border-bottom:1px solid var(--border)">
+                            <th style="padding:8px;text-align:left">Имя</th>
+                            <th style="padding:8px;text-align:left;width:80px">User ID</th>
+                            <th style="padding:8px;text-align:left;width:60px">Platform</th>
+                            <th style="padding:8px;text-align:left">Chat ID / username</th>
+                            <th style="padding:8px;text-align:left;width:140px">Привязан</th>
+                        </tr>
+                    </thead>
+                    <tbody id="msgBody"></tbody>
+                </table>
+            </div>
+
+            <div id="msgStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-top:10px"></div>
+        </div>
+    </section>
+
     <!-- Dialog drawer -->
     <div id="dialogOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9998;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:720px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
@@ -652,6 +696,8 @@
         if (ttsTab) ttsTab.style.display = 'none';
         var parseTab = document.getElementById('parseTab');
         if (parseTab) parseTab.style.display = 'none';
+        var messengersTab = document.getElementById('messengersTab');
+        if (messengersTab) messengersTab.style.display = 'none';
         try {
             if (currentTab === 'summary') {
                 var d = await _fetch('/api/analytics/summary');
@@ -693,6 +739,9 @@
                 if (parseTab) parseTab.style.display = 'block';
                 // Подгрузим очередь сразу при открытии
                 if (typeof _parseLoadQueue === 'function') _parseLoadQueue();
+            } else if (currentTab === 'messengers') {
+                if (messengersTab) messengersTab.style.display = 'block';
+                if (typeof _msgLoad === 'function') _msgLoad();
             }
         } catch (e) {
             _err(e.message || 'Ошибка');
@@ -2237,6 +2286,114 @@
 
     // expose для refresh() — он вызывает _parseLoadQueue при открытии таба
     window._parseLoadQueue = _parseLoadQueue;
+
+    // ============================================================
+    // 📱 MESSENGER LINKS STATS
+    // ============================================================
+    var _msgLastItems = [];
+
+    function _msgSetStatus(msg, kind) {
+        var s = document.getElementById('msgStatus');
+        if (!s) return;
+        s.textContent = msg || '';
+        s.style.color = kind === 'err' ? 'var(--err, #e11d48)'
+                      : kind === 'ok'  ? 'var(--success, #10b981)'
+                      : 'var(--text-dim)';
+    }
+
+    function _renderMsgKpi(summary) {
+        var box = document.getElementById('msgKpi');
+        if (!box) return;
+        var platforms = { max: { color: '#ec4899', label: 'MAX', icon: '⚡' },
+                          telegram: { color: '#0088cc', label: 'Telegram', icon: '✈️' } };
+        var html = '';
+        Object.keys(platforms).forEach(function(p) {
+            var meta = platforms[p];
+            var s = summary[p] || {};
+            html +=
+                '<div style="background:' + meta.color + '12;border:1px solid ' + meta.color + '40;border-radius:10px;padding:12px">' +
+                  '<div style="font-size:10px;color:' + meta.color + ';text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">' + meta.icon + ' ' + meta.label + '</div>' +
+                  '<div style="font-size:24px;font-weight:700;color:var(--text);line-height:1">' + (s.active || 0) + '</div>' +
+                  '<div style="font-size:10px;color:var(--text-dim);margin-top:6px">всего активных</div>' +
+                  '<div style="font-size:11px;color:var(--text-dim);margin-top:8px;padding-top:8px;border-top:1px solid ' + meta.color + '20">' +
+                    '24ч: <b style="color:' + meta.color + '">+' + (s.last_24h || 0) + '</b>' +
+                    ' · 7д: <b style="color:' + meta.color + '">+' + (s.last_7d || 0) + '</b>' +
+                    ' · 30д: <b style="color:' + meta.color + '">+' + (s.last_30d || 0) + '</b>' +
+                  '</div>' +
+                '</div>';
+        });
+        box.innerHTML = html;
+    }
+
+    async function _msgLoad() {
+        var plat = (document.getElementById('msgFilter') || {}).value || '';
+        var url = '/api/analytics/messenger-links?limit=200';
+        if (plat) url += '&platform=' + encodeURIComponent(plat);
+        try {
+            var data = await _fetch(url);
+            _msgLastItems = data.items || [];
+            _renderMsgKpi(data.summary || {});
+            _renderMsgTable(_msgLastItems);
+            _msgSetStatus('✓ Загружено: ' + _msgLastItems.length, 'ok');
+        } catch (e) {
+            _msgSetStatus('⚠ ' + (e.message || e), 'err');
+        }
+    }
+
+    function _renderMsgTable(items) {
+        var body = document.getElementById('msgBody');
+        if (!body) return;
+        body.innerHTML = (items || []).map(function(it) {
+            var when = it.linked_at ? new Date(it.linked_at).toLocaleString('ru-RU',
+                { day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit' }) : '';
+            var ico = it.platform === 'max' ? '⚡' : (it.platform === 'telegram' ? '✈️' : '');
+            var color = it.platform === 'max' ? '#ec4899' : '#0088cc';
+            return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">' +
+                '<td style="padding:6px 8px">' + _esc(it.display_name || ('id'+it.user_id)) + '</td>' +
+                '<td style="padding:6px 8px;font-family:monospace;font-size:11px;color:var(--text-dim)">' + it.user_id + '</td>' +
+                '<td style="padding:6px 8px;color:' + color + ';font-weight:600">' + ico + ' ' + _esc(it.platform) + '</td>' +
+                '<td style="padding:6px 8px;font-family:monospace;font-size:11px">' + _esc(it.chat_id || '') +
+                  (it.username ? '<span style="color:var(--text-dim);margin-left:6px">@' + _esc(it.username) + '</span>' : '') +
+                '</td>' +
+                '<td style="padding:6px 8px;color:var(--text-dim);font-size:11px">' + _esc(when) + '</td>' +
+            '</tr>';
+        }).join('');
+    }
+
+    function _msgExportCsv() {
+        if (!_msgLastItems.length) { _msgSetStatus('⚠ Нечего экспортировать', 'err'); return; }
+        var rows = [['user_id','platform','chat_id','username','display_name','linked_at']];
+        _msgLastItems.forEach(function(it) {
+            rows.push([it.user_id, it.platform, it.chat_id || '', it.username || '',
+                       it.display_name || '', it.linked_at || '']);
+        });
+        var csv = rows.map(function(r){
+            return r.map(function(v){
+                v = String(v || '');
+                if (v.indexOf(',')>=0 || v.indexOf('"')>=0 || v.indexOf('\n')>=0) {
+                    return '"' + v.replace(/"/g,'""') + '"';
+                }
+                return v;
+            }).join(',');
+        }).join('\n');
+        var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'fredi-messenger-links-' + new Date().toISOString().slice(0,10) + '.csv';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+        _msgSetStatus('✓ Скачано: ' + _msgLastItems.length + ' строк', 'ok');
+    }
+
+    var _msgRefreshBtn = document.getElementById('msgRefresh');
+    if (_msgRefreshBtn) _msgRefreshBtn.addEventListener('click', _msgLoad);
+    var _msgFilterEl = document.getElementById('msgFilter');
+    if (_msgFilterEl) _msgFilterEl.addEventListener('change', _msgLoad);
+    var _msgCsvBtn = document.getElementById('msgExportCsv');
+    if (_msgCsvBtn) _msgCsvBtn.addEventListener('click', _msgExportCsv);
+
+    window._msgLoad = _msgLoad;
 })();
 </script>
 <script src="clients-tab.js"></script>
