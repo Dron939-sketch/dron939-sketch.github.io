@@ -381,8 +381,27 @@
                     style="padding:11px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer;opacity:0.4">
                     💾 Скачать MP3
                 </button>
-                <button id="ttsSendMax" disabled
-                    style="padding:11px 18px;border-radius:10px;border:1px solid #4f46e5;background:transparent;color:#4f46e5;font:inherit;font-weight:600;cursor:pointer;opacity:0.4">
+            </div>
+
+            <!-- Блок отправки в MAX (виден после генерации MP3) -->
+            <div id="ttsMaxBlock" style="display:none;border-top:1px solid var(--border);padding-top:12px;margin-top:8px;margin-bottom:10px">
+                <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">📨 Отправить в MAX</div>
+
+                <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:4px">Получатель (MAX chat_id) или выбери из списка</label>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;align-items:center">
+                    <input id="ttsMaxChatId" type="number" placeholder="например 123456789"
+                        style="flex:1;min-width:200px;padding:10px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                    <select id="ttsMaxRecent" style="padding:10px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit;max-width:260px">
+                        <option value="">— из недавних —</option>
+                    </select>
+                </div>
+
+                <label style="display:block;font-size:11px;color:var(--text-dim);margin-bottom:4px">Подпись (опционально, до 1000 символов)</label>
+                <input id="ttsMaxCaption" type="text" placeholder="что-нибудь в одну строку…" maxlength="1000"
+                    style="width:100%;box-sizing:border-box;padding:10px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit;margin-bottom:10px">
+
+                <button id="ttsSendMax"
+                    style="padding:11px 18px;border-radius:10px;border:none;background:#4f46e5;color:#fff;font:inherit;font-weight:700;cursor:pointer">
                     📨 Отправить в MAX
                 </button>
             </div>
@@ -1474,13 +1493,34 @@
 
     function _ttsToggleResultButtons(enabled) {
         var dl = document.getElementById('ttsDownload');
-        var mx = document.getElementById('ttsSendMax');
-        [dl, mx].forEach(function (b) {
-            if (!b) return;
-            b.disabled = !enabled;
-            b.style.opacity = enabled ? '1' : '0.4';
-            b.style.cursor = enabled ? 'pointer' : 'not-allowed';
-        });
+        if (dl) {
+            dl.disabled = !enabled;
+            dl.style.opacity = enabled ? '1' : '0.4';
+            dl.style.cursor = enabled ? 'pointer' : 'not-allowed';
+        }
+        // Блок отправки в MAX — целиком скрываем/показываем
+        var maxBlock = document.getElementById('ttsMaxBlock');
+        if (maxBlock) maxBlock.style.display = enabled ? 'block' : 'none';
+    }
+
+    async function _ttsMaxLoadRecent() {
+        var sel = document.getElementById('ttsMaxRecent');
+        if (!sel || !token) return;
+        try {
+            var data = await _fetch('/api/admin/max/recent-chats?limit=20');
+            var items = (data && data.items) || [];
+            // Очищаем (оставляем дефолтный option)
+            while (sel.options.length > 1) sel.remove(1);
+            items.forEach(function (it) {
+                var opt = document.createElement('option');
+                opt.value = String(it.max_chat_id);
+                opt.textContent = it.name + ' · ' + it.max_chat_id;
+                sel.appendChild(opt);
+            });
+        } catch (e) {
+            // Тихо — список недавних опционален, ввод вручную всё равно работает
+            console.warn('[Fredi] max recent-chats:', e.message || e);
+        }
     }
 
     function _ttsCharCount() {
@@ -1596,22 +1636,34 @@
             _ttsSetStatus('⚠ Сначала озвучь текст', 'err');
             return;
         }
+        var chatInput = document.getElementById('ttsMaxChatId');
+        var chatSel = document.getElementById('ttsMaxRecent');
+        var captionInput = document.getElementById('ttsMaxCaption');
+        var chatId = (chatInput && chatInput.value || '').trim();
+        if (!chatId && chatSel && chatSel.value) chatId = chatSel.value;
+        if (!chatId || isNaN(parseInt(chatId, 10)) || parseInt(chatId, 10) <= 0) {
+            _ttsSetStatus('⚠ Введи MAX chat_id или выбери из списка', 'err');
+            return;
+        }
+        var caption = (captionInput && captionInput.value || '').trim();
+
         var btn = document.getElementById('ttsSendMax');
         btn.disabled = true;
         var orig = btn.textContent;
         btn.textContent = '⏳ Отправляю…';
-        _ttsSetStatus('Отправляю файл в MAX…');
+        _ttsSetStatus('Загружаю в MAX (10-20 сек)…');
         try {
             var fd = new FormData();
             fd.append('audio', _ttsBlob, 'fredi-voice.mp3');
-            fd.append('caption', (_ttsLastText || '').slice(0, 400));
+            fd.append('chat_id', String(parseInt(chatId, 10)));
+            if (caption) fd.append('caption', caption);
             var resp = await fetch(API + '/api/admin/max/send-audio', {
                 method: 'POST',
                 headers: { 'X-Admin-Token': token },
                 body: fd,
             });
             if (resp.status === 404) {
-                throw new Error('Endpoint /api/admin/max/send-audio пока не настроен на бэке. Скажи Клоду — добавит.');
+                throw new Error('Endpoint не настроен (бэкенд устарел?)');
             }
             if (resp.status === 401) throw new Error('Неверный ADMIN_TOKEN');
             if (!resp.ok) {
@@ -1622,7 +1674,7 @@
                 } catch (_) {}
                 throw new Error(emsg);
             }
-            _ttsSetStatus('✓ Отправлено в MAX', 'ok');
+            _ttsSetStatus('✓ Отправлено в MAX (chat_id=' + chatId + ')', 'ok');
         } catch (e) {
             _ttsSetStatus('⚠ ' + (e.message || e), 'err');
         } finally {
@@ -1637,6 +1689,30 @@
     if (_ttsDlBtn) _ttsDlBtn.addEventListener('click', _ttsDownload);
     var _ttsMaxBtn = document.getElementById('ttsSendMax');
     if (_ttsMaxBtn) _ttsMaxBtn.addEventListener('click', _ttsSendMax);
+
+    // Select из недавних → подставить в input. Это даёт юзеру свободу:
+    // выбрал → можно отредактировать число вручную.
+    var _ttsMaxSel = document.getElementById('ttsMaxRecent');
+    if (_ttsMaxSel) {
+        _ttsMaxSel.addEventListener('change', function () {
+            var v = _ttsMaxSel.value;
+            if (!v) return;
+            var inp = document.getElementById('ttsMaxChatId');
+            if (inp) inp.value = v;
+        });
+    }
+
+    // При первом открытии таба «🔊 Озвучка» подгружаем недавних
+    // MAX-юзеров (один раз). Хук на nav кнопку с data-tab="tts".
+    var _ttsMaxRecentLoaded = false;
+    document.querySelectorAll('#navBar button').forEach(function (b) {
+        if (b.dataset.tab !== 'tts') return;
+        b.addEventListener('click', function () {
+            if (_ttsMaxRecentLoaded) return;
+            _ttsMaxRecentLoaded = true;
+            _ttsMaxLoadRecent();
+        });
+    });
 })();
 </script>
 <script src="clients-tab.js"></script>
