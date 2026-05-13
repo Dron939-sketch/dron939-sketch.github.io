@@ -1954,6 +1954,38 @@
         '</div>';
     }
 
+    // Тактический слой: top-3 actionable problem_signals + рекомендованный
+    // инструмент для второго касания. Бэк передаёт уже отфильтрованный
+    // список (weight >= weight_floor).
+    var sigs = r.problem_signals_actionable || [];
+    var sigsHtml = '';
+    if (sigs.length) {
+      var rows = sigs.map(function(s){
+        var tool = s.tool || {};
+        var w = Math.round((s.weight || 0) * 100);
+        var bar = '<div style="display:inline-block;width:36px;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;vertical-align:middle;margin:0 6px;overflow:hidden"><div style="width:'+w+'%;height:100%;background:#10b981"></div></div>';
+        var time = s.best_send_time_msk ? ' · ⏰ ' + esc(s.best_send_time_msk) : '';
+        return (
+          '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.06)">' +
+            '<div style="flex:1;min-width:0">' +
+              '<div style="font-size:12px;font-weight:600">' + esc(s.name_ru || s.code || '—') + '</div>' +
+              (s.evidence ? '<div style="font-size:10px;color:var(--text-dim);font-style:italic;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">«' + esc(s.evidence) + '»</div>' : '') +
+            '</div>' +
+            '<div style="font-size:11px;color:var(--text-dim);text-align:right;flex-shrink:0">' +
+              (tool.icon_emoji || '🔧') + ' <b style="color:var(--text)">' + esc(tool.name || s.tool_code || '—') + '</b>' + time +
+              '<div style="font-size:10px;margin-top:2px">' + bar + w + '%</div>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join('');
+      sigsHtml =
+        '<div style="background:rgba(16,185,129,0.06);border-left:3px solid #10b981;padding:10px 12px;border-radius:6px;margin-bottom:12px">' +
+          '<div style="font-size:10px;color:#10b981;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">🎯 Острые проблемы → рекомендованный инструмент</div>' +
+          rows +
+        '</div>';
+    }
+    cpBadgeHtml = cpBadgeHtml + sigsHtml;
+
     var profileHtml = cpBadgeHtml +
       '<div style="background:rgba(167,139,250,0.06);border-left:3px solid var(--accent);padding:10px 12px;border-radius:6px;margin-bottom:12px">' +
         '<div style="font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px">🧠 Психологический портрет</div>' +
