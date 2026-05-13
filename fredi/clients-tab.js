@@ -1954,6 +1954,53 @@
         '</div>';
     }
 
+    // Нарративный слой: журней А→Б→С + цепочка инструментов.
+    // Бэк передаёт r.journey = {code,name_ru,compass,point_a,point_c,
+    // evidence_a,evidence_c,tool_chain:[{step,tool,step_name,why,time_min}],
+    // weight,compensatory_link} или null если LLM не классифицировал.
+    var journey = r.journey;
+    var journeyHtml = '';
+    if (journey && journey.code) {
+      var chain = journey.tool_chain || [];
+      var chainHtml = chain.map(function(s){
+        var t = s.tool || {};
+        return (
+          '<div style="display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed rgba(255,255,255,0.06)">' +
+            '<div style="flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(99,102,241,0.2);color:#a5b4fc;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">'+esc(String(s.step||'·'))+'</div>' +
+            '<div style="flex:1;min-width:0">' +
+              '<div style="font-size:12px;font-weight:600">' +
+                (t.icon_emoji || '🔧') + ' ' + esc(t.name || s.tool_code || '—') +
+                ' <span style="color:var(--text-dim);font-weight:400">— ' + esc(s.step_name || '') + '</span>' +
+                ' <span style="color:var(--text-dim);font-size:10px">· ~' + esc(String(s.time_min || 5)) + ' мин</span>' +
+              '</div>' +
+              (s.why ? '<div style="font-size:11px;color:var(--text-dim);margin-top:2px;line-height:1.4">' + esc(s.why) + '</div>' : '') +
+            '</div>' +
+          '</div>'
+        );
+      }).join('');
+      var jWeight = Math.round((journey.weight || 0) * 100);
+      journeyHtml =
+        '<div style="background:rgba(99,102,241,0.06);border-left:3px solid #6366f1;padding:12px 14px;border-radius:6px;margin-bottom:12px">' +
+          '<div style="font-size:10px;color:#a5b4fc;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">' +
+            '🗺️ Путь А → Б → С: «' + esc(journey.name_ru || journey.code) + '» (компас: ' + esc(journey.compass || '—') + ') · уверенность ' + jWeight + '%' +
+          '</div>' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">' +
+            '<div style="background:rgba(0,0,0,0.12);padding:8px 10px;border-radius:4px">' +
+              '<div style="font-size:10px;color:#a5b4fc;font-weight:700;margin-bottom:3px">А · ОТКУДА (причина)</div>' +
+              '<div style="font-size:12px;line-height:1.45">' + esc(journey.point_a || '—') + '</div>' +
+              (journey.evidence_a ? '<div style="font-size:10px;color:var(--text-dim);font-style:italic;margin-top:4px">«' + esc(journey.evidence_a) + '»</div>' : '') +
+            '</div>' +
+            '<div style="background:rgba(0,0,0,0.12);padding:8px 10px;border-radius:4px">' +
+              '<div style="font-size:10px;color:#86efac;font-weight:700;margin-bottom:3px">С · КУДА (компенсация)</div>' +
+              '<div style="font-size:12px;line-height:1.45">' + esc(journey.point_c || '—') + '</div>' +
+              (journey.evidence_c ? '<div style="font-size:10px;color:var(--text-dim);font-style:italic;margin-top:4px">«' + esc(journey.evidence_c) + '»</div>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div style="font-size:10px;color:#a5b4fc;font-weight:700;margin-bottom:4px">Б · ПУТЬ (' + chain.length + ' шагов)</div>' +
+          chainHtml +
+        '</div>';
+    }
+
     // Тактический слой: top-3 actionable problem_signals + рекомендованный
     // инструмент для второго касания. Бэк передаёт уже отфильтрованный
     // список (weight >= weight_floor).
@@ -1984,7 +2031,7 @@
           rows +
         '</div>';
     }
-    cpBadgeHtml = cpBadgeHtml + sigsHtml;
+    cpBadgeHtml = cpBadgeHtml + journeyHtml + sigsHtml;
 
     var profileHtml = cpBadgeHtml +
       '<div style="background:rgba(167,139,250,0.06);border-left:3px solid var(--accent);padding:10px 12px;border-radius:6px;margin-bottom:12px">' +
