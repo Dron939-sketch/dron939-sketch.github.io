@@ -1929,6 +1929,36 @@
     var ub = (r.vk_data || {}).user_basic || {};
     var chatUrl = ub.id ? ('https://vk.com/im?sel=' + ub.id) : '';
 
+    // Экзистенциальный слой (Ялом × Роттер) — координатная сетка
+    // для уточнения А и С. Бэк передаёт r.existential = {existential_stance,
+    // existential_card, locus_of_control, locus_card, compass, evidences}
+    // или null если LLM не классифицировал.
+    var ex = r.existential;
+    var existentialHtml = '';
+    if (ex && (ex.existential_card || ex.locus_card)) {
+      var esCard = ex.existential_card;
+      var lcCard = ex.locus_card;
+      var esColor = '#fbbf24';   // янтарный — экзистенция
+      var lcColor = '#06b6d4';   // циан — локус
+      existentialHtml =
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">' +
+          // existential
+          '<div style="background:'+esColor+'12;border-left:3px solid '+esColor+';padding:8px 11px;border-radius:6px">' +
+            '<div style="font-size:10px;color:'+esColor+';text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">⚰️ Экзистенция (Ялом)</div>' +
+            '<div style="font-size:12px;font-weight:600;line-height:1.3">' + esc((esCard||{}).name_ru || '—') + '</div>' +
+            ((esCard||{}).summary ? '<div style="font-size:10px;color:var(--text-dim);margin-top:3px;line-height:1.4">' + esc(esCard.summary) + '</div>' : '') +
+            (ex.existential_evidence ? '<div style="font-size:10px;color:var(--text-dim);font-style:italic;margin-top:3px">«' + esc(ex.existential_evidence) + '»</div>' : '') +
+          '</div>' +
+          // locus
+          '<div style="background:'+lcColor+'12;border-left:3px solid '+lcColor+';padding:8px 11px;border-radius:6px">' +
+            '<div style="font-size:10px;color:'+lcColor+';text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">🎯 Локус контроля (Роттер)</div>' +
+            '<div style="font-size:12px;font-weight:600;line-height:1.3">' + esc((lcCard||{}).name_ru || '—') + '</div>' +
+            ((lcCard||{}).summary ? '<div style="font-size:10px;color:var(--text-dim);margin-top:3px;line-height:1.4">' + esc(lcCard.summary) + '</div>' : '') +
+            (ex.locus_evidence ? '<div style="font-size:10px;color:var(--text-dim);font-style:italic;margin-top:3px">«' + esc(ex.locus_evidence) + '»</div>' : '') +
+          '</div>' +
+        '</div>';
+    }
+
     // Compensatory pattern badge — отдельная плашка для глаз админа.
     // Бэк передаёт pain.compensatory_pattern + pain.is_target_audience.
     var cpCode = (pain.compensatory_pattern || '').toLowerCase();
@@ -2031,7 +2061,7 @@
           rows +
         '</div>';
     }
-    cpBadgeHtml = cpBadgeHtml + journeyHtml + sigsHtml;
+    cpBadgeHtml = existentialHtml + cpBadgeHtml + journeyHtml + sigsHtml;
 
     var profileHtml = cpBadgeHtml +
       '<div style="background:rgba(167,139,250,0.06);border-left:3px solid var(--accent);padding:10px 12px;border-radius:6px;margin-bottom:12px">' +
