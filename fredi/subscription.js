@@ -193,21 +193,6 @@
         return false;
     }
 
-    async function _toggleAutoRenew(enabled) {
-        const uid = _uid();
-        if (!uid) return;
-        try {
-            const r = await fetch(`${_api()}/api/subscription/toggle-auto-renew`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: uid, enabled })
-            });
-            const data = await r.json();
-            if (data.success) { _toast(enabled ? 'Автопродление включено' : 'Автопродление отключено', 'info'); }
-            else { _toast('Не удалось изменить настройку', 'error'); }
-        } catch (e) { _toast('Ошибка сети', 'error'); }
-    }
-
     async function _deleteCard() {
         const uid = _uid();
         if (!uid) return;
@@ -277,15 +262,7 @@
                 <div class="sub-desc">Полный доступ ко всем возможностям</div>
                 <div class="sub-info-row"><span class="sub-info-label">Следующее списание</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">690 &#8381;/мес</span></div>
-                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew ? 'Включено' : 'Выключено'}</span></div>
-                <div class="sub-divider"></div>
-                <div class="sub-btn-group">
-                    ${sub.auto_renew
-                        ? '<button class="sub-btn sub-btn-danger" id="subToggleAutoRenew">Отключить автопродление</button>'
-                        : '<button class="sub-btn sub-btn-secondary" id="subToggleAutoRenew">Включить автопродление</button>'
-                    }
-                </div>
+                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">690 &#8381;/мес</span></div>
             </div>
             ${_renderSavedCardsSection(sub.card)}`;
     }
@@ -339,15 +316,6 @@
         const sub = await _loadSubscriptionStatus();
         if (sub && sub.has_subscription) {
             container.innerHTML = _renderActiveSubscription(sub);
-            const toggleBtn = document.getElementById('subToggleAutoRenew');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', async () => {
-                    const newState = !sub.auto_renew;
-                    if (!newState && !confirm('Отключить автопродление? Подписка останется активной до конца оплаченного периода.')) return;
-                    await _toggleAutoRenew(newState);
-                    await renderSubscriptionSection(container);
-                });
-            }
         } else {
             const pendingPid = _readPendingPaymentId();
             const pendingBanner = pendingPid ? _renderPendingBanner() : '';
