@@ -1,7 +1,7 @@
 // ============================================
 // premium_pill.js — Premium-индикаторы на дашборде
-//   • ⭐ PREMIUM pill рядом с именем
-//   • золотая обводка profile-badge
+//   • PREMIUM pill рядом с именем (голубой, без анимации)
+//   • голубая обводка profile-badge
 //   • Affordance для .mode-btn (коуч/психолог/тренер) — контраст,
 //     активная подсветка, label сверху, пульс для новичков. Делается
 //     здесь чтобы не пушить большие styles.css/app.js.
@@ -19,6 +19,8 @@
         if (document.getElementById(STYLE_ID)) return;
         var s = document.createElement('style');
         s.id = STYLE_ID;
+        // Голубой pill без glow-анимации — спокойнее для глаза,
+        // не отвлекает от чтения дашборда.
         s.textContent =
             '.hero-premium-pill {' +
             '  display: inline-flex;' +
@@ -30,21 +32,16 @@
             '  padding: 3px 9px;' +
             '  margin-left: 10px;' +
             '  border-radius: 10px;' +
-            '  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);' +
+            '  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);' +
             '  color: #fff;' +
-            '  box-shadow: 0 2px 10px rgba(243, 156, 18, 0.35);' +
+            '  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.30);' +
             '  vertical-align: middle;' +
             '  text-transform: uppercase;' +
             '  white-space: nowrap;' +
-            '  animation: premiumPillGlow 2.5s ease-in-out infinite;' +
-            '}' +
-            '@keyframes premiumPillGlow {' +
-            '  0%, 100% { box-shadow: 0 2px 10px rgba(243, 156, 18, 0.35); }' +
-            '  50% { box-shadow: 0 2px 18px rgba(243, 156, 18, 0.65); }' +
             '}' +
             '.profile-badge--premium {' +
-            '  border: 1px solid rgba(243, 156, 18, 0.55) !important;' +
-            '  box-shadow: 0 4px 16px rgba(243, 156, 18, 0.18) !important;' +
+            '  border: 1px solid rgba(59, 130, 246, 0.55) !important;' +
+            '  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.18) !important;' +
             '}';
         document.head.appendChild(s);
     }
@@ -149,7 +146,7 @@
         pill.id = PILL_ID;
         pill.className = 'hero-premium-pill';
         pill.title = 'Подписка Фреди Premium активна';
-        pill.textContent = '⭐ PREMIUM';
+        pill.textContent = 'PREMIUM';
         pill.style.display = 'none';
         heroName.parentNode.insertBefore(pill, heroName.nextSibling);
     }
