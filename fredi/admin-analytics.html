@@ -883,7 +883,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                     body: JSON.stringify({
                         group: raw,
                         max_members: limit,
-                        active_only: false
+                        active_only: true
                     })
                 });
                 var d = await r.json().catch(function () { return {}; });
@@ -899,15 +899,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                 document.getElementById('waveVkIds').value = lines.join('\n');
                 _updateCount();
                 var gname = (d.group && d.group.name) || raw;
-                var st = d.stats || {};
-                var hint = '';
-                if (st.total_fetched && lines.length === 0) {
-                    hint = ' (получено ' + st.total_fetched + ' участников, но все отфильтрованы — попробуй уменьшить лимит или зайди позже)';
-                } else if (st.total_fetched && lines.length < st.total_fetched) {
-                    hint = ' (из ' + st.total_fetched + ' участников)';
-                }
-                statusEl.textContent = '✓ ' + gname + ' — заполнено ' + lines.length + ' VK ID' + hint;
-                statusEl.style.color = lines.length ? '#10b981' : '#f59e0b';
+                statusEl.textContent = '✓ ' + gname + ' — заполнено ' + lines.length + ' VK ID (имена сохранены)';
+                statusEl.style.color = '#10b981';
             } catch (e) {
                 statusEl.textContent = '✗ ' + (e && e.message || e);
                 statusEl.style.color = '#ef4444';
