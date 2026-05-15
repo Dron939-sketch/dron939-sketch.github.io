@@ -68,6 +68,8 @@
         } catch (e) { console.error('subscription status error:', e); return null; }
     }
 
+    function _pendingKey(uid) { return 'fredi_pending_payment_' + uid; }
+
     async function _createPayment() {
         const uid = _uid();
         if (!uid) return;
@@ -82,19 +84,113 @@
 
         _toast('Создаю платёж...', 'info');
         try {
+            const baseReturn = window.location.origin + window.location.pathname + '?subscription=success';
             const r = await fetch(`${_api()}/api/subscription/create-payment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: uid,
-                    return_url: window.location.origin + window.location.pathname,
+                    return_url: baseReturn,
                     email: email,
                 })
             });
             const data = await r.json();
-            if (data.success && data.confirmation_url) { window.location.href = data.confirmation_url; }
-            else { _toast(data.error || 'Не удалось создать платёж', 'error'); }
+            if (data.success && data.confirmation_url) {
+                try {
+                    localStorage.setItem(_pendingKey(uid), JSON.stringify({
+                        payment_id: data.payment_id,
+                        created_at: Date.now(),
+                    }));
+                } catch (e) {}
+                window.location.href = data.confirmation_url;
+            } else { _toast(data.error || 'Не удалось создать платёж', 'error'); }
         } catch (e) { _toast('Ошибка сети', 'error'); }
+    }
+
+    async function _verifyPayment(paymentId) {
+        const uid = _uid();
+        if (!uid || !paymentId) return null;
+        try {
+            const r = await fetch(`${_api()}/api/subscription/verify-payment`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: uid, payment_id: paymentId })
+            });
+            return await r.json();
+        } catch (e) {
+            console.error('verify payment error:', e);
+            return null;
+        }
+    }
+
+    function _readPendingPaymentId() {
+        let pid = null;
+        try {
+            const sp = new URLSearchParams(window.location.search);
+            pid = sp.get('payment_id');
+            if (!pid && window.location.hash.includes('?')) {
+                pid = new URLSearchParams(window.location.hash.split('?')[1]).get('payment_id');
+            }
+        } catch (e) {}
+        if (pid) return pid;
+
+        try {
+            const uid = _uid();
+            const raw = uid ? localStorage.getItem(_pendingKey(uid)) : null;
+            if (raw) {
+                const obj = JSON.parse(raw);
+                if (obj && obj.payment_id && (Date.now() - (obj.created_at || 0)) < 2 * 3600 * 1000) {
+                    return obj.payment_id;
+                }
+            }
+        } catch (e) {}
+        return null;
+    }
+
+    function _clearPendingPayment() {
+        try {
+            const uid = _uid();
+            if (uid) localStorage.removeItem(_pendingKey(uid));
+        } catch (e) {}
+        try {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('payment_id');
+            url.searchParams.delete('subscription');
+            window.history.replaceState({}, '', url.toString());
+        } catch (e) {}
+    }
+
+    async function _autoVerifyOnReturn(container) {
+        const paymentId = _readPendingPaymentId();
+        if (!paymentId) return false;
+
+        if (container) {
+            container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Проверяю оплату...</div></div>';
+        }
+        _toast('Проверяю оплату...', 'info');
+
+        const deadline = Date.now() + 30000;
+        let lastResult = null;
+        while (Date.now() < deadline) {
+            lastResult = await _verifyPayment(paymentId);
+            if (lastResult && lastResult.success && lastResult.activated) {
+                _clearPendingPayment();
+                _toast('Подписка активирована ✨', 'info');
+                return true;
+            }
+            if (lastResult && lastResult.status === 'canceled') {
+                _clearPendingPayment();
+                _toast('Оплата отменена', 'error');
+                return false;
+            }
+            await new Promise(res => setTimeout(res, 3000));
+        }
+
+        if (lastResult && lastResult.status && lastResult.status !== 'pending' && lastResult.status !== 'waiting_for_capture') {
+            _clearPendingPayment();
+        }
+        _toast('Платёж в обработке, статус обновится автоматически', 'info');
+        return false;
     }
 
     async function _toggleAutoRenew(enabled) {
@@ -128,7 +224,7 @@
     }
 
     function _formatDate(dateStr) {
-        if (!dateStr) return '\u2014';
+        if (!dateStr) return '—';
         return new Date(dateStr).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
@@ -194,6 +290,18 @@
             ${_renderSavedCardsSection(sub.card)}`;
     }
 
+    function _renderPendingBanner() {
+        return `
+            <div class="sub-card" style="border:1px solid rgba(255,183,59,0.45);background:linear-gradient(135deg,rgba(255,183,59,0.12),rgba(255,107,59,0.06))">
+                <div class="sub-badge" style="background:rgba(255,183,59,0.18);color:rgba(255,183,59,0.95);border:1px solid rgba(255,183,59,0.35)">&#x23F3; Платёж в обработке</div>
+                <div class="sub-title">Подтверждаем оплату…</div>
+                <div class="sub-desc">Ваш платёж только что прошёл через ЮKassa и обрабатывается. Обычно занимает 1–5 минут. Подписка активируется автоматически, ничего делать не нужно.</div>
+                <div class="sub-btn-group">
+                    <button class="sub-btn sub-btn-secondary" id="subRefreshPendingBtn">Обновить статус</button>
+                </div>
+            </div>`;
+    }
+
     function _renderNoSubscription(sub) {
         const isExpired = sub && sub.status === 'expired';
         const card = sub ? sub.card : null;
@@ -218,7 +326,7 @@
                         style="width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);font-size:14px;font-family:inherit;box-sizing:border-box;outline:none"
                         onfocus="this.style.borderColor='rgba(59,130,255,0.5)'" onblur="this.style.borderColor='rgba(224,224,224,0.18)'" />
                 </div>
-                <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку \u2014 690 &#8381;</button>
+                <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 690 &#8381;</button>
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
             </div>
             ${_renderSavedCardsSection(card)}`;
@@ -227,6 +335,7 @@
     async function renderSubscriptionSection(container) {
         _injectSubscriptionStyles();
         container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Загрузка...</div></div>';
+        await _autoVerifyOnReturn(container);
         const sub = await _loadSubscriptionStatus();
         if (sub && sub.has_subscription) {
             container.innerHTML = _renderActiveSubscription(sub);
@@ -240,9 +349,36 @@
                 });
             }
         } else {
-            container.innerHTML = _renderNoSubscription(sub);
+            const pendingPid = _readPendingPaymentId();
+            const pendingBanner = pendingPid ? _renderPendingBanner() : '';
+            container.innerHTML = pendingBanner + _renderNoSubscription(sub);
             const payBtn = document.getElementById('subPayBtn');
             if (payBtn) { payBtn.addEventListener('click', _createPayment); }
+            const refreshBtn = document.getElementById('subRefreshPendingBtn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', async () => {
+                    refreshBtn.disabled = true;
+                    refreshBtn.textContent = 'Проверяю…';
+                    if (pendingPid) {
+                        await _verifyPayment(pendingPid);
+                    }
+                    await renderSubscriptionSection(container);
+                });
+            }
+            if (pendingPid) {
+                clearInterval(window._fredSubPollTimer);
+                window._fredSubPollTimer = setInterval(async () => {
+                    if (!document.body.contains(container)) {
+                        clearInterval(window._fredSubPollTimer);
+                        return;
+                    }
+                    const r = await _verifyPayment(pendingPid);
+                    if (r && (r.activated || r.status === 'canceled')) {
+                        clearInterval(window._fredSubPollTimer);
+                        await renderSubscriptionSection(container);
+                    }
+                }, 15000);
+            }
         }
         const deleteBtn = document.getElementById('subDeleteCard');
         if (deleteBtn) {
@@ -255,5 +391,51 @@
     }
 
     window.renderSubscriptionSection = renderSubscriptionSection;
+
+    function _findSubContainer() {
+        return document.querySelector('[data-subscription-container]')
+            || document.getElementById('subscriptionSection')
+            || (function () {
+                var anyCard = document.querySelector('.sub-card');
+                return anyCard ? anyCard.parentElement : null;
+            })();
+    }
+
+    function _bootstrapAutoVerify() {
+        setTimeout(async () => {
+            try {
+                if (!_uid()) return;
+                const sp = new URLSearchParams(window.location.search);
+                const hasMarker = sp.get('subscription') === 'success' || sp.get('payment_id');
+                const hasPending = !!_readPendingPaymentId();
+                if (!hasMarker && !hasPending) return;
+                await _autoVerifyOnReturn(null);
+                const subContainer = _findSubContainer();
+                if (subContainer) {
+                    try { await renderSubscriptionSection(subContainer); } catch (e) {}
+                }
+                try {
+                    window.dispatchEvent(new CustomEvent('fredi:subscription-updated'));
+                } catch (e) {}
+                try {
+                    if (typeof window.loadPremiumStatus === 'function') {
+                        await window.loadPremiumStatus();
+                    }
+                    if (typeof window.updatePremiumIndicators === 'function') {
+                        window.updatePremiumIndicators();
+                    }
+                } catch (e) {}
+            } catch (e) { console.error('bootstrap auto-verify error:', e); }
+        }, 1500);
+    }
+    _bootstrapAutoVerify();
+
+    window.addEventListener('fredi:subscription-updated', function () {
+        var c = _findSubContainer();
+        if (c) {
+            try { renderSubscriptionSection(c); } catch (e) {}
+        }
+    });
+
     console.log('subscription.js loaded');
 })();
