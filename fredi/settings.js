@@ -47,6 +47,13 @@
             .st-link-btn:hover{background:rgba(224,224,224,0.14);color:var(--text-primary)}
             .st-link-btn.danger{color:rgba(255,140,140,0.85)}
             .st-tasks-empty{font-size:12px;color:var(--text-secondary);font-style:italic;padding:8px 0}
+            .st-task-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:rgba(224,224,224,0.04);border:1px solid rgba(224,224,224,0.1);margin-bottom:8px}
+            .st-task-row__icon{font-size:20px;flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(224,224,224,0.06);border-radius:10px}
+            .st-task-row__body{flex:1;min-width:0}
+            .st-task-row__title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px}
+            .st-task-row__desc{font-size:11px;color:var(--text-secondary);line-height:1.4}
+            .st-task-row__cancel{padding:7px 12px;border-radius:18px;font-size:11px;font-weight:500;font-family:inherit;cursor:pointer;background:rgba(255,107,107,0.10);border:1px solid rgba(255,107,107,0.30);color:rgba(255,140,140,0.95);flex-shrink:0;touch-action:manipulation}
+            .st-task-row__cancel:hover{background:rgba(255,107,107,0.18)}
             .st-theme-grid{display:flex;gap:10px}
             .st-theme-card{flex:1;padding:16px;border-radius:14px;cursor:pointer;text-align:center;border:2px solid transparent;transition:border-color 0.18s;touch-action:manipulation}
             .st-theme-card.active{border-color:var(--chrome)}
@@ -163,14 +170,14 @@
 
     function _channelCard(key, icon, title, desc, extra) {
         var act = _state.channel === key;
-        return '<div class="st-channel-card ' + (act ? 'active' : '') + '" data-channel="' + key + '"><div class="st-channel-icon">' + icon + '</div><div class="st-channel-body"><div class="st-channel-title">' + title + '</div><div class="st-channel-desc">' + desc + '</div>' + (extra || '') + '</div><div class="st-channel-check">' + (act ? '\u2713' : '') + '</div></div>';
+        return '<div class="st-channel-card ' + (act ? 'active' : '') + '" data-channel="' + key + '"><div class="st-channel-icon">' + icon + '</div><div class="st-channel-body"><div class="st-channel-title">' + title + '</div><div class="st-channel-desc">' + desc + '</div>' + (extra || '') + '</div><div class="st-channel-check">' + (act ? '✓' : '') + '</div></div>';
     }
 
     function _linkRow(platform, link) {
         var l = _state.linked[platform];
         if (l) {
             var u = l.username ? '@' + l.username : 'привязан';
-            return '<div class="st-link-row" onclick="event.stopPropagation()"><span class="st-link-status linked">\u2713 ' + u + '</span><button class="st-link-btn danger" data-action="unlink" data-platform="' + platform + '">Отвязать</button></div>';
+            return '<div class="st-link-row" onclick="event.stopPropagation()"><span class="st-link-status linked">✓ ' + u + '</span><button class="st-link-btn danger" data-action="unlink" data-platform="' + platform + '">Отвязать</button></div>';
         }
         return '<div class="st-link-row" onclick="event.stopPropagation()"><span class="st-link-status">Не связан</span><a class="st-link-btn" href="' + link + '" target="_blank" rel="noopener">Связать</a></div>';
     }
@@ -181,16 +188,16 @@
         if (!c) return;
 
         c.innerHTML = '<div class="full-content-page">' +
-            '<button class="back-btn" id="stBack">\u25C0\uFE0F НАЗАД</button>' +
-            '<div class="content-header"><div class="content-emoji">\u2699\uFE0F</div>' +
+            '<button class="back-btn" id="stBack">◀️ НАЗАД</button>' +
+            '<div class="content-header"><div class="content-emoji">⚙️</div>' +
             '<h1 class="content-title">Настройки</h1>' +
             '<p style="font-size:12px;color:var(--text-secondary);margin-top:4px">Управление Фреди</p></div>' +
-            _accordion('account', '\uD83D\uDD11', 'Аккаунт') +
-            _accordion('subscription', '\uD83D\uDC8E', 'Подписка') +
-            _accordion('tasks', '\uD83D\uDCCB', 'Активные задачи') +
-            _accordion('notifications', '\uD83D\uDD14', 'Уведомления') +
-            _accordion('appearance', '\uD83C\uDFA8', 'Оформление') +
-            _accordion('profile', '\uD83D\uDC64', 'Профиль') +
+            _accordion('account', '🔑', 'Аккаунт') +
+            _accordion('subscription', '💎', 'Подписка') +
+            _accordion('tasks', '📋', 'Активные задачи') +
+            _accordion('notifications', '🔔', 'Уведомления') +
+            _accordion('appearance', '🎨', 'Оформление') +
+            _accordion('profile', '👤', 'Профиль') +
             '</div>';
 
         document.getElementById('stBack').onclick = function() { if (typeof renderDashboard === 'function') renderDashboard(); };
@@ -208,6 +215,91 @@
 
         var subH = document.querySelector('[data-acc="subscription"]');
         if (subH) subH.click();
+    }
+
+    function _collectActiveTasks() {
+        // Собирает активные задачи юзера из тех мест, где их хранят
+        // другие модули: skill_choice → 'sc_plan_<uid>' и 'trainer_skill_<uid>',
+        // morning → активен пока канал уведомлений != 'none'.
+        // Привычки/цели — отдельные экраны, сюда не дублируем.
+        var tasks = [];
+        var uid = _uid() || '';
+
+        try {
+            var skillRaw = localStorage.getItem('sc_plan_' + uid)
+                || localStorage.getItem('trainer_skill_' + uid);
+            if (skillRaw) {
+                var sp = JSON.parse(skillRaw);
+                var sName = (sp && (sp.skill_name || sp.title || sp.name)) || 'выбранный навык';
+                tasks.push({
+                    id: 'skill',
+                    icon: '🎯',
+                    title: 'Формирование навыка',
+                    desc: sName,
+                });
+            }
+        } catch (e) {}
+
+        if (_state && _state.channel && _state.channel !== 'none') {
+            var chLabels = { push: 'Web Push', telegram: 'Telegram', max: 'Max' };
+            tasks.push({
+                id: 'morning',
+                icon: '🌅',
+                title: 'Утренние сообщения',
+                desc: 'Каждый день в 9:00 — ' + (chLabels[_state.channel] || _state.channel),
+            });
+        }
+
+        return tasks;
+    }
+
+    function _renderTasksSection(el) {
+        var tasks = _collectActiveTasks();
+        var html = '<div class="st-hint">Здесь отображаются задачи, которые Фреди выполняет для вас. Любую можно отменить кнопкой справа.</div>';
+
+        if (tasks.length === 0) {
+            html += '<div class="st-tasks-empty">Пока нет активных задач.</div>'
+                + '<div style="margin-top:12px;font-size:11px;color:var(--text-secondary)">'
+                + '<b>Примеры команд Фреди:</b><br>'
+                + '• "Хочу сформировать привычку медитации"<br>'
+                + '• "Моя цель — выучить английский"<br>'
+                + '• "Напомни завтра в 9 утра позвонить маме"</div>';
+        } else {
+            html += tasks.map(function (t) {
+                return '<div class="st-task-row">'
+                    + '<div class="st-task-row__icon">' + t.icon + '</div>'
+                    + '<div class="st-task-row__body">'
+                    +   '<div class="st-task-row__title">' + t.title + '</div>'
+                    +   '<div class="st-task-row__desc">' + t.desc + '</div>'
+                    + '</div>'
+                    + '<button class="st-task-row__cancel" data-task-id="' + t.id + '">Отменить</button>'
+                + '</div>';
+            }).join('');
+        }
+
+        el.innerHTML = html;
+
+        el.querySelectorAll('.st-task-row__cancel').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var tid = btn.dataset.taskId;
+                if (tid === 'skill') {
+                    if (!confirm('Прекратить формирование навыка? План будет удалён.')) return;
+                    try {
+                        var uid = _uid() || '';
+                        localStorage.removeItem('sc_plan_' + uid);
+                        localStorage.removeItem('trainer_skill_' + uid);
+                    } catch (e) {}
+                    _toast('Формирование навыка отменено', 'info');
+                    _renderTasksSection(el);
+                } else if (tid === 'morning') {
+                    if (!confirm('Отключить утренние сообщения? Их можно вернуть в разделе «Уведомления».')) return;
+                    _saveChannel('none').then(function () {
+                        _toast('Утренние сообщения отключены', 'info');
+                        _renderTasksSection(el);
+                    });
+                }
+            });
+        });
     }
 
     function _renderSection(id) {
@@ -276,13 +368,7 @@
         }
 
         if (id === 'tasks') {
-            el.innerHTML = '<div class="st-hint">Здесь отображаются задачи, которые Фреди выполняет для вас: отслеживание привычек, контроль целей и напоминания. Скажите Фреди голосом или текстом, что хотите, и задача появится здесь.</div>' +
-                '<div class="st-tasks-empty">Пока нет активных задач.</div>' +
-                '<div style="margin-top:12px;font-size:11px;color:var(--text-secondary)">' +
-                '<b>Примеры команд:</b><br>' +
-                '\u2022 "Хочу сформировать привычку медитации"<br>' +
-                '\u2022 "Моя цель - выучить английский"<br>' +
-                '\u2022 "Напомни завтра в 9 утра позвонить маме"</div>';
+            _renderTasksSection(el);
         }
 
         if (id === 'notifications') {
@@ -292,17 +378,17 @@
 
             el.innerHTML = '<div class="st-hint">Выберите, куда Фреди будет отправлять сообщения: утренние послания, напоминания о задачах, уведомления о привычках и другие оповещения.</div>' +
                 '<div class="st-channel-grid">' +
-                _channelCard('push', '\uD83D\uDD14', 'Web Push', 'Уведомления прямо в браузере. На iPhone нужно добавить на экран Домой.', '') +
-                _channelCard('telegram', '\u2708\uFE0F', 'Telegram', 'Все сообщения от Фреди будут приходить в Telegram-бот.', _linkRow('telegram', tgLink)) +
-                _channelCard('max', '\uD83D\uDCAC', 'Max', 'Все сообщения от Фреди будут приходить в Max-бот.', _linkRow('max', maxLink)) +
-                _channelCard('none', '\uD83D\uDD15', 'Не отправлять', 'Фреди не будет присылать уведомления.', '') +
+                _channelCard('push', '🔔', 'Web Push', 'Уведомления прямо в браузере. На iPhone нужно добавить на экран Домой.', '') +
+                _channelCard('telegram', '✈️', 'Telegram', 'Все сообщения от Фреди будут приходить в Telegram-бот.', _linkRow('telegram', tgLink)) +
+                _channelCard('max', '💬', 'Max', 'Все сообщения от Фреди будут приходить в Max-бот.', _linkRow('max', maxLink)) +
+                _channelCard('none', '🔕', 'Не отправлять', 'Фреди не будет присылать уведомления.', '') +
                 '</div>' +
                 '<div style="margin-top:12px;font-size:11px;color:var(--text-secondary)">' +
                 '<b>Что присылает Фреди:</b><br>' +
-                '\u2022 Утренние мотивационные сообщения (9:00)<br>' +
-                '\u2022 Напоминания о задачах и привычках<br>' +
-                '\u2022 Идеи на выходные (по пятницам)<br>' +
-                '\u2022 Уведомления об окончании перерыва</div>';
+                '• Утренние мотивационные сообщения (9:00)<br>' +
+                '• Напоминания о задачах и привычках<br>' +
+                '• Идеи на выходные (по пятницам)<br>' +
+                '• Уведомления об окончании перерыва</div>';
 
             el.querySelectorAll('.st-channel-card').forEach(function(card) {
                 card.addEventListener('click', async function(e) {
@@ -325,8 +411,8 @@
         if (id === 'appearance') {
             el.innerHTML = '<div class="st-hint">Выберите тему оформления приложения.</div>' +
                 '<div class="st-theme-grid">' +
-                '<div class="st-theme-card st-theme-dark ' + (_state.theme === 'dark' ? 'active' : '') + '" data-theme="dark">\uD83C\uDF19<div class="st-theme-label">Темная</div></div>' +
-                '<div class="st-theme-card st-theme-light ' + (_state.theme === 'light' ? 'active' : '') + '" data-theme="light">\u2600\uFE0F<div class="st-theme-label">Светлая</div></div>' +
+                '<div class="st-theme-card st-theme-dark ' + (_state.theme === 'dark' ? 'active' : '') + '" data-theme="dark">🌙<div class="st-theme-label">Темная</div></div>' +
+                '<div class="st-theme-card st-theme-light ' + (_state.theme === 'light' ? 'active' : '') + '" data-theme="light">☀️<div class="st-theme-label">Светлая</div></div>' +
                 '</div>';
 
             el.querySelectorAll('.st-theme-card').forEach(function(card) {
