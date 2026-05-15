@@ -683,9 +683,25 @@
                 <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
                     <input id="waveGroupInput" type="text" placeholder="vk.com/group_id  или  screen_name  или  -123456"
                         style="flex:1;min-width:240px;padding:9px 12px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:8px;color:var(--text);font:13px inherit">
-                    <input id="waveGroupLimit" type="number" min="1" max="10000" value="200" title="Сколько участников взять"
+                    <input id="waveGroupLimit" type="number" min="1" max="10000" value="500" title="Сколько участников взять (до фильтрации)"
                         style="width:90px;padding:9px 12px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:8px;color:var(--text);font:13px inherit">
                     <button id="waveParseGroupBtn" style="padding:9px 16px;border-radius:8px;border:none;background:#10b981;color:#fff;font:600 13px inherit;cursor:pointer">🎣 Запарсить</button>
+                </div>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px;font-size:12px;color:var(--text-dim)">
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+                        <input type="checkbox" id="waveFilterFemale" checked>
+                        Только женщины
+                    </label>
+                    <label style="display:flex;align-items:center;gap:6px">
+                        Возраст:
+                        <input type="number" id="waveAgeMin" min="14" max="99" value="30" style="width:60px;padding:4px 8px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                        –
+                        <input type="number" id="waveAgeMax" min="14" max="99" value="55" style="width:60px;padding:4px 8px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                    </label>
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+                        <input type="checkbox" id="waveFilterAlive" checked>
+                        Только живые (90 дней)
+                    </label>
                 </div>
                 <div id="waveGroupStatus" style="font-size:11px;color:var(--text-dim);margin-top:8px;min-height:14px"></div>
             </div>
@@ -883,7 +899,10 @@ POV: ты на семейном ужине, и мама такая «как у �
                     body: JSON.stringify({
                         group: raw,
                         max_members: limit,
-                        active_only: false
+                        active_only: document.getElementById('waveFilterAlive').checked,
+                        sex: document.getElementById('waveFilterFemale').checked ? 1 : 0,
+                        age_min: parseInt(document.getElementById('waveAgeMin').value, 10) || 0,
+                        age_max: parseInt(document.getElementById('waveAgeMax').value, 10) || 0
                     })
                 });
                 var d = await r.json().catch(function () { return {}; });
@@ -900,14 +919,18 @@ POV: ты на семейном ужине, и мама такая «как у �
                 _updateCount();
                 var gname = (d.group && d.group.name) || raw;
                 var st = d.stats || {};
-                var hint = '';
-                if (st.total_fetched && lines.length === 0) {
-                    hint = ' (получено ' + st.total_fetched + ' участников, но все отфильтрованы — попробуй уменьшить лимит или зайди позже)';
-                } else if (st.total_fetched && lines.length < st.total_fetched) {
-                    hint = ' (из ' + st.total_fetched + ' участников)';
-                }
-                statusEl.textContent = '✓ ' + gname + ' — заполнено ' + lines.length + ' VK ID' + hint;
+                var funnel = [];
+                if (st.total_fetched != null) funnel.push('всего: ' + st.total_fetched);
+                if (st.after_alive != null) funnel.push('живые: ' + st.after_alive);
+                if (st.after_sex != null) funnel.push('пол: ' + st.after_sex);
+                if (st.after_age != null) funnel.push('возраст: ' + st.after_age);
+                if (st.after_city != null) funnel.push('город: ' + st.after_city);
+                var hint = funnel.length ? ' (' + funnel.join(' → ') + ')' : '';
+                statusEl.innerHTML = '<b>' + (lines.length ? '✓' : '⚠') + ' ' + gname + '</b> — отобрано ' + lines.length + ' VK ID' + hint;
                 statusEl.style.color = lines.length ? '#10b981' : '#f59e0b';
+                if (lines.length === 0) {
+                    statusEl.innerHTML += '<br><span style="font-size:11px">Подсказка: bdate скрыт у многих юзеров — фильтр по возрасту режет сильно. Попробуй увеличить лимит или ослабить фильтры.</span>';
+                }
             } catch (e) {
                 statusEl.textContent = '✗ ' + (e && e.message || e);
                 statusEl.style.color = '#ef4444';
