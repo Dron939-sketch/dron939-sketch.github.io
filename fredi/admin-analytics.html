@@ -702,6 +702,10 @@
                         <input type="checkbox" id="waveFilterAlive" checked>
                         Только живые (90 дней)
                     </label>
+                    <label style="display:flex;align-items:center;gap:6px;cursor:pointer" title="Через users.get с user-token проверяет can_write_private_message — отсекает тех, кому нельзя писать. Медленнее (~1 запрос/0.4с на 500 юзеров).">
+                        <input type="checkbox" id="waveFilterCanWrite" checked>
+                        🔒 Только открытая личка
+                    </label>
                 </div>
                 <div id="waveGroupStatus" style="font-size:11px;color:var(--text-dim);margin-top:8px;min-height:14px"></div>
             </div>
@@ -902,7 +906,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                         active_only: document.getElementById('waveFilterAlive').checked,
                         sex: document.getElementById('waveFilterFemale').checked ? 1 : 0,
                         age_min: parseInt(document.getElementById('waveAgeMin').value, 10) || 0,
-                        age_max: parseInt(document.getElementById('waveAgeMax').value, 10) || 0
+                        age_max: parseInt(document.getElementById('waveAgeMax').value, 10) || 0,
+                        check_can_write: document.getElementById('waveFilterCanWrite').checked
                     })
                 });
                 var d = await r.json().catch(function () { return {}; });
@@ -925,6 +930,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 if (st.after_sex != null) funnel.push('пол: ' + st.after_sex);
                 if (st.after_age != null) funnel.push('возраст: ' + st.after_age);
                 if (st.after_city != null) funnel.push('город: ' + st.after_city);
+                if (st.after_can_write != null) funnel.push('открытая личка: ' + st.after_can_write);
                 var hint = funnel.length ? ' (' + funnel.join(' → ') + ')' : '';
                 statusEl.innerHTML = '<b>' + (lines.length ? '✓' : '⚠') + ' ' + gname + '</b> — отобрано ' + lines.length + ' VK ID' + hint;
                 statusEl.style.color = lines.length ? '#10b981' : '#f59e0b';
@@ -1013,7 +1019,7 @@ POV: ты на семейном ужине, и мама такая «как у �
             LOG.innerHTML = '';
             _log('🚀 Старт: ' + prepared.length + ' получателей, задержка ' + (delaySec ? _fmt(delaySec) : 'нет'));
 
-            var ok = 0, fail = 0, privacy = 0;
+            var ok = 0, fail = 0;
             for (var i = 0; i < prepared.length; i++) {
                 if (ABORT_FLAG) { _log('⏹ Остановлено пользователем', '#ef4444'); break; }
                 var p = prepared[i];
@@ -1037,17 +1043,9 @@ POV: ты на семейном ужине, и мама такая «как у �
                         ok++;
                         _log('  ✓ ' + p.vk_id + ' (' + name + '): отправлено', '#10b981');
                     } else {
+                        fail++;
                         var err = (res.data && res.data.detail && (res.data.detail.message || res.data.detail.error)) || res.data.error || ('HTTP ' + res.status);
-                        // VK error 902 — privacy settings (юзер запретил сообщения от не-друзей).
-                        // Это не баг — нечего "повторять", это юзер сам так настроил.
-                        // 7 — закрыт диалог; 901 — заблокировал бота; 917 — не в чате (для бесед)
-                        if (/902|901|917|privacy|нет доступа к личке|закрыт/i.test(err)) {
-                            privacy++;
-                            _log('  🔒 ' + p.vk_id + ' (' + name + '): личка закрыта (' + err.substring(0, 80) + ')', '#f59e0b');
-                        } else {
-                            fail++;
-                            _log('  ✗ ' + p.vk_id + ' (' + name + '): ' + err, '#ef4444');
-                        }
+                        _log('  ✗ ' + p.vk_id + ' (' + name + '): ' + err, '#ef4444');
                     }
                 } catch (e) {
                     fail++;
@@ -1056,7 +1054,7 @@ POV: ты на семейном ужине, и мама такая «как у �
 
                 if (i < prepared.length - 1 && delaySec > 0) {
                     var done = await _sleep(delaySec * 1000, function (left) {
-                        _setStatus('Следующая через ' + _fmt(left) + ' (отправлено ' + (i + 1) + '/' + prepared.length + ', ✓' + ok + ' 🔒' + privacy + ' ✗' + fail + ')');
+                        _setStatus('Следующая через ' + _fmt(left) + ' (отправлено ' + (i + 1) + '/' + prepared.length + ', ✓' + ok + ' ✗' + fail + ')');
                     });
                     if (!done) { _log('⏹ Остановлено во время паузы', '#ef4444'); break; }
                 }
@@ -1064,8 +1062,8 @@ POV: ты на семейном ужине, и мама такая «как у �
 
             BTN_SEND.disabled = false; BTN_SEND.style.opacity = '1';
             BTN_STOP.disabled = true; BTN_STOP.style.opacity = '0.5';
-            _setStatus('🏁 Готово: ✓' + ok + ' 🔒' + privacy + ' ✗' + fail + ' из ' + prepared.length);
-            _log('🏁 Финиш: успешно ' + ok + ', личка закрыта ' + privacy + ', ошибок ' + fail);
+            _setStatus('🏁 Готово: ✓' + ok + ' ✗' + fail + ' из ' + prepared.length);
+            _log('🏁 Финиш: успешно ' + ok + ', ошибок ' + fail);
         }
 
         function _init() {
