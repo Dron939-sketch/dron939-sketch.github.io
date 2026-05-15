@@ -1114,6 +1114,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (parseTab) parseTab.style.display = 'none';
         var messengersTab = document.getElementById('messengersTab');
         if (messengersTab) messengersTab.style.display = 'none';
+        var waveTab = document.getElementById('waveTab');
+        if (waveTab) waveTab.style.display = 'none';
         try {
             if (currentTab === 'summary') {
                 var d = await _fetch('/api/analytics/summary');
@@ -1158,6 +1160,9 @@ POV: ты на семейном ужине, и мама такая «как у �
             } else if (currentTab === 'messengers') {
                 if (messengersTab) messengersTab.style.display = 'block';
                 if (typeof _msgLoad === 'function') _msgLoad();
+            } else if (currentTab === 'wave') {
+                // 2-я волна — это форма, fetch не нужен. Просто показываем UI.
+                if (waveTab) waveTab.style.display = 'block';
             }
         } catch (e) {
             _err(e.message || 'Ошибка');
