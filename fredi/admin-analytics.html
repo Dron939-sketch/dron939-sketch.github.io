@@ -814,19 +814,35 @@ POV: ты на семейном ужине, и мама такая «как у �
 
         function _setStatus(msg) { if (STATUS) STATUS.textContent = msg; }
 
-        async function _sendOne(vkId, voiceText, followupText) {
-            var r = await fetch(_apiBase() + '/api/admin/vk/send-voice', {
+        async function _sendOne(vkId, voiceNameText, voiceBodyText, followupText) {
+            // Если есть и имя и тело — используем split-endpoint
+            // (тело TTS-кэшируется, экономит время и даёт стабильное качество).
+            var url, payload;
+            if (voiceNameText && voiceBodyText) {
+                url = _apiBase() + '/api/admin/vk/send-voice-split';
+                payload = {
+                    voice_name_text: voiceNameText,
+                    voice_body_text: voiceBodyText,
+                    vk_peer_id: vkId,
+                    text_followup: followupText || '',
+                    pause_ms: 350
+                };
+            } else {
+                url = _apiBase() + '/api/admin/vk/send-voice';
+                payload = {
+                    voice_text: (voiceNameText || '') + (voiceBodyText || ''),
+                    vk_peer_id: vkId,
+                    text_followup: followupText || ''
+                };
+            }
+            var r = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-Admin-Token': _token(),
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    voice_text: voiceText,
-                    vk_peer_id: vkId,
-                    text_followup: followupText || ''
-                })
+                body: JSON.stringify(payload)
             });
             var data = await r.json().catch(function () { return {}; });
             return { ok: r.ok, status: r.status, data: data };
@@ -975,9 +991,18 @@ POV: ты на семейном ужине, и мама такая «как у �
                 _setStatus('Отправка ' + (i + 1) + '/' + prepared.length + ' → ' + name + ' (vk_id=' + p.vk_id + ')…');
                 _log('→ ' + p.vk_id + ' (' + name + '): отправляю…');
                 try {
-                    var voiceText = _personalize(voiceTpl, name);
+                    // Разделяем шаблон голоса по первому появлению "{name}":
+                    // всё до и включая {name} — это «имя» (короткий TTS, новый для каждого),
+                    // всё после — это «тело» (кэшируется на бэке, генерится один раз).
+                    var voiceNameText = '';
+                    var voiceBodyText = voiceTpl;
+                    var idx = voiceTpl.indexOf('{name}');
+                    if (idx >= 0) {
+                        voiceNameText = voiceTpl.substring(0, idx + '{name}'.length).replace(/\{name\}/g, name);
+                        voiceBodyText = voiceTpl.substring(idx + '{name}'.length).trim();
+                    }
                     var followupText = followupTpl ? _personalize(followupTpl, name) : '';
-                    var res = await _sendOne(p.vk_id, voiceText, followupText);
+                    var res = await _sendOne(p.vk_id, voiceNameText, voiceBodyText, followupText);
                     if (res.ok && res.data && res.data.success !== false) {
                         ok++;
                         _log('  ✓ ' + p.vk_id + ' (' + name + '): отправлено', '#10b981');
