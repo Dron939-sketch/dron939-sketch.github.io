@@ -762,7 +762,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 style="width:100%;padding:12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:10px;color:var(--text);font:13px/1.55 inherit;resize:vertical;box-sizing:border-box;margin-bottom:10px"
                 placeholder="12345678&#10;arino4ka1988&#10;https://vk.com/durov&#10;или через запятую"></textarea>
 
-            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
                 <label style="font-size:11px;color:var(--text-dim)">Задержка между отправками:</label>
                 <select id="waveDelay" style="padding:8px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
                     <option value="0">Без задержки</option>
@@ -771,6 +771,19 @@ POV: ты на семейном ужине, и мама такая «как у �
                     <option value="3600">60 минут</option>
                 </select>
                 <span id="waveIdsCount" style="font-size:11px;color:var(--text-dim);margin-left:auto">0 получателей</span>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;font-size:12px;color:var(--text-dim)">
+                <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+                    <input type="checkbox" id="waveTimeWindowEnabled" checked>
+                    🕐 Окно отправки
+                </label>
+                <label style="display:flex;align-items:center;gap:6px">
+                    с
+                    <input type="time" id="waveTimeFrom" value="10:00" style="padding:5px 8px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                    до
+                    <input type="time" id="waveTimeTo" value="22:00" style="padding:5px 8px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                </label>
+                <span style="font-size:10px;color:var(--text-dim);opacity:0.7">время браузера; вне окна рассылка приостановится до следующего «с»</span>
             </div>
 
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
@@ -939,6 +952,52 @@ POV: ты на семейном ужине, и мама такая «как у �
             }
         }
 
+        function _isInTimeWindow() {
+            var en = document.getElementById('waveTimeWindowEnabled');
+            if (!en || !en.checked) return { inside: true };
+            var from = (document.getElementById('waveTimeFrom') || {}).value || '10:00';
+            var to = (document.getElementById('waveTimeTo') || {}).value || '22:00';
+            var now = new Date();
+            var minsNow = now.getHours() * 60 + now.getMinutes();
+            var fParts = from.split(':').map(Number);
+            var tParts = to.split(':').map(Number);
+            var minsFrom = fParts[0] * 60 + (fParts[1] || 0);
+            var minsTo = tParts[0] * 60 + (tParts[1] || 0);
+            var inside;
+            if (minsFrom <= minsTo) {
+                inside = minsNow >= minsFrom && minsNow < minsTo;
+            } else {
+                // ночное окно (например 22:00–06:00)
+                inside = minsNow >= minsFrom || minsNow < minsTo;
+            }
+            return { inside: inside, from: from, to: to, minsFrom: minsFrom, minsTo: minsTo, minsNow: minsNow };
+        }
+
+        function _msUntilNextWindowStart(state) {
+            var now = new Date();
+            var target = new Date(now);
+            target.setHours(Math.floor(state.minsFrom / 60), state.minsFrom % 60, 0, 0);
+            if (target.getTime() <= now.getTime()) {
+                target.setDate(target.getDate() + 1);
+            }
+            return target.getTime() - now.getTime();
+        }
+
+        async function _waitForTimeWindow(onTick) {
+            // Возвращает true когда дождались окна (или окно не активно), false при отмене.
+            while (true) {
+                if (ABORT_FLAG) return false;
+                var state = _isInTimeWindow();
+                if (state.inside) return true;
+                var ms = _msUntilNextWindowStart(state);
+                var left = Math.ceil(ms / 1000);
+                if (onTick) onTick(left, state.from);
+                // Спим короткими интервалами по 30 сек чтобы реагировать на ABORT_FLAG
+                var slept = await _sleep(Math.min(30000, ms), null);
+                if (!slept) return false;
+            }
+        }
+
         async function _sleep(ms, onTick) {
             var end = Date.now() + ms;
             while (Date.now() < end) {
@@ -1016,6 +1075,11 @@ POV: ты на семейном ужине, и мама такая «как у �
             var ok = 0, fail = 0;
             for (var i = 0; i < prepared.length; i++) {
                 if (ABORT_FLAG) { _log('⏹ Остановлено пользователем', '#ef4444'); break; }
+                // Ждём, если за окном времени
+                var waitedForWindow = await _waitForTimeWindow(function (left, until) {
+                    _setStatus('🕐 Вне окна отправки. Ждём до ' + until + ' (' + _fmt(left) + ')');
+                });
+                if (!waitedForWindow) { _log('⏹ Остановлено во время ожидания окна', '#ef4444'); break; }
                 var p = prepared[i];
                 var name = p.first_name || 'друг';
                 _setStatus('Отправка ' + (i + 1) + '/' + prepared.length + ' → ' + name + ' (vk_id=' + p.vk_id + ')…');
@@ -1051,6 +1115,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                         _setStatus('Следующая через ' + _fmt(left) + ' (отправлено ' + (i + 1) + '/' + prepared.length + ', ✓' + ok + ' ✗' + fail + ')');
                     });
                     if (!done) { _log('⏹ Остановлено во время паузы', '#ef4444'); break; }
+                    // Если задержка закончилась вне окна — ждём окно (в начале следующей итерации тоже сработает, но дублирующая проверка тут даёт корректный статус)
                 }
             }
 
