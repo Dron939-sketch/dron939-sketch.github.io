@@ -677,6 +677,38 @@
                 Имя получателя подставляется в шаблоны через <code style="background:rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px">{name}</code>. <b>Не закрывайте вкладку до окончания.</b>
             </div>
 
+            <!-- 🌱 АВТО-ПРОГРЕВ ДРУЗЕЙ (3 дня × 40/день) -->
+            <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:14px;margin-bottom:14px">
+                <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px">🌱 Авто-прогрев VK-друзей <span style="font-weight:500;color:var(--text-dim);font-size:11px">(3 дня × 40/день, без участия)</span></div>
+                <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
+                    Загружает твоих VK-друзей (через <code style="background:rgba(0,0,0,0.08);padding:1px 5px;border-radius:4px">friends.get</code> с user-token), фильтрует по полу/возрасту/открытой личке, кладёт в очередь.<br>
+                    Бэкенд сам шлёт <b>Д1 (voice+text)</b> → через 24ч <b>Д2 (text)</b> → через 24ч <b>Д3 (text)</b>. Окно 10:00–21:00 МСК, лимит 40/сутки. Тексты — мужчинам и женщинам разные, зашиты в код.
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+                    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim)">
+                        Пол:
+                        <select id="dripSex" style="padding:6px 10px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                            <option value="1" selected>♀ Женщины</option>
+                            <option value="2">♂ Мужчины</option>
+                        </select>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim)">
+                        Возраст:
+                        <input id="dripAgeMin" type="number" min="14" max="99" value="30" style="width:60px;padding:5px 8px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                        –
+                        <input id="dripAgeMax" type="number" min="14" max="99" value="55" style="width:60px;padding:5px 8px;background:rgba(255,255,255,0.6);border:1px solid var(--border);border-radius:6px;color:var(--text);font:12px inherit">
+                    </label>
+                    <button id="dripInitBtn" style="padding:8px 14px;border-radius:8px;border:none;background:#10b981;color:#fff;font:600 12px inherit;cursor:pointer">👥 Загрузить друзей в очередь</button>
+                </div>
+                <div id="dripStatusBox" style="font-size:12px;color:var(--text-dim);padding:10px 12px;background:rgba(255,255,255,0.5);border-radius:8px;line-height:1.6;min-height:30px;margin-bottom:10px">— нажми «обновить» —</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button id="dripRefreshBtn" style="padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 12px inherit;cursor:pointer">🔄 Обновить статус</button>
+                    <button id="dripPauseBtn" style="padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 12px inherit;cursor:pointer">⏸ Пауза</button>
+                    <button id="dripResumeBtn" style="padding:7px 13px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 12px inherit;cursor:pointer">▶ Возобновить</button>
+                    <button id="dripStopBtn" style="padding:7px 13px;border-radius:8px;border:1px solid rgba(239,68,68,0.5);background:transparent;color:#ef4444;font:600 12px inherit;cursor:pointer;margin-left:auto">🗑 Очистить очередь</button>
+                </div>
+            </div>
+
             <div style="margin-bottom:12px">
                 <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px">📋 Шаблоны рассылки (клик — подставит голос и текст)</div>
                 <div id="waveTemplateButtons" style="display:flex;flex-wrap:wrap;gap:6px"></div>
@@ -1190,6 +1222,129 @@ POV: ты на семейном ужине, и мама такая «как у �
             });
         }
 
+
+        // ====== DRIP CAMPAIGN UI ======
+        var DRIP_AUTO_TIMER = null;
+
+        async function _dripFetch(path, method, body) {
+            method = method || 'GET';
+            var token = _token();
+            var url = _apiBase() + path;
+            var opts = { method: method, headers: { 'Content-Type': 'application/json' } };
+            if (token) opts.headers['X-Admin-Token'] = token;
+            if (body) opts.body = JSON.stringify(body);
+            var r = await fetch(url, opts);
+            try { return await r.json(); } catch (e) { return { success: false, error: 'bad_json' }; }
+        }
+
+        function _dripFmtTime(iso) {
+            if (!iso) return '—';
+            try {
+                var d = new Date(iso);
+                return d.toLocaleString('ru-RU', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+            } catch (e) { return iso; }
+        }
+
+        async function _dripRefresh() {
+            var box = document.getElementById('dripStatusBox');
+            if (!box) return;
+            var data;
+            try {
+                data = await _dripFetch('/api/admin/vk/drip/status');
+            } catch (e) {
+                box.textContent = '✗ Ошибка сети: ' + e;
+                return;
+            }
+            if (!data || !data.success) {
+                box.innerHTML = '<span style="color:#ef4444">✗ ' + ((data && data.error) || 'unknown') + '</span>';
+                return;
+            }
+            var hourBadge = data.in_working_hours
+                ? '<span style="color:#10b981">●</span> в рабочем окне (10:00–21:00 МСК)'
+                : '<span style="color:#9ca3af">○</span> вне окна — спит';
+            var pauseBadge = data.paused
+                ? '<span style="background:#ef4444;color:#fff;padding:1px 6px;border-radius:6px;font-size:10px;margin-left:6px">PAUSED</span>'
+                : '';
+            var floodBadge = data.flood_cooldown_until
+                ? '<span style="background:#f59e0b;color:#fff;padding:1px 6px;border-radius:6px;font-size:10px;margin-left:6px">FLOOD COOLDOWN до ' + _dripFmtTime(data.flood_cooldown_until) + '</span>'
+                : '';
+            var lastSent = data.last_sent_user
+                ? ('Д' + data.last_sent_user.day_status + ' → ' + (data.last_sent_user.first_name || '') + ' (vk=' + data.last_sent_user.vk_id + '), ' + _dripFmtTime(data.last_sent_user.at))
+                : '—';
+            box.innerHTML =
+                '<div>' + hourBadge + pauseBadge + floodBadge + '</div>' +
+                '<div style="margin-top:6px">' +
+                  '<b>Всего в очереди:</b> ' + (data.queue_total || 0) +
+                  ' &nbsp;|&nbsp; <b>ждут Д1:</b> ' + (data.pending_d1 || 0) +
+                  ' &nbsp;|&nbsp; <b>получили Д1:</b> ' + (data.got_d1 || 0) +
+                  ' &nbsp;|&nbsp; <b>получили Д2:</b> ' + (data.got_d2 || 0) +
+                  ' &nbsp;|&nbsp; <b>прошли Д3:</b> ' + (data.completed_d3 || 0) +
+                '</div>' +
+                '<div style="margin-top:4px"><b>За 24ч отправлено:</b> ' + (data.sent_last_24h || 0) + ' / ' + (data.daily_cap || 40) +
+                ' &nbsp;|&nbsp; <b>фатальных ошибок:</b> ' + (data.fatal_errors || 0) + '</div>' +
+                '<div style="margin-top:4px;color:var(--text-dim)"><b>Последняя отправка:</b> ' + lastSent + '</div>' +
+                '<div style="margin-top:4px;color:var(--text-dim)"><b>Прошлый цикл:</b> ' + _dripFmtTime(data.last_run_at) +
+                  (data.last_run_summary && data.last_run_summary.skipped_reason ? ' (' + data.last_run_summary.skipped_reason + ')' : '') + '</div>';
+        }
+
+        async function _dripInit() {
+            var sex = parseInt(document.getElementById('dripSex').value || '1', 10);
+            var aMin = parseInt(document.getElementById('dripAgeMin').value || '30', 10);
+            var aMax = parseInt(document.getElementById('dripAgeMax').value || '55', 10);
+            var btn = document.getElementById('dripInitBtn');
+            btn.disabled = true; btn.textContent = '⏳ Грузим друзей…';
+            try {
+                var data = await _dripFetch('/api/admin/vk/drip/init', 'POST', { sex: sex, age_min: aMin, age_max: aMax });
+                if (data && data.success) {
+                    alert('Готово: всего друзей по фильтру — ' + (data.total_friends || 0) +
+                          ', добавлено новых — ' + (data.inserted || 0) +
+                          ', уже было в очереди — ' + (data.skipped_existing || 0));
+                } else {
+                    alert('Ошибка: ' + ((data && (data.error || data.message)) || 'unknown'));
+                }
+            } catch (e) {
+                alert('Сеть упала: ' + e);
+            } finally {
+                btn.disabled = false; btn.textContent = '👥 Загрузить друзей в очередь';
+                _dripRefresh();
+            }
+        }
+
+        async function _dripPause() {
+            await _dripFetch('/api/admin/vk/drip/pause', 'POST', {});
+            _dripRefresh();
+        }
+        async function _dripResume() {
+            await _dripFetch('/api/admin/vk/drip/resume', 'POST', {});
+            _dripRefresh();
+        }
+        async function _dripStop() {
+            if (!confirm('Очистить очередь полностью? Все ждущие Д1/Д2/Д3 пропадут.')) return;
+            var data = await _dripFetch('/api/admin/vk/drip/stop', 'POST', {});
+            if (data && data.success) alert('Удалено: ' + (data.deleted || 0));
+            _dripRefresh();
+        }
+
+        function _dripWireUI() {
+            var initBtn = document.getElementById('dripInitBtn');
+            if (initBtn) initBtn.addEventListener('click', _dripInit);
+            var refr = document.getElementById('dripRefreshBtn');
+            if (refr) refr.addEventListener('click', _dripRefresh);
+            var pau = document.getElementById('dripPauseBtn');
+            if (pau) pau.addEventListener('click', _dripPause);
+            var res = document.getElementById('dripResumeBtn');
+            if (res) res.addEventListener('click', _dripResume);
+            var stp = document.getElementById('dripStopBtn');
+            if (stp) stp.addEventListener('click', _dripStop);
+            // Авто-рефреш каждые 60 сек пока вкладка wave открыта.
+            if (DRIP_AUTO_TIMER) clearInterval(DRIP_AUTO_TIMER);
+            DRIP_AUTO_TIMER = setInterval(function () {
+                var waveTab = document.getElementById('waveTab');
+                if (waveTab && waveTab.style.display !== 'none') _dripRefresh();
+            }, 60000);
+            _dripRefresh();
+        }
+
         function _init() {
             BTN_SEND = document.getElementById('waveSendBtn');
             BTN_STOP = document.getElementById('waveStopBtn');
@@ -1203,6 +1358,7 @@ POV: ты на семейном ужине, и мама такая «как у �
             document.getElementById('waveVkIds').addEventListener('input', _updateCount);
             _updateCount();
             _renderTemplateButtons();
+            try { _dripWireUI(); } catch (e) { console.warn('drip UI wire failed', e); }
         }
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', _init);
