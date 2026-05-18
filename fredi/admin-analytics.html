@@ -1333,28 +1333,24 @@ POV: ты на семейном ужине, и мама такая «как у �
             var box = document.getElementById('frTemplatesContainer');
             if (!box) return;
             var sexLabels = { female: '♀ Женщины', male: '♂ Мужчины' };
-            var dayLabels = { d1: 'День 1 — Знакомство', d2: 'День 2 — Эмпатия', d3: 'День 3 — Напоминание' };
+            var dayLabels = { d1: 'День 1 — голос (создаём интерес)', d2: 'День 2 — текст со ссылкой' };
             var html = '';
             ['female', 'male'].forEach(function (sex) {
                 var s = tpls[sex] || {};
                 html += '<div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:12px">' +
                     '<div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:0.3px">' + sexLabels[sex] + '</div>';
-                ['d1', 'd2', 'd3'].forEach(function (day) {
+                ['d1', 'd2'].forEach(function (day) {
                     var t = s[day] || {};
                     html += '<div style="margin-bottom:12px">' +
-                        '<div style="font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">' + dayLabels[day] + (day === 'd1' ? '' : ' (только текст)') + '</div>';
+                        '<div style="font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px">' + dayLabels[day] + '</div>';
                     if (day === 'd1') {
                         html += '<div style="margin-bottom:6px">' +
                             '<label style="font-size:11px;color:var(--text-dim);display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span>Голос — приставка с именем</span></label>' +
                             '<input data-tpl="' + sex + '.d1.voice_name" type="text" value="' + _frEscape(t.voice_name || '') + '" style="width:100%;padding:8px 10px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px/1.5 inherit;box-sizing:border-box">' +
                         '</div>' +
-                        '<div style="margin-bottom:6px">' +
-                            '<label style="font-size:11px;color:var(--text-dim);display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span>Голос — тело сообщения</span><button data-preview="' + sex + '" style="padding:3px 9px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 10px inherit;cursor:pointer">🎧 Прослушать</button></label>' +
-                            '<textarea data-tpl="' + sex + '.d1.voice_body" rows="4" style="width:100%;padding:9px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px/1.5 inherit;resize:vertical;box-sizing:border-box">' + _frEscape(t.voice_body || '') + '</textarea>' +
-                        '</div>' +
                         '<div>' +
-                            '<label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:3px">Текст вдогонку (после голоса)</label>' +
-                            '<textarea data-tpl="' + sex + '.d1.text" rows="5" style="width:100%;padding:9px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px/1.5 inherit;resize:vertical;box-sizing:border-box">' + _frEscape(t.text || '') + '</textarea>' +
+                            '<label style="font-size:11px;color:var(--text-dim);display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span>Голос — тело сообщения</span><button data-preview="' + sex + '" style="padding:3px 9px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 10px inherit;cursor:pointer">🎧 Прослушать</button></label>' +
+                            '<textarea data-tpl="' + sex + '.d1.voice_body" rows="5" style="width:100%;padding:9px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px/1.5 inherit;resize:vertical;box-sizing:border-box">' + _frEscape(t.voice_body || '') + '</textarea>' +
                         '</div>';
                     } else {
                         html += '<textarea data-tpl="' + sex + '.' + day + '.text" rows="6" style="width:100%;padding:9px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px/1.5 inherit;resize:vertical;box-sizing:border-box">' + _frEscape(t.text || '') + '</textarea>';
@@ -1483,9 +1479,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '<div style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">' +
                   '<span>📋 <b>В очереди:</b> ' + (r.queue_total || 0) + '</span>' +
                   '<span>🕐 <b>Ждут Д1:</b> ' + (r.pending_d1 || 0) + '</span>' +
-                  '<span>1️⃣ <b>Получили Д1:</b> ' + (r.got_d1 || 0) + '</span>' +
-                  '<span>2️⃣ <b>Получили Д2:</b> ' + (r.got_d2 || 0) + '</span>' +
-                  '<span>3️⃣ <b>Прошли Д3:</b> ' + (r.completed_d3 || 0) + '</span>' +
+                  '<span>1️⃣ <b>Получили голос (Д1):</b> ' + (r.got_d1 || 0) + '</span>' +
+                  '<span>2️⃣ <b>Получили ссылку (Д2):</b> ' + (r.got_d2 || 0) + '</span>' +
                 '</div>' +
                 '<div style="margin-top:6px;display:flex;gap:14px;flex-wrap:wrap">' +
                   '<span><b>За 24ч:</b> ' + (r.sent_last_24h || 0) + '/' + (r.daily_cap || 40) + '</span>' +
