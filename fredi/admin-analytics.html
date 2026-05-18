@@ -871,6 +871,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 <div style="display:flex;gap:8px;flex-wrap:wrap">
                     <button id="frResumeBtn" style="padding:9px 16px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:700 13px inherit;cursor:pointer">▶ Запустить рассылку</button>
                     <button id="frPauseBtn" style="padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 12px inherit;cursor:pointer">⏸ Пауза</button>
+                    <button id="frRunOnceBtn" style="padding:9px 14px;border-radius:8px;border:1px solid rgba(245,158,11,0.5);background:rgba(245,158,11,0.10);color:#f59e0b;font:600 12px inherit;cursor:pointer" title="Принудительный цикл — игнорит часы и паузу, для теста">⚡ Отправить сейчас (тест)</button>
                     <button id="frStopBtn" style="padding:9px 14px;border-radius:8px;border:1px solid rgba(239,68,68,0.5);background:transparent;color:#ef4444;font:600 12px inherit;cursor:pointer;margin-left:auto">🗑 Очистить очередь</button>
                 </div>
             </div>
@@ -1474,8 +1475,25 @@ POV: ты на семейном ужине, и мама такая «как у �
             var last = r.last_sent_user
                 ? ('Д' + r.last_sent_user.day_status + ' → ' + _frEscape(r.last_sent_user.first_name) + ' (vk=' + r.last_sent_user.vk_id + '), ' + _frFmtTime(r.last_sent_user.at))
                 : '—';
+            // Большой видимый индикатор «до следующего цикла»
+            var nextSec = (r.next_run_in_sec === null || r.next_run_in_sec === undefined) ? null : Number(r.next_run_in_sec);
+            var nextLine;
+            if (r.paused) {
+                nextLine = '<span style="color:#ef4444">⏸ На паузе — нажми «▶ Запустить рассылку»</span>';
+            } else if (!r.in_working_hours) {
+                nextLine = '<span style="color:#9ca3af">🌙 Вне рабочего окна (10:00–21:00 МСК) — спит до утра</span>';
+            } else if (nextSec === null) {
+                nextLine = '<span style="color:#9ca3af">⏳ Scheduler ещё не дёргался (только что стартанул, ждём ~1 мин)</span>';
+            } else if (nextSec <= 0) {
+                nextLine = '<span style="color:#10b981">🚀 Следующий цикл прямо сейчас…</span>';
+            } else {
+                var m = Math.floor(nextSec / 60);
+                var s = nextSec % 60;
+                nextLine = '<span style="color:#10b981">⏱ До следующего цикла: ' + (m > 0 ? m + ' мин ' : '') + s + ' сек</span>';
+            }
             box.innerHTML =
-                '<div>' + hourBadge + pauseBadge + flood + '</div>' +
+                '<div style="font-size:14px;font-weight:600;margin-bottom:8px">' + nextLine + '</div>' +
+                '<div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">' + hourBadge + pauseBadge + flood + '</div>' +
                 '<div style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">' +
                   '<span>📋 <b>В очереди:</b> ' + (r.queue_total || 0) + '</span>' +
                   '<span>🕐 <b>Ждут Д1:</b> ' + (r.pending_d1 || 0) + '</span>' +
@@ -1608,7 +1626,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                 };
                 var r = await _frFetch('/api/admin/vk/drip/enqueue', 'POST', payload);
                 if (r && r.success) {
-                    alert('✓ Добавлено: ' + (r.inserted || 0) + ', пропущено (уже было): ' + (r.skipped_existing || 0));
+                    var resumeNote = r.resumed === false ? '\n(на паузе — нажми «▶ Запустить рассылку»)' : '\n(кампания активна, scheduler начнёт работать с ближайшего цикла)';
+                    alert('✓ Добавлено: ' + (r.inserted || 0) + ', пропущено (уже было): ' + (r.skipped_existing || 0) + resumeNote);
                     // После постановки помечаем их как already_in_queue, чтобы не дублировать.
                     var addedSet = {};
                     selected.forEach(function (s) { addedSet[s.vk_id] = true; });
@@ -1633,6 +1652,36 @@ POV: ты на семейном ужине, и мама такая «как у �
             var r = await _frFetch('/api/admin/vk/drip/pause', 'POST', {});
             if (r && r.success) _frRefreshStatus();
         }
+        async function _frRunOnce() {
+            if (!confirm('Принудительно запустить цикл прямо сейчас?\n(Игнорит пауза, рабочие часы, cooldown — для теста.)')) return;
+            var btn = document.getElementById('frRunOnceBtn');
+            btn.disabled = true; var prev = btn.textContent; btn.textContent = '⏳ Шлю…';
+            try {
+                var r = await _frFetch('/api/admin/vk/drip/run-once', 'POST', {});
+                if (r && r.success) {
+                    var s = r.summary || {};
+                    var sent = (s.d1_sent || 0) + (s.d2_sent || 0);
+                    var msg;
+                    if (sent > 0) {
+                        msg = '✓ Отправлено: ' + sent + ' (Д1: ' + (s.d1_sent || 0) + ', Д2: ' + (s.d2_sent || 0) + ')';
+                    } else if (s.skipped_reason === 'daily_cap_reached') {
+                        msg = '⚠ Лимит 24ч исчерпан, попробуй завтра';
+                    } else if (s.fatal || s.retry) {
+                        msg = '⚠ Никого не отправлено. Ошибок: ' + (s.fatal || 0) + ' fatal, ' + (s.retry || 0) + ' retry. Смотри лог.';
+                    } else {
+                        msg = '⚠ Никого не отправлено — возможно, очередь пуста или Д2-кандидаты ещё в 20-часовом окне после Д1';
+                    }
+                    alert(msg);
+                } else {
+                    alert('Ошибка: ' + ((r && (r.error || r.message)) || 'unknown'));
+                }
+            } catch (e) { alert('Сеть упала: ' + e); }
+            finally {
+                btn.disabled = false; btn.textContent = prev;
+                _frRefreshStatus(); _frRefreshLog();
+            }
+        }
+
         async function _frStop() {
             if (!confirm('Очистить очередь полностью? Все ждущие пропадут.')) return;
             var r = await _frFetch('/api/admin/vk/drip/stop', 'POST', {});
@@ -1654,6 +1703,7 @@ POV: ты на семейном ужине, и мама такая «как у �
             bid('frSelectNoneBtn', function () { _frSelectAll(false); });
             bid('frResumeBtn', _frResume);
             bid('frPauseBtn', _frPause);
+            bid('frRunOnceBtn', _frRunOnce);
             bid('frStopBtn', _frStop);
             bid('frStatusRefreshBtn', function () { _frRefreshStatus(); _frRefreshLog(); });
         }
