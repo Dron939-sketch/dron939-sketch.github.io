@@ -818,10 +818,10 @@ POV: ты на семейном ужине, и мама такая «как у �
                 </div>
             </div>
 
-            <!-- ===== БЛОК ЗАПУСКА ===== -->
+            <!-- ===== БЛОК ПАРСИНГА (шаг 1) ===== -->
             <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:14px;margin-bottom:14px">
-                <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">🚀 Запуск рассылки</div>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+                <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">🔎 Шаг 1. Парсинг друзей</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
                     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text)">
                         Пол:
                         <select id="frSex" style="padding:7px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px inherit">
@@ -835,7 +835,38 @@ POV: ты на семейном ужине, и мама такая «как у �
                         –
                         <input id="frAgeMax" type="number" min="14" max="99" value="55" style="width:64px;padding:6px 9px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px inherit">
                     </label>
-                    <button id="frLoadFriendsBtn" style="padding:9px 14px;border-radius:8px;border:none;background:#10b981;color:#fff;font:600 12px inherit;cursor:pointer">👥 Загрузить друзей в очередь</button>
+                    <button id="frParseBtn" style="padding:9px 14px;border-radius:8px;border:none;background:#10b981;color:#fff;font:600 12px inherit;cursor:pointer">🔎 Запарсить</button>
+                </div>
+            </div>
+
+            <!-- ===== БЛОК ТАБЛИЦЫ (шаг 2) ===== -->
+            <div id="frTableBlock" style="display:none;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:14px">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+                    <div style="font-size:13px;font-weight:700;color:var(--text)">📋 Шаг 2. Выбери кого слать <span id="frTableSummary" style="font-weight:500;color:var(--text-dim);font-size:11px;margin-left:6px"></span></div>
+                    <div style="display:flex;gap:6px">
+                        <button id="frSelectAllBtn" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 11px inherit;cursor:pointer">☑ Все</button>
+                        <button id="frSelectNoneBtn" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text);font:600 11px inherit;cursor:pointer">☐ Никого</button>
+                    </div>
+                </div>
+                <div id="frFriendsList" style="max-height:340px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.02)"></div>
+            </div>
+
+            <!-- ===== БЛОК ЗАПУСКА (шаг 3) ===== -->
+            <div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.3);border-radius:12px;padding:14px;margin-bottom:14px">
+                <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px">🚀 Шаг 3. Интервал и запуск</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+                    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text)" title="Сколько минут между отправками — антибан">
+                        Интервал:
+                        <select id="frInterval" style="padding:7px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:13px inherit">
+                            <option value="5">5 мин</option>
+                            <option value="10">10 мин</option>
+                            <option value="15" selected>15 мин</option>
+                            <option value="30">30 мин</option>
+                            <option value="60">60 мин (час)</option>
+                            <option value="120">2 часа</option>
+                        </select>
+                    </label>
+                    <button id="frEnqueueBtn" style="padding:9px 14px;border-radius:8px;border:none;background:#6366f1;color:#fff;font:600 12px inherit;cursor:pointer" disabled>📥 Поставить выбранных в очередь</button>
                 </div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap">
                     <button id="frResumeBtn" style="padding:9px 16px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:700 13px inherit;cursor:pointer">▶ Запустить рассылку</button>
@@ -1494,27 +1525,110 @@ POV: ты на семейном ужине, и мама такая «как у �
         }
 
         // ===== Actions =====
-        async function _frLoadFriends() {
+        // ===== Парсинг (превью список) + таблица с галочками + enqueue =====
+        var FR_PARSED = [];
+
+        async function _frParse() {
             var sex = parseInt(document.getElementById('frSex').value || '1', 10);
             var aMin = parseInt(document.getElementById('frAgeMin').value || '30', 10);
             var aMax = parseInt(document.getElementById('frAgeMax').value || '55', 10);
-            var btn = document.getElementById('frLoadFriendsBtn');
-            btn.disabled = true; var prev = btn.textContent; btn.textContent = '⏳ Грузим…';
+            var btn = document.getElementById('frParseBtn');
+            btn.disabled = true; var prev = btn.textContent; btn.textContent = '⏳ Парсим…';
             try {
-                var r = await _frFetch('/api/admin/vk/drip/init', 'POST', { sex: sex, age_min: aMin, age_max: aMax });
+                var r = await _frFetch('/api/admin/vk/drip/preview', 'POST', { sex: sex, age_min: aMin, age_max: aMax });
+                if (!r || !r.success) {
+                    alert('Ошибка: ' + ((r && (r.error || r.message)) || 'unknown'));
+                    return;
+                }
+                FR_PARSED = (r.friends || []).map(function (f) {
+                    // Чекаем по умолчанию только тех, кого ещё нет в очереди
+                    return Object.assign({}, f, { _checked: !f.already_in_queue });
+                });
+                _frRenderTable();
+            } catch (e) { alert('Сеть упала: ' + e); }
+            finally { btn.disabled = false; btn.textContent = prev; }
+        }
+
+        function _frRenderTable() {
+            var block = document.getElementById('frTableBlock');
+            var list = document.getElementById('frFriendsList');
+            var summary = document.getElementById('frTableSummary');
+            var enqBtn = document.getElementById('frEnqueueBtn');
+            if (!FR_PARSED.length) {
+                block.style.display = 'block';
+                list.innerHTML = '<div style="padding:14px;color:var(--text-dim);font-size:12px;text-align:center">— по этим фильтрам никого не нашлось —</div>';
+                if (summary) summary.textContent = '';
+                if (enqBtn) enqBtn.disabled = true;
+                return;
+            }
+            block.style.display = 'block';
+            list.innerHTML = FR_PARSED.map(function (f, idx) {
+                var isInQ = !!f.already_in_queue;
+                var dayBadge = isInQ ? '<span style="background:rgba(99,102,241,0.18);color:#a5b4fc;padding:1px 6px;border-radius:6px;font-size:10px;font-weight:700;margin-left:6px">в очереди · Д' + (f.day_status || 0) + '</span>' : '';
+                return '<label style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer' + (isInQ ? ';opacity:0.55' : '') + '">' +
+                    '<input type="checkbox" data-fr-idx="' + idx + '"' + (f._checked ? ' checked' : '') + (isInQ ? ' disabled' : '') + ' style="margin:0;cursor:pointer">' +
+                    '<span style="flex:1;font-size:13px;color:var(--text)">' + _frEscape(f.first_name) + ' ' + _frEscape(f.last_name) +
+                      ' <span style="color:var(--text-dim);font-size:11px">— ' + f.age + ' лет</span>' + dayBadge + '</span>' +
+                    '<span style="color:var(--text-dim);font-size:11px">vk=' + f.vk_id + '</span>' +
+                '</label>';
+            }).join('');
+            list.querySelectorAll('input[type="checkbox"][data-fr-idx]').forEach(function (cb) {
+                cb.addEventListener('change', function () {
+                    var i = parseInt(cb.dataset.frIdx, 10);
+                    if (FR_PARSED[i]) FR_PARSED[i]._checked = cb.checked;
+                    _frUpdateSummary();
+                });
+            });
+            _frUpdateSummary();
+        }
+
+        function _frUpdateSummary() {
+            var total = FR_PARSED.length;
+            var checked = FR_PARSED.filter(function (f) { return f._checked; }).length;
+            var inQ = FR_PARSED.filter(function (f) { return f.already_in_queue; }).length;
+            var s = document.getElementById('frTableSummary');
+            var b = document.getElementById('frEnqueueBtn');
+            if (s) s.textContent = 'Найдено: ' + total + ', выбрано: ' + checked + (inQ ? ', уже в очереди: ' + inQ : '');
+            if (b) b.disabled = checked === 0;
+        }
+
+        function _frSelectAll(on) {
+            FR_PARSED.forEach(function (f) { if (!f.already_in_queue) f._checked = !!on; });
+            _frRenderTable();
+        }
+
+        async function _frEnqueue() {
+            var selected = FR_PARSED.filter(function (f) { return f._checked && !f.already_in_queue; });
+            if (!selected.length) { alert('Никто не выбран'); return; }
+            var intervalMin = parseInt(document.getElementById('frInterval').value || '15', 10);
+            if (!confirm('Поставить в очередь ' + selected.length + ' человек(а)?\nИнтервал между отправками: ' + intervalMin + ' мин.\nЭто перепишет настройку интервала глобально.')) return;
+            var btn = document.getElementById('frEnqueueBtn');
+            btn.disabled = true; var prev = btn.textContent; btn.textContent = '⏳ …';
+            try {
+                var payload = {
+                    interval_min: intervalMin,
+                    friends: selected.map(function (f) {
+                        return { vk_id: f.vk_id, first_name: f.first_name, last_name: f.last_name, sex: f.sex, age: f.age };
+                    })
+                };
+                var r = await _frFetch('/api/admin/vk/drip/enqueue', 'POST', payload);
                 if (r && r.success) {
-                    alert('✓ Всего по фильтру: ' + (r.total_friends || 0) +
-                          '\nДобавлено новых: ' + (r.inserted || 0) +
-                          '\nУже было в очереди: ' + (r.skipped_existing || 0));
+                    alert('✓ Добавлено: ' + (r.inserted || 0) + ', пропущено (уже было): ' + (r.skipped_existing || 0));
+                    // После постановки помечаем их как already_in_queue, чтобы не дублировать.
+                    var addedSet = {};
+                    selected.forEach(function (s) { addedSet[s.vk_id] = true; });
+                    FR_PARSED = FR_PARSED.map(function (f) {
+                        if (addedSet[f.vk_id]) return Object.assign({}, f, { already_in_queue: true, _checked: false, day_status: 0 });
+                        return f;
+                    });
+                    _frRenderTable();
                 } else {
                     alert('Ошибка: ' + ((r && (r.error || r.message)) || 'unknown'));
                 }
             } catch (e) { alert('Сеть упала: ' + e); }
-            finally {
-                btn.disabled = false; btn.textContent = prev;
-                _frRefreshStatus(); _frRefreshLog();
-            }
+            finally { btn.disabled = false; btn.textContent = prev; _frRefreshStatus(); _frRefreshLog(); }
         }
+
 
         async function _frResume() {
             var r = await _frFetch('/api/admin/vk/drip/resume', 'POST', {});
@@ -1539,16 +1653,40 @@ POV: ты на семейном ужине, и мама такая «как у �
             var bid = function (id, fn) { var el = document.getElementById(id); if (el) el.addEventListener('click', fn); };
             bid('frTemplatesSaveBtn', _frSaveTemplates);
             bid('frTemplatesResetBtn', _frResetTemplates);
-            bid('frLoadFriendsBtn', _frLoadFriends);
+            bid('frParseBtn', _frParse);
+            bid('frEnqueueBtn', _frEnqueue);
+            bid('frSelectAllBtn', function () { _frSelectAll(true); });
+            bid('frSelectNoneBtn', function () { _frSelectAll(false); });
             bid('frResumeBtn', _frResume);
             bid('frPauseBtn', _frPause);
             bid('frStopBtn', _frStop);
             bid('frStatusRefreshBtn', function () { _frRefreshStatus(); _frRefreshLog(); });
         }
 
+        async function _frLoadConfig() {
+            try {
+                var r = await _frFetch('/api/admin/vk/drip/config');
+                if (r && r.success && r.interval_min) {
+                    var sel = document.getElementById('frInterval');
+                    if (sel) {
+                        // Если такой опции нет — добавим
+                        var opt = sel.querySelector('option[value="' + r.interval_min + '"]');
+                        if (!opt) {
+                            opt = document.createElement('option');
+                            opt.value = r.interval_min;
+                            opt.textContent = r.interval_min + ' мин';
+                            sel.appendChild(opt);
+                        }
+                        sel.value = String(r.interval_min);
+                    }
+                }
+            } catch (e) {}
+        }
+
         function _frActivate() {
             _frWireOnce();
             _frLoadTemplates();
+            _frLoadConfig();
             _frRefreshStatus();
             _frRefreshLog();
             if (FR_AUTO_TIMER) clearInterval(FR_AUTO_TIMER);
