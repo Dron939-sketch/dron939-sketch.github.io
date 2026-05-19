@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КПТ за 30 дней: практический гид с упражнениями на каждый день — Андрей Мейстер</title>
+<meta name="description" content="30-дневная программа самостоятельной работы с тревогой и низкой самооценкой по протоколам когнитивно-поведенческой терапии. Упражнения, дневники, домашки, контрольные точки. Не заменяет терапевта, но даёт базу.">
+<meta name="keywords" content="кпт 30 дней, когнитивно-поведенческая терапия гид, кпт упражнения самостоятельно, кпт дневник мыслей">
+<meta name="author" content="Андрей Мейстер">
+<meta name="robots" content="index, follow">
+<meta name="ai-content-declaration" content="comprehensive-guide">
+<meta property="og:title" content="КПТ за 30 дней: практический гид">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://meysternlp.ru/blog/kpt-za-30-dnej-prakticheskij-gid.html">
+<link rel="canonical" href="https://meysternlp.ru/blog/kpt-za-30-dnej-prakticheskij-gid.html">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HowTo",
+      "name": "30-дневная программа КПТ для самостоятельной работы",
+      "description": "Структурированная программа изучения и применения когнитивно-поведенческой терапии в течение 30 дней",
+      "totalTime": "P30D",
+      "estimatedCost": {"@type": "MonetaryAmount", "currency": "RUB", "value": "0"},
+      "supply": ["Тетрадь или приложение для дневника", "30 минут в день"],
+      "step": [
+        {"@type": "HowToStep", "name": "Дни 1-7: основы", "text": "Изучение когнитивной триады, ABC-модели, ведение дневника эмоций."},
+        {"@type": "HowToStep", "name": "Дни 8-14: автоматические мысли", "text": "Отлов автоматических мыслей, классификация искажений, dispute."},
+        {"@type": "HowToStep", "name": "Дни 15-21: поведенческие эксперименты", "text": "Проверка гипотез действием, экспозиция."},
+        {"@type": "HowToStep", "name": "Дни 22-30: глубинные убеждения", "text": "Работа с core beliefs, формирование альтернативных схем."}
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Можно ли освоить КПТ за 30 дней?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Освоить как профессиональную модальность — нет, для этого нужны годы обучения и супервизии. Но получить рабочие навыки самонаблюдения, отлова автоматических мыслей и поведенческого эксперимента — реально за 30 дней при ежедневной практике 20-30 минут. Эффект сравним с короткой группой КПТ."}
+        },
+        {
+          "@type": "Question",
+          "name": "При каких проблемах КПТ работает лучше всего?",
+          "acceptedAnswer": {"@type": "Answer", "text": "По мета-анализам: лучший эффект при тревожных расстройствах (паническое, генерализованное тревожное, социальная тревога), фобиях, лёгкой и умеренной депрессии, ОКР, бессоннице, пищевых расстройствах (булимия). Сложнее работает при ПРЛ (нужна DBT), тяжёлой депрессии (нужны медикаменты), психотическом регистре."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+:root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-card: #1a1a25; --text-primary: #e8e8ee; --text-secondary: #a8a8b8; --text-muted: #6a6a78; --accent: #6366f1; --accent-hover: #818cf8; --accent-warm: #f59e0b; --accent-green: #10b981; --border: rgba(255,255,255,0.08); --hero-grad: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.65; font-size: 17px; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+header { background: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.nav { display: flex; justify-content: space-between; align-items: center; }
+.nav a { color: var(--text-primary); text-decoration: none; font-weight: 600; }
+.nav .menu a { margin-left: 24px; color: var(--text-secondary); font-weight: 500; }
+.hero-tldr { background: var(--hero-grad); border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+.hero-tldr .label { display: inline-block; background: rgba(255,255,255,0.15); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
+.hero-tldr h1 { font-size: 28px; line-height: 1.25; color: #fff; margin-bottom: 16px; }
+.hero-tldr .summary { color: rgba(255,255,255,0.92); font-size: 16px; }
+.meta { display: flex; gap: 16px; color: var(--text-muted); font-size: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.meta .dot { color: var(--accent); }
+article { padding: 20px 0 60px; }
+article h2 { font-size: 26px; margin: 42px 0 16px; color: var(--text-primary); border-left: 4px solid var(--accent); padding-left: 14px; line-height: 1.3; }
+article h3 { font-size: 20px; margin: 28px 0 12px; color: var(--accent-hover); }
+article h4 { font-size: 17px; margin: 20px 0 8px; color: var(--text-primary); }
+article p { margin-bottom: 16px; }
+article ul, article ol { margin: 0 0 16px 24px; }
+article li { margin-bottom: 8px; }
+article a { color: var(--accent-hover); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 28px 0; }
+.toc h3 { color: var(--text-primary); margin: 0 0 12px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+.toc ol { margin: 0 0 0 20px; }
+.toc li { font-size: 15px; }
+.toc a { color: var(--text-secondary); border: none; }
+.day-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 18px 0; border-left: 4px solid var(--accent); }
+.day-card .day-num { display: inline-block; background: var(--accent); color: #fff; font-weight: 800; font-size: 13px; padding: 4px 14px; border-radius: 6px; margin-bottom: 10px; letter-spacing: 0.5px; }
+.day-card h4 { margin: 0 0 10px; color: var(--text-primary); font-size: 18px; }
+.day-card .practice { background: var(--bg-secondary); border-radius: 8px; padding: 12px 16px; margin-top: 12px; }
+.day-card .practice strong { color: var(--accent-hover); }
+.week-header { background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.04)); border: 1px solid rgba(99,102,241,0.2); border-radius: 12px; padding: 16px 22px; margin: 28px 0 18px; }
+.week-header h3 { margin: 0; color: var(--accent-hover); font-size: 18px; }
+.exercise-box { background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.exercise-box .title { color: #6ee7b7; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+.cta-box { background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08)); border: 1px solid rgba(99,102,241,0.3); border-radius: 14px; padding: 26px 28px; margin: 36px 0; text-align: center; }
+.cta-btn { display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent-hover)); color: #fff !important; padding: 12px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; border: none !important; }
+.author-block { display: flex; gap: 18px; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 36px 0 20px; }
+.author-block .avatar { width: 64px; height: 64px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.author-block .role { color: var(--text-secondary); font-size: 14px; margin: 4px 0 8px; }
+.author-block p { color: var(--text-secondary); font-size: 14px; margin: 0; }
+.sources { background: var(--bg-secondary); border-radius: 10px; padding: 18px 22px; margin: 28px 0; font-size: 14px; }
+.sources h4 { margin-bottom: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; font-size: 13px; }
+.sources ol { margin: 0 0 0 20px; color: var(--text-muted); }
+.faq-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin: 30px 0; }
+.faq-item { padding: 16px 0; border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+.faq-item h4 { color: var(--accent-hover); margin-bottom: 8px; font-size: 17px; }
+.faq-item p { color: var(--text-secondary); margin: 0; }
+footer { border-top: 1px solid var(--border); padding: 30px 0; text-align: center; color: var(--text-muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="/" class="logo">Meister NLP</a>
+    <div class="menu">
+      <a href="/blog/">Блог</a>
+      <a href="/fredi/">Фреди</a>
+      <a href="/o-mne.html">О мне</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <article>
+    <div class="hero-tldr">
+      <span class="label">TL;DR · Практический протокол</span>
+      <h1>КПТ за 30 дней: практический гид с упражнениями на каждый день</h1>
+      <div class="summary">
+        Структурированная программа самостоятельной работы по протоколам КПТ. 4 недели: основы и дневник, отлов автоматических мыслей и dispute, поведенческие эксперименты, работа с глубинными убеждениями. По 20-30 минут в день. Не заменяет терапевта при серьёзных состояниях, но даёт рабочие навыки и сравнима по эффекту с короткой групповой КПТ.
+      </div>
+    </div>
+
+    <div class="meta">
+      <span>📅 19 мая 2026</span><span class="dot">•</span>
+      <span>⏱ Чтение: 28 минут</span><span class="dot">•</span>
+      <span>🔬 30 дней практики</span><span class="dot">•</span>
+      <span>👤 Андрей Мейстер</span>
+    </div>
+
+    <div class="toc">
+      <h3>Содержание</h3>
+      <ol>
+        <li><a href="#osnovy">Что такое КПТ и кому подходит</a></li>
+        <li><a href="#nedelya-1">Неделя 1: основы и дневник эмоций</a></li>
+        <li><a href="#nedelya-2">Неделя 2: автоматические мысли и dispute</a></li>
+        <li><a href="#nedelya-3">Неделя 3: поведенческие эксперименты</a></li>
+        <li><a href="#nedelya-4">Неделя 4: глубинные убеждения</a></li>
+        <li><a href="#dalshe">Что делать после 30 дней</a></li>
+        <li><a href="#faq">Частые вопросы</a></li>
+      </ol>
+    </div>
+
+    <h2 id="osnovy">Что такое КПТ и кому подходит</h2>
+
+    <p>Когнитивно-поведенческая терапия (КПТ) — самая исследованная и доказательная модальность психотерапии, разработанная Аароном Беком в 1960-х. Её центральная идея: наши эмоции и поведение зависят не от событий, а от мыслей об этих событиях. Меняя мысли и поведение — меняем эмоции.</p>
+
+    <p>КПТ имеет наибольшую доказательную базу для:</p>
+    <ul>
+      <li>Тревожных расстройств (паническое, ГТР, социофобия, специфические фобии)</li>
+      <li>Депрессии лёгкой и умеренной тяжести</li>
+      <li>ОКР</li>
+      <li>ПТСР (вариант КПТ-Т)</li>
+      <li>Бессонницы (КПТ-И)</li>
+      <li>Пищевых расстройств (булимия, переедание)</li>
+    </ul>
+
+    <p>Этот гид — НЕ замена терапевта. Это структурированная программа самообразования и тренировки навыков. Если у вас:</p>
+    <ul>
+      <li>Острая суицидальность — обращайтесь к психиатру срочно (8-800-2000-122, бесплатно).</li>
+      <li>Тяжёлая депрессия (не можете встать, не работаете, не едите) — нужна медикаментозная поддержка.</li>
+      <li>ПТСР, ПРЛ, психотический спектр — нужен живой специалист.</li>
+    </ul>
+
+    <p>Для всего остального — ниже 30-дневный протокол, который я использую в своей практике как «домашку» для клиентов на первой стадии работы.</p>
+
+    <h2 id="nedelya-1">Неделя 1: основы и дневник эмоций</h2>
+
+    <div class="week-header">
+      <h3>Цель недели: научиться замечать эмоции и связывать их с ситуациями</h3>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 1</span>
+      <h4>Когнитивная триада Бека</h4>
+      <p>Прочитайте: КПТ опирается на идею, что в депрессии и тревоге работает «триада» — негативные мысли о себе, о мире, о будущем. Это не «настроение», это паттерн мышления.</p>
+      <div class="practice">
+        <strong>Практика (15 мин):</strong> Запишите 3 мысли о себе за сегодня. 3 мысли о мире. 3 мысли о будущем. Какие из них негативные? Это база, к которой будем возвращаться.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 2</span>
+      <h4>ABC-модель</h4>
+      <p>A — Activating event (событие). B — Belief (мысль/убеждение об этом). C — Consequence (эмоция/поведение). КПТ работает на букве B, потому что A нельзя изменить, а C — следствие B.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Возьмите один эпизод сегодня, когда было неприятно. Запишите по схеме A→B→C. Например: A — начальник не ответил на письмо; B — «он мной недоволен»; C — тревога, желание перепроверить почту.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 3</span>
+      <h4>Запуск дневника эмоций</h4>
+      <p>Главный инструмент КПТ — дневник. Без него — никакого прогресса. Заведите тетрадь или приложение (любое — Notion, Daylio, бумажная).</p>
+      <div class="practice">
+        <strong>Структура записи:</strong> Дата/время · Ситуация · Эмоция (одно слово) · Интенсивность 1-10 · Что подумали · Что сделали. Сегодня — 3 записи минимум.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 4</span>
+      <h4>Базовый словарь эмоций</h4>
+      <p>Многие путают эмоции с мыслями. «Я чувствую, что он не прав» — это не эмоция, это мысль. Эмоции — это: радость, грусть, страх, гнев, отвращение, удивление, стыд, вина (и оттенки).</p>
+      <div class="practice">
+        <strong>Практика:</strong> Скачайте «Колесо эмоций Плутчика» (есть в интернете). При записи в дневник используйте конкретное слово из колеса, а не общее «плохо/хорошо».
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 5</span>
+      <h4>Связь тело-эмоция</h4>
+      <p>Эмоции живут в теле. Тревога — давление в груди, ком в горле. Гнев — жжение, напряжение челюсти. Грусть — тяжесть в плечах. Замечание тела помогает поймать эмоцию до того, как она затопит.</p>
+      <div class="practice">
+        <strong>Практика:</strong> 3 раза за день сделайте «сканирование тела» — где напряжение? Назовите эмоцию. Запишите.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 6</span>
+      <h4>Поведенческая активация</h4>
+      <p>В депрессии человек прекращает делать то, что приносило радость, что усиливает депрессию. Поведенческая активация: вернуть простые приятные действия, даже без желания.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Составьте список 10 действий, которые когда-то приносили вам удовольствие. Не «бывшие хобби», а простые: чашка кофе на балконе, разговор с другом, прогулка 15 минут. Запланируйте 1-2 на завтра.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 7</span>
+      <h4>Обзор недели</h4>
+      <p>Перечитайте все записи за неделю. Что вы заметили? Какие ситуации повторяются? Какие эмоции чаще всего? Это первая карта вашего эмоционального ландшафта.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Запишите 3 наблюдения о себе из этой недели. Не оценочно, просто факты: «Я часто тревожусь утром перед работой», «Гнев приходит при разговорах с мамой» и т.п.
+      </div>
+    </div>
+
+    <h2 id="nedelya-2">Неделя 2: автоматические мысли и dispute</h2>
+
+    <div class="week-header">
+      <h3>Цель: научиться отлавливать автоматические мысли и оспаривать их</h3>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 8</span>
+      <h4>Автоматические мысли</h4>
+      <p>Автоматическая мысль (AM) — это мысль, которая возникает сама, без вашего сознательного решения, в ответ на событие. «Меня уволят», «Я неудачник», «Никто меня не любит». Они проносятся быстро, часто не осознаются, но влияют на эмоции.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Добавьте в дневник новую колонку «Автоматическая мысль». В каждой записи зафиксируйте: что именно пронеслось в голове в момент эмоции?
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 9</span>
+      <h4>10 когнитивных искажений</h4>
+      <p>Автоматические мысли часто следуют типичным паттернам — когнитивным искажениям. Изучите 10 основных: чёрно-белое мышление, чтение мыслей, катастрофизация, персонализация, долженствование, эмоциональное рассуждение, обесценивание положительного, навешивание ярлыков, сверхобобщение, фильтрация негатива.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Перечитайте свои записи. Какие искажения вы видите в своих автоматических мыслях? Отметьте рядом название искажения.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 10</span>
+      <h4>Sokratic questioning</h4>
+      <p>Главный метод оспаривания автоматических мыслей. 6 вопросов:</p>
+      <ol>
+        <li>Какие доказательства поддерживают эту мысль?</li>
+        <li>Какие доказательства против?</li>
+        <li>Что бы я сказал другу с такой мыслью?</li>
+        <li>Что самое плохое, что может случиться? И насколько это вероятно?</li>
+        <li>Какова альтернативная интерпретация?</li>
+        <li>Что я могу сделать в этой ситуации?</li>
+      </ol>
+      <div class="practice">
+        <strong>Практика:</strong> Возьмите одну сильную AM этой недели. Пройдите все 6 вопросов письменно.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 11</span>
+      <h4>Альтернативная мысль</h4>
+      <p>После dispute сформулируйте альтернативную, более сбалансированную мысль. Не «всё будет хорошо» (это другое искажение), а реалистичная: «Возможно, начальник просто занят, и его молчание не обязательно про меня».</p>
+      <div class="practice">
+        <strong>Практика:</strong> Возьмите 3 AM. К каждой напишите альтернативную мысль. Оцените, насколько вы в неё верите (1-10).
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 12</span>
+      <h4>Запись мыслей: 7-колоночная форма</h4>
+      <p>Это инструмент уровня Бека-Гринбергера. 7 колонок: Ситуация · Эмоция · Интенсивность · AM · Доказательства за · Доказательства против · Альтернативная мысль + новая интенсивность эмоции.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Заполните полную 7-колоночную запись на одну ситуацию. Это будет долго (~30 мин). Это норма для первых разов.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 13</span>
+      <h4>Тренировка скорости</h4>
+      <p>В первое время dispute занимает 20-30 минут на одну мысль. Цель — довести до 2-5 минут «в голове», без записи. Но первые недели — обязательно письменно.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Сегодня — 3 записи в полном формате. Сравните, насколько эмоция снизилась после альтернативной мысли.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 14</span>
+      <h4>Обзор недели 2</h4>
+      <p>Перечитайте все 7-колоночные записи. Какие AM повторяются? Какие искажения чаще всего? Это ваш индивидуальный «когнитивный профиль».</p>
+      <div class="practice">
+        <strong>Практика:</strong> Составьте список 5 ваших самых частых AM. К каждой — готовая альтернативная мысль на «вызов».
+      </div>
+    </div>
+
+    <h2 id="nedelya-3">Неделя 3: поведенческие эксперименты</h2>
+
+    <div class="week-header">
+      <h3>Цель: проверить мысли действием, не только в голове</h3>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 15</span>
+      <h4>Что такое поведенческий эксперимент</h4>
+      <p>Когнитивный dispute — это работа в голове. Но мозг плохо верит чисто аргументам. Реально меняет картину опыт. Поведенческий эксперимент — это сознательное действие для проверки убеждения.</p>
+      <div class="practice">
+        <strong>Пример:</strong> AM «Все на меня смотрят, когда я в кафе». Эксперимент: одеть смешную шляпу, пойти в кафе, посчитать, сколько людей действительно посмотрели. Обычно — 0-2.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 16</span>
+      <h4>Иерархия страхов</h4>
+      <p>Для тревоги и фобий — основной инструмент. Список ситуаций от 1 (легко) до 10 (паника). Постепенное прохождение снизу вверх.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Выберите один страх (социальный, фобия, тревога). Составьте список 10 ситуаций по нарастанию сложности. Сегодня — выполните пункт 1.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 17</span>
+      <h4>Экспозиция</h4>
+      <p>Метод «оставаться в ситуации, пока тревога не снизится естественным образом». Не убегать. Ключ — оставаться достаточно долго: тревога ВСЕГДА снижается через 20-40 минут (физиологический предел).</p>
+      <div class="practice">
+        <strong>Практика:</strong> Если есть страх — выполните пункт 2 из иерархии. Оставайтесь до снижения тревоги. Записывайте уровень тревоги каждые 5 минут.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 18</span>
+      <h4>Поведенческая активация для депрессии</h4>
+      <p>Депрессия снижает энергию → меньше делаешь → ещё меньше радости → ещё ниже энергия. Поведенческая активация разрывает цикл: делать → радость приходит → энергия восстанавливается.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Запланируйте на завтра 3 активности: 1 для удовольствия, 1 для достижения, 1 для общения. Размер — маленький (15 минут каждое). Сделайте, даже если не хочется.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 19</span>
+      <h4>Активность и настроение: связь</h4>
+      <p>Ведите шкалу настроения 1-10 утром и вечером. И активности дня. Через неделю увидите корреляцию: дни с большим количеством активностей = выше настроение.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Заведите простую таблицу: день · утро (1-10) · вечер (1-10) · 3 главные активности. Ведите следующие 12 дней.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 20</span>
+      <h4>Эксперимент: «худший сценарий»</h4>
+      <p>Для тревоги о будущем. Возьмите страх («меня уволят»). Опишите письменно: что произойдёт, как вы справитесь, какой будет жизнь через год. Конкретно. Часто после такого упражнения тревога ослабевает — мозг видит, что справится.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Сделайте упражнение на один свой страх. На 1-2 страницы текста.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 21</span>
+      <h4>Обзор недели 3</h4>
+      <p>Какие эксперименты сделали? Что узнали? Что подтвердилось из ваших AM, а что — нет? Поведенческие эксперименты ВСЕГДА учат — даже если получилось «как боялись», вы получаете данные.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Запишите 5 уроков из экспериментов недели. Какие AM теперь кажутся менее правдоподобными?
+      </div>
+    </div>
+
+    <h2 id="nedelya-4">Неделя 4: глубинные убеждения</h2>
+
+    <div class="week-header">
+      <h3>Цель: выйти на корневые убеждения (core beliefs) и начать с ними работать</h3>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 22</span>
+      <h4>Что такое core beliefs</h4>
+      <p>Под автоматическими мыслями лежат промежуточные убеждения («если..., то...»). Под ними — глубинные (core beliefs) о себе, мире и других. Типичные: «Я неполноценный», «Меня никто не любит», «Мир опасен», «Людям нельзя доверять». Они формируются в детстве.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Перечитайте свои 7-колоночные записи. Какая общая тема? Какое одно глубинное убеждение объединяет ваши AM?
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 23</span>
+      <h4>Техника «вертикальная стрела»</h4>
+      <p>Способ выйти на core belief из автоматической мысли. Берёте AM, спрашиваете: «И если это правда, что это значит обо мне?». Ответ. И снова: «И если это правда, что это значит?». 3-5 итераций — выходите на корень.</p>
+      <div class="practice">
+        <strong>Пример:</strong> AM «начальник не ответил» → «он мной недоволен» → «я плохо работаю» → «я некомпетентный» → «я неудачник» (core belief).
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 24</span>
+      <h4>История убеждения</h4>
+      <p>Когда возникло это убеждение? В каком возрасте? В каких ситуациях? Когда core belief осознаётся как «детский вывод», его сила слабеет.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Найдите свой core belief. Напишите 3 ранних эпизода, когда вы это о себе впервые подумали. Сколько вам было лет?
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 25</span>
+      <h4>Доказательства за и против core belief</h4>
+      <p>Тот же dispute, но для глубинного убеждения. Это сложнее, чем для AM, потому что вы в это верите давно.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Возьмите свой core belief. Напишите 10 доказательств ЗА (где это подтверждалось в жизни) и 10 ПРОТИВ (где опровергалось). Часто люди легко находят 20 «за» и с трудом 3 «против» — это и есть фильтрация подтверждений.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 26</span>
+      <h4>Альтернативное убеждение</h4>
+      <p>Сформулируйте альтернативный core belief. Не противоположный («Я лучший»), а реалистичный («Я компетентен в одних областях, не очень в других, как все люди»).</p>
+      <div class="practice">
+        <strong>Практика:</strong> Запишите альтернативу. Перечитывайте утром и вечером следующие 5 дней.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 27</span>
+      <h4>Положительный журнал данных</h4>
+      <p>Каждый день фиксируйте 3 события, подтверждающих альтернативное убеждение. Это компенсирует «фильтр негатива» core belief.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Начните вести этот журнал. 3 записи в день. Минимум 30 дней.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 28</span>
+      <h4>Continuum technique</h4>
+      <p>Если core belief «Я неудачник», нарисуйте линию от 0 до 100. На 0 — самый страшный неудачник в мире. На 100 — самый успешный. Где вы реально? Обычно люди ставят себя в 20-30, хотя по любым критериям они в 50-60. Это показывает искажение.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Сделайте упражнение. Поставьте на шкале людей, которых знаете. Поставьте себя. Сравните с реальностью.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 29</span>
+      <h4>План поддержания результата</h4>
+      <p>30-дневный спринт даст видимый эффект. Но без поддержания через 3 месяца всё откатится. Нужен «лёгкий» план для долгосрочки.</p>
+      <div class="practice">
+        <strong>Практика:</strong> Составьте план на следующие 3 месяца. Минимум: 1 запись в дневнике в день, 1 раз в неделю — пересмотр core belief, 1 раз в неделю — поведенческий эксперимент.
+      </div>
+    </div>
+
+    <div class="day-card">
+      <span class="day-num">ДЕНЬ 30</span>
+      <h4>Обзор и закрепление</h4>
+      <p>30 дней позади. Сравните себя с днём 1: что изменилось в восприятии себя, мира, ситуаций? Какие AM теперь автоматически возникают реже? Какие техники стали привычными?</p>
+      <div class="practice">
+        <strong>Практика:</strong> Напишите письмо себе через год. Что вы хотите помнить? Какие выводы из этого спринта?
+      </div>
+    </div>
+
+    <h2 id="dalshe">Что делать после 30 дней</h2>
+
+    <ol>
+      <li><strong>Поддерживайте дневник.</strong> 5-10 минут в день — достаточно.</li>
+      <li><strong>Книга Дэвида Бернса «Терапия настроения»</strong> — лучший практический КПТ-руководитель для самостоятельной работы. Прочитайте.</li>
+      <li><strong>Группа КПТ</strong> — если есть в вашем городе, отличный следующий шаг.</li>
+      <li><strong>Индивидуальный КПТ-терапевт</strong> — если на 30 дней не получилось серьёзно сдвинуть состояние, или если есть глубокие травмы.</li>
+      <li><strong>Сочетание с другими подходами</strong> — для глубокой работы с привязанностью полезен EFT, с травмой — EMDR, с экзистенциальными вопросами — гуманистические подходы.</li>
+    </ol>
+
+    <h2 id="faq">Частые вопросы</h2>
+
+    <div class="faq-block">
+      <div class="faq-item">
+        <h4>А что если я пропущу день?</h4>
+        <p>Ничего страшного. Не начинайте сначала, продолжайте с пропущенного. Главное — общая тенденция, а не идеальная серия. У моих клиентов средний показатель — 22-26 дней из 30 активных. Этого достаточно для эффекта.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Я заметил улучшение через неделю — нужно ли продолжать?</h4>
+        <p>Да. Краткосрочное улучшение часто связано с эффектом «я что-то делаю». Устойчивые изменения требуют 6-12 недель практики, потом — поддержания. После 30-дневного спринта переходите на «лёгкий режим» поддержания.</p>
+      </div>
+      <div class="faq-item">
+        <h4>А если мне станет ХУЖЕ от этой практики?</h4>
+        <p>Возможно — особенно на неделе с глубинными убеждениями. Это означает, что вы коснулись больной темы, и для проработки нужен живой терапевт. Останавливайтесь, не давите. Обращайтесь к психологу.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Можно ли пройти этот гид с Фреди?</h4>
+        <p>Да. Фреди обучен сопровождать 30-дневную КПТ-программу. Он задаёт вопросы по структуре, держит ваш дневник в памяти, напоминает про практики. Это менее одиноко, чем делать одному.</p>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <h3>Запустить 30-дневный КПТ-марафон с Фреди</h3>
+      <p>Фреди ведёт тебя по программе день за днём. Бесплатно в Free-тарифе.</p>
+      <a href="/fredi/" class="cta-btn">Начать марафон</a>
+    </div>
+
+    <div class="author-block">
+      <div class="avatar">АМ</div>
+      <div>
+        <h4>Андрей Мейстер</h4>
+        <div class="role">Психолог, НЛП-тренер, 20 лет практики</div>
+        <p>Использую КПТ как основу краткосрочной работы с тревожными расстройствами. Эта 30-дневная программа адаптирована из протоколов Бека и Гринбергер с учётом российской культуры и формата самопомощи.</p>
+      </div>
+    </div>
+
+    <div class="sources">
+      <h4>Опорная литература</h4>
+      <ol>
+        <li>Beck J.S. (2020). <i>Cognitive Behavior Therapy: Basics and Beyond, 3rd ed.</i> Guilford Press.</li>
+        <li>Burns D.D. (1999). <i>The Feeling Good Handbook</i>. Plume. — лучшая русскоязычная версия: «Терапия настроения», изд. «Альпина».</li>
+        <li>Greenberger D., Padesky C.A. (2015). <i>Mind Over Mood, 2nd ed.</i> Guilford. — рабочая тетрадь, основа этого гида.</li>
+        <li>Hofmann S.G. et al. (2012). The Efficacy of Cognitive Behavioral Therapy: A Review of Meta-analyses. <i>Cognitive Therapy and Research</i>, 36, 427-440.</li>
+      </ol>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 13px; margin-top: 24px;">Опубликовано: 19 мая 2026. Автор: Андрей Мейстер.</p>
+  </article>
+</div>
+
+<footer>
+  <div class="container">© 2008–2026 Meister NLP</div>
+</footer>
+</body>
+</html>
