@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12 подходов к целеполаганию: сравнение и какой выбрать — Андрей Мейстер</title>
+<meta name="description" content="Сравнительный обзор 12 моделей целеполагания: SMART, GROW, OKR, WOOP, BHAG, HARD, CLEAR, OGSM, KISS, FAST, PACT, RACI. Где какая работает, под какой тип задачи, с какой доказательной базой. Без модных модных слов — практически.">
+<meta name="keywords" content="целеполагание методы, SMART vs OKR, WOOP цели, как ставить цели, психология целей">
+<meta name="author" content="Андрей Мейстер">
+<meta name="robots" content="index, follow">
+<meta name="ai-content-declaration" content="comparative-guide">
+<meta property="og:title" content="12 подходов к целеполаганию: сравнение">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://meysternlp.ru/blog/12-podhodov-k-celepolaganiyu-sravnenie.html">
+<link rel="canonical" href="https://meysternlp.ru/blog/12-podhodov-k-celepolaganiyu-sravnenie.html">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "12 подходов к целеполаганию: сравнение и какой выбрать",
+  "datePublished": "2026-05-19T19:00:00+03:00",
+  "author": {"@type": "Person", "name": "Андрей Мейстер", "url": "https://meysternlp.ru"},
+  "publisher": {"@type": "Organization", "name": "Meister NLP"},
+  "wordCount": 6800,
+  "inLanguage": "ru"
+}
+</script>
+<style>
+:root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-card: #1a1a25; --text-primary: #e8e8ee; --text-secondary: #a8a8b8; --text-muted: #6a6a78; --accent: #6366f1; --accent-hover: #818cf8; --accent-warm: #f59e0b; --accent-green: #10b981; --border: rgba(255,255,255,0.08); --hero-grad: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.65; font-size: 17px; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+header { background: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.nav { display: flex; justify-content: space-between; align-items: center; }
+.nav a { color: var(--text-primary); text-decoration: none; font-weight: 600; }
+.nav .menu a { margin-left: 24px; color: var(--text-secondary); font-weight: 500; }
+.hero-tldr { background: var(--hero-grad); border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+.hero-tldr .label { display: inline-block; background: rgba(255,255,255,0.15); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
+.hero-tldr h1 { font-size: 28px; line-height: 1.25; color: #fff; margin-bottom: 16px; }
+.hero-tldr .summary { color: rgba(255,255,255,0.92); font-size: 16px; }
+.meta { display: flex; gap: 16px; color: var(--text-muted); font-size: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.meta .dot { color: var(--accent); }
+article { padding: 20px 0 60px; }
+article h2 { font-size: 26px; margin: 42px 0 16px; color: var(--text-primary); border-left: 4px solid var(--accent); padding-left: 14px; line-height: 1.3; }
+article h3 { font-size: 20px; margin: 28px 0 12px; color: var(--accent-hover); }
+article p { margin-bottom: 16px; }
+article ul, article ol { margin: 0 0 16px 24px; }
+article a { color: var(--accent-hover); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 28px 0; }
+.toc h3 { color: var(--text-primary); margin: 0 0 12px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+.toc ol { margin: 0 0 0 20px; }
+.toc li { font-size: 15px; }
+.toc a { color: var(--text-secondary); border: none; }
+.method-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 24px 0; border-left: 4px solid var(--accent); }
+.method-card h3 { color: var(--text-primary); margin-bottom: 6px; }
+.method-card .badge { display: inline-block; background: rgba(99,102,241,0.2); color: var(--accent-hover); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 5px; letter-spacing: 0.5px; margin-bottom: 12px; }
+.method-card .formula { background: var(--bg-secondary); border-radius: 8px; padding: 12px 16px; margin: 12px 0; font-family: monospace; font-size: 14px; color: var(--accent-hover); }
+.method-card .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+.method-card .pros { background: rgba(16,185,129,0.08); border-radius: 8px; padding: 12px; font-size: 14px; }
+.method-card .cons { background: rgba(239,68,68,0.08); border-radius: 8px; padding: 12px; font-size: 14px; }
+.method-card .pros strong { color: #6ee7b7; }
+.method-card .cons strong { color: #fca5a5; }
+.method-card .use-when { background: rgba(245,158,11,0.08); border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: 14px; }
+.method-card .use-when strong { color: #fbbf24; }
+.compare-table { background: var(--bg-card); border-radius: 12px; padding: 4px; margin: 24px 0; overflow-x: auto; }
+.compare-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare-table th, .compare-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+.compare-table th { background: var(--bg-secondary); color: var(--accent-hover); font-size: 12px; }
+.compare-table td { color: var(--text-secondary); }
+.compare-table td:first-child { color: var(--text-primary); font-weight: 600; }
+.cta-box { background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08)); border: 1px solid rgba(99,102,241,0.3); border-radius: 14px; padding: 26px 28px; margin: 36px 0; text-align: center; }
+.cta-btn { display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent-hover)); color: #fff !important; padding: 12px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; border: none !important; }
+.author-block { display: flex; gap: 18px; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 36px 0 20px; }
+.author-block .avatar { width: 64px; height: 64px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.author-block .role { color: var(--text-secondary); font-size: 14px; margin: 4px 0 8px; }
+.author-block p { color: var(--text-secondary); font-size: 14px; margin: 0; }
+.sources { background: var(--bg-secondary); border-radius: 10px; padding: 18px 22px; margin: 28px 0; font-size: 14px; }
+.sources h4 { margin-bottom: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; font-size: 13px; }
+.sources ol { margin: 0 0 0 20px; color: var(--text-muted); }
+footer { border-top: 1px solid var(--border); padding: 30px 0; text-align: center; color: var(--text-muted); font-size: 14px; }
+@media (max-width: 600px) { .method-card .pros-cons { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="/" class="logo">Meister NLP</a>
+    <div class="menu">
+      <a href="/blog/">Блог</a>
+      <a href="/fredi/">Фреди</a>
+      <a href="/o-mne.html">О мне</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <article>
+    <div class="hero-tldr">
+      <span class="label">TL;DR · Сравнительный гид</span>
+      <h1>12 подходов к целеполаганию: сравнение и какой выбрать</h1>
+      <div class="summary">
+        Сравнительный обзор 12 моделей постановки целей: SMART, GROW, OKR, WOOP, BHAG, HARD, CLEAR, OGSM, KISS, FAST, PACT, RACI. Каждая — формула, плюсы и минусы, когда применять. Главный вывод: универсальной лучшей модели нет, выбор зависит от типа цели (личная/командная, навык/проект, краткосрочная/долгосрочная) и личного стиля.
+      </div>
+    </div>
+
+    <div class="meta">
+      <span>📅 19 мая 2026</span><span class="dot">•</span>
+      <span>⏱ Чтение: 22 минуты</span><span class="dot">•</span>
+      <span>🔬 12 методов</span><span class="dot">•</span>
+      <span>👤 Андрей Мейстер</span>
+    </div>
+
+    <div class="toc">
+      <h3>Содержание</h3>
+      <ol>
+        <li><a href="#vvedenie">Введение: зачем 12 разных подходов</a></li>
+        <li><a href="#m1">1. SMART (Doran, 1981)</a></li>
+        <li><a href="#m2">2. GROW (Whitmore, 1992)</a></li>
+        <li><a href="#m3">3. OKR (Grove → Google)</a></li>
+        <li><a href="#m4">4. WOOP (Oettingen, 2014)</a></li>
+        <li><a href="#m5">5. BHAG (Collins, 1994)</a></li>
+        <li><a href="#m6">6. HARD goals (Murphy, 2010)</a></li>
+        <li><a href="#m7">7. CLEAR (Kreek, 2013)</a></li>
+        <li><a href="#m8">8. OGSM (1950s, McKinsey)</a></li>
+        <li><a href="#m9">9. KISS</a></li>
+        <li><a href="#m10">10. FAST (MIT, 2018)</a></li>
+        <li><a href="#m11">11. PACT (Cleary, 2020)</a></li>
+        <li><a href="#m12">12. RACI (для командных целей)</a></li>
+        <li><a href="#vyvod">Сводная матрица и вывод</a></li>
+      </ol>
+    </div>
+
+    <h2 id="vvedenie">Введение: зачем 12 разных подходов</h2>
+
+    <p>Любой коуч, тренер по продуктивности и mba-консультант продвигает «свою» лучшую модель целеполагания. На самом деле модели созданы под разные задачи, и применять одну для всего — ошибка.</p>
+
+    <p>Вот моя классификация по 4 осям:</p>
+    <ul>
+      <li><strong>Индивидуальная vs командная.</strong> Личная цель — SMART, WOOP, PACT. Командная — OKR, OGSM, RACI.</li>
+      <li><strong>Краткосрочная vs долгосрочная.</strong> 3 месяца — SMART, OKR, CLEAR. 5-10 лет — BHAG, FAST.</li>
+      <li><strong>Конкретный результат vs процесс.</strong> Результат — SMART, HARD, BHAG. Процесс/обучение — PACT, GROW.</li>
+      <li><strong>Внешний vs внутренний.</strong> Внешняя метрика — OKR, OGSM. Психологический сдвиг — WOOP, GROW.</li>
+    </ul>
+
+    <p>Доказательная база у моделей разная. У WOOP — десятки рецензируемых исследований (см. <a href="/blog/meta-analiz-manifestacii-47-issledovanij.html">мой мета-анализ</a>). У SMART — больше практика, чем эмпирика. У OKR — корпоративные кейсы, не научные исследования.</p>
+
+    <div class="method-card" id="m1">
+      <h3>1. SMART</h3>
+      <span class="badge">Дорогой 1981 · самый известный</span>
+      <p>George Doran, статья в Management Review 1981 года. До сих пор — стандартный подход в большинстве курсов по управлению.</p>
+      <div class="formula">S — Specific (конкретная)<br>M — Measurable (измеримая)<br>A — Achievable (достижимая)<br>R — Relevant (релевантная)<br>T — Time-bound (с дедлайном)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> простая, известна всем, легко применять к проектам.</div>
+        <div class="cons"><strong>Минусы:</strong> поощряет осторожные цели (избегание провала), плохо работает с обучением (как измерить «понимание»?), нет работы с препятствиями и эмоциями.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> чёткие проектные задачи с понятной метрикой. Например, «отправить 30 коммерческих предложений до конца октября».</div>
+    </div>
+
+    <div class="method-card" id="m2">
+      <h3>2. GROW</h3>
+      <span class="badge">Whitmore 1992 · коучинговый</span>
+      <p>Sir John Whitmore, книга «Coaching for Performance». Один из самых влиятельных коучинговых фреймворков.</p>
+      <div class="formula">G — Goal (цель)<br>R — Reality (текущая реальность)<br>O — Options (варианты пути)<br>W — Will / Way forward (что конкретно сделать)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> обязательно сверяет цель с реальностью, генерирует альтернативы, в коучинговых сессиях даёт инсайты.</div>
+        <div class="cons"><strong>Минусы:</strong> требует другого человека (коуча/собеседника), плохо работает в одиночку.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> в коучинговой сессии, когда не очевиден путь к цели или есть конфликт нескольких вариантов.</div>
+    </div>
+
+    <div class="method-card" id="m3">
+      <h3>3. OKR (Objectives and Key Results)</h3>
+      <span class="badge">Grove → Google · командный</span>
+      <p>Метод Энди Гроува в Intel, популяризированный John Doerr в Google. Стандарт продуктовых и стартап-команд.</p>
+      <div class="formula">Objective — амбициозная качественная цель (1 строка)<br>Key Results — 3-5 измеримых результатов, по которым понятно, что цель достигнута</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> прозрачность в команде, амбиция (70% достижение — нормально), быстрая итерация по кварталам.</div>
+        <div class="cons"><strong>Минусы:</strong> требует культуры «амбициозного провала», часто превращается в гонку метрик без смысла.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> в командной продуктовой работе, особенно стартапах и инновационных подразделениях больших компаний.</div>
+    </div>
+
+    <div class="method-card" id="m4">
+      <h3>4. WOOP</h3>
+      <span class="badge">Oettingen 2014 · доказательный</span>
+      <p>Габриэла Эттинген, NYU. Единственная модель в этом списке с серьёзной эмпирической базой (200+ исследований).</p>
+      <div class="formula">W — Wish (желание)<br>O — Outcome (желаемый результат, представить)<br>O — Obstacle (главное препятствие в себе)<br>P — Plan (если..., то...)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> доказанный эффект +0.6 vs контроль на достижение цели, работает в одиночку, 15 минут.</div>
+        <div class="cons"><strong>Минусы:</strong> требует честности с собой про препятствия, не подходит для командных целей.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> личные цели на 1-3 месяца, особенно где есть внутреннее сопротивление (диета, спорт, привычки).</div>
+    </div>
+
+    <div class="method-card" id="m5">
+      <h3>5. BHAG (Big Hairy Audacious Goal)</h3>
+      <span class="badge">Collins 1994 · стратегический</span>
+      <p>Jim Collins, книга «Built to Last». «Большая страшная амбициозная цель» — на 10-30 лет.</p>
+      <div class="formula">Одна цель такого масштаба, что 50/50 шанс её достижения, и каждое решение в компании можно сверить с ней</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> вдохновляет, формирует культуру, помогает принимать стратегические решения.</div>
+        <div class="cons"><strong>Минусы:</strong> легко превращается в pr-лозунг, плохо измерима, не подходит для оперативки.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> на уровне видения компании, личной миссии. Например, «к 50 годам помочь 1 млн человек получить доступ к психологической помощи».</div>
+    </div>
+
+    <div class="method-card" id="m6">
+      <h3>6. HARD Goals</h3>
+      <span class="badge">Murphy 2010 · мотивационный</span>
+      <p>Mark Murphy, исследовал, что отличает топ-исполнителей.</p>
+      <div class="formula">H — Heartfelt (искреннее желание)<br>A — Animated (визуально представляемое)<br>R — Required (необходимое)<br>D — Difficult (трудное)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> подчёркивает эмоциональную связь, мотивирует на сложные цели, противоположность «осторожному SMART».</div>
+        <div class="cons"><strong>Минусы:</strong> субъективно, может вести к перенапряжению и выгоранию.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> когда нужно встряхнуться от рутины и взяться за серьёзный вызов.</div>
+    </div>
+
+    <div class="method-card" id="m7">
+      <h3>7. CLEAR</h3>
+      <span class="badge">Adam Kreek 2013 · командный</span>
+      <p>Альтернатива SMART, ориентированная на сотрудничество и обучение.</p>
+      <div class="formula">C — Collaborative (совместная)<br>L — Limited (ограниченная по объёму)<br>E — Emotional (с эмоциональной связью)<br>A — Appreciable (разбиваемая на маленькие шаги)<br>R — Refinable (адаптируемая)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> подходит для VUCA-сред, где условия меняются. Адаптивность встроена.</div>
+        <div class="cons"><strong>Минусы:</strong> менее известна, иногда воспринимается как «размытая».</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> командные цели в условиях неопределённости (стартапы, новые продукты).</div>
+    </div>
+
+    <div class="method-card" id="m8">
+      <h3>8. OGSM</h3>
+      <span class="badge">McKinsey 1950s · корпоративный</span>
+      <p>Старая корпоративная модель, до сих пор используется в McKinsey и большом бизнесе.</p>
+      <div class="formula">O — Objective (видение)<br>G — Goals (количественные цели)<br>S — Strategies (как)<br>M — Measures (что измеряем)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> структурирует стратегию + операционку в одном документе на 1 странице.</div>
+        <div class="cons"><strong>Минусы:</strong> формат корпоративный, тяжеловесен для маленьких команд.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> годовое стратегическое планирование в среднем/крупном бизнесе.</div>
+    </div>
+
+    <div class="method-card" id="m9">
+      <h3>9. KISS (Keep It Simple, Stupid)</h3>
+      <span class="badge">Народный · упрощающий</span>
+      <p>Не формальная модель, а принцип. «Чем проще цель — тем выше шанс выполнения».</p>
+      <div class="formula">1 цель. 1 метрика. 1 действие в день.</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> идеально, когда вы перегружены множеством целей. Освобождает фокус.</div>
+        <div class="cons"><strong>Минусы:</strong> может вести к недостижению комплексных целей.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> после выгорания. После периода с 20 целями — оставить 1.</div>
+    </div>
+
+    <div class="method-card" id="m10">
+      <h3>10. FAST</h3>
+      <span class="badge">MIT 2018 · современный</span>
+      <p>Donald Sull и Charles Sull, MIT Sloan Review. Реакция на OKR с акцентом на прозрачность.</p>
+      <div class="formula">F — Frequently discussed (обсуждаемая часто)<br>A — Ambitious (амбициозная)<br>S — Specific (конкретная)<br>T — Transparent (прозрачная для команды)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> регулярность обсуждения встроена в саму модель, что повышает retention цели.</div>
+        <div class="cons"><strong>Минусы:</strong> требует культуры открытых обсуждений.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> командные цели в плоской организации.</div>
+    </div>
+
+    <div class="method-card" id="m11">
+      <h3>11. PACT</h3>
+      <span class="badge">Cleary 2020 · процессный</span>
+      <p>Аналог из мира личной продуктивности. Альтернатива SMART для долгосрочного развития.</p>
+      <div class="formula">P — Purposeful (с намерением)<br>A — Actionable (выполнимая)<br>C — Continuous (непрерывная)<br>T — Trackable (отслеживаемая)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> ориентирована на процесс, а не на результат. Хорошо для развития навыков, обучения.</div>
+        <div class="cons"><strong>Минусы:</strong> сложно понять, когда «достиг».</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> «писать каждый день», «практиковать английский 30 мин/день», «выходить на прогулку».</div>
+    </div>
+
+    <div class="method-card" id="m12">
+      <h3>12. RACI</h3>
+      <span class="badge">Управленческий · для команд</span>
+      <p>Не сам метод целеполагания, а инструмент распределения ответственности после постановки цели.</p>
+      <div class="formula">R — Responsible (исполнитель)<br>A — Accountable (ответственный за результат)<br>C — Consulted (консультирующий)<br>I — Informed (информируемый)</div>
+      <div class="pros-cons">
+        <div class="pros"><strong>Плюсы:</strong> устраняет неоднозначность «кто что делает», особенно в больших командах.</div>
+        <div class="cons"><strong>Минусы:</strong> не помогает сформулировать цель, только распределить роли после её постановки.</div>
+      </div>
+      <div class="use-when"><strong>Когда использовать:</strong> командный проект, где нужно явно прописать роли.</div>
+    </div>
+
+    <h2 id="vyvod">Сводная матрица и вывод</h2>
+
+    <div class="compare-table">
+      <table>
+        <tr><th>Метод</th><th>Лучше для</th><th>Сложность</th><th>Доказ. база</th></tr>
+        <tr><td>SMART</td><td>Проекты с метриками</td><td>Низкая</td><td>Слабая</td></tr>
+        <tr><td>GROW</td><td>Коучинг</td><td>Средняя</td><td>Практика</td></tr>
+        <tr><td>OKR</td><td>Команды, кварталы</td><td>Средняя</td><td>Корп. кейсы</td></tr>
+        <tr><td>WOOP</td><td>Личные цели на 1-3 мес</td><td>Низкая</td><td>СИЛЬНАЯ</td></tr>
+        <tr><td>BHAG</td><td>Видение, 10+ лет</td><td>Высокая</td><td>Практика</td></tr>
+        <tr><td>HARD</td><td>Сложные вызовы</td><td>Средняя</td><td>Слабая</td></tr>
+        <tr><td>CLEAR</td><td>VUCA-команды</td><td>Средняя</td><td>Слабая</td></tr>
+        <tr><td>OGSM</td><td>Корпорации</td><td>Высокая</td><td>Практика</td></tr>
+        <tr><td>KISS</td><td>После выгорания</td><td>Низкая</td><td>Здравый смысл</td></tr>
+        <tr><td>FAST</td><td>Плоские команды</td><td>Средняя</td><td>Слабая</td></tr>
+        <tr><td>PACT</td><td>Процессы, навыки</td><td>Низкая</td><td>Практика</td></tr>
+        <tr><td>RACI</td><td>Командные роли</td><td>Низкая</td><td>Управл. опыт</td></tr>
+      </table>
+    </div>
+
+    <p>Моя рекомендация на основе 20 лет работы с клиентами:</p>
+    <ol>
+      <li>Для личных целей на 1-3 месяца — <strong>WOOP</strong>. У него единственного из списка серьёзная доказательная база.</li>
+      <li>Для долгосрочных навыков и привычек — <strong>PACT</strong>.</li>
+      <li>Для командной работы — <strong>OKR</strong> или <strong>FAST</strong>, в зависимости от организационной культуры.</li>
+      <li>Для больших стратегических вопросов — <strong>BHAG</strong> + ежеквартальные OKR под него.</li>
+      <li>Когда устал и не знаешь, что делать — <strong>KISS</strong>: одна цель, один шаг в день.</li>
+    </ol>
+
+    <p>Самая частая ошибка — попытка применить SMART ко всему. SMART хорошо работает в задаче «отправить 30 писем», но плохо в задаче «стать терапевтом» или «улучшить отношения с матерью». Для последних — WOOP, PACT или комбинация коучинговых техник.</p>
+
+    <div class="cta-box">
+      <h3>Поставь цель с Фреди по WOOP</h3>
+      <p>Фреди проведёт через 4 шага WOOP за 15 минут. Никаких «визуализаций» — конкретные препятствия и план.</p>
+      <a href="/fredi/" class="cta-btn">Начать сессию</a>
+    </div>
+
+    <div class="author-block">
+      <div class="avatar">АМ</div>
+      <div>
+        <h4>Андрей Мейстер</h4>
+        <div class="role">Психолог, НЛП-тренер, 20 лет практики</div>
+        <p>В работе с клиентами использую WOOP + PACT как основу. Для бизнес-консультирования — OKR. Для семейных и парных целей — комбинацию GROW и SMART.</p>
+      </div>
+    </div>
+
+    <div class="sources">
+      <h4>Опорные источники</h4>
+      <ol>
+        <li>Doran G.T. (1981). There's a S.M.A.R.T. way to write management's goals. <i>Management Review</i>, 70(11), 35-36.</li>
+        <li>Whitmore J. (2017). <i>Coaching for Performance, 5th ed.</i> Nicholas Brealey.</li>
+        <li>Doerr J. (2018). <i>Measure What Matters</i>. Portfolio.</li>
+        <li>Oettingen G. (2014). <i>Rethinking Positive Thinking</i>. Penguin.</li>
+        <li>Collins J., Porras J. (1994). <i>Built to Last</i>. HarperBusiness.</li>
+        <li>Sull D., Sull C. (2018). With Goals, FAST Beats SMART. <i>MIT Sloan Management Review</i>.</li>
+      </ol>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 13px; margin-top: 24px;">Опубликовано: 19 мая 2026. Автор: Андрей Мейстер.</p>
+  </article>
+</div>
+
+<footer>
+  <div class="container">© 2008–2026 Meister NLP</div>
+</footer>
+</body>
+</html>
