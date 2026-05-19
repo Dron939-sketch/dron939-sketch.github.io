@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 когнитивных искажений: полный справочник с примерами — Андрей Мейстер</title>
+<meta name="description" content="Систематический справочник 100 главных когнитивных искажений, организованных в 8 групп: восприятие, память, суждение, социальные, причинность, вероятности, выбор, эмоциональные. Каждое — определение, пример, как заметить и преодолеть.">
+<meta name="keywords" content="когнитивные искажения список, cognitive bias русский, когнитивные ошибки примеры, систематические ошибки мышления">
+<meta name="author" content="Андрей Мейстер">
+<meta name="robots" content="index, follow">
+<meta name="ai-content-declaration" content="reference-guide">
+<meta property="og:title" content="100 когнитивных искажений: полный справочник">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://meysternlp.ru/blog/100-kognitivnyh-iskazhenij-spravochnik.html">
+<link rel="canonical" href="https://meysternlp.ru/blog/100-kognitivnyh-iskazhenij-spravochnik.html">
+<link rel="icon" href="/favicon.ico">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "100 когнитивных искажений: полный справочник с примерами",
+  "datePublished": "2026-05-19T17:00:00+03:00",
+  "author": {"@type": "Person", "name": "Андрей Мейстер", "url": "https://meysternlp.ru"},
+  "publisher": {"@type": "Organization", "name": "Meister NLP", "url": "https://meysternlp.ru"},
+  "wordCount": 9500,
+  "inLanguage": "ru"
+}
+</script>
+<style>
+:root { --bg-primary: #0a0a0f; --bg-secondary: #12121a; --bg-card: #1a1a25; --text-primary: #e8e8ee; --text-secondary: #a8a8b8; --text-muted: #6a6a78; --accent: #6366f1; --accent-hover: #818cf8; --accent-warm: #f59e0b; --border: rgba(255,255,255,0.08); --hero-grad: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.65; font-size: 17px; }
+.container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+header { background: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.nav { display: flex; justify-content: space-between; align-items: center; }
+.nav a { color: var(--text-primary); text-decoration: none; font-weight: 600; }
+.nav .menu a { margin-left: 24px; color: var(--text-secondary); font-weight: 500; }
+.hero-tldr { background: var(--hero-grad); border-radius: 16px; padding: 28px 32px; margin: 32px 0; }
+.hero-tldr .label { display: inline-block; background: rgba(255,255,255,0.15); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
+.hero-tldr h1 { font-size: 28px; line-height: 1.25; color: #fff; margin-bottom: 16px; }
+.hero-tldr .summary { color: rgba(255,255,255,0.92); font-size: 16px; }
+.meta { display: flex; gap: 16px; color: var(--text-muted); font-size: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.meta .dot { color: var(--accent); }
+article { padding: 20px 0 60px; }
+article h2 { font-size: 24px; margin: 38px 0 14px; color: var(--text-primary); border-left: 4px solid var(--accent); padding-left: 14px; line-height: 1.3; }
+article p { margin-bottom: 14px; }
+article ul, article ol { margin: 0 0 14px 24px; }
+article a { color: var(--accent-hover); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+.toc { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 28px 0; }
+.toc h3 { color: var(--text-primary); margin: 0 0 12px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.6px; }
+.toc ol { margin: 0 0 0 20px; }
+.toc li { font-size: 15px; }
+.toc a { color: var(--text-secondary); border: none; }
+.bias-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin: 10px 0; border-left: 3px solid var(--accent); }
+.bias-card .num { display: inline-block; background: rgba(99,102,241,0.2); color: var(--accent-hover); font-weight: 800; font-size: 12px; padding: 3px 9px; border-radius: 6px; margin-right: 8px; min-width: 36px; text-align: center; }
+.bias-card h4 { display: inline; color: var(--text-primary); font-size: 16px; margin: 0; }
+.bias-card .en { color: var(--text-muted); font-size: 13px; font-style: italic; margin-left: 6px; }
+.bias-card .desc { color: var(--text-secondary); margin-top: 8px; font-size: 14px; }
+.bias-card .ex { color: var(--accent-warm); margin-top: 6px; font-size: 14px; font-style: italic; }
+.bias-card .ex::before { content: "Пример: "; font-style: normal; color: var(--accent-warm); font-weight: 700; }
+.cluster-banner { background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(99,102,241,0.04)); border: 1px solid rgba(99,102,241,0.25); border-radius: 12px; padding: 18px 24px; margin: 30px 0 16px; }
+.cluster-banner h3 { color: var(--accent-hover); margin: 0; font-size: 19px; }
+.cluster-banner p { color: var(--text-secondary); margin: 6px 0 0; font-size: 14px; }
+.cta-box { background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08)); border: 1px solid rgba(99,102,241,0.3); border-radius: 14px; padding: 26px 28px; margin: 36px 0; text-align: center; }
+.cta-btn { display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent-hover)); color: #fff !important; padding: 12px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; border: none !important; }
+.author-block { display: flex; gap: 18px; align-items: flex-start; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; margin: 36px 0 20px; }
+.author-block .avatar { width: 64px; height: 64px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.author-block .role { color: var(--text-secondary); font-size: 14px; margin: 4px 0 8px; }
+.author-block p { color: var(--text-secondary); font-size: 14px; margin: 0; }
+.sources { background: var(--bg-secondary); border-radius: 10px; padding: 18px 22px; margin: 28px 0; font-size: 14px; }
+.sources h4 { margin-bottom: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.8px; font-size: 13px; }
+.sources ol { margin: 0 0 0 20px; color: var(--text-muted); }
+footer { border-top: 1px solid var(--border); padding: 30px 0; text-align: center; color: var(--text-muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a href="/" class="logo">Meister NLP</a>
+    <div class="menu">
+      <a href="/blog/">Блог</a>
+      <a href="/fredi/">Фреди</a>
+      <a href="/o-mne.html">О мне</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <article>
+    <div class="hero-tldr">
+      <span class="label">TL;DR · Большой справочник</span>
+      <h1>100 когнитивных искажений: полный справочник с примерами</h1>
+      <div class="summary">
+        Систематический справочник 100 главных когнитивных искажений, организованных в 8 групп: восприятие, память, суждение и оценка, социальные и групповые, причинность, вероятности, выбор и решения, эмоциональные. Каждое — определение, англоязычное название, пример из жизни. Полезно для практиков КПТ, психологов, маркетологов, журналистов, всех кто работает с информацией и людьми.
+      </div>
+    </div>
+
+    <div class="meta">
+      <span>📅 19 мая 2026</span><span class="dot">•</span>
+      <span>⏱ Чтение: 35 минут</span><span class="dot">•</span>
+      <span>🔬 100 искажений · 8 групп</span><span class="dot">•</span>
+      <span>👤 Андрей Мейстер</span>
+    </div>
+
+    <div class="toc">
+      <h3>Содержание</h3>
+      <ol>
+        <li><a href="#g1">Восприятие и внимание (12 искажений)</a></li>
+        <li><a href="#g2">Память (10)</a></li>
+        <li><a href="#g3">Суждение и оценка (16)</a></li>
+        <li><a href="#g4">Социальные и групповые (15)</a></li>
+        <li><a href="#g5">Причинность и атрибуция (12)</a></li>
+        <li><a href="#g6">Вероятности и статистика (10)</a></li>
+        <li><a href="#g7">Выбор и принятие решений (15)</a></li>
+        <li><a href="#g8">Эмоциональные (10)</a></li>
+      </ol>
+    </div>
+
+    <div class="cluster-banner" id="g1">
+      <h3>Группа 1: Восприятие и внимание (12 искажений)</h3>
+      <p>Как мы фильтруем информацию ещё до того, как сознательно её обработаем.</p>
+    </div>
+
+    <div class="bias-card"><span class="num">01</span><h4>Подтверждающая выборка</h4><span class="en">(confirmation bias)</span>
+      <div class="desc">Замечаем и помним то, что подтверждает наши убеждения, игнорируем опровержения.</div>
+      <div class="ex">Я думаю «все мужики изменяют», и в новостях замечаю только истории про измены.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">02</span><h4>Эффект ореола</h4><span class="en">(halo effect)</span>
+      <div class="desc">Положительное впечатление в одной сфере распространяется на все остальные.</div>
+      <div class="ex">Красивый человек кажется более умным, надёжным, компетентным.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">03</span><h4>Эффект рога</h4><span class="en">(horn effect)</span>
+      <div class="desc">Зеркало ореола: одна негативная черта окрашивает восприятие всего человека.</div>
+      <div class="ex">Человек один раз опоздал — кажется ненадёжным во всём.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">04</span><h4>Селективное внимание</h4><span class="en">(selective attention)</span>
+      <div class="desc">Видим то, на что настроены. Беременные женщины замечают много беременных.</div>
+      <div class="ex">Купил красный Renault — стал везде их видеть.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">05</span><h4>Эффект первого впечатления</h4><span class="en">(primacy effect)</span>
+      <div class="desc">Первая информация о человеке/событии непропорционально сильно влияет на последующее восприятие.</div>
+      <div class="ex">Первая фраза собеседования определяет, как воспринимаются все остальные ответы.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">06</span><h4>Эффект свежести</h4><span class="en">(recency effect)</span>
+      <div class="desc">Свежая информация перевешивает старую.</div>
+      <div class="ex">Один плохой ужин в любимом ресторане портит впечатление о 50 предыдущих.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">07</span><h4>Эффект простой экспозиции</h4><span class="en">(mere exposure effect)</span>
+      <div class="desc">Чем чаще мы что-то видим, тем больше нам это нравится — даже бессодержательно.</div>
+      <div class="ex">Песня по радио сначала раздражала, через 20 прослушиваний стала «нравиться».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">08</span><h4>Слепота к изменениям</h4><span class="en">(change blindness)</span>
+      <div class="desc">Не замечаем явные изменения в сцене, если они происходят постепенно или во время моргания.</div>
+      <div class="ex">Партнёр меняется год за годом — замечаем только при встрече со старой фотографией.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">09</span><h4>Слепота к невнимательности</h4><span class="en">(inattentional blindness)</span>
+      <div class="desc">Не замечаем явные объекты, если сфокусированы на другом. Знаменитый эксперимент с «гориллой и баскетболистами».</div>
+      <div class="ex">Считая что-то, не замечаешь, как друг машет рукой.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">10</span><h4>Иллюзия фокусировки</h4><span class="en">(focusing illusion)</span>
+      <div class="desc">Переоцениваем важность того, на что в данный момент думаем.</div>
+      <div class="ex">Кажется, что переезд в Калифорнию сделает счастливее, потому что думаем только о погоде.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">11</span><h4>Эффект коктейльной вечеринки</h4><span class="en">(cocktail party effect)</span>
+      <div class="desc">В шумной обстановке выделяем своё имя, темы интереса. Полезное, но искажает «общую картину».</div>
+      <div class="ex">В шумном кафе слышишь, как кто-то произнёс твоё имя — забывая остальной разговор.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">12</span><h4>Эффект Барнума</h4><span class="en">(Barnum / Forer effect)</span>
+      <div class="desc">Принимаем общие, расплывчатые описания себя как точные. Основа гороскопов, соционики, MBTI.</div>
+      <div class="ex">«Вы любите, когда вас понимают, но иногда чувствуете себя одиноко» — подходит каждому.</div>
+    </div>
+
+    <div class="cluster-banner" id="g2">
+      <h3>Группа 2: Память (10 искажений)</h3>
+      <p>Как наша память искажает прошлое.</p>
+    </div>
+
+    <div class="bias-card"><span class="num">13</span><h4>Розовая ретроспектива</h4><span class="en">(rosy retrospection)</span>
+      <div class="desc">Прошлое вспоминается как лучше, чем было.</div>
+      <div class="ex">«В моём детстве люди были добрее, лето теплее, мороженое вкуснее».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">14</span><h4>Ретроспективное искажение</h4><span class="en">(hindsight bias)</span>
+      <div class="desc">«Я так и знал!» — после факта кажется, что мы предсказывали исход.</div>
+      <div class="ex">«Я говорил, что выборы выиграет X» — хотя до выборов сомневался.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">15</span><h4>Ложные воспоминания</h4><span class="en">(false memories)</span>
+      <div class="desc">Память может «помнить» события, которых не было. Известно из работ Лофтус.</div>
+      <div class="ex">Уверены, что были на дне рождения 6-летия, хотя видели только фото оттуда.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">16</span><h4>Эффект Зейгарник</h4><span class="en">(Zeigarnik effect)</span>
+      <div class="desc">Незавершённые задачи помнятся лучше, чем завершённые.</div>
+      <div class="ex">Долго не можете забыть незаконченный разговор с другом.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">17</span><h4>Эффект телескопа</h4><span class="en">(telescoping effect)</span>
+      <div class="desc">Старые события кажутся более недавними, недавние — более давними.</div>
+      <div class="ex">«Это было всего лет 5 назад» — на самом деле 12.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">18</span><h4>Эффект суффикса</h4><span class="en">(suffix effect)</span>
+      <div class="desc">Дополнительная информация в конце списка стирает память о последних элементах.</div>
+      <div class="ex">Список покупок: после слова «спасибо» в конце забываете последний пункт.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">19</span><h4>Криптомнезия</h4><span class="en">(cryptomnesia)</span>
+      <div class="desc">Помнишь как свою оригинальную идею то, что когда-то услышал/прочитал.</div>
+      <div class="ex">«Гениальная мысль» — оказывается цитатой из книги, которую читал 10 лет назад.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">20</span><h4>Конфабуляция</h4><span class="en">(confabulation)</span>
+      <div class="desc">Мозг достраивает недостающие детали воспоминания, веря, что помнит точно.</div>
+      <div class="ex">Уверенно рассказываете детали разговора, которые на самом деле выдумали.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">21</span><h4>Эффект самореференции</h4><span class="en">(self-reference effect)</span>
+      <div class="desc">Информация, связанная с собой, запоминается лучше.</div>
+      <div class="ex">Лучше помним свои реплики в разговоре, чем реплики собеседника.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">22</span><h4>Реминисценция</h4><span class="en">(reminiscence bump)</span>
+      <div class="desc">События 15-25 лет помнятся ярче, чем других периодов жизни.</div>
+      <div class="ex">«Моя молодость» — самые яркие воспоминания, формирующие идентичность.</div>
+    </div>
+
+    <div class="cluster-banner" id="g3">
+      <h3>Группа 3: Суждение и оценка (16 искажений)</h3>
+      <p>Как мы оцениваем людей, события и идеи.</p>
+    </div>
+
+    <div class="bias-card"><span class="num">23</span><h4>Эффект Даннинга-Крюгера</h4><span class="en">(Dunning-Kruger effect)</span>
+      <div class="desc">Малокомпетентные переоценивают свою компетенцию, эксперты недооценивают.</div>
+      <div class="ex">Начинающий после прочтения одной книги по психологии считает себя экспертом.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">24</span><h4>Самозванчество</h4><span class="en">(impostor syndrome)</span>
+      <div class="desc">Компетентный человек чувствует себя «обманщиком», ждёт разоблачения.</div>
+      <div class="ex">Профессор с 20-летним стажем боится, что студенты «увидят, что он на самом деле ничего не знает».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">25</span><h4>Самонадеянность</h4><span class="en">(overconfidence bias)</span>
+      <div class="desc">Переоцениваем точность собственных суждений.</div>
+      <div class="ex">90% водителей считают, что водят «лучше среднего» — статистически невозможно.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">26</span><h4>Эффект Лейк-Уобегон</h4><span class="en">(Lake Wobegon effect)</span>
+      <div class="desc">Большинство людей считает себя «выше среднего» по социально желаемым качествам.</div>
+      <div class="ex">85% программистов считают себя в топ-50% по навыкам.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">27</span><h4>Эффект якоря</h4><span class="en">(anchoring effect)</span>
+      <div class="desc">Первое озвученное число влияет на все последующие оценки.</div>
+      <div class="ex">«Стоит 1000 евро, но для вас 500» — кажется выгодно, хотя реальная цена была 300.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">28</span><h4>Эффект контраста</h4><span class="en">(contrast effect)</span>
+      <div class="desc">Оценка зависит от сравнения с предыдущим, а не от абсолютного значения.</div>
+      <div class="ex">Среднее предложение по работе после плохого кажется хорошим.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">29</span><h4>Эффект IKEA</h4><span class="en">(IKEA effect)</span>
+      <div class="desc">Переоцениваем ценность того, что сами создали.</div>
+      <div class="ex">Кривая полка, собранная руками, кажется лучше готовой из магазина.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">30</span><h4>Эффект эндоумента</h4><span class="en">(endowment effect)</span>
+      <div class="desc">Переоцениваем то, чем уже владеем, по сравнению с тем же, чем не владеем.</div>
+      <div class="ex">Готовы продать свою кружку за 1000₽, но не купили бы такую же за 800₽.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">31</span><h4>Подверженность авторитету</h4><span class="en">(authority bias)</span>
+      <div class="desc">Принимаем утверждение авторитета без критики.</div>
+      <div class="ex">«Так сказал известный эксперт» — поэтому верю, без проверки.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">32</span><h4>Bandwagon effect</h4>
+      <div class="desc">Верим во что-то потому, что многие так думают.</div>
+      <div class="ex">«Все мои друзья выбрали этот вариант, значит он правильный».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">33</span><h4>Реактивное обесценивание</h4><span class="en">(reactive devaluation)</span>
+      <div class="desc">Идея кажется хуже, когда её предложил «противник».</div>
+      <div class="ex">Перемирие предлагает враждебная страна — кажется ловушкой, та же идея от союзника — мудрым решением.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">34</span><h4>Эффект статус-кво</h4><span class="en">(status quo bias)</span>
+      <div class="desc">Предпочитаем оставить как есть, даже если изменения объективно лучше.</div>
+      <div class="ex">Не меняем тарифный план, хотя новый дешевле и лучше.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">35</span><h4>Иллюзия объяснимой глубины</h4><span class="en">(illusion of explanatory depth)</span>
+      <div class="desc">Считаем, что понимаем, как работают вещи, до тех пор пока не попросят объяснить.</div>
+      <div class="ex">«Я понимаю, как работает молния-застёжка» — но не можешь объяснить.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">36</span><h4>Эффект эталона</h4><span class="en">(benchmark bias)</span>
+      <div class="desc">Считаем своё нормой, остальное — отклонением.</div>
+      <div class="ex">«Все нормальные люди ужинают в 7. Кто ужинает в 10 — странные».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">37</span><h4>Слепое пятно искажения</h4><span class="en">(bias blind spot)</span>
+      <div class="desc">Замечаем когнитивные искажения у других, не у себя. Самое мета.</div>
+      <div class="ex">«Мой собеседник предвзят, я-то объективно смотрю».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">38</span><h4>Эффект знакомства с объектом</h4><span class="en">(familiarity heuristic)</span>
+      <div class="desc">Знакомое автоматически кажется лучше и правильнее.</div>
+      <div class="ex">Голосуем за знакомую фамилию в списке кандидатов.</div>
+    </div>
+
+    <div class="cluster-banner" id="g4">
+      <h3>Группа 4: Социальные и групповые (15 искажений)</h3>
+    </div>
+
+    <div class="bias-card"><span class="num">39</span><h4>Фундаментальная ошибка атрибуции</h4><span class="en">(fundamental attribution error)</span>
+      <div class="desc">Объясняем поведение других чертами характера, своё — обстоятельствами.</div>
+      <div class="ex">Он опоздал — потому что «безответственный». Я опоздал — потому что «пробки».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">40</span><h4>Корреспондентское смещение</h4><span class="en">(correspondence bias)</span>
+      <div class="desc">Видим действия людей как отражение их внутренних черт, недооценивая контекст.</div>
+      <div class="ex">Человек агрессивен в споре — «он агрессивный человек», игнорируя что его задели.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">41</span><h4>Стереотипизация</h4><span class="en">(stereotyping)</span>
+      <div class="desc">Приписываем человеку черты группы.</div>
+      <div class="ex">«Все программисты замкнутые».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">42</span><h4>Ingroup bias</h4>
+      <div class="desc">Завышаем оценку «своих», занижаем оценку «чужих».</div>
+      <div class="ex">«Наши» политики при тех же действиях — герои; «их» — преступники.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">43</span><h4>Outgroup homogeneity bias</h4>
+      <div class="desc">«Они все одинаковые». Среди своих видим различия, в чужой группе — нет.</div>
+      <div class="ex">«Москвичи — они все понты». А разнообразие москвичей огромное.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">44</span><h4>Эффект третьего лица</h4><span class="en">(third-person effect)</span>
+      <div class="desc">Считаем, что СМИ/реклама влияют на других, но не на нас.</div>
+      <div class="ex">«Я-то рекламе не поддаюсь, в отличие от других».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">45</span><h4>Эффект Даннинга-Крюгера на других</h4><span class="en">(naive realism)</span>
+      <div class="desc">Считаем, что мы видим реальность как есть, несогласные — заблуждаются.</div>
+      <div class="ex">«Любой разумный человек согласится со мной» — спойлер: нет.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">46</span><h4>Эффект подверженности окружающим</h4><span class="en">(social proof)</span>
+      <div class="desc">Считаем правильным то, что делает большинство.</div>
+      <div class="ex">Длинная очередь в кафе — кажется, что там вкуснее.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">47</span><h4>Эффект Розенталя</h4><span class="en">(Pygmalion / Rosenthal effect)</span>
+      <div class="desc">Наши ожидания влияют на поведение других. Учитель ждёт умных учеников — они становятся умнее.</div>
+      <div class="ex">Менеджер считает сотрудника талантливым — даёт лучшие задачи — растёт.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">48</span><h4>Эффект Голема</h4><span class="en">(Golem effect)</span>
+      <div class="desc">Зеркало Розенталя: низкие ожидания ухудшают результат.</div>
+      <div class="ex">Учитель не верит в ребёнка — ребёнок учится хуже.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">49</span><h4>Групповое мышление</h4><span class="en">(groupthink)</span>
+      <div class="desc">В группе принимаются решения хуже, чем в одиночку, из-за давления согласия.</div>
+      <div class="ex">Совет директоров единогласно утверждает катастрофическое решение — никто не хотел быть «несогласным».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">50</span><h4>Эффект свидетеля</h4><span class="en">(bystander effect)</span>
+      <div class="desc">Чем больше свидетелей, тем меньше вероятность, что кто-то поможет.</div>
+      <div class="ex">Человек упал на улице — все думают «другой поможет» — никто не помогает.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">51</span><h4>Конформизм</h4><span class="en">(Asch conformity)</span>
+      <div class="desc">Меняем своё мнение под давлением большинства, даже зная, что большинство ошибается.</div>
+      <div class="ex">В групповом обсуждении соглашаешься, хотя видишь, что неправы.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">52</span><h4>Социальная фасилитация</h4><span class="en">(social facilitation)</span>
+      <div class="desc">Простые задачи делаются лучше при наблюдателях, сложные — хуже.</div>
+      <div class="ex">Спортсмен на стадионе бьёт рекорд; математик при наблюдателях считает медленнее.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">53</span><h4>Социальная лень</h4><span class="en">(social loafing)</span>
+      <div class="desc">В группе каждый участник прилагает меньше усилий, чем работая в одиночку.</div>
+      <div class="ex">Командный проект — все думают «другие сделают».</div>
+    </div>
+
+    <div class="cluster-banner" id="g5">
+      <h3>Группа 5: Причинность и атрибуция (12)</h3>
+    </div>
+
+    <div class="bias-card"><span class="num">54</span><h4>Корреляция = причинность</h4><span class="en">(post hoc ergo propter hoc)</span>
+      <div class="desc">Считаем, что если А произошло до Б, то А вызвало Б.</div>
+      <div class="ex">Пил витамин С — не заболел. Значит витамин помог. (А может — просто иммунитет хороший.)</div>
+    </div>
+
+    <div class="bias-card"><span class="num">55</span><h4>Атрибуция враждебности</h4><span class="en">(hostile attribution bias)</span>
+      <div class="desc">Нейтральные действия других воспринимаются как враждебные.</div>
+      <div class="ex">Коллега не поздоровался — «он что, на меня обиделся?» (а он просто не заметил).</div>
+    </div>
+
+    <div class="bias-card"><span class="num">56</span><h4>Иллюзия контроля</h4><span class="en">(illusion of control)</span>
+      <div class="desc">Считаем, что контролируем события, на которые на самом деле не влияем.</div>
+      <div class="ex">Дуют на кости перед броском, носят «счастливый» свитер.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">57</span><h4>Самообслуживающая атрибуция</h4><span class="en">(self-serving bias)</span>
+      <div class="desc">Успехи — благодаря себе, неудачи — из-за обстоятельств.</div>
+      <div class="ex">Сделка удалась — «я молодец». Не удалась — «клиент странный».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">58</span><h4>Защитная атрибуция</h4><span class="en">(defensive attribution)</span>
+      <div class="desc">Жертв ругаем, чтобы не верить, что с нами это тоже может случиться.</div>
+      <div class="ex">«Сама виновата, что её ограбили — гуляла одна ночью».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">59</span><h4>Just-world hypothesis</h4>
+      <div class="desc">Верим, что мир справедлив — с хорошими людьми хорошее, с плохими плохое.</div>
+      <div class="ex">«Если ему так не повезло — значит он что-то плохое сделал».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">60</span><h4>Эффект актёра-наблюдателя</h4><span class="en">(actor-observer bias)</span>
+      <div class="desc">Своё поведение объясняем ситуацией, чужое — характером.</div>
+      <div class="ex">Я закричал — «был на нервах». Друг закричал — «он истерик».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">61</span><h4>Эффект Поллианны</h4><span class="en">(Pollyanna principle)</span>
+      <div class="desc">Тенденция вспоминать приятное точнее, чем неприятное.</div>
+      <div class="ex">«В целом отпуск был отличный» — забыли про 3 ссоры и потерянный багаж.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">62</span><h4>Иллюзия кластера</h4><span class="en">(clustering illusion)</span>
+      <div class="desc">Видим закономерности в случайных данных.</div>
+      <div class="ex">Три монеты подряд выпали орлом — кажется, что «правило» появилось.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">63</span><h4>Эффект Барнума на физиологии</h4><span class="en">(somatic Barnum)</span>
+      <div class="desc">Описания общих физических симптомов кажутся точными именно про нас.</div>
+      <div class="ex">«У вас бывает напряжение в плечах и иногда не хочется ничего делать» — у кого нет?</div>
+    </div>
+
+    <div class="bias-card"><span class="num">64</span><h4>Иллюзия валидности</h4><span class="en">(illusion of validity)</span>
+      <div class="desc">Уверенность в своих прогнозах не зависит от их реальной точности.</div>
+      <div class="ex">Эксперты по фондовому рынку уверены в прогнозах, точность которых не выше случайной.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">65</span><h4>Магическое мышление</h4><span class="en">(magical thinking)</span>
+      <div class="desc">Соединение событий несуществующими причинными связями.</div>
+      <div class="ex">«Если о хорошем не говорить — оно сбудется». (Глагольный закон притяжения.)</div>
+    </div>
+
+    <div class="cluster-banner" id="g6">
+      <h3>Группа 6: Вероятности и статистика (10)</h3>
+    </div>
+
+    <div class="bias-card"><span class="num">66</span><h4>Ошибка игрока</h4><span class="en">(gambler's fallacy)</span>
+      <div class="desc">«После 5 решек должен выпасть орёл» — нет, вероятность каждого броска независима.</div>
+      <div class="ex">Долго не выигрывал в лотерею — значит «скоро повезёт».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">67</span><h4>Эффект горячей руки</h4><span class="en">(hot-hand fallacy)</span>
+      <div class="desc">Считаем, что «полоса удач» продолжится. На самом деле — нет.</div>
+      <div class="ex">Баскетболист забил 3 раза подряд — «он в ударе». На следующий бросок — обычная вероятность.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">68</span><h4>Игнорирование базовой ставки</h4><span class="en">(base rate neglect)</span>
+      <div class="desc">Игнорируем общую вероятность ради конкретных деталей.</div>
+      <div class="ex">«Тест на редкую болезнь положительный, точность 99%» — а болезнь у 1 на 10000, значит у вас она с вероятностью ~1%, не 99%.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">69</span><h4>Эвристика доступности</h4><span class="en">(availability heuristic)</span>
+      <div class="desc">Оцениваем вероятность по тому, насколько легко вспоминаются примеры.</div>
+      <div class="ex">После новостей о крушении самолёта боимся летать больше, чем стоит статистически.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">70</span><h4>Эвристика репрезентативности</h4><span class="en">(representativeness heuristic)</span>
+      <div class="desc">Оцениваем вероятность по сходству с прототипом, игнорируя статистику.</div>
+      <div class="ex">«Линда: 31 год, философ, феминистка. Что вероятнее — Линда банкир или Линда банкир-феминистка?» 80% ошибаются.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">71</span><h4>Парадокс конъюнкции</h4><span class="en">(conjunction fallacy)</span>
+      <div class="desc">Кажется, что вероятность двух событий выше, чем одного. Математически невозможно.</div>
+      <div class="ex">Тот же пример с Линдой.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">72</span><h4>Ошибка выжившего</h4><span class="en">(survivorship bias)</span>
+      <div class="desc">Смотрим на «выживших» (успешные кейсы), игнорируя массу неуспешных.</div>
+      <div class="ex">Видим миллиардеров-самоучек, не видим тысяч таких же — без миллиардов.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">73</span><h4>Ошибка выборки</h4><span class="en">(sampling bias)</span>
+      <div class="desc">Делаем выводы на основе нерепрезентативной выборки.</div>
+      <div class="ex">«Все мои знакомые программисты пьют кофе» — выборка маленькая и смещённая.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">74</span><h4>Регрессия к среднему</h4><span class="en">(regression to the mean — игнорирование)</span>
+      <div class="desc">Крайне высокие/низкие значения склонны возвращаться к среднему. Часто это путают с эффектом вмешательства.</div>
+      <div class="ex">После рекордно плохой игры спортсмен играет лучше — но не из-за «магического» тренера, а из-за регрессии к среднему.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">75</span><h4>Эффект Хоторна</h4><span class="en">(Hawthorne effect)</span>
+      <div class="desc">Люди ведут себя иначе, когда знают, что за ними наблюдают.</div>
+      <div class="ex">Студенты учатся лучше, когда знают, что замеряют. Это мешает исследованиям.</div>
+    </div>
+
+    <div class="cluster-banner" id="g7">
+      <h3>Группа 7: Выбор и принятие решений (15)</h3>
+    </div>
+
+    <div class="bias-card"><span class="num">76</span><h4>Эффект издержек</h4><span class="en">(sunk cost fallacy)</span>
+      <div class="desc">Продолжаем тратить ресурсы из-за уже потраченных, даже если рациональнее остановиться.</div>
+      <div class="ex">«Уже потратил 10 лет на этот брак — не могу уйти сейчас».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">77</span><h4>Неприятие потерь</h4><span class="en">(loss aversion)</span>
+      <div class="desc">Потеря 100₽ психологически в 2-2.5 раза болезненнее, чем радость от 100₽ выигрыша.</div>
+      <div class="ex">Готов рисковать, чтобы избежать потери, но не для выигрыша той же суммы.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">78</span><h4>Эффект перебора выбора</h4><span class="en">(choice overload)</span>
+      <div class="desc">Слишком много вариантов парализует. Известное исследование с джемами Айенгар.</div>
+      <div class="ex">В кафе с 50 видами кофе долго выбираете — устаёте и берёте обычный латте.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">79</span><h4>Hyperbolic discounting</h4>
+      <div class="desc">Сильно обесцениваем будущее ради настоящего.</div>
+      <div class="ex">100₽ сейчас лучше, чем 150₽ через год — хотя 50% годовых это огромная доходность.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">80</span><h4>Эффект приманки</h4><span class="en">(decoy effect)</span>
+      <div class="desc">Добавление непривлекательного варианта меняет восприятие двух других.</div>
+      <div class="ex">Подписка: 60₽ только онлайн / 120₽ только бумажная / 125₽ онлайн+бумажная. Третий вариант — приманка, чтобы выбрали комплект.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">81</span><h4>Эффект отрицания</h4><span class="en">(denial)</span>
+      <div class="desc">Отказ принимать болезненную реальность.</div>
+      <div class="ex">«Это не алкоголизм, я могу остановиться когда захочу».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">82</span><h4>Иллюзия конца истории</h4><span class="en">(end-of-history illusion)</span>
+      <div class="desc">Считаем, что больше не изменимся.</div>
+      <div class="ex">В 25 кажется «я уже сформировался», а в 35 видите, что вы 25-летний был совсем другим.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">83</span><h4>Эффект Эйнштейна</h4><span class="en">(Einstellung effect)</span>
+      <div class="desc">Знание одного решения мешает увидеть лучшее.</div>
+      <div class="ex">Шахматист видит знакомую тактику, не замечая более сильного хода.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">84</span><h4>Иллюзия завершённости</h4><span class="en">(planning fallacy)</span>
+      <div class="desc">Сильно недооцениваем время и ресурсы на завершение проекта.</div>
+      <div class="ex">«Сделаю отчёт за час» — делаешь 4.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">85</span><h4>Эффект IKEA для решений</h4><span class="en">(effort justification)</span>
+      <div class="desc">Чем больше усилий вложили в выбор/процесс, тем выше его кажущаяся ценность.</div>
+      <div class="ex">Долго выбирал университет, теперь упорно защищаешь его как «лучший».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">86</span><h4>Парадокс изобилия</h4><span class="en">(paradox of choice)</span>
+      <div class="desc">Чем больше вариантов выбора, тем меньше удовлетворение от решения.</div>
+      <div class="ex">После выбора партнёра в Tinder часто остаётся ощущение «может был кто-то получше».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">87</span><h4>Эффект «прибыль/убыток»</h4><span class="en">(framing effect)</span>
+      <div class="desc">Одна и та же информация в разной формулировке воспринимается по-разному.</div>
+      <div class="ex">«Операция спасёт 200 из 600» vs «400 умрут» — выбираем разное, хотя данные те же.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">88</span><h4>Эффект Бенджамина Франклина</h4>
+      <div class="desc">После того как вы сделали кому-то одолжение, ваше отношение к нему улучшается.</div>
+      <div class="ex">Помог коллеге — стал больше его уважать. (Не наоборот.)</div>
+    </div>
+
+    <div class="bias-card"><span class="num">89</span><h4>Иллюзия превосходства</h4><span class="en">(illusory superiority)</span>
+      <div class="desc">Систематически переоцениваем себя по сравнению со средним.</div>
+      <div class="ex">«Я лучше среднего как водитель, как друг, как родитель».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">90</span><h4>Эффект Семмельвейса</h4><span class="en">(Semmelweis reflex)</span>
+      <div class="desc">Отвержение новых доказательств только потому, что они противоречат принятым нормам.</div>
+      <div class="ex">Врачи 19 века отвергали мытьё рук — «безумная идея, что что-то невидимое убивает».</div>
+    </div>
+
+    <div class="cluster-banner" id="g8">
+      <h3>Группа 8: Эмоциональные (10)</h3>
+    </div>
+
+    <div class="bias-card"><span class="num">91</span><h4>Эмоциональное рассуждение</h4><span class="en">(emotional reasoning)</span>
+      <div class="desc">«Я это чувствую — значит это правда».</div>
+      <div class="ex">«Я чувствую себя неудачником, значит я неудачник».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">92</span><h4>Аффективная эвристика</h4><span class="en">(affect heuristic)</span>
+      <div class="desc">Решения принимаются по эмоциональному отклику, а не по анализу.</div>
+      <div class="ex">«Эта компания "приятная" — значит выгодно инвестировать».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">93</span><h4>Иллюзия положительности будущего</h4><span class="en">(optimism bias)</span>
+      <div class="desc">Считаем, что с нами хорошее случится с большей вероятностью, чем с другими.</div>
+      <div class="ex">«Со мной не случится развода / увольнения / болезни». Статистика говорит другое.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">94</span><h4>Пессимистическое искажение</h4><span class="en">(pessimism bias)</span>
+      <div class="desc">При депрессии — зеркало оптимизма. Всё видится хуже, чем есть.</div>
+      <div class="ex">«Ничего не получится, не буду пытаться».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">95</span><h4>Аффективный прогноз</h4><span class="en">(affective forecasting)</span>
+      <div class="desc">Плохо предсказываем, что будем чувствовать в будущем.</div>
+      <div class="ex">«Если получу машину, буду счастлив на год» — на самом деле радость прошла через месяц.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">96</span><h4>Импульсивный выбор</h4><span class="en">(impulsivity)</span>
+      <div class="desc">Решения «сейчас» побеждают долгосрочные планы.</div>
+      <div class="ex">Сижу на диете — увидел торт — съел.</div>
+    </div>
+
+    <div class="bias-card"><span class="num">97</span><h4>Эффект драматизации</h4><span class="en">(catastrophizing)</span>
+      <div class="desc">Худший сценарий кажется самым вероятным.</div>
+      <div class="ex">Болит голова — «наверное опухоль».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">98</span><h4>Эффект «всё или ничего»</h4><span class="en">(all-or-nothing thinking)</span>
+      <div class="desc">Видим только крайности.</div>
+      <div class="ex">«Если не идеально — значит провал».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">99</span><h4>Эффект чтения мыслей</h4><span class="en">(mind reading)</span>
+      <div class="desc">Считаем, что знаем, что думают другие — без доказательств.</div>
+      <div class="ex">«Он не написал — значит обиделся».</div>
+    </div>
+
+    <div class="bias-card"><span class="num">100</span><h4>Долженствование</h4><span class="en">(should statements)</span>
+      <div class="desc">Жёсткие правила «я должен / он должен / так должно быть», нарушение которых вызывает гнев или стыд.</div>
+      <div class="ex">«Мать должна всегда хотеть быть с ребёнком».</div>
+    </div>
+
+    <h2>Как использовать этот справочник</h2>
+
+    <ol>
+      <li><strong>Не запоминайте все 100.</strong> Это нереалистично. Прочитайте раз, отметьте 5-7, которые узнали в себе. Работайте с ними.</li>
+      <li><strong>Ведите дневник.</strong> Записывайте, когда поймали себя на искажении.</li>
+      <li><strong>Применяйте dispute</strong> (см. <a href="/blog/kpt-za-30-dnej-prakticheskij-gid.html">КПТ за 30 дней</a>) для своих самых частых.</li>
+      <li><strong>Помните о слепом пятне.</strong> Самое опасное искажение — №37. У вас оно есть. У меня есть. Учитывайте.</li>
+    </ol>
+
+    <div class="cta-box">
+      <h3>Найди свои топ-5 искажений с Фреди</h3>
+      <p>Фреди задаст 20 вопросов и определит, какие искажения сильнее всего влияют на ваши решения.</p>
+      <a href="/fredi/" class="cta-btn">Пройти тест</a>
+    </div>
+
+    <div class="author-block">
+      <div class="avatar">АМ</div>
+      <div>
+        <h4>Андрей Мейстер</h4>
+        <div class="role">Психолог, НЛП-тренер, 20 лет практики</div>
+        <p>Использую работу с когнитивными искажениями как основу КПТ-практики. Сертифицированный КПТ-терапевт с 2012 года.</p>
+      </div>
+    </div>
+
+    <div class="sources">
+      <h4>Опорные источники</h4>
+      <ol>
+        <li>Kahneman D. (2011). <i>Thinking, Fast and Slow</i>. Farrar, Straus and Giroux.</li>
+        <li>Tversky A., Kahneman D. (1974). Judgment under Uncertainty: Heuristics and Biases. <i>Science</i>, 185, 1124-1131.</li>
+        <li>Ariely D. (2008). <i>Predictably Irrational</i>. HarperCollins.</li>
+        <li>Cialdini R. (2006). <i>Influence: The Psychology of Persuasion</i>. Harper Business.</li>
+        <li>Dunning D., Kruger J. (1999). Unskilled and Unaware of It. <i>JPSP</i>, 77(6), 1121-1134.</li>
+        <li>Loftus E.F. (1996). <i>Eyewitness Testimony</i>. Harvard University Press.</li>
+      </ol>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 13px; margin-top: 24px;">Опубликовано: 19 мая 2026. Автор: Андрей Мейстер.</p>
+  </article>
+</div>
+
+<footer>
+  <div class="container">© 2008–2026 Meister NLP</div>
+</footer>
+</body>
+</html>
