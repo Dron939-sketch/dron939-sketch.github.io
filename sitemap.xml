@@ -89,9 +89,15 @@
   <!-- ========== БЛОГ ========== -->
   <url>
     <loc>https://meysternlp.ru/blog/</loc>
-    <lastmod>2026-05-07</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/kak-rabotaet-infopole-vk.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <priority>1.0</priority>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/yalom-cherez-sistemu-koordinat-4-ekzistencialnyh-voprosa.html</loc>
