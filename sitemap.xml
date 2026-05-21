@@ -1,18 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://meysternlp.ru/</loc><lastmod>2026-05-22</lastmod><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://meysternlp.ru/knigi/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://meysternlp.ru/igry/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://meysternlp.ru/treningi/</loc><lastmod>2026-05-04</lastmod><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://meysternlp.ru/blog/</loc><lastmod>2026-05-22</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://meysternlp.ru/fredi/</loc><lastmod>2026-05-22</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://meysternlp.ru/</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://meysternlp.ru/knigi/</loc><lastmod>2026-05-21</lastmod><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/igry/</loc><lastmod>2026-05-21</lastmod><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/treningi/</loc><lastmod>2026-05-21</lastmod><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/</loc><lastmod>2026-05-21</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://meysternlp.ru/fredi/</loc><lastmod>2026-05-21</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
 
-  <!-- 6-я волна: 5 новых статей -->
+  <!-- 7-я волна: 20 продуктовых статей (нативная реклама товаров) -->
+  <!-- Блок A: разговорный гипноз (тренинги + Том I) -->
+  <url><loc>https://meysternlp.ru/blog/6-principov-vliyaniya-chaldini-2026.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/psihologiya-prodazh-2026-7-patternov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/psihologiya-peregovorov-metod-voss-fbi.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/neverbalnoe-obshchenie-12-markerov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/eriksonovskij-gipnoz-dlya-nachinayushchih.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Блок B: Вариатика (игры + книга паттернов) -->
+  <url><loc>https://meysternlp.ru/blog/kak-chitat-lyudej-7-urovnej-nablyudatelnosti.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/sistemnoe-myshlenie-5-praktik.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/8-klassifikacij-psihotipov-mbti-disc-variatika.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/trenirovka-nablyudatelnosti-30-dnej-uprazhnenij.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/patterny-povedeniya-kak-zamechat.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/psihologicheskij-portret-za-odnu-vstrechu.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Блок C: Том III: Стимульный контроль -->
+  <url><loc>https://meysternlp.ru/blog/stimulnyj-kontrol-7-rychagov-izmeneniya-povedeniya.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/sreda-opredelyaet-povedenie-nauchnyj-vzglyad-2026.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Блок D: манипуляции и защита (Том I) -->
+  <url><loc>https://meysternlp.ru/blog/kak-raspoznat-lozh-12-markerov-ekmana.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/konflikt-v-kommunikacii-6-tipov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/zashchita-ot-davleniya-10-tekhnik.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Блок E: карьера и коммуникация (тренинги) -->
+  <url><loc>https://meysternlp.ru/blog/soft-skills-2026-8-klyuchevyh-navykov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/psihologiya-lichnogo-brenda-7-principov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/aktivnoe-slushanie-6-urovnej.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/rapport-za-60-sekund-5-tekhnik.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+
+  <!-- 6-я волна: 5 статей -->
   <url><loc>https://meysternlp.ru/blog/psihologiya-revnosti-6-tipov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://meysternlp.ru/blog/bessonnica-5-tipov-kpt-i.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://meysternlp.ru/blog/uspeshnaya-odinokaya-zhenshchina-35.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://meysternlp.ru/blog/vozvrashchenie-posle-vygoraniya-7-etapov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://meysternlp.ru/blog/zdorovye-granicy-8-tipov.html</loc><lastmod>2026-05-22</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://meysternlp.ru/blog/zdorovye-granicy-8-tipov.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
 
   <!-- 5-я волна: 10 статей -->
   <url><loc>https://meysternlp.ru/blog/vygoranie-5-tipov-i-protokoly-vosstanovleniya.html</loc><lastmod>2026-05-21</lastmod><priority>1.0</priority><changefreq>monthly</changefreq></url>
