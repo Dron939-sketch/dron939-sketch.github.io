@@ -1,191 +1,114 @@
-/* Единый светлый стиль для всех статей блога meysternlp.ru */
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;color:#1D1D1F;line-height:1.7;font-size:17px;overflow-x:hidden;width:100%}
-.container{max-width:880px;margin:0 auto;padding:40px 24px;width:100%}
+/* Override layer: применяется поверх inline dark-стиля каждой статьи и делает её светлой
+   Применять через <link rel="stylesheet" href="/blog-light.css"> ПОСЛЕ inline <style>
+   Все правила с !important для гарантированного переопределения */
 
-/* === Typography === */
-h1{font-size:clamp(2.2rem,5.5vw,3.4rem);line-height:1.15;margin-bottom:20px;font-weight:700;color:#1D1D1F;letter-spacing:-0.01em}
-h2{font-size:clamp(1.7rem,4vw,2.2rem);margin:50px 0 20px;font-weight:600;line-height:1.25;color:#1D1D1F;letter-spacing:-0.005em}
-h3{font-size:1.35rem;margin:32px 0 14px;font-weight:600;color:#1D1D1F}
-h4{font-size:1.1rem;font-weight:600;color:#1D1D1F}
-p{margin-bottom:18px;color:#3A3A3C;font-weight:400}
-a{color:#3A86FF;text-decoration:none;transition:color .2s}
-a:hover{color:#1D1D1F}
-strong{color:#1D1D1F;font-weight:600}
-em{color:#3A3A3C}
+/* === Базовый светлый фон === */
+body{background:#FFFFFF!important;color:#1D1D1F!important;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif!important;line-height:1.7!important;font-size:17px!important}
 
-/* === Article wrapper === */
-.breadcrumbs{font-size:13px;color:#6E6E73;margin-bottom:24px}
-.breadcrumbs a{color:#3A86FF}
+/* === CSS-переменные: подменяем тёмные значения на светлые === */
+:root{--bg:#FFFFFF!important;--bg-primary:#FFFFFF!important;--bg-secondary:#F5F5F7!important;--bg-card:#FFFFFF!important;--card:#F5F5F7!important;--text:#1D1D1F!important;--text-primary:#1D1D1F!important;--text-secondary:#3A3A3C!important;--text-muted:#6E6E73!important;--muted:#6E6E73!important;--border:rgba(0,0,0,0.1)!important;--accent:#3A86FF!important;--accent-hover:#1D1D1F!important;--accent-warm:#F59E0B!important;--gold:#FBBF24!important;--green:#10B981!important;--cyan:#06B6D4!important;--blue:#3B82F6!important;--red:#EF4444!important;--pink:#EC4899!important}
 
-.tag{display:inline-block;background:linear-gradient(135deg,#3A86FF,#00A8E8);color:#FFFFFF;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:20px}
+/* === Заголовки: убираем градиент с -webkit-text-fill-color и делаем тёмными === */
+h1,h2,h3,h4,h5,h6{background:none!important;background-clip:initial!important;-webkit-background-clip:initial!important;-webkit-text-fill-color:#1D1D1F!important;color:#1D1D1F!important;font-weight:700!important}
+h1{font-size:clamp(2.2rem,5.5vw,3.4rem)!important;font-weight:800!important;line-height:1.15!important;letter-spacing:-0.01em!important}
+h2{font-size:clamp(1.7rem,4vw,2.4rem)!important;font-weight:700!important;line-height:1.25!important;margin:50px 0 20px!important}
+h3{font-size:1.35rem!important;font-weight:600!important;margin:32px 0 14px!important}
+h4{font-size:1.1rem!important;font-weight:600!important}
 
-.subtitle{font-size:1.25rem;color:#6E6E73;margin-bottom:32px;font-weight:400;line-height:1.5}
+/* === Параграфы и текст === */
+p{color:#3A3A3C!important;font-weight:400!important;margin-bottom:18px!important}
+strong,b{color:#1D1D1F!important;font-weight:600!important}
+em,i{color:#3A3A3C!important}
+li,td,th{color:#1D1D1F!important}
 
-.meta{display:flex;gap:20px;color:#6E6E73;font-size:14px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid #E0E0E0;flex-wrap:wrap}
+/* === Ссылки === */
+a{color:#3A86FF!important;text-decoration:none!important}
+a:hover{color:#1D1D1F!important}
 
-/* === Hero TL;DR === */
-.hero-tldr{background:linear-gradient(135deg,#FFFCE8,#F5F5F7);border:1px solid #FBBF24;border-left:4px solid #FBBF24;border-radius:16px;padding:28px 32px;margin:32px 0}
-.hero-tldr .label{display:inline-block;background:#FBBF24;color:#1D1D1F;padding:5px 12px;border-radius:12px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
-.hero-tldr p,.hero-tldr .summary{font-size:1.1rem;line-height:1.6;color:#1D1D1F;margin:0}
-.hero-tldr strong{color:#1D1D1F}
-.hero-tldr h1{font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.25;color:#1D1D1F;margin-bottom:14px}
+/* === Карточки, блоки, контейнеры — светлый фон === */
+.container{max-width:880px!important;margin:0 auto!important;padding:40px 24px!important}
+.toc,.faq,.faq-block,.sources,.related,.signature,.stat,.timeline-item,.case-block,.test-card,.method-box,.trend-card,.cost-block,.gift-block,.cause-card,.pattern-card,.trauma-card,.warning-box,.quote-block,.markers-list,.compare-table,.disclaimer,.protocol,.protocol-step,.role,.voice{background:#F5F5F7!important;border-color:#E0E0E0!important;color:#1D1D1F!important;border-radius:14px!important}
+.level-card,.goal-card,.obstacle-card,.breakthrough-card,.day-card,.bias-card,.step-card,.principle-card,.stat-card,.section-header{background:#FFFFFF!important;border:1px solid #E0E0E0!important;color:#1D1D1F!important;border-radius:12px!important}
 
-/* === Table of Contents === */
-.toc{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:24px 28px;margin:32px 0}
-.toc h3,.toc h4{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#6E6E73;margin-bottom:14px;font-weight:700;border:none;padding:0}
-.toc ol,.toc ul{padding-left:22px}
-.toc li{margin:8px 0;color:#1D1D1F}
-.toc a{color:#1D1D1F;border-bottom:1px dotted #E0E0E0;display:inline}
-.toc a:hover{color:#3A86FF;border-bottom-color:#3A86FF}
+/* === Hero TL;DR — золотой акцент в светлой теме === */
+.hero-tldr{background:linear-gradient(135deg,#FFFCE8,#F5F5F7)!important;border:1px solid #FBBF24!important;border-left:4px solid #FBBF24!important;border-radius:16px!important}
+.hero-tldr p,.hero-tldr .lead,.hero-tldr .summary{color:#1D1D1F!important;font-weight:400!important}
+.hero-tldr strong{color:#1D1D1F!important}
+.hero-tldr .label{background:#FBBF24!important;color:#1D1D1F!important}
 
-/* === Level cards (manifesto 29) === */
-.level-card,.principle-card,.goal-card,.obstacle-card{background:#F5F5F7;border:1px solid #E0E0E0;border-left:4px solid #3A86FF;border-radius:10px;padding:22px 26px;margin:18px 0}
-.level-card.lvl1,.obstacle-card{border-left-color:#EF4444}
-.level-card.lvl2{border-left-color:#F97316}
-.level-card.lvl3{border-left-color:#FBBF24}
-.level-card.lvl4,.goal-card{border-left-color:#10B981}
-.level-card.lvl5{border-left-color:#06B6D4}
-.level-card.lvl6{border-left-color:#3B82F6}
-.level-card.lvl7{border-left-color:#EC4899}
-.lvl-num,.goal-card .num,.obstacle-card .num{display:inline-block;background:#3A86FF;color:#FFFFFF;padding:3px 12px;border-radius:10px;font-size:11px;font-weight:800;margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase}
-.lvl1 .lvl-num,.obstacle-card .num{background:#EF4444}
-.lvl2 .lvl-num{background:#F97316;color:#1D1D1F}
-.lvl3 .lvl-num{background:#FBBF24;color:#1D1D1F}
-.lvl4 .lvl-num,.goal-card .num{background:#10B981}
-.lvl5 .lvl-num{background:#06B6D4}
-.lvl6 .lvl-num{background:#3B82F6}
-.lvl7 .lvl-num{background:#EC4899}
-.lvl-traits{background:#FFFFFF;border-radius:8px;padding:14px;margin-top:12px;font-size:0.96rem;color:#3A3A3C;border:1px solid #E0E0E0}
-.lvl-traits strong{color:#1D1D1F}
+/* === Метки, теги, бейджи === */
+.tag,.label,.lvl-num,.day-num,.num,.case-label,.manifest-label{filter:none!important}
+.subtitle,.lead,.muted,.text-muted,.breadcrumbs,.footer-note,.stat-lbl,.role,.date,.lvl-traits,.article-meta,.meta,.disclaimer,.interp,.divider,.toc-title{color:#6E6E73!important}
+.lvl-traits strong,.interp strong{color:#1D1D1F!important}
 
-/* === Breakthrough cards (manifesto 30) === */
-.breakthrough-card{background:linear-gradient(135deg,#F0F7FF,#F5F5F7);border:1px solid #3A86FF;border-radius:14px;padding:26px 30px;margin:20px 0}
-.breakthrough-card .num{display:inline-block;background:#3A86FF;color:#FFFFFF;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:800;margin-bottom:10px;letter-spacing:0.5px;text-transform:uppercase}
-
-/* === Bias cards (100 cognitive biases) === */
-.bias-card{background:#FFFFFF;border:1px solid #E0E0E0;border-left:4px solid #3A86FF;border-radius:12px;padding:18px 24px;margin:12px 0;transition:all .2s ease}
-.bias-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,134,255,0.08)}
-.bias-card .num{display:inline-block;background:rgba(58,134,255,0.1);color:#3A86FF;font-weight:800;font-size:13px;padding:4px 10px;border-radius:6px;margin-right:10px;min-width:40px;text-align:center}
-.bias-card h4{display:inline;color:#1D1D1F;font-size:1.1rem}
-.bias-card .en{color:#6E6E73;font-size:0.92rem;font-style:italic;margin-left:8px}
-.bias-card .desc{color:#1D1D1F;margin-top:10px;font-size:1rem;line-height:1.6}
-.bias-card .ex{color:#3A3A3C;margin-top:8px;font-size:0.95rem;font-style:italic;padding:10px 14px;background:#F5F5F7;border-radius:8px}
-.bias-card .ex::before{content:"💡 Пример: ";font-style:normal;color:#3A86FF;font-weight:700}
-
-/* === Cluster banner (groups) === */
-.cluster-banner{background:linear-gradient(135deg,#E8F1FF,#F5F5F7);border:1px solid #3A86FF;border-radius:14px;padding:22px 28px;margin:40px 0 18px}
-.cluster-banner h3{color:#3A86FF;margin:0;font-size:1.4rem;font-weight:600}
-.cluster-banner p{color:#6E6E73;margin:8px 0 0;font-size:1rem}
-
-/* === Day cards (KPT 30 days) === */
-.day-card{background:#FFFFFF;border:1px solid #E0E0E0;border-left:4px solid #3A86FF;border-radius:12px;padding:22px 28px;margin:18px 0}
-.day-card .day-num{display:inline-block;background:#3A86FF;color:#FFFFFF;font-weight:800;font-size:13px;padding:4px 14px;border-radius:6px;margin-bottom:10px;letter-spacing:0.5px}
-.day-card h4{margin:0 0 10px;color:#1D1D1F;font-size:1.15rem}
-.day-card .practice{background:#F5F5F7;border-radius:8px;padding:12px 16px;margin-top:12px;border:1px solid #E0E0E0}
-.day-card .practice strong{color:#3A86FF}
-
-/* === Week header === */
-.week-header{background:linear-gradient(135deg,#E8F1FF,#F5F5F7);border:1px solid #3A86FF;border-radius:12px;padding:18px 24px;margin:32px 0 20px}
-.week-header h3{margin:0;color:#3A86FF;font-size:1.15rem}
-
-/* === Exercise box === */
-.exercise-box{background:#ECFDF5;border:1px solid #10B981;border-radius:10px;padding:16px 20px;margin:18px 0}
-.exercise-box .title{color:#047857;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px}
-
-/* === FAQ === */
-.faq,.faq-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:22px 28px;margin:14px 0}
-.faq h4,.faq-item h4{color:#3A86FF;margin-bottom:10px;font-size:1.1rem}
-.faq-item{padding:14px 0;border-bottom:1px solid #E0E0E0}
-.faq-item:last-child{border-bottom:none}
-.faq-item p{color:#3A3A3C;margin:0}
-
-/* === Aphorism === */
-.aphorism{font-size:1.4rem;font-style:italic;text-align:center;color:#1D1D1F;border-left:4px solid #3A86FF;padding:24px 32px;margin:38px 0;background:linear-gradient(135deg,#E8F1FF,#F5F5F7);border-radius:0 14px 14px 0;font-weight:400;line-height:1.4}
-
-/* === Stats grid === */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:28px 0}
-.stat{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:22px;text-align:center}
-.stat-num{font-size:2.2rem;font-weight:800;color:#3A86FF;display:block;margin-bottom:6px;line-height:1}
-.stat-lbl{font-size:13px;color:#6E6E73;line-height:1.4}
+/* === Афоризм / blockquote === */
+.aphorism,blockquote.aphorism,blockquote{background:linear-gradient(135deg,#E8F1FF,#F5F5F7)!important;border-left:4px solid #3A86FF!important;color:#1D1D1F!important;-webkit-text-fill-color:#1D1D1F!important;font-style:italic!important;padding:24px 32px!important;border-radius:0 14px 14px 0!important;font-weight:400!important}
 
 /* === Tables === */
-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:1rem;background:#F5F5F7;border-radius:12px;overflow:hidden}
-th,td{padding:14px 16px;text-align:left;border-bottom:1px solid #E0E0E0}
-th{background:rgba(58,134,255,0.08);color:#3A86FF;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.5px}
-td{color:#1D1D1F}
+table{background:#F5F5F7!important;border-radius:12px!important;overflow:hidden!important;border-collapse:collapse!important;width:100%!important}
+th{background:rgba(58,134,255,0.08)!important;color:#3A86FF!important;font-weight:700!important;text-transform:uppercase!important;font-size:13px!important;letter-spacing:0.5px!important}
+td{color:#1D1D1F!important;border-bottom:1px solid #E0E0E0!important}
+
+/* === FAQ === */
+.faq h4,.faq-item h4,.case-title,.case-label{color:#3A86FF!important}
+.faq-item{border-bottom:1px solid #E0E0E0!important}
 
 /* === Sources === */
-.sources{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:24px 28px;margin:40px 0;font-size:0.95rem;color:#3A3A3C}
-.sources h4{color:#1D1D1F;margin-bottom:14px;font-size:13px;text-transform:uppercase;letter-spacing:1px}
-.sources ol{padding-left:22px}
-.sources li{margin:6px 0;color:#3A3A3C}
+.sources h4{color:#1D1D1F!important}
+.sources li,.sources ol{color:#3A3A3C!important}
 
-/* === CTA blocks === */
-.final-cta{background:linear-gradient(135deg,#3A86FF,#00A8E8);border-radius:20px;padding:36px;text-align:center;margin:50px 0;color:#FFFFFF}
-.final-cta h3{color:#FFFFFF;font-size:1.8rem;margin-bottom:14px}
-.final-cta p{color:rgba(255,255,255,0.92);font-size:1.1rem;margin-bottom:22px}
-.final-cta a{display:inline-block;background:#FFFFFF;color:#3A86FF;padding:14px 36px;border-radius:30px;text-decoration:none;font-weight:700;font-size:1rem;transition:transform 0.2s}
-.final-cta a:hover{transform:scale(1.05);background:#1D1D1F;color:#FFFFFF}
-
-.cta-box,.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFFFFF);border:2px solid #3A86FF;border-radius:20px;padding:36px;text-align:center;margin:40px 0}
-.cta-box h3,.cta-block h3{color:#1D1D1F;font-size:1.6rem;margin-bottom:14px}
-.cta-box p,.cta-block p{color:#6E6E73;margin-bottom:22px;font-size:1.05rem}
-.cta-btn,.cta-block .btn{display:inline-block;background:#3A86FF;color:#FFFFFF !important;padding:14px 36px;border-radius:30px;text-decoration:none;font-weight:600;font-size:1rem;transition:all .3s;border:none}
-.cta-btn:hover,.cta-block .btn:hover{background:#1D1D1F;transform:scale(1.05);box-shadow:0 10px 30px rgba(0,0,0,0.1)}
+/* === CTA (final-cta) — синий градиент в светлой теме === */
+.final-cta,.cta-box,.cta-block{background:linear-gradient(135deg,#3A86FF,#00A8E8)!important;color:#FFFFFF!important;border:none!important;box-shadow:0 20px 60px rgba(58,134,255,0.25)!important;border-radius:20px!important}
+.final-cta h3,.cta-box h3,.cta-block h3{color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF!important}
+.final-cta p,.cta-box p,.cta-block p{color:rgba(255,255,255,0.92)!important}
+.final-cta a,.cta-box a,.cta-block a,.cta-btn,.cta-block .btn{background:#FFFFFF!important;color:#3A86FF!important;font-weight:700!important;border-radius:30px!important;padding:14px 32px!important}
+.final-cta a:hover,.cta-box a:hover,.cta-btn:hover{background:#1D1D1F!important;color:#FFFFFF!important}
 
 /* === Author block === */
-.author-block{display:flex;gap:20px;align-items:flex-start;background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:24px 28px;margin:40px 0 24px}
-.author-block .avatar{width:64px;height:64px;background:linear-gradient(135deg,#00A8E8,#3A86FF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#FFFFFF;flex-shrink:0}
-.author-block h4{color:#1D1D1F;margin-bottom:4px}
-.author-block .role{color:#6E6E73;font-size:0.9rem;margin:0 0 8px}
-.author-block p{color:#3A3A3C;font-size:0.95rem;margin:0}
-
-/* === Related / Manifest grid === */
-.related{margin:40px 0;padding:24px;background:#F5F5F7;border-radius:14px;border:1px solid #E0E0E0}
-.related h4{margin-bottom:14px;color:#3A86FF;font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
-.related a{display:block;color:#1D1D1F;text-decoration:none;padding:8px 0;border-bottom:1px solid #E0E0E0;font-size:0.97rem}
-.related a:hover{color:#3A86FF}
-
-.manifest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:24px 0 40px}
-.manifesto-card{display:block;padding:20px 22px;border:1px solid #E0E0E0;border-radius:12px;background:linear-gradient(135deg,#FAFAFA,#F0F0F5);transition:all .2s;text-decoration:none}
-.manifesto-card:hover{border-color:#3A86FF;transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,134,255,0.15)}
-.manifesto-card .m-num{display:inline-block;font-size:0.75rem;font-weight:700;color:#3A86FF;letter-spacing:0.1em;margin-bottom:8px;background:rgba(58,134,255,0.1);padding:3px 8px;border-radius:8px}
-
-/* === Timeline (manifesto 30) === */
-.timeline{margin:32px 0}
-.timeline-item{display:flex;gap:20px;margin:18px 0;padding:20px 24px;background:#F5F5F7;border:1px solid #E0E0E0;border-radius:12px}
-.timeline-year{font-size:1.5rem;font-weight:800;color:#3A86FF;min-width:80px}
-.timeline-content{flex:1}
-.timeline-content strong{color:#1D1D1F;display:block;margin-bottom:6px}
-.timeline-content p{margin:0;font-size:0.95rem;color:#3A3A3C}
+.author-block{background:#F5F5F7!important;border:1px solid #E0E0E0!important;color:#1D1D1F!important}
+.author-block h4{color:#1D1D1F!important}
+.author-block p,.author-info p,.author-info .role{color:#3A3A3C!important}
+.author-avatar,.author-block .avatar{background:linear-gradient(135deg,#00A8E8,#3A86FF)!important;color:#FFFFFF!important}
 
 /* === Signature === */
-.signature{margin-top:50px;padding:32px;background:linear-gradient(135deg,#FFFCE8,#F5F5F7);border:1px solid #FBBF24;border-radius:18px;text-align:center}
-.signature .name{font-size:1.4rem;color:#1D1D1F;font-weight:700;margin-bottom:6px}
-.signature .role{font-size:0.9rem;color:#6E6E73;margin-bottom:14px}
-.signature .date{font-size:0.85rem;color:#6E6E73;font-style:italic}
+.signature{background:linear-gradient(135deg,#FFFCE8,#F5F5F7)!important;border:1px solid #FBBF24!important}
+.signature .name{color:#1D1D1F!important}
+.signature .role,.signature .date{color:#6E6E73!important}
 
-/* === Footer note === */
-.footer-note,.pub-date{text-align:center;font-size:0.85rem;color:#6E6E73;margin-top:50px;padding-top:24px;border-top:1px solid #E0E0E0}
+/* === Timeline === */
+.timeline-year{color:#3A86FF!important;-webkit-text-fill-color:#3A86FF!important}
+.timeline-content strong{color:#1D1D1F!important}
+.timeline-content p{color:#3A3A3C!important}
 
-/* === Back link === */
-.back-link{display:inline-block;margin:30px 0 60px;color:#3A86FF;font-size:1rem;font-weight:500;text-decoration:none;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;transition:all 0.3s}
-.back-link:hover{background:#3A86FF;color:#FFFFFF}
+/* === Stats === */
+.stat-num{color:#3A86FF!important;background:none!important;-webkit-text-fill-color:#3A86FF!important;-webkit-background-clip:initial!important}
+.stat-lbl{color:#6E6E73!important}
 
-/* === Section banner === */
-.wave-section{margin-bottom:40px;padding:24px;background:#F5F5F7;border-radius:14px;border-left:4px solid #3A86FF}
-.section-intro{font-size:1.05rem;color:#6E6E73;margin-bottom:20px}
+/* === Step / Protocol / Day cards === */
+.step-card .num,.day-card .day-num,.protocol-step .num{background:#3A86FF!important;color:#FFFFFF!important;border-radius:50%!important;width:40px!important;height:40px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;font-weight:800!important}
+.step-card,.protocol-step{display:flex!important;gap:20px!important;align-items:flex-start!important;padding:22px 26px!important}
+
+/* === Inline old <header>/<footer> от старого шаблона — спрячем === */
+header.site,header > div.container.nav,body > footer:not(#footer-placeholder ~ footer){display:none!important}
+main.container{display:block!important}
+
+/* === Manifest label / Article meta === */
+.manifest-label{display:inline-block!important;background:rgba(58,134,255,0.1)!important;color:#3A86FF!important;padding:5px 12px!important;border-radius:10px!important;font-size:0.8rem!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:0.5px!important;margin-bottom:16px!important}
+.article-meta{display:flex!important;gap:18px!important;color:#6E6E73!important;font-size:0.9rem!important;flex-wrap:wrap!important;margin:14px 0 24px!important}
+.article-meta .tag{margin-bottom:0!important}
+
+/* === Breadcrumbs === */
+.breadcrumbs{font-size:13px!important;color:#6E6E73!important;margin-bottom:24px!important}
+.breadcrumbs a{color:#3A86FF!important;text-decoration:none!important}
+
+/* === Divider === */
+.divider{text-align:center!important;color:#A8A8A8!important;letter-spacing:0.4em!important;margin:40px 0!important}
 
 /* === Mobile === */
 @media(max-width:640px){
-  h1{font-size:2rem}
-  h2{font-size:1.5rem}
-  .container{padding:24px 16px}
-  .aphorism{font-size:1.15rem;padding:18px 22px}
-  .timeline-item{flex-direction:column;gap:8px}
-  .author-block{flex-direction:column}
-  .manifest-grid{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:1fr}
+  h1{font-size:2rem!important}
+  h2{font-size:1.5rem!important}
+  .container{padding:24px 16px!important}
+  .step-card,.protocol-step{flex-direction:column!important;gap:10px!important}
+  .author-block{flex-direction:column!important}
 }
