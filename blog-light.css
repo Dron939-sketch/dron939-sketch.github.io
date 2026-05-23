@@ -31,9 +31,15 @@ li{margin-bottom:8px!important;line-height:1.6!important}
 a{color:#3A86FF!important;text-decoration:none!important;transition:color 0.2s!important}
 a:hover{color:#1D1D1F!important}
 
-/* === Container === */
-.container{max-width:880px!important;margin:0 auto!important;padding:40px 24px!important}
-main.container{display:block!important}
+/* === Container ===
+   Узкая колонка только для контентного контейнера (main.container),
+   чтобы не ломать ширину/высоту шапки и подвала, которые тоже используют .container */
+main.container{display:block!important;max-width:880px!important;margin:0 auto!important;padding:40px 24px!important}
+
+/* Шапка: возвращаем оригинальную геометрию (1200px, без вертикальных отступов) */
+.header .container{max-width:1200px!important;padding:0 20px!important}
+/* Подвал: то же самое */
+.footer .container{max-width:1200px!important;padding:0 20px!important}
 
 /* === Главные карточки: общая база === */
 .level-card,
