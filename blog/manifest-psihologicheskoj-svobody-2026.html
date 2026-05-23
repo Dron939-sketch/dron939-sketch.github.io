@@ -23,7 +23,7 @@
 </head>
 <body>
 <div id="header-placeholder"></div>
-<script>fetch('/header.html').then(function(r){return r.text();}).then(function(d){document.getElementById('header-placeholder').innerHTML=d;}).catch(function(){document.getElementById('header-placeholder').innerHTML='<header style="padding:20px 0;background:#0C0C0C;text-align:center;"><a href="/" style="color:#fff;font-size:1.5rem;letter-spacing:0.3em;text-decoration:none;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</a></header>';});</script>
+<script>(function(){function loadAndRun(url,id,fallback){fetch(url).then(function(r){return r.text();}).then(function(html){var el=document.getElementById(id);el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});}).catch(function(){document.getElementById(id).innerHTML=fallback;});}loadAndRun('/header.html','header-placeholder','<header style="padding:20px 0;background:#0C0C0C;text-align:center;"><a href="/" style="color:#fff;font-size:1.5rem;letter-spacing:0.3em;text-decoration:none;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</a></header>');})();</script>
 <main class="container">
 
   <div class="breadcrumbs">
@@ -463,6 +463,6 @@
 
 </main>
 <div id="footer-placeholder"></div>
-<script>fetch('/footer.html').then(function(r){return r.text();}).then(function(d){document.getElementById('footer-placeholder').innerHTML=d;});</script>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 </body>
 </html>

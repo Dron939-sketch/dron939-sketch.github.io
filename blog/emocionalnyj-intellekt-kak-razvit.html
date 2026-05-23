@@ -139,7 +139,7 @@
 <body>
 
 <div id="header-placeholder"></div>
-<script>fetch('/header.html').then(r=>r.text()).then(d=>{document.getElementById('header-placeholder').innerHTML=d});</script>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 
 <div class="container">
   <article>
@@ -318,7 +318,7 @@
 </div>
 
 <div id="footer-placeholder"></div>
-<script>fetch('/footer.html').then(r=>r.text()).then(d=>{document.getElementById('footer-placeholder').innerHTML=d});</script>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 
 </body>
 </html>
