@@ -1,0 +1,51 @@
+name: IndexNow ping on content change
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'sitemap.xml'
+      - 'feed.xml'
+
+jobs:
+  ping-indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Find changed HTML files
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep -E '\.html$' | grep -vE '^(header|footer|404|yandex_)\.html$' | head -200 || true)
+          if [ -z "$CHANGED" ]; then
+            echo "Nothing to ping"
+            echo "list=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          URLS=$(echo "$CHANGED" | awk '{print "\"https://meysternlp.ru/"$1"\""}' | sed 's|/index\.html"|/"|' | paste -sd "," -)
+          echo "list=$URLS" >> $GITHUB_OUTPUT
+          echo "Will ping $(echo "$CHANGED" | wc -l) URLs"
+
+      - name: Ping IndexNow (Yandex + Bing)
+        if: steps.changed.outputs.list != ''
+        run: |
+          curl -sS -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"meysternlp.ru\",
+              \"key\": \"d2c0c096ffd9fe58fe859b63b810e1d2\",
+              \"keyLocation\": \"https://meysternlp.ru/d2c0c096ffd9fe58fe859b63b810e1d2.txt\",
+              \"urlList\": [${{ steps.changed.outputs.list }}]
+            }" || true
+
+          curl -sS -X POST https://yandex.com/indexnow \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"meysternlp.ru\",
+              \"key\": \"d2c0c096ffd9fe58fe859b63b810e1d2\",
+              \"keyLocation\": \"https://meysternlp.ru/d2c0c096ffd9fe58fe859b63b810e1d2.txt\",
+              \"urlList\": [${{ steps.changed.outputs.list }}]
+            }" || true

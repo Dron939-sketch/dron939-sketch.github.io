@@ -40,6 +40,9 @@ Allow: /about/
 Sitemap: https://meysternlp.ru/sitemap.xml
 Sitemap: https://meysternlp.ru/sitemap-images.xml
 
+# RSS-фид (Дзен, Пульс Mail.ru, читалки)
+# https://meysternlp.ru/feed.xml
+
 # Задержка для медленных ботов
 Crawl-delay: 1
 
