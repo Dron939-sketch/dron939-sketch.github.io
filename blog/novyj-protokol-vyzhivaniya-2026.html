@@ -27,211 +27,87 @@
 }
 </script>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#08080d;--bg-card:#11111a;--text:#e8e8f0;--text-dim:#9da3b4;--text-faint:#6c7185;--accent:#a78bfa;--accent-2:#ec4899;--gold:#fbbf24;--green:#10b981;--border:rgba(167,139,250,0.18);--radius:14px}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.78;-webkit-font-smoothing:antialiased}
-.container{max-width:820px;margin:0 auto;padding:40px 24px 80px}
-header.site{padding:18px 24px;border-bottom:1px solid var(--border);background:rgba(8,8,13,0.94);position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
-.nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:700;color:var(--accent);text-decoration:none;font-size:1.1rem}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{color:var(--text-dim);text-decoration:none;font-size:.92rem}
-.breadcrumbs{margin-bottom:28px;font-size:.85rem;color:var(--text-faint)}
-.breadcrumbs a{color:var(--accent);text-decoration:none}
-.manifest-label{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#67e8f9;background:linear-gradient(135deg,rgba(6,182,212,0.18),rgba(167,139,250,0.10));padding:6px 14px;border-radius:6px;margin-bottom:18px;border:1px solid rgba(6,182,212,0.3)}
-.article-meta{display:flex;gap:18px;align-items:center;font-size:.86rem;color:var(--text-dim);margin-bottom:20px;flex-wrap:wrap}
-.article-meta .tag{background:rgba(167,139,250,0.14);color:var(--accent);padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:600}
-h1{font-size:clamp(2rem,5vw,3rem);line-height:1.1;margin-bottom:22px;color:#fff;letter-spacing:-0.025em;font-weight:800;background:linear-gradient(135deg,#fff 0%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.subtitle{font-size:1.18rem;line-height:1.55;color:var(--text-dim);margin-bottom:36px;font-weight:400;border-left:3px solid var(--accent);padding-left:18px;font-style:italic}
-h2{font-size:clamp(1.5rem,3.5vw,2rem);margin:56px 0 22px;color:#fff;line-height:1.22;font-weight:700;letter-spacing:-0.015em}
-h3{font-size:clamp(1.18rem,2.4vw,1.4rem);margin:30px 0 14px;color:var(--accent);font-weight:600}
-p{margin-bottom:20px;color:#d8dae6;font-size:1.07rem}
-.lead{font-size:1.18rem;color:#e8e8f0;line-height:1.65;margin-bottom:24px}
-ul,ol{margin:0 0 24px 28px;color:#d8dae6}
-li{margin-bottom:11px}
-strong{color:#fff;font-weight:600}
-em{color:var(--gold);font-style:normal;font-weight:500}
-a{color:var(--accent);text-decoration:underline}
-blockquote.aphorism{text-align:center;border-left:none;border-top:1px solid rgba(251,191,36,0.2);border-bottom:1px solid rgba(251,191,36,0.2);padding:24px 28px;font-size:1.18rem;font-weight:500;background:transparent;color:#fff}
-blockquote.aphorism::before{content:'«';color:var(--gold);font-size:2.2rem;line-height:0;margin-right:6px;vertical-align:middle}
-blockquote.aphorism::after{content:'»';color:var(--gold);font-size:2.2rem;line-height:0;margin-left:6px;vertical-align:middle}
-.hero-tldr{background:linear-gradient(135deg,rgba(167,139,250,0.10),rgba(236,72,153,0.06));border:1px solid var(--border);padding:28px 32px;border-radius:var(--radius);margin:36px 0 44px}
-.hero-tldr .label{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:rgba(167,139,250,0.18);padding:5px 11px;border-radius:6px;margin-bottom:16px}
-.hero-tldr p{font-size:1.1rem;color:#fff;margin-bottom:0;line-height:1.65}
-.step-card{background:var(--bg-card);border:1px solid var(--border);padding:22px 26px;margin:18px 0;border-radius:12px;display:flex;gap:18px;align-items:flex-start}
-.step-card .num{flex-shrink:0;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--accent));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.15rem}
-.step-card h3{margin:0 0 6px;color:#fff;font-size:1.14rem}
-.step-card .interp{font-size:.95rem;color:#c8cad6}
-.author-block{background:linear-gradient(135deg,var(--bg-card),rgba(167,139,250,0.04));border:1px solid var(--border);border-radius:var(--radius);padding:26px 30px;margin:48px 0 24px;display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
-.author-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.4rem;flex-shrink:0}
-.author-info h4{color:#fff;margin:0 0 6px;font-size:1.08rem}
-.author-info p{font-size:.9rem;color:var(--text-dim);margin-bottom:0;line-height:1.55}
-.sources{background:rgba(167,139,250,0.03);border:1px dashed rgba(167,139,250,0.2);border-radius:var(--radius);padding:26px 30px;margin:36px 0;font-size:.94rem}
-.sources h3{margin-top:0;font-size:.92rem;color:var(--text-faint);text-transform:uppercase;letter-spacing:.1em;font-weight:700}
-.sources ol{margin-bottom:0}
-.sources li{font-size:.88rem;color:#b8bccc;margin-bottom:7px}
-.final-cta{text-align:center;padding:48px 30px;background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(236,72,153,0.06));border:1px solid var(--border);border-radius:var(--radius);margin:48px 0 30px}
-.final-cta h3{color:#fff;margin-bottom:14px;font-size:1.4rem}
-.final-cta p{color:#d8dae6;margin-bottom:22px}
-.final-cta a{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff !important;padding:14px 36px;border-radius:10px;font-weight:700;text-decoration:none;font-size:1.04rem}
-.divider{text-align:center;margin:40px 0;color:var(--text-faint);letter-spacing:1em}
-footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;color:var(--text-faint);font-size:.86rem}
-@media (max-width:600px){.nav-links{display:none}.container{padding:24px 18px 60px}.author-block{flex-direction:column}.step-card{flex-direction:column}}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog-light.css">
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
+ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:'dataLayer',referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
 </head>
 <body>
-
-<header class="site">
-  <nav class="nav">
-    <a href="/" class="logo">Meysternlp</a>
-    <ul class="nav-links">
-      <li><a href="/blog/">Блог</a></li>
-      <li><a href="/fredi/">Фреди</a></li>
-      <li><a href="/treningi/">Тренинги</a></li>
-      <li><a href="/knigi/">Книги</a></li>
-      <li><a href="/igry/">Игры</a></li>
-    </ul>
-  </nav>
-</header>
+<div id="header-placeholder"></div>
+<script>
+fetch('/header.html').then(function(r){return r.text();}).then(function(d){
+  document.getElementById('header-placeholder').innerHTML=d;
+  setTimeout(function(){
+    var nl=document.querySelectorAll('.nav-links a');
+    nl.forEach(function(l){if(l.getAttribute('href')&&l.getAttribute('href').indexOf('/blog/')>=0)l.classList.add('active');});
+    var b=document.getElementById('burgerBtn'),n=document.getElementById('navLinks');
+    if(b&&n){
+      b.addEventListener('click',function(){b.classList.toggle('active');n.classList.toggle('active');document.body.style.overflow=n.classList.contains('active')?'hidden':'';});
+      n.querySelectorAll('a').forEach(function(l){l.addEventListener('click',function(){b.classList.remove('active');n.classList.remove('active');document.body.style.overflow='';});});
+      window.addEventListener('resize',function(){if(window.innerWidth>768){b.classList.remove('active');n.classList.remove('active');document.body.style.overflow='';}});
+    }
+  },100);
+}).catch(function(){
+  document.getElementById('header-placeholder').innerHTML='<header style="padding:20px 0;background:#0C0C0C;text-align:center;border-bottom:1px solid rgba(58,134,255,0.2);"><a href="/" style="color:#fff;font-size:1.5rem;letter-spacing:0.3em;text-decoration:none;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</a></header>';
+});
+</script>
 
 <main class="container">
-
-  <div class="breadcrumbs">
-    <a href="/">Главная</a> / <a href="/blog/">Блог</a> / Новый протокол выживания 2026
-  </div>
-
+  <div class="breadcrumbs"><a href="/">Главная</a> / <a href="/blog/">Блог</a> / Новый протокол выживания 2026</div>
   <div class="manifest-label">Манифест 27/30 · Практический протокол</div>
-
   <div class="article-meta">
     <span class="tag">Антихрупкость</span>
-    <span>22 мая 2026</span>
-    <span>·</span>
-    <span>21 мин чтения</span>
-    <span>·</span>
+    <span>22 мая 2026</span><span>·</span>
+    <span>21 мин чтения</span><span>·</span>
     <span>Андрей Мейстер</span>
   </div>
-
   <h1>Новый протокол выживания 2026: как жить в эпоху перманентной неопределённости</h1>
-
   <p class="subtitle">Прежний мир, в котором «всё может быть стабильным», закончился. Новая эпоха требует новой стратегии — не «как пережить кризис», а «как жить, когда кризис стал нормой». Авторский 12-шаговый протокол.</p>
 
   <div class="hero-tldr">
     <span class="label">Главное за 30 секунд</span>
-    <p><strong>Эпоха стабильности закончилась.</strong> Не «временно», а структурно. Нужна другая стратегия жизни — не «выжить и вернуться к норме», а «жить в условиях, когда нормой стала неопределённость». Этот манифест — 12-шаговый протокол: финансовая антихрупкость, психологическая устойчивость, гибкая идентичность, диверсифицированные связи, регулярная работа с собой, дизайн среды, и др. Не «выживание» в советском смысле. Прагматическая стратегия жизни 2026-2035.</p>
+    <p><strong>Эпоха стабильности закончилась.</strong> Не «временно», а структурно. Нужна другая стратегия жизни — не «выжить и вернуться к норме», а «жить в условиях, когда нормой стала неопределённость». Этот манифест — 12-шаговый протокол: финансовая антихрупкость, психологическая устойчивость, гибкая идентичность, диверсифицированные связи, регулярная работа с собой, дизайн среды, и др.</p>
   </div>
 
   <h2>12 шагов протокола</h2>
 
-  <div class="step-card">
-    <div class="num">1</div>
-    <div>
-      <h3>Финансовая антихрупкость, не безопасность</h3>
-      <p class="interp">Старая модель: «накопить и спрятать». Новая: диверсификация ресурсов между несколькими валютами, активами, юрисдикциями. Не «не пропасть», а «выдержать любой удар». 3-6 месяцев расходов в ликвидности минимум. Несколько источников дохода. Не одно «надёжное место».</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">1</div><div><h3>Финансовая антихрупкость, не безопасность</h3><p class="interp">Старая модель: «накопить и спрятать». Новая: диверсификация ресурсов между несколькими валютами, активами, юрисдикциями. Не «не пропасть», а «выдержать любой удар». 3-6 месяцев расходов в ликвидности минимум. Несколько источников дохода.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">2</div>
-    <div>
-      <h3>Несколько профессиональных компетенций</h3>
-      <p class="interp">Одна профессия = одна точка уязвимости. Нужны 2-3 области, в каждой из которых вы способны зарабатывать. Это «диверсификация карьеры». Образовательная стратегия — учиться чему-то новому каждые 2-3 года.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">2</div><div><h3>Несколько профессиональных компетенций</h3><p class="interp">Одна профессия = одна точка уязвимости. Нужны 2-3 области, в каждой из которых вы способны зарабатывать. Это «диверсификация карьеры». Образовательная стратегия — учиться чему-то новому каждые 2-3 года.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">3</div>
-    <div>
-      <h3>Глубокие связи + широкая сеть</h3>
-      <p class="interp">3-5 глубоких связей (см. манифест 20 — главный предиктор счастья). Плюс широкая сеть знакомых из разных кругов. Глубокие — для эмоциональной устойчивости. Широкие — для возможностей и информации.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">3</div><div><h3>Глубокие связи + широкая сеть</h3><p class="interp">3-5 глубоких связей. Плюс широкая сеть знакомых из разных кругов. Глубокие — для эмоциональной устойчивости. Широкие — для возможностей и информации.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">4</div>
-    <div>
-      <h3>Регулярная работа с собой</h3>
-      <p class="interp">Психотерапия + виртуальный психолог + телесные практики + рефлексия. Минимум 30-60 минут в день. Не «когда тяжело», а как часть структуры жизни. Это инвестиция в психическую устойчивость.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">4</div><div><h3>Регулярная работа с собой</h3><p class="interp">Психотерапия + виртуальный психолог + телесные практики + рефлексия. Минимум 30-60 минут в день. Не «когда тяжело», а как часть структуры жизни.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">5</div>
-    <div>
-      <h3>Гибкая идентичность</h3>
-      <p class="interp">Не «я — кто», а «я могу быть тем и тем». Готовность к смене ролей. Гибкость — не предательство себя, а способность к адаптации без потери ядра. Идентичность — как яблочный плод: твёрдое ядро, мягкая мякоть, гибкая кожура.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">5</div><div><h3>Гибкая идентичность</h3><p class="interp">Не «я — кто», а «я могу быть тем и тем». Готовность к смене ролей. Гибкость — не предательство себя, а способность к адаптации без потери ядра.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">6</div>
-    <div>
-      <h3>Здоровье как инфраструктура</h3>
-      <p class="interp">Не «лечить, когда заболеет», а «строить здоровье как основу». Сон 7-9 часов, регулярная физическая активность, нутрицевтика, ежегодные комплексные анализы. Тело — главный носитель психики. Без здорового тела никакая психологическая работа не работает на 100%.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">6</div><div><h3>Здоровье как инфраструктура</h3><p class="interp">Не «лечить, когда заболеет», а «строить здоровье как основу». Сон 7-9 часов, регулярная физическая активность, ежегодные комплексные анализы.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">7</div>
-    <div>
-      <h3>Дизайн информационной среды</h3>
-      <p class="interp">Информация = психическое питание. Что вы потребляете, тем вы становитесь. Сократить токсичные источники. Добавить развивающие. Регулярные «информационные посты» (день/неделя без новостей). Это новая гигиена.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">7</div><div><h3>Дизайн информационной среды</h3><p class="interp">Информация = психическое питание. Что вы потребляете, тем вы становитесь. Сократить токсичные источники. Регулярные «информационные посты».</p></div></div>
 
-  <div class="step-card">
-    <div class="num">8</div>
-    <div>
-      <h3>Принятие неопределённости как нормы</h3>
-      <p class="interp">Психически — отказ от ожидания, что «скоро всё стабилизируется». Принятие, что неопределённость — это новая нормальность. Это парадоксально снимает большую часть тревоги. Тревога рождается из ожидания стабильности, которой нет.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">8</div><div><h3>Принятие неопределённости как нормы</h3><p class="interp">Психически — отказ от ожидания, что «скоро всё стабилизируется». Принятие, что неопределённость — это новая нормальность. Это парадоксально снимает большую часть тревоги.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">9</div>
-    <div>
-      <h3>Короткие циклы планирования</h3>
-      <p class="interp">Не «план на 10 лет», а «направление на 10 лет + конкретный план на 1 год + детали на 3 месяца». Гибкая корректировка по обстоятельствам. Готовность к тому, что любой план изменится.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">9</div><div><h3>Короткие циклы планирования</h3><p class="interp">Не «план на 10 лет», а «направление на 10 лет + конкретный план на 1 год + детали на 3 месяца». Гибкая корректировка по обстоятельствам.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">10</div>
-    <div>
-      <h3>Регулярные ритуалы устойчивости</h3>
-      <p class="interp">Ежедневные (медитация, дневник эмоций), еженедельные (анализ недели, день без работы), ежемесячные (ретрит, ревью), ежегодные (большое планирование, отпуск без коммуникации). Это структура, удерживающая психику.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">10</div><div><h3>Регулярные ритуалы устойчивости</h3><p class="interp">Ежедневные (медитация, дневник эмоций), еженедельные (анализ недели), ежемесячные (ретрит), ежегодные (большое планирование). Это структура, удерживающая психику.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">11</div>
-    <div>
-      <h3>Сообщество таких же</h3>
-      <p class="interp">Найти 5-10 человек, живущих по тому же протоколу. Не «друзья», не «коллеги» — «соратники по образу жизни». С ними можно обмениваться опытом, поддерживать друг друга, идти параллельно. Это критически важно — в одиночестве этот протокол не поддерживается.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">11</div><div><h3>Сообщество таких же</h3><p class="interp">Найти 5-10 человек, живущих по тому же протоколу. «Соратники по образу жизни». В одиночестве этот протокол не поддерживается.</p></div></div>
 
-  <div class="step-card">
-    <div class="num">12</div>
-    <div>
-      <h3>Поиск и удержание большего смысла</h3>
-      <p class="interp">Все 11 шагов — про устойчивость. Но устойчивость без смысла — пустота. Нужен большой ответ на «зачем». Это может быть служение, творчество, дело, духовный поиск. Без этого все остальные шаги — техника без души.</p>
-    </div>
-  </div>
+  <div class="step-card"><div class="num">12</div><div><h3>Поиск и удержание большего смысла</h3><p class="interp">Все 11 шагов — про устойчивость. Но устойчивость без смысла — пустота. Нужен большой ответ на «зачем». Без этого все остальные шаги — техника без души.</p></div></div>
 
   <h2>Это не «выживание» — это качество жизни</h2>
-
   <p>Заметьте: эти 12 шагов не похожи на «как выжить в кризис». Они похожи на «как хорошо жить» — независимо от внешних обстоятельств.</p>
-
-  <p>Это не случайно. Главное открытие 2020-х: нет разницы между «выживать в трудное время» и «хорошо жить в любое время». Один и тот же набор привычек — это и то, и другое. Те, у кого этот набор есть, выживают трудные времена с меньшими потерями и живут хорошие времена с большим качеством.</p>
-
-  <p>Это и есть <strong>антихрупкость</strong> в смысле Талеба — не просто устойчивость к ударам, а способность от ударов <em>становиться сильнее</em>. И в 2026 году это уже не «продвинутый уровень», а минимум для нормальной жизни.</p>
+  <p>Это не случайно. Главное открытие 2020-х: нет разницы между «выживать в трудное время» и «хорошо жить в любое время». Те, у кого этот набор привычек есть, выживают трудные времена с меньшими потерями и живут хорошие времена с большим качеством.</p>
+  <p>Это и есть <strong>антихрупкость</strong> в смысле Талеба — не просто устойчивость к ударам, а способность от ударов <em>становиться сильнее</em>.</p>
 
   <blockquote class="aphorism">Эпоха «стабильность как норма» закончилась. Не временно. Тот, кто это понимает, начинает жить иначе. И через 10 лет — выигрывает.</blockquote>
 
   <div class="final-cta">
     <h3>Начать с одного шага — с Фреди</h3>
-    <p>Виртуальный психолог поможет вам выбрать первый шаг из 12, который сейчас вам нужнее всего, и пошагово его внедрить. Не «вся программа за раз», а постепенная трансформация.</p>
+    <p>Виртуальный психолог поможет вам выбрать первый шаг из 12, который сейчас вам нужнее всего, и пошагово его внедрить.</p>
     <a href="/fredi/">Открыть Фреди →</a>
   </div>
 
@@ -250,23 +126,25 @@ footer{border-top:1px solid var(--border);padding:32px 24px;text-align:center;co
       <li>Frankl V. Man's Search for Meaning. — Beacon, 1959.</li>
       <li>Maté G. The Myth of Normal. — Avery, 2022.</li>
       <li>Walker M. Why We Sleep. — Scribner, 2017.</li>
-      <li>Pinker S. Enlightenment Now. — Viking, 2018.</li>
       <li>Мейстер А. Том III: Стимульный контроль. — М., 2024.</li>
     </ol>
   </div>
 
   <div class="divider">· · ·</div>
 
-  <p style="text-align:center;color:var(--text-faint);font-size:.92rem;margin-top:24px">
+  <p style="text-align:center;color:#6E6E73;font-size:.92rem;margin-top:24px">
     Манифест 27/30 серии «Манифесты Мейстера 2026».<br>
     Следующий: <em>«Психология после ИИ: 5 человеческих способностей будущего»</em>
   </p>
-
 </main>
 
-<footer>
-  © 2026 Meysternlp · Андрей Мейстер · <a href="/obo-mne/" style="color:var(--accent);text-decoration:none">О проекте</a>
-</footer>
-
+<div id="footer-placeholder"></div>
+<script>
+fetch('/footer.html').then(function(r){return r.text();}).then(function(d){
+  document.getElementById('footer-placeholder').innerHTML=d;
+}).catch(function(){
+  document.getElementById('footer-placeholder').innerHTML='<footer style="padding:50px 0 30px;border-top:1px solid rgba(58,134,255,0.2);background:#0C0C0C;margin-top:60px;color:#F0F0F0;"><div style="max-width:1200px;margin:0 auto;padding:0 20px;"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;"><div style="font-size:1.2rem;letter-spacing:0.3em;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</div><div style="display:flex;gap:24px;flex-wrap:wrap;"><a href="https://t.me/meysternlp" target="_blank" rel="noopener" style="color:#F0F0F0;text-decoration:none;text-transform:uppercase;font-size:0.9rem;">Telegram</a><a href="https://vk.com/meysternlp" target="_blank" rel="noopener" style="color:#F0F0F0;text-decoration:none;text-transform:uppercase;font-size:0.9rem;">VK</a><a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener" style="color:#F0F0F0;text-decoration:none;text-transform:uppercase;font-size:0.9rem;">Rutube</a><a href="https://dzen.ru/89857788588" target="_blank" rel="noopener" style="color:#F0F0F0;text-decoration:none;text-transform:uppercase;font-size:0.9rem;">Дзен</a></div></div><div style="text-align:center;margin-top:40px;font-size:0.85rem;opacity:0.55;">© Андрей Мейстер · 2026</div></div></footer>';
+});
+</script>
 </body>
 </html>
