@@ -27,9 +27,11 @@ li,td,th{color:#1D1D1F!important}
 ul,ol{padding-left:24px!important;margin:0 0 20px!important}
 li{margin-bottom:8px!important;line-height:1.6!important}
 
-/* === Ссылки === */
-a{color:#3A86FF!important;text-decoration:none!important;transition:color 0.2s!important}
-a:hover{color:#1D1D1F!important}
+/* === Ссылки ===
+   Скоупируем на main.container, чтобы не перекрывать цвета шапки/подвала
+   (.btn-header, .logo, .nav-links a, footer-link и т.п. имеют свои цвета) */
+main.container a{color:#3A86FF!important;text-decoration:none!important;transition:color 0.2s!important}
+main.container a:hover{color:#1D1D1F!important}
 
 /* === Container ===
    Узкая колонка только для контентного контейнера (main.container),
