@@ -499,3 +499,14 @@ header.site,header > div.container.nav,body > footer:not(#footer-placeholder ~ f
   .article-meta{gap:10px!important;font-size:0.85rem!important}
   blockquote,.aphorism{padding:18px 22px!important;font-size:1rem!important}
 }
+
+
+/* === Блок "Читайте также" === */
+.related-articles{margin:60px 0 30px!important;padding:32px!important;background:#F5F5F7!important;border-radius:20px!important;border:1px solid rgba(0,0,0,0.06)!important}
+.related-articles h3{margin:0 0 20px!important;color:#1D1D1F!important;font-size:1.3rem!important;font-weight:700!important}
+.related-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))!important;gap:14px!important}
+.related-item{background:#FFFFFF!important;padding:16px 18px!important;border-radius:12px!important;border:1px solid rgba(0,0,0,0.06)!important;transition:transform .15s,box-shadow .15s!important}
+.related-item:hover{transform:translateY(-2px)!important;box-shadow:0 4px 16px rgba(58,134,255,0.12)!important;border-color:rgba(58,134,255,0.25)!important}
+.related-item a{color:#1D1D1F!important;text-decoration:none!important;font-weight:500!important;font-size:0.98rem!important;line-height:1.35!important;display:block!important}
+.related-item a:hover{color:#3A86FF!important}
+@media (max-width:520px){.related-articles{padding:22px 18px!important}.related-grid{grid-template-columns:1fr!important}}
