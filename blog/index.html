@@ -78,6 +78,35 @@
     .social-links a{color:#F0F0F0;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem}
     .social-links a:hover{color:#3A86FF}
     .copyright{text-align:center;margin-top:40px;font-size:.85rem;opacity:.55}
+    
+    /* === Новые элементы дизайна (май 2026) === */
+    .start-here{margin:24px 0 0;padding:18px 22px;background:linear-gradient(135deg,rgba(58,134,255,0.08),rgba(58,134,255,0.02));border-left:4px solid #3A86FF;border-radius:10px;font-size:1.02rem;color:#1D1D1F}
+    .start-here strong{color:#3A86FF}
+    .start-here a{font-weight:600}
+    .quick-nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);padding:16px 0;margin:30px -20px 0;border-bottom:1px solid #E0E0E0}
+    .quick-nav-inner{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px;max-width:1200px;margin:0 auto}
+    .quick-nav a{flex-shrink:0;padding:8px 14px;background:#F0F0F5;border:1px solid #E0E0E0;border-radius:20px;color:#1D1D1F;font-size:0.88rem;font-weight:500;white-space:nowrap;transition:all .15s}
+    .quick-nav a:hover{background:#3A86FF;color:#fff;border-color:#3A86FF}
+    .search-box{margin:30px 0 40px;position:relative}
+    .search-box input{width:100%;padding:16px 50px 16px 22px;border:2px solid #E0E0E0;border-radius:14px;font-size:1.05rem;font-family:inherit;color:#1D1D1F;background:#FFFFFF;transition:border-color .2s,box-shadow .2s}
+    .search-box input:focus{outline:none;border-color:#3A86FF;box-shadow:0 0 0 4px rgba(58,134,255,.1)}
+    .search-box::after{content:'🔍';position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:1.3rem;pointer-events:none}
+    .search-count{font-size:.9rem;color:#6E6E73;margin-top:10px;display:none}
+    .search-count.visible{display:block}
+    .featured-card{margin:40px 0 60px;padding:32px;background:linear-gradient(135deg,#1D1D1F,#2D2D3F);border-radius:20px;color:#FFFFFF;position:relative;overflow:hidden;border:1px solid rgba(58,134,255,0.3)}
+    .featured-card::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(58,134,255,0.15),transparent 70%);pointer-events:none}
+    .featured-tag{display:inline-block;font-size:.75rem;font-weight:700;color:#3A86FF;text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;padding:4px 10px;background:rgba(58,134,255,0.15);border-radius:6px}
+    .featured-card h2{font-size:clamp(1.4rem,3.5vw,2rem)!important;color:#FFFFFF!important;margin:8px 0 14px!important;font-weight:500!important;letter-spacing:.02em!important;line-height:1.2}
+    .featured-card p{color:rgba(255,255,255,0.82);margin-bottom:18px;font-size:1.02rem;line-height:1.6;max-width:780px}
+    .featured-link{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:#3A86FF;color:#fff!important;border-radius:30px;font-weight:600;font-size:.95rem;letter-spacing:.02em;transition:all .15s}
+    .featured-link:hover{background:#fff;color:#1D1D1F!important;transform:translateX(4px)}
+    .card-meta{display:block;font-size:.75rem;color:#6E6E73;margin-top:10px;font-weight:400;letter-spacing:.02em}
+    .manifesto-card.no-match{display:none}
+    .archive-list a.no-match{display:none}
+    .empty-search{display:none;text-align:center;padding:40px;color:#6E6E73;font-size:1.05rem}
+    .empty-search.visible{display:block}
+    @media(max-width:640px){.quick-nav{overflow-x:auto;-webkit-overflow-scrolling:touch}.quick-nav-inner{flex-wrap:nowrap}.featured-card{padding:24px;margin:30px 0 40px}}
+
     @media(max-width:640px){.manifest-grid{grid-template-columns:1fr}.archive-list{grid-template-columns:1fr;gap:6px}.wave-section{padding:18px}}
   </style>
 
@@ -98,92 +127,121 @@
 <div class="container">
   <div class="blog-hero">
     <h1>Блог Андрея Мейстера</h1>
-    <p>245+ статей о психологии, манипуляциях, виртуальном психологе Фреди и системном мышлении. Манифесты, исследования, авторские концепты — обновление еженедельно.</p>
+    <p>290+ статей о психологии, манипуляциях, реакциях на страх, виртуальном психологе Фреди и системном мышлении. Манифесты, исследования, авторские концепты — обновление еженедельно.</p>
     <div class="stats-row">
-      <div class="stat"><span class="stat-num">245+</span><span class="stat-lbl">Статей</span></div>
+      <div class="stat"><span class="stat-num">290+</span><span class="stat-lbl">Статей</span></div>
       <div class="stat"><span class="stat-num">30</span><span class="stat-lbl">Манифестов 2026</span></div>
-      <div class="stat"><span class="stat-num">9</span><span class="stat-lbl">Тематических волн</span></div>
+      <div class="stat"><span class="stat-num">20</span><span class="stat-lbl">Серия о страхе</span></div>
       <div class="stat"><span class="stat-num">20</span><span class="stat-lbl">Лет практики</span></div>
     </div>
+    <div class="start-here">
+      <strong>Впервые здесь?</strong> Начните с авторской концепции — <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html">Закон Мейстера: 3 уровня внутренней правды</a>. Это семя, из которого выросла вся методология.
+    </div>
+  </div>
+
+  <nav class="quick-nav">
+    <div class="quick-nav-inner">
+      <a href="#new">🔥 Новое</a>
+      <a href="#fear-series">😨 Страх</a>
+      <a href="#manifestos">🆕 Манифесты</a>
+      <a href="#fredi">🤖 Фреди</a>
+      <a href="#products">📚 Практика</a>
+      <a href="#research">🔬 Концепты</a>
+      <a href="#clinic">🩺 Клиника</a>
+      <a href="#archive">📁 Архив</a>
+    </div>
+  </nav>
+
+  <div class="featured-card">
+    <span class="featured-tag">★ Флагман сайта</span>
+    <h2>Закон Мейстера: 3 уровня внутренней правды</h2>
+    <p>Авторская концепция, объясняющая почему 90% людей живут в иллюзии «одной правды о себе». Три уровня — декларативный, осознаваемый, глубинный — и почему их рассогласование рождает большинство психологических проблем взрослого человека. Базовая статья, после которой остальные концепты становятся понятнее.</p>
+    <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html" class="featured-link">Читать →</a>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="blogSearch" placeholder="Поиск по 290 статьям — введите ключевое слово">
+    <div class="search-count" id="searchCount"></div>
+    <div class="empty-search" id="emptySearch">Ничего не найдено. Попробуйте другое слово или сбросьте фильтр.</div>
   </div>
 
   <h2 id="fear-series">😨 Серия о реакциях на страх (20 статей)</h2>
   <p class="section-intro">Цикл из 20 статей о том, как 4 базовые реакции на страх (Fight/Flight/Freeze/Fawn) формируют жизненные сценарии — в карьере, отношениях, деньгах, родительстве. С эксцентричными темами: адреналиновые наркоманы, контрфобия, страх собственного успеха, психология трусости.</p>
   <div class="manifest-grid">
-    <a href="/blog/chetyre-reakcii-na-strah-bej-begi-zamri-ugodi.html" class="manifesto-card"><span class="m-num">1/20</span><h3>«Бей, беги, замри, угоди». 30 секунд, чтобы понять свой режим</h3></a>
-    <a href="/blog/pochemu-eta-reakciya-stala-vashej-formirovanie-do-6-let.html" class="manifesto-card"><span class="m-num">2/20</span><h3>Почему именно эта реакция стала вашей: формирование в первые 6 лет</h3></a>
-    <a href="/blog/body-memory-gde-zhivyot-vasha-reakciya-na-strah.html" class="manifesto-card"><span class="m-num">3/20</span><h3>Body memory: где живёт ваша реакция на страх и как её обнаружить в теле</h3></a>
-    <a href="/blog/test-glavnaya-i-tenevaya-reakciya-na-strah.html" class="manifesto-card"><span class="m-num">4/20</span><h3>Тест: какая у вас главная реакция и какая теневая (12 вопросов)</h3></a>
-    <a href="/blog/kogda-reakciya-rabotaet-a-kogda-stanovitsya-tyuremshikom.html" class="manifesto-card"><span class="m-num">5/20</span><h3>Когда реакция на страх работает, а когда становится тюрьмой</h3></a>
-    <a href="/blog/zhizn-v-rezhime-begi-flight-pattern.html" class="manifesto-card"><span class="m-num">6/20</span><h3>Жизнь в режиме «Беги» (Flight): карьера-побег, отношения-побег, эмоции-побег</h3></a>
-    <a href="/blog/zhizn-v-rezhime-srazhajsya-fight-pattern.html" class="manifesto-card"><span class="m-num">7/20</span><h3>Жизнь в режиме «Сражайся» (Fight): почему вы воюете со всеми, не побеждая</h3></a>
-    <a href="/blog/zhizn-v-rezhime-zamri-freeze-pattern.html" class="manifesto-card"><span class="m-num">8/20</span><h3>Жизнь в режиме «Замри» (Freeze): эффект отложенной жизни и хроническое зависание</h3></a>
-    <a href="/blog/zhizn-v-rezhime-ugodi-fawn-pattern.html" class="manifesto-card"><span class="m-num">9/20</span><h3>Жизнь в режиме «Угоди» (Fawn): сценарий «хорошего человека» как форма побега</h3></a>
-    <a href="/blog/gibridnye-reakcii-kogda-dva-rezhima-smeshivayutsya.html" class="manifesto-card"><span class="m-num">10/20</span><h3>Гибридные реакции: когда два режима смешиваются — самые сложные случаи</h3></a>
-    <a href="/blog/strah-v-karere-5-tipichnyh-scenariev.html" class="manifesto-card"><span class="m-num">11/20</span><h3>Страх в карьере: 5 типичных сценариев и какая реакция за каждым</h3></a>
-    <a href="/blog/strah-v-otnosheniyah-pochemu-vy-vybiraete-takih-partnyorov.html" class="manifesto-card"><span class="m-num">12/20</span><h3>Страх в отношениях: почему вы выбираете именно «таких» партнёров</h3></a>
-    <a href="/blog/strah-v-dengah-4-arhetipa-otnoshenij-s-finansami.html" class="manifesto-card"><span class="m-num">13/20</span><h3>Страх в деньгах: 4 архетипа отношения с финансами</h3></a>
-    <a href="/blog/strah-v-roditelstve-kak-vy-peredayote-svoyu-reakciyu.html" class="manifesto-card"><span class="m-num">14/20</span><h3>Страх в родительстве: как вы передаёте свою дефолтную реакцию детям</h3></a>
-    <a href="/blog/strah-v-odinochestve-pochemu-odni-vygorayut-drugie-rasvetayut.html" class="manifesto-card"><span class="m-num">15/20</span><h3>Страх в одиночестве: почему одни выгорают, другие расцветают</h3></a>
-    <a href="/blog/adrenalinovye-narkomany-kogda-strah-stimulator.html" class="manifesto-card"><span class="m-num">16/20</span><h3>Адреналиновые наркоманы: почему некоторые ищут страх как стимулятор</h3></a>
-    <a href="/blog/kontrfobiya-paradox-kogda-strah-tolkaet-v-opasnost.html" class="manifesto-card"><span class="m-num">17/20</span><h3>Контрфобия: парадокс, когда страх толкает прямо в опасность</h3></a>
-    <a href="/blog/strah-sobstvennogo-uspeha-7-priznakov-samosabotazha.html" class="manifesto-card"><span class="m-num">18/20</span><h3>Страх собственного успеха: 7 признаков, что вы саботируете себя</h3></a>
-    <a href="/blog/psihologiya-trusosti-geroi-ne-protivopolozhnost-trusam.html" class="manifesto-card"><span class="m-num">19/20</span><h3>Психология трусости: почему герои — не противоположность трусам</h3></a>
-    <a href="/blog/pereproshivka-reakcii-chto-rabotaet-i-chto-mif.html" class="manifesto-card"><span class="m-num">20/20 ★</span><h3>Перепрошивка реакции на страх: что реально работает и что — миф (ФИНАЛ)</h3></a>
+    <a href="/blog/chetyre-reakcii-na-strah-bej-begi-zamri-ugodi.html" class="manifesto-card"><span class="m-num">1/20</span><h3>«Бей, беги, замри, угоди». 30 секунд, чтобы понять свой режим</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
+    <a href="/blog/pochemu-eta-reakciya-stala-vashej-formirovanie-do-6-let.html" class="manifesto-card"><span class="m-num">2/20</span><h3>Почему именно эта реакция стала вашей: формирование в первые 6 лет</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/body-memory-gde-zhivyot-vasha-reakciya-na-strah.html" class="manifesto-card"><span class="m-num">3/20</span><h3>Body memory: где живёт ваша реакция на страх и как её обнаружить в теле</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
+    <a href="/blog/test-glavnaya-i-tenevaya-reakciya-na-strah.html" class="manifesto-card"><span class="m-num">4/20</span><h3>Тест: какая у вас главная реакция и какая теневая (12 вопросов)</h3><span class="card-meta">25 мая 2026 · 11 мин</span></a>
+    <a href="/blog/kogda-reakciya-rabotaet-a-kogda-stanovitsya-tyuremshikom.html" class="manifesto-card"><span class="m-num">5/20</span><h3>Когда реакция на страх работает, а когда становится тюрьмой</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
+    <a href="/blog/zhizn-v-rezhime-begi-flight-pattern.html" class="manifesto-card"><span class="m-num">6/20</span><h3>Жизнь в режиме «Беги» (Flight): карьера-побег, отношения-побег, эмоции-побег</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/zhizn-v-rezhime-srazhajsya-fight-pattern.html" class="manifesto-card"><span class="m-num">7/20</span><h3>Жизнь в режиме «Сражайся» (Fight): почему вы воюете со всеми, не побеждая</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/zhizn-v-rezhime-zamri-freeze-pattern.html" class="manifesto-card"><span class="m-num">8/20</span><h3>Жизнь в режиме «Замри» (Freeze): эффект отложенной жизни и хроническое зависание</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/zhizn-v-rezhime-ugodi-fawn-pattern.html" class="manifesto-card"><span class="m-num">9/20</span><h3>Жизнь в режиме «Угоди» (Fawn): сценарий «хорошего человека» как форма побега</h3><span class="card-meta">25 мая 2026 · 11 мин</span></a>
+    <a href="/blog/gibridnye-reakcii-kogda-dva-rezhima-smeshivayutsya.html" class="manifesto-card"><span class="m-num">10/20</span><h3>Гибридные реакции: когда два режима смешиваются — самые сложные случаи</h3><span class="card-meta">25 мая 2026 · 11 мин</span></a>
+    <a href="/blog/strah-v-karere-5-tipichnyh-scenariev.html" class="manifesto-card"><span class="m-num">11/20</span><h3>Страх в карьере: 5 типичных сценариев и какая реакция за каждым</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/strah-v-otnosheniyah-pochemu-vy-vybiraete-takih-partnyorov.html" class="manifesto-card"><span class="m-num">12/20</span><h3>Страх в отношениях: почему вы выбираете именно «таких» партнёров</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/strah-v-dengah-4-arhetipa-otnoshenij-s-finansami.html" class="manifesto-card"><span class="m-num">13/20</span><h3>Страх в деньгах: 4 архетипа отношения с финансами</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
+    <a href="/blog/strah-v-roditelstve-kak-vy-peredayote-svoyu-reakciyu.html" class="manifesto-card"><span class="m-num">14/20</span><h3>Страх в родительстве: как вы передаёте свою дефолтную реакцию детям</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
+    <a href="/blog/strah-v-odinochestve-pochemu-odni-vygorayut-drugie-rasvetayut.html" class="manifesto-card"><span class="m-num">15/20</span><h3>Страх в одиночестве: почему одни выгорают, другие расцветают</h3><span class="card-meta">26 мая 2026 · 9 мин</span></a>
+    <a href="/blog/adrenalinovye-narkomany-kogda-strah-stimulator.html" class="manifesto-card"><span class="m-num">16/20</span><h3>Адреналиновые наркоманы: почему некоторые ищут страх как стимулятор</h3><span class="card-meta">26 мая 2026 · 10 мин</span></a>
+    <a href="/blog/kontrfobiya-paradox-kogda-strah-tolkaet-v-opasnost.html" class="manifesto-card"><span class="m-num">17/20</span><h3>Контрфобия: парадокс, когда страх толкает прямо в опасность</h3><span class="card-meta">26 мая 2026 · 9 мин</span></a>
+    <a href="/blog/strah-sobstvennogo-uspeha-7-priznakov-samosabotazha.html" class="manifesto-card"><span class="m-num">18/20</span><h3>Страх собственного успеха: 7 признаков, что вы саботируете себя</h3><span class="card-meta">26 мая 2026 · 10 мин</span></a>
+    <a href="/blog/psihologiya-trusosti-geroi-ne-protivopolozhnost-trusam.html" class="manifesto-card"><span class="m-num">19/20</span><h3>Психология трусости: почему герои — не противоположность трусам</h3><span class="card-meta">26 мая 2026 · 10 мин</span></a>
+    <a href="/blog/pereproshivka-reakcii-chto-rabotaet-i-chto-mif.html" class="manifesto-card"><span class="m-num">20/20 ★</span><h3>Перепрошивка реакции на страх: что реально работает и что — миф (ФИНАЛ)</h3><span class="card-meta">26 мая 2026 · 11 мин</span></a>
   </div>
 
   <h2 id="new">🔥 Свежие публикации (май 2026)</h2>
   <p class="section-intro">Новые манифесты и щекотливые темы — гуманистическая психология, эмиграция как травма, повторение нарциссического сценария, разоблачение псевдонаук и протоколы редкой терапии. Все с источниками, разбором и предупреждениями.</p>
   <div class="manifest-grid">
-    <a href="/blog/pohoronnaya-terapiya-konfrontaciya-so-smertyu.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Лечь в гроб, чтобы жить: похоронная терапия — психология, физика, риски</h3></a>
-    <a href="/blog/narciss-naoborot-vy-vyrosli-s-narcissom.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Вы выросли с нарциссом — теперь нарцисс это вы. 7 признаков повторения сценария</h3></a>
-    <a href="/blog/cherez-5-let-polovina-psihologov-nenuzhna.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Через 5 лет половина психологов станет ненужной. Что останется и почему</h3></a>
-    <a href="/blog/karta-zhelaniy-ne-rabotaet-47-issledovanij.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Карта желаний не работает: разбор 47 исследований</h3></a>
-    <a href="/blog/prokrastinaciya-soprotivlenie-chuzhoj-celi.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Прокрастинация — это сопротивление чужой цели</h3></a>
-    <a href="/blog/rasstanovki-hellingera-6-prichin-psevdonauka.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Расстановки Хеллингера: 6 причин, почему это псевдонаука</h3></a>
-    <a href="/blog/samoocenka-pridumannaya-kategoriya-5-edinic.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Самооценка — придуманная категория. 5 единиц, которые работают на самом деле</h3></a>
-    <a href="/blog/psiholog-sam-ne-hodit-k-psihologu.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Психолог сам не ходит к психологу. Разбор табу профессии</h3></a>
-    <a href="/blog/lyubov-eto-kontrakt-7-skrytyh-punktov.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Любовь — это контракт, которого никто не читал. 7 скрытых пунктов</h3></a>
-    <a href="/blog/bezdetnye-po-vyboru-novyj-tip-odinochestva.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Бездетные по выбору: новый тип одиночества в России 2026</h3></a>
-    <a href="/blog/rossiyane-kto-ne-uehal-vina-i-zlost.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Россияне, которые не уехали: 6 невыговоренных эмоций оставшихся</h3></a>
-    <a href="/blog/emigraciya-kak-travma-7-stadij.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Эмиграция как травма: 7 стадий 2022–2024</h3></a>
-    <a href="/blog/setevoj-marketing-lider-kak-produkt.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Сетевой маркетинг: главный фокус — ЛОМ передаёт сигнал, у которого нет товара</h3></a>
-    <a href="/blog/psihologiya-barmena-gumanisticheskij-podhod.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Психология бармена: научное объяснение от Маслоу-Маслова до Роджерса и Фреди</h3></a>
+    <a href="/blog/pohoronnaya-terapiya-konfrontaciya-so-smertyu.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Лечь в гроб, чтобы жить: похоронная терапия — психология, физика, риски</h3><span class="card-meta">24 мая 2026 · 14 мин</span></a>
+    <a href="/blog/narciss-naoborot-vy-vyrosli-s-narcissom.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Вы выросли с нарциссом — теперь нарцисс это вы. 7 признаков повторения сценария</h3><span class="card-meta">24 мая 2026 · 14 мин</span></a>
+    <a href="/blog/cherez-5-let-polovina-psihologov-nenuzhna.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Через 5 лет половина психологов станет ненужной. Что останется и почему</h3><span class="card-meta">24 мая 2026 · 11 мин</span></a>
+    <a href="/blog/karta-zhelaniy-ne-rabotaet-47-issledovanij.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Карта желаний не работает: разбор 47 исследований</h3><span class="card-meta">24 мая 2026 · 10 мин</span></a>
+    <a href="/blog/prokrastinaciya-soprotivlenie-chuzhoj-celi.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Прокрастинация — это сопротивление чужой цели</h3><span class="card-meta">24 мая 2026 · 10 мин</span></a>
+    <a href="/blog/rasstanovki-hellingera-6-prichin-psevdonauka.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Расстановки Хеллингера: 6 причин, почему это псевдонаука</h3><span class="card-meta">23 мая 2026 · 13 мин</span></a>
+    <a href="/blog/samoocenka-pridumannaya-kategoriya-5-edinic.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Самооценка — придуманная категория. 5 единиц, которые работают на самом деле</h3><span class="card-meta">23 мая 2026 · 10 мин</span></a>
+    <a href="/blog/psiholog-sam-ne-hodit-k-psihologu.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Психолог сам не ходит к психологу. Разбор табу профессии</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
+    <a href="/blog/lyubov-eto-kontrakt-7-skrytyh-punktov.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Любовь — это контракт, которого никто не читал. 7 скрытых пунктов</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
+    <a href="/blog/bezdetnye-po-vyboru-novyj-tip-odinochestva.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Бездетные по выбору: новый тип одиночества в России 2026</h3><span class="card-meta">23 мая 2026 · 10 мин</span></a>
+    <a href="/blog/rossiyane-kto-ne-uehal-vina-i-zlost.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Россияне, которые не уехали: 6 невыговоренных эмоций оставшихся</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
+    <a href="/blog/emigraciya-kak-travma-7-stadij.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Эмиграция как травма: 7 стадий 2022–2024</h3><span class="card-meta">23 мая 2026 · 13 мин</span></a>
+    <a href="/blog/setevoj-marketing-lider-kak-produkt.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Сетевой маркетинг: главный фокус — ЛОМ передаёт сигнал, у которого нет товара</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
+    <a href="/blog/psihologiya-barmena-gumanisticheskij-podhod.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Психология бармена: научное объяснение от Маслоу-Маслова до Роджерса и Фреди</h3><span class="card-meta">23 мая 2026 · 12 мин</span></a>
   </div>
 
   <h2 id="manifestos">🆕 Манифесты Мейстера 2026 (30/30)</h2>
   <p class="section-intro">Серия из 30 манифестов, разделённых на 5 блоков: новые понятия, разоблачения, российская специфика, исследования, будущее. Авторские концепты — Закон Мейстера, Эпидемия онемения, 7 уровней эволюции.</p>
   <div class="manifest-grid">
-    <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html" class="manifesto-card"><span class="m-num">№1</span><h3>Закон Мейстера: 3 уровня внутренней правды</h3></a>
-    <a href="/blog/epidemiya-onemeniya-30-procentov-psihicheskoj-moschnosti.html" class="manifesto-card"><span class="m-num">№2</span><h3>Эпидемия онемения: 30% психической мощности россиян</h3></a>
-    <a href="/blog/manifest-psihologicheskoj-svobody-2026.html" class="manifesto-card"><span class="m-num">№3</span><h3>Манифест психологической свободы 2026: 7 свобод Мейстера</h3></a>
-    <a href="/blog/alfa-scenarij-7-rolej-uspeshnogo-cheloveka-v-rossii.html" class="manifesto-card"><span class="m-num">№4</span><h3>Альфа-сценарий: 7 ролей успешного человека в России</h3></a>
-    <a href="/blog/paradoks-vyzhivaniya-1990-2026.html" class="manifesto-card"><span class="m-num">№5</span><h3>Парадокс выживания: 1990–2026</h3></a>
-    <a href="/blog/konec-epohi-psiholog-celitel-2035.html" class="manifesto-card"><span class="m-num">№6</span><h3>Конец эпохи: психолог-целитель 2035</h3></a>
-    <a href="/blog/pochemu-psihoterapiya-v-rossii-ne-rabotaet.html" class="manifesto-card"><span class="m-num">№7</span><h3>Почему психотерапия в России не работает</h3></a>
-    <a href="/blog/kolonizaciya-russkogo-soznaniya-23-ustanovki.html" class="manifesto-card"><span class="m-num">№8</span><h3>Колонизация русского сознания: 23 установки</h3></a>
-    <a href="/blog/bolshaya-lozh-samopomoschi-7-mifov.html" class="manifesto-card"><span class="m-num">№9</span><h3>Большая ложь самопомощи: 7 мифов индустрии</h3></a>
-    <a href="/blog/tajnaya-ekonomika-boli-industriya-psihologii.html" class="manifesto-card"><span class="m-num">№10</span><h3>Тайная экономика боли: индустрия психологии</h3></a>
-    <a href="/blog/rossijskij-abyuz-9-unikalnyh-patternov.html" class="manifesto-card"><span class="m-num">№11</span><h3>Российский абъюз: 9 уникальных паттернов</h3></a>
-    <a href="/blog/epidemiya-odinochestva-v-brake-2026.html" class="manifesto-card"><span class="m-num">№12</span><h3>Эпидемия одиночества в браке: Россия 2026</h3></a>
-    <a href="/blog/12-nacionalnyh-psihologicheskih-konstant-rossiyan.html" class="manifesto-card"><span class="m-num">№13</span><h3>12 национальных психологических констант россиян</h3></a>
-    <a href="/blog/psihologicheskij-pasport-rossiyanina-23-fakta.html" class="manifesto-card"><span class="m-num">№14</span><h3>Психологический паспорт россиянина: 23 факта</h3></a>
-    <a href="/blog/travma-pokoleniya-8-shramov-rossiyan-1985-2025.html" class="manifesto-card"><span class="m-num">№15</span><h3>Травма поколения: 8 шрамов россиян 1985–2025</h3></a>
-    <a href="/blog/rossiya-vs-zapad-11-razlichij.html" class="manifesto-card"><span class="m-num">№16</span><h3>Россия vs Запад: 11 психологических различий</h3></a>
-    <a href="/blog/rossijskij-semejnyj-scenarij-5-modelej.html" class="manifesto-card"><span class="m-num">№17</span><h3>Российский семейный сценарий: 5 моделей</h3></a>
-    <a href="/blog/psihologiya-dolgosrochnoj-osady-2022-2026.html" class="manifesto-card"><span class="m-num">№18</span><h3>Психология долгосрочной осады: 2022–2026</h3></a>
-    <a href="/blog/analiz-10000-dialogov-fredi-2026.html" class="manifesto-card"><span class="m-num">№19</span><h3>Анализ 10 000 диалогов Фреди: данные 2026</h3></a>
-    <a href="/blog/bolshoe-issledovanie-schastya-2026.html" class="manifesto-card"><span class="m-num">№20</span><h3>Большое исследование счастья 2026</h3></a>
-    <a href="/blog/longityud-1000-rossiyan-10-let-2016-2026.html" class="manifesto-card"><span class="m-num">№21</span><h3>Лонгитюд: 1000 россиян за 10 лет (2016–2026)</h3></a>
-    <a href="/blog/pokolencheskij-razryv-4-pokoleniya-rossii.html" class="manifesto-card"><span class="m-num">№22</span><h3>Поколенческий разрыв: 4 поколения России</h3></a>
-    <a href="/blog/metaanaliz-200-issledovanij-russkaya-psihologiya.html" class="manifesto-card"><span class="m-num">№23</span><h3>Метаанализ 200 исследований русской психологии</h3></a>
-    <a href="/blog/karta-psihologicheskih-konfliktov-rossii-2026.html" class="manifesto-card"><span class="m-num">№24</span><h3>Карта психологических конфликтов России 2026</h3></a>
-    <a href="/blog/budushchee-psihologii-12-trendov-2035.html" class="manifesto-card"><span class="m-num">№25</span><h3>Будущее психологии: 12 трендов до 2035</h3></a>
-    <a href="/blog/pokolenie-x-plus-rossiyane-35-50.html" class="manifesto-card"><span class="m-num">№26</span><h3>Поколение X+: россияне 35–50 лет</h3></a>
-    <a href="/blog/novyj-protokol-vyzhivaniya-2026.html" class="manifesto-card"><span class="m-num">№27</span><h3>Новый протокол выживания 2026</h3></a>
-    <a href="/blog/psihologiya-posle-ii-5-cennejshih-sposobnostej.html" class="manifesto-card"><span class="m-num">№28</span><h3>Психология после ИИ: 5 ценнейших способностей</h3></a>
-    <a href="/blog/ot-zhertvy-k-tvorcu-7-urovnej-evolyucii.html" class="manifesto-card"><span class="m-num">№29</span><h3>От жертвы к творцу: 7 уровней эволюции</h3></a>
-    <a href="/blog/manifest-russkoj-psihologii-2030.html" class="manifesto-card"><span class="m-num">№30</span><h3>Манифест русской психологии 2030</h3></a>
+    <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html" class="manifesto-card"><span class="m-num">№1</span><h3>Закон Мейстера: 3 уровня внутренней правды</h3><span class="card-meta">21 мая 2026 · 32 мин</span></a>
+    <a href="/blog/epidemiya-onemeniya-30-procentov-psihicheskoj-moschnosti.html" class="manifesto-card"><span class="m-num">№2</span><h3>Эпидемия онемения: 30% психической мощности россиян</h3><span class="card-meta">21 мая 2026 · 30 мин</span></a>
+    <a href="/blog/manifest-psihologicheskoj-svobody-2026.html" class="manifesto-card"><span class="m-num">№3</span><h3>Манифест психологической свободы 2026: 7 свобод Мейстера</h3><span class="card-meta">21 мая 2026 · 28 мин</span></a>
+    <a href="/blog/alfa-scenarij-7-rolej-uspeshnogo-cheloveka-v-rossii.html" class="manifesto-card"><span class="m-num">№4</span><h3>Альфа-сценарий: 7 ролей успешного человека в России</h3><span class="card-meta">22 мая 2026 · 29 мин</span></a>
+    <a href="/blog/paradoks-vyzhivaniya-1990-2026.html" class="manifesto-card"><span class="m-num">№5</span><h3>Парадокс выживания: 1990–2026</h3><span class="card-meta">22 мая 2026 · 30 мин</span></a>
+    <a href="/blog/konec-epohi-psiholog-celitel-2035.html" class="manifesto-card"><span class="m-num">№6</span><h3>Конец эпохи: психолог-целитель 2035</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
+    <a href="/blog/pochemu-psihoterapiya-v-rossii-ne-rabotaet.html" class="manifesto-card"><span class="m-num">№7</span><h3>Почему психотерапия в России не работает</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
+    <a href="/blog/kolonizaciya-russkogo-soznaniya-23-ustanovki.html" class="manifesto-card"><span class="m-num">№8</span><h3>Колонизация русского сознания: 23 установки</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
+    <a href="/blog/bolshaya-lozh-samopomoschi-7-mifov.html" class="manifesto-card"><span class="m-num">№9</span><h3>Большая ложь самопомощи: 7 мифов индустрии</h3><span class="card-meta">22 мая 2026 · 26 мин</span></a>
+    <a href="/blog/tajnaya-ekonomika-boli-industriya-psihologii.html" class="manifesto-card"><span class="m-num">№10</span><h3>Тайная экономика боли: индустрия психологии</h3><span class="card-meta">22 мая 2026 · 27 мин</span></a>
+    <a href="/blog/rossijskij-abyuz-9-unikalnyh-patternov.html" class="manifesto-card"><span class="m-num">№11</span><h3>Российский абъюз: 9 уникальных паттернов</h3><span class="card-meta">22 мая 2026 · 27 мин</span></a>
+    <a href="/blog/epidemiya-odinochestva-v-brake-2026.html" class="manifesto-card"><span class="m-num">№12</span><h3>Эпидемия одиночества в браке: Россия 2026</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
+    <a href="/blog/12-nacionalnyh-psihologicheskih-konstant-rossiyan.html" class="manifesto-card"><span class="m-num">№13</span><h3>12 национальных психологических констант россиян</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
+    <a href="/blog/psihologicheskij-pasport-rossiyanina-23-fakta.html" class="manifesto-card"><span class="m-num">№14</span><h3>Психологический паспорт россиянина: 23 факта</h3><span class="card-meta">22 мая 2026 · 25 мин</span></a>
+    <a href="/blog/travma-pokoleniya-8-shramov-rossiyan-1985-2025.html" class="manifesto-card"><span class="m-num">№15</span><h3>Травма поколения: 8 шрамов россиян 1985–2025</h3><span class="card-meta">22 мая 2026 · 26 мин</span></a>
+    <a href="/blog/rossiya-vs-zapad-11-razlichij.html" class="manifesto-card"><span class="m-num">№16</span><h3>Россия vs Запад: 11 психологических различий</h3><span class="card-meta">22 мая 2026 · 25 мин</span></a>
+    <a href="/blog/rossijskij-semejnyj-scenarij-5-modelej.html" class="manifesto-card"><span class="m-num">№17</span><h3>Российский семейный сценарий: 5 моделей</h3><span class="card-meta">22 мая 2026 · 24 мин</span></a>
+    <a href="/blog/psihologiya-dolgosrochnoj-osady-2022-2026.html" class="manifesto-card"><span class="m-num">№18</span><h3>Психология долгосрочной осады: 2022–2026</h3><span class="card-meta">22 мая 2026 · 23 мин</span></a>
+    <a href="/blog/analiz-10000-dialogov-fredi-2026.html" class="manifesto-card"><span class="m-num">№19</span><h3>Анализ 10 000 диалогов Фреди: данные 2026</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
+    <a href="/blog/bolshoe-issledovanie-schastya-2026.html" class="manifesto-card"><span class="m-num">№20</span><h3>Большое исследование счастья 2026</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
+    <a href="/blog/longityud-1000-rossiyan-10-let-2016-2026.html" class="manifesto-card"><span class="m-num">№21</span><h3>Лонгитюд: 1000 россиян за 10 лет (2016–2026)</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
+    <a href="/blog/pokolencheskij-razryv-4-pokoleniya-rossii.html" class="manifesto-card"><span class="m-num">№22</span><h3>Поколенческий разрыв: 4 поколения России</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
+    <a href="/blog/metaanaliz-200-issledovanij-russkaya-psihologiya.html" class="manifesto-card"><span class="m-num">№23</span><h3>Метаанализ 200 исследований русской психологии</h3><span class="card-meta">22 мая 2026 · 21 мин</span></a>
+    <a href="/blog/karta-psihologicheskih-konfliktov-rossii-2026.html" class="manifesto-card"><span class="m-num">№24</span><h3>Карта психологических конфликтов России 2026</h3><span class="card-meta">22 мая 2026 · 20 мин</span></a>
+    <a href="/blog/budushchee-psihologii-12-trendov-2035.html" class="manifesto-card"><span class="m-num">№25</span><h3>Будущее психологии: 12 трендов до 2035</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
+    <a href="/blog/pokolenie-x-plus-rossiyane-35-50.html" class="manifesto-card"><span class="m-num">№26</span><h3>Поколение X+: россияне 35–50 лет</h3><span class="card-meta">22 мая 2026 · 20 мин</span></a>
+    <a href="/blog/novyj-protokol-vyzhivaniya-2026.html" class="manifesto-card"><span class="m-num">№27</span><h3>Новый протокол выживания 2026</h3><span class="card-meta">22 мая 2026 · 21 мин</span></a>
+    <a href="/blog/psihologiya-posle-ii-5-cennejshih-sposobnostej.html" class="manifesto-card"><span class="m-num">№28</span><h3>Психология после ИИ: 5 ценнейших способностей</h3><span class="card-meta">22 мая 2026 · 19 мин</span></a>
+    <a href="/blog/ot-zhertvy-k-tvorcu-7-urovnej-evolyucii.html" class="manifesto-card"><span class="m-num">№29</span><h3>От жертвы к творцу: 7 уровней эволюции</h3><span class="card-meta">22 мая 2026 · 7 мин</span></a>
+    <a href="/blog/manifest-russkoj-psihologii-2030.html" class="manifesto-card"><span class="m-num">№30</span><h3>Манифест русской психологии 2030</h3><span class="card-meta">22 мая 2026 · 7 мин</span></a>
   </div>
 
   <div class="wave-section">
@@ -440,6 +498,55 @@
 <div id="footer-placeholder"></div>
 <script>
   (function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();.catch(()=>{document.getElementById('footer-placeholder').innerHTML='<footer class="footer"><div class="container"><div class="footer-content"><div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div><div class="social-links"><a href="https://t.me/meysternlp" target="_blank" rel="noopener">Telegram</a><a href="https://vk.com/meysternlp" target="_blank" rel="noopener">VK</a><a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener">Rutube</a><a href="https://dzen.ru/89857788588" target="_blank" rel="noopener">Дзен</a></div></div><div class="copyright">© Андрей Мейстер · 2026</div></div></footer>'});
+</script>
+
+
+<script>
+(function(){
+  const input = document.getElementById('blogSearch');
+  const count = document.getElementById('searchCount');
+  const empty = document.getElementById('emptySearch');
+  if (!input) return;
+  
+  const cards = document.querySelectorAll('.manifesto-card');
+  const links = document.querySelectorAll('.archive-list a');
+  
+  function filter(){
+    const q = input.value.trim().toLowerCase();
+    let matched = 0;
+    let total = cards.length + links.length;
+    
+    cards.forEach(c => {
+      const t = c.textContent.toLowerCase();
+      if (!q || t.includes(q)){
+        c.classList.remove('no-match');
+        matched++;
+      } else {
+        c.classList.add('no-match');
+      }
+    });
+    links.forEach(a => {
+      const t = a.textContent.toLowerCase();
+      if (!q || t.includes(q)){
+        a.classList.remove('no-match');
+        matched++;
+      } else {
+        a.classList.add('no-match');
+      }
+    });
+    
+    if (q){
+      count.textContent = matched === 1 ? '1 статья найдена' : matched + ' статей найдено';
+      count.classList.add('visible');
+      empty.classList.toggle('visible', matched === 0);
+    } else {
+      count.classList.remove('visible');
+      empty.classList.remove('visible');
+    }
+  }
+  
+  input.addEventListener('input', filter);
+})();
 </script>
 
 </body>
