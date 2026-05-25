@@ -331,4 +331,10 @@
   <url><loc>https://meysternlp.ru/obo-mne/</loc><lastmod>2026-04-27</lastmod><priority>0.8</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://meysternlp.ru/about/</loc><lastmod>2026-03-22</lastmod><priority>0.7</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://meysternlp.ru/privacy/</loc><lastmod>2026-03-22</lastmod><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url>
+    <loc>https://meysternlp.ru/blog/protokol-grob-dnevnik-12-mesyacev-keys-direktora.html</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
