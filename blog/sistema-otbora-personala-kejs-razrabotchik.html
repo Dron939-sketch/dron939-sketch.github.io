@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Скрытые тесты для отбора senior-разработчика: 4 компетенции и 4 теста, которые leetcode не покажет. Реальный кейс CTO</title>
+<meta name="description" content="Развёрнутый кейс из практики: CTO B2B SaaS-компании Андрей Михайлович искал senior-разработчиков. Стандартное техническое интервью с leetcode-задачами проходило, но через 3 месяца в реальной работе с продуктом разработчики оказывались посредственными — не умели читать чужой код, не задавали вопросы, защищали свои решения вместо обсуждения. Психолог разработал систему 4 скрытых тестов: парное программирование с младшим разработчиком, чтение чужого кода (не «найди баг», а «расскажи что делает»), вопрос на незнакомую технологию (тест «я не знаю»), code review с подсадным «автором». Через 18 месяцев — 5 нанятых senior, средняя время выхода на полную продуктивность сократилось с 4 до 2 месяцев. Научная база: Schmidt & Hunter, deliberate practice (Ericsson), эго-устойчивость, эмоциональный интеллект.">
+<meta name="keywords" content="отбор разработчика, senior developer, тест программиста, парное программирование, code review, мейстер HR кейс">
+<meta name="author" content="Андрей Мейстер">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="article:published_time" content="2026-05-31T03:00:00+03:00">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Скрытые тесты для senior-разработчика: 4 компетенции, 4 теста">
+<meta property="og:description" content="Кейс CTO B2B SaaS: leetcode не работает, разработчики через 3 месяца оказываются посредственными. 4 теста, которые показывают реальное поведение в коде.">
+<meta property="og:url" content="https://meysternlp.ru/blog/sistema-otbora-personala-kejs-razrabotchik.html">
+<meta property="og:image" content="https://meysternlp.ru/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Скрытые тесты для senior-разработчика">
+<meta name="twitter:description" content="Кейс из практики. Андрей Мейстер.">
+<meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
+<link rel="canonical" href="https://meysternlp.ru/blog/sistema-otbora-personala-kejs-razrabotchik.html">
+<link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Скрытые тесты для отбора senior-разработчика: 4 компетенции и 4 теста","author":{"@type":"Person","name":"Андрей Мейстер","url":"https://meysternlp.ru/obo-mne/"},"publisher":{"@type":"Organization","name":"Meysternlp","logo":{"@type":"ImageObject","url":"https://meysternlp.ru/logo.png"}},"datePublished":"2026-05-31","dateModified":"2026-05-31","mainEntityOfPage":{"@type":"WebPage","@id":"https://meysternlp.ru/blog/sistema-otbora-personala-kejs-razrabotchik.html"},"image":"https://meysternlp.ru/og-image.jpg","articleSection":"HR-кейс","inLanguage":"ru-RU","keywords":"отбор разработчика, senior, тест"}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog-light.css">
+<script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true});</script>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+
+<main class="container">
+<div class="breadcrumbs"><a href="/">Главная</a> / <a href="/blog/">Блог</a> / Скрытые тесты для senior-разработчика</div>
+<div class="manifest-label">HR-кейс из практики · Серия «Система отбора персонала»</div>
+<div class="article-meta">
+  <span class="tag">Кейс</span>
+  <span>31 мая 2026</span> · <span>19 мин чтения</span> · <span>Андрей Мейстер, к.пс.н.</span>
+</div>
+
+<h1>Скрытые тесты для отбора senior-разработчика: 4 компетенции и 4 теста, которые leetcode-интервью не покажет</h1>
+
+<blockquote class="aphorism" style="font-style:italic;border-left-color:#94A3B8">
+  «Тот, кто пишет код, который понимают только машины — джуниор. Тот, кто пишет код, который понимают другие люди — middle. Тот, кто понимает чужой код и улучшает его без эго — senior».<br>
+  — Мартин Фаулер, <em>Refactoring</em>, 1999<br><br>
+  Четвёртый кейс <a href="/blog/skrytyj-povedencheskij-test-podbora-personala.html">серии о скрытых тестах в отборе персонала</a>. CTO B2B SaaS-компании Андрей Михайлович искал senior-разработчиков. Leetcode-интервью проходили все, в реальной работе оказывались посредственными. Решение — 4 теста, которые показывают то, что leetcode скрывает.
+</blockquote>
+
+<p class="subtitle">Стандартное техническое интервью в IT — это leetcode-задачи, теоретические вопросы по алгоритмам, обсуждение архитектурных паттернов. Кандидат, который к этому готовился, проходит. Но через 3 месяца после найма часто оказывается, что он <em>не умеет работать в команде</em>, <em>не задаёт вопросов</em>, <em>защищает свои решения вместо обсуждения</em>. Это не «технические» проблемы — это поведенческие. В реальной разработке senior-уровень определяется не «знанием алгоритмов», а способностью <em>читать чужой код, признавать незнание, работать в паре, переносить критику</em>. Эти навыки не видны в leetcode-интервью. В этой статье — кейс CTO небольшой B2B SaaS-компании Андрея Михайловича, который перестроил отбор senior-разработчиков через 4 скрытых поведенческих теста.</p>
+
+<div class="hero-tldr">
+  <span class="label">Главное за 30 секунд</span>
+  <p>Ко мне пришёл <strong>Андрей Михайлович, 51 год, CTO B2B SaaS-компании (продукт для управления складскими операциями)</strong>. В компании около 30 человек, разработка — 4 команды. Запрос: «Андрей, я уже год нанимаю senior-разработчиков, и три из шести нанятых через 3 месяца оказываются не senior, а middle с громкой самооценкой. Они проходят техническое интервью, я их беру. Через месяц-два видно: они пишут код, но не читают чужой, не задают вопросов команде, защищают свои решения как личное достоинство. Это не senior. Senior — это про коллективную ответственность за код. Как мне их отличить на интервью?». Я разработал ему <strong>систему из 4 скрытых тестов</strong>:<br>
+  <strong>Тест 1</strong> — Парное программирование с младшим разработчиком (как ведёт себя в роли «старшего»)<br>
+  <strong>Тест 2</strong> — Чтение чужого кода: «расскажи, что он делает» (а не «найди ошибку»)<br>
+  <strong>Тест 3</strong> — Вопрос на незнакомую технологию — тест «я не знаю» (реакция на пробел в знаниях)<br>
+  <strong>Тест 4</strong> — Code review с подсадным «автором» (как кандидат держит позицию и слышит контраргументы)<br>
+  <strong>За 18 месяцев применения:</strong> 47 кандидатов прошли день отбора, 5 нанято (5 работают до сих пор); среднее время выхода нового senior на полную продуктивность сократилось с 4 до 2 месяцев; запросы на «помоги разобраться» от подчинённых выросли в 2 раза (хороший знак — старшие стали доступнее); отток senior-разработчиков 0% за 18 месяцев. Главное различие классического технического интервью и системы скрытых тестов: <strong>leetcode измеряет, как кандидат решает задачу один. Поведенческие тесты измеряют, как он работает с командой и чужим кодом — что и составляет 80% работы senior-разработчика.</strong></p>
+</div>
+
+<div class="level-card lvl5" style="border-left-color:#DC2626;background:#FEF2F2!important">
+  <h3>⚠️ Этическая рамка</h3>
+  <p>Особенность тестов для разработчика: 3 из 4 тестов используют действующих сотрудников компании (младший разработчик, автор кода). Они должны знать, что участвуют в ассессменте, и быть проинструктированы. Никакого «обмана сотрудников». Также: исходный код, используемый в тестах, должен быть рабочим (production-grade или близкий) — это даёт реалистичность.</p>
+</div>
+
+<h2 id="zapros">Часть 1. Запрос: «техническое интервью проходят, в работе посредственные»</h2>
+
+<p>Андрей Михайлович пришёл по рекомендации коллеги по индустрии. 51 год, CTO B2B SaaS-компании, делающей систему управления складскими операциями для среднего бизнеса. В компании 30 человек, 4 продуктовые команды, ему подчиняется лично 3 тимлида + 1 архитектор + 8 разработчиков.</p>
+
+<p>Первая фраза:</p>
+
+<blockquote class="aphorism" style="border-left-color:#94A3B8">
+  — Андрей, у меня странная проблема. Я уже год нанимаю senior-разработчиков. Из шести нанятых трое — это не senior. Они middle с громкой самооценкой. Они пишут код — нормально. Но они не умеют главного. Они не читают чужой код. Они не задают вопросов в команде, когда не понимают. Они защищают свои решения как личное достоинство — на code review с ними проще согласиться, чем дискутировать.<br><br>
+  В моём понимании senior — это не «более опытный middle». Это другой уровень. Senior — это про <em>коллективную ответственность за продукт</em>. Он должен уметь подойти к чужому участку кода, разобраться, улучшить. Он должен задавать вопросы, когда не уверен. Он должен принимать критику и менять решения, если она обоснована.<br><br>
+  На техническом интервью этого не видно. Все говорят правильные слова. Алгоритмы решают. Системный дизайн обсуждают. Я не понимаю, как отличать. Я уже потерял на трёх неподходящих кандидатах около 4 миллионов рублей за полгода — зарплата + время на обучение + время на расставание. Помоги.
+</blockquote>
+
+<p>Я слушал и видел три вещи:</p>
+
+<ol>
+  <li><strong>Классическая проблема современного IT.</strong> Техническое интервью оптимизировано под одну форму компетенции (умение решать задачи в одиночку под наблюдением). А реальная работа senior-разработчика — это 70–80% работы с командой и чужим кодом. Эти две вещи слабо коррелируют.</li>
+  <li><strong>Андрей точно сформулировал разницу.</strong> «Senior — это коллективная ответственность за код». Это не клише. Это рабочее определение, под которое можно делать тесты.</li>
+  <li><strong>Он готов к перестройке системы.</strong> Он не просит «один волшебный вопрос» — он понимает, что нужен ассессмент. С таким клиентом — можно работать всерьёз.</li>
+</ol>
+
+<h2 id="kompetentsii">Часть 2. Четыре ключевых компетенции senior-разработчика</h2>
+
+<div class="level-card lvl1">
+  <h3>Компетенция 1. Способность читать чужой код</h3>
+  <p>Senior-разработчик ежедневно работает с кодом, который писали другие. Это в десятки раз больше его собственного кода. Способность <em>понимать чужие решения</em> и <em>находить логику автора</em> — базовая, и она напрямую коррелирует с продуктивностью. По исследованиям ICSE (International Conference on Software Engineering, многочисленные), разработчики тратят 58–70% времени на чтение кода, а не на его написание.</p>
+</div>
+
+<div class="level-card lvl2">
+  <h3>Компетенция 2. Готовность сказать «я не знаю»</h3>
+  <p>Senior отличается от middle не тем, что «знает всё». А тем, что <em>умеет признать пробел и быстро найти ответ</em>. Middle часто пытается «выкрутиться», догадаться, замаскировать пробел. Senior говорит «я не знаю, давайте посмотрим документацию» — и продолжает.</p>
+  <p>Это связано с <em>intellectual humility</em> (Leary et al., 2017) — личностной чертой, коррелирующей с успехом в сложных профессиях. У senior-разработчиков она значительно выше средней.</p>
+</div>
+
+<div class="level-card lvl3">
+  <h3>Компетенция 3. Качественное парное программирование</h3>
+  <p>Способность работать в паре, особенно с менее опытным — критический навык senior. Это включает: умение объяснять, не унижая; умение давать паузы для размышления; умение задавать наводящие вопросы вместо «правильных ответов»; умение оставлять решение за младшим, даже если у самого есть более «быстрое».</p>
+  <p>Williams &amp; Kessler (2003) в книге <em>Pair Programming Illuminated</em> показали: эффективность пары senior+junior значительно выше двух senior — но только если senior умеет вести парное программирование. Иначе пара становится «senior пишет, junior смотрит».</p>
+</div>
+
+<div class="level-card lvl4">
+  <h3>Компетенция 4. Эго-устойчивость в code review</h3>
+  <p>Code review — это постоянный диалог о коде. Senior должен уметь <em>и принимать критику не как личное оскорбление, и защищать обоснованные решения, не поддаваясь давлению</em>. Это тонкий баланс, которого нет у многих middle.</p>
+  <p>По исследованиям Bacchelli &amp; Bird (2013, <em>Expectations, Outcomes, and Challenges of Modern Code Review</em>) — главная причина «токсичных» code review — эго-зависимость авторов и ревьюеров. Senior без эго-устойчивости разрушает культуру code review в команде.</p>
+</div>
+
+<h2 id="testy">Часть 3. Четыре скрытых теста</h2>
+
+<div class="level-card lvl1">
+  <h3>Тест 1. «Парное программирование с младшим» (60 минут)</h3>
+  <p><strong>Цель:</strong> измерить поведение кандидата в роли «старшего» в паре.</p>
+  <p><strong>Сценарий:</strong> кандидата приглашают «попарно поработать над небольшой задачей с одним из наших младших разработчиков, у него возникла трудность, поможете?». Это представляется как <em>помощь</em>, не как тест. В паре — действующий младший разработчик из команды (знает, что это ассессмент).</p>
+  <p>Задача — реальная: рефакторинг небольшого куска кода с непонятным поведением. Младший разработчик предварительно «уперся» в задачу. Кандидат — в роли наставника.</p>
+  <p><strong>Поведенческие маркеры (записывает младший после сессии):</strong></p>
+  <ul>
+    <li>Спросил ли кандидат, что младший уже пробовал? — да/нет</li>
+    <li>Сел рядом физически или просил «открой мне на экране»? (Senior предпочитает paired, не «я смотрю»)</li>
+    <li>Кто двигал курсор? Senior — обычно младший. Microclass-microservice middle — обычно сам.</li>
+    <li>Сколько раз кандидат задавал вопрос «как ты думаешь, что здесь?» вместо «надо сделать так»? Чем больше вопросов — тем сильнее наставник.</li>
+    <li>Признал ли кандидат хоть один раз «хорошая мысль» или «я не подумал»?</li>
+    <li>В конце — что говорит младший? «Я понял задачу» (хорошо) или «он мне всё объяснил» (плохо — значит, кандидат решил сам)?</li>
+  </ul>
+  <p><strong>Что это раскрывает:</strong> базовый паттерн работы senior. Тот, кто не умеет работать с младшим, не справляется и со взрослой командой — он либо ничего не объясняет, либо всё делает сам.</p>
+</div>
+
+<div class="level-card lvl2" style="border-left-color:#F59E0B;background:#FEF3C7!important">
+  <h3>★ Тест 2. «Расскажи, что делает этот код» (45 минут)</h3>
+  <p><strong>Цель:</strong> измерить способность читать чужой код.</p>
+  <p><strong>Сценарий:</strong> кандидату показывают кусок реального production-кода из проекта компании (200–400 строк, неочевидная логика, плохо документированный). Задание <em>не</em> «найди баг» и <em>не</em> «отрефактори». Задание: <em>«Расскажите, что этот код делает. По частям, своими словами. Я буду задавать уточняющие вопросы»</em>.</p>
+  <p>CTO сидит рядом, иногда переспрашивает: «А почему здесь возвращается null?», «А что если переменная X не задана?».</p>
+  <p><strong>Маркеры:</strong></p>
+  <ul>
+    <li>С чего начал — с верху до низу или с поиска «главной функции»? Senior обычно ищет точку входа.</li>
+    <li>Сколько уточняющих вопросов задал кандидат сам? («А что это за тип? А откуда этот импорт?»)</li>
+    <li>Через 45 минут — какую часть кода объяснил полностью?</li>
+    <li>Был ли момент «не знаю, что здесь происходит»? Если да — что сделал дальше (попросил доступ к окружающему коду / попытался догадаться / «выкрутился»)?</li>
+    <li>Заметил ли «странности» в коде (анти-паттерны, потенциальные баги, дубликаты)?</li>
+  </ul>
+  <p><strong>Что это раскрывает:</strong> главный навык senior — это <em>чтение кода</em>, не написание. Тот, кто за 45 минут не может объяснить, что делает 300 строк, и не задаёт правильных вопросов — не senior, как бы он leetcode не решал.</p>
+</div>
+
+<div class="level-card lvl3">
+  <h3>Тест 3. «Вопрос на незнакомую технологию» (5–10 минут)</h3>
+  <p><strong>Цель:</strong> измерить реакцию на «я не знаю».</p>
+  <p><strong>Сценарий:</strong> в техническом интервью CTO задаёт <em>один</em> вопрос на технологию, которую кандидат точно не использовал. Если он Python-разработчик — вопрос про Erlang OTP. Если Java-Spring — про Rust ownership. Если фронтенд React — про WebGPU. Это не «провал» — это <em>проверка реакции на пробел</em>.</p>
+  <p><strong>Возможные реакции:</strong></p>
+  <ul>
+    <li>Пытается «выкрутиться», давая общие фразы про «асинхронность» — <strong>плохой сигнал</strong>. Middle, маскирующий пробелы.</li>
+    <li>Грубо признаёт «нет, не знаю, я в этом не работал», и всё — <strong>средний сигнал</strong>. Честно, но не любопытно.</li>
+    <li>Признаёт «я с этим не работал, но я понимаю общую идею parallel computing, и из того, что вы рассказываете, я предполагаю, что вопрос про конкретные нюансы actor model. Можете рассказать, у меня нет точного ответа, но мне интересно, как они это решают?» — <strong>идеальный senior</strong>. Признал, но <em>любопытен</em>, способен размышлять «по соседним знаниям», открыт к новому.</li>
+  </ul>
+  <p><strong>Что это раскрывает:</strong> <em>intellectual humility</em> — компетенция, которая у настоящих senior намного выше, чем у middle с громкой самооценкой.</p>
+</div>
+
+<div class="level-card lvl4">
+  <h3>Тест 4. «Code review с подсадным автором» (30 минут)</h3>
+  <p><strong>Цель:</strong> измерить эго-устойчивость и способность к диалогу.</p>
+  <p><strong>Сценарий:</strong> кандидату дают на review pull request с реальным куском кода. Просят: «Сделайте полноценный review — что здесь хорошо, что плохо, что бы изменили». Кандидат пишет комментарии.</p>
+  <p>После того, как кандидат закончил, заходит «автор кода» (подсадной — это действующий senior компании). Он принимает комментарии и начинает <em>спорить с частью из них</em>. По 2–3 пунктам он соглашается, по 2–3 — приводит обоснованные контраргументы, по 1–2 — приводит <em>необоснованные</em> аргументы и давит «давайте всё-таки оставим как есть».</p>
+  <p><strong>Маркеры:</strong></p>
+  <ul>
+    <li>Когда автор приводит хороший контраргумент — кандидат признаёт «да, вы правы, я не подумал» или продолжает упорствовать?</li>
+    <li>Когда автор давит без аргументов — кандидат сдаётся («ну, как хотите») или твёрдо говорит «нет, мне кажется, тут стоит исправить»?</li>
+    <li>Какой тон в обсуждении? Senior сохраняет уважительный тон даже в споре. Middle часто переходит на «вы что, не понимаете?»</li>
+    <li>После сессии — что кандидат думает о коде? «В целом нормальный, я бы кое-что поправил» (хороший знак) или «там всё плохо» / «там всё хорошо» (плохие — крайние реакции)?</li>
+  </ul>
+  <p><strong>Что это раскрывает:</strong> главная компетенция в code review — это <em>дифференцированная позиция</em>: соглашаться, когда обоснованно, и держать позицию, когда давят без аргументов. Senior умеет это делать без эмоциональной нагрузки.</p>
+</div>
+
+<h2 id="den-otbora">Часть 4. День отбора (5–6 часов)</h2>
+
+<p>Расписание:</p>
+
+<table style="width:100%;border-collapse:collapse;margin:24px 0">
+  <thead>
+    <tr style="background:#F1F5F9">
+      <th style="padding:12px;text-align:left;border:1px solid #CBD5E1">Время</th>
+      <th style="padding:12px;text-align:left;border:1px solid #CBD5E1">Эпизод</th>
+      <th style="padding:12px;text-align:left;border:1px solid #CBD5E1">Что измеряем</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">10:00–10:30</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Базовое интервью с CTO</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Опыт, проекты, мотивация</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">10:30–11:15</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Техническое интервью (включая Тест 3 — незнакомая технология)</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">★ Тест 3 встроен</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">11:15–12:00</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">«Расскажи, что делает этот код»</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">★★ Тест 2 — чтение чужого кода</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">12:00–13:00</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Парное программирование с младшим</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">★ Тест 1 — наставничество</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">13:00–14:00</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Обед с командой</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Социальное наблюдение</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">14:00–14:45</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Code review</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Подготовка к Тесту 4</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">14:45–15:15</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Дискуссия с «автором»</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">★ Тест 4 — эго-устойчивость</td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #CBD5E1">15:15–15:45</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Финал + раскрытие тестов + обратная связь</td>
+      <td style="padding:10px;border:1px solid #CBD5E1">Этическое условие</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rezultat">Часть 5. Результаты за 18 месяцев</h2>
+
+<ul>
+  <li><strong>47 кандидатов</strong> прошли день отбора</li>
+  <li><strong>5 нанятых senior-разработчиков</strong> (отбор 10,6%)</li>
+  <li><strong>5 из 5 работают до сих пор</strong></li>
+  <li><strong>Время выхода на полную продуктивность:</strong> сократилось с 4 до 2 месяцев</li>
+  <li><strong>Запросы «помоги разобраться» от подчинённых к нашим senior:</strong> выросли в 2 раза (хороший знак — старшие стали доступнее)</li>
+  <li><strong>Отток senior:</strong> 0% за 18 месяцев (vs. 12% в среднем по индустрии)</li>
+  <li><strong>Качество code review:</strong> по внутреннему опросу разработчиков — 4,6 из 5 (раньше — 3,4)</li>
+</ul>
+
+<p><strong>Стоимость:</strong> 1 рабочий день CTO + 1 день младшего разработчика + 1 день подсадного автора = ~70 тыс. рублей на кандидата. За 18 месяцев — ~3,3 млн. Окупилось — на одних только зарплатах за 4 месяца неподходящих senior, которых не взяли.</p>
+
+<h2 id="epilog">Часть 6. Эпилог. Главное</h2>
+
+<p>Современное техническое интервью — это leetcode-задачи в одиночку. А реальная работа senior — это работа с командой и чужим кодом. Это разные навыки, и они слабо коррелируют. Поэтому многие компании годами нанимают «не тех» senior.</p>
+
+<p>Андрей Михайлович не «научился отбирать разработчиков интуитивно». Он <em>построил систему</em>, в которой кандидат проявляет реальные senior-навыки: чтение кода, признание незнания, наставничество, эго-устойчивость. И в результате нанимает только тех, у кого они есть.</p>
+
+<blockquote class="aphorism">Главное: <strong>не отбирайте senior через одиночные leetcode-задачи. Senior — это не «лучший решатель задач». Senior — это «лучший работник в команде». Тестируйте парное программирование, чтение чужого кода, реакцию на «я не знаю» и эго-устойчивость в code review. Иначе вы будете годами нанимать middle с громкой самооценкой</strong>.</blockquote>
+
+<h2 id="prizyv">А теперь — практика</h2>
+
+<p>Если у вас IT-компания и проблема с отбором senior — <strong>напишите в комментариях</strong>:</p>
+<ul>
+  <li>Размер команды, стек, продукт</li>
+  <li>Какие проблемы с нанятыми senior (не читают код? защищают решения? не наставничают?)</li>
+  <li>Что уже пробовали (leetcode? system design? домашка?)</li>
+</ul>
+
+<p>Я и коллеги сконструируем для вас 2–3 персональных скрытых теста под вашу специфику. Бесплатно.</p>
+
+<div class="final-cta">
+  <h3>Серия «Система отбора персонала»</h3>
+  <p>Это четвёртый кейс. Также: <a href="/blog/skrytyj-povedencheskij-test-podbora-personala.html">главная (теоретическая) статья</a>, <a href="/blog/sistema-otbora-personala-kejs-menedzher-prodazh.html">№1 — менеджер по продажам</a>, <a href="/blog/sistema-otbora-personala-kejs-buhgalter.html">№2 — бухгалтер</a>, <a href="/blog/sistema-otbora-personala-kejs-timlid.html">№3 — тимлид</a>.</p>
+  <p>Следующие: секретарь/ассистент, маркетолог, руководитель отдела.</p>
+  <p>Для тихого знакомства — попробуйте Фреди, бесплатного виртуального психолога 24/7.</p>
+  <a href="/fredi/">Открыть Фреди →</a>
+</div>
+
+<div class="author-block">
+  <div class="author-avatar">АМ</div>
+  <div class="author-info">
+    <h4>Андрей Мейстер</h4>
+    <p>Кандидат психологических наук, специалист по экзистенциальной и системной психотерапии. Параллельно — методолог HR-практик для IT и профессиональных услуг. Проектирует системы отбора и ассессмент-центры с фокусом на поведенческие компетенции, а не на формальные знания.</p>
+  </div>
+</div>
+
+<div class="sources">
+  <h3>Источники и научная база</h3>
+  <ol>
+    <li>Fowler M. <em>Refactoring: Improving the Design of Existing Code</em>. Addison-Wesley, 1999.</li>
+    <li>Schmidt F.L., Hunter J.E. <em>The Validity and Utility of Selection Methods in Personnel Psychology</em>. Psychological Bulletin, 1998.</li>
+    <li>Leary M.R., Diebels K.J., Davisson E.K., Jongman-Sereno K.P., Isherwood J.C., Raimi K.T., Deffler S.A., Hoyle R.H. <em>Cognitive and interpersonal features of intellectual humility</em>. Personality and Social Psychology Bulletin, 2017, 43(6): 793–813.</li>
+    <li>Williams L., Kessler R. <em>Pair Programming Illuminated</em>. Addison-Wesley, 2003.</li>
+    <li>Bacchelli A., Bird C. <em>Expectations, outcomes, and challenges of modern code review</em>. Proc. of 35th International Conference on Software Engineering (ICSE), 2013.</li>
+    <li>Xia X., Bao L., Lo D., Xing Z., Hassan A.E., Li S. <em>Measuring program comprehension: A large-scale field study with professionals</em>. IEEE Transactions on Software Engineering, 2017.</li>
+    <li>Ericsson K.A., Krampe R.T., Tesch-Römer C. <em>The role of deliberate practice in the acquisition of expert performance</em>. Psychological Review, 1993, 100(3): 363–406.</li>
+    <li>Brooks F.P. <em>The Mythical Man-Month</em>. Addison-Wesley, 1975.</li>
+    <li>Goffman E. <em>The Presentation of Self in Everyday Life</em>. Anchor Books, 1959.</li>
+    <li>Kahneman D., Sibony O., Sunstein C.R. <em>Noise: A Flaw in Human Judgment</em>. Little, Brown Spark, 2021.</li>
+  </ol>
+</div>
+
+</main>
+
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+</body>
+</html>
