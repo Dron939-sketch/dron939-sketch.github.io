@@ -1,0 +1,512 @@
+/* Override + base layout layer для блог-статей meysternlp.ru
+   Подключать через <link rel="stylesheet" href="/blog-light.css"> в <head>
+   Содержит:
+     1. Override-правила (для статей с inline dark <style>)
+     2. Базовый layout (для compact-статей без inline <style>) */
+
+*{box-sizing:border-box}
+
+/* === Базовый светлый фон === */
+body{background:#FFFFFF!important;color:#1D1D1F!important;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif!important;line-height:1.7!important;font-size:17px!important;margin:0!important;padding:0!important;-webkit-font-smoothing:antialiased!important}
+
+/* === CSS-переменные === */
+:root{--bg:#FFFFFF!important;--bg-primary:#FFFFFF!important;--bg-secondary:#F5F5F7!important;--bg-card:#FFFFFF!important;--card:#F5F5F7!important;--text:#1D1D1F!important;--text-primary:#1D1D1F!important;--text-secondary:#3A3A3C!important;--text-muted:#6E6E73!important;--muted:#6E6E73!important;--border:rgba(0,0,0,0.1)!important;--accent:#3A86FF!important;--accent-hover:#1D1D1F!important;--accent-warm:#F59E0B!important;--gold:#FBBF24!important;--green:#10B981!important;--cyan:#06B6D4!important;--blue:#3B82F6!important;--red:#EF4444!important;--pink:#EC4899!important;--purple:#8B5CF6!important}
+
+/* === Заголовки === */
+h1,h2,h3,h4,h5,h6{background:none!important;background-clip:initial!important;-webkit-background-clip:initial!important;-webkit-text-fill-color:#1D1D1F!important;color:#1D1D1F!important;font-weight:700!important}
+h1{font-size:clamp(2.2rem,5.5vw,3.4rem)!important;font-weight:800!important;line-height:1.15!important;letter-spacing:-0.01em!important;margin:24px 0 12px!important}
+h2{font-size:clamp(1.7rem,4vw,2.4rem)!important;font-weight:700!important;line-height:1.25!important;margin:50px 0 20px!important}
+h3{font-size:1.35rem!important;font-weight:600!important;margin:32px 0 14px!important}
+h4{font-size:1.1rem!important;font-weight:600!important;margin:20px 0 10px!important}
+
+/* === Текст === */
+p{color:#3A3A3C!important;font-weight:400!important;margin:0 0 18px!important}
+strong,b{color:#1D1D1F!important;font-weight:600!important}
+em,i{color:#3A3A3C!important}
+li,td,th{color:#1D1D1F!important}
+ul,ol{padding-left:24px!important;margin:0 0 20px!important}
+li{margin-bottom:8px!important;line-height:1.6!important}
+
+/* === Ссылки ===
+   Скоупируем на main.container, чтобы не перекрывать цвета шапки/подвала
+   (.btn-header, .logo, .nav-links a, footer-link и т.п. имеют свои цвета) */
+main.container a{color:#3A86FF!important;text-decoration:none!important;transition:color 0.2s!important}
+main.container a:hover{color:#1D1D1F!important}
+
+/* === Container ===
+   Узкая колонка только для контентного контейнера (main.container),
+   чтобы не ломать ширину/высоту шапки и подвала, которые тоже используют .container */
+main.container{display:block!important;max-width:880px!important;margin:0 auto!important;padding:40px 24px!important}
+
+/* Шапка: возвращаем оригинальную геометрию (1200px, без вертикальных отступов) */
+.header .container{max-width:1200px!important;padding:0 20px!important}
+/* Подвал: то же самое */
+.footer .container{max-width:1200px!important;padding:0 20px!important}
+
+/* === Главные карточки: общая база === */
+.level-card,
+.goal-card,
+.obstacle-card,
+.breakthrough-card,
+.day-card,
+.bias-card,
+.step-card,
+.principle-card,
+.stat-card,
+.section-header,
+.ability-card,
+.trait-card,
+.factor-card,
+.divide-card,
+.gen-card,
+.lesson-card,
+.diff-card,
+.trend-card,
+.crisis-card,
+.conflict-card,
+.fact-card,
+.scar-card,
+.model-card,
+.shift-card,
+.constant-card,
+.scenario-card,
+.role-card,
+.pattern-card{
+  background:#FFFFFF!important;
+  border:1px solid #E0E0E0!important;
+  color:#1D1D1F!important;
+  border-radius:14px!important;
+  padding:24px 28px!important;
+  margin:18px 0!important;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04)!important;
+}
+
+.level-card h3,.goal-card h3,.obstacle-card h3,.breakthrough-card h3,
+.ability-card h3,.trait-card h3,.factor-card h3,.divide-card h3,
+.gen-card h3,.lesson-card h3,.diff-card h3,.trend-card h3,
+.step-card h3,.principle-card h3,.crisis-card h3,.conflict-card h3,
+.fact-card h3,.bias-card h3,.scar-card h3,.model-card h3,
+.shift-card h3,.constant-card h3,.scenario-card h3,.role-card h3,
+.pattern-card h3{
+  margin:0 0 12px!important;
+  font-size:1.2rem!important;
+  color:#1D1D1F!important;
+  font-weight:700!important;
+}
+
+.level-card p,.goal-card p,.obstacle-card p,.breakthrough-card p,
+.ability-card p,.trait-card p,.factor-card p,.divide-card p,
+.gen-card p,.lesson-card p,.diff-card p,.trend-card p,
+.step-card p,.principle-card p,.crisis-card p,.conflict-card p,
+.fact-card p,.bias-card p,.scar-card p,.model-card p,
+.shift-card p,.constant-card p,.scenario-card p,.role-card p,
+.pattern-card p{
+  margin:8px 0!important;
+  color:#3A3A3C!important;
+}
+
+.level-card p:last-child,.goal-card p:last-child,.ability-card p:last-child,
+.trait-card p:last-child{margin-bottom:0!important}
+
+/* === Level-card цветная вертикальная полоса по lvl === */
+.level-card.lvl1{border-left:5px solid #94A3B8!important}
+.level-card.lvl2{border-left:5px solid #06B6D4!important}
+.level-card.lvl3{border-left:5px solid #10B981!important}
+.level-card.lvl4{border-left:5px solid #3A86FF!important}
+.level-card.lvl5{border-left:5px solid #8B5CF6!important}
+.level-card.lvl6{border-left:5px solid #EC4899!important}
+.level-card.lvl7{border-left:5px solid #FBBF24!important}
+
+/* === Toc, faq, sources, related, signature и др. фоновые блоки === */
+.toc,.faq,.faq-block,.sources,.related,.case-block,.test-card,.method-box,.cost-block,.gift-block,.cause-card,.trauma-card,.warning-box,.quote-block,.markers-list,.compare-table,.disclaimer,.protocol,.voice{
+  background:#F5F5F7!important;
+  border:1px solid #E0E0E0!important;
+  color:#1D1D1F!important;
+  border-radius:14px!important;
+  padding:22px 26px!important;
+  margin:24px 0!important;
+}
+
+/* === Hero TL;DR === */
+.hero-tldr{
+  background:linear-gradient(135deg,#FFFCE8,#F5F5F7)!important;
+  border:1px solid #FBBF24!important;
+  border-left:4px solid #FBBF24!important;
+  border-radius:16px!important;
+  padding:24px 28px!important;
+  margin:24px 0 32px!important;
+}
+.hero-tldr p,.hero-tldr .lead,.hero-tldr .summary{color:#1D1D1F!important;font-weight:400!important;margin:0!important}
+.hero-tldr strong{color:#1D1D1F!important}
+.hero-tldr .label{
+  display:inline-block!important;
+  background:#FBBF24!important;
+  color:#1D1D1F!important;
+  padding:4px 12px!important;
+  border-radius:8px!important;
+  font-size:0.7rem!important;
+  font-weight:800!important;
+  text-transform:uppercase!important;
+  letter-spacing:0.5px!important;
+  margin-bottom:12px!important;
+}
+
+/* === Tags, metas, breadcrumbs === */
+.tag,.case-label{
+  display:inline-block!important;
+  background:rgba(58,134,255,0.1)!important;
+  color:#3A86FF!important;
+  padding:4px 10px!important;
+  border-radius:8px!important;
+  font-size:0.75rem!important;
+  font-weight:600!important;
+  letter-spacing:0.3px!important;
+}
+.manifest-label{
+  display:inline-block!important;
+  background:rgba(58,134,255,0.1)!important;
+  color:#3A86FF!important;
+  padding:5px 12px!important;
+  border-radius:10px!important;
+  font-size:0.8rem!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+  letter-spacing:0.5px!important;
+  margin-bottom:16px!important;
+}
+.article-meta{
+  display:flex!important;
+  gap:18px!important;
+  color:#6E6E73!important;
+  font-size:0.9rem!important;
+  flex-wrap:wrap!important;
+  margin:14px 0 24px!important;
+  align-items:center!important;
+}
+.article-meta .tag{margin-bottom:0!important}
+.breadcrumbs{
+  font-size:13px!important;
+  color:#6E6E73!important;
+  margin-bottom:24px!important;
+}
+.breadcrumbs a{color:#3A86FF!important;text-decoration:none!important}
+
+.subtitle,.lead{color:#6E6E73!important;font-size:1.15rem!important;line-height:1.5!important;margin-bottom:24px!important;font-weight:400!important}
+.muted,.text-muted,.footer-note,.stat-lbl,.role,.date,.lvl-traits,.meta,.disclaimer,.interp,.divider,.toc-title{color:#6E6E73!important}
+.lvl-traits strong,.interp strong{color:#1D1D1F!important}
+
+/* === Афоризм === */
+.aphorism,blockquote.aphorism,blockquote{
+  background:linear-gradient(135deg,#E8F1FF,#F5F5F7)!important;
+  border-left:4px solid #3A86FF!important;
+  color:#1D1D1F!important;
+  -webkit-text-fill-color:#1D1D1F!important;
+  font-style:italic!important;
+  padding:24px 32px!important;
+  border-radius:0 14px 14px 0!important;
+  font-weight:400!important;
+  margin:32px 0!important;
+  font-size:1.1rem!important;
+  line-height:1.6!important;
+}
+
+/* === Stats grid === */
+.stats-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr))!important;
+  gap:18px!important;
+  margin:24px 0 32px!important;
+}
+.stat{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  padding:24px!important;
+  background:#F5F5F7!important;
+  border:1px solid #E0E0E0!important;
+  border-radius:14px!important;
+  margin:0!important;
+}
+.stat-num{
+  display:block!important;
+  font-size:2.4rem!important;
+  font-weight:800!important;
+  color:#3A86FF!important;
+  background:none!important;
+  -webkit-text-fill-color:#3A86FF!important;
+  -webkit-background-clip:initial!important;
+  line-height:1!important;
+  margin-bottom:8px!important;
+}
+.stat-lbl{
+  display:block!important;
+  font-size:0.92rem!important;
+  color:#6E6E73!important;
+  line-height:1.4!important;
+}
+
+/* === Timeline === */
+.timeline{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:14px!important;
+  margin:24px 0 32px!important;
+  padding-left:20px!important;
+  border-left:2px solid #E0E0E0!important;
+}
+.timeline-item{
+  display:flex!important;
+  gap:24px!important;
+  align-items:flex-start!important;
+  padding:18px 22px!important;
+  background:#F5F5F7!important;
+  border:1px solid #E0E0E0!important;
+  border-radius:12px!important;
+  position:relative!important;
+}
+.timeline-year{
+  font-size:1.4rem!important;
+  font-weight:800!important;
+  color:#3A86FF!important;
+  -webkit-text-fill-color:#3A86FF!important;
+  min-width:70px!important;
+  flex-shrink:0!important;
+}
+.timeline-content{flex:1!important}
+.timeline-content strong{display:block!important;color:#1D1D1F!important;margin-bottom:4px!important;font-size:1rem!important}
+.timeline-content p{margin:0!important;font-size:0.95rem!important;color:#3A3A3C!important}
+
+/* === Breakthrough cards === */
+.breakthrough-card{
+  position:relative!important;
+  padding:24px 28px!important;
+}
+.breakthrough-card .num,
+.breakthrough-card span.num{
+  display:inline-block!important;
+  background:rgba(58,134,255,0.1)!important;
+  color:#3A86FF!important;
+  padding:4px 10px!important;
+  border-radius:8px!important;
+  font-size:0.75rem!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+  letter-spacing:0.5px!important;
+  margin-bottom:10px!important;
+}
+
+/* === Ability cards (для #28) === */
+.ability-card{
+  position:relative!important;
+  padding:28px 28px 24px 94px!important;
+  margin:24px 0!important;
+}
+.ability-num{
+  position:absolute!important;
+  top:28px!important;
+  left:24px!important;
+  width:52px!important;
+  height:52px!important;
+  border-radius:50%!important;
+  background:linear-gradient(135deg,#3A86FF,#00A8E8)!important;
+  color:#FFFFFF!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-weight:800!important;
+  font-size:1.2rem!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+}
+.why-ai,.how-develop{
+  background:#F5F5F7!important;
+  padding:14px 18px!important;
+  border-radius:10px!important;
+  margin-top:14px!important;
+  font-size:0.95rem!important;
+  color:#3A3A3C!important;
+}
+.why-ai{border-left:3px solid #EF4444!important}
+.how-develop{border-left:3px solid #10B981!important}
+.why-ai strong{color:#EF4444!important}
+.how-develop strong{color:#10B981!important}
+
+/* === Trait cards (для #26 поколение Х+) === */
+.trait-card{
+  position:relative!important;
+  padding:24px 28px!important;
+}
+.trait-num,.trait-card .trait-num{
+  display:inline-block!important;
+  background:rgba(58,134,255,0.1)!important;
+  color:#3A86FF!important;
+  padding:4px 10px!important;
+  border-radius:8px!important;
+  font-size:0.72rem!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+  letter-spacing:0.5px!important;
+  margin-bottom:8px!important;
+}
+
+/* === Step / Protocol cards === */
+.step-card,.protocol-step{
+  display:flex!important;
+  gap:20px!important;
+  align-items:flex-start!important;
+  padding:22px 26px!important;
+}
+.step-card .num,.day-card .day-num,.protocol-step .num,.step-num{
+  flex-shrink:0!important;
+  background:linear-gradient(135deg,#3A86FF,#00A8E8)!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  border-radius:50%!important;
+  width:40px!important;
+  height:40px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-weight:800!important;
+}
+
+/* === Tables === */
+table{background:#F5F5F7!important;border-radius:12px!important;overflow:hidden!important;border-collapse:collapse!important;width:100%!important;margin:24px 0!important}
+th{background:rgba(58,134,255,0.08)!important;color:#3A86FF!important;font-weight:700!important;text-transform:uppercase!important;font-size:13px!important;letter-spacing:0.5px!important;padding:12px 16px!important;text-align:left!important}
+td{color:#1D1D1F!important;border-bottom:1px solid #E0E0E0!important;padding:12px 16px!important;vertical-align:top!important}
+
+/* === FAQ === */
+.faq h4,.faq-item h4,.case-title,.case-label{color:#3A86FF!important}
+.faq-item{border-bottom:1px solid #E0E0E0!important;padding:14px 0!important}
+
+/* === CTA === */
+.final-cta,.cta-box,.cta-block{
+  background:linear-gradient(135deg,#3A86FF,#00A8E8)!important;
+  color:#FFFFFF!important;
+  border:none!important;
+  box-shadow:0 20px 60px rgba(58,134,255,0.25)!important;
+  border-radius:20px!important;
+  padding:36px 40px!important;
+  margin:40px 0!important;
+  text-align:center!important;
+}
+.final-cta h3,.cta-box h3,.cta-block h3{
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  margin:0 0 14px!important;
+  font-size:1.5rem!important;
+}
+.final-cta p,.cta-box p,.cta-block p{
+  color:rgba(255,255,255,0.92)!important;
+  margin:0 0 22px!important;
+  font-size:1rem!important;
+}
+.final-cta a,.cta-box a,.cta-block a,.cta-btn,.cta-block .btn{
+  display:inline-block!important;
+  background:#FFFFFF!important;
+  color:#3A86FF!important;
+  font-weight:700!important;
+  border-radius:30px!important;
+  padding:14px 32px!important;
+  text-decoration:none!important;
+  transition:all 0.2s!important;
+}
+.final-cta a:hover,.cta-box a:hover,.cta-btn:hover{background:#1D1D1F!important;color:#FFFFFF!important}
+
+/* === Author block === */
+.author-block{
+  display:flex!important;
+  align-items:center!important;
+  gap:20px!important;
+  background:#F5F5F7!important;
+  border:1px solid #E0E0E0!important;
+  color:#1D1D1F!important;
+  padding:24px 26px!important;
+  border-radius:14px!important;
+  margin:36px 0 24px!important;
+}
+.author-avatar,.author-block .avatar{
+  flex-shrink:0!important;
+  width:56px!important;
+  height:56px!important;
+  border-radius:50%!important;
+  background:linear-gradient(135deg,#00A8E8,#3A86FF)!important;
+  color:#FFFFFF!important;
+  -webkit-text-fill-color:#FFFFFF!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-weight:800!important;
+  font-size:1.05rem!important;
+}
+.author-info h4{margin:0 0 4px!important;color:#1D1D1F!important;font-size:1.05rem!important}
+.author-block p,.author-info p{margin:0!important;color:#3A3A3C!important;font-size:0.9rem!important;line-height:1.5!important}
+.author-info .role{color:#6E6E73!important}
+
+/* === Signature === */
+.signature{
+  background:linear-gradient(135deg,#FFFCE8,#F5F5F7)!important;
+  border:1px solid #FBBF24!important;
+  border-radius:14px!important;
+  padding:20px 28px!important;
+  margin:36px 0 24px!important;
+}
+.signature .name{color:#1D1D1F!important;font-size:1.05rem!important;font-weight:700!important;margin-bottom:4px!important}
+.signature .role,.signature .date{color:#6E6E73!important;font-size:0.9rem!important;margin-bottom:2px!important}
+
+/* === Footer note === */
+.footer-note{
+  text-align:center!important;
+  font-size:0.92rem!important;
+  color:#6E6E73!important;
+  margin:24px 0 40px!important;
+}
+
+/* === Sources === */
+.sources{margin:36px 0 24px!important;padding:24px 28px!important;border-radius:14px!important}
+.sources h3,.sources h4{margin:0 0 14px!important;font-size:1.1rem!important;color:#1D1D1F!important}
+.sources ol{padding-left:20px!important;margin:0!important}
+.sources li{margin-bottom:6px!important;font-size:0.92rem!important;color:#3A3A3C!important;line-height:1.5!important}
+
+/* === Divider === */
+.divider{text-align:center!important;color:#A8A8A8!important;letter-spacing:0.4em!important;margin:40px 0!important}
+
+/* === Related === */
+.related{margin:36px 0 24px!important;padding:24px 28px!important}
+.related h3,.related h4{margin:0 0 14px!important;color:#1D1D1F!important}
+.related ul{padding-left:20px!important;margin:0!important}
+.related li{margin-bottom:8px!important}
+
+/* === Скрываем inline старые header/footer === */
+header.site,header > div.container.nav,body > footer:not(#footer-placeholder ~ footer){display:none!important}
+
+/* === Mobile === */
+@media(max-width:640px){
+  body{font-size:16px!important}
+  h1{font-size:2rem!important}
+  h2{font-size:1.5rem!important}
+  h3{font-size:1.2rem!important}
+  .container{padding:24px 16px!important}
+  .step-card,.protocol-step,.timeline-item{flex-direction:column!important;gap:10px!important;align-items:stretch!important}
+  .timeline-year{min-width:auto!important}
+  .author-block{flex-direction:column!important;text-align:center!important;align-items:center!important}
+  .ability-card{padding:28px 22px 22px 22px!important}
+  .ability-num{position:static!important;margin-bottom:14px!important}
+  .stats-grid{grid-template-columns:repeat(2,1fr)!important;gap:12px!important}
+  .stat{padding:18px!important}
+  .stat-num{font-size:2rem!important}
+  .final-cta{padding:28px 24px!important}
+  .level-card,.ability-card,.trait-card,.breakthrough-card{padding:20px 22px!important}
+  .article-meta{gap:10px!important;font-size:0.85rem!important}
+  blockquote,.aphorism{padding:18px 22px!important;font-size:1rem!important}
+}
+
+
+/* === Блок "Читайте также" === */
+.related-articles{margin:60px 0 30px!important;padding:32px!important;background:#F5F5F7!important;border-radius:20px!important;border:1px solid rgba(0,0,0,0.06)!important}
+.related-articles h3{margin:0 0 20px!important;color:#1D1D1F!important;font-size:1.3rem!important;font-weight:700!important}
+.related-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))!important;gap:14px!important}
+.related-item{background:#FFFFFF!important;padding:16px 18px!important;border-radius:12px!important;border:1px solid rgba(0,0,0,0.06)!important;transition:transform .15s,box-shadow .15s!important}
+.related-item:hover{transform:translateY(-2px)!important;box-shadow:0 4px 16px rgba(58,134,255,0.12)!important;border-color:rgba(58,134,255,0.25)!important}
+.related-item a{color:#1D1D1F!important;text-decoration:none!important;font-weight:500!important;font-size:0.98rem!important;line-height:1.35!important;display:block!important}
+.related-item a:hover{color:#3A86FF!important}
+@media (max-width:520px){.related-articles{padding:22px 18px!important}.related-grid{grid-template-columns:1fr!important}}

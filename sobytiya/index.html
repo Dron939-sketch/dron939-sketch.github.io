@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/">
+  
+  <!-- SEO МЕТА-ТЕГИ -->
+  <title>Архив материалов — видео и тексты | Андрей Мейстер</title>
+  <meta name="description" content="Архив учебных материалов: видео-лекции, разборы, инструкции, PDF-документы. Всё, что остаётся и работает.">
+  <meta name="keywords" content="архив, видео, тексты, инструкции, pdf, материалы, системное мышление">
+  <meta name="author" content="Андрей Мейстер">
+  
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Архив материалов — Андрей Мейстер">
+  <meta property="og:description" content="Видео и тексты: лекции, инструкции, разборы. То, что можно скачать и использовать.">
+  <meta property="og:image" content="/og-image.jpg">
+  <meta property="og:url" content="https://meysternlp.ru/sobytiya/">
+  <meta property="og:type" content="website">
+  
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://meysternlp.ru/sobytiya/">
+  
+  <!-- Подключаем Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* ===== ТИПОГРАФИКА ===== */
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 200;
+      margin-bottom: 0.5rem;
+      color: #3A86FF;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      font-weight: 300;
+      margin: 2rem 0 1.5rem;
+      color: #FFFFFF;
+      letter-spacing: 0.15em;
+    }
+
+    p {
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      font-weight: 300;
+      color: #CCCCCC;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ===== ХЕДЕР ===== */
+    .main-header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 1001;
+      background: transparent;
+      border: none;
+    }
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3A86FF;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3A86FF;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #3A86FF;
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .psychologist-btn {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      color: white !important;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .psychologist-btn::after {
+      display: none;
+    }
+
+    .psychologist-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+      color: white !important;
+    }
+
+    .psychologist-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #FFFFFF;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px);
+      font-weight: 400;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+      border: 1px solid #3A86FF;
+      background-color: transparent;
+      color: #FFFFFF;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      text-align: center;
+      min-height: 40px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      color: #0C0C0C;
+      border-color: #3A86FF;
+      box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
+    }
+
+    .btn:hover::before {
+      left: 0;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-small {
+      padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 16px);
+      font-size: clamp(0.65rem, 2vw, 0.75rem);
+      min-height: 32px;
+    }
+
+    /* ===== СТРАНИЦА АРХИВА ===== */
+    .page-header {
+      padding: clamp(40px, 8vw, 60px) 0 20px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      margin-bottom: 10px;
+    }
+
+    .page-header .subtitle {
+      font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+      color: #FFFFFF;
+      font-weight: 200;
+      letter-spacing: 0.1em;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background-color: #3A86FF;
+      margin: 25px auto;
+    }
+
+    .archive-section {
+      margin: 50px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .section-icon {
+      font-size: clamp(2rem, 6vw, 2.5rem);
+      line-height: 1;
+    }
+
+    .section-name {
+      font-size: clamp(1.3rem, 5vw, 2rem);
+      font-weight: 200;
+      color: #FFFFFF;
+    }
+
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .material-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: clamp(20px, 4vw, 25px);
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    .material-card:nth-child(1) { animation-delay: 0.1s; }
+    .material-card:nth-child(2) { animation-delay: 0.2s; }
+    .material-card:nth-child(3) { animation-delay: 0.3s; }
+
+    .material-card:hover {
+      border-color: #3A86FF;
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .material-icon {
+      font-size: clamp(1.8rem, 5vw, 2rem);
+      margin-bottom: 15px;
+    }
+
+    .material-title {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-weight: 400;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+
+    .material-meta {
+      color: #666;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+      margin-bottom: 15px;
+    }
+
+    .material-description {
+      color: #CCCCCC;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      margin-bottom: 20px;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .material-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .video-embed {
+      margin: 15px 0;
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 1px solid rgba(58, 134, 255, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .video-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    audio {
+      width: 100%;
+      margin: 15px 0;
+      border-radius: 30px;
+    }
+
+    .email-section {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: clamp(25px, 5vw, 40px);
+      margin: 50px 0;
+      text-align: center;
+      border-radius: 12px;
+    }
+
+    .email-section p {
+      margin-bottom: 25px;
+      color: #FFFFFF;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .email-input {
+      background-color: transparent;
+      border: 1px solid rgba(58, 134, 255, 0.3);
+      padding: clamp(12px, 3vw, 14px) clamp(15px, 4vw, 20px);
+      font-size: clamp(0.9rem, 3vw, 1rem);
+      color: #FFFFFF;
+      font-family: 'Inter', sans-serif;
+      min-width: 280px;
+      border-radius: 30px;
+      transition: border-color 0.3s ease;
+    }
+
+    .email-input:focus {
+      outline: none;
+      border-color: #3A86FF;
+    }
+
+    .form-note {
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+      color: #666;
+    }
+
+    .actions-section {
+      text-align: center;
+      margin: 40px 0 30px;
+    }
+
+    .actions-title {
+      font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+      color: #FFFFFF;
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: clamp(40px, 8vw, 60px) 0 clamp(20px, 4vw, 30px);
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: clamp(20px, 5vw, 30px);
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: clamp(0.8rem, 3vw, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #3A86FF;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      opacity: 0.5;
+      color: #666;
+    }
+
+    .text-blue { color: #3A86FF; }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .psychologist-btn {
+        margin-top: 15px;
+        text-align: center;
+      }
+      
+      .materials-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .email-input {
+        min-width: 100%;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .action-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      .section-title {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        letter-spacing: 0.2em;
+      }
+      
+      .burger {
+        width: 25px;
+        height: 18px;
+      }
+      
+      .burger.active span:nth-child(1),
+      .burger.active span:nth-child(3) {
+        top: 8px;
+      }
+      
+      .material-card {
+        padding: 20px;
+      }
+      
+      .video-embed {
+        margin: 12px 0;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+      
+      .nav-links a {
+        padding: 8px 0;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .psychologist-btn, .burger, .material-card {
+        cursor: pointer;
+      }
+      
+      .btn:active, .psychologist-btn:active {
+        transform: scale(0.97);
+      }
+      
+      .burger:active {
+        transform: scale(0.95);
+      }
+      
+      .material-card:active {
+        transform: scale(0.98);
+      }
+    }
+  </style>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
+
+    ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Архив материалов — видео и тексты | Андрей Мейстер">
+  <meta name="twitter:description" content="Архив учебных материалов: видео-лекции, разборы, инструкции, PDF-документы. Всё, что остаётся и работает.">
+  <meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+
+<!-- ХЕДЕР (встроенный) -->
+<header class="main-header">
+  <div class="header-container">
+    <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/knigi/">Книги</a>
+      <a href="/igry/">Игры</a>
+      <a href="/treningi/">Тренинги</a>
+      <a href="/v-razrabotke/">В разработке</a>
+      <a href="/sobytiya/" class="active">Архив</a>
+      <a href="/virtual-psychologist/" class="psychologist-btn">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="container">
+  <!-- Заголовок -->
+  <div class="page-header">
+    <h1>АРХИВ</h1>
+    <div class="subtitle">Материалы, которые остаются.</div>
+    <div class="subtitle">То, что можно скачать, сохранить, использовать.</div>
+    <div class="divider"></div>
+  </div>
+
+  <!-- ВИДЕО-РАЗДЕЛ -->
+  <div class="archive-section">
+    <div class="section-title">
+      <span class="section-icon">🎥</span>
+      <span class="section-name">ВИДЕО</span>
+    </div>
+
+    <div class="materials-grid">
+      <!-- Видео 1: Вводная инструкция для ВАРИАТИКА-basic -->
+      <div class="material-card video-card">
+        <div class="material-icon">🎬</div>
+        <div class="material-title">Вводная инструкция для «ВАРИАТИКА-basic»</div>
+        <div class="material-meta">VK Видео • 45 мин</div>
+        <div class="material-description">Базовое введение в систему Вариатика. Основные принципы, структура и первые шаги.</div>
+        <div class="video-embed">
+          <iframe src="https://vk.com/video_ext.php?oid=469250200&id=456239357&hash=d5f4b9d3f8e2a1c7" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      
+      <!-- Видео 2: Инструкция к дидактической игре «Маркетолог» -->
+      <div class="material-card video-card">
+        <div class="material-icon">🎮</div>
+        <div class="material-title">Инструкция к дидактической игре «Маркетолог»</div>
+        <div class="material-meta">VK Видео • 15 мин</div>
+        <div class="material-description">Подробное руководство по игре «Маркетолог». Как играть, какие стратегии использовать, как достигать целей.</div>
+        <div class="video-embed">
+          <iframe src="https://vk.com/video_ext.php?oid=469250200&id=456239291&hash=9b8f7e6d5c4a3b2a" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      
+      <!-- Видео 3: ЭКСПЕРТ-ИНФЛЮЕНСЕР 126 (Программа нейрокоррекции) -->
+      <div class="material-card video-card">
+        <div class="material-icon">🧠</div>
+        <div class="material-title">ЭКСПЕРТ-ИНФЛЮЕНСЕР 126</div>
+        <div class="material-meta">VK Видео • Программа нейрокоррекции поведенческих паттернов</div>
+        <div class="material-description">Программа нейрокоррекции поведенческих паттернов с использованием VR-очков.</div>
+        <div class="video-embed">
+          <iframe src="https://vkvideo.ru/video_ext.php?oid=-234137703&id=456239019&hash=bbaf070220ef2f33&hd=2" width="100%" height="100%" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ТЕКСТОВЫЙ РАЗДЕЛ -->
+  <div class="archive-section">
+    <div class="section-title">
+      <span class="section-icon">📄</span>
+      <span class="section-name">ТЕКСТЫ</span>
+    </div>
+
+    <div class="materials-grid">
+      <!-- Гайд по страхам -->
+      <div class="material-card text-card">
+        <div class="material-icon">📘</div>
+        <div class="material-title">Гайд по страхам</div>
+        <div class="material-meta">PDF</div>
+        <div class="material-description">Практическое руководство по работе со страхами и тревожными состояниями.</div>
+        <div class="material-actions">
+          <a href="/sobytiya/PDF/Гайд%2012_гайд%20по%20страхам.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
+        </div>
+      </div>
+
+      <!-- Гайд 7: Упражнения и техники -->
+      <div class="material-card text-card">
+        <div class="material-icon">📄</div>
+        <div class="material-title">Гайд 7: Упражнения и техники</div>
+        <div class="material-meta">PDF</div>
+        <div class="material-description">Практические упражнения и техники для развития навыков.</div>
+        <div class="material-actions">
+          <a href="/sobytiya/PDF/Гайд%207.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
+        </div>
+      </div>
+
+      <!-- Яды: деструктивные паттерны -->
+      <div class="material-card text-card">
+        <div class="material-icon">⚠️</div>
+        <div class="material-title">Яды: деструктивные паттерны</div>
+        <div class="material-meta">PDF</div>
+        <div class="material-description">Анализ деструктивных паттернов поведения и способы работы с ними.</div>
+        <div class="material-actions">
+          <a href="/sobytiya/PDF/Гайд%20_ЯДЫ.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
+        </div>
+      </div>
+
+      <!-- Матрица контроля (приложение) -->
+      <div class="material-card text-card">
+        <div class="material-icon">📊</div>
+        <div class="material-title">Матрица контроля (приложение)</div>
+        <div class="material-meta">PDF</div>
+        <div class="material-description">Приложение к Матрице контроля — дополнительные материалы и упражнения.</div>
+        <div class="material-actions">
+          <a href="/sobytiya/PDF/Гайд_10_Матрица_контроля_ПРИЛОЖЕНИЕ.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
+        </div>
+      </div>
+
+      <!-- Терапевтические сказки -->
+      <div class="material-card text-card">
+        <div class="material-icon">📖</div>
+        <div class="material-title">Терапевтические сказки</div>
+        <div class="material-meta">PDF</div>
+        <div class="material-description">Сборник терапевтических сказок для работы с подсознанием.</div>
+        <div class="material-actions">
+          <a href="/sobytiya/PDF/Гайд_15_Терапевтические%20сказки.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
+        </div>
+      </div>
+
+      <!-- Матрица контроля (основы) -->
+      <div class="material-card text-card">
+        <div class="material-icon">🎯</div>
+        <div class="material-title">Матрица контроля (основы)</div>
+        <div class="material-meta">PDF</div>
+        <div class="material-description">Основной теоретический материал по Матрице контроля из курса «Теория манипуляции».</div>
+        <div class="material-actions">
+          <a href="/sobytiya/PDF/Матрица_контроля_Теория_манипуляции.pdf" class="btn btn-small" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ PDF</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- АУДИО РАЗДЕЛ -->
+  <div class="archive-section">
+    <div class="section-title">
+      <span class="section-icon">🎧</span>
+      <span class="section-name">АУДИО · только в наушниках</span>
+    </div>
+
+    <div class="materials-grid">
+      
+      <!-- 1. Архитектор -->
+      <div class="material-card text-card">
+        <div class="material-icon">🏗️</div>
+        <div class="material-title">Архитектор. Многоуровневая навигация бессознательного</div>
+        <div class="material-meta">MP3 · 20 мин</div>
+        <div class="material-description">
+          <strong>Кому:</strong> Тем, кто живёт не свою жизнь и не может понять, какую именно хочет.<br>
+          <strong>Зачем:</strong> Увидеть реальные убеждения, которые управляют выборами, и пересобрать опору под себя.<br>
+          <br>
+          Метафора строительства башни для глубинной работы с убеждениями, ресурсами и целеполаганием. Встроенные команды на углубление транса и активацию бессознательного поиска решений.
+        </div>
+        <audio controls preload="metadata">
+          <source src="/sobytiya/AUDIO/Архитектор-Многоуровневая навигация бессознательного.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает аудио.
+        </audio>
+        <div class="material-actions">
+          <a href="/sobytiya/AUDIO/Архитектор-Многоуровневая навигация бессознательного.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>
+        </div>
+      </div>
+
+      <!-- 2. Скорость: Управление темпом реальности -->
+      <div class="material-card text-card">
+        <div class="material-icon">🚀</div>
+        <div class="material-title">Скорость: Управление темпом реальности</div>
+        <div class="material-meta">MP3 · 20 мин</div>
+        <div class="material-description">
+          <strong>Кому:</strong> Тем, кто устал ждать результатов — в делах, отношениях, изменениях.<br>
+          <strong>Зачем:</strong> Поймать свой ритм, в котором всё делается без выгорания и насилия над собой.<br>
+          <br>
+          Работа с восприятием времени через метафоры движения — от реки до космоса. Гармонизация внутреннего ритма и снятие тревоги от ожидания.
+        </div>
+        <audio controls preload="metadata">
+          <source src="/sobytiya/AUDIO/Скорость-Управление темпом реальности.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает аудио.
+        </audio>
+        <div class="material-actions">
+          <a href="/sobytiya/AUDIO/Скорость-Управление темпом реальности.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>
+        </div>
+      </div>
+
+      <!-- 3. Ткань реальности: Наблюдение за изменениями -->
+      <div class="material-card text-card">
+        <div class="material-icon">🕸️</div>
+        <div class="material-title">Ткань реальности: Наблюдение за изменениями</div>
+        <div class="material-meta">MP3 · 20 мин</div>
+        <div class="material-description">
+          <strong>Кому:</strong> Тем, кто не замечает своего роста и обесценивает микро-сдвиги.<br>
+          <strong>Зачем:</strong> Научиться видеть, как жизнь меняется прямо сейчас, а не «когда-нибудь потом».<br>
+          <br>
+          Фокус на восприятие микро-изменений через метафоры распускающихся цветов и спичечной искры. Формирование принятия и доверия к процессу.
+        </div>
+        <audio controls preload="metadata">
+          <source src="/sobytiya/AUDIO/Ткань реальности-Наблюдение за изменениями.mp3" type="audio/mpeg">
+          Ваш браузер не поддерживает аудио.
+        </audio>
+        <div class="material-actions">
+          <a href="/sobytiya/AUDIO/Ткань реальности-Наблюдение за изменениями.mp3" class="btn btn-small" download>СКАЧАТЬ MP3</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Подписка -->
+  <div class="email-section">
+    <p>Хотите получать новые материалы?</p>
+    <form action="/subscribe/" method="POST">
+      <div class="form-group">
+        <input type="email" name="email" class="email-input" placeholder="Ваш email" required>
+        <button type="submit" class="btn">ПОДПИСАТЬСЯ</button>
+      </div>
+    </form>
+    <div class="form-note">* Новые видео, инструкции и статьи — раз в месяц.</div>
+  </div>
+
+  <!-- Действия -->
+  <div class="actions-section">
+    <div class="actions-title">А пока можете:</div>
+    <div class="action-buttons">
+      <a href="/virtual-psychologist/" class="btn">ПОПРОБОВАТЬ ФРЕДИ</a>
+      <a href="/blog/" class="btn">ЧИТАТЬ БЛОГ</a>
+    </div>
+  </div>
+</div>
+
+<!-- ПОДВАЛ (встроенный) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Бургер-меню с оверлеем
+  document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      // Создать оверлей
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-overlay';
+      document.body.appendChild(overlay);
+      
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+      
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+    }
+  });
+</script>
+
+<!-- JSON-LD микроразметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Архив материалов",
+  "description": "Архив учебных материалов: видео-лекции, разборы, инструкции, PDF-документы",
+  "url": "https://meysternlp.ru/sobytiya/",
+  "author": {
+    "@type": "Person",
+    "name": "Андрей Юрьевич Мейстер"
+  }
+}
+</script>
+
+</body>
+</html>

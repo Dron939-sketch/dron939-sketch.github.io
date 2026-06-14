@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  <base href="/">
+  
+  <!-- SEO МЕТА-ТЕГИ -->
+  <title>Дидактические игры для развития мышления | Андрей Мейстер</title>
+  <meta name="description" content="Настольные игры для развития системного мышления: Маркетолог и серия Вариатика (Basic, Intensive, Progressive). Учимся мыслить через игру.">
+  <meta name="keywords" content="дидактические игры, настольные игры, системное мышление, маркетолог, вариатика, Андрей Мейстер">
+  <meta name="author" content="Андрей Мейстер">
+  
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Дидактические игры — Андрей Мейстер">
+  <meta property="og:description" content="Инструменты для изменения реальности. Маркетолог + Вариатика (Basic, Intensive, Progressive).">
+  <meta property="og:image" content="/Маркетолог.png">
+  <meta property="og:url" content="https://meysternlp.ru/igry/">
+  <meta property="og:type" content="website">
+  
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://meysternlp.ru/igry/">
+  
+  <!-- Подключаем Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome для иконок -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* ===== ТИПОГРАФИКА ===== */
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 200;
+      margin: 40px 0 20px;
+      color: #FFFFFF;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
+      font-weight: 300;
+      margin: 40px 0 20px;
+      color: #3A86FF;
+      letter-spacing: 0.15em;
+    }
+
+    p {
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      font-weight: 300;
+      color: #CCCCCC;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ===== ХЕДЕР (стили для шапки) ===== */
+    .main-header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 1001;
+      background: transparent;
+      border: none;
+    }
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3A86FF;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3A86FF;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #3A86FF;
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .psychologist-btn {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      color: white !important;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .psychologist-btn::after {
+      display: none;
+    }
+
+    .psychologist-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+      color: white !important;
+    }
+
+    .psychologist-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
+    .breadcrumbs {
+      display: flex;
+      gap: 8px;
+      margin: 20px 0 15px;
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
+      color: #666;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumbs a {
+      color: #666;
+    }
+
+    .breadcrumbs a:hover {
+      color: #3A86FF;
+    }
+
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #FFFFFF;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px);
+      border: 1px solid #3A86FF;
+      background: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      text-align: center;
+      min-height: 44px;
+      min-width: 160px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      color: #0C0C0C;
+      border-color: #3A86FF;
+      box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
+    }
+
+    .btn:hover::before {
+      left: 0;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== БЛОК ФИЛОСОФИИ ===== */
+    .philosophy-block {
+      margin: 30px 0 50px;
+      padding: clamp(20px, 5vw, 30px);
+      border-left: 3px solid #3A86FF;
+      background: rgba(58, 134, 255, 0.02);
+    }
+
+    .philosophy-block p:first-child {
+      font-size: clamp(1.1rem, 4vw, 1.2rem);
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .philosophy-block .small {
+      color: #CCCCCC;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      margin: 0;
+    }
+
+    /* ===== ПРОГРЕССИЯ ===== */
+    .progression {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: clamp(0.8rem, 3vw, 0.95rem);
+      letter-spacing: 0.05em;
+      word-break: keep-all;
+      flex-wrap: wrap;
+    }
+
+    .progression span {
+      color: #3A86FF;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    /* ===== СЕТКА ИГР ===== */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+    }
+
+    .game-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: clamp(20px, 5vw, 30px);
+      transition: all 0.3s ease;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    .game-card:nth-child(1) { animation-delay: 0.1s; }
+    .game-card:nth-child(2) { animation-delay: 0.2s; }
+    .game-card:nth-child(3) { animation-delay: 0.3s; }
+    .game-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .game-card:hover {
+      border-color: #3A86FF;
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(58, 134, 255, 0.2);
+      background-color: rgba(58, 134, 255, 0.03);
+    }
+
+    .game-image {
+      width: 100%;
+      height: clamp(180px, 30vw, 220px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: transparent;
+    }
+
+    .game-image img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+      transition: all 0.3s ease;
+    }
+
+    .game-card:hover .game-image img {
+      transform: scale(1.05);
+      filter: drop-shadow(0 15px 25px rgba(58, 134, 255, 0.3));
+    }
+
+    .game-title {
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      color: #FFFFFF;
+      margin-bottom: 5px;
+      font-weight: 300;
+    }
+
+    .game-subtitle {
+      color: #3A86FF;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 15px;
+    }
+
+    .game-subtitle i {
+      margin-right: 5px;
+      font-style: normal;
+    }
+
+    .game-description {
+      color: #CCCCCC;
+      margin-bottom: 20px;
+      flex-grow: 1;
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      line-height: 1.6;
+    }
+
+    .game-actions {
+      margin-top: auto;
+      text-align: center;
+    }
+
+    /* ===== ПРИЗЫВ ===== */
+    .cta-block {
+      text-align: center;
+      margin: 50px 0 40px;
+      animation: fadeInUp 0.6s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    .cta-block p {
+      color: #CCCCCC;
+      margin-bottom: 20px;
+    }
+
+    /* ===== АНИМАЦИИ ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: clamp(40px, 8vw, 60px) 0 clamp(20px, 4vw, 30px);
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: clamp(20px, 5vw, 30px);
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: clamp(0.8rem, 3vw, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #3A86FF;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 40px;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      opacity: 0.5;
+      color: #666;
+    }
+
+    .text-blue { color: #3A86FF; }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .psychologist-btn {
+        margin-top: 15px;
+        text-align: center;
+      }
+      
+      .games-grid {
+        gap: 25px;
+        margin: 40px 0;
+      }
+      
+      .game-card {
+        padding: 25px;
+      }
+      
+      .game-actions .btn {
+        width: 100%;
+        max-width: 250px;
+      }
+      
+      .cta-block .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .progression {
+        line-height: 1.8;
+      }
+      
+      .progression span {
+        margin: 0;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        letter-spacing: 0.2em;
+      }
+      
+      .burger {
+        width: 25px;
+        height: 18px;
+      }
+      
+      .burger.active span:nth-child(1),
+      .burger.active span:nth-child(3) {
+        top: 8px;
+      }
+      
+      .philosophy-block {
+        padding: 20px;
+      }
+      
+      .game-image {
+        height: 160px;
+      }
+      
+      .game-title {
+        font-size: 1.3rem;
+      }
+      
+      .game-card {
+        padding: 20px;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+      
+      .nav-links a {
+        padding: 8px 0;
+      }
+      
+      .games-grid {
+        gap: 20px;
+      }
+      
+      .game-card {
+        padding: 20px;
+      }
+      
+      .game-image {
+        height: 140px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .psychologist-btn, .burger, .game-card {
+        cursor: pointer;
+      }
+      
+      .btn:active, .psychologist-btn:active {
+        transform: scale(0.97);
+      }
+      
+      .burger:active {
+        transform: scale(0.95);
+      }
+      
+      .game-card:active {
+        transform: translateY(-2px);
+      }
+    }
+  </style>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
+
+    ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Дидактические игры для развития мышления | Андрей Мейстер">
+  <meta name="twitter:description" content="Настольные игры для развития системного мышления: Маркетолог и серия Вариатика (Basic, Intensive, Progressive). Учимся мыслить через игру.">
+  <meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+
+<!-- ХЕДЕР (встроенный, чтобы не зависеть от header.html) -->
+<header class="main-header">
+  <div class="header-container">
+    <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/knigi/">Книги</a>
+      <a href="/igry/" class="active">Игры</a>
+      <a href="/treningi/">Тренинги</a>
+      <a href="/v-razrabotke/">В разработке</a>
+      <a href="/sobytiya/">Архив</a>
+      <a href="/virtual-psychologist/" class="psychologist-btn">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
+
+<!-- ХЛЕБНЫЕ КРОШКИ -->
+<div class="container">
+  <div class="breadcrumbs">
+    <a href="/">Главная</a> / 
+    <span>Игры</span>
+  </div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="container">
+  <h1>ДИДАКТИЧЕСКИЕ ИГРЫ</h1>
+  <p style="color: #3A86FF; margin-bottom: 20px; font-size: clamp(1rem, 4vw, 1.2rem);">Инструменты для изменения реальности</p>
+
+  <!-- БЛОК ФИЛОСОФИИ (СВЯЗЬ С МАНИФЕСТОМ) -->
+  <div class="philosophy-block">
+    <p>🎲 Мои камни</p>
+    <p class="small">Каждая игра — это инструмент. Маркетолог учит создавать нарративы для других. Вариатика — видеть, понимать и создавать реальность. Берите и бросайте.</p>
+  </div>
+
+  <!-- ПРОГРЕССИЯ ВАРИАТИКИ -->
+  <div class="progression">
+    <span>Basic</span> → <span>Intensive</span> → <span>Progressive</span>: от анализа поведения к созданию реальности
+  </div>
+
+  <!-- СЕТКА ИГР -->
+  <div class="games-grid">
+    <!-- Маркетолог -->
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/Маркетолог.png" alt="Маркетолог - игра для развития креативного мышления" loading="lazy">
+      </div>
+      <div class="game-title">Маркетолог</div>
+      <div class="game-subtitle"><i class="fas fa-bullhorn"></i> Креативное мышление</div>
+      <div class="game-description">Развитие креативного мышления и навыков речевого воздействия. Учитесь создавать эффективные рекламные сообщения через игру. 2-3 игрока.</div>
+      <div class="game-actions">
+        <a href="/igry/marketolog.html" class="btn" aria-label="Подробнее о игре Маркетолог">ПОДРОБНЕЕ</a>
+      </div>
+    </div>
+
+    <!-- Вариатика Basic -->
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/Басик.webp" alt="Вариатика Basic - анализ поведения" loading="lazy">
+      </div>
+      <div class="game-title">Вариатика</div>
+      <div class="game-subtitle"><i class="fas fa-search"></i> Basic</div>
+      <div class="game-description">Анализ и прогнозирование поведения людей. Понимание характера, истинных желаний, способностей и ограничений.</div>
+      <div class="game-actions">
+        <a href="/igry/variatika-basic.html" class="btn" aria-label="Подробнее о игре Вариатика Basic">ПОДРОБНЕЕ</a>
+      </div>
+    </div>
+
+    <!-- Вариатика Intensive -->
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/интенсив.webp" alt="Вариатика Intensive - системное мышление" loading="lazy">
+      </div>
+      <div class="game-title">Вариатика</div>
+      <div class="game-subtitle"><i class="fas fa-brain"></i> Intensive</div>
+      <div class="game-description">Системное, критическое и латеральное мышление. Анализ сложных систем и принятие эффективных решений.</div>
+      <div class="game-actions">
+        <a href="/igry/variatika-intensive.html" class="btn" aria-label="Подробнее о игре Вариатика Intensive">ПОДРОБНЕЕ</a>
+      </div>
+    </div>
+
+    <!-- Вариатика Progressive -->
+    <div class="game-card">
+      <div class="game-image">
+        <img src="/progresive.webp" alt="Вариатика Progressive - искусство везения" loading="lazy">
+      </div>
+      <div class="game-title">Вариатика</div>
+      <div class="game-subtitle"><i class="fas fa-star"></i> Progressive</div>
+      <div class="game-description">Искусство везения — превращение маловероятных позитивных исходов в реальность. Создание «счастливых случайностей».</div>
+      <div class="game-actions">
+        <a href="/igry/variatika-progressive.html" class="btn" aria-label="Подробнее о игре Вариатика Progressive">ПОДРОБНЕЕ</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+  <div class="cta-block">
+    <p>Выберите свой инструмент и начните менять свою реальность</p>
+    <a href="#" class="btn" style="padding: clamp(10px, 3vw, 12px) clamp(30px, 6vw, 40px);" aria-label="К играм">К ИГРАМ</a>
+  </div>
+</div>
+
+<!-- ИЗ БЛОГА — внутренняя перелинковка для SEO -->
+<section style="padding: 60px 0 80px; border-top: 1px solid rgba(58, 134, 255, 0.15);">
+  <div class="container">
+    <h2 style="color: #FFFFFF; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 30px; text-align: center;">📚 Из блога</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <a href="/blog/sistemnoe-myshlenie-v-biznese.html" style="display: block; padding: 24px; background: rgba(26, 26, 46, 0.4); border: 1px solid rgba(58, 134, 255, 0.2); border-radius: 12px; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#3A86FF';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(58, 134, 255, 0.2)';this.style.transform='translateY(0)'">
+        <div style="color: #3A86FF; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 8px;">БИЗНЕС</div>
+        <div style="color: #F0F0F0; font-size: 1.1rem; font-weight: 500; margin-bottom: 8px;">Как системное мышление помогает в бизнесе</div>
+        <div style="color: #888; font-size: 0.9rem;">Кейсы: точки рычага, стратегические решения, управленческие ошибки</div>
+      </a>
+      <a href="/blog/4-strategii-raboty-s-zaprosom-klienta.html" style="display: block; padding: 24px; background: rgba(26, 26, 46, 0.4); border: 1px solid rgba(58, 134, 255, 0.2); border-radius: 12px; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#3A86FF';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(58, 134, 255, 0.2)';this.style.transform='translateY(0)'">
+        <div style="color: #3A86FF; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 8px;">КЛИЕНТЫ</div>
+        <div style="color: #F0F0F0; font-size: 1.1rem; font-weight: 500; margin-bottom: 8px;">4 стратегии работы с запросами клиента</div>
+        <div style="color: #888; font-size: 0.9rem;">Возражения, типы клиентов, эффективная обработка запросов</div>
+      </a>
+      <a href="/blog/lateralnoe-myshlenie.html" style="display: block; padding: 24px; background: rgba(26, 26, 46, 0.4); border: 1px solid rgba(58, 134, 255, 0.2); border-radius: 12px; text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#3A86FF';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(58, 134, 255, 0.2)';this.style.transform='translateY(0)'">
+        <div style="color: #3A86FF; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 8px;">МЫШЛЕНИЕ</div>
+        <div style="color: #F0F0F0; font-size: 1.1rem; font-weight: 500; margin-bottom: 8px;">Латеральное мышление</div>
+        <div style="color: #888; font-size: 0.9rem;">Техники Эдварда де Боно для нестандартных решений</div>
+      </a>
+    </div>
+    <div style="text-align: center; margin-top: 30px;">
+      <a href="/blog/" style="display: inline-block; padding: 12px 32px; border: 1px solid #3A86FF; color: #3A86FF; text-decoration: none; border-radius: 30px; letter-spacing: 0.1em; font-size: 0.9rem; transition: all 0.3s ease;" onmouseover="this.style.background='#3A86FF';this.style.color='white'" onmouseout="this.style.background='transparent';this.style.color='#3A86FF'">ВСЕ СТАТЬИ БЛОГА →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ПОДВАЛ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+      </div>
+    </div>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Бургер-меню с оверлеем
+  document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      // Создать оверлей
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-overlay';
+      document.body.appendChild(overlay);
+      
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+      
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+    }
+  });
+</script>
+
+<!-- JSON-LD микроразметка -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Дидактические игры",
+  "description": "Настольные игры для развития системного мышления",
+  "itemListElement": [
+    {
+      "@type": "Product",
+      "position": 1,
+      "name": "Маркетолог",
+      "description": "Развитие креативного мышления и навыков речевого воздействия",
+      "image": "https://meysternlp.ru/Маркетолог.png",
+      "url": "https://meysternlp.ru/igry/marketolog.html"
+    },
+    {
+      "@type": "Product",
+      "position": 2,
+      "name": "Вариатика Basic",
+      "description": "Анализ и прогнозирование поведения людей",
+      "image": "https://meysternlp.ru/Басик.webp",
+      "url": "https://meysternlp.ru/igry/variatika-basic.html"
+    },
+    {
+      "@type": "Product",
+      "position": 3,
+      "name": "Вариатика Intensive",
+      "description": "Системное, критическое и латеральное мышление",
+      "image": "https://meysternlp.ru/интенсив.webp",
+      "url": "https://meysternlp.ru/igry/variatika-intensive.html"
+    },
+    {
+      "@type": "Product",
+      "position": 4,
+      "name": "Вариатика Progressive",
+      "description": "Искусство везения — превращение маловероятных позитивных исходов в реальность",
+      "image": "https://meysternlp.ru/progresive.webp",
+      "url": "https://meysternlp.ru/igry/variatika-progressive.html"
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
