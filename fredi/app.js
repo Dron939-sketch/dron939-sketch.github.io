@@ -24,7 +24,7 @@
 // ============================================
 
 const CONFIG = {
-    API_BASE_URL: 'https://fredi-backend-flz2.onrender.com',
+    API_BASE_URL: 'https://ffred-ddd989.amvera.io',
 
     // USER_ID: всегда числовой (localStorage + cookie fallback)
     get USER_ID() {
