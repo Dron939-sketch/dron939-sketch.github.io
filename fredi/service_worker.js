@@ -1,8 +1,14 @@
 // service_worker.js — Фреди PWA
-// Версия 1.1 — инвалидация после фикса charset
+// Версия 1.2 — относительные пути для меуstern-NLP-deployment под /fredi/
 
-const CACHE_NAME = 'fredi-v2';
-const STATIC_FILES = ['/', '/styles.css', '/app.js', '/mirrors.js', '/admin.js'];
+// Относительные пути (без ведущего /) — SW резолвит их относительно своей
+// собственной локации. SW зарегистрирован как /fredi/service_worker.js,
+// значит './styles.css' → '/fredi/styles.css'. Раньше были '/styles.css',
+// которые на meysternlp.ru уходили в КОРЕНЬ домена → 404 в nginx-логах:
+//   open() "/usr/share/nginx/html/styles.css" failed (No such file or directory)
+// Service Worker install падал тихо, кэш был неполный.
+const CACHE_NAME = 'fredi-v3';
+const STATIC_FILES = ['./', './styles.css', './app.js', './mirrors.js', './admin.js'];
 
 self.addEventListener('install', e => {
     e.waitUntil(
@@ -20,9 +26,13 @@ self.addEventListener('activate', e => {
     self.clients.claim();
 });
 
+// SW зарегистрирован под /fredi/ → дефолтные иконки и URL должны идти в
+// /fredi/, иначе они уходят в корень meysternlp.ru (где их нет).
+const SW_BASE = new URL('./', self.location).pathname;  // '/fredi/'
+
 // ===== PUSH-УВЕДОМЛЕНИЯ =====
 self.addEventListener('push', e => {
-    let data = { title: 'Фреди', body: 'Есть новое событие', url: '/', icon: '/icon-192.png' };
+    let data = { title: 'Фреди', body: 'Есть новое событие', url: SW_BASE, icon: SW_BASE + 'icon-192.png' };
     try {
         if (e.data) data = { ...data, ...e.data.json() };
     } catch {}
@@ -30,12 +40,12 @@ self.addEventListener('push', e => {
     e.waitUntil(
         self.registration.showNotification(data.title, {
             body: data.body,
-            icon: data.icon || '/icon-192.png',
-            badge: '/icon-72.png',
+            icon: data.icon || (SW_BASE + 'icon-192.png'),
+            badge: SW_BASE + 'icon-72.png',
             tag: 'fredi-notification',
             renotify: true,
             requireInteraction: false,
-            data: { url: data.url || '/' },
+            data: { url: data.url || SW_BASE },
             actions: [
                 { action: 'open', title: 'Открыть' },
                 { action: 'close', title: 'Закрыть' }
@@ -47,7 +57,7 @@ self.addEventListener('push', e => {
 // Клик по уведомлению
 self.addEventListener('notificationclick', e => {
     e.notification.close();
-    const url = e.notification.data?.url || '/';
+    const url = e.notification.data?.url || SW_BASE;
 
     if (e.action === 'close') return;
 
