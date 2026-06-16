@@ -1,7 +1,7 @@
 // service_worker.js — Фреди PWA
-// Версия 1.0
+// Версия 1.1 — инвалидация после фикса charset
 
-const CACHE_NAME = 'fredi-v1';
+const CACHE_NAME = 'fredi-v2';
 const STATIC_FILES = ['/', '/styles.css', '/app.js', '/mirrors.js', '/admin.js'];
 
 self.addEventListener('install', e => {
