@@ -11,7 +11,7 @@
     if (window._loginLoaded) return;
     window._loginLoaded = true;
 
-    var API_BASE = window.API_BASE_URL || (window.CONFIG && window.CONFIG.API_BASE_URL) || 'https://fredi-backend-flz2.onrender.com';
+    var API_BASE = window.API_BASE_URL || (window.CONFIG && window.CONFIG.API_BASE_URL) || 'https://ffred-ddd989.amvera.io';
     var LS_LAST_EMAIL = 'fredi_last_email';
 
     function _safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -864,7 +864,7 @@
             var trimmed = (name || '').trim();
             if (trimmed && uid) {
                 try {
-                    var apiBase = (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+                    var apiBase = (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
                     await fetch(apiBase + '/api/save-context', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },

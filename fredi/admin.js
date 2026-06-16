@@ -198,7 +198,7 @@ function adminLogout() {
 // ГЛАВНЫЙ ДАШБОРД
 // ============================================
 async function renderAdminDashboard() {
-    const API = window.API_BASE_URL||'https://fredi-backend-flz2.onrender.com';
+    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
     document.getElementById('screenContainer').innerHTML = `
         <div class="adm-wrap">
 
@@ -407,7 +407,7 @@ function renderMirrors(c) {
 // ============================================
 async function renderUsers(c) {
     c.innerHTML = `<div style="text-align:center;padding:32px;color:rgba(255,255,255,0.3);font-size:13px;">⏳ Загружаю...</div>`;
-    const API = window.API_BASE_URL||'https://fredi-backend-flz2.onrender.com';
+    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
     let users = [];
     try {
         const res = await fetch(`${API}/api/admin/recent-users`).then(r=>r.json());
@@ -466,7 +466,7 @@ async function renderUsers(c) {
 // ============================================
 function renderSystem(c) {
     const ss = adminState.systemStatus;
-    const API = window.API_BASE_URL||'https://fredi-backend-flz2.onrender.com';
+    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
 
     const services = [
         ['🗄️','База данных',   ss.database],
@@ -541,7 +541,7 @@ function getDemoMirrors() {
 // ============================================
 async function renderLogs(c) {
     c.innerHTML = '<div style="text-align:center;padding:32px;color:rgba(255,255,255,0.3);font-size:13px;">⏳ Загружаю логи...</div>';
-    const API = window.API_BASE_URL||'https://fredi-backend-flz2.onrender.com';
+    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
     let logs = [];
     try {
         const res = await fetch(`${API}/api/admin/logs`).then(r=>r.json());

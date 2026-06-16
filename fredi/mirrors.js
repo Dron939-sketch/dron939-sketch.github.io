@@ -3,7 +3,7 @@
 // Версия 3.3 — унификация USER_ID + mobile/Telegram WebView / PWA / private-mode fallback
 // ============================================
 
-const API_BASE = window.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+const API_BASE = window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
 
 // ============================================
 // БЕЗОПАСНОЕ ПОЛУЧЕНИЕ USER_ID (ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ)
