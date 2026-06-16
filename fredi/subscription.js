@@ -7,7 +7,7 @@
     if (window._subscriptionLoaded) return;
     window._subscriptionLoaded = true;
 
-    function _api() { return window.CONFIG?.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com'; }
+    function _api() { return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
     function _uid() { return window.CONFIG?.USER_ID; }
     function _toast(msg, type) { if (window.showToast) window.showToast(msg, type || 'info'); }
 

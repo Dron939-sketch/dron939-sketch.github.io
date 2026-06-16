@@ -12,7 +12,7 @@
     if(window._trackerLoaded) return;
     window._trackerLoaded=true;
 
-    var API=function(){return window.API_BASE_URL||window.CONFIG?.API_BASE_URL||'https://fredi-backend-flz2.onrender.com';};
+    var API=function(){return window.API_BASE_URL||window.CONFIG?.API_BASE_URL||'https://ffred-ddd989.amvera.io';};
     var UID=function(){return window.USER_ID||window.CONFIG?.USER_ID;};
     var SID=Date.now()+'_'+Math.random().toString(36).substr(2,6);
     var START=Date.now();
@@ -66,7 +66,7 @@
         var uid=UID();
         if(!uid) return;
         try{
-            var r=await _origFetch.call(window, API()+'/api/meter/status/'+uid, {credentials:'include'});
+            var r=await _origFetch.call(window, API()+'/api/meter/status/'+uid, {credentials:'omit'});
             if(!r.ok) return;
             var d=await r.json();
             _isPremium=!!d.is_premium;
@@ -95,14 +95,20 @@
         if(_sending||!_queue.length) return;
         _sending=true;
         var batch=_queue.splice(0,10);
+        // sendBeacon шлёт куки (credentials = include), а у бэка нет
+        // Access-Control-Allow-Credentials → preflight падает на CORS.
+        // Уходим на fetch с credentials:'omit' и keepalive:true (даёт то же
+        // поведение «дотащить даже при закрытии вкладки», но без куки).
         try{
-            var blob=new Blob([JSON.stringify({events:batch})],{type:'application/json'});
-            navigator.sendBeacon(API()+'/api/analytics/events',blob);
-        }catch(e){
-            try{
-                _origFetch(API()+'/api/analytics/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({events:batch}),keepalive:true});
-            }catch(e2){}
-        }
+            _origFetch(API()+'/api/analytics/events',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({events:batch}),
+                keepalive:true,
+                credentials:'omit',
+                mode:'cors'
+            }).catch(function(){});
+        }catch(e){}
         _sending=false;
         if(_queue.length) setTimeout(_flush,1000);
     }

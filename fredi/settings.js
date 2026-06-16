@@ -9,7 +9,7 @@
     const TG_BOT = window.CONFIG?.TG_BOT_USERNAME || 'Frederick777bot';
     const MAX_LINK = window.CONFIG?.MAX_BOT_LINK || 'https://max.ru/id502238728185_1_bot';
 
-    function _api() { return window.CONFIG?.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com'; }
+    function _api() { return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
     function _uid() { return window.CONFIG?.USER_ID; }
     function _toast(msg, t) { if (window.showToast) window.showToast(msg, t || 'info'); }
 

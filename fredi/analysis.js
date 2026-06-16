@@ -8,7 +8,7 @@
 // ============================================
 window.isTestCompleted = window.isTestCompleted || async function () {
     try {
-        const apiUrl = window.CONFIG?.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+        const apiUrl = window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
         const userId = window.CONFIG?.USER_ID;
         const r = await fetch(`${apiUrl}/api/user-status?user_id=${userId}`);
         const d = await r.json();
@@ -523,7 +523,7 @@ async function openAnalysisScreen() {
     _removeFooter();
 
     try {
-        const api    = window.CONFIG?.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+        const api    = window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
         const userId = window.CONFIG?.USER_ID;
 
         // Профиль
@@ -566,7 +566,7 @@ async function generateDeepAnalysis() {
     const timer = _startTimer();
 
     try {
-        const api     = window.CONFIG?.API_BASE_URL || 'https://fredi-backend-flz2.onrender.com';
+        const api     = window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
         const userId  = window.CONFIG?.USER_ID;
         const mode    = window.currentMode || 'psychologist';
 
