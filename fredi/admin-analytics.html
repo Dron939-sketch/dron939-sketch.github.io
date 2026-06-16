@@ -1881,7 +1881,7 @@ POV: ты на семейном ужине, и мама такая «как у �
             } else if (currentTab === 'mirrors') {
                 // Три open-эндпоинта — не требуют admin-токена.
                 var [stats, ms, ru] = await Promise.all([
-                    fetch(API + '/admin/stats').then(r => r.json()).catch(() => ({})),
+                    fetch(API + '/api/admin/stats').then(r => r.json()).catch(() => ({})),
                     fetch(API + '/api/admin/mirrors-stats').then(r => r.json()).catch(() => ({})),
                     fetch(API + '/api/admin/recent-users').then(r => r.json()).catch(() => ({})),
                 ]);
