@@ -510,3 +510,124 @@ header.site,header > div.container.nav,body > footer:not(#footer-placeholder ~ f
 .related-item a{color:#1D1D1F!important;text-decoration:none!important;font-weight:500!important;font-size:0.98rem!important;line-height:1.35!important;display:block!important}
 .related-item a:hover{color:#3A86FF!important}
 @media (max-width:520px){.related-articles{padding:22px 18px!important}.related-grid{grid-template-columns:1fr!important}}
+
+/* === Дополнительные классы (для автономных статей при рефакторинге) === */
+
+/* Step card вспомогательные блоки */
+.step-card .what {
+  background: #F8FAFC;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #475569;
+}
+.step-card .what strong { color: #1E293B; }
+.step-card .how {
+  background: rgba(16,185,129,0.08);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #475569;
+}
+.step-card .how strong { color: #047857; }
+
+/* Product CTA — мягкая жёлтая карточка-ссылка */
+.product-cta {
+  background: linear-gradient(135deg, rgba(245,158,11,0.10), rgba(245,158,11,0.04));
+  border: 1px solid rgba(245,158,11,0.35);
+  border-radius: 12px;
+  padding: 22px 26px;
+  margin: 28px 0;
+}
+.product-cta .tag {
+  display: inline-block;
+  background: rgba(245,158,11,0.20);
+  color: #B45309;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.product-cta h4 { color: #1E293B; margin-bottom: 10px; font-size: 18px; }
+.product-cta p { color: #475569; font-size: 15px; margin: 0 0 14px; }
+.product-cta p strong { color: #1E293B; }
+.product-cta a {
+  display: inline-block;
+  background: #F59E0B;
+  color: #FFFFFF !important;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  border: none !important;
+  text-decoration: none;
+  margin-right: 8px;
+}
+.product-cta a.secondary {
+  background: transparent;
+  color: #B45309 !important;
+  border: 1px solid rgba(245,158,11,0.45) !important;
+}
+
+/* Warning box — мягкое красное предупреждение */
+.warn-box {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 18px 0;
+  color: #7F1D1D;
+  font-size: 15px;
+}
+.warn-box strong { color: #B91C1C; }
+
+/* Related articles — блок похожих статей в конце */
+.related-articles {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 22px 26px;
+  margin: 36px 0;
+}
+.related-articles h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E293B;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.related-item {
+  display: block;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  color: #1E293B !important;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.45;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.related-item:hover {
+  border-color: #3A86FF;
+  transform: translateY(-1px);
+}
+
+/* Meta-row dots */
+.meta .dot { color: #3A86FF; }
+
+/* Хero summary внутри hero-tldr */
+.hero-tldr .summary {
+  color: rgba(255,255,255,0.92);
+  font-size: 16px;
+}
