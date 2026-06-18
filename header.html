@@ -109,18 +109,18 @@
   transform: translateY(-9px) rotate(-45deg);
 }
 
-/* Оверлей для меню */
+/* Оверлей для меню — на весь экран, чтобы не было прозрачной полоски
+   между нижним краем шапки и верхом оверлея на мобильных. Шапка
+   z-index:1000 поверх — её не закрашивает. */
 .nav-overlay {
   position: fixed;
-  top: 70px;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 998;
 }
 
@@ -391,63 +391,96 @@
 </style>
 
 <script>
-// Скрипт для работы бургер-меню с оверлеем
-document.addEventListener('DOMContentLoaded', function() {
-  const burger = document.getElementById('burgerBtn');
-  const nav = document.getElementById('navLinks');
-  
-  if (burger && nav) {
-    // Создать оверлей
-    const overlay = document.createElement('div');
-    overlay.className = 'nav-overlay';
-    document.body.appendChild(overlay);
-    
-    function toggleMenu() {
-      const isActive = burger.classList.contains('active');
-      burger.classList.toggle('active');
-      nav.classList.toggle('active');
-      overlay.classList.toggle('active');
-      burger.setAttribute('aria-expanded', !isActive);
-      document.body.style.overflow = !isActive ? 'hidden' : '';
+// Скрипт для работы бургер-меню с оверлеем.
+//
+// Header.html подключается двумя способами:
+//   1) Инлайн прямо в HTML (например, на главной) — скрипт запускается
+//      ещё до DOMContentLoaded, и addEventListener срабатывает штатно.
+//   2) Через fetch + innerHTML в блог-статьях — это происходит ПОЗЖЕ
+//      DOMContentLoaded, который к тому моменту уже прошёл. Если
+//      просто вешать addEventListener('DOMContentLoaded', ...), он
+//      молча подвисает в пустоту — событие больше не повторится.
+//
+// Решение: проверяем document.readyState. Если DOM ещё парсится — ждём
+// событие как раньше. Если уже готов (loaded/interactive/complete) —
+// вызываем инициализацию сразу. Это покрывает оба сценария подключения.
+(function() {
+  function initHeader() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+
+    if (burger && nav && !burger.dataset.bound) {
+      burger.dataset.bound = '1';
+
+      // Создать оверлей (один раз)
+      let overlay = document.querySelector('.nav-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'nav-overlay';
+        document.body.appendChild(overlay);
+      }
+
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+
+      // Закрыть меню при клике на ссылку
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Закрыть меню при изменении размера окна (поворот, ресайз)
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+
+      // Закрыть меню по Escape — для клавиатурных юзеров
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
     }
-    
-    function closeMenu() {
-      burger.classList.remove('active');
-      nav.classList.remove('active');
-      overlay.classList.remove('active');
-      burger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-    
-    burger.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', closeMenu);
-    
-    // Закрыть меню при клике на ссылку
-    nav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-    
-    // Закрыть меню при изменении размера окна
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && burger.classList.contains('active')) {
-        closeMenu();
+
+    // Подсветка активного пункта меню
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href !== '#') {
+        if (currentPath === href ||
+            (href !== '/' && currentPath.startsWith(href + '/')) ||
+            (href === '/' && currentPath === '/')) {
+          link.classList.add('active');
+        }
       }
     });
   }
-  
-  // Подсветка активного пункта меню
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.nav-links a');
-  
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href && href !== '#') {
-      if (currentPath === href || 
-          (href !== '/' && currentPath.startsWith(href + '/')) ||
-          (href === '/' && currentPath === '/')) {
-        link.classList.add('active');
-      }
-    }
-  });
-});
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeader);
+  } else {
+    // DOM уже готов — header был подгружен после DOMContentLoaded
+    // (типичный сценарий для блог-статей через fetch + innerHTML)
+    initHeader();
+  }
+})();
 </script>
