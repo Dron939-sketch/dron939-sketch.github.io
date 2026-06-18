@@ -295,9 +295,12 @@
                 _lastCheck = null;
                 showFatigueModal(result);
             }
-            if (isAi && result && result.response) {
-                recordUsage(Math.min(Math.max(Math.ceil(result.response.length / 8), 10), 60));
-            }
+            // ВАЖНО: здесь recordUsage НЕ вызываем. _origApiCall внутри
+            // ходит через window.fetch, который уже пропатчен (_patchFetch)
+            // и сам записывает расход. Если записать ещё и тут — один
+            // AI-запрос спишет лимит дважды (15с в fetch + до 60с тут =
+            // до 75с за сообщение), и free-юзер упрётся в paywall в 3-5 раз
+            // быстрее положенного. Расход пишет ровно один слой — fetch.
             return result;
         };
         console.log('meter: apiCall patched');
