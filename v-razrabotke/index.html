@@ -8,14 +8,14 @@
   <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
-  <title>Проекты в разработке — Концептикон, Фреди, виртуальный маркетолог | Андрей Мейстер</title>
-  <meta name="description" content="Три проекта Андрея Мейстера в разработке: книга «Концептикон», виртуальный психолог Фреди и виртуальный маркетолог. Следите за новостями.">
-  <meta name="keywords" content="андрей мейстер, концептикон, фреди, виртуальный психолог, виртуальный маркетолог, разработка">
+  <title>Проекты и инструменты — Концептикон, Фреди, МЕЙСТЕР-КОД, книга депутата | Андрей Мейстер</title>
+  <meta name="description" content="Проекты Андрея Мейстера: книга «Концептикон» (в печати, в продаже с июля 2026) и психолог Фреди — реализованы; «Настольная книга депутата», игра МЕЙСТЕР-КОД и виртуальный маркетолог — в разработке.">
+  <meta name="keywords" content="андрей мейстер, концептикон, фреди, виртуальный психолог, мейстер-код, настольная книга депутата, виртуальный маркетолог, разработка">
   <meta name="author" content="Андрей Мейстер">
-  
+
   <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Проекты в разработке — Андрей Мейстер">
-  <meta property="og:description" content="Три проекта: книга «Концептикон», виртуальный психолог Фреди и виртуальный маркетолог">
+  <meta property="og:title" content="Проекты и инструменты — Андрей Мейстер">
+  <meta property="og:description" content="Концептикон (в печати, с июля 2026) и Фреди — реализованы. Книга депутата, игра МЕЙСТЕР-КОД и виртуальный маркетолог — в работе.">
   <meta property="og:image" content="/og-image.jpg">
   <meta property="og:url" content="https://meysternlp.ru/v-razrabotke/">
   <meta property="og:type" content="website">
@@ -275,9 +275,11 @@
       opacity: 0;
     }
 
-    .project-card:nth-child(1) { animation-delay: 0.1s; }
-    .project-card:nth-child(2) { animation-delay: 0.2s; }
-    .project-card:nth-child(3) { animation-delay: 0.3s; }
+    .project-card:nth-child(2) { animation-delay: 0.1s; }
+    .project-card:nth-child(3) { animation-delay: 0.2s; }
+    .project-card:nth-child(4) { animation-delay: 0.3s; }
+    .project-card:nth-child(5) { animation-delay: 0.4s; }
+    .project-card:nth-child(6) { animation-delay: 0.5s; }
 
     /* ===== ССЫЛКИ И КНОПКИ ===== */
     a {
@@ -390,6 +392,43 @@
       font-weight: 300;
       color: #3A86FF;
     }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: clamp(0.62rem, 2.4vw, 0.72rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .status-done {
+      background: rgba(46, 204, 113, 0.14);
+      color: #2ECC71;
+      border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+
+    .status-dev {
+      background: rgba(58, 134, 255, 0.12);
+      color: #3A86FF;
+      border: 1px solid rgba(58, 134, 255, 0.35);
+    }
+
+    .project-status.done { color: #2ECC71; }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      color: #3A86FF;
+      letter-spacing: 0.05em;
+    }
+
+    .project-link:hover { color: #FFFFFF; }
 
     .project-desc {
       font-size: clamp(1rem, 4vw, 1.2rem);
@@ -695,8 +734,8 @@
 
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Проекты в разработке — Концептикон, Фреди, виртуальный маркетолог | Андрей Мейстер">
-  <meta name="twitter:description" content="Три проекта Андрея Мейстера в разработке: книга «Концептикон», виртуальный психолог Фреди и виртуальный маркетолог. Следите за новостями.">
+  <meta name="twitter:title" content="Проекты и инструменты — Концептикон, Фреди, МЕЙСТЕР-КОД | Андрей Мейстер">
+  <meta name="twitter:description" content="Концептикон (в печати, с июля 2026) и Фреди — реализованы. Книга депутата, игра МЕЙСТЕР-КОД и виртуальный маркетолог — в работе.">
   <meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
   <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
 </head>
@@ -726,9 +765,9 @@
 <div class="container">
   <!-- Заголовок -->
   <div class="page-header">
-    <h1>ПРОЕКТЫ В РАЗРАБОТКЕ</h1>
-    <div class="subtitle">Три направления. Три инструмента.</div>
-    <div class="subtitle">Объединённых одной методологией.</div>
+    <h1>ПРОЕКТЫ И ИНСТРУМЕНТЫ</h1>
+    <div class="subtitle">Книги, игры, цифровые помощники.</div>
+    <div class="subtitle">Что-то уже реализовано, что-то — в работе.</div>
     <div class="divider"></div>
   </div>
 
@@ -737,6 +776,7 @@
     <div class="project-title">
       <span class="project-icon">📘</span>
       <span class="project-name">КНИГА «КОНЦЕПТИКОН»</span>
+      <span class="status-badge status-done">Реализовано</span>
     </div>
     <div class="project-desc">Семь линз, которые меняют восприятие. ЛСД без ЛСД. Градусник для психики.</div>
     <ul class="project-list">
@@ -744,7 +784,7 @@
       <li>QR-коды с видео-демонстрациями</li>
       <li>Испытания для закрепления навыка</li>
     </ul>
-    <div class="project-status">Статус: в работе. Выход — 2026 год.</div>
+    <div class="project-status done">Статус: реализовано. Книга в печати. В продаже — с июля 2026 года.</div>
   </div>
 
   <!-- Виртуальный психолог Фреди -->
@@ -752,6 +792,7 @@
     <div class="project-title">
       <span class="project-icon">🧠</span>
       <span class="project-name">ВИРТУАЛЬНЫЙ ПСИХОЛОГ (ФРЕДИ)</span>
+      <span class="status-badge status-done">Реализовано</span>
     </div>
     <div class="project-desc">Цифровой помощник на основе 7 линз. Помогает увидеть структуру там, где раньше был хаос.</div>
     <ul class="project-list">
@@ -760,7 +801,42 @@
       <li>Работает в трёх режимах (коуч, психолог, тренер)</li>
       <li>Отвечает голосом и текстом</li>
     </ul>
-    <div class="project-status">Статус: beta-тест. Уже доступен.</div>
+    <div class="project-status done">Статус: реализовано. Доступен прямо сейчас.</div>
+    <a href="/virtual-psychologist/" class="project-link">🧠 Попробовать Фреди →</a>
+  </div>
+
+  <!-- Настольная книга депутата -->
+  <div class="project-card">
+    <div class="project-title">
+      <span class="project-icon">🏛️</span>
+      <span class="project-name">НАСТОЛЬНАЯ КНИГА ДЕПУТАТА</span>
+      <span class="status-badge status-dev">В разработке</span>
+    </div>
+    <div class="project-desc">Практическое руководство для тех, кто работает с людьми и несёт ответственность: депутата, руководителя, общественника.</div>
+    <ul class="project-list">
+      <li>39 глав + 5 приложений</li>
+      <li>От влияния и переговоров — до выгорания, семьи и этики</li>
+      <li>Каждая глава опирается на проверенные исследования</li>
+    </ul>
+    <div class="project-status">Статус: в работе. Главы публикуются на сайте.</div>
+    <a href="/knigi/nastolnaya-kniga-deputata/" class="project-link">📖 Читать главы →</a>
+  </div>
+
+  <!-- Трансформационная игра МЕЙСТЕР-КОД -->
+  <div class="project-card">
+    <div class="project-title">
+      <span class="project-icon">🎴</span>
+      <span class="project-name">МЕЙСТЕР-КОД (КОД МЕЙСТЕРА)</span>
+      <span class="status-badge status-dev">В разработке</span>
+    </div>
+    <div class="project-desc">Трансформационная игра для двоих. Конструктор личности на 9 уровней: один тренирует навык, другой меняется.</div>
+    <ul class="project-list">
+      <li>Парная игра, где выигрывают оба</li>
+      <li>9 уровней — от состояния до миссии</li>
+      <li>Колода из 36 карт-прошивок: 8 архетипов + 28 коллабораций</li>
+    </ul>
+    <div class="project-status">Статус: в работе. Правила и колода уже доступны.</div>
+    <a href="/blog/mejster-kod-transformacionnaya-igra.html" class="project-link">🎲 Правила и колода →</a>
   </div>
 
   <!-- Виртуальный маркетолог -->
@@ -768,6 +844,7 @@
     <div class="project-title">
       <span class="project-icon">📊</span>
       <span class="project-name">ВИРТУАЛЬНЫЙ МАРКЕТОЛОГ</span>
+      <span class="status-badge status-dev">В разработке</span>
     </div>
     <div class="project-desc">Следующий шаг. Инструмент для бизнеса.</div>
     <ul class="project-list">
