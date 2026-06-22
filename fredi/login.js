@@ -82,10 +82,13 @@
         var m = document.getElementById('faAuthModal');
         if (m && m.parentNode) m.parentNode.removeChild(m);
         // Если автопоказ при входе закрылся без авторизации — запоминаем
-        // в sessionStorage. Не докучаем при перезагрузках этой же сессии.
-        // На следующий день / в другом браузере модалка снова появится.
+        // и в sessionStorage (не докучаем в этой же сессии), и в localStorage
+        // на 24 часа (не докучаем при каждом новом визите). По аналитике
+        // юзер с visits=14 получал auth_modal_auto_shown 12 раз подряд —
+        // это убивает retention и взвинчивает auth_modal_opened без конверсии.
         if (_lastSource === 'app_start' && !window.IS_AUTHENTICATED) {
             try { sessionStorage.setItem('fredi_auth_skipped', '1'); } catch (e) {}
+            try { localStorage.setItem('fredi_auth_dismissed_at', String(Date.now())); } catch (e) {}
         }
     }
 
@@ -319,6 +322,7 @@
             // had_anon=true всегда. Теперь видим реальное соотношение.
             var hadAnon = !!(anonUidBefore && anonUidBefore !== newUid);
             try { localStorage.setItem('fredi_user_id', String(newUid)); } catch (e) {}
+            try { localStorage.removeItem('fredi_auth_dismissed_at'); } catch (e) {}
             _track('register_success', { had_anon: hadAnon, source: _lastSource });
             // Welcome voice: первый раз после регистрации играем
             // голосовое приветствие Фреди через 3 сек после reload.
@@ -394,6 +398,7 @@
             }
             _safeSet(LS_LAST_EMAIL, email);
             try { localStorage.setItem('fredi_user_id', data.user_id); } catch (e) {}
+            try { localStorage.removeItem('fredi_auth_dismissed_at'); } catch (e) {}
             _track('login_success', { remember: !!remember, has_anon_data: !!data.has_anon_data });
             _toast('Добро пожаловать, ' + (data.name || email) + '!', 'success');
             _closeModal();
@@ -929,6 +934,38 @@
             try { if (sessionStorage.getItem('fredi_name_prompt_seen') === '1') return; } catch (e) {}
             _track('name_prompt_auto_shown', { visit: visits, user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh') });
             _showNamePrompt();
+            return;
+        }
+
+        // 24-часовой snooze после dismiss. Если юзер недавно закрыл модал —
+        // не показываем его снова при каждом следующем визите.
+        try {
+            var dismissedAt = parseInt(localStorage.getItem('fredi_auth_dismissed_at') || '0', 10);
+            if (dismissedAt && (Date.now() - dismissedAt) < 24 * 60 * 60 * 1000) {
+                _track('auth_modal_auto_skipped', {
+                    reason: 'recent_dismiss',
+                    hours_since: Math.round((Date.now() - dismissedAt) / 3600000),
+                    visits: visits,
+                    user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh')
+                });
+                return;
+            }
+        } catch (e) {}
+
+        // Экспоненциальная каденция: показываем модал на визитах 2, 5, 10, 20, 40, 80…
+        // Вместо «каждый визит начиная со 2-го». У того же анона мы можем
+        // встретиться с просьбой о регистрации не 12 раз, а 3-4 за месяц.
+        // Анонам без какой-либо активности (hasData=false) — каденцию ещё реже:
+        // им продукт ещё не доказал ценность, мы не имеем права требовать аккаунт.
+        var cadenceFull   = [2, 5, 10, 20, 40, 80, 160];
+        var cadenceSilent = [5, 20, 80];
+        var cadence = hasData ? cadenceFull : cadenceSilent;
+        if (cadence.indexOf(visits) === -1) {
+            _track('auth_modal_auto_skipped', {
+                reason: 'off_cadence',
+                visits: visits,
+                user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh')
+            });
             return;
         }
 

@@ -73,7 +73,26 @@
         }catch(e){}
     }
 
+    // ---- error dedupe ----
+    // По аналитике polling-эндпоинты (/api/notifications, /api/profile/access/inbox)
+    // генерят повторяющиеся api_network_error/api_error при каждом тике сети,
+    // создавая шум (43 ошибки/неделя при том, что причина — одна и та же).
+    // Троттлим повторы по ключу endpoint+method+status: один раз в 5 минут.
+    var _errKeyLastAt = Object.create(null);
+    var _ERR_DEDUPE_MS = 5 * 60 * 1000;
+    function _shouldDedupeError(event, data) {
+        if (event !== 'api_network_error' && event !== 'api_error') return false;
+        if (!data) return false;
+        var key = (data.endpoint || '') + '|' + (data.method || '') + '|' + (data.status || '');
+        var now = Date.now();
+        var last = _errKeyLastAt[key] || 0;
+        if (now - last < _ERR_DEDUPE_MS) return true;
+        _errKeyLastAt[key] = now;
+        return false;
+    }
+
     function track(event,data){
+        if (_shouldDedupeError(event, data)) return;
         var payload={
             user_id:UID(),
             session_id:SID,
