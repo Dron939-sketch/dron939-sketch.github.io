@@ -58,7 +58,33 @@
     PARADOX:  { name: 'Парадоксы',   q: 'Где в теме не сходится; какое противоречие ты обходишь?' },
     EVOLVE:   { name: 'Эволюция',    q: 'Во что тема развивается — если не трогать и если заниматься?' }
   };
-  var LENS_ORDER = Object.keys(LENSES);
+  // ---------- 4 АРХЕТИПА МЫШЛЕНИЯ (пучки осей) ----------
+  // Каждый архетип = единица восприятия + что даёт в жизни + где включать.
+  // Через них Фреди вращает тему, чтобы человек увидел её 4 принципиально
+  // разными углами, а не одной родной осью своей «масти».
+  var ARCHETYPES = {
+    ANATOM:    { name: 'Анатом',    emoji: '🔪', lenses: ['BOUND', 'STRUCT', 'HIER'],
+                 unit: 'состав · границы · что главное',
+                 q: 'Из чего это собрано, где граница, что тут главное, а что — шум?',
+                 gain: 'ясность вместо «всё навалилось»',
+                 where: 'запутанная задача, большой выбор' },
+    KORENWIK:  { name: 'Корневик',  emoji: '🌱', lenses: ['CAUSE', 'PURPOSE', 'PARADOX'],
+                 unit: 'причины · назначение · противоречия',
+                 q: 'Откуда это взялось на самом деле, зачем существует, где не сходится?',
+                 gain: 'лечишь причину, а не симптом',
+                 where: '«почему опять?», спор, саботаж' },
+    NAVIGATOR: { name: 'Навигатор', emoji: '🧭', lenses: ['PROCESS', 'CYCLE', 'EVOLVE'],
+                 unit: 'движение во времени',
+                 q: 'Откуда-куда движется, где ты в цикле сейчас, во что развивается?',
+                 gain: 'перестаёшь застревать, видишь траекторию',
+                 where: 'выгорание, «застрял», долгие решения' },
+    CARTOGRAF: { name: 'Картограф', emoji: '🗺️', lenses: ['LINKS', 'CONTEXT', 'PERSP'],
+                 unit: 'связи · среда · чужие глаза',
+                 q: 'С чем это связано, в какой среде живёт, чьими глазами ещё посмотреть?',
+                 gain: 'видишь систему и второй ход',
+                 where: 'конфликты, переговоры, чужие решения' }
+  };
+  var ARCH_ORDER = ['ANATOM', 'KORENWIK', 'NAVIGATOR', 'CARTOGRAF'];
 
   // ---------- ТЕСТ: вопросы (портирование логики с сайта) ----------
   var Q = [
@@ -274,6 +300,15 @@
     track('feature_opened', { feature: 'kontur' });
     var c = container(); if (!c) return;
     var hot = (loadResult() || {}).hotName;
+    var axes = loadAxes(), akeys = Object.keys(axes), recap = '';
+    if (akeys.length) {
+      recap = '<div class="kt-card" style="margin-top:14px"><div style="font-weight:700;margin-bottom:8px">🧭 Твои слепые оси</div>';
+      akeys.sort(function (a, b) { return (axes[b].ts || 0) - (axes[a].ts || 0); }).slice(0, 6).forEach(function (t) {
+        var k = axes[t].blind; if (!THEMES[t] || !ARCHETYPES[k]) return;
+        recap += '<div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid rgba(128,128,128,.12);font-size:.9rem"><span>' + esc(THEMES[t].name) + '</span><span style="color:var(--text-secondary,#888)">' + ARCHETYPES[k].emoji + ' ' + esc(ARCHETYPES[k].name) + '</span></div>';
+      });
+      recap += '<div style="font-size:11px;color:var(--text-secondary,#999);margin-top:8px">Угол, который ты в этой теме обходил. Сыграй её снова и начни с него.</div></div>';
+    }
     c.innerHTML =
       '<div class="kt-wrap">' +
         '<button class="kt-ghost" onclick="KONTUR.gamesHome()">← К списку игр</button>' +
@@ -283,6 +318,7 @@
         '<button class="kt-btn" onclick="KONTUR.test()"><span class="em">🧭</span>Пройти тест-диагностику<small>8 вопросов → честная карта: о чём ты думаешь уже сейчас</small></button>' +
         '<button class="kt-btn" onclick="KONTUR.game()"><span class="em">🎮</span>Играть с Фреди' + (hot ? ('<small>Твоя горячая тема по тесту: ' + esc(hot) + '</small>') : '<small>Выбери тему — и Фреди проведёт тебя через настоящее думание</small>') + '</button>' +
         '<div class="kt-card" style="margin-top:14px;font-size:.9rem;color:var(--text-secondary,#777)">💡 <b>Главная подсказка модуля:</b> человек умеет думать о том, о чём он больше всего думает. Не о прочитанном один раз — о том, куда возвращается сотни раз. Этот модуль даёт повод возвращаться правильно.</div>' +
+        recap +
       '</div>';
   }
 
@@ -303,7 +339,7 @@
           '<div class="kt-li">4. <b>Видишь то, чего не видит новичок</b> в этой теме.</div></div>' +
         '<div class="kt-card"><div class="kt-ch">Как модуль это развивает</div>' +
           '<div class="kt-li">• <b>Тест</b> показывает, о чём ты думаешь уже сейчас — куда мысль идёт сама и где есть инструменты.</div>' +
-          '<div class="kt-li">• <b>Игра с Фреди</b> — тренажёр: Фреди берёт тему и не даёт тебе соскользнуть в мнение. Подсовывает инструменты, поворачивает тему разными гранями (линзами), ловит, когда ты отвечаешь на автомате, и в конце честно говорит — думал ты или вспоминал готовое.</div></div>' +
+          '<div class="kt-li">• <b>Игра с Фреди</b> — тренажёр: Фреди берёт тему и проводит её через 4 угла (оси) мышления, не даёт соскользнуть в мнение, ловит, когда ты застрял в одной мерке, и в конце показывает твою <b>слепую ось</b> + конкретный вопрос для жизни.</div></div>' +
         '<div class="kt-card" style="border-color:rgba(58,134,255,.3)"><div class="kt-ch">Что ты получишь</div>Не «правильные ответы» (их тут нет), а <b>навык</b>: держать мысль, видеть тему с разных сторон, отличать своё думание от чужих мнений в своей голове. Это переносится на деньги, отношения, работу — на любую тему жизни.</div>' +
         '<button class="kt-btn kt-primary" onclick="KONTUR.test()">Начать с теста →</button>' +
         '<button class="kt-ghost" style="width:100%;margin-top:6px" onclick="KONTUR.game()">или сразу играть с Фреди</button>' +
@@ -434,13 +470,13 @@
       '<div class="kt-card"><div style="font-weight:700;margin-bottom:8px">1. Тема</div><div id="ktThemes">';
     THEME_ORDER.forEach(function (d) { html += '<span class="kt-chip" data-th="' + d + '" onclick="KONTUR.selTheme(\'' + d + '\')">' + esc(THEMES[d].name) + '</span>'; });
     html += '</div></div>' +
-      '<div class="kt-card"><div style="font-weight:700;margin-bottom:8px">2. Линза <span style="font-weight:400;color:var(--text-secondary,#999);font-size:.85rem">— угол атаки (можно пропустить)</span></div><div id="ktLenses">';
-    html += '<span class="kt-chip sel" data-ln="" onclick="KONTUR.selLens(\'\')">без линзы</span>';
-    LENS_ORDER.forEach(function (l) { html += '<span class="kt-chip" data-ln="' + l + '" onclick="KONTUR.selLens(\'' + l + '\')">' + esc(LENSES[l].name) + '</span>'; });
-    html += '</div></div>' +
+      '<div class="kt-card"><div style="font-weight:700;margin-bottom:8px">2. Как будем думать</div><div id="ktArch">';
+    html += '<span class="kt-chip sel" data-arch="" onclick="KONTUR.selArch(\'\')">🌀 Все 4 оси · рекомендую</span>';
+    ARCH_ORDER.forEach(function (a) { html += '<span class="kt-chip" data-arch="' + a + '" onclick="KONTUR.selArch(\'' + a + '\')">' + ARCHETYPES[a].emoji + ' ' + esc(ARCHETYPES[a].name) + '</span>'; });
+    html += '</div><div id="ktArchHint" style="font-size:.82rem;color:var(--text-secondary,#888);margin-top:10px;line-height:1.45">Фреди проведёт тему через все 4 угла и в конце покажет твою <b>слепую ось</b> — угол, который ты сам обходишь.</div></div>' +
       '<button class="kt-btn kt-primary" id="ktStartBtn" onclick="KONTUR.startGame()" disabled>Выбери тему, чтобы начать</button></div>';
     c.innerHTML = html;
-    ST.theme = null; ST.lens = '';
+    ST.theme = null; ST.arch = '';
   }
   function gameWith(d) { game(); selTheme(d); }
   function selTheme(d) {
@@ -448,15 +484,20 @@
     document.querySelectorAll('#ktThemes .kt-chip').forEach(function (ch) { ch.classList.toggle('sel', ch.getAttribute('data-th') === d); });
     var b = document.getElementById('ktStartBtn'); if (b) { b.disabled = false; b.textContent = 'Думать про «' + THEMES[d].name + '» с Фреди →'; }
   }
-  function selLens(l) {
-    ST.lens = l;
-    document.querySelectorAll('#ktLenses .kt-chip').forEach(function (ch) { ch.classList.toggle('sel', ch.getAttribute('data-ln') === l); });
+  function selArch(a) {
+    ST.arch = a;
+    document.querySelectorAll('#ktArch .kt-chip').forEach(function (ch) { ch.classList.toggle('sel', ch.getAttribute('data-arch') === a); });
+    var h = document.getElementById('ktArchHint');
+    if (h) {
+      if (a && ARCHETYPES[a]) h.innerHTML = '<b>' + ARCHETYPES[a].emoji + ' ' + esc(ARCHETYPES[a].name) + '</b> — ' + esc(ARCHETYPES[a].unit) + '.<br>Даёт: ' + esc(ARCHETYPES[a].gain) + '. Включать: ' + esc(ARCHETYPES[a].where) + '.';
+      else h.innerHTML = 'Фреди проведёт тему через все 4 угла и в конце покажет твою <b>слепую ось</b> — угол, который ты сам обходишь.';
+    }
   }
 
   function startGame() {
     if (!ST.theme) { toast('Сначала выбери тему', 'info'); return; }
     ST.history = [];
-    track('feature_opened', { feature: 'kontur_game', theme: ST.theme, lens: ST.lens || '' });
+    track('feature_opened', { feature: 'kontur_game', theme: ST.theme, arch: ST.arch || 'all' });
     renderChat();
     firstFrediMove();
   }
@@ -464,7 +505,7 @@
   function renderChat() {
     var c = container(); if (!c) return;
     var th = THEMES[ST.theme];
-    var sub = th.name + (ST.lens ? (' · линза «' + LENSES[ST.lens].name + '»') : '');
+    var sub = th.name + (ST.arch ? (' · ' + ARCHETYPES[ST.arch].emoji + ' ' + ARCHETYPES[ST.arch].name) : ' · все 4 оси');
     var html = '<div class="kt-wrap">' +
       '<button class="kt-ghost" onclick="KONTUR.game()">← Сменить тему</button>' +
       '<div style="font-weight:700;font-size:1.05rem">🎮 ' + esc(th.name) + '</div>' +
@@ -546,6 +587,8 @@
     var box = document.getElementById('ktChat'); if (!box) return;
     box.innerHTML = ST.history.map(function (m) {
       if (m.role === 'sys') return '<div class="kt-msg sys">' + esc(m.text) + '</div>';
+      if (m.role === 'verdict') return '<div style="background:linear-gradient(135deg,rgba(59,130,255,.13),rgba(59,130,255,.04));border:1px solid rgba(59,130,255,.38);border-radius:14px;padding:14px 16px;margin:12px 0;line-height:1.55;font-size:.95rem">' + esc(m.text).replace(/\n/g, '<br>') + '</div>';
+      if (m.role === 'cta') return '<div style="text-align:center;margin:6px 0 12px"><button class="kt-btn kt-primary" style="width:auto;margin:0;padding:12px 22px" onclick="KONTUR.playBlind()">' + esc(m.text) + '</button></div>';
       return '<div class="kt-msg ' + (m.role === 'fredi' ? 'f' : 'u') + '">' + esc(m.text) + '</div>';
     }).join('');
     box.scrollTop = box.scrollHeight;
@@ -560,26 +603,43 @@
   // системный промпт-ядро: «загруженные мыслительные алгоритмы»
   function buildPrompt(mode) {
     var th = THEMES[ST.theme];
-    var lensTxt = ST.lens ? ('\nЛИНЗА (обязательно поворачивай тему через неё): «' + LENSES[ST.lens].name + '» — ' + LENSES[ST.lens].q) : '';
+    function axisLine(k) { var a = ARCHETYPES[k]; return '• ' + a.name + ' (' + a.unit + '): ' + a.q; }
+    var focus = ST.arch && ARCHETYPES[ST.arch];
+    var axesBlock, journey;
+    if (focus) {
+      var fa = ARCHETYPES[ST.arch];
+      axesBlock = 'ОДНА ОСЬ НА ВСЮ ИГРУ — «' + fa.name + '» (' + fa.unit + '): ' + fa.q + '\n' +
+        'Крути тему её гранями по очереди: ' + fa.lenses.map(function (l) { return LENSES[l].name + ' («' + LENSES[l].q + '»)'; }).join('; ') + '.';
+      journey = 'Держи человека на этой оси и углубляй — не перескакивай на другие.';
+    } else {
+      axesBlock = '4 ОСИ МЫШЛЕНИЯ (через них вращай тему):\n' + ARCH_ORDER.map(axisLine).join('\n');
+      journey = 'МЕХАНИКА ВРАЩЕНИЯ: начни с одной оси. Когда человек выдал на ней ЖИВУЮ мысль (или дважды соскользнул в мнение) — ЯВНО переведи его на ДРУГУЮ ось: назови её и задай её вопрос к теме («Это была ось состава. Теперь поверни через время — куда это движется?»). За игру проведи через все 4 оси, особенно ту, которую он сам обходит.';
+    }
     var rules =
-      'Ты — Фреди в роли ВЕДУЩЕГО тренажёра мышления (не психолог сейчас, а тренер мысли).\n' +
-      'Твоя единственная цель: заставить человека ДУМАТЬ о теме «' + th.name + '», а не выдавать готовые мнения.\n' +
-      'ИНСТРУМЕНТЫ ТЕМЫ (подсовывай их по одному, когда человек застрял или выдал поверхностное): ' + th.tools.join('; ') + '.' + lensTxt + '\n\n' +
+      'Ты — Фреди, ВЕДУЩИЙ тренажёра мышления (сейчас не психолог, а тренер мысли).\n' +
+      'Тема игры: «' + th.name + '». Цель — не «правильный ответ», а заставить человека ДУМАТЬ на РАЗНЫХ осях, а не на одной привычной.\n\n' +
+      axesBlock + '\n\n' + journey + '\n\n' +
+      'ИНСТРУМЕНТЫ ТЕМЫ (подсовывай по одному, когда застрял): ' + th.tools.join('; ') + '.\n\n' +
       'ЖЁСТКИЕ ПРАВИЛА:\n' +
-      '1. НИКОГДА не думай за него и не давай готовых выводов. Ты задаёшь вопросы и подсовываешь по одному инструменту.\n' +
-      '2. После каждого ответа сначала про себя оцени: это мысль или мнение? Мнение = быстрое, общее, без инструмента. Если мнение — мягко ткни: «это первое, что пришло. А если глубже / через этот инструмент?».\n' +
-      '3. Если человек думает — углубляй: «а где ты можешь быть неправ?», «а с другой стороны?», «доведи до конца».\n' +
-      '4. Удерживай на ОДНОЙ мысли, не давай перескакивать.\n' +
-      '5. Отвечай КОРОТКО: 2–4 предложения, ровно один вопрос за раз. Живой язык, на «ты», без канцелярита и без списков.\n' +
-      '6. Не хвали автоматически («отлично!»). Хвали только за реальное усилие и точность.\n';
-    var hist = ST.history.filter(function (m) { return m.role !== 'sys'; }).map(function (m) { return (m.role === 'fredi' ? 'ФРЕДИ' : 'ЧЕЛОВЕК') + ': ' + m.text; }).join('\n');
+      '1. НИКОГДА не думай за него и не давай готовых выводов — только вопросы и по одному инструменту/оси.\n' +
+      '2. После ответа про себя оцени: мысль или мнение (мнение = быстрое, общее, без инструмента)? Если мнение — мягко ткни и удержи на оси.\n' +
+      '3. Лови ПОДМЕНУ ОСИ: если он меряет одно через другое («быстро — значит хорошо», «дорого — значит ценно»), назови это: «ты смешал две мерки — это разные оси».\n' +
+      '4. Отвечай КОРОТКО: 2–4 предложения, ровно ОДИН вопрос. На «ты», живой язык, без списков и канцелярита.\n' +
+      '5. Не хвали автоматически. Хвали только за реальное усилие и точность.\n';
+    var hist = ST.history.filter(function (m) { return m.role !== 'sys' && m.role !== 'cta' && m.role !== 'verdict'; }).map(function (m) { return (m.role === 'fredi' ? 'ФРЕДИ' : 'ЧЕЛОВЕК') + ': ' + m.text; }).join('\n');
     if (mode === 'first') {
-      return rules + '\nНачни игру: задай короткий парадокс-вход или острый вопрос по теме, который собьёт с автоматического ответа и заставит задуматься. Только реплика Фреди, без префиксов.';
+      return rules + '\nНАЧНИ ИГРУ: задай короткий парадокс-вход или острый вопрос по теме на ПЕРВОЙ оси — такой, чтобы сбить автоматический ответ. Только реплика Фреди, без префиксов.';
     }
     if (mode === 'verdict') {
-      return rules + '\nДИАЛОГ:\n' + hist + '\n\nИгра окончена. Дай человеку короткий честный ВЕРДИКТ (4–6 предложений): думал он (Система 2) или больше выдавал мнения (Система 1)? Опирайся на признаки: скорость, новизна для него, конкретность, использование инструментов, готовность спорить с собой. Отметь 1 сильный момент и 1 точку роста. Заверши одним вопросом, который ему стоит додумать самому. Тон — прямой, тёплый, без лести.';
+      var blindSet = focus ? ('{' + ARCHETYPES[ST.arch].name + '}') : '{Анатом, Корневик, Навигатор, Картограф}';
+      return rules + '\nДИАЛОГ:\n' + hist + '\n\n' +
+        'Игра окончена. Сделай человеку КАРТУ ОСЕЙ по теме «' + th.name + '» — прямо, тепло, на «ты», без лести:\n' +
+        '1) На каких осях он думал живо — 1–2 фразы по делу.\n' +
+        '2) СЛЕПАЯ ОСЬ: какой угол он обходил или где сваливался в мнение. Назови её и почему это важно именно в теме «' + th.name + '».\n' +
+        '3) ИНСТРУМЕНТ В ЖИЗНЬ: один конкретный вопрос, который ему стоит задавать себе в реальной жизни на этой слепой оси (про «' + th.name + '»).\n' +
+        'Всего 5–8 предложений связной речью, без нумерации в тексте. Затем С НОВОЙ СТРОКИ добавь строго машинный тег слепой оси из набора ' + blindSet + ' в формате ровно так: ||BLIND:Название||';
     }
-    return rules + '\nДИАЛОГ:\n' + hist + '\n\nОтветь как Фреди-ведущий на последнюю реплику человека. Только реплика, без префиксов.';
+    return rules + '\nДИАЛОГ:\n' + hist + '\n\nОтветь как Фреди-ведущий на последнюю реплику человека и веди по механике вращения осей. Только реплика, без префиксов.';
   }
 
   async function firstFrediMove() {
@@ -620,20 +680,45 @@
     paintChat();
   }
 
+  function archKeyByName(nm) {
+    nm = String(nm || '').trim().toLowerCase();
+    for (var i = 0; i < ARCH_ORDER.length; i++) { if (ARCHETYPES[ARCH_ORDER[i]].name.toLowerCase() === nm) return ARCH_ORDER[i]; }
+    return null;
+  }
+
   async function verdict() {
     var userTurns = ST.history.filter(function (m) { return m.role === 'user'; }).length;
     if (userTurns < 2) { toast('Сначала пройди хотя бы пару кругов с Фреди', 'info'); return; }
-    ST.history.push({ role: 'sys', text: '— Фреди подводит итог —' });
+    ST.history.push({ role: 'sys', text: '— Фреди читает твою карту осей —' });
     paintChat(); typing(true);
+    var v;
     try {
-      var r = await aiGenerate(buildPrompt('verdict'), { temperature: 0.6, max_tokens: 400 });
-      var v = (r && r.success && r.content) ? clean(r.content) : 'Главное ты сделал — удержал мысль дольше, чем привычно. Где сегодня ты заметил, что отвечаешь на автомате? Вот там в следующий раз и копай.';
-      ST.history.push({ role: 'fredi', text: v });
-    } catch (e) {
-      ST.history.push({ role: 'fredi', text: 'Связь подвела, но вердикт прост: если было трудно и ты заметил новое — ты думал. Если легко и привычно — это было мнение. Honest?' });
+      var r = await aiGenerate(buildPrompt('verdict'), { temperature: 0.6, max_tokens: 460 });
+      v = (r && r.success && r.content) ? clean(r.content) : '';
+    } catch (e) { v = ''; }
+    if (!v) v = 'Главное ты сделал — удержал мысль дольше привычного. Но заметь: почти весь разговор ты мерил тему одной меркой. Слепая ось — та, которую ты так и не включил. В следующий раз начни прямо с неё.';
+    // вытащить машинный тег слепой оси и убрать его из текста
+    var blindKey = null, mm = v.match(/\|\|\s*BLIND\s*:\s*([^|]+?)\s*\|\|/i);
+    if (mm) blindKey = archKeyByName(mm[1]);
+    v = v.replace(/\|\|\s*BLIND\s*:[^|]*\|\|/i, '').trim();
+    typing(false);
+    ST.history.push({ role: 'verdict', text: v });
+    if (blindKey && ST.theme) {
+      ST.blind = { theme: ST.theme, arch: blindKey };
+      saveAxis(ST.theme, blindKey);
+      ST.history.push({ role: 'cta', text: '🎯 Сыграть слепую ось: ' + ARCHETYPES[blindKey].emoji + ' ' + ARCHETYPES[blindKey].name });
     }
-    typing(false); paintChat();
-    track('feature_opened', { feature: 'kontur_verdict' });
+    paintChat();
+    track('feature_opened', { feature: 'kontur_verdict', theme: ST.theme || '', blind: blindKey || '' });
+  }
+
+  function playBlind() {
+    var b = ST.blind;
+    if (!b || !ARCHETYPES[b.arch] || !b.theme) { game(); return; }
+    ST.theme = b.theme; ST.arch = b.arch; ST.history = [];
+    track('feature_opened', { feature: 'kontur_play_blind', theme: b.theme, arch: b.arch });
+    renderChat();
+    firstFrediMove();
   }
 
   function clean(s) {
@@ -646,13 +731,16 @@
   // ---------- хранение результата теста ----------
   function saveResult(o) { try { localStorage.setItem('kontur_result', JSON.stringify(o)); } catch (e) {} ST.result = o; }
   function loadResult() { if (ST.result) return ST.result; try { return JSON.parse(localStorage.getItem('kontur_result') || 'null'); } catch (e) { return null; } }
+  // слепые оси по темам — карта растёт от игры к игре
+  function saveAxis(theme, archKey) { try { var m = JSON.parse(localStorage.getItem('kontur_axes') || '{}'); m[theme] = { blind: archKey, ts: Date.now() }; localStorage.setItem('kontur_axes', JSON.stringify(m)); } catch (e) {} }
+  function loadAxes() { try { return JSON.parse(localStorage.getItem('kontur_axes') || '{}'); } catch (e) { return {}; } }
 
   // ---------- экспорт ----------
   window.KONTUR = {
     gamesHome: showKonturScreen, gameHome: gameHome, home: gameHome,
     intro: intro, test: test, game: game, gameWith: gameWith,
-    pick: pick, qback: qback, qnext: qnext, selTheme: selTheme, selLens: selLens,
-    startGame: startGame, send: send, verdict: verdict, grow: grow
+    pick: pick, qback: qback, qnext: qnext, selTheme: selTheme, selArch: selArch,
+    startGame: startGame, send: send, verdict: verdict, grow: grow, playBlind: playBlind
   };
   window.showKonturScreen = showKonturScreen;   // пункт меню «Игры» (список игр)
   window.showKonturGame = gameHome;             // deep-link на саму игру «О чём ты умеешь думать»
