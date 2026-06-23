@@ -174,7 +174,7 @@
   ];
 
   // ---------- состояние ----------
-  var ST = { answers: null, result: null, cur: 0, theme: null, lens: null, history: [], busy: false };
+  var ST = { answers: null, result: null, cur: 0, theme: null, arch: '', blind: null, history: [], busy: false };
 
   function container() { return document.getElementById('screenContainer'); }
   function injectCSS() {
