@@ -7,7 +7,7 @@
 // которые на meysternlp.ru уходили в КОРЕНЬ домена → 404 в nginx-логах:
 //   open() "/usr/share/nginx/html/styles.css" failed (No such file or directory)
 // Service Worker install падал тихо, кэш был неполный.
-const CACHE_NAME = 'fredi-v7';
+const CACHE_NAME = 'fredi-v8';
 const STATIC_FILES = ['./', './styles.css', './app.js', './mirrors.js', './admin.js'];
 
 self.addEventListener('install', e => {
