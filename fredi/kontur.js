@@ -202,6 +202,11 @@
       '.kt-ta::placeholder{color:#7a7d88}',
       '.kt-send{flex:0 0 46px;height:46px;border-radius:50%;border:none;background:#3A86FF;color:#fff;font-size:1.2rem;cursor:pointer}',
       '.kt-send:disabled{opacity:.5;cursor:not-allowed}',
+      '.kt-mic{flex:0 0 46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#f2f3f5;font-size:1.15rem;cursor:pointer;line-height:1}',
+      '.kt-mic.rec{background:rgba(239,68,68,.2);border-color:#ef4444;animation:ktPulse 1.1s ease-in-out infinite}',
+      '.kt-mic.off{opacity:.4;cursor:default}',
+      '.kt-hint{font-size:.78rem;color:#8a8d98;text-align:center;margin-top:7px}',
+      '@keyframes ktPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}',
       '.kt-chip{display:inline-block;padding:6px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,.18);margin:3px;font-size:.86rem;cursor:pointer;background:rgba(255,255,255,.05);color:#f2f3f5}',
       '.kt-chip.sel{border-color:#3A86FF;background:rgba(58,134,255,.2);color:#bcd5ff;font-weight:600}',
       // ---------- ОВЕРРАЙДЫ СВЕТЛОЙ ТЕМЫ ----------
@@ -226,7 +231,10 @@
       '[data-theme="light"] .kt-ta{background:#fff;border-color:rgba(0,0,0,.15);color:#1c1c1e}',
       '[data-theme="light"] .kt-ta::placeholder{color:#9a9a9e}',
       '[data-theme="light"] .kt-chip{background:#fff;border-color:rgba(0,0,0,.14);color:#1c1c1e}',
-      '[data-theme="light"] .kt-chip.sel{background:rgba(58,134,255,.1);color:#1d6fed}'
+      '[data-theme="light"] .kt-chip.sel{background:rgba(58,134,255,.1);color:#1d6fed}',
+      '[data-theme="light"] .kt-mic{background:#fff;border-color:rgba(0,0,0,.15);color:#1c1c1e}',
+      '[data-theme="light"] .kt-mic.rec{background:rgba(239,68,68,.12);border-color:#ef4444}',
+      '[data-theme="light"] .kt-hint{color:#8a8a8e}'
     ].join('\n');
     document.head.appendChild(s);
   }
@@ -236,6 +244,7 @@
   // ============================================================
   function showKonturScreen() {
     injectCSS();
+    if (_rec.on) stopVoice();
     track('feature_opened', { feature: 'kontur' });
     var c = container(); if (!c) return;
     var hot = (loadResult() || {}).hotName;
@@ -384,6 +393,7 @@
   // ЭКРАН — ИГРА С ФРЕДИ
   // ============================================================
   function game() {
+    if (_rec.on) stopVoice();
     var c = container(); if (!c) return;
     var html = '<div class="kt-wrap"><button class="kt-ghost" onclick="KONTUR.home()">← Назад</button>' +
       '<div class="kt-h1">🎮 Игра с Фреди</div>' +
@@ -429,11 +439,74 @@
       '<div class="kt-chat" id="ktChat"></div>' +
       '<div id="ktTyping"></div>' +
       '<div class="kt-inrow"><textarea class="kt-ta" id="ktInput" rows="1" placeholder="Думай вслух…" oninput="KONTUR.grow(this)"></textarea>' +
+      '<button class="kt-mic" id="ktMic" title="Размышлять вслух голосом">🎤</button>' +
       '<button class="kt-send" id="ktSend" onclick="KONTUR.send()">➤</button></div>' +
+      '<div class="kt-hint" id="ktHint">✍️ печатай — или 🎤 говори вслух, текст распознается сам</div>' +
       '<div style="text-align:center;margin-top:10px"><button class="kt-ghost" onclick="KONTUR.verdict()">Завершить и получить вердикт Фреди</button></div>' +
       '</div>';
     c.innerHTML = html;
     paintChat();
+    initVoice();
+  }
+
+  // ---------- голосовой ввод (STT через voiceManager приложения) ----------
+  var _rec = { on: false, t0: 0, timer: null, savedT: null, savedC: null };
+  function initVoice() {
+    var mic = document.getElementById('ktMic'), input = document.getElementById('ktInput');
+    if (!mic || !input) return;
+    if (!window.voiceManager || typeof window.voiceManager.startRecording !== 'function') {
+      mic.classList.add('off'); mic.onclick = function () { toast('🎤 Голосовой ввод недоступен в этом браузере', 'info'); };
+      return;
+    }
+    mic.onclick = function () { _rec.on ? stopVoice() : startVoice(); };
+  }
+  function recHint(sec) {
+    var h = document.getElementById('ktHint');
+    if (h) h.innerHTML = sec == null ? '✍️ печатай — или 🎤 говори вслух, текст распознается сам'
+      : '<span style="color:#ef4444">🔴 слушаю… ' + sec + ' с — нажми 🎤, когда закончишь мысль</span>';
+  }
+  async function startVoice() {
+    var mic = document.getElementById('ktMic'), input = document.getElementById('ktInput');
+    if (!window.voiceManager) return;
+    _rec.savedT = window.voiceManager.onTranscript;
+    _rec.savedC = window.voiceManager.onTranscriptComplete;
+    window.voiceManager.sttOnly = true;
+    window.voiceManager.onTranscript = function (text) {
+      if (!text) return;
+      input.value = input.value ? (input.value + ' ' + text) : text;
+      grow(input);
+    };
+    window.voiceManager.onTranscriptComplete = function () {};
+    _rec.on = true; _rec.t0 = Date.now();
+    if (mic) { mic.classList.add('rec'); mic.textContent = '⏹'; }
+    recHint(0);
+    if (navigator.vibrate) { try { navigator.vibrate(40); } catch (e) {} }
+    _rec.timer = setInterval(function () {
+      var s = Math.floor((Date.now() - _rec.t0) / 1000);
+      recHint(s);
+      if (s >= 180) { stopVoice(); toast('⏱ Достигнут лимит записи (3 мин)', 'info'); }
+    }, 300);
+    var ok = await window.voiceManager.startRecording();
+    if (!ok) { stopVoice(); toast('🎤 Нет доступа к микрофону', 'error'); }
+  }
+  function stopVoice() {
+    if (!_rec.on) return;
+    if (_rec.timer) { clearInterval(_rec.timer); _rec.timer = null; }
+    try { if (window.voiceManager && window.voiceManager.stopRecording) window.voiceManager.stopRecording(); } catch (e) {}
+    _rec.on = false;
+    var mic = document.getElementById('ktMic'); if (mic) { mic.classList.remove('rec'); mic.textContent = '🎤'; }
+    recHint(null);
+    // даём дойти финальному куску транскрипта, потом возвращаем хендлеры основному чату
+    setTimeout(function () {
+      if (window.voiceManager) {
+        if (_rec.savedT !== null) window.voiceManager.onTranscript = _rec.savedT;
+        if (_rec.savedC !== null) window.voiceManager.onTranscriptComplete = _rec.savedC;
+        window.voiceManager.sttOnly = false;
+        _rec.savedT = null; _rec.savedC = null;
+      }
+      var input = document.getElementById('ktInput');
+      if (input && input.value.trim()) { input.focus(); }
+    }, 700);
   }
   function paintChat() {
     var box = document.getElementById('ktChat'); if (!box) return;
@@ -492,6 +565,7 @@
   }
 
   async function send() {
+    if (_rec.on) stopVoice();
     if (ST.busy) return;
     var inp = document.getElementById('ktInput'); if (!inp) return;
     var txt = inp.value.trim(); if (!txt) return;
