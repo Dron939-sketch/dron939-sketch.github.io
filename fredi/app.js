@@ -148,7 +148,7 @@ const MODES = {
         name: 'БАЗОВЫЙ',
         emoji: '💬',
         color: '#6E6E73',
-        greeting: 'Я Фреди — поговорим о том, что для вас важно.',
+        greeting: 'Я Фреди — ваш виртуальный психолог и собеседник.',
         voicePrompt: 'О чём поговорим?'
     },
     coach: {
@@ -1803,7 +1803,7 @@ function renderDashboard() {
                 <div class="hero-greeting">
                     <div class="hero-mode-emoji">${modeConfig.emoji}</div>
                     <h2 class="hero-title">${heroGreetingHtml}</h2>
-                    <p class="hero-sub">Фреди слушает — говорите голосом или выберите действие</p>
+                    <p class="hero-sub">Слушает, поддерживает, помогает разобраться — говорите голосом или выберите действие</p>
                 </div>
                 <div class="profile-badge" id="profileBadge">
                     <div class="profile-code" id="profileCode">${CONFIG.PROFILE_CODE || '···'}</div>
