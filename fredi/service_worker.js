@@ -7,7 +7,7 @@
 // которые на meysternlp.ru уходили в КОРЕНЬ домена → 404 в nginx-логах:
 //   open() "/usr/share/nginx/html/styles.css" failed (No such file or directory)
 // Service Worker install падал тихо, кэш был неполный.
-const CACHE_NAME = 'fredi-v12';
+const CACHE_NAME = 'fredi-v13';
 // ВАЖНО: app.js / kontur.js НЕ кэшируем в precache — они часто меняются
 // (новые модули, фичи). Иначе на мобиле застревает старый код, и новые
 // пункты меню («Игры») «не открываются».

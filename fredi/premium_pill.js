@@ -77,8 +77,8 @@
             '  white-space: nowrap; pointer-events: none;' +
             '}' +
             '.mode-btn {' +
-            '  background: rgba(255,255,255,0.06) !important;' +
-            '  border: 1px solid rgba(255,255,255,0.12) !important;' +
+            '  background: rgba(255,255,255,0.09) !important;' +
+            '  border: 1px solid rgba(147,197,253,0.28) !important;' +
             '  color: var(--text-primary) !important;' +
             '  transition: background 0.2s, color 0.2s, transform 0.12s, border-color 0.2s, box-shadow 0.2s !important;' +
             '}' +

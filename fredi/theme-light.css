@@ -116,6 +116,9 @@ body, .app, .chats-panel, .chat-panel, .chat-header,
 [data-theme="light"] .mode-btn.active {
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.12), rgba(100, 100, 100, 0.08));
 }
+[data-theme="light"] .hero-sub {
+    color: #5b5f6b;
+}
 [data-theme="light"] .voice-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(230, 230, 235, 0.5));
     border: 1px solid rgba(59, 130, 255, 0.45);

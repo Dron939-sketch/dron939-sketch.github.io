@@ -472,10 +472,17 @@ body::after {
 .hero-greeting { margin-bottom: 18px; }
 
 .hero-mode-emoji {
-    font-size: 36px;
-    line-height: 1.2;
-    margin-bottom: 10px;
-    display: block;
+    font-size: 30px;
+    line-height: 1;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(59, 130, 255, 0.12);
+    border: 1px solid rgba(59, 130, 255, 0.30);
 }
 
 .hero-title {
@@ -494,8 +501,18 @@ body::after {
 
 .hero-sub {
     font-size: 12px;
-    color: var(--text-secondary);
+    color: #b6bac6;
     line-height: 1.5;
+}
+
+/* Twemoji: эмодзи рендерятся как SVG-картинки (одинаково на всех ОС,
+   нет «квадратиков» на старых Windows). Выравниваем под размер текста. */
+img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
 }
 
 /* Профиль-бейдж */
