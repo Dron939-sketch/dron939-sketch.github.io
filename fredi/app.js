@@ -695,6 +695,7 @@ function navigateTo(screen, params = {}) {
         case 'anchors': if (typeof showAnchorsScreen==='function') showAnchorsScreen(); else { const s=document.createElement('script');s.src='anchors.js';s.onload=()=>{if(typeof showAnchorsScreen==='function')showAnchorsScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } break;
         case 'dreams': if (typeof showDreamsScreen==='function') showDreamsScreen(); else { const s=document.createElement('script');s.src='dreams.js';s.onload=()=>{if(typeof showDreamsScreen==='function')showDreamsScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } break;
         case 'esoterica': if (typeof showEsotericaScreen==='function') showEsotericaScreen(); else { const s=document.createElement('script');s.src='esoterica.js';s.onload=()=>{if(typeof showEsotericaScreen==='function')showEsotericaScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } break;
+        case 'kontur': if (typeof showKonturScreen==='function') showKonturScreen(); else { const s=document.createElement('script');s.src='kontur.js';s.onload=()=>{if(typeof showKonturScreen==='function')showKonturScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } break;
         case 'statistics': showStatistics(); break;
         case 'analysis':
             if (typeof openAnalysisScreen === 'function') {
@@ -2489,6 +2490,7 @@ async function init() {
             const actions = {
                 fredi: renderDashboard,
                 test: startTest,
+                kontur: () => { if (typeof showKonturScreen==='function') showKonturScreen(); else { showToast('🧠 Загрузка модуля...', 'info'); const s=document.createElement('script'); s.src='kontur.js'; s.onload=()=>{ if(typeof showKonturScreen==='function') showKonturScreen(); }; s.onerror=()=>showToast('Не удалось загрузить модуль','error'); document.head.appendChild(s); } },
                 messages: () => {
                     if (typeof showMessagesScreen === 'function') showMessagesScreen();
                     else { showToast('💬 Загрузка сообщений...', 'info'); const s = document.createElement('script'); s.src = 'messages.js'; s.onload = () => { if (typeof showMessagesScreen === 'function') showMessagesScreen(); }; document.head.appendChild(s); }
