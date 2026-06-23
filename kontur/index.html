@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КОНТУР — игра-тренажёр мышления (28 карт + теория + PDF) | Андрей Мейстер</title>
+<meta name="description" content="КОНТУР — настольная игра-тренажёр для тех, кто хочет научиться думать о конкретных темах вместо «обо всём». 24 карты-темы по 7 областям жизни + 4 мета-карты для контроля качества мышления. С теорией (Канеман, Деннетт, Эриксон, Флейвелл) и правилами. Печатается в PDF одной кнопкой.">
+<meta name="keywords" content="игра тренажёр мышления, уметь думать, System 2, карты для размышления, инструменты мышления, метакогниция, deliberate practice, Андрей Мейстер">
+<meta name="author" content="Андрей Мейстер">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://meysternlp.ru/kontur/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="КОНТУР — игра-тренажёр мышления">
+<meta property="og:description" content="28 карт-тем, по которым тренируется навык думать предметно вместо «обо всём». Теория, правила, PDF.">
+<meta property="og:url" content="https://meysternlp.ru/kontur/">
+<meta property="og:image" content="https://meysternlp.ru/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;background:#F4F5F8;color:#1D1D1F;line-height:1.55;padding:20px}
+  .wrap{max-width:1000px;margin:0 auto}
+
+  /* ===== Веб-часть ===== */
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.01em;margin:30px 0 10px;color:#0B1220;line-height:1.1}
+  h2{font-size:1.4rem;font-weight:700;color:#3A86FF;margin:36px 0 14px;letter-spacing:-0.005em}
+  h3{font-size:1.1rem;font-weight:700;margin:22px 0 8px;color:#0B1220}
+  h4{font-size:1rem;font-weight:600;margin:16px 0 6px;color:#3A86FF;letter-spacing:.01em}
+  p{margin:0 0 12px;color:#1D1D1F}
+  ul,ol{margin:0 0 14px 22px}
+  li{margin:5px 0}
+  .meta{font-size:13px;color:#64748B;margin-bottom:18px}
+  .lead{font-size:1.1rem;color:#475569;line-height:1.55;margin:14px 0 22px;max-width:780px}
+
+  .box{background:#EEF2FF;border-left:4px solid #3A86FF;padding:14px 18px;border-radius:6px;margin:16px 0}
+  .box.dark{background:#0B1220;color:#E2E8F0;border-left-color:#3A86FF}
+  .box.dark strong{color:#fff}
+  .box.warn{background:#FEF3C7;border-left-color:#F59E0B}
+
+  blockquote.q{margin:16px 0;padding:14px 18px;border-left:3px solid #3A86FF;background:#F8FAFC;color:#1D1D1F;border-radius:0 6px 6px 0;font-style:italic;font-size:15px}
+
+  table.t{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+  table.t th,table.t td{border:1px solid #E2E8F0;padding:10px 12px;vertical-align:top;text-align:left}
+  table.t th{background:#0B1220;color:#fff;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  table.t td:first-child{width:28%;color:#3A86FF;font-weight:600;background:#F8FAFC}
+
+  .top-actions{display:flex;gap:10px;justify-content:center;margin:18px 0 22px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;background:#3A86FF;color:#fff;border:none;font:600 13px Inter,sans-serif;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:transparent;color:#3A86FF;border:1px solid #3A86FF}
+  .btn:hover{background:#1d6fed}
+  .btn.ghost:hover{background:#3A86FF;color:#fff}
+  .hint{font-size:12.5px;color:#64748B;text-align:center;margin-bottom:22px}
+
+  .breadcrumbs{font-size:13px;color:#64748B;margin-bottom:14px}
+  .breadcrumbs a{color:#3A86FF;text-decoration:none}
+
+  /* ===== Печатная карточка-обложка ===== */
+  .cover{
+    width:200mm;min-height:130mm;
+    margin:24px auto;
+    background:linear-gradient(135deg,#0B1220 0%,#1a2444 100%);
+    color:#F4F5F8;
+    border-radius:18px;
+    padding:18mm 20mm;
+    position:relative;
+    box-shadow:0 8px 30px rgba(0,0,0,0.12);
+  }
+  .cover .brand{position:absolute;top:12mm;right:18mm;font-size:11px;letter-spacing:.3em;color:#3A86FF;font-weight:700}
+  .cover .name{font-size:46px;font-weight:800;letter-spacing:-0.01em;line-height:1;margin-bottom:6mm}
+  .cover .sub{font-size:15px;font-weight:400;color:#9CA3AF;letter-spacing:.02em;margin-bottom:10mm;max-width:130mm}
+  .cover .epi{font-size:14px;font-style:italic;color:#E2E8F0;border-left:3px solid #3A86FF;padding-left:10px;margin-bottom:10mm;max-width:140mm;line-height:1.5}
+  .cover .stats{display:flex;gap:10mm;margin-top:6mm;font-size:12px;color:#9CA3AF;letter-spacing:.06em;text-transform:uppercase}
+  .cover .stats b{color:#3A86FF;display:block;font-size:24px;font-weight:700;font-style:normal;letter-spacing:0;margin-bottom:2px}
+
+  /* ===== Печатные карты тем (А6) ===== */
+  .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6mm;margin:22px 0}
+  .card{
+    background:#FFFFFF;
+    border:2px solid #0B1220;
+    border-radius:10px;
+    padding:8mm 9mm;
+    min-height:118mm;
+    position:relative;
+    font-size:11.5px;
+    line-height:1.45;
+    page-break-inside:avoid;
+  }
+  .card .no{position:absolute;top:5mm;right:7mm;font-size:9.5px;letter-spacing:.25em;color:#94A3B8;font-weight:700}
+  .card .sect{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#3A86FF;font-weight:700;margin-bottom:3mm}
+  .card .nm{font-size:18px;font-weight:800;color:#0B1220;letter-spacing:-0.005em;line-height:1.1;margin-bottom:3mm}
+  .card .par{font-style:italic;color:#475569;border-left:2px solid #3A86FF;padding-left:7px;font-size:11.5px;line-height:1.4;margin-bottom:4mm}
+  .card .sec-h{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#3A86FF;font-weight:700;margin:3mm 0 1.5mm}
+  .card .lst{padding-left:14px;margin:0 0 3mm;font-size:11px}
+  .card .lst li{margin:1mm 0;line-height:1.35}
+  .card .fin{margin-top:auto;padding-top:3mm;border-top:1px dotted #94A3B8;font-size:11px;color:#0B1220;font-weight:600;font-style:italic}
+  .card.meta{background:#0B1220;color:#E2E8F0;border-color:#3A86FF}
+  .card.meta .nm{color:#fff}
+  .card.meta .par{color:#9CA3AF;border-left-color:#3A86FF}
+  .card.meta .sect,.card.meta .sec-h{color:#3A86FF}
+  .card.meta .lst{color:#E2E8F0}
+  .card.meta .fin{color:#fff;border-top-color:#3A86FF}
+
+  /* ===== Печать ===== */
+  @media print{
+    body{background:#fff;padding:0;font-size:10.5pt}
+    .top-actions,.hint,.no-print{display:none!important}
+    .wrap{max-width:none}
+    .cover{box-shadow:none;page-break-after:always;margin:0 auto}
+    .card-grid{page-break-before:always;gap:5mm}
+    .card{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card.meta{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h1{font-size:18pt;margin-top:10mm}
+    h2{font-size:13pt;color:#000;border-bottom:1px solid #999;padding-bottom:1mm}
+    h3{font-size:11pt}
+    table.t th{background:#222!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    table.t td:first-child{background:#f3f3f3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .box{background:#f3f3f3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .box.dark{background:#0B1220!important;color:#E2E8F0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    blockquote.q{background:#f8f8f8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="breadcrumbs no-print"><a href="/">Главная</a> / <a href="/blog/">Блог</a> / КОНТУР — игра-тренажёр мышления</div>
+
+<div class="top-actions no-print">
+  <button class="btn" onclick="window.print()">🖨 Скачать игру в PDF (Печать → Сохранить как PDF)</button>
+  <a class="btn ghost" href="/blog/o-chyom-ty-umeesh-dumat.html">📖 К исходной статье</a>
+  <a class="btn ghost" href="/blog/mejster-kod-transformacionnaya-igra.html">🎴 МЕЙСТЕР-КОД</a>
+</div>
+<div class="hint no-print">A4, поля «по умолчанию», ориентация книжная. Обложка + 14 листов карт + методичка.</div>
+
+<!-- ====== ПЕЧАТНАЯ ОБЛОЖКА ====== -->
+<div class="cover">
+  <div class="brand">МЕЙСТЕР · ТРЕНАЖЁР</div>
+  <div class="name">КОНТУР</div>
+  <div class="sub">Игра-тренажёр для тех, кто хочет научиться думать о конкретных темах вместо «обо всём»</div>
+  <div class="epi">«Я умею думать обо всём» — это вежливый способ сказать «я ни о чём не думал так глубоко, чтобы заметить, как это устроено». КОНТУР — лекарство от этого ответа.</div>
+  <div class="stats">
+    <div><b>28</b>карт</div>
+    <div><b>7</b>областей</div>
+    <div><b>4</b>мета-уровня</div>
+    <div><b>1+</b>игрока</div>
+  </div>
+  <div style="margin-top:14mm;font-size:12px;color:#9CA3AF">🎵 Песня-якорь игры: Владимир Высоцкий — «Я не люблю». Гимн думающего по-своему.</div>
+</div>
+
+<!-- ====== ВЕБ-ЧАСТЬ: ТЕОРИЯ + ПРАВИЛА ====== -->
+<h1>КОНТУР — игра-тренажёр мышления</h1>
+<p class="meta">28 карт · 7 областей жизни · от 20 минут</p>
+
+<p class="lead">КОНТУР — это не игра-«вытаскивалка» (как МЕЙСТЕР-КОД с прошивкой идентичности) и не игра-обсуждение. Это <strong>тренажёр Системы 2</strong>: каждая карта — узкая тема, по которой нужно <em>удерживать</em> думание дольше, чем хочется, с подсказками-инструментами и проверкой через мета-карты. После 5–10 сессий человек реально начинает <em>уметь думать</em> о тех контурах, в которых играл — и видит разницу между «у меня есть мнение» и «я об этом думаю».</p>
+
+<h2>Зачем эта игра существует</h2>
+<p>Игра выросла из статьи <a href="/blog/o-chyom-ty-umeesh-dumat.html">«О чём ты умеешь думать?»</a>. Главная мысль: «обо всём» в ответ на «о чём ты умеешь думать?» устроено так же, как «что я умею руками? — всё»: это не широта, а отсутствие различения между обладанием и навыком. У зрелого человека в списке тем 3–5, и он знает их имена. Этот список <strong>растёт тренировкой</strong> — и КОНТУР даёт ровно тренажёр под эту тренировку.</p>
+
+<div class="box">
+  <strong>Уметь думать о Х</strong> = (1) конкретная тема + (2) инструменты, а не только мнения + (3) способность удерживать Систему 2 + (4) видение того, что не видит впервые сталкивающийся + (5) метакогниция. Каждая карта КОНТУРА собрана как раз по этой формуле.
+</div>
+
+<h2>На чём это стоит научно</h2>
+<table class="t">
+  <tr><th>Опора</th><th>Что даёт игре</th></tr>
+  <tr><td>Канеман — System 1 / System 2 (2011)</td><td>Цель игры — удержать игрока в Системе 2 (медленное усилие) дольше, чем он привык, по конкретной теме.</td></tr>
+  <tr><td>Эрикссон — deliberate practice</td><td>Качество, а не количество. Каждая карта проходится как «тренировка на пределе» с подсказкой инструмента и обратной связью.</td></tr>
+  <tr><td>Флейвелл — метакогниция (1979)</td><td>4 мета-карты следят за тем, КАК ты думаешь — не только за содержанием.</td></tr>
+  <tr><td>Деннетт — инструменты мышления (2013)</td><td>На каждой карте — 4 «насоса интуиции» по теме: понятия и различения, без которых думание остаётся мнением.</td></tr>
+  <tr><td>Поля — «How to Solve It» (1945)</td><td>Каждая карта построена по каркасу: парадокс-вход → инструменты → ошибки → финальный вопрос (понять → план → выполнить → оглянуться).</td></tr>
+  <tr><td>Тетлок — суперпрогнозисты</td><td>Принцип «не объём данных, а способ думать»: ошибки на каждой карте — это типовые ловушки, которых избегают суперпрогнозисты.</td></tr>
+</table>
+
+<h2>Структура карты</h2>
+<p>Каждая из 24 тематических карт устроена одинаково — это и есть тренажёр:</p>
+<ol>
+  <li><strong>Парадокс-вход</strong> — вопрос-зацепка, который ставит в ступор и заставляет включить Систему 2 (а не выдать первое готовое мнение).</li>
+  <li><strong>4 инструмента</strong> — понятия, различения и операции, которыми можно <em>работать</em> с темой. Без них думание остаётся «нравится / не нравится».</li>
+  <li><strong>3 типовые ошибки</strong> — ловушки, в которые сваливаются 80% людей в этой теме. Их полезно знать заранее.</li>
+  <li><strong>Финальный вопрос</strong> — требует синтеза: применить хотя бы 2 инструмента к своей реальной жизни и сформулировать ответ для себя.</li>
+</ol>
+
+<p>Плюс 4 <strong>мета-карты</strong> — они работают как контроль качества: после прохождения тематических карт игрок проверяет, в Системе 1 он был или в Системе 2, какой новый инструмент применил, где соскальзывал в готовый ответ.</p>
+
+<h2>Режимы игры</h2>
+
+<h3>Режим 1. Одиночный (с собой, 20 минут)</h3>
+<ol>
+  <li>Перемешай 24 карты. Тяни одну вслепую.</li>
+  <li>Поставь таймер на 15 минут. Не закрывай тему раньше, даже если «уже всё понятно».</li>
+  <li>Прочти парадокс-вход. Дай первый ответ — и сразу <em>отметь</em>, насколько это Система 1 (мгновенное мнение).</li>
+  <li>Возьми по очереди 4 инструмента. На каждом — попробуй пересмотреть тему через него. Какой даёт <em>новое</em> в твоей ситуации?</li>
+  <li>Прочти 3 ошибки. Узнаёшь ли ты в себе хотя бы одну?</li>
+  <li>Ответь на финальный вопрос — письменно, одной формулировкой. Это твой результат сессии.</li>
+  <li>Возьми мета-карту M1 (или любую другую). Что заметил о том, как ты думал?</li>
+</ol>
+
+<h3>Режим 2. Парный (мастер + думающий, 40 минут)</h3>
+<ol>
+  <li>Думающий тянет карту. Мастер не подсказывает — мастер удерживает его в Системе 2.</li>
+  <li>Мастер задаёт парадокс-вход и слушает первый ответ. Потом не уходит «дальше», а спрашивает: «А ещё? А что в этом неправильного?». Цель — <strong>5 минут на одной мысли</strong>, без выпрыгивания.</li>
+  <li>Когда думающий выдохся — мастер показывает первый инструмент. «Если посмотреть через X — что меняется?»</li>
+  <li>Так же по остальным трём инструментам и трём ошибкам.</li>
+  <li>Финальный вопрос — думающий формулирует сам. Мастер только следит, чтобы это был ответ из <em>применения инструментов</em>, а не первое мнение пятиминутной давности.</li>
+  <li>В конце — мастер достаёт одну мета-карту и зачитывает. Думающий отвечает.</li>
+</ol>
+
+<h3>Режим 3. Групповой (3–5 человек, 60 минут)</h3>
+<ol>
+  <li>Группа выбирает одну карту (или тянет вслепую).</li>
+  <li>15 минут — каждый думает над парадоксом-входом про себя. Никаких обсуждений.</li>
+  <li>20 минут — обсуждение по инструментам. Один инструмент = один круг по комнате. Запрещено повторять чужое; обязательно — добавлять.</li>
+  <li>15 минут — обсуждение ошибок. Каждый называет, какую из трёх узнал в себе.</li>
+  <li>10 минут — каждый формулирует финальный вопрос для себя. Произносит вслух.</li>
+  <li>Мета-карта в конце общая.</li>
+</ol>
+
+<div class="box dark">
+  <strong>Правило одного шага.</strong> Не пытайся за одну сессию пройти больше 1–2 карт. КОНТУР — не викторина, а тренажёр. Качество удерживания мысли важнее количества пройденных тем.
+</div>
+
+<h2>Что вы уносите со стола</h2>
+<ul>
+  <li><strong>За одну сессию:</strong> один контур, в котором вы хоть немного начали думать всерьёз. Письменный ответ на финальный вопрос — это и есть выход.</li>
+  <li><strong>За 10 сессий по разным картам:</strong> ощутимое расширение «честного списка» — тех тем, по которым вы реально <em>видите</em>, что другие не видят.</li>
+  <li><strong>Через несколько месяцев регулярной игры:</strong> натренированная привычка <em>не отвечать сразу</em> и не сваливаться в Систему 1 на сложных темах в жизни.</li>
+</ul>
+
+<h2>Песня-якорь</h2>
+<p>В играх Мейстера у каждой колоды есть портативное состояние через песню — для входа в нужный режим. У КОНТУРА это:</p>
+<blockquote class="q">«Я не люблю фатального исхода / От жизни никогда не устаю / Я не люблю любое время года / Когда весёлых песен не пою…» — <strong>Владимир Высоцкий, «Я не люблю»</strong></blockquote>
+<p>Почему именно эта. Песня — концентрат думающего по-своему. Каждая строка «я не люблю» — это <em>проведённое различение</em>: выбор одного и отказ от другого. Это и есть Система 2 в эмоциональной упаковке. Включать перед сессией — для настройки на «я говорю своё, а не первое попавшееся».</p>
+
+<!-- ====== ОПИСАНИЕ КАРТ ====== -->
+<h2>24 темы — что внутри</h2>
+<p>Темы разложены по 7 областям. Это не «всё, о чём можно думать» — это узкие тренажёры, отрабатывающие конкретные навыки. После прохождения всех 24 вы получаете рабочий стартовый набор «о чём именно я научился думать предметно».</p>
+
+<table class="t">
+<tr><th>Область</th><th>Карты</th></tr>
+<tr><td>I. Время и жизнь</td><td>01. Время как ресурс · 02. Что я оставлю · 03. Куда уходит моя энергия · 04. Возраст: что он со мной делает</td></tr>
+<tr><td>II. Решения</td><td>05. Решения при неполной информации · 06. Когда выходить из проекта · 07. Что делать с риском · 08. Доверять интуиции или нет</td></tr>
+<tr><td>III. Деньги</td><td>09. Как я ставлю свою цену · 10. Что копить и зачем · 11. Когда дёшево — это дорого</td></tr>
+<tr><td>IV. Дело</td><td>12. В чём моё преимущество · 13. Где я приношу больше всего пользы · 14. Когда учиться, а когда делать</td></tr>
+<tr><td>V. Отношения</td><td>15. С кем я провожу время и зачем · 16. Конфликты, которые повторяются · 17. Что в отношениях зависит от меня · 18. Когда отношения мертвы</td></tr>
+<tr><td>VI. Семья</td><td>19. Что я передаю детям молча · 20. Старшие родители · 21. Семейная роль, в которой застрял</td></tr>
+<tr><td>VII. Себя</td><td>22. Что я в себе люблю и не люблю · 23. Где я живу чужим · 24. Чего я хочу по-настоящему</td></tr>
+<tr><td>VIII. Мета</td><td>M1. Система 1 или Система 2? · M2. Какой инструмент применил впервые? · M3. Где тянуло уйти в готовый ответ? · M4. Открытый вопрос</td></tr>
+</table>
+
+<div class="box warn">
+  <strong>Этическая граница.</strong> КОНТУР — для своих тем, а не для разбора чужой жизни. Карты «Конфликты», «Старшие родители», «Когда отношения мертвы» в групповом режиме обсуждайте только про себя, не выводите выводы на отсутствующих. Это игра о <em>навыке мыслить</em>, не о вердикте близким.
+</div>
+
+<!-- ====== ПЕЧАТНЫЕ КАРТЫ ====== -->
+<h2>🎴 Карты для печати</h2>
+<p class="no-print" style="font-size:13px;color:#475569">Дальше — карты в формате А6 (по 2 на A4). После «Скачать в PDF» получите буклет: обложка + 14 листов с картами + методичка. Можно печатать как есть или 4-up в настройках принтера (тогда выйдет 7 листов).</p>
+
+<!-- ---- I. ВРЕМЯ И ЖИЗНЬ ---- -->
+<div class="card-grid">
+
+<div class="card">
+  <div class="no">01 / 28</div>
+  <div class="sect">I · Время и жизнь</div>
+  <div class="nm">Время как ресурс</div>
+  <div class="par">У тебя 24 часа в сутки. У Илона Маска — те же 24. В чём разница на самом деле?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Главное vs важное (матрица Эйзенхауэра)</li><li>Стоимость переключения между задачами</li><li>Необратимость времени (не возвращается)</li><li>Чьё время ты сейчас тратишь — своё или заёмное</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать «занят» с «продуктивен»</li><li>Не считать «мелочи» и фон</li><li>Брать вечный кредит у «завтра»</li></ul>
+  <div class="fin">→ Где ты сейчас сжигаешь час, который через 10 лет назовёшь зря потерянным?</div>
+</div>
+
+<div class="card">
+  <div class="no">02 / 28</div>
+  <div class="sect">I · Время и жизнь</div>
+  <div class="nm">Что я оставлю</div>
+  <div class="par">Если завтра — твой последний день, что остаётся как сделанное тобой?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Артефакт vs репутация (что переживёт)</li><li>Короткая vs длинная амортизация дела</li><li>Кому это нужно (помимо тебя)</li><li>«Что не сгорит» при пожаре жизни</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать «много делал» со «след оставил»</li><li>Ждать памяти за намерения, не за результат</li><li>Не отличать своё дело от заёмного</li></ul>
+  <div class="fin">→ Что из делаемого сейчас доживёт до конца твоей жизни?</div>
+</div>
+
+<div class="card">
+  <div class="no">03 / 28</div>
+  <div class="sect">I · Время и жизнь</div>
+  <div class="nm">Куда уходит моя энергия</div>
+  <div class="par">Восстанови вчерашний день по часам. Где энергия пришла, где ушла?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Энергия vs время (это разные шкалы)</li><li>Источник vs выход энергии</li><li>Возобновляемая / невозобновляемая</li><li>Чем ты «оплатил» сегодняшнее «нет сил»</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать утомление с внутренней пустотой</li><li>Считать только часы, не интенсивность</li><li>Не учитывать восстановление как работу</li></ul>
+  <div class="fin">→ Что забирает у тебя энергию системно — и что ты с этим делаешь?</div>
+</div>
+
+<div class="card">
+  <div class="no">04 / 28</div>
+  <div class="sect">I · Время и жизнь</div>
+  <div class="nm">Возраст: что он со мной делает</div>
+  <div class="par">В чём ты сейчас моложе, чем в 25? В чём старше? Конкретно — без общих слов.</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Биологический vs психологический возраст</li><li>Окно возможностей по этой стадии</li><li>«Опыт vs шоры» (что опыт даёт и что отнимает)</li><li>Стадия жизни, а не календарный возраст</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать возраст одной шкалой</li><li>Сравнивать с 20-летней версией себя</li><li>«Уже поздно» как универсальный довод</li></ul>
+  <div class="fin">→ Что доступно тебе сейчас, чего не было раньше и не будет позже?</div>
+</div>
+
+<!-- ---- II. РЕШЕНИЯ ---- -->
+
+<div class="card">
+  <div class="no">05 / 28</div>
+  <div class="sect">II · Решения</div>
+  <div class="nm">Решения при неполной информации</div>
+  <div class="par">Решение нужно сейчас, данных половина. Как не залипнуть и не сорваться?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Outside view (как это обычно бывает у других)</li><li>3 контр-сценария, не один</li><li>Обратимое vs необратимое</li><li>«Достаточно для следующего шага», не «для всего»</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Ждать полной информации (её не будет)</li><li>Одна гипотеза вместо нескольких</li><li>Путать уверенность с правотой</li></ul>
+  <div class="fin">→ Какое решение последнего месяца ты принял на одном сценарии вместо трёх?</div>
+</div>
+
+<div class="card">
+  <div class="no">06 / 28</div>
+  <div class="sect">II · Решения</div>
+  <div class="nm">Когда выходить из проекта</div>
+  <div class="par">Если бы тебе сегодня предложили начать ЭТО с нуля — ты бы согласился?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Sunk cost (вложенное не основание продолжать)</li><li>Альтернативные издержки (что не делаешь, пока тащишь это)</li><li>«Потолок» проекта — есть ли он</li><li>Точка невозврата vs точка выбора</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Держаться за вложенное</li><li>Путать упрямство с верностью</li><li>Не считать упущенное</li></ul>
+  <div class="fin">→ Где ты сейчас держишься за то, что давно стоит закрыть?</div>
+</div>
+
+<div class="card">
+  <div class="no">07 / 28</div>
+  <div class="sect">II · Решения</div>
+  <div class="nm">Что делать с риском</div>
+  <div class="par">Один большой риск или десять маленьких — что страшнее? Почему именно так?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Вероятность × ущерб (не одна вероятность)</li><li>Risk vs uncertainty (Найт): известное-неизвестное</li><li>Допустимая потеря (сколько готов потерять)</li><li>«Гантель» Талеба: 90% безопасное + 10% агрессивное</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать страх измерителем риска</li><li>Избегать любого риска как стратегия</li><li>Идти ва-банк на эмоциях</li></ul>
+  <div class="fin">→ Какой риск ты не берёшь не потому, что взвесил, а потому, что страшно?</div>
+</div>
+
+<div class="card">
+  <div class="no">08 / 28</div>
+  <div class="sect">II · Решения</div>
+  <div class="nm">Доверять интуиции или нет</div>
+  <div class="par">Интуиция — знание без слов или иллюзия знания?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Эксперт-интуиция vs новичок-интуиция (Канеман)</li><li>Условия валидности: повторяемая среда + обратная связь</li><li>Быстрые ответы — на быстрые задачи</li><li>Поправка на эмоцию (страх ≠ предчувствие)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать интуицию универсальной</li><li>Игнорировать её при реальной экспертизе</li><li>Принимать предчувствие за факт</li></ul>
+  <div class="fin">→ В каких 1–2 областях твоя интуиция уже стоит данных, а в каких — пока нет?</div>
+</div>
+
+<!-- ---- III. ДЕНЬГИ ---- -->
+
+<div class="card">
+  <div class="no">09 / 28</div>
+  <div class="sect">III · Деньги</div>
+  <div class="nm">Как я ставлю свою цену</div>
+  <div class="par">Если бы за то же ты брал в 2 раза больше — что изменилось бы? А в 5?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Цена за результат, а не за час</li><li>Стоимость замены тебя на рынке</li><li>«Цена клиента» vs «цена тебя»</li><li>Якорь: первое названное число</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Ставить «как у соседа» без анализа</li><li>Занижать «чтобы согласились»</li><li>Считать только время, не риск/опыт/уникальность</li></ul>
+  <div class="fin">→ Какова реальная стоимость замены тебя — и почему ты берёшь меньше?</div>
+</div>
+
+<div class="card">
+  <div class="no">10 / 28</div>
+  <div class="sect">III · Деньги</div>
+  <div class="nm">Что копить и зачем</div>
+  <div class="par">У тебя свободный миллион. Куда? И главное — почему именно туда?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Цель vs страх (под что копишь?)</li><li>Буфер на «прожить N месяцев»</li><li>Ликвидность vs доходность (разные деньги)</li><li>Временной горизонт (на год, на 10, на пенсию)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Копить из тревоги, а не под цель</li><li>Смешивать ликвидное и долгое</li><li>Не различать буфер и инвестицию</li></ul>
+  <div class="fin">→ Твой нынешний остаток лежит под какую цель — или просто «на всякий»?</div>
+</div>
+
+<div class="card">
+  <div class="no">11 / 28</div>
+  <div class="sect">III · Деньги</div>
+  <div class="nm">Когда дёшево — это дорого</div>
+  <div class="par">Сколько раз ты покупал дешёвое и потом покупал то же дороже?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>TCO — полная стоимость владения</li><li>Горизонт окупаемости (за какой срок отбиваешь)</li><li>Скрытая цена (время, ремонт, замена)</li><li>«Цена отсутствия» — что теряешь, не имея</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать только цену покупки</li><li>Оптимизировать не ту переменную</li><li>Экономить там, где надо вкладывать</li></ul>
+  <div class="fin">→ Где у тебя «дешёвое» оказалось скрыто-дорогим за последние 12 месяцев?</div>
+</div>
+
+<!-- ---- IV. ДЕЛО ---- -->
+
+<div class="card">
+  <div class="no">12 / 28</div>
+  <div class="sect">IV · Дело</div>
+  <div class="nm">В чём моё преимущество</div>
+  <div class="par">Что ты делаешь так, как ровно никто из твоих знакомых?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Уникальное пересечение 2–3 навыков</li><li>Моё «легко» = чужое «трудно»</li><li>Видимое vs невидимое преимущество</li><li>«Шрамы» (опыт, который не повторишь)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Называть преимуществом то, что у всех</li><li>Считать слабым то, что отличает</li><li>Путать профессию с преимуществом</li></ul>
+  <div class="fin">→ На пересечении каких 3 редких вещей ты сейчас стоишь — и используешь ли?</div>
+</div>
+
+<div class="card">
+  <div class="no">13 / 28</div>
+  <div class="sect">IV · Дело</div>
+  <div class="nm">Где я приношу больше всего пользы</div>
+  <div class="par">Если бы ты делал только одно — что? И этим зарабатывал.</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Задача vs функция (разное)</li><li>Кто платит и за что именно</li><li>ROI на твою операцию</li><li>Усиление других vs замена их</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать «нравится» с «полезно»</li><li>Считать пользой количество, а не плотность</li><li>Обслуживать не своего клиента</li></ul>
+  <div class="fin">→ Какие 10% твоей работы дают 80% результата — и почему ты не делаешь только их?</div>
+</div>
+
+<div class="card">
+  <div class="no">14 / 28</div>
+  <div class="sect">IV · Дело</div>
+  <div class="nm">Когда учиться, а когда делать</div>
+  <div class="par">Перфекционист всё учится, делец — всё делает. Где здоровая граница?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>J-curve: спад до подъёма — норма</li><li>Учеба-в-делании (90% знаний — на практике)</li><li>MVP: минимально работающее</li><li>Цена ошибки vs цена откладывания</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Учиться, чтобы не делать</li><li>Делать без минимальной учёбы и буксовать</li><li>Учить то, что не пригодится</li></ul>
+  <div class="fin">→ Что ты сейчас учишь и НЕ делаешь — потому что страшно начать?</div>
+</div>
+
+<!-- ---- V. ОТНОШЕНИЯ ---- -->
+
+<div class="card">
+  <div class="no">15 / 28</div>
+  <div class="sect">V · Отношения</div>
+  <div class="nm">С кем я провожу время и зачем</div>
+  <div class="par">Назови 5 людей, с которыми проводишь больше всего времени. Это твой выбор?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Правило 5 (Джим Рон): ты — среднее этих пятерых</li><li>Отношения-источник vs отношения-выход</li><li>Близость vs частота встреч</li><li>Возврат vs инерция</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Общаться по инерции</li><li>Путать долг с близостью</li><li>Не различать поддержку и стимуляцию</li></ul>
+  <div class="fin">→ С кем ты общаешься часто, но не выбрал бы заново знакомиться?</div>
+</div>
+
+<div class="card">
+  <div class="no">16 / 28</div>
+  <div class="sect">V · Отношения</div>
+  <div class="nm">Конфликты, которые повторяются</div>
+  <div class="par">Какой конфликт у тебя случается уже в 5-й раз, в разных декорациях?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Паттерн vs ситуация (что повторяется — ты)</li><li>«Моя часть»: что я делаю в этой петле</li><li>Цикл: триггер → чувство → реакция → реакция другого</li><li>Точка переключателя в этом цикле</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Винить других в повторяющемся</li><li>Считать каждый раз новым</li><li>Избегать вместо разбирать</li></ul>
+  <div class="fin">→ Какой повторяющийся конфликт ты не обсуждал ни с кем — и поэтому он повторится?</div>
+</div>
+
+<div class="card">
+  <div class="no">17 / 28</div>
+  <div class="sect">V · Отношения</div>
+  <div class="nm">Что в отношениях зависит от меня</div>
+  <div class="par">Если другой не изменится никогда — что я всё равно могу?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Круг влияния vs круг забот (Кови)</li><li>Мои действия vs мои реакции (это разное)</li><li>Поведение vs позиция (что я делаю — где стою)</li><li>«Уйти» как часть пространства выбора</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Ждать, что другой сделает первый шаг</li><li>Считать «от меня» = «всё стерпеть»</li><li>Игнорировать вариант ухода</li></ul>
+  <div class="fin">→ Какую одну вещь ты можешь сделать в этих отношениях, не дожидаясь его/её?</div>
+</div>
+
+<div class="card">
+  <div class="no">18 / 28</div>
+  <div class="sect">V · Отношения</div>
+  <div class="nm">Когда отношения мертвы</div>
+  <div class="par">Что отличает живые трудности от мёртвых отношений?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>4 всадника Готтмана: критика, презрение, защита, стена</li><li>Уважение как маркер живого</li><li>Цикл починки: ссора → разрыв → починка</li><li>Усталость vs внутренняя пустота</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать стабильность с жизнью</li><li>Надеяться, что «само разрешится»</li><li>Считать долг основанием</li></ul>
+  <div class="fin">→ Что в твоих ключевых отношениях говорит «живо», что «мертво» — честно?</div>
+</div>
+
+<!-- ---- VI. СЕМЬЯ ---- -->
+
+<div class="card">
+  <div class="no">19 / 28</div>
+  <div class="sect">VI · Семья</div>
+  <div class="nm">Что я передаю детям молча</div>
+  <div class="par">Какую установку ребёнок усвоит из ТВОЕГО поведения, не слов?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Моделирование (он копирует, а не слушает)</li><li>Что вы обходите стороной (он усвоит, что туда нельзя)</li><li>Передача тревоги — через тело и фон</li><li>Семейные ритуалы и их сообщение</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Думать, что слова важнее действий</li><li>Надеяться, что не заметит</li><li>Повторять «не как у меня» — и повторить</li></ul>
+  <div class="fin">→ Какой родительский паттерн ты сейчас невольно передаёшь дальше?</div>
+</div>
+
+<div class="card">
+  <div class="no">20 / 28</div>
+  <div class="sect">VI · Семья</div>
+  <div class="nm">Старшие родители</div>
+  <div class="par">Что я обязан как сын/дочь, а что — выбираю?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Обязанность vs выбор</li><li>Возвратный долг (как много возвращать)</li><li>Границы при заботе (забота без растворения)</li><li>Автономия родителя (он субъект, не объект)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Тащить из вины, не из любви</li><li>Считать любовью только полное отдавание</li><li>Не отделять свои чувства от их</li></ul>
+  <div class="fin">→ Где ты сейчас тащишь из вины, а не из любви?</div>
+</div>
+
+<div class="card">
+  <div class="no">21 / 28</div>
+  <div class="sect">VI · Семья</div>
+  <div class="nm">Семейная роль, в которой застрял</div>
+  <div class="par">В семье тебя называют ___. Это всё ещё ты?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Роль vs идентичность (роль уже)</li><li>Типичные: старший / младший / спасатель / изгой</li><li>Вес ярлыка (что он давал и чего лишал)</li><li>Переписать роль вслух</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Оставаться в роли из лояльности</li><li>Не различать роль и себя</li><li>Спорить с ярлыком вместо переписать</li></ul>
+  <div class="fin">→ Какую семейную роль ты тащишь, хотя давно её перерос?</div>
+</div>
+
+<!-- ---- VII. СЕБЯ ---- -->
+
+<div class="card">
+  <div class="no">22 / 28</div>
+  <div class="sect">VII · Себя</div>
+  <div class="nm">Что я в себе люблю и не люблю</div>
+  <div class="par">Назови 3 свои черты, которые тебе нравятся. Конкретно, не общие.</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Черта vs поведение (черта проявляется, наблюдай факт)</li><li>Теневая сила (что не люблю — что-то даёт)</li><li>Сравнение с другими vs самоощущение</li><li>Честность ≠ самокритика</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Называть достоинствами то, чем хвалят</li><li>Путать самокритику с честностью</li><li>Избегать «нелюбимого» — оно тогда правит</li></ul>
+  <div class="fin">→ Что ты в себе не любишь, и что эта черта при этом тебе даёт?</div>
+</div>
+
+<div class="card">
+  <div class="no">23 / 28</div>
+  <div class="sect">VII · Себя</div>
+  <div class="nm">Где я живу чужим</div>
+  <div class="par">Если бы завтра все умерли — что из делаемого ты перестанешь делать?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Своё vs заёмное (по происхождению хотения)</li><li>Внутренний vs внешний компас</li><li>«Должен» vs «хочу»</li><li>Цена аутентичности (она есть)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать обязательство с навязанным</li><li>Считать, что у всех «как у меня»</li><li>Принимать чужие хотения за свои</li></ul>
+  <div class="fin">→ Какие 1–2 крупные вещи в твоей жизни — точно не твои, а заёмные?</div>
+</div>
+
+<div class="card">
+  <div class="no">24 / 28</div>
+  <div class="sect">VII · Себя</div>
+  <div class="nm">Чего я хочу по-настоящему</div>
+  <div class="par">Если бы никто никогда не узнал — чем бы ты занимался?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Желание vs социальная роль</li><li>Хочу-делать vs хочу-иметь (разные хотения)</li><li>Сжигаемое (используется) vs остающееся</li><li>«Честный список»: всё, что хочешь, без оценки</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать желание с целью</li><li>Говорить «правильно» вместо честно</li><li>Назвать желание и не сделать ни шага</li></ul>
+  <div class="fin">→ Чего ты хочешь так, что ни разу не произносил вслух?</div>
+</div>
+
+<!-- ---- VIII. МЕТА ---- -->
+
+<div class="card meta">
+  <div class="no">M1 / 28</div>
+  <div class="sect">VIII · МЕТА · контроль</div>
+  <div class="nm">Я в Системе 1 или 2?</div>
+  <div class="par">Я сейчас говорю первое, что пришло, или думаю?</div>
+  <div class="sec-h">Маркеры</div>
+  <ul class="lst"><li>Автоматическое vs усилие</li><li>Паузы как маркер думания</li><li>«Остаюсь на одной мысли &gt; 30 сек»</li><li>Уточняющий вопрос самому себе</li></ul>
+  <div class="sec-h">Типовые провалы</div>
+  <ul class="lst"><li>Считать, что Система 2 = долго и больно</li><li>Уходить в Систему 1 «и так понятно»</li><li>Имитация мышления (умные слова без работы)</li></ul>
+  <div class="fin">→ На каком моменте сегодняшнего разговора я свалился из Системы 2?</div>
+</div>
+
+<div class="card meta">
+  <div class="no">M2 / 28</div>
+  <div class="sect">VIII · МЕТА · контроль</div>
+  <div class="nm">Какой инструмент я применил впервые?</div>
+  <div class="par">Что из того, что я понял, я раньше не применял?</div>
+  <div class="sec-h">Что искать</div>
+  <ul class="lst"><li>Новое слово — обозначение, которого не было</li><li>Новое различение (раньше путал, теперь нет)</li><li>Новый угол на знакомую тему</li><li>Новый вопрос, который теперь буду задавать</li></ul>
+  <div class="sec-h">Типовые провалы</div>
+  <ul class="lst"><li>Повторять одно и то же</li><li>«Согласиться» без присвоения</li><li>Забыть к следующему разу</li></ul>
+  <div class="fin">→ Какой из новых инструментов я возьму в ежедневное использование?</div>
+</div>
+
+<div class="card meta">
+  <div class="no">M3 / 28</div>
+  <div class="sect">VIII · МЕТА · контроль</div>
+  <div class="nm">Где меня тянуло уйти в готовое</div>
+  <div class="par">Где сегодня хотелось схватить готовое и закрыть тему?</div>
+  <div class="sec-h">Источники соблазна</div>
+  <ul class="lst"><li>Соблазн известного («у меня же есть мнение»)</li><li>Усталость («хватит»)</li><li>Социальное давление («все согласны»)</li><li>«Уже и так понятно»</li></ul>
+  <div class="sec-h">Типовые провалы</div>
+  <ul class="lst"><li>Уйти и не заметить</li><li>Назвать готовое «выводом»</li><li>Закрыть тему преждевременно</li></ul>
+  <div class="fin">→ Что я в следующий раз сделаю иначе именно в этой точке соблазна?</div>
+</div>
+
+<div class="card meta">
+  <div class="no">M4 / 28</div>
+  <div class="sect">VIII · МЕТА · контроль</div>
+  <div class="nm">Открытый вопрос</div>
+  <div class="par">Что осталось не разобранным — и должно остаться, чтобы вернуться?</div>
+  <div class="sec-h">Что фиксировать</div>
+  <ul class="lst"><li>Список открытых вопросов сессии</li><li>«Доедание»: что доcмотреть после</li><li>Глубже vs шире (куда копать дальше)</li><li>Связки с другими темами</li></ul>
+  <div class="sec-h">Типовые провалы</div>
+  <ul class="lst"><li>Закрыть всё преждевременно</li><li>Уйти от трудного</li><li>«Решил всё» как иллюзия</li></ul>
+  <div class="fin">→ С какого вопроса начнётся следующая сессия КОНТУРа?</div>
+</div>
+
+</div>
+
+<!-- ====== МЕТОДИЧКА ====== -->
+<h2>Методичка ведущего</h2>
+
+<h3>1. Как удерживать игрока в Системе 2</h3>
+<p>Главный риск тренажёра — игрок «уходит» в Систему 1 после 30 секунд и выдаёт мнение, замаскированное под думание. Маркеры провала:</p>
+<ul>
+  <li>Скорость ответа &lt;5 сек после вопроса</li>
+  <li>Готовая формулировка («ну, я считаю, что…»)</li>
+  <li>Обобщения вместо примеров («все так делают»)</li>
+  <li>Эмоциональная окраска вместо различения</li>
+</ul>
+<p>Что делать ведущему: после первого ответа — пауза 5 секунд. Потом мягко: «А ещё? А с другой стороны? Где ты в этом неправ?». Цель — <strong>5 минут на одной мысли</strong>. Это и есть тренировка.</p>
+
+<h3>2. Как давать инструменты, не подсказывая решение</h3>
+<p>Инструмент — это <em>оптический прибор</em>, через который игрок должен <em>сам</em> посмотреть на свою тему. Правильная подача: «Вот понятие. Если посмотреть твою ситуацию через него — что меняется?». <strong>Не</strong>: «Значит, у тебя X, и тебе надо Y».</p>
+
+<h3>3. Когда останавливать сессию</h3>
+<ul>
+  <li>Если игрок проваливается в эмоцию (плачет, замолкает на 2+ минуты) — переключиться на «состояние», вернуться к карте на следующей сессии.</li>
+  <li>Если игрок начинает «теоретизировать» вообще — вернуть к конкретике через «Где это в твоей жизни СЕЙЧАС?».</li>
+  <li>Если за 30 минут не сдвинулись с парадокса-входа — закрыть, отметить как «не созрело», взять другую карту.</li>
+</ul>
+
+<h3>4. Распечатка и сборка колоды</h3>
+<ol>
+  <li>Скачайте страницу в PDF: кнопка «🖨 Скачать игру в PDF» сверху. Поля по умолчанию, ориентация книжная.</li>
+  <li>Печатайте на A4 с двух сторон не нужно — карты односторонние.</li>
+  <li>Разрежьте по сетке: на каждом листе 2 карты А6 (148×105 мм). 24 темы + 4 меты = 28 карт = 14 листов.</li>
+  <li>Можно ламинировать или вложить в файлики.</li>
+  <li>4 мета-карты держите отдельно (они на тёмном фоне) — выбираются после темы.</li>
+</ol>
+
+<div class="box dark">
+  <strong>Правило ведущего одной фразой.</strong> Я не отвечаю за качество ответа игрока. Я отвечаю за то, чтобы он не выпрыгивал из мышления, пока не пройдёт через все 4 инструмента карты.
+</div>
+
+<h2>Связь с другими продуктами Мейстера</h2>
+<ul>
+  <li><a href="/blog/o-chyom-ty-umeesh-dumat.html">Статья «О чём ты умеешь думать?»</a> — теоретическая база КОНТУРа.</li>
+  <li><a href="/blog/mejster-kod-transformacionnaya-igra.html">МЕЙСТЕР-КОД</a> — старший брат КОНТУРа: там прошивается идентичность (декларации по 9 уровням), здесь прокачивается мышление (System 2 по конкретным контурам). Идеально проходить вместе: МЕЙСТЕР-КОД даёт «кто я», КОНТУР даёт «о чём я умею думать».</li>
+  <li><a href="/blog/verbalnyj-potencial-skrytaya-deklaraciya.html">«Что произносишь — тем и становишься»</a> — общий принцип: произнесённый список своих контуров (вместо «обо всём») запускает их рост.</li>
+</ul>
+
+<hr style="margin:40px 0;border:none;border-top:1px solid #E2E8F0">
+<p style="text-align:center;color:#64748B;font-size:13px">
+  КОНТУР · Игра-тренажёр мышления · © Андрей Мейстер<br>
+  <a href="/blog/o-chyom-ty-umeesh-dumat.html" style="color:#3A86FF">К теоретической статье</a>
+</p>
+
+</div>
+</body>
+</html>
