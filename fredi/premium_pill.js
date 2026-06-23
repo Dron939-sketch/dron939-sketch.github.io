@@ -58,7 +58,7 @@
         // и не нажимали → 33-секундная сессия и уход. Здесь:
         //   • явный фон и граница неактивных (раньше были transparent)
         //   • активная — фирменный оранжево-фиолетовый градиент + glow
-        //   • label "🎭 Выбери стиль общения с Фреди:" сверху над pill'ом
+        //   • label "🎭 Выбери режим" сверху над pill'ом
         //   • микро-пульс неактивных для НОВЫХ юзеров (1 раз — после клика
         //     класс снимается навсегда через localStorage флаг)
         if (document.getElementById(MODE_STYLE_ID)) return;
@@ -67,7 +67,7 @@
         s.textContent =
             '.mode-selector { position: relative; gap: 6px !important; margin-top: 44px !important; margin-bottom: 18px !important; }' +
             '.mode-selector::before {' +
-            '  content: "🎭 Выбери стиль общения с Фреди";' +
+            '  content: "🎭 Выбери режим";' +
             '  position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);' +
             '  font-size: 12px; font-weight: 700; letter-spacing: 0.2px;' +
             '  color: var(--text-primary);' +
