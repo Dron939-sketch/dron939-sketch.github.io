@@ -2692,7 +2692,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 (function () {
     try {
-        var m = new URLSearchParams(location.search).get('m');
+        var m = null;
+        try { m = new URLSearchParams(location.search).get('m'); }
+        catch (e1) { var mm = (location.search || '').match(/[?&]m=([^&]+)/); m = mm ? decodeURIComponent(mm[1]) : null; }
         if (!m) return;
         var ROUTES = { kontur: { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' } };
         var r = ROUTES[m];
