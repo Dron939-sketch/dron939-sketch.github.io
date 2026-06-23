@@ -7,8 +7,11 @@
 // которые на meysternlp.ru уходили в КОРЕНЬ домена → 404 в nginx-логах:
 //   open() "/usr/share/nginx/html/styles.css" failed (No such file or directory)
 // Service Worker install падал тихо, кэш был неполный.
-const CACHE_NAME = 'fredi-v9';
-const STATIC_FILES = ['./', './styles.css', './app.js', './mirrors.js', './admin.js'];
+const CACHE_NAME = 'fredi-v10';
+// ВАЖНО: app.js НЕ кэшируем в precache — он часто меняется (новые модули, фичи).
+// Иначе на мобиле застревает старый app.js, и новые пункты меню не работают.
+// Стратегия fetch и так network-first: при наличии сети всё свежее.
+const STATIC_FILES = ['./', './styles.css'];
 
 self.addEventListener('install', e => {
     e.waitUntil(

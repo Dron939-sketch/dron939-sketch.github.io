@@ -204,10 +204,13 @@
       '.kt-ta::placeholder{color:#7a7d88}',
       '.kt-send{flex:0 0 46px;height:46px;border-radius:50%;border:none;background:#3A86FF;color:#fff;font-size:1.2rem;cursor:pointer}',
       '.kt-send:disabled{opacity:.5;cursor:not-allowed}',
-      '.kt-mic{flex:0 0 46px;height:46px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#f2f3f5;font-size:1.15rem;cursor:pointer;line-height:1}',
-      '.kt-mic.rec{background:rgba(239,68,68,.2);border-color:#ef4444;animation:ktPulse 1.1s ease-in-out infinite}',
-      '.kt-mic.off{opacity:.4;cursor:default}',
-      '.kt-hint{font-size:.78rem;color:#8a8d98;text-align:center;margin-top:7px}',
+      '.kt-mic{flex:0 0 46px;height:46px;border-radius:50%;border:none;background:linear-gradient(135deg,#10b981,#0e8f6f);color:#fff;font-size:1.25rem;cursor:pointer;line-height:1;box-shadow:0 4px 14px rgba(16,185,129,.45);transition:transform .15s ease,box-shadow .15s ease}',
+      '.kt-mic:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(16,185,129,.55)}',
+      '.kt-mic:active{transform:scale(.94)}',
+      '.kt-mic.rec{background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 4px 14px rgba(239,68,68,.55);animation:ktPulse 1.1s ease-in-out infinite}',
+      '.kt-mic.off{opacity:.4;cursor:default;box-shadow:none}',
+      '.kt-hint{font-size:.82rem;color:#a0a3b0;text-align:center;margin-top:8px;line-height:1.45}',
+      '.kt-hint b{color:#10b981;font-weight:600}',
       '@keyframes ktPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}',
       '.kt-chip{display:inline-block;padding:6px 12px;border-radius:20px;border:1.5px solid rgba(255,255,255,.18);margin:3px;font-size:.86rem;cursor:pointer;background:rgba(255,255,255,.05);color:#f2f3f5}',
       '.kt-chip.sel{border-color:#3A86FF;background:rgba(58,134,255,.2);color:#bcd5ff;font-weight:600}',
@@ -235,9 +238,10 @@
       '[data-theme="light"] .kt-ta::placeholder{color:#9a9a9e}',
       '[data-theme="light"] .kt-chip{background:#fff;border-color:rgba(0,0,0,.14);color:#1c1c1e}',
       '[data-theme="light"] .kt-chip.sel{background:rgba(58,134,255,.1);color:#1d6fed}',
-      '[data-theme="light"] .kt-mic{background:#fff;border-color:rgba(0,0,0,.15);color:#1c1c1e}',
-      '[data-theme="light"] .kt-mic.rec{background:rgba(239,68,68,.12);border-color:#ef4444}',
-      '[data-theme="light"] .kt-hint{color:#8a8a8e}',
+      '[data-theme="light"] .kt-mic{background:linear-gradient(135deg,#10b981,#0e8f6f);color:#fff;box-shadow:0 3px 10px rgba(16,185,129,.35)}',
+      '[data-theme="light"] .kt-mic.rec{background:linear-gradient(135deg,#ef4444,#b91c1c);box-shadow:0 3px 10px rgba(239,68,68,.4)}',
+      '[data-theme="light"] .kt-hint{color:#6c6c70}',
+      '[data-theme="light"] .kt-hint b{color:#059669}',
       // ---------- МОБИЛЬНАЯ АДАПТАЦИЯ ----------
       '@media(max-width:560px){.kt-wrap{padding:14px 12px 88px}.kt-h1{font-size:1.3rem}.kt-q{font-size:1.1rem}.kt-lead{font-size:.97rem}.kt-msg{max-width:92%}.kt-chip{padding:10px 14px}.kt-btn{padding:14px 15px}.kt-card{padding:16px}}',
       '@media(max-width:380px){.kt-h1{font-size:1.18rem}.kt-lead{font-size:.93rem}.kt-q{font-size:1.04rem}.kt-send,.kt-mic{flex-basis:42px;height:42px;font-size:1.05rem}.kt-btn .em{font-size:1.25rem}}'
@@ -467,10 +471,10 @@
       '<div style="font-size:.82rem;color:var(--text-secondary,#888);margin-bottom:6px">' + esc(sub) + '</div>' +
       '<div class="kt-chat" id="ktChat"></div>' +
       '<div id="ktTyping"></div>' +
-      '<div class="kt-inrow"><textarea class="kt-ta" id="ktInput" rows="1" placeholder="Думай вслух…" oninput="KONTUR.grow(this)"></textarea>' +
-      '<button class="kt-mic" id="ktMic" title="Размышлять вслух голосом">🎤</button>' +
-      '<button class="kt-send" id="ktSend" onclick="KONTUR.send()">➤</button></div>' +
-      '<div class="kt-hint" id="ktHint">✍️ печатай — или 🎤 говори вслух, текст распознается сам</div>' +
+      '<div class="kt-inrow"><textarea class="kt-ta" id="ktInput" rows="1" placeholder="Напиши свою мысль — или нажми 🎤 и думай вслух" oninput="KONTUR.grow(this)"></textarea>' +
+      '<button class="kt-mic" id="ktMic" title="Размышлять вслух голосом" aria-label="Включить голосовой ввод">🎤</button>' +
+      '<button class="kt-send" id="ktSend" onclick="KONTUR.send()" aria-label="Отправить">➤</button></div>' +
+      '<div class="kt-hint" id="ktHint">Нажми зелёную <b>🎤</b>, чтобы думать вслух — Фреди распознает речь и подхватит мысль</div>' +
       '<div style="text-align:center;margin-top:10px"><button class="kt-ghost" onclick="KONTUR.verdict()">Завершить и получить вердикт Фреди</button></div>' +
       '</div>';
     c.innerHTML = html;
@@ -491,8 +495,9 @@
   }
   function recHint(sec) {
     var h = document.getElementById('ktHint');
-    if (h) h.innerHTML = sec == null ? '✍️ печатай — или 🎤 говори вслух, текст распознается сам'
-      : '<span style="color:#ef4444">🔴 слушаю… ' + sec + ' с — нажми 🎤, когда закончишь мысль</span>';
+    if (h) h.innerHTML = sec == null
+      ? 'Нажми зелёную <b>🎤</b>, чтобы думать вслух — Фреди распознает речь и подхватит мысль'
+      : '<span style="color:#ef4444;font-weight:600">🔴 слушаю… ' + sec + ' с</span> <span style="color:#a0a3b0">— нажми ⏹, когда закончишь</span>';
   }
   async function startVoice() {
     var mic = document.getElementById('ktMic'), input = document.getElementById('ktInput');
