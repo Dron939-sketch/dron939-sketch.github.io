@@ -1,5 +1,5 @@
 // ============================================
-// kontur.js — Модуль «О чём ты умеешь думать»
+// kontur.js — Модуль «Игры» (контейнер). Первая игра: «О чём ты умеешь думать».
 // Тренажёр мышления: интро + тест-диагностика + игра с Фреди.
 // Опора: статья и игра КОНТУР (meysternlp.ru/kontur).
 // AI: POST /api/ai/generate {user_id, prompt} -> {success, content} (stateless).
@@ -248,7 +248,23 @@
   // ============================================================
   // ЭКРАН 0 — ХАБ
   // ============================================================
+  // ВЕРХНИЙ ХАБ «ИГРЫ» — список игр (пункт левого меню ведёт сюда)
   function showKonturScreen() {
+    injectCSS();
+    if (_rec.on) stopVoice();
+    track('feature_opened', { feature: 'games' });
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="kt-wrap">' +
+        '<div class="kt-h1">🎮 Игры</div>' +
+        '<div class="kt-lead">Игры, которые помогают думать яснее и жить осознаннее — не «убить время», а потренировать то, что реально меняет жизнь. Каждая новая игра появляется здесь только после того, как доведена до ума и проверена. Качество важнее количества.</div>' +
+        '<button class="kt-btn" onclick="KONTUR.gameHome()"><span class="em">🧠</span>О чём ты умеешь думать<small>Тренажёр мышления: тест + игра с Фреди. Учишься думать о конкретных темах вместо «обо всём».</small></button>' +
+        '<div class="kt-card" style="opacity:.65"><div class="kt-ch">Скоро — новые игры</div>Готовим следующие. Сначала доводим до ума эту, потом добавляем следующую — чтобы каждая по-настоящему помогала.</div>' +
+      '</div>';
+  }
+
+  // ХАБ ИГРЫ «О чём ты умеешь думать» (интро / тест / играть)
+  function gameHome() {
     injectCSS();
     if (_rec.on) stopVoice();
     track('feature_opened', { feature: 'kontur' });
@@ -256,6 +272,7 @@
     var hot = (loadResult() || {}).hotName;
     c.innerHTML =
       '<div class="kt-wrap">' +
+        '<button class="kt-ghost" onclick="KONTUR.gamesHome()">← К списку игр</button>' +
         '<div class="kt-h1">🧠 О чём ты умеешь думать</div>' +
         '<div class="kt-lead">Большинство на вопрос «о чём ты умеешь думать?» отвечают «обо всём». Это то же самое, что «что умею руками? — Всё»: не широта, а отсутствие различения. Здесь ты узнаешь свой настоящий, короткий список — и научишься его расширять. Думать вместе с Фреди.</div>' +
         '<button class="kt-btn" onclick="KONTUR.intro()"><span class="em">📖</span>Зачем это нужно<small>Коротко и по делу: что не так с «обо всём» и как это чинится</small></button>' +
@@ -272,7 +289,7 @@
     var c = container(); if (!c) return;
     c.innerHTML =
       '<div class="kt-wrap">' +
-        '<button class="kt-ghost" onclick="KONTUR.home()">← Назад</button>' +
+        '<button class="kt-ghost" onclick="KONTUR.gameHome()">← Назад</button>' +
         '<div class="kt-h1">Зачем этот модуль</div>' +
         '<div class="kt-card"><div class="kt-ch">Проблема</div>«Иметь мысли» и «уметь думать» — разные вещи. Мысли есть у всех и обо всём: это быстрая, автоматическая работа мозга (Канеман называл это Системой&nbsp;1). А «уметь думать о&nbsp;Х» — это медленное усилие (Система&nbsp;2): держать одну мысль дольше, чем хочется, и не сваливаться в готовое мнение.</div>' +
         '<div class="kt-card"><div class="kt-ch">4 признака настоящего думания</div>' +
@@ -363,7 +380,7 @@
     var html = '<div class="kt-wrap"><div class="kt-h1">Твоя карта мышления</div>';
     if (total < 4) {
       html += '<div class="kt-card">Ты выбрал слишком мало, чтобы карта была честной. Пройди заново и отвечай смелее — выбирай даже то, в чём не уверен.</div>' +
-        '<button class="kt-btn kt-primary" onclick="KONTUR.test()">Пройти заново</button><button class="kt-ghost" style="width:100%" onclick="KONTUR.home()">В меню</button></div>';
+        '<button class="kt-btn kt-primary" onclick="KONTUR.test()">Пройти заново</button><button class="kt-ghost" style="width:100%" onclick="KONTUR.gameHome()">В меню</button></div>';
       c.innerHTML = html; return;
     }
     if (master.length) {
@@ -384,7 +401,7 @@
       html += '<button class="kt-btn kt-primary" onclick="KONTUR.game()">🎮 Выбрать тему и сыграть с Фреди →</button>';
     }
     html += '<button class="kt-ghost" style="width:100%" onclick="KONTUR.test()">Пройти заново</button>';
-    html += '<button class="kt-ghost" style="width:100%" onclick="KONTUR.home()">В меню</button></div>';
+    html += '<button class="kt-ghost" style="width:100%" onclick="KONTUR.gameHome()">В меню</button></div>';
     c.innerHTML = html;
     track('feature_opened', { feature: 'kontur_test_done' });
   }
@@ -407,7 +424,7 @@
   function game() {
     if (_rec.on) stopVoice();
     var c = container(); if (!c) return;
-    var html = '<div class="kt-wrap"><button class="kt-ghost" onclick="KONTUR.home()">← Назад</button>' +
+    var html = '<div class="kt-wrap"><button class="kt-ghost" onclick="KONTUR.gameHome()">← Назад</button>' +
       '<div class="kt-h1">🎮 Игра с Фреди</div>' +
       '<div class="kt-lead">Выбери тему — Фреди будет не отвечать за тебя, а заставлять тебя думать: подсовывать инструменты, поворачивать тему гранями и ловить, когда ты соскальзываешь в готовое мнение.</div>' +
       '<div class="kt-card"><div style="font-weight:700;margin-bottom:8px">1. Тема</div><div id="ktThemes">';
@@ -627,10 +644,12 @@
 
   // ---------- экспорт ----------
   window.KONTUR = {
-    home: showKonturScreen, intro: intro, test: test, game: game, gameWith: gameWith,
+    gamesHome: showKonturScreen, gameHome: gameHome, home: gameHome,
+    intro: intro, test: test, game: game, gameWith: gameWith,
     pick: pick, qback: qback, qnext: qnext, selTheme: selTheme, selLens: selLens,
     startGame: startGame, send: send, verdict: verdict, grow: grow
   };
-  window.showKonturScreen = showKonturScreen;
-  console.log('✅ kontur.js loaded (модуль «О чём ты умеешь думать»)');
+  window.showKonturScreen = showKonturScreen;   // пункт меню «Игры» (список игр)
+  window.showKonturGame = gameHome;             // deep-link на саму игру «О чём ты умеешь думать»
+  console.log('✅ kontur.js loaded (модуль «Игры»: О чём ты умеешь думать)');
 })();

@@ -2696,7 +2696,10 @@ document.addEventListener('DOMContentLoaded', function() {
         try { m = new URLSearchParams(location.search).get('m'); }
         catch (e1) { var mm = (location.search || '').match(/[?&]m=([^&]+)/); m = mm ? decodeURIComponent(mm[1]) : null; }
         if (!m) return;
-        var ROUTES = { kontur: { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' } };
+        var ROUTES = {
+            kontur: { fn: 'showKonturGame', src: 'kontur.js', chat: 'kontur' }, // прямо в игру «О чём ты умеешь думать»
+            games:  { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' } // в список игр
+        };
         var r = ROUTES[m];
         if (!r) return;
         var open = function () {
