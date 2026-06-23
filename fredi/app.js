@@ -149,7 +149,7 @@ const MODES = {
         emoji: '💬',
         color: '#6E6E73',
         greeting: 'Я Фреди — поговорим о том, что для вас важно.',
-        voicePrompt: 'Расскажите, что вас беспокоит'
+        voicePrompt: 'О чём поговорим?'
     },
     coach: {
         id: 'coach',
