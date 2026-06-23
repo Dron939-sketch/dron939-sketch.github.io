@@ -118,10 +118,11 @@ body, .app, .chats-panel, .chat-panel, .chat-header,
 }
 [data-theme="light"] .voice-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(230, 230, 235, 0.5));
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(59, 130, 255, 0.45);
+    box-shadow: 0 4px 22px rgba(59, 130, 255, 0.15);
 }
 [data-theme="light"] .voice-record-btn-premium {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.06), rgba(100, 100, 100, 0.05));
+    background: linear-gradient(135deg, rgba(59, 130, 255, 0.16), rgba(59, 130, 255, 0.07));
 }
 [data-theme="light"] .module-card {
     background: rgba(0, 0, 0, 0.03);

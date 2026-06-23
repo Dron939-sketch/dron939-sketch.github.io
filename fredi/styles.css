@@ -738,14 +738,15 @@ body::after {
     backdrop-filter: blur(20px);
     border-radius: 60px;
     padding: 6px;
-    border: 1px solid rgba(224, 224, 224, 0.2);
+    border: 1px solid rgba(59, 130, 255, 0.4);
+    box-shadow: 0 4px 24px rgba(59, 130, 255, 0.12);
 }
 
 .voice-record-btn-premium {
     width: 100%;
     padding: 20px 24px;
     border-radius: 54px;
-    background: linear-gradient(135deg, rgba(224, 224, 224, 0.1), rgba(192, 192, 192, 0.05));
+    background: linear-gradient(135deg, rgba(59, 130, 255, 0.28), rgba(59, 130, 255, 0.12));
     border: none;
     color: var(--text-primary);
     cursor: pointer;
@@ -753,7 +754,6 @@ body::after {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    transition: transform 0.15s;
     font-size: 16px;
     font-weight: 500;
     font-family: inherit;
@@ -763,6 +763,11 @@ body::after {
     min-height: 64px;
     outline: none;
     -webkit-touch-callout: none;
+    transition: transform 0.15s, background 0.2s;
+}
+
+.voice-record-btn-premium:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 255, 0.36), rgba(59, 130, 255, 0.16));
 }
 
 .voice-record-btn-premium:active { transform: scale(0.98); }
