@@ -1783,6 +1783,18 @@ function renderDashboard() {
         }
     } catch (e) {}
 
+    // Имя-обращение вставляем ПЕРЕД финальной .!?… приветствия — иначе
+    // выходит «…что для вас важно., Андрей» (точка + запятая). Без имени —
+    // приветствие остаётся как есть.
+    const _hg = (modeConfig.greeting || '');
+    const _hgM = _hg.match(/^([\s\S]*?)\s*([.!?…]+)\s*$/);
+    const _hgBody = _hgM ? _hgM[1] : _hg;
+    const _hgPunct = _hgM ? _hgM[2] : '';
+    const _hgName = (CONFIG.USER_NAME || '').trim();
+    const heroGreetingHtml = _hgName
+        ? `${_hgBody}, <span class="hero-name">${_hgName}</span>${_hgPunct}`
+        : `${_hgBody}${_hgPunct}`;
+
     container.innerHTML = `
         <div class="dashboard-container">
             ${maxBannerHtml}
@@ -1790,7 +1802,7 @@ function renderDashboard() {
             <div class="hero-section">
                 <div class="hero-greeting">
                     <div class="hero-mode-emoji">${modeConfig.emoji}</div>
-                    <h2 class="hero-title">${modeConfig.greeting}, <span class="hero-name">${CONFIG.USER_NAME}</span></h2>
+                    <h2 class="hero-title">${heroGreetingHtml}</h2>
                     <p class="hero-sub">Фреди слушает — говорите голосом или выберите действие</p>
                 </div>
                 <div class="profile-badge" id="profileBadge">
