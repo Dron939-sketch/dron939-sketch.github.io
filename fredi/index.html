@@ -28,7 +28,26 @@
         <div><img src="https://mc.yandex.ru/watch/108965607" style="position:absolute; left:-9999px;" alt="" /></div>
     </noscript>
     <!-- /Yandex.Metrika counter -->
-    
+
+    <!-- Самообновление Service Worker: чтобы свежий код (новые игры/модули)
+         подхватывался сразу, а на мобиле не застревал старый app.js/kontur.js
+         и пункт меню «Игры» открывался. Проверяем апдейт при каждом заходе и
+         один раз перезагружаемся, когда новый SW берёт управление. -->
+    <script>
+    (function () {
+        if (!('serviceWorker' in navigator)) return;
+        var refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function () {
+            if (refreshing) return;
+            refreshing = true;
+            window.location.reload();
+        });
+        navigator.serviceWorker.getRegistration().then(function (reg) {
+            if (reg) { try { reg.update(); } catch (e) {} }
+        }).catch(function () {});
+    })();
+    </script>
+
     <!-- ========== SEO МЕТА-ТЕГИ ========== -->
     <title>Фреди — виртуальный психолог онлайн | ИИ-психолог бесплатно 24/7</title>
     <meta name="description" content="Фреди — виртуальный психолог на базе искусственного интеллекта. Конфиденциальный чат, психологический тест, дневник эмоций, КПТ-практики, гипноз. Бесплатно, 24/7. Регистрация — email + 4-значный пин-код.">
