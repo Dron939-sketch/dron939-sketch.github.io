@@ -7,8 +7,11 @@
 // которые на meysternlp.ru уходили в КОРЕНЬ домена → 404 в nginx-логах:
 //   open() "/usr/share/nginx/html/styles.css" failed (No such file or directory)
 // Service Worker install падал тихо, кэш был неполный.
-const CACHE_NAME = 'fredi-v9';
-const STATIC_FILES = ['./', './styles.css', './app.js', './mirrors.js', './admin.js'];
+const CACHE_NAME = 'fredi-v11';
+// ВАЖНО: app.js / kontur.js НЕ кэшируем в precache — они часто меняются
+// (новые модули, фичи). Иначе на мобиле застревает старый код, и новые
+// пункты меню («Игры») «не открываются».
+const STATIC_FILES = ['./', './styles.css'];
 
 self.addEventListener('install', e => {
     e.waitUntil(
@@ -70,11 +73,37 @@ self.addEventListener('notificationclick', e => {
     );
 });
 
-// Fetch — network first, fallback cache
+// Fetch — network-first c обходом HTTP-кэша для ЯДРА приложения.
+// ПОЧЕМУ: на мобиле fetch(e.request) внутри SW мог вернуть устаревший
+// app.js / kontur.js / index.html из HTTP-кэша браузера (не из сети) —
+// тогда новый пункт меню «Игры» отсутствовал и «не открывался».
+// Решение: для навигации и .js/.css/.html форсируем свежую версию с
+// сервера (cache:'reload'), свежую копию кладём в кэш для офлайна.
 self.addEventListener('fetch', e => {
     if (e.request.method !== 'GET') return;
     if (e.request.url.includes('/api/')) return; // API не кэшируем
+
+    var sameOrigin = e.request.url.indexOf(self.location.origin) === 0;
+    var isCore = false;
+    try {
+        var p = new URL(e.request.url).pathname;
+        isCore = e.request.mode === 'navigate' || (sameOrigin && /\.(js|css|html)$/i.test(p));
+    } catch (err) {}
+
+    var req = e.request;
+    if (isCore) {
+        // new Request(orig, {cache:'reload'}) сохраняет mode/credentials и
+        // лишь принудительно идёт мимо HTTP-кэша в сеть.
+        try { req = new Request(e.request, { cache: 'reload' }); } catch (err) {}
+    }
+
     e.respondWith(
-        fetch(e.request).catch(() => caches.match(e.request))
+        fetch(req).then(function (resp) {
+            if (resp && resp.ok && sameOrigin && e.request.url.indexOf('chrome-extension') === -1) {
+                var copy = resp.clone();
+                caches.open(CACHE_NAME).then(function (c) { c.put(e.request, copy); }).catch(function () {});
+            }
+            return resp;
+        }).catch(function () { return caches.match(e.request); })
     );
 });
