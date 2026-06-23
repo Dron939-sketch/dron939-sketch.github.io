@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КОНТУР v2 — линзы мышления (12 категорий + 12 новых тем) | Андрей Мейстер</title>
+<meta name="description" content="КОНТУР v2: горизонтальный слой к игре — 12 «линз мышления» (процесс, структура, связи, иерархия, причины, назначение, циклы, границы, контекст, перспективы, парадоксы, эволюция). Плюс 12 дополнительных тем. Печатается в PDF.">
+<meta name="keywords" content="категории мышления, линзы мышления, как думать, способы думать, методология мышления, системное мышление, Аристотель, Медоуз, Дилтс, Андрей Мейстер">
+<meta name="author" content="Андрей Мейстер">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://meysternlp.ru/kontur/v2.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;background:#F4F5F8;color:#1D1D1F;line-height:1.55;padding:20px}
+  .wrap{max-width:1000px;margin:0 auto}
+  h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-0.01em;margin:30px 0 10px;color:#0B1220;line-height:1.1}
+  h2{font-size:1.4rem;font-weight:700;color:#3A86FF;margin:36px 0 14px}
+  h3{font-size:1.1rem;font-weight:700;margin:22px 0 8px;color:#0B1220}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px 22px}
+  li{margin:5px 0}
+  .meta{font-size:13px;color:#64748B;margin-bottom:18px}
+  .lead{font-size:1.1rem;color:#475569;line-height:1.55;margin:14px 0 22px;max-width:780px}
+  .box{background:#EEF2FF;border-left:4px solid #3A86FF;padding:14px 18px;border-radius:6px;margin:16px 0}
+  .box.dark{background:#0B1220;color:#E2E8F0;border-left-color:#3A86FF}
+  .box.dark strong{color:#fff}
+  .box.warn{background:#FEF3C7;border-left-color:#F59E0B}
+  blockquote.q{margin:16px 0;padding:14px 18px;border-left:3px solid #3A86FF;background:#F8FAFC;border-radius:0 6px 6px 0;font-style:italic;font-size:15px}
+  table.t{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+  table.t th,table.t td{border:1px solid #E2E8F0;padding:10px 12px;vertical-align:top;text-align:left}
+  table.t th{background:#0B1220;color:#fff;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  table.t td:first-child{width:18%;color:#3A86FF;font-weight:600;background:#F8FAFC;white-space:nowrap}
+  .top-actions{display:flex;gap:10px;justify-content:center;margin:18px 0 22px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:10px;background:#3A86FF;color:#fff;border:none;font:600 13px Inter,sans-serif;cursor:pointer;text-decoration:none}
+  .btn.ghost{background:transparent;color:#3A86FF;border:1px solid #3A86FF}
+  .btn:hover{background:#1d6fed}
+  .btn.ghost:hover{background:#3A86FF;color:#fff}
+  .hint{font-size:12.5px;color:#64748B;text-align:center;margin-bottom:22px}
+  .breadcrumbs{font-size:13px;color:#64748B;margin-bottom:14px}
+  .breadcrumbs a{color:#3A86FF;text-decoration:none}
+
+  /* ===== Обложка ===== */
+  .cover{width:200mm;min-height:130mm;margin:24px auto;background:linear-gradient(135deg,#1a2444 0%,#3A86FF 100%);color:#F4F5F8;border-radius:18px;padding:18mm 20mm;position:relative;box-shadow:0 8px 30px rgba(0,0,0,0.12)}
+  .cover .brand{position:absolute;top:12mm;right:18mm;font-size:11px;letter-spacing:.3em;color:#fff;font-weight:700;opacity:.85}
+  .cover .name{font-size:46px;font-weight:800;letter-spacing:-0.01em;line-height:1;margin-bottom:6mm}
+  .cover .sub{font-size:15px;color:#E2E8F0;letter-spacing:.02em;margin-bottom:10mm;max-width:140mm}
+  .cover .epi{font-size:14px;font-style:italic;color:#fff;border-left:3px solid #fff;padding-left:10px;margin-bottom:10mm;max-width:140mm;line-height:1.5}
+  .cover .stats{display:flex;gap:10mm;margin-top:6mm;font-size:12px;color:#E2E8F0;letter-spacing:.06em;text-transform:uppercase}
+  .cover .stats b{color:#fff;display:block;font-size:24px;font-weight:700;font-style:normal;letter-spacing:0;margin-bottom:2px}
+
+  /* ===== Карты ===== */
+  .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6mm;margin:22px 0}
+  .card{background:#fff;border:2px solid #0B1220;border-radius:10px;padding:8mm 9mm;min-height:118mm;position:relative;font-size:11.5px;line-height:1.45;page-break-inside:avoid}
+  .card .no{position:absolute;top:5mm;right:7mm;font-size:9.5px;letter-spacing:.25em;color:#94A3B8;font-weight:700}
+  .card .sect{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#3A86FF;font-weight:700;margin-bottom:3mm}
+  .card .nm{font-size:18px;font-weight:800;color:#0B1220;letter-spacing:-0.005em;line-height:1.1;margin-bottom:3mm}
+  .card .par{font-style:italic;color:#475569;border-left:2px solid #3A86FF;padding-left:7px;font-size:11.5px;line-height:1.4;margin-bottom:4mm}
+  .card .sec-h{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#3A86FF;font-weight:700;margin:3mm 0 1.5mm}
+  .card .lst{padding-left:14px;margin:0 0 3mm;font-size:11px}
+  .card .lst li{margin:1mm 0;line-height:1.35}
+  .card .fin{margin-top:auto;padding-top:3mm;border-top:1px dotted #94A3B8;font-size:11px;color:#0B1220;font-weight:600;font-style:italic}
+  .card.lens{background:#3A86FF;color:#fff;border-color:#0B1220}
+  .card.lens .nm{color:#fff}
+  .card.lens .par{color:#E2E8F0;border-left-color:#fff}
+  .card.lens .sect,.card.lens .sec-h{color:#FFF;opacity:0.85}
+  .card.lens .lst{color:#fff}
+  .card.lens .fin{color:#fff;border-top-color:#fff}
+  .card.lens .no{color:#fff;opacity:0.7}
+
+  @media print{
+    body{background:#fff;padding:0;font-size:10.5pt}
+    .top-actions,.hint,.no-print{display:none!important}
+    .wrap{max-width:none}
+    .cover{box-shadow:none;page-break-after:always;margin:0 auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card-grid{page-break-before:always;gap:5mm}
+    .card{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h1{font-size:18pt;margin-top:10mm}
+    h2{font-size:13pt;color:#000;border-bottom:1px solid #999;padding-bottom:1mm}
+    h3{font-size:11pt}
+    table.t th{background:#222!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    table.t td:first-child{background:#f3f3f3!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .box,.box.dark,blockquote.q{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="breadcrumbs no-print"><a href="/">Главная</a> / <a href="/kontur/">КОНТУР</a> / v2 — линзы мышления</div>
+
+<div class="top-actions no-print">
+  <button class="btn" onclick="window.print()">🖨 Скачать v2 в PDF</button>
+  <a class="btn ghost" href="/kontur/">← К базовой колоде</a>
+  <a class="btn ghost" href="/blog/o-chyom-ty-umeesh-dumat.html">📖 К исходной статье</a>
+</div>
+<div class="hint no-print">v2 — это расширение, не замена. Базовая колода 28 карт остаётся актуальной.</div>
+
+<!-- ====== ОБЛОЖКА v2 ====== -->
+<div class="cover">
+  <div class="brand">МЕЙСТЕР · ТРЕНАЖЁР · v2</div>
+  <div class="name">КОНТУР · ЛИНЗЫ</div>
+  <div class="sub">Горизонтальный слой к игре: 12 категорий мышления + 12 дополнительных тем</div>
+  <div class="epi">Темы отвечают на вопрос «о ЧЁМ я думаю». Линзы — на вопрос «КАК я об этом думаю». Без второго первое остаётся плоским: одно мнение на одну тему.</div>
+  <div class="stats">
+    <div><b>12</b>линз</div>
+    <div><b>12</b>новых тем</div>
+    <div><b>288+</b>комбинаций</div>
+  </div>
+  <div style="margin-top:14mm;font-size:13px;color:#fff;font-style:italic;line-height:1.5;max-width:140mm;border-left:3px solid #fff;padding-left:10px">Главная подсказка: <strong>человек умеет думать о том, о чём он больше всего думает</strong>. Не о том, что прочитал. Не о том, что обсудил один раз. О том, куда вернулся 100 раз. Линзы — это способ возвращаться в одну тему с разных сторон.</div>
+</div>
+
+<!-- ====== ТЕОРИЯ ====== -->
+<h1>КОНТУР v2 — линзы мышления</h1>
+<p class="meta">12 категорий думания · 12 дополнительных тем · 24 новые карты</p>
+
+<p class="lead">Базовая колода КОНТУРа отвечала на «о чём думать»: 24 темы по 7 областям жизни. Но даже над «деньгами» можно думать минимум двенадцатью разными способами — и каждый даёт принципиально другой результат. v2 добавляет к игре горизонтальный слой <strong>линз</strong>: категорий, через которые рассматривается любая тема. Тема + линза = осмысленная мысль, а не мнение.</p>
+
+<h2>Зачем линзы — и почему их пропустили в v1</h2>
+<p>v1 решала первую проблему: «обо всём» → «о конкретных темах». Но даже с конкретной темой человек часто думает <em>одним способом</em>: «деньги — это плохо / хорошо / много / мало». Это всё ещё мнение, замаскированное под думание. Чтобы сделать настоящий шаг, к теме нужен <strong>угол атаки</strong>.</p>
+
+<div class="box">
+  <strong>Главная мысль v2.</strong> «Думать о теме Х» — это не одно действие, а минимум двенадцать. Каждый раз, когда вы говорите «я подумаю об этом», полезно уточнить: <em>в какой линзе</em>. Иначе мысль скатится в первый попавшийся ракурс и остановится.
+</div>
+
+<h2>Подсказка, которая объясняет всё</h2>
+<div class="box dark">
+  <strong>Человек умеет думать о том, о чём он больше всего думает.</strong> Не о том, что прочитал в умной книге. Не о том, что обсудил один раз с другом. А о том, куда возвращался <em>сотни раз</em> — на работе, в дороге, перед сном, в разговорах, в записях. Это и есть «свой контур»: тема, которую вы по факту тренируете каждый день, хотите того или нет.
+</div>
+<p>Из этой подсказки выходит вся логика игры. Каждая ваша сильная мысль — это не случайность и не «способности», это <em>часы возвращения</em>. Каждый прыщ на чужом мышлении вы видите потому, что в этой области у вас накопилось много возвращений. Линзы тут — инструмент, который <em>принуждает</em> вернуться к одной теме разными способами в течение одной сессии. Вы за час делаете 12 заходов, вместо одного. Это и есть ускоренная deliberate practice мышления.</p>
+
+<p>Практический вывод из подсказки — на двух уровнях:</p>
+<ul>
+  <li><strong>Диагноз:</strong> чтобы понять, о чём вы реально умеете думать, не спрашивайте «о чём я думаю». Спросите: <em>о чём я думаю на прогулке, когда никто не слушает</em>. Куда возвращается мысль сама, без вашего разрешения? Это и есть ваш реальный контур умения. Возможно, не тот, что вам нравится.</li>
+  <li><strong>Стратегия:</strong> хотите начать думать о новой теме — выберите её и <em>возвращайтесь</em> в неё регулярно. Сначала 5 минут в день, потом 10, потом она сама начинает «всплывать». Через 2–3 месяца это станет вашим контуром. Через год — преимуществом.</li>
+</ul>
+
+<h2>На каких категориях стоят линзы (научно)</h2>
+<table class="t">
+  <tr><th>Источник</th><th>Что даёт линзам</th></tr>
+  <tr><td>Аристотель — 10 категорий, 4 причины</td><td>Базовая разметка: сущность, количество, качество, отношение, место, время, действие, страдание + причины (материальная, формальная, действующая, целевая)</td></tr>
+  <tr><td>Кант — категории рассудка</td><td>Доказательство того, что без категорий восприятие не превращается в опыт. То есть без линз нет думания</td></tr>
+  <tr><td>Медоуз — Thinking in Systems</td><td>Линзы «структура», «связи», «циклы» (петли обратной связи), «иерархия»</td></tr>
+  <tr><td>Сенге — пятая дисциплина</td><td>Системные архетипы — устойчивые паттерны, видимые только через системную линзу</td></tr>
+  <tr><td>Дилтс (НЛП) — логические уровни</td><td>Линза «иерархия»: одна тема разворачивается на 6 уровнях (от среды до миссии)</td></tr>
+  <tr><td>Лакофф &amp; Джонсон — Metaphors We Live By</td><td>Линза «языки описания»: одну тему можно описать как путь, как сосуд, как войну, как танец — и каждая метафора даёт разное действие</td></tr>
+  <tr><td>Лейбниц, Ницше — перспективизм</td><td>Линза «перспективы»: реальность зависит от точки, с которой смотрят</td></tr>
+  <tr><td>Гегель — диалектика</td><td>Линза «парадоксы»: мысль идёт через противоречие, а не через его обход</td></tr>
+</table>
+
+<h2>12 линз — список и краткое описание</h2>
+
+<table class="t">
+  <tr><th>Линза</th><th>Главный вопрос</th><th>Что даёт на любой теме</th></tr>
+  <tr><td>L1 · Процесс</td><td>«Что происходит во времени?»</td><td>Фазы, скорость, инерция, стадии. Тема перестаёт быть «вещью» — становится движением.</td></tr>
+  <tr><td>L2 · Структура</td><td>«Из чего состоит?»</td><td>Элементы и отношения между ними. Тема перестаёт быть монолитом — становится разборной.</td></tr>
+  <tr><td>L3 · Связи</td><td>«С чем соединено снаружи?»</td><td>Что зависит от темы и от чего зависит она. Видна сеть, в которой тема живёт.</td></tr>
+  <tr><td>L4 · Иерархия</td><td>«Что выше, что ниже?»</td><td>Уровни (Дилтс), приоритеты, кто кому подчинён. Тема перестаёт быть плоской.</td></tr>
+  <tr><td>L5 · Причины</td><td>«Откуда это взялось?»</td><td>4 типа причин Аристотеля. Тема перестаёт быть случайной.</td></tr>
+  <tr><td>L6 · Назначение</td><td>«Зачем это существует?»</td><td>Кому служит, какую функцию выполняет. Тема обретает «для чего».</td></tr>
+  <tr><td>L7 · Циклы</td><td>«Что повторяется?»</td><td>Ритмы, петли обратной связи, фракталы. Тема перестаёт быть линейной.</td></tr>
+  <tr><td>L8 · Границы</td><td>«Где начинается и где кончается?»</td><td>Что внутри vs снаружи. Тема обретает «не-Х» (всё, что ею не является).</td></tr>
+  <tr><td>L9 · Контекст</td><td>«В какой среде это живёт?»</td><td>Без контекста любая тема искажается. Линза возвращает её на место.</td></tr>
+  <tr><td>L10 · Перспективы</td><td>«Глазами кого?»</td><td>Минимум 3 точки зрения на тему. Тема перестаёт быть одной правдой.</td></tr>
+  <tr><td>L11 · Парадоксы</td><td>«Где не сходится?»</td><td>Противоречия как точки роста мысли (по Гегелю). Тема перестаёт быть однородной.</td></tr>
+  <tr><td>L12 · Эволюция</td><td>«Во что развивается?»</td><td>Куда движется тема, во что превращается. Тема обретает будущее, а не только настоящее.</td></tr>
+</table>
+
+<h2>Как линза меняет тему — на примере «Деньги»</h2>
+<table class="t">
+  <tr><th>Линза</th><th>«Деньги» через неё</th></tr>
+  <tr><td>L1 · Процесс</td><td>Деньги как поток: где притекают, где утекают, какая скорость, инерция привычных трат</td></tr>
+  <tr><td>L2 · Структура</td><td>Деньги как состав: ликвидные/неликвидные, активы/обязательства, рабочие/спящие</td></tr>
+  <tr><td>L3 · Связи</td><td>Деньги в сети других ресурсов: время-деньги, репутация-деньги, отношения-деньги</td></tr>
+  <tr><td>L4 · Иерархия</td><td>Деньги — на каком уровне Дилтса? Среда (доход) vs идентичность («я финансовый человек»)?</td></tr>
+  <tr><td>L5 · Причины</td><td>Откуда у меня сейчас столько денег, сколько есть? 4 типа причин</td></tr>
+  <tr><td>L6 · Назначение</td><td>Деньги — ДЛЯ ЧЕГО лично у меня? Под свободу? Под статус? Под безопасность?</td></tr>
+  <tr><td>L7 · Циклы</td><td>Какие денежные циклы у меня повторяются (доход-всплеск → разогнался → снова в дефиците)</td></tr>
+  <tr><td>L8 · Границы</td><td>Где у меня граница «мои деньги» / «не мои»? Что я НЕ покупаю принципиально?</td></tr>
+  <tr><td>L9 · Контекст</td><td>В каком экономическом контексте я сейчас живу? И как это меняет, что значит «много»?</td></tr>
+  <tr><td>L10 · Перспективы</td><td>Глазами родителей, глазами супруга, глазами 80-летнего меня — что такое мои деньги?</td></tr>
+  <tr><td>L11 · Парадоксы</td><td>Я хочу больше — и боюсь больше. Я говорю «деньги — не главное» и тревожусь о них</td></tr>
+  <tr><td>L12 · Эволюция</td><td>Куда движется моя денежная история — к чему через 5, 10, 20 лет?</td></tr>
+</table>
+
+<div class="box dark">
+  <strong>Главный сдвиг.</strong> 1 тема × 1 линза = 1 осмысленная мысль (а не мнение). Базовая колода даёт 24 темы, v2 — ещё 12 тем и 12 линз. Полная двумерка: 36 тем × 12 линз = <strong>432 уникальные мысли-тренажёра</strong>. На два-три года тренировки хватит — и это в самой узкой комбинации, когда тянутся одна тема + одна линза.
+</div>
+
+<h2>Новые режимы игры (v2)</h2>
+
+<h3>Режим 4. «Тема × линза» (одиночный, 15 минут)</h3>
+<ol>
+  <li>Тяните одну тематическую карту И одну линзу.</li>
+  <li>Сформулируйте: «Я думаю о [тема] через линзу [имя]».</li>
+  <li>Возьмите 3 главных вопроса с карты линзы. Применяйте их к теме по очереди.</li>
+  <li>15 минут — таймер обязателен. Один цикл «тема × линза» = одна сессия.</li>
+</ol>
+
+<h3>Режим 5. «Тройка» (одиночный или парный, 30 минут)</h3>
+<ol>
+  <li>1 тема + 2 линзы (например, «Отношения × Циклы × Перспективы»).</li>
+  <li>Это уже не размышление, а маленький мини-доклад: «вот как это выглядит, если посмотреть так, а потом так».</li>
+  <li>Финал: одно различение, которое появилось ТОЛЬКО благодаря пересечению двух линз.</li>
+</ol>
+
+<h3>Режим 6. «12 линз — одна тема» (продвинутый, день)</h3>
+<ol>
+  <li>Берётся одна тема. Прогоняется через все 12 линз — по одной за 20–30 минут.</li>
+  <li>В конце дня — итоговая «карта темы»: что в ней увидено через каждую линзу.</li>
+  <li>Это и есть состояние «я умею думать о Х» в самой сильной версии: вы можете посмотреть на тему через любую из 12 категорий и сказать что-то осмысленное.</li>
+</ol>
+
+<div class="box warn">
+  <strong>Важно.</strong> Линзы — не одинаковые. К одним темам сильнее ложится одна линза, к другим — другая. К «Отношениям» — Циклы и Перспективы. К «Деньгам» — Процесс и Назначение. К «Семейной роли» — Иерархия и Эволюция. Это и интересно: ловить, где линза «зажигает» тему, где даёт скрип.
+</div>
+
+<!-- ====== ПЕЧАТНЫЕ КАРТЫ ЛИНЗ ====== -->
+<h2>🔍 12 карт-линз (для печати)</h2>
+<p class="no-print" style="font-size:13px;color:#475569">Синие карты — отличаются от тематических цветом. Печатать в А6, по 2 на A4 = 6 листов.</p>
+
+<div class="card-grid">
+
+<div class="card lens">
+  <div class="no">L1 / v2</div>
+  <div class="sect">ЛИНЗА · ПРОЦЕСС</div>
+  <div class="nm">Процесс</div>
+  <div class="par">Что в этой теме происходит во времени?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Какие у темы фазы — что было, что сейчас, что дальше?</li><li>Какая у неё скорость и инерция?</li><li>Где «застряло» и где «разогналось»?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>S-кривая · точки перегиба</li><li>Стадии vs этапы · фазовые переходы</li><li>Инерция и сопротивление</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Видеть тему как «вещь», а не движение</li><li>Считать сегодняшнюю фазу вечной</li></ul>
+  <div class="fin">→ Какая фаза этой темы сейчас, и какая её сменит?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L2 / v2</div>
+  <div class="sect">ЛИНЗА · СТРУКТУРА</div>
+  <div class="nm">Структура</div>
+  <div class="par">Из чего эта тема состоит?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Какие в ней различимые элементы?</li><li>Какие отношения между этими элементами?</li><li>Что — ядро, что — периферия?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Декомпозиция · холархия</li><li>Ядро vs оболочка</li><li>Граф элементов и связей</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Считать тему монолитом</li><li>Сводить структуру к одному элементу</li></ul>
+  <div class="fin">→ На какие 3–5 частей делится тема? И что главное из них?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L3 / v2</div>
+  <div class="sect">ЛИНЗА · СВЯЗИ</div>
+  <div class="nm">Связи</div>
+  <div class="par">С чем эта тема соединена снаружи?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Что от темы зависит?</li><li>От чего зависит сама тема?</li><li>Что меняется одновременно (коррелирует)?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Каузальная диаграмма</li><li>Сильные / слабые связи</li><li>Сеть зависимостей</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Изолировать тему</li><li>Путать корреляцию с причиной</li></ul>
+  <div class="fin">→ Какие 3 связи этой темы — самые сильные?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L4 / v2</div>
+  <div class="sect">ЛИНЗА · ИЕРАРХИЯ</div>
+  <div class="nm">Иерархия</div>
+  <div class="par">Что в этой теме выше, что ниже?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>На каких уровнях она живёт (от среды до миссии)?</li><li>Что главное, что подчинённое?</li><li>Где я путаю уровни?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Логические уровни Дилтса (6 ступеней)</li><li>Приоритезация</li><li>Каскад целей</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Лечить «среду» на уровне идентичности</li><li>Считать все элементы равноценными</li></ul>
+  <div class="fin">→ На каком уровне у меня сейчас узкое место по теме?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L5 / v2</div>
+  <div class="sect">ЛИНЗА · ПРИЧИНЫ</div>
+  <div class="nm">Причины</div>
+  <div class="par">Откуда это вообще взялось?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Из чего тема сделана (материальная причина)?</li><li>Что её привело в нынешнее состояние (действующая)?</li><li>Кто или что её придумало (формальная)?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>4 причины Аристотеля</li><li>5 «почему?» подряд</li><li>Контрфактический вопрос: что было бы, если не…</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Останавливаться на одной поверхностной причине</li><li>Путать корреляцию с причиной</li></ul>
+  <div class="fin">→ Какая глубинная причина темы — не та, что лежит на поверхности?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L6 / v2</div>
+  <div class="sect">ЛИНЗА · НАЗНАЧЕНИЕ</div>
+  <div class="nm">Назначение</div>
+  <div class="par">Зачем это существует? Для чего?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Какую функцию тема выполняет в моей жизни?</li><li>Кому/чему она служит, может, кроме меня?</li><li>Что было бы, если её не было?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Целевая причина (Аристотель)</li><li>Jobs to be done — какую работу нанимаешь</li><li>Замена: чем заменю, если уберу</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Считать «само собой»</li><li>Путать назначение с привычкой</li></ul>
+  <div class="fin">→ Какую функцию эта тема выполняет — и стоит ли продолжать?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L7 / v2</div>
+  <div class="sect">ЛИНЗА · ЦИКЛЫ</div>
+  <div class="nm">Циклы</div>
+  <div class="par">Что в этой теме повторяется?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Какой ритм у темы?</li><li>Какие петли обратной связи есть (усиливающие vs балансирующие)?</li><li>Где я в этом цикле сейчас?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Петли обратной связи (Медоуз)</li><li>Системные архетипы (Сенге)</li><li>Хронотип / сезонность</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Видеть только линейность</li><li>Принимать цикл за «случайность»</li></ul>
+  <div class="fin">→ Какой повторяющийся цикл я в этой теме НЕ замечал?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L8 / v2</div>
+  <div class="sect">ЛИНЗА · ГРАНИЦЫ</div>
+  <div class="nm">Границы</div>
+  <div class="par">Где эта тема начинается — и где кончается?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Что точно входит в эту тему? Что точно — нет?</li><li>Где у меня размытая граница?</li><li>Что находится «по ту сторону»?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Включение vs исключение</li><li>«Анти-тема»: чем тема НЕ является</li><li>Граница как место для решений</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Делать тему «обо всём»</li><li>Считать границу очевидной</li></ul>
+  <div class="fin">→ Что находится прямо за границей этой темы — и почему я туда не смотрю?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L9 / v2</div>
+  <div class="sect">ЛИНЗА · КОНТЕКСТ</div>
+  <div class="nm">Контекст</div>
+  <div class="par">В какой среде эта тема живёт?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>В каком пространстве она разворачивается?</li><li>В каком историческом моменте?</li><li>Что меняет смысл темы, если контекст другой?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Бахтин — хронотоп</li><li>Социальный, культурный, экономический слои</li><li>«Перенос» — как изменилась бы тема в другом контексте</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Считать тему «вне времени»</li><li>Игнорировать культурный/исторический слой</li></ul>
+  <div class="fin">→ Что в моём отношении к теме — мне, а что — времени и месту, в котором я живу?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L10 / v2</div>
+  <div class="sect">ЛИНЗА · ПЕРСПЕКТИВЫ</div>
+  <div class="nm">Перспективы</div>
+  <div class="par">Глазами кого ещё можно посмотреть?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Как это видит самый близкий человек?</li><li>Как это видит человек, которому тема — чужая?</li><li>Как это вижу я через 20 лет — оглядываясь?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>3 позиции восприятия (НЛП): я / другой / наблюдатель</li><li>Будущий и прошлый я</li><li>Адвокат дьявола</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Считать свою перспективу единственной</li><li>«Все остальные просто не видят, как я»</li></ul>
+  <div class="fin">→ С какой перспективы я НИКОГДА не смотрел на эту тему?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L11 / v2</div>
+  <div class="sect">ЛИНЗА · ПАРАДОКСЫ</div>
+  <div class="nm">Парадоксы</div>
+  <div class="par">Где в этой теме не сходится?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Что я думаю об этом одновременно противоречиво?</li><li>Где «и да, и нет»?</li><li>Какое противоречие я обхожу годами?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Диалектика (Гегель): тезис → антитезис → синтез</li><li>«И-и» вместо «или-или»</li><li>Парадокс как точка роста</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Заметать противоречие под ковёр</li><li>Считать парадокс «неправильным мышлением»</li></ul>
+  <div class="fin">→ Какой парадокс я в этой теме обхожу — и как он бы решился, если перестать его обходить?</div>
+</div>
+
+<div class="card lens">
+  <div class="no">L12 / v2</div>
+  <div class="sect">ЛИНЗА · ЭВОЛЮЦИЯ</div>
+  <div class="nm">Эволюция</div>
+  <div class="par">Куда эта тема развивается?</div>
+  <div class="sec-h">3 главных вопроса</div>
+  <ul class="lst"><li>Во что она превращается, если её НЕ трогать?</li><li>Во что превращается, если ею заниматься осознанно?</li><li>Что в ней «незрелое», а что «перезрелое»?</li></ul>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Стадии развития (Spiral Dynamics, Кегган)</li><li>Зрелость темы (раннее, среднее, позднее состояние)</li><li>Точка следующего шага</li></ul>
+  <div class="sec-h">Провалы</div>
+  <ul class="lst"><li>Считать тему статичной</li><li>Путать «развивается» с «увеличивается»</li></ul>
+  <div class="fin">→ Если ничего не делать — куда тема придёт через 5 лет?</div>
+</div>
+
+</div>
+
+<!-- ====== 12 НОВЫХ ТЕМ ====== -->
+<h2>📚 12 новых тем (дополнение к 24 базовым)</h2>
+<p>Для полноты онтологии — темы, которые в базовой колоде не были покрыты. Они одни из самых трудных и одни из самых важных. Печатать как обычные тематические карты.</p>
+
+<div class="card-grid">
+
+<div class="card">
+  <div class="no">25 / v2</div>
+  <div class="sect">VIII · Власть и влияние</div>
+  <div class="nm">Власть — что я с ней делаю</div>
+  <div class="par">У тебя есть власть. Над кем и над чем — конкретно?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>5 источников власти (Френч и Рейвен)</li><li>Власть-над vs власть-к (Адлер)</li><li>Объём моей реальной власти</li><li>Влияние без полномочий</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать «нет власти» (она есть всегда)</li><li>Путать власть с агрессией</li><li>Использовать только один источник власти</li></ul>
+  <div class="fin">→ Какую власть у меня есть, и как я ею пользуюсь?</div>
+</div>
+
+<div class="card">
+  <div class="no">26 / v2</div>
+  <div class="sect">VIII · Власть и влияние</div>
+  <div class="nm">Конфликт интересов внутри</div>
+  <div class="par">Я хочу двух противоположных вещей одновременно. Это нормально?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Карта внутренних голосов</li><li>Иерархия желаний (что от чего)</li><li>«Часть меня хочет / другая часть хочет»</li><li>Цена выбора</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать, что должен хотеть одного</li><li>Не давать слово «другой» части</li><li>Решать без учёта обеих</li></ul>
+  <div class="fin">→ Какие две вещи я сейчас хочу одновременно, и которая из них мне не разрешена?</div>
+</div>
+
+<div class="card">
+  <div class="no">27 / v2</div>
+  <div class="sect">IX · Внутренние процессы</div>
+  <div class="nm">Что я скрываю</div>
+  <div class="par">От других — понятно. От себя — труднее. Что я не хочу замечать?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Тень (Юнг)</li><li>«Слепое пятно» в окне Джохари</li><li>Что я обхожу в разговорах</li><li>Цена скрытия</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать, что не скрываю ничего</li><li>Скрывать то, что давно уже знают</li><li>Скрывать от себя</li></ul>
+  <div class="fin">→ Что я скрываю, и от кого: от других или от себя?</div>
+</div>
+
+<div class="card">
+  <div class="no">28 / v2</div>
+  <div class="sect">IX · Внутренние процессы</div>
+  <div class="nm">Тело</div>
+  <div class="par">У меня есть тело. Или я и есть тело?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Embodied cognition (Дамасио)</li><li>Сигналы тела как информация</li><li>Тело-инструмент vs тело-я</li><li>Долг тела (накопленный)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Игнорировать тело до поломки</li><li>Эксплуатировать как машину</li><li>Считать жалобы тела «капризами»</li></ul>
+  <div class="fin">→ Что моё тело говорит мне последний месяц, и что я не слышу?</div>
+</div>
+
+<div class="card">
+  <div class="no">29 / v2</div>
+  <div class="sect">X · Знание и мнение</div>
+  <div class="nm">Знание vs мнение</div>
+  <div class="par">Что я знаю по-настоящему, а в чём — у меня лишь убеждение?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Эпистемический статус (как проверено)</li><li>Уровни уверенности (5/10/100%)</li><li>Источник знания (опыт, чтение, кажется)</li><li>Дунинг-Крюгер (Я знаю что я не знаю)</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Путать мнение с фактом</li><li>Уверенность принимать за знание</li><li>Не различать своё и вычитанное</li></ul>
+  <div class="fin">→ Что я говорю как «знаю», хотя на деле — только убеждение?</div>
+</div>
+
+<div class="card">
+  <div class="no">30 / v2</div>
+  <div class="sect">XI · Социальные процессы</div>
+  <div class="nm">Помощь</div>
+  <div class="par">Кому я помогаю — и зачем?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Помощь vs спасательство (драматический треугольник)</li><li>Условие просьбы</li><li>Возвратность помощи</li><li>Граница «я могу помочь, но не вместо»</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Помогать без просьбы</li><li>Спасать вместо помогать</li><li>Ждать благодарности</li></ul>
+  <div class="fin">→ Кому я помогаю из их потребности, а кому — из своей?</div>
+</div>
+
+<div class="card">
+  <div class="no">31 / v2</div>
+  <div class="sect">XI · Социальные процессы</div>
+  <div class="nm">Доверие</div>
+  <div class="par">Кому я доверяю — и насколько?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>3 компонента доверия: компетенция, надёжность, забота</li><li>Кредит доверия (накапливается / расходуется)</li><li>Доверять с условиями</li><li>Цена недоверия</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Доверять всё или ничего</li><li>Не различать доверие в разных областях</li><li>Терять доверие к себе</li></ul>
+  <div class="fin">→ Кому я доверяю больше, чем стоило бы, и наоборот?</div>
+</div>
+
+<div class="card">
+  <div class="no">32 / v2</div>
+  <div class="sect">XI · Социальные процессы</div>
+  <div class="nm">Признание</div>
+  <div class="par">Чьё признание мне нужно — и почему именно это?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Внешнее vs внутреннее признание</li><li>«Карты признания» (от кого получаю, кому даю)</li><li>Цена ожидания признания</li><li>Самопризнание как навык</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Жить ради признания других</li><li>Считать признание = любовью</li><li>Не давать признание себе</li></ul>
+  <div class="fin">→ Чьё признание я ловлю годами, и нужно ли оно мне на самом деле?</div>
+</div>
+
+<div class="card">
+  <div class="no">33 / v2</div>
+  <div class="sect">XII · Эстетика и этика</div>
+  <div class="nm">Эстетика и вкус</div>
+  <div class="par">Как я выбираю красивое? Что говорит мой вкус?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Вкус как сигнал ценностей</li><li>Усвоенный vs свой</li><li>Чувствительность к деталям</li><li>«Эстетика повседневности»</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Считать вкус «дано»</li><li>Не отличать чужой от своего</li><li>Игнорировать сигналы вкуса</li></ul>
+  <div class="fin">→ Что в моей жизни эстетически меня травмирует — и я молча терплю?</div>
+</div>
+
+<div class="card">
+  <div class="no">34 / v2</div>
+  <div class="sect">XII · Эстетика и этика</div>
+  <div class="nm">Моя личная этика</div>
+  <div class="par">Что для меня лично — нельзя, даже если можно?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Унаследованная vs пережитая этика</li><li>«Линии, которые не пересекаю»</li><li>Цена нарушения</li><li>Этика как ось идентичности</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Жить чужой этикой, не своей</li><li>Не знать своих красных линий</li><li>Сдвигать их под давлением</li></ul>
+  <div class="fin">→ Какие 3 вещи я не сделаю никогда — и почему именно эти?</div>
+</div>
+
+<div class="card">
+  <div class="no">35 / v2</div>
+  <div class="sect">XIII · Предельные темы</div>
+  <div class="nm">Смерть и предел</div>
+  <div class="par">Я знаю, что умру. Что я с этим знанием делаю?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>4 экзистенциальные данности (Ялом)</li><li>Memento mori как ясность</li><li>Что меняется при горизонте — 1 год, 10 лет, 50</li><li>Принятие vs избегание</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Жить, как будто времени бесконечно</li><li>Парализоваться страхом конца</li><li>Не использовать как ясность</li></ul>
+  <div class="fin">→ Что я отложил «на потом», хотя «потом» не гарантировано?</div>
+</div>
+
+<div class="card">
+  <div class="no">36 / v2</div>
+  <div class="sect">XIII · Предельные темы</div>
+  <div class="nm">Информационная среда</div>
+  <div class="par">Что я ежедневно потребляю — и что это со мной делает?</div>
+  <div class="sec-h">Инструменты</div>
+  <ul class="lst"><li>Информационная диета</li><li>Контент-стимул vs контент-источник</li><li>Объём входящего vs способность обработать</li><li>Тишина как ресурс</li></ul>
+  <div class="sec-h">Типовые ошибки</div>
+  <ul class="lst"><li>Потреблять без выбора</li><li>Не различать «развлекает» и «питает»</li><li>Считать шум нормой</li></ul>
+  <div class="fin">→ Что из ежедневно потребляемого делает меня хуже — и я всё равно потребляю?</div>
+</div>
+
+</div>
+
+<!-- ====== ИТОГ ====== -->
+<h2>Связь v1 и v2</h2>
+<table class="t">
+<tr><th>v1 (базовая)</th><th>v2 (это расширение)</th></tr>
+<tr><td>24 темы + 4 меты = 28 карт</td><td>+12 линз + 12 новых тем = +24 карты. Итого с v1: <strong>52 карты</strong></td></tr>
+<tr><td>Один режим: одна карта-тема за сессию</td><td>Три новых режима: тема × линза / тема × 2 линзы / 12 линз на одной теме</td></tr>
+<tr><td>Тренажёр System 2 на конкретных темах</td><td>Тренажёр System 2 на конкретных темах через конкретные категории</td></tr>
+</table>
+
+<div class="box dark">
+  <strong>В сухом остатке.</strong> v1 учит не отвечать «обо всём». v2 учит, что «о Х» — это не одна мысль, а минимум двенадцать разных мыслей. И что зрелое «я умею думать о Х» — это когда вы можете посмотреть на тему через любую из 12 линз и сказать что-то осмысленное в каждой. А путь к этому — простой: возвращаться в эту тему чаще, чем в остальные.
+</div>
+
+<hr style="margin:40px 0;border:none;border-top:1px solid #E2E8F0">
+<p style="text-align:center;color:#64748B;font-size:13px">
+  КОНТУР v2 · Линзы мышления · © Андрей Мейстер<br>
+  <a href="/kontur/" style="color:#3A86FF">К базовой колоде v1</a> · <a href="/blog/o-chyom-ty-umeesh-dumat.html" style="color:#3A86FF">К теоретической статье</a>
+</p>
+
+</div>
+</body>
+</html>
