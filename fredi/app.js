@@ -2685,3 +2685,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 8000); // через 8 сек после загрузки страницы — после welcome voice
     } catch (e) {}
 });
+
+// ============================================
+// DEEP-LINK НА МОДУЛЬ: /fredi/?m=kontur
+// Позволяет вести из статьи/поста прямо в модуль, минуя поиск в меню.
+// ============================================
+(function () {
+    try {
+        var m = new URLSearchParams(location.search).get('m');
+        if (!m) return;
+        var ROUTES = { kontur: { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' } };
+        var r = ROUTES[m];
+        if (!r) return;
+        var open = function () {
+            var go = function () {
+                try {
+                    if (typeof window[r.fn] === 'function') {
+                        window[r.fn]();
+                        document.querySelectorAll('.chat-item').forEach(function (i) { i.classList.remove('active'); });
+                        var item = document.querySelector('[data-chat="' + r.chat + '"]');
+                        if (item) item.classList.add('active');
+                    } else {
+                        var s = document.createElement('script'); s.src = r.src;
+                        s.onload = function () { if (typeof window[r.fn] === 'function') window[r.fn](); };
+                        document.head.appendChild(s);
+                    }
+                } catch (e) { console.warn('[Fredi] deep-link error', e); }
+            };
+            setTimeout(go, 500);
+        };
+        if (window.authReady && typeof window.authReady.then === 'function') {
+            window.authReady.then(open).catch(open);
+        } else {
+            setTimeout(open, 1400);
+        }
+    } catch (e) {}
+})();
