@@ -158,9 +158,41 @@
     document.head.appendChild(s);
   }
 
-  // ---------- хаб ----------
-  function home() {
+  // ---------- премиум-гейт (как у Progressive/Intensive) ----------
+  async function ensurePremium() {
+    if (window.IS_PREMIUM === true) return true;
+    if (window.IS_PREMIUM == null && typeof window.loadPremiumStatus === 'function') {
+      try { await window.loadPremiumStatus(); } catch (e) {}
+    }
+    return window.IS_PREMIUM === true;
+  }
+  function openPremium() {
+    if (typeof window.showPremiumLockPopup === 'function') { window.showPremiumLockPopup('Вариатика Basic'); return; }
+    if (typeof window.showSettingsScreen === 'function') { try { window.showSettingsScreen(); return; } catch (e) {} }
+    toast('Открой раздел «Подписка» в настройках', 'info');
+  }
+  function renderLocked() {
     injectCSS();
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="vr-wrap">' +
+        '<button class="vr-ghost" onclick="VARIATIKA.exit()">← К списку игр</button>' +
+        '<div class="vr-h1">🔮 Вариатика — Basic</div>' +
+        '<div class="vr-card" style="text-align:center;border-color:rgba(16,185,129,.4)">' +
+          '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра доступна с подпиской</div>' +
+          '<div style="color:#aeb1bd;line-height:1.55">«Вариатика — Basic» — первая часть серии: тренажёр чтения людей. С подпиской открыты все три «Вариатики» (Basic / Progressive / Intensive) и другие сильные игры.</div>' +
+        '</div>' +
+        '<button class="vr-btn vr-primary" onclick="VARIATIKA.openPremium()">💎 Открыть Premium</button>' +
+        '<button class="vr-btn" onclick="VARIATIKA.exit()">← Вернуться к играм</button>' +
+      '</div>';
+    track('feature_opened', { feature: 'variatika_locked' });
+  }
+
+  // ---------- хаб ----------
+  async function home() {
+    injectCSS();
+    if (!(await ensurePremium())) { renderLocked(); return; }
     track('feature_opened', { feature: 'variatika' });
     var c = container(); if (!c) return;
     var p = loadProg();
@@ -208,6 +240,7 @@
 
   // ---------- раунд ----------
   function start(level) {
+    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     injectCSS();
     var lvl = level && LEVELS[level] ? level : LEVEL_ORDER[Math.floor(Math.random() * LEVEL_ORDER.length)];
     var mast = MAST_ORDER[Math.floor(Math.random() * MAST_ORDER.length)];
@@ -392,7 +425,7 @@
 
   // ---------- экспорт ----------
   window.VARIATIKA = {
-    home: home, exit: exit, start: start, guessMast: guessMast, predict: predict, mic: mic, applyTransfer: applyTransfer
+    home: home, exit: exit, openPremium: openPremium, start: start, guessMast: guessMast, predict: predict, mic: mic, applyTransfer: applyTransfer
   };
   window.showVariatikaGame = home;
   console.log('✅ variatika.js loaded (игра «Вариатика Basic»: паттерны поведения + слепая масть)');
