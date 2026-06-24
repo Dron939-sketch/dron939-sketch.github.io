@@ -26,13 +26,23 @@
 
   // ---------- 4 масти ----------
   var MASTS = {
-    SB: { suit: '♠', name: 'СБ', full: 'Силовик-Беспредельщик', param: 'Сила', q: 'Кто здесь сильнее?' },
-    TF: { suit: '♣', name: 'ТФ', full: 'Трудяга-Фермер',        param: 'Выносливость / материальное', q: 'Сколько это стоит?' },
-    UB: { suit: '♦', name: 'УБ', full: 'Умный-Бедный',          param: 'Мышление', q: 'Почему это так?' },
-    CV: { suit: '♥', name: 'ЧВ', full: 'Человек-Возможность',   param: 'Расчётливость (интеллектуальное зрение)', q: 'Зачем и как обойти?' }
+    SB: { suit: '♠', name: 'СБ', full: 'Силовик-Беспредельщик', param: 'Сила', q: 'Кто здесь сильнее?',
+          short: 'сила · кто сильнее', markers: 'боится / применяет / избегает СИЛЫ. Реакции: бежать, замереть, давить, заискивать, звать сильных.' },
+    TF: { suit: '♣', name: 'ТФ', full: 'Трудяга-Фермер',        param: 'Выносливость / материальное', q: 'Сколько это стоит?',
+          short: 'труд · сколько это стоит', markers: 'считает деньги / усилия / выгоду. Ключи: «не моё», «зачем тратить», «стабильно», «свои руки».' },
+    UB: { suit: '♦', name: 'УБ', full: 'Умный-Бедный',          param: 'Мышление', q: 'Почему это так?',
+          short: 'мышление · почему это так', markers: 'хочет понять, верит во что-то «логичное», ищет причины. Ключи: «потому что», «это объясняется», «проверил/доказал».' },
+    CV: { suit: '♥', name: 'ЧВ', full: 'Человек-Возможность',   param: 'Расчётливость (интеллектуальное зрение)', q: 'Зачем и как обойти?',
+          short: 'расчёт · как обойти', markers: 'видит схему / связи / выгоду через людей. Ключи: «подвернулось», «обошёл», «использовал», «договорился».' }
   };
   var MAST_ORDER = ['SB', 'TF', 'UB', 'CV'];
-  var LEVELS = { 6: 'Реактивность (страх)', 7: 'Адаптация', 8: 'Компетентность', 9: 'Осознанность', 10: 'Баланс' };
+  var LEVELS = {
+    6:  'Реактивность · действует из страха, на автомате',
+    7:  'Адаптация · хитрит, ищет обходы',
+    8:  'Компетентность · считает, видит детали',
+    9:  'Осознанность · понимает причины и систему',
+    10: 'Баланс · действует контролируемо, в долгую'
+  };
   var LEVEL_ORDER = [6, 7, 8, 9, 10];
 
   // ---------- каноничная матрица паттернов (масть × уровень) ----------
@@ -169,14 +179,29 @@
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.exit()">← К списку игр</button>' +
         '<div class="vr-h1">🔮 Вариатика — Basic</div>' +
-        '<div class="vr-lead">Тренируем главный навык: видеть <b>паттерн поведения</b> и предсказывать продолжение. Фреди даёт 2 истории одного типа → ты определяешь масть → предсказываешь третьего → узнаёшь этот тип в своих знакомых.</div>' +
-        '<div class="vr-card" style="font-size:.9rem"><b>4 масти:</b> ♠ <b>СБ</b> сила · ♣ <b>ТФ</b> труд · ♦ <b>УБ</b> мышление · ♥ <b>ЧВ</b> расчёт. Уровни 6→10 — от страха к балансу.</div>' +
-        (p.rounds ? ('<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">🎯 Твоя точность чтения мастей</div>' + rows +
+        '<div class="vr-lead"><b>Тренажёр чтения людей.</b> Учишься по поведению определять, <i>что движет человеком</i> — и предсказывать, как он поступит дальше. Без этого приходится «удивляться людям» снова и снова.</div>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">🎁 Что ты получишь</div>' +
+          '<div style="font-size:.92rem;line-height:1.55"><b>· В работе:</b> понимать, кому какую задачу можно доверить, а кому — нет.<br>' +
+          '<b>· В переговорах и продажах:</b> подбирать ключ под человека (один платит за стабильность, другой — за статус, третий — за идею).<br>' +
+          '<b>· В отношениях:</b> перестать ждать от человека того, чего он по своей «масти» дать не может.<br>' +
+          '<b>· В безопасности:</b> раньше замечать манипулятора и того, кто «обходит систему».</div></div>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">🎲 Как играет (3 шага)</div>' +
+          '<div style="font-size:.92rem;line-height:1.55"><b>1.</b> Фреди даёт <b>2 истории</b> одного типа — ты ищешь, что общего.<br>' +
+          '<b>2.</b> Выбираешь <b>масть</b> (♠♣♦♥) — Фреди говорит, угадал или нет, и раскрывает паттерн.<br>' +
+          '<b>3.</b> Даёт <b>3-ю ситуацию (без развязки)</b> — ты предсказываешь поведение → проверка → можешь узнать этот тип в своих знакомых.</div></div>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">🃏 4 масти — 4 «двигателя»</div>' +
+          '<div style="font-size:.92rem;line-height:1.6">' +
+          '<div><b>♠ СБ — Сила.</b> Главный вопрос: «кто здесь сильнее?» Реагирует на угрозу.</div>' +
+          '<div><b>♣ ТФ — Труд.</b> Главный вопрос: «сколько это стоит?» Считает усилия и деньги.</div>' +
+          '<div><b>♦ УБ — Мышление.</b> Главный вопрос: «почему это так?» Хочет понять и объяснить.</div>' +
+          '<div><b>♥ ЧВ — Расчёт.</b> Главный вопрос: «зачем и как обойти?» Видит схемы и связи.</div>' +
+          '<div style="margin-top:6px;color:#9aa0ad;font-size:.86rem">Уровни 6→10 — от <i>реакции из страха</i> до <i>контролируемого баланса</i>.</div></div></div>' +
+        (p.rounds ? ('<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">📊 Твоя точность чтения мастей</div>' + rows +
           '<div style="font-size:.84rem;color:#9aa0ad;margin-top:8px">Прогнозов точно: ' + p.predHits + '/' + p.rounds + ' (' + predAcc + '%)' +
           (blind ? '.<br>Хуже всего читаешь <b style="color:#fca5a5">' + blind.suit + ' ' + blind.name + '</b> — это твоя <b>слепая масть</b>. Часто это тип, противоположный твоему.' : '') + '</div></div>') : '') +
-        '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(0)">🎲 Случайный раунд</button>' +
+        '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(0)">🎲 Начать — случайный раунд</button>' +
         '<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">Или выбери уровень</div><div>' + chips + '</div></div>' +
-        '<div class="vr-card" style="font-size:.82rem;color:#8b90a0">💡 Цель — не вызубрить систему, а натренировать глаз: после двух историй сам видишь масть и предсказываешь поведение. Слепая масть покажет, кого тебе труднее всего понять.</div>' +
+        '<div class="vr-card" style="font-size:.82rem;color:#8b90a0">💡 Цель — не вызубрить систему, а натренировать глаз. Слепая масть появится через пару раундов: это тип, которого ты в жизни узнаёшь хуже всего — и которого тебе важнее всего научиться читать.</div>' +
       '</div>';
   }
   function exit() { if (typeof window.showKonturScreen === 'function') window.showKonturScreen(); else home(); }
@@ -240,11 +265,18 @@
     c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
-        '<div class="vr-h1">🔍 Две истории — один тип</div>' +
-        '<div class="vr-lead">Прочитай обе. Что общего в поведении? Какая это масть — что движет человеком?</div>' +
+        '<div class="vr-h1">🔍 Шаг 1 из 3: определи масть</div>' +
+        '<div class="vr-lead">Прочитай обе истории. Они про <b>один тип</b> людей. Какой главный «двигатель» у этого типа — сила, труд, мышление или расчёт?</div>' +
         '<div class="vr-story"><div class="lab">История 1</div>' + esc(ST.round.s1) + '</div>' +
         '<div class="vr-story"><div class="lab">История 2</div>' + esc(ST.round.s2) + '</div>' +
-        '<div class="vr-card"><div style="font-weight:700;margin-bottom:10px">Определи масть:</div>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:6px">На что смотреть:</div>' +
+          '<div style="font-size:.88rem;color:#aeb1bd;line-height:1.55">' +
+          '<b>♠ СБ — сила:</b> ' + esc(MASTS.SB.markers) + '<br>' +
+          '<b>♣ ТФ — труд:</b> ' + esc(MASTS.TF.markers) + '<br>' +
+          '<b>♦ УБ — мышление:</b> ' + esc(MASTS.UB.markers) + '<br>' +
+          '<b>♥ ЧВ — расчёт:</b> ' + esc(MASTS.CV.markers) +
+          '</div></div>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:10px">Твой выбор:</div>' +
           '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'SB\')"><span class="s">♠</span> СБ · сила</button>' +
           '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'TF\')"><span class="s">♣</span> ТФ · труд</button>' +
           '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'UB\')"><span class="s">♦</span> УБ · мышление</button>' +
@@ -269,7 +301,7 @@
     c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
-        '<div class="vr-h1">🎯 Предскажи третьего</div>' +
+        '<div class="vr-h1">🎯 Шаг 2 из 3: предскажи третьего</div>' +
         banner +
         '<div class="vr-reveal"><b>' + m.suit + ' ' + esc(m.name) + ' · уровень ' + ST.level + '</b> — «' + esc(pat.card) + '»<br><span style="color:#aeb1bd">Паттерн: ' + esc(pat.p) + '</span></div>' +
         '<div class="vr-q3"><b>Ситуация 3.</b> ' + esc(ST.round.setup) + '</div>' +
@@ -322,7 +354,7 @@
     c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
-        '<div class="vr-h1">' + (ok ? '✅ Паттерн пойман' : '🔄 Почти') + '</div>' +
+        '<div class="vr-h1">Шаг 3 из 3 · ' + (ok ? '✅ Паттерн пойман' : '🔄 Почти') + '</div>' +
         '<div class="' + (ok ? 'vr-ok' : 'vr-no') + '"><b>Твой прогноз:</b> ' + esc(pred) + (note ? '<br><br>' + esc(note) : '') + '</div>' +
         '<div class="vr-reveal"><b>Как было на самом деле:</b><br>' + esc(ST.round.outcome) + '</div>' +
         '<div class="vr-card"><div style="font-weight:700;margin-bottom:6px">🪞 Узнай в жизни</div>' +
