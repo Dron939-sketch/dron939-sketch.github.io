@@ -1,0 +1,294 @@
+// variatika.js — игра «Вариатика Basic» в модуле «Игры» Фреди.
+// Тренажёр системного мышления через паттерны поведения (по книге
+// «Вариатика» и инструкции игры): 2 истории одного типа → найди паттерн →
+// предскажи поведение в 3-й ситуации → проверка.
+// Матрица: 4 масти (СБ/ТФ/УБ/ЧВ) × уровни 6–10 (литл-версия).
+(function () {
+  'use strict';
+
+  function api() { return (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
+  function uid() { return (window.CONFIG && window.CONFIG.USER_ID) || window.USER_ID || 0; }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function toast(t, k) { if (typeof window.showToast === 'function') window.showToast(t, k || 'info'); }
+  function track(ev, d) { try { if (window.FrediTracker) window.FrediTracker.track(ev, d || {}); } catch (e) {} }
+  async function aiGenerate(prompt, opts) {
+    opts = opts || {};
+    var body = { user_id: uid(), prompt: prompt, max_tokens: opts.max_tokens || 620, temperature: opts.temperature == null ? 0.85 : opts.temperature };
+    try {
+      if (typeof window.apiCall === 'function') return await window.apiCall('/api/ai/generate', { method: 'POST', body: JSON.stringify(body) });
+      var r = await fetch(api() + '/api/ai/generate', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (!r.ok) return { success: false };
+      return await r.json();
+    } catch (e) { return { success: false }; }
+  }
+  function clean(s) { return String(s || '').replace(/\|\|[^|]*\|\|/g, '').trim(); }
+
+  // ---------- 4 масти ----------
+  var MASTS = {
+    SB: { suit: '♠', name: 'СБ', full: 'Силовик-Беспредельщик', param: 'Сила', q: 'Кто здесь сильнее?' },
+    TF: { suit: '♣', name: 'ТФ', full: 'Трудяга-Фермер',        param: 'Выносливость / материальное', q: 'Сколько это стоит?' },
+    UB: { suit: '♦', name: 'УБ', full: 'Умный-Бедный',          param: 'Мышление', q: 'Почему это так?' },
+    CV: { suit: '♥', name: 'ЧВ', full: 'Человек-Возможность',   param: 'Расчётливость (интеллектуальное зрение)', q: 'Зачем и как обойти?' }
+  };
+  var MAST_ORDER = ['SB', 'TF', 'UB', 'CV'];
+  var LEVELS = { 6: 'Реактивность (страх)', 7: 'Адаптация', 8: 'Компетентность', 9: 'Осознанность', 10: 'Баланс' };
+  var LEVEL_ORDER = [6, 7, 8, 9, 10];
+
+  // ---------- каноничная матрица паттернов (масть × уровень) ----------
+  var PAT = {
+    SB: {
+      6: { card: 'Кладбищенский смотритель', p: 'Боится любого конфликта и силы — прячется, убегает, делает вид, что не видит. Не может защитить себя.' },
+      7: { card: 'Охранник', p: 'Избегает конфликта, но не прячется, а «не замечает» и ищет формальный компромисс: «не видел, не слышал». Пообещает разобраться — и не сделает.' },
+      8: { card: 'Спортивный тренер', p: 'Распознаёт силу и подстраивается под сильных: заискивает, «дружит» с опасными, чтобы поднять статус или получить защиту.' },
+      9: { card: 'Грузчик / сотрудник ППС', p: 'При конфликте зовёт тех, кто сильнее (друзья, родня, полиция, авторитеты). Использует чужую силу для своих проблем.' },
+      10: { card: 'Спортсмен', p: 'Сила есть и готов применить, но сначала пробует мирно. Силу — только если иначе не работает. Контролирует агрессию.' }
+    },
+    TF: {
+      6: { card: 'Лентяй-попрошайка', p: 'Видит только траты. Отказывается от выгоды, если надо вложить своё: «зачем тратить свои деньги».' },
+      7: { card: 'Уборщик', p: 'Считает прямые траты и видит выгоду, но боится скрытых: «а вдруг ещё что-то вылезет?» — и от страха отказывается.' },
+      8: { card: 'Продавец', p: 'Считает все издержки — и прямые, и косвенные (время, износ, ответственность, нервы, отпуск). Чаще выбирает стабильность.' },
+      9: { card: 'Монтажник', p: 'Работает на себя (фриланс/своё дело), продаёт своё время напрямую, оптимизирует издержки — иногда в ущерб качеству.' },
+      10: { card: 'Прораб / бригадир', p: 'Организует труд других (бригада, команда), сам не работает руками. Бережёт качество: репутация = капитал.' }
+    },
+    UB: {
+      6: { card: 'Зритель (киноман)', p: 'Верит всему, что «звучит логично» — псевдонаука, конспирология, эзотерика. Воображение без критических фильтров.' },
+      7: { card: 'Читающий', p: 'Фильтрует через авторитет: верит экспертам, степеням, книгам, известным людям — но сам не проверяет.' },
+      8: { card: 'Юзер', p: 'Верит только проверяемому: «покажите доказательства». Требует эмпирики, отделяет подтверждённое от сомнительного.' },
+      9: { card: 'Психолог', p: 'Не довольствуется поверхностью — ищет скрытые причины и мотивы, критически анализирует, замечает подвох.' },
+      10: { card: 'Врач', p: 'Систематически применяет научный метод и готовые протоколы предшественников — тщательно, по алгоритму.' }
+    },
+    CV: {
+      6: { card: 'Клептоман', p: 'Примитивная схема без расчёта последствий — берёт/обманывает «в лоб», попадается сразу.' },
+      7: { card: 'Актёр-породист', p: 'Копирует чужие схемы без понимания, действует импульсивно: увидел возможность — взял. Быстро попадается.' },
+      8: { card: 'Фальсификатор', p: 'Разбирает систему на части, находит слабое место и системно использует дыру.' },
+      9: { card: 'Мошенник-аферист', p: 'Видит причины поведения системы и людей, использует это понимание долгосрочно ради своей выгоды.' },
+      10: { card: 'Посредник / риелтор', p: 'Видит систему целиком и усиливает закономерности так, чтобы выигрывали все (win-win).' }
+    }
+  };
+
+  // числовые разминки (как в тренинге — разогреть мозг на закономерности)
+  var WARMUPS = [
+    { q: '3, 6, 9, 12, …', a: '15', why: 'шаг +3' },
+    { q: '2, 6, 18, 54, …', a: '162', why: '×3' },
+    { q: '1, 4, 9, 16, …', a: '25', why: 'квадраты: 5²' },
+    { q: '5, 10, 20, 40, …', a: '80', why: '×2' },
+    { q: '1, 1, 2, 3, 5, 8, …', a: '13', why: 'Фибоначчи: сумма двух предыдущих' },
+    { q: '2, 5, 11, 23, …', a: '47', why: '×2 + 1' }
+  ];
+
+  function loadProg() { try { return JSON.parse(localStorage.getItem('variatika_prog') || 'null') || { rounds: 0, hits: 0 }; } catch (e) { return { rounds: 0, hits: 0 }; } }
+  function saveProg(p) { try { localStorage.setItem('variatika_prog', JSON.stringify(p)); } catch (e) {} }
+
+  // ---------- состояние раунда ----------
+  // phase: 'pattern' (видны 2 истории) → 'predict' (видна 3-я завязка) → 'result'
+  var ST = { mast: null, level: null, round: null, phase: '', busy: false };
+  function container() { return document.getElementById('screenContainer'); }
+
+  function injectCSS() {
+    if (document.getElementById('vrCSS')) return;
+    var s = document.createElement('style'); s.id = 'vrCSS';
+    s.textContent = [
+      '.vr-wrap{max-width:720px;margin:0 auto;padding:18px 16px 90px;color:#f2f3f5}',
+      '.vr-h1{font-size:1.5rem;font-weight:800;margin:6px 0 10px;line-height:1.15;color:#fff}',
+      '.vr-lead{font-size:1.02rem;color:#aeb1bd;line-height:1.6;margin-bottom:16px}',
+      '.vr-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px 18px;margin-bottom:12px;color:#dfe2e8;line-height:1.6;font-size:.96rem}',
+      '.vr-card b{color:#fff;font-weight:600}',
+      '.vr-btn{display:block;width:100%;text-align:left;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:15px 18px;margin-bottom:10px;color:#fff;font:inherit;font-size:1rem;cursor:pointer;transition:.18s}',
+      '.vr-btn:hover{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.5)}',
+      '.vr-btn small{display:block;color:#9aa0ad;font-size:.82rem;margin-top:4px;font-weight:400}',
+      '.vr-primary{background:linear-gradient(135deg,#10b981,#0ea5b7);border:none;color:#fff;text-align:center;font-weight:700}',
+      '.vr-primary:hover{filter:brightness(1.07)}',
+      '.vr-ghost{display:inline-block;background:none;border:none;color:#9aa0ad;font:inherit;font-size:.9rem;cursor:pointer;padding:6px 0;margin-bottom:6px}',
+      '.vr-ghost:hover{color:#fff}',
+      '.vr-chip{display:inline-block;padding:9px 15px;margin:0 7px 8px 0;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e6e8ee;font-size:.92rem;cursor:pointer;transition:.15s}',
+      '.vr-chip:hover{border-color:rgba(16,185,129,.55)}',
+      '.vr-story{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-left:3px solid #10b981;border-radius:10px;padding:12px 14px;margin-bottom:10px;line-height:1.55;font-size:.95rem}',
+      '.vr-story .lab{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6ee7b7;margin-bottom:5px}',
+      '.vr-reveal{background:linear-gradient(135deg,rgba(16,185,129,.14),rgba(16,185,129,.04));border:1px solid rgba(16,185,129,.4);border-radius:14px;padding:14px 16px;margin:10px 0;line-height:1.55}',
+      '.vr-q3{background:linear-gradient(135deg,rgba(245,158,11,.13),rgba(245,158,11,.04));border:1px solid rgba(245,158,11,.4);border-radius:14px;padding:14px 16px;margin:10px 0;line-height:1.55}',
+      '.vr-ta{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px 14px;color:#fff;font:inherit;font-size:.96rem;resize:vertical;min-height:80px;line-height:1.5}',
+      '.vr-ta:focus{outline:none;border-color:rgba(16,185,129,.6)}',
+      '.vr-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}',
+      '.vr-mic{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;font-size:1.1rem;cursor:pointer;flex-shrink:0}',
+      '.vr-ok{background:linear-gradient(135deg,rgba(22,163,74,.18),rgba(22,163,74,.05));border:1px solid rgba(22,163,74,.5);border-radius:14px;padding:13px 16px;margin:10px 0;line-height:1.5}',
+      '.vr-no{background:linear-gradient(135deg,rgba(239,68,68,.14),rgba(239,68,68,.04));border:1px solid rgba(239,68,68,.45);border-radius:14px;padding:13px 16px;margin:10px 0;line-height:1.5}',
+      '.vr-typing{color:#8b90a0;font-size:.85rem;font-style:italic;padding:6px 0}',
+      '.vr-warm{font-size:.86rem;color:#9aa0ad;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);border-radius:12px;padding:10px 14px;margin-bottom:12px}',
+      '[data-theme="light"] .vr-wrap{color:#1a1a2e}',
+      '[data-theme="light"] .vr-h1{color:#0f1020}',
+      '[data-theme="light"] .vr-lead{color:#555}',
+      '[data-theme="light"] .vr-card{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#222}',
+      '[data-theme="light"] .vr-card b{color:#000}',
+      '[data-theme="light"] .vr-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#111}',
+      '[data-theme="light"] .vr-btn small{color:#666}',
+      '[data-theme="light"] .vr-story{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08)}',
+      '[data-theme="light"] .vr-ta{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.15);color:#111}'
+    ].join('\n');
+    document.head.appendChild(s);
+  }
+
+  // ---------- хаб ----------
+  function home() {
+    injectCSS();
+    track('feature_opened', { feature: 'variatika' });
+    var c = container(); if (!c) return;
+    var p = loadProg();
+    var acc = p.rounds ? Math.round(p.hits / p.rounds * 100) : 0;
+    var chips = LEVEL_ORDER.map(function (n) { return '<span class="vr-chip" onclick="VARIATIKA.start(' + n + ')">Ур. ' + n + ' · ' + esc(LEVELS[n]) + '</span>'; }).join('');
+    c.innerHTML =
+      '<div class="vr-wrap">' +
+        '<button class="vr-ghost" onclick="VARIATIKA.exit()">← К списку игр</button>' +
+        '<div class="vr-h1">🔮 Вариатика — Basic</div>' +
+        '<div class="vr-lead">Тренируем главный навык: видеть <b>паттерн поведения</b> и предсказывать продолжение. Как «3, 6, 9, … → 12», только с людьми. Фреди даёт 2 истории одного типа → ты находишь закономерность → предсказываешь, как поведёт себя третий.</div>' +
+        '<div class="vr-card" style="font-size:.9rem"><b>4 масти — 4 мыслительные привычки:</b><br>♠ <b>СБ</b> — сила. ♣ <b>ТФ</b> — выносливость и труд. ♦ <b>УБ</b> — мышление. ♥ <b>ЧВ</b> — расчётливость и связи.<br>Уровни 6→10 — от страха к балансу.</div>' +
+        '<div class="vr-card" style="font-size:.86rem;color:#9aa0ad">Раундов: <b style="color:#6ee7b7">' + (p.rounds || 0) + '</b> · точных прогнозов: <b style="color:#6ee7b7">' + (p.hits || 0) + '</b>' + (p.rounds ? ' (' + acc + '%)' : '') + '</div>' +
+        '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(0)">🎲 Случайный раунд</button>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">Или выбери уровень</div><div>' + chips + '</div></div>' +
+        '<div class="vr-card" style="font-size:.82rem;color:#8b90a0">💡 Это «литл-версия» (уровни 6–10). Цель — не вызубрить систему, а натренировать глаз: после двух историй сам видишь паттерн и предсказываешь третью.</div>' +
+      '</div>';
+  }
+  function exit() { if (typeof window.showKonturScreen === 'function') window.showKonturScreen(); else home(); }
+
+  // ---------- раунд ----------
+  function start(level) {
+    injectCSS();
+    var lvl = level && LEVELS[level] ? level : LEVEL_ORDER[Math.floor(Math.random() * LEVEL_ORDER.length)];
+    var mast = MAST_ORDER[Math.floor(Math.random() * MAST_ORDER.length)];
+    ST = { mast: mast, level: lvl, round: null, phase: 'gen', busy: true };
+    track('feature_opened', { feature: 'variatika_round', mast: mast, level: lvl });
+    renderGen();
+    genRound();
+  }
+  function renderGen() {
+    var c = container(); if (!c) return;
+    c.innerHTML = '<div class="vr-wrap"><button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
+      '<div class="vr-h1">🔮 Раунд готовится…</div><div class="vr-typing">Фреди подбирает две истории одного типа…</div></div>';
+  }
+
+  function buildGen() {
+    var m = MASTS[ST.mast], pat = PAT[ST.mast][ST.level];
+    return 'Ты — генератор заданий для тренажёра «Вариатика» (чтение паттернов поведения).\n' +
+      'Тип человека: масть ' + m.full + ' (' + m.param + '), уровень ' + ST.level + ' (' + LEVELS[ST.level] + ').\n' +
+      'ПАТТЕРН этого типа: ' + pat.p + '\n\n' +
+      'Сгенерируй РОВНО в таком формате (без вступлений), на «ты», живым русским, бытовые ситуации с обычными профессиями:\n' +
+      'ИСТОРИЯ1: <2–4 предложения: человек в ситуации ярко проявляет этот паттерн. Концовка показана.>\n' +
+      'ИСТОРИЯ2: <2–4 предложения: ДРУГАЯ профессия/ситуация, тот же паттерн. Концовка показана.>\n' +
+      'ЗАВЯЗКА3: <2–4 предложения: ТРЕТЬЯ ситуация, только завязка — БЕЗ развязки, поставь героя перед выбором/угрозой.>\n' +
+      'РАЗВЯЗКА3: <1–3 предложения: как герой поведёт себя по этому паттерну — каноничный исход.>\n' +
+      'Не называй масть и уровень внутри историй. Истории должны быть про РАЗНЫХ людей.';
+  }
+  function parseRound(raw) {
+    function grab(label, next) {
+      var re = new RegExp(label + '\\s*[:：]\\s*([\\s\\S]*?)(?=\\n\\s*(?:' + next + ')\\s*[:：]|$)', 'i');
+      var m = String(raw || '').match(re); return m ? m[1].trim() : '';
+    }
+    return {
+      s1: grab('ИСТОРИЯ1', 'ИСТОРИЯ2|ЗАВЯЗКА3|РАЗВЯЗКА3'),
+      s2: grab('ИСТОРИЯ2', 'ЗАВЯЗКА3|РАЗВЯЗКА3'),
+      setup: grab('ЗАВЯЗКА3', 'РАЗВЯЗКА3'),
+      outcome: grab('РАЗВЯЗКА3', '$')
+    };
+  }
+  async function genRound() {
+    var r = await aiGenerate(buildGen(), { temperature: 0.9, max_tokens: 640 });
+    var parsed = (r && r.success && r.content) ? parseRound(r.content) : null;
+    if (!parsed || !parsed.s1 || !parsed.s2 || !parsed.setup || !parsed.outcome) {
+      var c = container(); if (c) c.innerHTML = '<div class="vr-wrap"><button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
+        '<div class="vr-card">Не удалось собрать раунд. Попробуем ещё раз?</div>' +
+        '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(' + ST.level + ')">🔄 Ещё раунд</button></div>';
+      ST.busy = false; return;
+    }
+    ST.round = parsed; ST.phase = 'pattern'; ST.busy = false;
+    renderPattern();
+  }
+
+  function renderPattern() {
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="vr-wrap">' +
+        '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
+        '<div class="vr-h1">🔍 Две истории — один тип</div>' +
+        '<div class="vr-lead">Прочитай обе. Что общего в поведении? Какой паттерн? Сформулируй (по желанию) — и открой проверку.</div>' +
+        '<div class="vr-story"><div class="lab">История 1</div>' + esc(ST.round.s1) + '</div>' +
+        '<div class="vr-story"><div class="lab">История 2</div>' + esc(ST.round.s2) + '</div>' +
+        '<textarea class="vr-ta" id="vrPat" placeholder="Паттерн: что общего в их поведении? (по желанию)"></textarea>' +
+        '<button class="vr-btn vr-primary" onclick="VARIATIKA.showPattern()">Показать паттерн и 3-ю ситуацию →</button>' +
+      '</div>';
+  }
+  function showPattern() {
+    var pat = PAT[ST.mast][ST.level], m = MASTS[ST.mast];
+    ST.phase = 'predict';
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="vr-wrap">' +
+        '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
+        '<div class="vr-h1">🎯 Предскажи третьего</div>' +
+        '<div class="vr-reveal"><b>' + m.suit + ' ' + esc(m.name) + ' · уровень ' + ST.level + '</b> — «' + esc(pat.card) + '»<br><span style="color:#aeb1bd">Паттерн: ' + esc(pat.p) + '</span></div>' +
+        '<div class="vr-q3"><b>Ситуация 3.</b> ' + esc(ST.round.setup) + '</div>' +
+        '<div style="font-size:.9rem;color:#aeb1bd;margin:4px 0 6px">Как поведёт себя этот человек? Предскажи:</div>' +
+        '<textarea class="vr-ta" id="vrPred" placeholder="Мой прогноз: он…"></textarea>' +
+        '<div class="vr-row">' +
+          '<button class="vr-mic" id="vrMic" onclick="VARIATIKA.mic()" aria-label="Голосом">🎤</button>' +
+          '<button class="vr-btn vr-primary" style="flex:1;width:auto;margin:0;padding:13px" onclick="VARIATIKA.predict()">Проверить прогноз</button>' +
+        '</div>' +
+      '</div>';
+    var t = document.getElementById('vrPred'); if (t) t.focus();
+  }
+
+  function micStop() { try { if (window.voiceManager && window.voiceManager.stopRecording) window.voiceManager.stopRecording(); } catch (e) {} ST.recording = false; var m = document.getElementById('vrMic'); if (m) m.textContent = '🎤'; }
+  function mic() {
+    var inp = document.getElementById('vrPred'); var mic = document.getElementById('vrMic');
+    var vm = window.voiceManager;
+    if (!vm || typeof vm.startRecording !== 'function') { toast('Голосовой ввод недоступен', 'info'); return; }
+    if (ST.recording) { micStop(); return; }
+    try {
+      vm.sttOnly = true;
+      vm.onTranscript = function (t) { if (inp) { inp.value = (inp.value ? inp.value + ' ' : '') + String(t || '').trim(); inp.focus(); } };
+      vm.startRecording(); ST.recording = true; if (mic) mic.textContent = '⏹';
+    } catch (e) { toast('Микрофон недоступен', 'error'); ST.recording = false; }
+  }
+
+  function buildJudge(pred) {
+    var pat = PAT[ST.mast][ST.level];
+    return 'Тренажёр «Вариатика». Паттерн типа: ' + pat.p + '\n' +
+      'Каноничная развязка 3-й ситуации: «' + ST.round.outcome + '».\n' +
+      'Прогноз игрока: «' + pred + '».\n\n' +
+      'Совпал ли прогноз игрока с развязкой ПО СМЫСЛУ (он уловил паттерн)? Ответь СТРОГО:\n' +
+      'РАЗБОР: <1–2 предложения, на «ты»: что игрок уловил/упустил в паттерне>\n' +
+      '||OK:yes|| или ||OK:no||';
+  }
+  async function predict() {
+    if (ST.busy) return;
+    if (ST.recording) micStop();
+    var inp = document.getElementById('vrPred'); if (!inp) return;
+    var pred = inp.value.trim();
+    if (pred.length < 5) { toast('Напиши прогноз — как он поступит?', 'info'); return; }
+    ST.busy = true;
+    var c = container();
+    var r = await aiGenerate(buildJudge(pred), { temperature: 0.2, max_tokens: 160 });
+    var ok = false, note = '';
+    if (r && r.success && r.content) { ok = /\|\|\s*OK\s*:\s*yes\s*\|\|/i.test(r.content); note = clean(r.content); }
+    var p = loadProg(); p.rounds = (p.rounds || 0) + 1; if (ok) p.hits = (p.hits || 0) + 1; saveProg(p);
+    var warm = WARMUPS[Math.floor(Math.random() * WARMUPS.length)];
+    if (c) c.innerHTML =
+      '<div class="vr-wrap">' +
+        '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
+        '<div class="vr-h1">' + (ok ? '✅ Паттерн пойман' : '🔄 Почти') + '</div>' +
+        '<div class="' + (ok ? 'vr-ok' : 'vr-no') + '"><b>Твой прогноз:</b> ' + esc(pred) + (note ? '<br><br>' + esc(note) : '') + '</div>' +
+        '<div class="vr-reveal"><b>Как было на самом деле:</b><br>' + esc(ST.round.outcome) + '</div>' +
+        '<div class="vr-warm">🔢 Разминка между раундами: <b>' + esc(warm.q) + '</b> &nbsp;→&nbsp; <span onclick="this.innerHTML=\'<b style=color:#6ee7b7>' + warm.a + '</b> (' + esc(warm.why) + ')\'" style="cursor:pointer;text-decoration:underline dotted">показать ответ</span></div>' +
+        '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(' + ST.level + ')">🎲 Ещё раунд (ур. ' + ST.level + ')</button>' +
+        '<button class="vr-btn" onclick="VARIATIKA.start(0)">🔀 Случайный уровень</button>' +
+        '<button class="vr-btn" onclick="VARIATIKA.home()">В меню</button>' +
+      '</div>';
+    ST.busy = false;
+    track('feature_opened', { feature: 'variatika_predict', ok: ok ? 1 : 0, mast: ST.mast, level: ST.level });
+  }
+
+  // ---------- экспорт ----------
+  window.VARIATIKA = {
+    home: home, exit: exit, start: start, showPattern: showPattern, predict: predict, mic: mic
+  };
+  window.showVariatikaGame = home;
+  console.log('✅ variatika.js loaded (игра «Вариатика Basic»: паттерны поведения)');
+})();
