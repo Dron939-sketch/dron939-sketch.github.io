@@ -292,6 +292,7 @@
         '<button class="kt-btn" onclick="window.showMeisterGame&&window.showMeisterGame()"><span class="em">🗝️</span>МЕЙСТЕР-КОД<small>Тренажёр высшего навыка: вытащи из собеседника его сильные слова — не прося напрямую. Произнёс вслух — стал.</small></button>' +
         '<button class="kt-btn" onclick="window.showMarketologGame&&window.showMarketologGame()"><span class="em">📣</span>Маркетолог <span style="font-size:.8rem;color:#f0b24b">💎 Premium</span><small>Разговорный гипноз через историю: по 3 картам построй рассказ так, чтобы слушатель погрузился, захотел предмет и сам пришёл к выводу.</small></button>' +
         '<button class="kt-btn" onclick="window.showVariatikaGame&&window.showVariatikaGame()"><span class="em">🔮</span>Вариатика — Basic<small>Тренажёр чтения людей: 2 истории одного типа → найди паттерн → предскажи, как поведёт себя третий. 4 масти × уровни 6–10.</small></button>' +
+        '<button class="kt-btn" onclick="window.showProgressiveGame&&window.showProgressiveGame()"><span class="em">🚀</span>Вариатика — Progressive <span style="font-size:.8rem;color:#f0b24b">💎 Premium</span><small>7-дневный курс по переходу в сектор ЧВ: конвертация ценностей, краники, ЛНСВ, БДК, поддержание связей. Не игра — фундамент.</small></button>' +
         '<div class="kt-card" style="opacity:.65"><div class="kt-ch">Скоро — новые игры</div>Каждую доводим до ума и проверяем, потом добавляем следующую.</div>' +
       '</div>';
   }
