@@ -290,7 +290,7 @@
         '<div class="kt-lead">Игры, которые помогают думать яснее и жить осознаннее — не «убить время», а потренировать то, что реально меняет жизнь. Каждая новая игра появляется здесь только после того, как доведена до ума и проверена. Качество важнее количества.</div>' +
         '<button class="kt-btn" onclick="KONTUR.gameHome()"><span class="em">🧠</span>О чём ты умеешь думать<small>Тренажёр мышления: тест + игра с Фреди. Учишься думать о конкретных темах вместо «обо всём».</small></button>' +
         '<button class="kt-btn" onclick="window.showMeisterGame&&window.showMeisterGame()"><span class="em">🗝️</span>МЕЙСТЕР-КОД<small>Тренажёр высшего навыка: вытащи из собеседника его сильные слова — не прося напрямую. Произнёс вслух — стал.</small></button>' +
-        '<button class="kt-btn" onclick="window.showMarketologGame&&window.showMarketologGame()"><span class="em">📣</span>Маркетолог<small>Разговорный гипноз через историю: по 3 картам построй рассказ так, чтобы слушатель погрузился, захотел предмет и сам пришёл к выводу.</small></button>' +
+        '<button class="kt-btn" onclick="window.showMarketologGame&&window.showMarketologGame()"><span class="em">📣</span>Маркетолог <span style="font-size:.8rem;color:#f0b24b">💎 Premium</span><small>Разговорный гипноз через историю: по 3 картам построй рассказ так, чтобы слушатель погрузился, захотел предмет и сам пришёл к выводу.</small></button>' +
         '<div class="kt-card" style="opacity:.65"><div class="kt-ch">Скоро — новые игры</div>Каждую доводим до ума и проверяем, потом добавляем следующую.</div>' +
       '</div>';
   }

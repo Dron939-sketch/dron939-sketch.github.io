@@ -119,11 +119,45 @@
     document.head.appendChild(s);
   }
 
-  // ---------- хаб ----------
-  function home() {
-    injectCSS(); stopSpeak();
-    track('feature_opened', { feature: 'marketolog' });
+  // ---------- премиум-гейт ----------
+  // «Маркетолог» — премиум-игра. Используем общий флаг window.IS_PREMIUM
+  // и общий апселл showPremiumLockPopup (app.js), как остальные платные фичи.
+  async function ensurePremium() {
+    if (window.IS_PREMIUM === true) return true;
+    if ((window.IS_PREMIUM === null || window.IS_PREMIUM === undefined) && typeof window.loadPremiumStatus === 'function') {
+      try { await window.loadPremiumStatus(); } catch (e) {}
+    }
+    return window.IS_PREMIUM === true;
+  }
+  function openPremium() {
+    if (typeof window.showPremiumLockPopup === 'function') { window.showPremiumLockPopup('Маркетолог'); return; }
+    if (typeof window.showSettingsScreen === 'function') { try { window.showSettingsScreen(); return; } catch (e) {} }
+    toast('Открой раздел «Подписка» в настройках', 'info');
+  }
+  function renderLocked() {
+    injectCSS();
     var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="mr-wrap">' +
+        '<button class="mr-ghost" onclick="MARKETOLOG.exit()">← К списку игр</button>' +
+        '<div class="mr-h1">📣 Маркетолог</div>' +
+        '<div class="mr-card" style="text-align:center;border-color:rgba(245,158,11,.4)">' +
+          '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра доступна с подпиской</div>' +
+          '<div style="color:#aeb1bd;line-height:1.55">«Маркетолог» — продвинутый тренажёр разговорного гипноза. Он входит в <b>Фреди Premium</b>: безлимит по времени и доступ к сильным играм.</div>' +
+        '</div>' +
+        '<button class="mr-btn mr-primary" onclick="MARKETOLOG.openPremium()">💎 Открыть Premium</button>' +
+        '<button class="mr-btn" onclick="MARKETOLOG.exit()">← Вернуться к играм</button>' +
+      '</div>';
+    track('feature_opened', { feature: 'marketolog_locked' });
+  }
+
+  // ---------- хаб ----------
+  async function home() {
+    injectCSS(); stopSpeak();
+    var c = container(); if (!c) return;
+    if (!(await ensurePremium())) { renderLocked(); return; }
+    track('feature_opened', { feature: 'marketolog' });
     var p = loadProg();
     c.innerHTML =
       '<div class="mr-wrap">' +
@@ -142,6 +176,7 @@
 
   // ---------- раздача карт ----------
   function deal() {
+    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     injectCSS(); stopSpeak();
     ST.loc = pick(LOCS); ST.obj = pick(OBJS); ST.thesis = pick(THESES); ST.busy = false;
     track('feature_opened', { feature: 'marketolog_deal' });
@@ -221,6 +256,7 @@
   }
 
   async function tell() {
+    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     if (ST.busy) return;
     if (ST.recording) micStop();
     var inp = document.getElementById('mrStory'); if (!inp) return;
@@ -266,6 +302,7 @@
   }
 
   async function example() {
+    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     if (ST.busy) return;
     ST.busy = true;
     var out = document.getElementById('mrOut');
@@ -288,7 +325,7 @@
 
   // ---------- экспорт ----------
   window.MARKETOLOG = {
-    home: home, exit: exit, deal: deal, tell: tell, mic: mic, example: example, speakExample: speakExample
+    home: home, exit: exit, deal: deal, tell: tell, mic: mic, example: example, speakExample: speakExample, openPremium: openPremium
   };
   window.showMarketologGame = home;
   console.log('✅ marketolog.js loaded (игра «Маркетолог»: разговорный гипноз через сторителлинг)');
