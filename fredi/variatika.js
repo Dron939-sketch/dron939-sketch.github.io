@@ -1,8 +1,9 @@
 // variatika.js — игра «Вариатика Basic» в модуле «Игры» Фреди.
 // Тренажёр системного мышления через паттерны поведения (по книге
-// «Вариатика» и инструкции игры): 2 истории одного типа → найди паттерн →
-// предскажи поведение в 3-й ситуации → проверка.
+// «Вариатика» и инструкции игры): 2 истории одного типа → определи масть →
+// предскажи поведение в 3-й ситуации → узнай этот тип в своих знакомых.
 // Матрица: 4 масти (СБ/ТФ/УБ/ЧВ) × уровни 6–10 (литл-версия).
+// Копится точность чтения по мастям → подсвечивается «слепая масть».
 (function () {
   'use strict';
 
@@ -66,7 +67,6 @@
     }
   };
 
-  // числовые разминки (как в тренинге — разогреть мозг на закономерности)
   var WARMUPS = [
     { q: '3, 6, 9, 12, …', a: '15', why: 'шаг +3' },
     { q: '2, 6, 18, 54, …', a: '162', why: '×3' },
@@ -76,12 +76,25 @@
     { q: '2, 5, 11, 23, …', a: '47', why: '×2 + 1' }
   ];
 
-  function loadProg() { try { return JSON.parse(localStorage.getItem('variatika_prog') || 'null') || { rounds: 0, hits: 0 }; } catch (e) { return { rounds: 0, hits: 0 }; } }
+  // ---------- прогресс (+ точность чтения по мастям) ----------
+  function loadProg() {
+    var d = { rounds: 0, predHits: 0, byMast: {} };
+    MAST_ORDER.forEach(function (k) { d.byMast[k] = { seen: 0, hit: 0 }; });
+    try {
+      var p = JSON.parse(localStorage.getItem('variatika_prog') || 'null');
+      if (!p) return d;
+      p.rounds = p.rounds || 0;
+      p.predHits = p.predHits || p.hits || 0;
+      p.byMast = p.byMast || {};
+      MAST_ORDER.forEach(function (k) { p.byMast[k] = p.byMast[k] || { seen: 0, hit: 0 }; });
+      return p;
+    } catch (e) { return d; }
+  }
   function saveProg(p) { try { localStorage.setItem('variatika_prog', JSON.stringify(p)); } catch (e) {} }
 
   // ---------- состояние раунда ----------
-  // phase: 'pattern' (видны 2 истории) → 'predict' (видна 3-я завязка) → 'result'
-  var ST = { mast: null, level: null, round: null, phase: '', busy: false };
+  // phase: 'pattern' (2 истории, выбери масть) → 'predict' (3-я завязка) → 'result'
+  var ST = { mast: null, level: null, round: null, phase: '', busy: false, recording: false, mastGuess: null };
   function container() { return document.getElementById('screenContainer'); }
 
   function injectCSS() {
@@ -102,6 +115,13 @@
       '.vr-ghost:hover{color:#fff}',
       '.vr-chip{display:inline-block;padding:9px 15px;margin:0 7px 8px 0;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#e6e8ee;font-size:.92rem;cursor:pointer;transition:.15s}',
       '.vr-chip:hover{border-color:rgba(16,185,129,.55)}',
+      '.vr-mast{display:inline-flex;align-items:center;gap:7px;padding:11px 16px;margin:0 8px 8px 0;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:#fff;font:inherit;font-size:1rem;cursor:pointer;transition:.15s}',
+      '.vr-mast:hover{border-color:rgba(16,185,129,.6);background:rgba(16,185,129,.1)}',
+      '.vr-mast .s{font-size:1.25rem;line-height:1}',
+      '.vr-mrow{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:.9rem}',
+      '.vr-mrow .nm{width:58px;flex-shrink:0;color:#e6e8ee}',
+      '.vr-bar{height:7px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden}',
+      '.vr-bar i{display:block;height:100%;background:linear-gradient(90deg,#10b981,#0ea5b7)}',
       '.vr-story{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-left:3px solid #10b981;border-radius:10px;padding:12px 14px;margin-bottom:10px;line-height:1.55;font-size:.95rem}',
       '.vr-story .lab{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#6ee7b7;margin-bottom:5px}',
       '.vr-reveal{background:linear-gradient(135deg,rgba(16,185,129,.14),rgba(16,185,129,.04));border:1px solid rgba(16,185,129,.4);border-radius:14px;padding:14px 16px;margin:10px 0;line-height:1.55}',
@@ -121,6 +141,7 @@
       '[data-theme="light"] .vr-card b{color:#000}',
       '[data-theme="light"] .vr-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#111}',
       '[data-theme="light"] .vr-btn small{color:#666}',
+      '[data-theme="light"] .vr-mast{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.15);color:#111}',
       '[data-theme="light"] .vr-story{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.08)}',
       '[data-theme="light"] .vr-ta{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.15);color:#111}'
     ].join('\n');
@@ -133,18 +154,29 @@
     track('feature_opened', { feature: 'variatika' });
     var c = container(); if (!c) return;
     var p = loadProg();
-    var acc = p.rounds ? Math.round(p.hits / p.rounds * 100) : 0;
+    var predAcc = p.rounds ? Math.round(p.predHits / p.rounds * 100) : 0;
+    var rows = '', blind = null, blindPct = 101;
+    MAST_ORDER.forEach(function (k) {
+      var b = p.byMast[k], m = MASTS[k];
+      var pct = b.seen ? Math.round(b.hit / b.seen * 100) : null;
+      rows += '<div class="vr-mrow"><span class="nm">' + m.suit + ' ' + m.name + '</span>' +
+        '<div style="flex:1"><div class="vr-bar"><i style="width:' + (pct == null ? 0 : pct) + '%"></i></div></div>' +
+        '<span style="width:58px;text-align:right;color:#9aa0ad">' + (pct == null ? '—' : pct + '%') + '</span></div>';
+      if (b.seen >= 2 && pct < blindPct) { blindPct = pct; blind = m; }
+    });
     var chips = LEVEL_ORDER.map(function (n) { return '<span class="vr-chip" onclick="VARIATIKA.start(' + n + ')">Ур. ' + n + ' · ' + esc(LEVELS[n]) + '</span>'; }).join('');
     c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.exit()">← К списку игр</button>' +
         '<div class="vr-h1">🔮 Вариатика — Basic</div>' +
-        '<div class="vr-lead">Тренируем главный навык: видеть <b>паттерн поведения</b> и предсказывать продолжение. Как «3, 6, 9, … → 12», только с людьми. Фреди даёт 2 истории одного типа → ты находишь закономерность → предсказываешь, как поведёт себя третий.</div>' +
-        '<div class="vr-card" style="font-size:.9rem"><b>4 масти — 4 мыслительные привычки:</b><br>♠ <b>СБ</b> — сила. ♣ <b>ТФ</b> — выносливость и труд. ♦ <b>УБ</b> — мышление. ♥ <b>ЧВ</b> — расчётливость и связи.<br>Уровни 6→10 — от страха к балансу.</div>' +
-        '<div class="vr-card" style="font-size:.86rem;color:#9aa0ad">Раундов: <b style="color:#6ee7b7">' + (p.rounds || 0) + '</b> · точных прогнозов: <b style="color:#6ee7b7">' + (p.hits || 0) + '</b>' + (p.rounds ? ' (' + acc + '%)' : '') + '</div>' +
+        '<div class="vr-lead">Тренируем главный навык: видеть <b>паттерн поведения</b> и предсказывать продолжение. Фреди даёт 2 истории одного типа → ты определяешь масть → предсказываешь третьего → узнаёшь этот тип в своих знакомых.</div>' +
+        '<div class="vr-card" style="font-size:.9rem"><b>4 масти:</b> ♠ <b>СБ</b> сила · ♣ <b>ТФ</b> труд · ♦ <b>УБ</b> мышление · ♥ <b>ЧВ</b> расчёт. Уровни 6→10 — от страха к балансу.</div>' +
+        (p.rounds ? ('<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">🎯 Твоя точность чтения мастей</div>' + rows +
+          '<div style="font-size:.84rem;color:#9aa0ad;margin-top:8px">Прогнозов точно: ' + p.predHits + '/' + p.rounds + ' (' + predAcc + '%)' +
+          (blind ? '.<br>Хуже всего читаешь <b style="color:#fca5a5">' + blind.suit + ' ' + blind.name + '</b> — это твоя <b>слепая масть</b>. Часто это тип, противоположный твоему.' : '') + '</div></div>') : '') +
         '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(0)">🎲 Случайный раунд</button>' +
         '<div class="vr-card"><div style="font-weight:700;margin-bottom:8px">Или выбери уровень</div><div>' + chips + '</div></div>' +
-        '<div class="vr-card" style="font-size:.82rem;color:#8b90a0">💡 Это «литл-версия» (уровни 6–10). Цель — не вызубрить систему, а натренировать глаз: после двух историй сам видишь паттерн и предсказываешь третью.</div>' +
+        '<div class="vr-card" style="font-size:.82rem;color:#8b90a0">💡 Цель — не вызубрить систему, а натренировать глаз: после двух историй сам видишь масть и предсказываешь поведение. Слепая масть покажет, кого тебе труднее всего понять.</div>' +
       '</div>';
   }
   function exit() { if (typeof window.showKonturScreen === 'function') window.showKonturScreen(); else home(); }
@@ -154,7 +186,7 @@
     injectCSS();
     var lvl = level && LEVELS[level] ? level : LEVEL_ORDER[Math.floor(Math.random() * LEVEL_ORDER.length)];
     var mast = MAST_ORDER[Math.floor(Math.random() * MAST_ORDER.length)];
-    ST = { mast: mast, level: lvl, round: null, phase: 'gen', busy: true };
+    ST = { mast: mast, level: lvl, round: null, phase: 'gen', busy: true, recording: false, mastGuess: null };
     track('feature_opened', { feature: 'variatika_round', mast: mast, level: lvl });
     renderGen();
     genRound();
@@ -202,27 +234,43 @@
     renderPattern();
   }
 
+  // фаза 1: две истории → определи масть
   function renderPattern() {
     var c = container(); if (!c) return;
     c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
         '<div class="vr-h1">🔍 Две истории — один тип</div>' +
-        '<div class="vr-lead">Прочитай обе. Что общего в поведении? Какой паттерн? Сформулируй (по желанию) — и открой проверку.</div>' +
+        '<div class="vr-lead">Прочитай обе. Что общего в поведении? Какая это масть — что движет человеком?</div>' +
         '<div class="vr-story"><div class="lab">История 1</div>' + esc(ST.round.s1) + '</div>' +
         '<div class="vr-story"><div class="lab">История 2</div>' + esc(ST.round.s2) + '</div>' +
-        '<textarea class="vr-ta" id="vrPat" placeholder="Паттерн: что общего в их поведении? (по желанию)"></textarea>' +
-        '<button class="vr-btn vr-primary" onclick="VARIATIKA.showPattern()">Показать паттерн и 3-ю ситуацию →</button>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:10px">Определи масть:</div>' +
+          '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'SB\')"><span class="s">♠</span> СБ · сила</button>' +
+          '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'TF\')"><span class="s">♣</span> ТФ · труд</button>' +
+          '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'UB\')"><span class="s">♦</span> УБ · мышление</button>' +
+          '<button class="vr-mast" onclick="VARIATIKA.guessMast(\'CV\')"><span class="s">♥</span> ЧВ · расчёт</button>' +
+        '</div>' +
       '</div>';
   }
-  function showPattern() {
+  function guessMast(key) {
+    if (ST.phase !== 'pattern' || !MASTS[key]) return;
+    var correct = (key === ST.mast);
+    ST.phase = 'predict'; ST.mastGuess = correct;
+    var p = loadProg(); p.byMast[ST.mast].seen++; if (correct) p.byMast[ST.mast].hit++; saveProg(p);
+    renderPredict(correct, key);
+  }
+  // фаза 2: показали масть/паттерн → предскажи третьего
+  function renderPredict(correct, guessKey) {
     var pat = PAT[ST.mast][ST.level], m = MASTS[ST.mast];
-    ST.phase = 'predict';
+    var banner = correct
+      ? '<div class="vr-ok">✅ Масть угадал: <b>' + m.suit + ' ' + esc(m.name) + '</b></div>'
+      : '<div class="vr-no">❌ Ты выбрал ' + (MASTS[guessKey] ? MASTS[guessKey].suit + ' ' + MASTS[guessKey].name : '?') + ', а это <b>' + m.suit + ' ' + esc(m.name) + '</b></div>';
     var c = container(); if (!c) return;
     c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
         '<div class="vr-h1">🎯 Предскажи третьего</div>' +
+        banner +
         '<div class="vr-reveal"><b>' + m.suit + ' ' + esc(m.name) + ' · уровень ' + ST.level + '</b> — «' + esc(pat.card) + '»<br><span style="color:#aeb1bd">Паттерн: ' + esc(pat.p) + '</span></div>' +
         '<div class="vr-q3"><b>Ситуация 3.</b> ' + esc(ST.round.setup) + '</div>' +
         '<div style="font-size:.9rem;color:#aeb1bd;margin:4px 0 6px">Как поведёт себя этот человек? Предскажи:</div>' +
@@ -237,14 +285,14 @@
 
   function micStop() { try { if (window.voiceManager && window.voiceManager.stopRecording) window.voiceManager.stopRecording(); } catch (e) {} ST.recording = false; var m = document.getElementById('vrMic'); if (m) m.textContent = '🎤'; }
   function mic() {
-    var inp = document.getElementById('vrPred'); var mic = document.getElementById('vrMic');
+    var inp = document.getElementById('vrPred'); var micBtn = document.getElementById('vrMic');
     var vm = window.voiceManager;
     if (!vm || typeof vm.startRecording !== 'function') { toast('Голосовой ввод недоступен', 'info'); return; }
     if (ST.recording) { micStop(); return; }
     try {
       vm.sttOnly = true;
       vm.onTranscript = function (t) { if (inp) { inp.value = (inp.value ? inp.value + ' ' : '') + String(t || '').trim(); inp.focus(); } };
-      vm.startRecording(); ST.recording = true; if (mic) mic.textContent = '⏹';
+      vm.startRecording(); ST.recording = true; if (micBtn) micBtn.textContent = '⏹';
     } catch (e) { toast('Микрофон недоступен', 'error'); ST.recording = false; }
   }
 
@@ -264,31 +312,56 @@
     var pred = inp.value.trim();
     if (pred.length < 5) { toast('Напиши прогноз — как он поступит?', 'info'); return; }
     ST.busy = true;
-    var c = container();
     var r = await aiGenerate(buildJudge(pred), { temperature: 0.2, max_tokens: 160 });
     var ok = false, note = '';
     if (r && r.success && r.content) { ok = /\|\|\s*OK\s*:\s*yes\s*\|\|/i.test(r.content); note = clean(r.content); }
-    var p = loadProg(); p.rounds = (p.rounds || 0) + 1; if (ok) p.hits = (p.hits || 0) + 1; saveProg(p);
+    var p = loadProg(); p.rounds = (p.rounds || 0) + 1; if (ok) p.predHits = (p.predHits || 0) + 1; saveProg(p);
     var warm = WARMUPS[Math.floor(Math.random() * WARMUPS.length)];
-    if (c) c.innerHTML =
+    var m = MASTS[ST.mast], pat = PAT[ST.mast][ST.level];
+    var c = container(); if (!c) { ST.busy = false; return; }
+    c.innerHTML =
       '<div class="vr-wrap">' +
         '<button class="vr-ghost" onclick="VARIATIKA.home()">← В меню</button>' +
         '<div class="vr-h1">' + (ok ? '✅ Паттерн пойман' : '🔄 Почти') + '</div>' +
         '<div class="' + (ok ? 'vr-ok' : 'vr-no') + '"><b>Твой прогноз:</b> ' + esc(pred) + (note ? '<br><br>' + esc(note) : '') + '</div>' +
         '<div class="vr-reveal"><b>Как было на самом деле:</b><br>' + esc(ST.round.outcome) + '</div>' +
-        '<div class="vr-warm">🔢 Разминка между раундами: <b>' + esc(warm.q) + '</b> &nbsp;→&nbsp; <span onclick="this.innerHTML=\'<b style=color:#6ee7b7>' + warm.a + '</b> (' + esc(warm.why) + ')\'" style="cursor:pointer;text-decoration:underline dotted">показать ответ</span></div>' +
+        '<div class="vr-card"><div style="font-weight:700;margin-bottom:6px">🪞 Узнай в жизни</div>' +
+          '<div style="font-size:.9rem;color:#aeb1bd;margin-bottom:8px">Кого из знакомых ты узнаёшь в типе <b>' + m.suit + ' ' + esc(m.name) + '</b> · «' + esc(pat.card) + '»? Как он повёл бы себя?</div>' +
+          '<textarea class="vr-ta" id="vrLife" placeholder="Это похоже на… (имя/роль и в чём)"></textarea>' +
+          '<button class="vr-btn" style="margin-top:8px" onclick="VARIATIKA.applyTransfer()">Примерить на него →</button>' +
+          '<div id="vrLifeOut"></div>' +
+        '</div>' +
+        '<div class="vr-warm">🔢 Разминка: <b>' + esc(warm.q) + '</b> &nbsp;→&nbsp; <span onclick="this.innerHTML=\'<b style=color:#6ee7b7>' + warm.a + '</b> (' + esc(warm.why) + ')\'" style="cursor:pointer;text-decoration:underline dotted">ответ</span></div>' +
         '<button class="vr-btn vr-primary" onclick="VARIATIKA.start(' + ST.level + ')">🎲 Ещё раунд (ур. ' + ST.level + ')</button>' +
         '<button class="vr-btn" onclick="VARIATIKA.start(0)">🔀 Случайный уровень</button>' +
         '<button class="vr-btn" onclick="VARIATIKA.home()">В меню</button>' +
       '</div>';
     ST.busy = false;
-    track('feature_opened', { feature: 'variatika_predict', ok: ok ? 1 : 0, mast: ST.mast, level: ST.level });
+    track('feature_opened', { feature: 'variatika_predict', ok: ok ? 1 : 0, mast: ST.mast, level: ST.level, mastOk: ST.mastGuess ? 1 : 0 });
+  }
+
+  // привязка к жизни: примерить тип на реального знакомого
+  async function applyTransfer() {
+    var inp = document.getElementById('vrLife'), out = document.getElementById('vrLifeOut');
+    if (!inp) return;
+    var txt = inp.value.trim();
+    if (txt.length < 3) { toast('Опиши, кого узнал', 'info'); return; }
+    if (ST.busy) return; ST.busy = true;
+    if (out) out.innerHTML = '<div class="vr-typing">Фреди примеряет тип…</div>';
+    var m = MASTS[ST.mast], pat = PAT[ST.mast][ST.level];
+    var prompt = 'Игрок тренажёра «Вариатика» узнал в типе «' + m.full + ' · ' + pat.card + '» (паттерн: ' + pat.p + ') своего знакомого: «' + txt + '».\n' +
+      'Ответь коротко, на «ты», по-человечески (3–4 предложения, без диагнозов и ярлыков): похоже ли это на паттерн, и дай ОДИН практичный совет — как с таким человеком эффективнее общаться или чего от него ждать. Без воды.';
+    var r = await aiGenerate(prompt, { temperature: 0.7, max_tokens: 240 });
+    var d = (r && r.success && r.content) ? clean(r.content) : 'Если поведение совпадает с паттерном — тип ты узнал верно. С таким человеком работает то, что отвечает его главному мотиву, а не давит против него.';
+    if (out) out.innerHTML = '<div class="vr-reveal" style="margin-top:10px">🪞 ' + esc(d) + '</div>';
+    ST.busy = false;
+    track('feature_opened', { feature: 'variatika_transfer', mast: ST.mast });
   }
 
   // ---------- экспорт ----------
   window.VARIATIKA = {
-    home: home, exit: exit, start: start, showPattern: showPattern, predict: predict, mic: mic
+    home: home, exit: exit, start: start, guessMast: guessMast, predict: predict, mic: mic, applyTransfer: applyTransfer
   };
   window.showVariatikaGame = home;
-  console.log('✅ variatika.js loaded (игра «Вариатика Basic»: паттерны поведения)');
+  console.log('✅ variatika.js loaded (игра «Вариатика Basic»: паттерны поведения + слепая масть)');
 })();
