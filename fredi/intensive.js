@@ -153,6 +153,22 @@
     { seq: ['10 СБ', 'В СБ', 'Д СБ', '?'], pick: ['Д ТФ', 'К СБ', '10 СБ'], a: 'К СБ', why: 'иерархия одной масти растёт' }
   ];
 
+  // ---------- СКВОЗНОЙ СЧЁТ СЕРИИ «ВАРИАТИКА» ----------
+  function loadSeries() { try { return JSON.parse(localStorage.getItem('variatika_series') || 'null') || { score: 0, byGame: {} }; } catch (e) { return { score: 0, byGame: {} }; } }
+  function saveSeries(s) { try { localStorage.setItem('variatika_series', JSON.stringify(s)); } catch (e) {} }
+  function seriesAdd(game, pts) { if (!pts) return; var s = loadSeries(); s.score = (s.score || 0) + pts; s.byGame = s.byGame || {}; s.byGame[game] = (s.byGame[game] || 0) + pts; saveSeries(s); }
+  function seriesRank() {
+    var s = loadSeries(), sc = s.score || 0;
+    var R = [{m:120,n:'Мастер Вариатики'},{m:60,n:'Читатель людей'},{m:25,n:'Практик серии'},{m:10,n:'Наблюдатель'},{m:0,n:'Новичок серии'}];
+    for (var i = 0; i < R.length; i++) if (sc >= R[i].m) return { name: R[i].n, score: sc, next: R[i - 1] ? { min: R[i - 1].m, name: R[i - 1].n } : null };
+    return { name: R[R.length - 1].n, score: sc, next: { min: R[R.length - 2].m, name: R[R.length - 2].n } };
+  }
+  function seriesCardHtml() {
+    var r = seriesRank();
+    var bar = r.next ? '<div style="margin-top:8px;height:6px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><i style="display:block;height:100%;width:' + Math.min(100, Math.round(r.score / r.next.min * 100)) + '%;background:linear-gradient(90deg,#6366f1,#0ea5b7)"></i></div><div style="font-size:.78rem;color:#9aa0ad;margin-top:5px">До «' + r.next.name + '» — ещё ' + (r.next.min - r.score) + ' очков</div>' : '<div style="font-size:.78rem;color:#fcd34d;margin-top:5px">🏆 Высший разряд серии</div>';
+    return '<div class="iv-card" style="font-size:.9rem"><b>🏵️ Серия «Вариатика»:</b> звание <b style="color:#a5b4fc">' + r.name + '</b> · <b>' + r.score + '</b> очков' + bar + '</div>';
+  }
+
   // ---------- состояние ----------
   function loadProg() {
     var d = { done: {}, runs: [], situation: '', current: { lvl: 0, idx: 0, answers: {} } };
@@ -164,7 +180,20 @@
     } catch (e) { return d; }
   }
   function saveProg(p) { try { localStorage.setItem('intensive_prog', JSON.stringify(p)); } catch (e) {} }
-  var ST = { busy: false };
+  var ST = { busy: false, recording: false };
+
+  // ---------- голосовой ввод (STT через voiceManager) ----------
+  function mic() {
+    var inp = document.getElementById('ivAns'); var btn = document.getElementById('ivMic');
+    var vm = window.voiceManager;
+    if (!vm || typeof vm.startRecording !== 'function') { toast('Голосовой ввод недоступен', 'info'); return; }
+    if (ST.recording) { try { vm.stopRecording(); } catch (e) {} ST.recording = false; if (btn) btn.textContent = '🎤'; return; }
+    try {
+      vm.sttOnly = true;
+      vm.onTranscript = function (t) { if (inp) { inp.value = (inp.value ? inp.value + ' ' : '') + String(t || '').trim(); inp.focus(); } };
+      vm.startRecording(); ST.recording = true; if (btn) btn.textContent = '⏹';
+    } catch (e) { toast('Микрофон недоступен', 'error'); ST.recording = false; }
+  }
   function container() { return document.getElementById('screenContainer'); }
 
   // ---------- premium ----------
@@ -270,6 +299,7 @@
         '<div class="iv-h1">💎 Вариатика — Intensive</div>' +
         '<div class="iv-lead"><b>Игра в 3 уровня</b> по перспективному мышлению масти УБ. Учишься <b>анализировать ситуации, предсказывать события и формировать изменения</b> через канонический алгоритм «Хрустального шара» (9 кружков). Каждый уровень — один из трёх этапов.</div>' +
         '<div class="iv-card" style="font-size:.9rem">Открыто этажей: <b>' + doneCount + '/3</b><div class="iv-prog"><i style="width:' + pct + '%"></i></div>Очки за кейсы: <b style="color:#fcd34d">' + (p.totalScore || 0) + '</b> · разборов в архиве: <b>' + (p.runs.length || 0) + '</b></div>' +
+        seriesCardHtml() +
         '<div class="iv-hint">⚠ Уровни проходятся по порядку: <b>анализ → предсказание → формирование</b>. Каждый следующий стоит на предыдущем — без анализа нет предсказания, без предсказания нет формирования.</div>' +
         rows +
         (p.runs.length ? '<button class="iv-btn" onclick="INTENSIVE.runs()">📚 Архив разборов (' + p.runs.length + ')<small>Все твои прошлые ситуации с ответами Фреди — можно перечитать</small></button>' : '') +
@@ -397,6 +427,7 @@
         '<textarea class="iv-ta" id="ivAns" placeholder="Твой ответ на этот кружок…">' + esc(savedAns) + '</textarea>' +
         '<div class="iv-row">' +
           (i > 0 ? '<button class="iv-btn" style="flex:0;width:auto;margin:0;padding:11px 16px" onclick="INTENSIVE.prev()">← Назад</button>' : '') +
+          '<button class="iv-btn" id="ivMic" style="flex:0;width:auto;margin:0;padding:11px 16px" onclick="INTENSIVE.mic()" aria-label="Голосом">🎤</button>' +
           '<button class="iv-btn iv-primary" style="flex:1;width:auto;margin:0;padding:13px" onclick="INTENSIVE.next()">' + (i < total - 1 ? 'Дальше →' : '🏁 Завершить и отправить Фреди') + '</button>' +
         '</div>' +
       '</div>';
@@ -469,6 +500,9 @@
       var prev = p.solvedCases[L.n][caseId] || 0;
       if (score > prev) p.solvedCases[L.n][caseId] = score;
       p.totalScore = (p.totalScore || 0) + score;
+      seriesAdd('intensive', score); // звёзды кейса → очки серии
+    } else {
+      seriesAdd('intensive', 2); // свой кейс — фиксировано +2 за прохождение 9 кружков
     }
     p.runs.unshift({ lvl: L.n, lvlName: L.name, situation: p.current.situation, answers: p.current.answers, fb: fb, ts: Date.now(), caseId: caseId, score: score, canon: canonAns });
     if (p.runs.length > 30) p.runs.length = 30;
@@ -543,7 +577,7 @@
   window.INTENSIVE = {
     home: home, exit: exit, openPremium: openPremium, reset: reset,
     start: start, renderIntro: renderIntro, pickCase: pickCase, beginCircles: beginCircles,
-    warmup: warmup, warmAns: warmAns,
+    warmup: warmup, warmAns: warmAns, mic: mic,
     prev: prev, next: next, runs: runs, viewRun: viewRun, delRun: delRun
   };
   window.showIntensiveGame = home;

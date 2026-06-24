@@ -162,6 +162,22 @@
   ];
 
   // ---------- состояние ----------
+  // ---------- СКВОЗНОЙ СЧЁТ СЕРИИ «ВАРИАТИКА» ----------
+  function loadSeries() { try { return JSON.parse(localStorage.getItem('variatika_series') || 'null') || { score: 0, byGame: {} }; } catch (e) { return { score: 0, byGame: {} }; } }
+  function saveSeries(s) { try { localStorage.setItem('variatika_series', JSON.stringify(s)); } catch (e) {} }
+  function seriesAdd(game, pts) { if (!pts) return; var s = loadSeries(); s.score = (s.score || 0) + pts; s.byGame = s.byGame || {}; s.byGame[game] = (s.byGame[game] || 0) + pts; saveSeries(s); }
+  function seriesRank() {
+    var s = loadSeries(), sc = s.score || 0;
+    var R = [{m:120,n:'Мастер Вариатики'},{m:60,n:'Читатель людей'},{m:25,n:'Практик серии'},{m:10,n:'Наблюдатель'},{m:0,n:'Новичок серии'}];
+    for (var i = 0; i < R.length; i++) if (sc >= R[i].m) return { name: R[i].n, score: sc, next: R[i - 1] ? { min: R[i - 1].m, name: R[i - 1].n } : null };
+    return { name: R[R.length - 1].n, score: sc, next: { min: R[R.length - 2].m, name: R[R.length - 2].n } };
+  }
+  function seriesCardHtml() {
+    var r = seriesRank();
+    var bar = r.next ? '<div style="margin-top:8px;height:6px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden"><i style="display:block;height:100%;width:' + Math.min(100, Math.round(r.score / r.next.min * 100)) + '%;background:linear-gradient(90deg,#8b5cf6,#6366f1)"></i></div><div style="font-size:.78rem;color:#9aa0ad;margin-top:5px">До «' + r.next.name + '» — ещё ' + (r.next.min - r.score) + ' очков</div>' : '<div style="font-size:.78rem;color:#fcd34d;margin-top:5px">🏆 Высший разряд серии</div>';
+    return '<div class="pg-card" style="font-size:.9rem"><b>🏵️ Серия «Вариатика»:</b> звание <b style="color:#c4b5fd">' + r.name + '</b> · <b>' + r.score + '</b> очков' + bar + '</div>';
+  }
+
   function loadProg() {
     var d = { day: 1, done: {}, notes: {}, cards: [], started: 0 };
     try {
@@ -173,7 +189,20 @@
   }
   function saveProg(p) { try { localStorage.setItem('progressive_prog', JSON.stringify(p)); } catch (e) {} }
 
-  var ST = { busy: false };
+  var ST = { busy: false, recording: false };
+
+  // ---------- голосовой ввод (STT через voiceManager приложения) ----------
+  function mic() {
+    var inp = document.getElementById('pgNote'); var btn = document.getElementById('pgMic');
+    var vm = window.voiceManager;
+    if (!vm || typeof vm.startRecording !== 'function') { toast('Голосовой ввод недоступен', 'info'); return; }
+    if (ST.recording) { try { vm.stopRecording(); } catch (e) {} ST.recording = false; if (btn) btn.textContent = '🎤'; return; }
+    try {
+      vm.sttOnly = true;
+      vm.onTranscript = function (t) { if (inp) { inp.value = (inp.value ? inp.value + ' ' : '') + String(t || '').trim(); inp.focus(); } };
+      vm.startRecording(); ST.recording = true; if (btn) btn.textContent = '⏹';
+    } catch (e) { toast('Микрофон недоступен', 'error'); ST.recording = false; }
+  }
   function container() { return document.getElementById('screenContainer'); }
 
   // ---------- премиум-гейт ----------
@@ -287,6 +316,7 @@
         '<div class="pg-h1">🚀 Вариатика — Progressive</div>' +
         '<div class="pg-lead"><b>Игра в 7 уровней</b> по переходу в сектор ЧВ. На каждом уровне: теория → практика в реальной жизни → разбор от Фреди. Уровни открываются по порядку — следующий доступен, когда сдан предыдущий.</div>' +
         '<div class="pg-card" style="font-size:.9rem">Уровень игрока: <b style="color:#c4b5fd">' + esc(rank) + '</b> · открыто этажей: <b>' + doneCount + '/7</b><div class="pg-prog"><i style="width:' + pct + '%"></i></div>Карточек в БДК: <b>' + (p.cards.length || 0) + '</b></div>' +
+        seriesCardHtml() +
         '<div class="pg-warn">⚠ Уровни закрыты на замок: пока не сдан предыдущий, следующий заперт. Это правило игры.</div>' +
         '<div class="pg-h2">Уровни</div>' + rows +
         '<button class="pg-btn" onclick="PROGRESSIVE.cards()">📇 База данных краников · ' + (p.cards.length || 0) + ' карт<small>Твой инвентарь — учётные карточки на знакомых, копятся от уровня к уровню</small></button>' +
@@ -316,6 +346,7 @@
         '<label class="pg-field">Опиши, что сделал (или собираешься). Чем подробнее — тем точнее разбор:</label>' +
         '<textarea class="pg-ta" id="pgNote" placeholder="Что сделал / что заметил / какие выводы…">' + esc(savedNote) + '</textarea>' +
         '<div class="pg-row">' +
+          '<button class="pg-btn" id="pgMic" style="width:auto;margin:0;padding:13px 16px;flex:0" onclick="PROGRESSIVE.mic()" aria-label="Голосом">🎤</button>' +
           '<button class="pg-btn pg-primary" style="flex:1;width:auto;margin:0;padding:13px" onclick="PROGRESSIVE.submit(' + n + ')">▶ Сдать уровень Фреди</button>' +
         '</div>' +
         (n === 4 ? '<button class="pg-btn" style="margin-top:8px" onclick="PROGRESSIVE.cards()">📇 Открыть БДК →</button>' : '') +
@@ -343,7 +374,9 @@
     var r = await aiGenerate(prompt, { temperature: 0.65, max_tokens: 380 });
     var fb = (r && r.success && r.content) ? clean(r.content) : 'Ты сделал шаг — это уже движение. Если что-то осталось непонятным, перечитай теорию уровня и попробуй на одном конкретном человеке. Готов идти дальше — продолжай.';
     var p = loadProg();
+    var wasDone = !!p.done[n];
     p.notes[n] = note; p.notes[n + '_fb'] = fb; p.done[n] = true; if (n + 1 > p.day) p.day = n + 1; saveProg(p);
+    if (!wasDone) seriesAdd('progressive', 5); // +5 очков серии за каждый новый сданный уровень
     if (out) out.innerHTML = '<div class="pg-fb">' + nl2br(fb) + '</div>' +
       '<div class="pg-row">' +
         (n < 7 ? '<button class="pg-btn pg-primary" style="flex:1;width:auto;margin:0;padding:13px" onclick="PROGRESSIVE.day(' + (n + 1) + ')">▶ Перейти на уровень ' + (n + 1) + '</button>'
@@ -506,7 +539,7 @@
 
   // ---------- экспорт ----------
   window.PROGRESSIVE = {
-    home: home, exit: exit, openPremium: openPremium, day: day, submit: submit, reset: reset,
+    home: home, exit: exit, openPremium: openPremium, day: day, submit: submit, reset: reset, mic: mic,
     cards: cards, editCard: editCard, saveCard: saveCard, delCard: delCard,
     test: test, testPick: testPick
   };
