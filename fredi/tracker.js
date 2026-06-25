@@ -36,6 +36,12 @@
     // Текущая «открытая» фича для feature_opened/closed.
     var _currentFeature=null;
     var _featureOpenedAt=0;
+    // Снапшот _activeMs на момент открытия фичи — нужен чтобы
+    // duration_sec считался по АКТИВНОМУ времени, а не wall-clock.
+    // Раньше: юзер закрывает вкладку с открытой фичей, через 16 часов
+    // переоткрывает страницу, феча закрывается → duration_sec = 59000.
+    // Это ломает все средние длительности (tales avg=29666s в дашборде).
+    var _featureOpenedActiveMs=0;
 
     // ---- user attrs ----
     var _isPremium=null;
@@ -133,21 +139,32 @@
     }
 
     // ---- feature lifecycle ----
+    // duration_sec — это АКТИВНОЕ время (фокус вкладки), а не wall-clock.
+    // wall_sec шлём в дополнение для отладки / сравнения.
+    // Capped до 2 часов на случай если активный счётчик где-то заглючит.
+    function _featureDuration(){
+        _tickActive(); // дотикать до текущего момента
+        var activeSec = Math.max(0, Math.round((_activeMs - _featureOpenedActiveMs)/1000));
+        return Math.min(activeSec, 7200);
+    }
+
     function _openFeature(name){
         if(!name) return;
         if(_currentFeature && _currentFeature === name) return;
         if(_currentFeature){
-            var dur=Math.round((Date.now()-_featureOpenedAt)/1000);
-            track('feature_closed',{feature:_currentFeature,duration_sec:dur});
+            var wall=Math.round((Date.now()-_featureOpenedAt)/1000);
+            track('feature_closed',{feature:_currentFeature,duration_sec:_featureDuration(),wall_sec:wall});
         }
         _currentFeature=name;
         _featureOpenedAt=Date.now();
+        _tickActive();
+        _featureOpenedActiveMs=_activeMs;
         track('feature_opened',{feature:name});
     }
     function _closeCurrentFeature(reason){
         if(!_currentFeature) return;
-        var dur=Math.round((Date.now()-_featureOpenedAt)/1000);
-        track('feature_closed',{feature:_currentFeature,duration_sec:dur,reason:reason||''});
+        var wall=Math.round((Date.now()-_featureOpenedAt)/1000);
+        track('feature_closed',{feature:_currentFeature,duration_sec:_featureDuration(),wall_sec:wall,reason:reason||''});
         _currentFeature=null;
     }
 
