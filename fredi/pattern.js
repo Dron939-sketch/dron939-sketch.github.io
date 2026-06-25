@@ -55,7 +55,9 @@
       hint: 'Дело во времени, на которое указывает реплика.',
       legend: 'Я отвечаю на твои реплики. Веди диалог.' },
     { id: 'has_we', lvl: 'mid', name: 'В реплике есть слово «мы» / «нас» / «наш»',
-      check: function (t) { return /\b(мы|нас|нам|нами|наш(а|е|и|у|ей|их|им|ему|ого)?)\b/i.test(t); },
+      // \b в JS не работает с кириллицей (\w = ASCII), поэтому используем
+      // явные word-bounds через классы. Иначе правило не срабатывает.
+      check: function (t) { return /(^|[^а-яёa-z0-9])(мы|нас|нам|нами|наш|наша|наше|наши|нашу|нашей|наших|нашим|нашего|нашему)([^а-яёa-z0-9]|$)/i.test(t); },
       hint: 'Я реагирую на местоимения.',
       legend: 'Я — потенциальный партнёр. Обсуди со мной идею.' },
     { id: 'has_digit', lvl: 'mid', name: 'В реплике есть хотя бы одна цифра',
@@ -69,7 +71,8 @@
       hint: 'Меня интересует объём, а не содержание.',
       legend: 'Я слушаю долго. Веди беседу.' },
     { id: 'all_caps_word', lvl: 'hard', name: 'В реплике есть слово ЗАГЛАВНЫМИ (2+ буквы)',
-      check: function (t) { return /\b[А-ЯЁA-Z]{2,}\b/.test(t); },
+      // \b не работает с кириллицей в JS — используем явные bounds.
+      check: function (t) { return /(^|[^А-ЯЁA-Z])[А-ЯЁA-Z]{2,}([^А-ЯЁA-Z]|$)/.test(t); },
       hint: 'Дело в форме слов, не в их смысле.',
       legend: 'Я обычный собеседник. Реагирую на твою манеру.' },
     { id: 'even_and_money', lvl: 'hard', name: 'Чётное число слов И тема денег',
@@ -79,7 +82,67 @@
     { id: 'question_about_future', lvl: 'hard', name: 'Вопрос о будущем (есть "?" И маркер будущего)',
       check: function (t) { return /\?/.test(t) && /(будет|будем|будешь|буду|завтра|потом|план|перспектив|когда|в будущем)/i.test(t); },
       hint: 'И форма реплики, и время — оба важны.',
-      legend: 'Я обращён в будущее. Спроси меня правильно.' }
+      legend: 'Я обращён в будущее. Спроси меня правильно.' },
+
+    // 🟢 простые — добавочные
+    { id: 'short_3', lvl: 'easy', name: 'Реплика — короткая (3 слова или меньше)',
+      check: function (t) { var n = wc(t); return n > 0 && n <= 3; },
+      hint: 'Я люблю краткость. Считай слова.',
+      legend: 'Простой собеседник. Жду коротких реплик.' },
+    { id: 'ends_dot', lvl: 'easy', name: 'Реплика заканчивается точкой "."',
+      check: function (t) { return /\.\s*$/.test(t); },
+      hint: 'Смотри на самый конец реплики.',
+      legend: 'Я аккуратный собеседник, ценю порядок.' },
+    { id: 'has_comma', lvl: 'easy', name: 'В реплике есть запятая ","',
+      check: function (t) { return /,/.test(t); },
+      hint: 'Я люблю развёрнутую речь, а не рубленую.',
+      legend: 'Поговорим — я слушаю.' },
+
+    // 🟡 средние — добавочные
+    { id: 'has_i', lvl: 'mid', name: 'В реплике есть слово «я» / «меня» / «мне» / «мой»',
+      check: function (t) { return /(^|[^а-яёa-z0-9])(я|меня|мне|мной|мой|моя|моё|мои|моего|моему|моим|моей|моих)([^а-яёa-z0-9]|$)/i.test(t); },
+      hint: 'Я реагирую на местоимения.',
+      legend: 'Я слушаю про тебя. Расскажи о себе.' },
+    { id: 'has_emo_pos', lvl: 'mid', name: 'В реплике есть позитивная эмоция',
+      check: function (t) { return /(радост|счаст|любл|нрав|круто|здорово|восторг|обожа|кайф|спасиб|улыбк|смех|весел)/i.test(t); },
+      hint: 'Я отзывчив к определённому настроению.',
+      legend: 'Я живу эмоциями. Поделись.' },
+    { id: 'has_emo_neg', lvl: 'mid', name: 'В реплике есть негативная эмоция',
+      check: function (t) { return /(груст|злюс|боюс|страх|устал|тяжел|плохо|больно|обид|разочаров|раздража|трев|депрес|одинок)/i.test(t); },
+      hint: 'Я отзывчив к определённому настроению.',
+      legend: 'Я живу эмоциями. Поделись.' },
+    { id: 'has_past', lvl: 'mid', name: 'В реплике есть маркер прошлого',
+      check: function (t) { return /(был|была|было|были|вчера|раньше|когда-то|давно|в детстве|тогда|помн|случил|произошл)/i.test(t); },
+      hint: 'Дело во времени, на которое указывает реплика.',
+      legend: 'Я живу воспоминаниями. Расскажи историю.' },
+    { id: 'has_action', lvl: 'mid', name: 'В реплике есть слово-действие в первом лице («сделал/делаю/буду делать»)',
+      check: function (t) { return /(^|[^а-яёa-z0-9])(сделал|сделала|делаю|пошёл|пошла|иду|пойду|написал|написала|пишу|напишу|купил|купила|куплю|сказал|сказала|скажу|думал|думала|думаю|подумаю|решил|решила|решу)([^а-яёa-z0-9]|$)/i.test(t)
+                                  || /буду\s+делать/i.test(t); },
+      hint: 'Меня цепляет конкретное действие.',
+      legend: 'Я ценю поступки. Что ты сделал?' },
+
+    // 🔴 сложные — добавочные (двойные / редкие)
+    { id: 'short_and_question', lvl: 'hard', name: 'Короткая реплика (≤4 слов) И вопрос',
+      check: function (t) { var n = wc(t); return n > 0 && n <= 4 && /\?\s*$/.test(t); },
+      hint: 'Здесь два условия: длина И форма.',
+      legend: 'Я отвечаю на острое и краткое.' },
+    { id: 'we_and_future', lvl: 'hard', name: 'Совместное будущее (есть «мы»/«нас» И маркер будущего)',
+      check: function (t) { return /(^|[^а-яёa-z0-9])(мы|нас|нам|нами|наш|наша|наше|наши|нашу|нашей|наших|нашим|нашего|нашему)([^а-яёa-z0-9]|$)/i.test(t) && /(будет|будем|будешь|буду|завтра|потом|план|когда-нибудь|в будущем|следующ)/i.test(t); },
+      hint: 'Два условия: про кого И когда.',
+      legend: 'Я — партнёр. Мечтаем вместе.' },
+    { id: 'i_and_emo', lvl: 'hard', name: 'Личное переживание («я/мне/меня» И эмоция)',
+      check: function (t) { return /(^|[^а-яёa-z0-9])(я|меня|мне|мной|мой|моя|моё|мои)([^а-яёa-z0-9]|$)/i.test(t) && /(радост|счаст|любл|нрав|груст|злюс|боюс|страх|устал|обид|трев|круто|плохо|больно|спасиб|обожа|кайф|разочаров)/i.test(t); },
+      hint: 'Здесь два условия: про кого И как чувствуется.',
+      legend: 'Я — близкий слушатель. Расскажи про себя.' },
+    { id: 'repeat_word', lvl: 'hard', name: 'В реплике есть повторяющееся слово (2+ раза, длиной 3+)',
+      check: function (t) {
+        var words = String(t || '').toLowerCase().match(/[а-яё\w]{3,}/gi) || [];
+        var seen = {};
+        for (var i = 0; i < words.length; i++) { if (seen[words[i]]) return true; seen[words[i]] = true; }
+        return false;
+      },
+      hint: 'Я реагирую на эхо в речи.',
+      legend: 'Я слышу акценты — повторы привлекают меня.' }
   ];
 
   function rulesByLvl(lvl) { return RULES.filter(function (r) { return r.lvl === lvl; }); }
@@ -104,7 +167,7 @@
   function saveProg(p) { try { localStorage.setItem('pattern_prog', JSON.stringify(p)); } catch (e) {} }
 
   // ---------- состояние раунда ----------
-  var ST = { rule: null, log: [], phase: 'idle', attempts: 0, hints: 0, applyStreak: 0, applyTries: 0, busy: false };
+  var ST = { rule: null, log: [], phase: 'idle', attempts: 0, hints: 0, applyStreak: 0, applyTries: 0, busy: false, narrowed: false };
   function container() { return document.getElementById('screenContainer'); }
 
   // ---------- premium ----------
@@ -174,6 +237,30 @@
       '.pt-win b{color:#86efac}',
       '.pt-fail{background:linear-gradient(135deg,rgba(239,68,68,.13),rgba(239,68,68,.04));border:1px solid rgba(239,68,68,.45);border-radius:14px;padding:14px 16px;margin:10px 0;line-height:1.55}',
       '.pt-hint{background:rgba(245,158,11,.07);border:1px dashed rgba(245,158,11,.4);border-radius:10px;padding:10px 13px;font-size:.86rem;color:#fcd34d;margin:8px 0;line-height:1.5}',
+      '.pt-apply-banner{background:linear-gradient(135deg,rgba(34,197,94,.22),rgba(34,197,94,.08));border:1.5px solid rgba(34,197,94,.6);border-radius:14px;padding:12px 16px;margin:10px 0 14px;display:flex;align-items:center;gap:10px;font-weight:600;color:#86efac;font-size:1rem;box-shadow:0 0 16px rgba(34,197,94,.12)}',
+      '.pt-apply-banner .pt-streak{margin-left:auto;font-size:1.1rem;font-weight:800;color:#fff;background:rgba(34,197,94,.3);padding:4px 12px;border-radius:999px;letter-spacing:.5px}',
+      '.pt-ta.apply{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.05)}',
+      '.pt-ta.apply:focus{border-color:#22c55e}',
+      '.pt-send.apply{background:linear-gradient(135deg,#22c55e,#16a34a)}',
+      '.pt-narrow-chip{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;margin:0 6px 6px 0;border-radius:999px;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(99,102,241,.1));border:1px solid rgba(99,102,241,.45);color:#a5b4fc;font-size:.86rem;cursor:pointer;transition:.15s;font-weight:500}',
+      '.pt-narrow-chip:hover{border-color:#818cf8;background:linear-gradient(135deg,rgba(99,102,241,.22),rgba(99,102,241,.14))}',
+      '.pt-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;animation:ptModalFade .18s ease-out}',
+      '@keyframes ptModalFade{from{opacity:0}to{opacity:1}}',
+      '.pt-modal{background:#1a1a2e;border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px 22px 18px;max-width:380px;width:100%;box-shadow:0 18px 50px rgba(0,0,0,.5);animation:ptModalIn .22s cubic-bezier(.2,.7,.3,1.2)}',
+      '@keyframes ptModalIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}',
+      '.pt-modal-title{font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:8px}',
+      '.pt-modal-text{color:#aeb1bd;line-height:1.5;font-size:.94rem;margin-bottom:18px}',
+      '.pt-modal-row{display:flex;gap:10px}',
+      '.pt-modal-btn{flex:1;border:none;border-radius:12px;padding:12px;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:.15s}',
+      '.pt-modal-btn.danger{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff}',
+      '.pt-modal-btn.danger:hover{filter:brightness(1.1)}',
+      '.pt-modal-btn.cancel{background:rgba(255,255,255,.08);color:#e2e3e8;border:1px solid rgba(255,255,255,.14)}',
+      '.pt-modal-btn.cancel:hover{background:rgba(255,255,255,.13)}',
+      '[data-theme="light"] .pt-modal{background:#fff}',
+      '[data-theme="light"] .pt-modal-title{color:#0f1020}',
+      '[data-theme="light"] .pt-modal-text{color:#555}',
+      '[data-theme="light"] .pt-modal-btn.cancel{background:rgba(0,0,0,.05);color:#111;border-color:rgba(0,0,0,.12)}',
+      '[data-theme="light"] .pt-narrow-chip{background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(99,102,241,.04));color:#4f46e5;border-color:rgba(99,102,241,.4)}',
       '.pt-typing{color:#8b90a0;font-size:.85rem;font-style:italic;padding:4px 0}',
       '[data-theme="light"] .pt-wrap{color:#1a1a2e}',
       '[data-theme="light"] .pt-h1{color:#0f1020}',
@@ -221,7 +308,7 @@
     var pool = (lvl === 'any') ? RULES : rulesByLvl(lvl);
     if (!pool.length) pool = RULES;
     var rule = pool[Math.floor(Math.random() * pool.length)];
-    ST = { rule: rule, log: [], phase: 'hunt', attempts: 0, hints: 0, applyStreak: 0, applyTries: 0, busy: false };
+    ST = { rule: rule, log: [], phase: 'hunt', attempts: 0, hints: 0, applyStreak: 0, applyTries: 0, busy: false, narrowed: false };
     track('feature_opened', { feature: 'pattern_round', lvl: rule.lvl, rule: rule.id });
     var p = loadProg(); p.hunts = (p.hunts || 0) + 1; saveProg(p);
     renderHunt();
@@ -246,8 +333,28 @@
     }).join('') + '</div>';
   }
 
+  // Бесплатная подсказка-сужение — раскрывает категорию правила,
+  // но не само правило. Появляется чипом после 10 попыток без гипотезы,
+  // снимает frustration на hard. Расходуется один раз за раунд.
+  var LVL_CATEGORY = {
+    easy: 'Дело в <b>форме реплики</b> — знаках, длине, первой/последней букве. Содержание неважно.',
+    mid:  'Дело в <b>содержании</b> — теме, словах, эмоции, времени. Форма неважна.',
+    hard: 'Здесь <b>два условия одновременно</b>: и форма, и содержание. Ищи комбинацию.'
+  };
+  function narrow() {
+    if (ST.phase !== 'hunt' || ST.narrowed) return;
+    ST.narrowed = true;
+    ST.log.push({ role: 'sys', t: '🔍 Сужение: ' + LVL_CATEGORY[ST.rule.lvl].replace(/<[^>]+>/g, '') });
+    track('feature_opened', { feature: 'pattern_narrow', lvl: ST.rule.lvl, attempts: ST.attempts });
+    renderHunt();
+  }
+
   function renderHunt() {
     var c = container(); if (!c) return;
+    // Чип «сузить» появляется после 10 попыток, бесплатный, доступен один раз.
+    var narrowChip = (ST.attempts >= 10 && !ST.narrowed)
+      ? '<button class="pt-narrow-chip" onclick="PATTERN.narrow()" title="Без штрафа очков">🔍 Сузить поле <small style="opacity:.7">(бесплатно, 1 раз)</small></button>'
+      : '';
     c.innerHTML =
       '<div class="pt-wrap">' +
         '<button class="pt-ghost" onclick="PATTERN.home()">← В меню</button>' +
@@ -261,6 +368,7 @@
         '</div>' +
         '<div class="pt-row" style="margin-top:10px;flex-wrap:wrap">' +
           '<button class="pt-chip" onclick="PATTERN.guess()">🎯 У меня гипотеза</button>' +
+          narrowChip +
           '<button class="pt-chip" onclick="PATTERN.hint()">💡 Подсказка (-2 очка)</button>' +
           '<button class="pt-chip" onclick="PATTERN.giveup()">🏳️ Сдаюсь</button>' +
         '</div>' +
@@ -356,17 +464,27 @@
   // ---------- этап применения ----------
   function renderApply(extraNote) {
     var c = container(); if (!c) return;
+    var dotsHtml = '';
+    for (var i = 0; i < 3; i++) {
+      dotsHtml += (i < ST.applyStreak)
+        ? '<span style="color:#fff">●</span>'
+        : '<span style="opacity:.4">○</span>';
+    }
     c.innerHTML =
       '<div class="pt-wrap">' +
         '<button class="pt-ghost" onclick="PATTERN.home()">← В меню</button>' +
         '<div class="pt-h1">🎯 Применение</div>' +
         (extraNote ? '<div class="pt-win">' + esc(extraNote) + '</div>' : '') +
-        '<div class="pt-hint">📐 Правило поймано. Теперь применяй его: добейся <b>3 «да» подряд</b> за <b>5 попыток</b>. Используй знание сознательно.</div>' +
-        statsHtml() +
+        '<div class="pt-apply-banner">' +
+          '<span style="font-size:1.3rem">✓</span>' +
+          '<span>Применение: добейся <b>3 «да» подряд</b> · попытка ' + ST.applyTries + '/5</span>' +
+          '<span class="pt-streak">' + dotsHtml + '</span>' +
+        '</div>' +
+        '<div class="pt-hint">📐 Правило в руках. Теперь используй его сознательно — попытайся сделать так, чтобы Фреди ответил «да» 3 раза подряд.</div>' +
         logHtml() +
         '<div class="pt-row">' +
-          '<textarea class="pt-ta" id="ptInput" rows="1" placeholder="Реплика, которая (по твоему правилу) должна получить «да»…" onkeydown="PATTERN.kd(event)"></textarea>' +
-          '<button class="pt-send" onclick="PATTERN.send()">➤</button>' +
+          '<textarea class="pt-ta apply" id="ptInput" rows="1" placeholder="Реплика, которая (по твоему правилу) должна получить «да»…" onkeydown="PATTERN.kd(event)"></textarea>' +
+          '<button class="pt-send apply" onclick="PATTERN.send()">➤</button>' +
         '</div>' +
       '</div>';
     setTimeout(function () { var t = document.getElementById('ptInput'); if (t) t.focus(); }, 50);
@@ -396,15 +514,67 @@
         '<div class="pt-h1">🏆 Паттерн схвачен</div>' +
         '<div class="pt-win"><b>Истинное правило Фреди:</b><br>' + esc(ST.rule.name) + '<br><br>Ты нашёл его за <b>' + ST.attempts + '</b> попыток' + (ST.hints ? ' (с ' + ST.hints + ' подсказками)' : '') + ' и закрепил применением. <b>+' + pts + '</b> к серии «Вариатика».</div>' +
         '<div class="pt-card" style="font-size:.92rem"><b>💡 Что только что произошло.</b> Ты сделал именно то, что отличает ЧВ-10 от ЧВ-8 — увидел скрытое правило, а потом сознательно его применил. В реальной жизни люди, команды, рынки тоже следуют скрытым правилам. Кто их видит — управляет игрой.</div>' +
-        '<button class="pt-btn pt-primary" onclick="PATTERN.start(\'' + ST.rule.lvl + '\')">🎯 Ещё охота на этом уровне</button>' +
+        '<button class="pt-btn pt-primary" onclick="PATTERN.share()">📤 Поделиться результатом</button>' +
+        '<button class="pt-btn" onclick="PATTERN.start(\'' + ST.rule.lvl + '\')">🎯 Ещё охота на этом уровне</button>' +
         '<button class="pt-btn" onclick="PATTERN.start(\'any\')">🎲 Случайный уровень</button>' +
         '<button class="pt-btn" onclick="PATTERN.home()">В меню</button>' +
       '</div>';
+    ST._lastWin = { rule: ST.rule.name, lvl: ST.rule.lvl, attempts: ST.attempts, hints: ST.hints, pts: pts };
     track('feature_opened', { feature: 'pattern_win', rule: ST.rule.id, attempts: ST.attempts, hints: ST.hints });
   }
 
-  function giveup() {
-    if (!confirm('Сдаёшься? Правило будет раскрыто, очков не получишь.')) return;
+  // Шер результата победы. Web Share API на мобиле → системный шер;
+  // на десктопе fallback в clipboard + тост. Виральный момент:
+  // «угадал ЧВ-9 правило за 4 попытки» → друг идёт пробовать.
+  function share() {
+    var w = ST._lastWin; if (!w) return;
+    var lvlEmoji = { easy: '🟢', mid: '🟡', hard: '🔴' };
+    var lvlName  = { easy: 'лёгкий', mid: 'средний', hard: 'сложный' };
+    var hintsTxt = w.hints ? ' (с ' + w.hints + ' подсказками)' : '';
+    var text = '🎯 Раскусил скрытое правило в игре «Паттерн: Охота на невидимое» — ' +
+               lvlEmoji[w.lvl] + ' ' + lvlName[w.lvl] + ' уровень, ' +
+               w.attempts + ' попыток' + hintsTxt + '. +' + w.pts + ' к Вариатике.\n\n' +
+               'Тренажёр главного навыка ЧВ-масти от Андрея Мейстера: https://meysternlp.ru/fredi/';
+    track('feature_opened', { feature: 'pattern_share', rule: w.rule, attempts: w.attempts });
+    if (navigator.share) {
+      navigator.share({ title: 'Паттерн: Охота на невидимое', text: text }).catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { toast('Текст скопирован — вставь в чат', 'success'); },
+        function () { toast('Не получилось скопировать', 'error'); }
+      );
+    } else {
+      toast('Сохрани вручную: ' + text.substring(0, 50) + '…', 'info');
+    }
+  }
+
+  // Внутренний модал-подтверждение «Сдаюсь» — нативный confirm()
+  // на мобиле выглядит как «уйти со страницы?», пугает юзеров.
+  function showGiveupModal() {
+    var overlay = document.createElement('div');
+    overlay.className = 'pt-modal-overlay';
+    overlay.id = 'ptGiveupModal';
+    overlay.innerHTML =
+      '<div class="pt-modal" role="dialog" aria-modal="true">' +
+        '<div class="pt-modal-title">🏳️ Сдаёшься?</div>' +
+        '<div class="pt-modal-text">Правило будет раскрыто, очков за раунд не получишь. Но сможешь сразу начать новый.</div>' +
+        '<div class="pt-modal-row">' +
+          '<button class="pt-modal-btn cancel" id="ptGiveupCancel">Продолжу искать</button>' +
+          '<button class="pt-modal-btn danger" id="ptGiveupConfirm">Раскрыть правило</button>' +
+        '</div>' +
+      '</div>';
+    function close() { if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay); }
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    document.body.appendChild(overlay);
+    document.getElementById('ptGiveupCancel').onclick = close;
+    document.getElementById('ptGiveupConfirm').onclick = function () { close(); doGiveup(); };
+  }
+
+  function giveup() { if (ST.phase === 'idle') return; showGiveupModal(); }
+
+  function doGiveup() {
     var c = container(); if (!c) return;
     c.innerHTML =
       '<div class="pt-wrap">' +
@@ -418,7 +588,7 @@
     track('feature_opened', { feature: 'pattern_giveup', rule: ST.rule.id });
   }
 
-  window.PATTERN = { home: home, exit: exit, openPremium: openPremium, start: start, send: send, kd: kd, guess: guess, back: back, checkGuess: checkGuess, hint: hint, giveup: giveup };
+  window.PATTERN = { home: home, exit: exit, openPremium: openPremium, start: start, send: send, kd: kd, guess: guess, back: back, checkGuess: checkGuess, hint: hint, giveup: giveup, narrow: narrow, share: share };
   window.showPatternGame = home;
   console.log('✅ pattern.js loaded (игра «Паттерн: Охота на невидимое»)');
 })();
