@@ -509,6 +509,7 @@ class VoiceTransport {
         // Callbacks
         this.onTranscript     = null;
         this.onAIResponse     = null;
+        this.onAIPartial      = null;  // стриминговое обновление AI-текста
         this.onStatusChange   = null;
         this.onError          = null;
         this.onThinking       = null;
@@ -954,6 +955,25 @@ class VoiceTransport {
         if (this.onStatusChange) this.onStatusChange('processing');
         if (this.onThinking) this.onThinking(true);
 
+        // Метрики латентности: точки между отправкой и доходом фронту.
+        // Шлём в FrediTracker через _emitLatency, чтобы в дашборде была
+        // реальная картина (раньше угадывали по комментариям и логам).
+        const _t0 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+        const _emitLatency = (event, extra) => {
+            try {
+                if (!window.FrediTracker || !window.FrediTracker.track) return;
+                const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+                const payload = Object.assign({
+                    ms: Math.round(now - _t0),
+                    blob_kb: Math.round(audioBlob.size / 1024),
+                    blob_type: audioBlob.type || '',
+                    transport: 'http_stream',
+                    mode: this.currentMode || '',
+                }, extra || {});
+                window.FrediTracker.track(event, payload);
+            } catch (e) {}
+        };
+
         try {
             const ctrl = new AbortController();
             const tid  = setTimeout(() => ctrl.abort(), 90000);
@@ -1005,13 +1025,19 @@ class VoiceTransport {
                     .finally(() => { try { URL.revokeObjectURL(url); } catch {} });
             };
 
+            let _firstTranscriptEmitted = false;
             const handleEvent = (ev) => {
                 if (!ev || typeof ev !== 'object') return;
                 if (ev.type === 'transcript') {
+                    if (!_firstTranscriptEmitted) {
+                        _firstTranscriptEmitted = true;
+                        _emitLatency('voice_latency_transcript', { text_length: (ev.text || '').length });
+                    }
                     if (ev.text && this.onTranscript) this.onTranscript(ev.text);
                 } else if (ev.type === 'audio') {
                     if (!firstAudioPlayed) {
                         firstAudioPlayed = true;
+                        _emitLatency('voice_latency_first_audio', { text_length: (ev.text || '').length });
                         // Первый аудио-чанк: гасим thinking-бабл в чате и
                         // переключаем САМУ КНОПКУ на «🔊 Фреди отвечает…»,
                         // чтобы прогресс ответа был виден без прокрутки вниз.
@@ -1019,10 +1045,17 @@ class VoiceTransport {
                         if (this.onStatusChange) this.onStatusChange('speaking');
                     }
                     if (ev.text) fullText += (fullText ? ' ' : '') + ev.text;
+                    // Стриминговый показ AI-текста в чате: бабл создаётся при
+                    // первом аудио-чанке с текстом и дописывается по мере прихода
+                    // предложений. Раньше onAIResponse(fullText) вызывался ПОСЛЕ
+                    // окончания стрима — голос уже играл, а текст ответа в чате
+                    // ещё не появлялся. UX-разрыв в 5-15 секунд.
+                    if (fullText && this.onAIPartial) this.onAIPartial(fullText);
                     enqueueAudio(ev.b64);
                 } else if (ev.type === 'done') {
                     if (ev.full_text) fullText = ev.full_text;
                     if (ev.action) pendingAction = ev.action;
+                    _emitLatency('voice_latency_done', { text_length: (fullText || '').length });
                 } else if (ev.type === 'error') {
                     throw new Error(ev.message || 'Server stream error');
                 }
@@ -1125,6 +1158,7 @@ class VoiceManager {
         // Callbacks для app.js
         this.onTranscript     = null;
         this.onAIResponse     = null;
+        this.onAIPartial      = null;  // стриминговое обновление AI-текста
         this.onStatusChange   = null;
         this.onError          = null;
         this.onRecordingStart = null;
@@ -1160,6 +1194,9 @@ class VoiceManager {
         // Колбэки транспорта
         this._transport.onTranscript    = t => { if (this.onTranscript) this.onTranscript(t); };
         this._transport.onAIResponse    = a => { if (this.onAIResponse) this.onAIResponse(a); };
+        // Стриминговый текст AI: бабл в чате обновляется по мере прихода
+        // предложений из NDJSON, не дожидаясь конца стрима.
+        this._transport.onAIPartial     = a => { if (this.onAIPartial) this.onAIPartial(a); };
         this._transport.onThinking      = b => {
             if (b) this._loading.show('Фреди думает');
             else   this._loading.remove();

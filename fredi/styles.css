@@ -1956,6 +1956,21 @@ img.emoji {
     border-bottom-left-radius: 4px;
 }
 
+/* Стриминговый бабл (voice response): мерцающий курсор справа,
+   чтобы было видно — текст ещё дописывается. */
+.message.bot.streaming::after {
+    content: '▍';
+    display: inline-block;
+    margin-left: 2px;
+    color: rgba(168, 85, 247, 0.85);
+    font-weight: 400;
+    animation: msgStreamCaret 0.9s steps(1) infinite;
+}
+@keyframes msgStreamCaret { 50% { opacity: 0; } }
+[data-theme="light"] .message.bot.streaming::after {
+    color: rgba(99, 102, 241, 0.85);
+}
+
 .message.user {
     align-self: flex-end;
     background: linear-gradient(135deg, #ff6b3b, #ff3b3b);
