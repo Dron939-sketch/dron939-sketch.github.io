@@ -811,9 +811,13 @@ class VoiceTransport {
     // ---- ОТПРАВКА АУДИО ----
 
     async sendAudio(audioBlob) {
-        // Длительность уже проверена в VoiceRecorder.stop() — здесь только sanity check.
-        if (!audioBlob || audioBlob.size < 200) {
-            if (this.onError) this.onError('Не удалось получить аудио');
+        // Минимальный размер блоба синхронизирован с бэкендским порогом
+        // (main.py: if len(audio_bytes) < 1000) — иначе сервер вернёт 400
+        // «Аудио файл слишком короткий» уже после network round-trip, а
+        // юзер увидит generic «Ошибка соединения». Лучше отлавливать на
+        // фронте и сразу подсказывать «Удерживай кнопку дольше».
+        if (!audioBlob || audioBlob.size < 1000) {
+            if (this.onError) this.onError('Слишком короткая запись — удерживай кнопку дольше');
             return false;
         }
 
@@ -992,6 +996,26 @@ class VoiceTransport {
                 const data = await resp.json().catch(() => ({}));
                 this._showMeterPaywall(data);
                 if (this.onStatusChange) this.onStatusChange('idle');
+                return false;
+            }
+
+            // 400 = бэк понял запрос, но валидация не прошла. На этом
+            // эндпоинте два сценария:
+            //   • «Аудио файл слишком короткий» — юзер быстро нажал-отпустил
+            //   • «Не удалось распознать речь» — тихо/невнятно/шум
+            // Раньше валилось в catch как HTTP 400 → generic «Ошибка
+            // соединения», и юзер не понимал что делать. По аналитике это и
+            // был «первый запрос — ошибка». Показываем конкретный текст из
+            // тела ответа + НЕ ретраим (ретрай заведомо упадёт так же).
+            if (resp.status === 400) {
+                const data = await resp.json().catch(() => ({}));
+                let msg = data && data.error;
+                if (!msg) msg = 'Не удалось распознать речь';
+                if (/коротк/i.test(msg))     msg = 'Слишком короткая запись — удерживай кнопку дольше';
+                if (/распознать/i.test(msg)) msg = 'Не расслышал. Скажи громче и чётче, пожалуйста';
+                if (this.onError) this.onError(msg);
+                if (this.onStatusChange) this.onStatusChange('idle');
+                if (this.onThinking) this.onThinking(false);
                 return false;
             }
 
