@@ -1659,12 +1659,40 @@ async function initVoice() {
         }
     };
 
-    // Текстовый ответ AI. Между «Фреди думает» и фактическим воспроизведением
-    // (onStatusChange('speaking')) есть короткое окно загрузки TTS — кнопку
-    // переключаем на «Готовлю голос…», чтобы не выглядело как зависание.
+    // Стриминговый текст AI в чате: бабл создаётся при первом partial'е и
+    // обновляется по мере прихода предложений из NDJSON. Раньше юзер слышал
+    // голос, но видел в чате только свой transcript — текст ответа AI
+    // появлялся в чате через 5-15 секунд после начала озвучки (UX-разрыв).
+    let _partialBubble = null;
+    let _partialTextNode = null;
+    voiceManager.onAIPartial = (textSoFar) => {
+        if (!textSoFar) return;
+        const container = _getMessagesContainer();
+        if (!container) return;
+        if (!_partialBubble) {
+            _hideThinkingBubble();
+            _partialBubble = document.createElement('div');
+            _partialBubble.className = 'message bot streaming';
+            _partialTextNode = document.createElement('div');
+            _partialBubble.appendChild(_partialTextNode);
+            container.appendChild(_partialBubble);
+        }
+        _partialTextNode.textContent = textSoFar;
+        _scrollMessagesToBottom(container);
+    };
+
+    // Финальный ответ AI: если стриминговый бабл уже создан — фиксируем его
+    // как обычное сообщение (убираем класс streaming) и НЕ добавляем дубль.
     voiceManager.onAIResponse = (answer) => {
         console.log('🧠 AI answer received, length:', answer?.length);
-        addMessage(answer, 'bot');
+        if (_partialBubble && _partialTextNode) {
+            _partialTextNode.textContent = answer || _partialTextNode.textContent;
+            _partialBubble.classList.remove('streaming');
+            _partialBubble = null;
+            _partialTextNode = null;
+        } else {
+            addMessage(answer, 'bot');
+        }
         const btn = document.getElementById('mainVoiceBtn');
         if (btn && (btn._voiceStatus === 'thinking' || btn._voiceStatus === 'processing')
             && voiceManager.onStatusChange) {
@@ -1676,6 +1704,13 @@ async function initVoice() {
     voiceManager.onError = (error) => {
         console.error('❌ Voice error:', error);
         showToast('❌ ' + error, 'error');
+        // Сброс стриминг-бабла: если ответ оборвался посередине, фиксируем
+        // то, что успело прийти, и НЕ цепляем следующий запрос к старому баблу.
+        if (_partialBubble) {
+            _partialBubble.classList.remove('streaming');
+            _partialBubble = null;
+            _partialTextNode = null;
+        }
         // Сбросить состояние кнопки при ошибке
         const btn = document.getElementById('mainVoiceBtn');
         if (btn) {
