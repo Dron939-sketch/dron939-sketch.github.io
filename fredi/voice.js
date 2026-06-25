@@ -305,7 +305,7 @@ class VoiceRecorder {
             this._recordingStartTs = Date.now();
             this._actualSampleRate = null;
 
-            await this._setupScriptProcessor(stream);
+            await this._setupAudioPipeline(stream);
 
             this.stopTimer = setTimeout(() => this.stop(), this.config.maxDuration);
             if (this.onRecordingStart) this.onRecordingStart();
@@ -323,10 +323,27 @@ class VoiceRecorder {
         }
     }
 
-    async _setupScriptProcessor(stream) {
-        // Создаём AudioContext. На iOS Safari нельзя жёстко задать sampleRate
-        // (выбрасывает NotSupportedError), поэтому пробуем — если не вышло,
-        // создаём дефолтный и берём фактический sampleRate из контекста.
+    // Общая обработка PCM-чанка — одинаковая для worklet и legacy ветки.
+    // Принимает Int16Array и precomputed sumAbs (worklet считает сам;
+    // legacy путь считает в onaudioprocess).
+    _handlePcmChunk(int16, sumAbs) {
+        if (!this.recording) return;
+        this.wavData.push(int16);
+        const n = int16.length || 1;
+        const vol = Math.min(100, (sumAbs / n / 32768) * 100);
+        if (this.onVolumeChange) this.onVolumeChange(vol);
+        const isSpeech = vol > VoiceConfig.ui.minVolumeToConsiderSpeech;
+        if (isSpeech) {
+            if (!this.speechSeen) { this.speechSeen = true; if (this.onSpeechDetected) this.onSpeechDetected(true); }
+            this.silenceStart = null;
+        } else if (this.speechSeen && !this.silenceStart) {
+            this.silenceStart = Date.now();
+        }
+    }
+
+    async _setupAudioPipeline(stream) {
+        // Создаём AudioContext (та же логика что была: iOS не даёт жёстко
+        // задать sampleRate, fallback на дефолт).
         const Ctx = window.AudioContext || window.webkitAudioContext;
         try {
             this.audioCtx = new Ctx({ sampleRate: this.config.sampleRate });
@@ -334,18 +351,65 @@ class VoiceRecorder {
             console.warn('AudioContext: fallback to default sampleRate', e?.message);
             this.audioCtx = new Ctx();
         }
-        // КРИТИЧНО для iOS: контекст может быть suspended после первого create
         if (this.audioCtx.state === 'suspended') {
             try { await this.audioCtx.resume(); } catch (e) { console.warn('audioCtx.resume failed:', e); }
         }
         this._actualSampleRate = this.audioCtx.sampleRate;
-        console.log(`🎤 AudioContext sampleRate: ${this._actualSampleRate}`);
 
         const src = this.audioCtx.createMediaStreamSource(stream);
         this.analyser = this.audioCtx.createAnalyser();
         this.analyser.fftSize = 256;
         src.connect(this.analyser);
 
+        // AudioWorkletNode — современный путь. iOS Safari < 14.5 и старые
+        // Android-браузеры его не поддерживают → fallback на ScriptProcessor
+        // (в Chrome он deprecated, но ещё работает; пометка от Chrome — это
+        // именно warning, а не ошибка).
+        const canWorklet = !!(this.audioCtx.audioWorklet
+            && typeof AudioWorkletNode !== 'undefined');
+        if (canWorklet) {
+            try {
+                await this._setupWorklet(src);
+                console.log(`🎤 AudioWorklet sampleRate: ${this._actualSampleRate}`);
+                this._startVolumeRaf();
+                return;
+            } catch (e) {
+                console.warn('AudioWorklet setup failed, fallback to ScriptProcessor:', e);
+            }
+        }
+        this._setupScriptProcessor(src);
+        console.log(`🎤 ScriptProcessor sampleRate: ${this._actualSampleRate}`);
+        this._startVolumeRaf();
+    }
+
+    async _setupWorklet(src) {
+        // Воркет-модуль резолвится относительно URL текущего HTML-документа.
+        // SW зарегистрирован под /fredi/, поэтому относительный путь —
+        // 'voice-pcm-worklet.js' — указывает в /fredi/. ?v= — cache-bust
+        // на случай если SW закешировал старую версию (он отдаёт .js с
+        // cache:'reload', но подстраховка не лишняя).
+        const url = new URL('voice-pcm-worklet.js', document.baseURI).toString();
+        await this.audioCtx.audioWorklet.addModule(url);
+        this.processor = new AudioWorkletNode(this.audioCtx, 'voice-pcm-processor', {
+            numberOfInputs: 1,
+            numberOfOutputs: 1,
+            channelCount: 1,
+            processorOptions: { chunkSize: this.config.chunkSize },
+        });
+        this.processor.port.onmessage = (e) => {
+            const d = e.data;
+            if (!d || !d.int16) return;
+            this._handlePcmChunk(d.int16, d.sumAbs);
+        };
+        src.connect(this.processor);
+        // На iOS обязательно подключить к destination, иначе process()
+        // не вызывается. На worklet та же история.
+        this.processor.connect(this.audioCtx.destination);
+    }
+
+    _setupScriptProcessor(src) {
+        // Deprecated, но нужен как fallback для iOS Safari < 14.5 и
+        // старых Android-браузеров без AudioWorklet.
         this.processor = this.audioCtx.createScriptProcessor(this.config.chunkSize, 1, 1);
         this.processor.onaudioprocess = e => {
             if (!this.recording) return;
@@ -357,21 +421,11 @@ class VoiceRecorder {
                 int16[i] = s * 32767;
                 sumAbs += Math.abs(int16[i]);
             }
-            this.wavData.push(int16);
-            const vol = Math.min(100, (sumAbs / data.length / 32768) * 100);
-            if (this.onVolumeChange) this.onVolumeChange(vol);
-            const isSpeech = vol > VoiceConfig.ui.minVolumeToConsiderSpeech;
-            if (isSpeech) {
-                if (!this.speechSeen) { this.speechSeen = true; if (this.onSpeechDetected) this.onSpeechDetected(true); }
-                this.silenceStart = null;
-            } else if (this.speechSeen && !this.silenceStart) {
-                this.silenceStart = Date.now();
-            }
+            this._handlePcmChunk(int16, sumAbs);
         };
         src.connect(this.processor);
         // На iOS обязательно подключить процессор к destination иначе onaudioprocess не вызывается
         this.processor.connect(this.audioCtx.destination);
-        this._startVolumeRaf();
     }
 
     _setupAnalyser(stream) {
