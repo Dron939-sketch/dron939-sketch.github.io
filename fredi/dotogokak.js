@@ -299,7 +299,24 @@
       if (!ok) { renderLocked(); return; }
       loadProg();
       var r = rank(PROG.count);
-      var rankLine = '<div class="dk-rank"><div>Готовность: <b>' + PROG.count + '</b> ' + (r.next ? '(до «' + (rank(r.next).name) + '» осталось ' + (r.next - PROG.count) + ')' : '(максимум)') + '</div><div>' + r.name + '</div></div>';
+      var appliedCount = PROG.appliedCount || 0;
+      var rankLine = '<div class="dk-rank"><div>Готовность: <b>' + PROG.count + '</b>'
+        + (r.next ? ' <span style="color:#9aa3ad">· до «' + (rank(r.next).name) + '» — ' + (r.next - PROG.count) + '</span>' : ' <span style="color:#9aa3ad">· максимум</span>')
+        + (appliedCount > 0 ? ' · <b style="color:#22c55e">' + appliedCount + ' прожито</b>' : '')
+        + '</div><div>' + r.name + '</div></div>';
+      // Ситуация дня — детерминированно по дате (одна на день)
+      var today = new Date();
+      var dayKey = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      var dayHash = 0; for (var i = 0; i < dayKey.length; i++) dayHash = (dayHash * 31 + dayKey.charCodeAt(i)) & 0x7fffffff;
+      var dailyIdx = dayHash % BANK.length;
+      var dailySit = BANK[dailyIdx];
+      var dailySeg = SEG.find(function (s) { return s.id === dailySit.seg; });
+      var dailyDone = !!PROG.done[dailyIdx];
+      var dailyBlock = '<div class="dk-card" style="background:linear-gradient(135deg,#1f1610,#1a1d23);border-color:#f59e0b66;margin-bottom:14px" onclick="DOTOGO.openDaily()">'
+        + '<div class="dk-step" style="margin:0 0 6px">🗓 Ситуация дня · ' + dailySeg.icon + ' ' + esc(dailySeg.name) + (dailyDone ? ' · ✓' : '') + '</div>'
+        + '<div style="font-size:14px;line-height:1.5;color:#fdebd0">' + esc(dailySit.text) + '</div>'
+        + '<div class="dk-card-c" style="margin-top:8px;color:#f59e0b">Нажмите, чтобы отрепетировать →</div>'
+        + '</div>';
       var segCards = SEG.map(function (s) {
         var total = BANK.filter(function (b) { return b.seg === s.id; }).length;
         var done = BANK.filter(function (b, i) { return b.seg === s.id && PROG.done[i]; }).length;
@@ -316,11 +333,20 @@
         +   '<div class="dk-h1">🎬 До того, как</div>'
         +   '<div class="dk-sub">Мысленно репетируй ситуации, в которые ты обычно попадаешь врасплох. Чтобы, когда они случатся в жизни, у тебя уже был готовый паттерн. Опора на mental rehearsal (Suinn) и implementation intentions (Gollwitzer).</div>'
         +   rankLine
+        +   dailyBlock
         +   '<div class="dk-step">Выберите сегмент</div>'
         +   '<div class="dk-grid">' + segCards + '</div>'
         + '</div>';
       track('feature_opened', { feature: 'dotogokak_home' });
     });
+  }
+
+  function openDaily() {
+    var today = new Date();
+    var dayKey = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var dayHash = 0; for (var i = 0; i < dayKey.length; i++) dayHash = (dayHash * 31 + dayKey.charCodeAt(i)) & 0x7fffffff;
+    var dailyIdx = dayHash % BANK.length;
+    openSit(dailyIdx);
   }
 
   function renderLocked() {
@@ -388,24 +414,37 @@
     if (!ST.review) {
       body = ''
         + '<div class="dk-row" style="margin-top:8px;justify-content:flex-end">'
-        +   '<button class="dk-btn ghost" style="width:auto;padding:6px 12px;margin:0" onclick="DOTOGO.speak()">🔊 Озвучить</button>'
+        +   '<button class="dk-btn ghost" style="width:auto;padding:6px 12px;margin:0" onclick="DOTOGO.speak()">🔊 Озвучить ситуацию</button>'
         + '</div>'
-        + '<div class="dk-step" style="margin-top:14px">Ваш сценарий</div>'
+        + '<div class="dk-step" style="margin-top:14px">Ваш сценарий (минимум 50 символов)</div>'
         + '<div class="dk-row" style="margin-top:6px">'
         +   '<button class="dk-mic" id="dkMic" title="Голосовой ввод">🎤</button>'
-        +   '<textarea class="dk-text" id="dkInput" placeholder="Опишите, как бы вы поступили: что сказали, что сделали, как себя повели. Чем подробнее, тем точнее разбор."></textarea>'
+        +   '<textarea class="dk-text" id="dkInput" placeholder="Опишите подробно:&#10;— с какой первой фразы начнёте&#10;— как держите тело, голос, взгляд&#10;— как реагируете, если собеседник давит&#10;— к какому исходу ведёте&#10;Чем конкретнее, тем точнее разбор."></textarea>'
         + '</div>'
-        + '<button class="dk-btn" onclick="DOTOGO.submit()">Получить разбор от Фреди</button>'
+        + '<button class="dk-btn" id="dkSubmit" onclick="DOTOGO.submit()">Получить разбор от Фреди</button>'
         + '<button class="dk-btn ghost" onclick="DOTOGO.openSeg(\'' + ST.segId + '\')">К списку ситуаций</button>';
     } else {
+      var done = ST.applied ? ' done' : '';
       body = ''
         + '<div class="dk-step" style="margin-top:14px">Ваш сценарий</div>'
         + '<div class="dk-answer-box">' + nl2br(ST.answer) + '</div>'
         + '<div class="dk-step" style="margin-top:14px">Разбор Фреди</div>'
-        + '<div class="dk-review">' + nl2br(ST.review) + '</div>'
-        + '<button class="dk-btn" onclick="DOTOGO.nextSit()">▶️ Следующая ситуация в этом сегменте</button>'
+        + '<div class="dk-review">' + nl2br(ST.review) + '</div>';
+      if (!ST.applied) {
+        body += ''
+          + '<div class="dk-step" style="margin-top:18px">Когда случится в жизни</div>'
+          + '<div class="dk-sub" style="margin-bottom:8px">Вернись и расскажи, что получилось. Это превращает репетицию в реальный навык.</div>'
+          + '<textarea class="dk-text" id="dkApplied" placeholder="Эта ситуация случилась? Что я сделал на самом деле? Сработал ли мой сценарий? Что бы изменил?" style="min-height:80px"></textarea>'
+          + '<button class="dk-btn" style="background:linear-gradient(135deg,#22c55e,#10b981)" onclick="DOTOGO.markApplied()">✓ Случилось в жизни — сохранить</button>';
+      } else {
+        body += ''
+          + '<div class="dk-step" style="margin-top:18px">✓ Случилось в жизни</div>'
+          + '<div class="dk-answer-box" style="border-left:4px solid #22c55e">' + nl2br(ST.applied) + '</div>';
+      }
+      body += ''
+        + '<button class="dk-btn" onclick="DOTOGO.nextSit()">▶️ Следующая ситуация</button>'
         + '<button class="dk-btn ghost" onclick="DOTOGO.openSeg(\'' + ST.segId + '\')">К списку</button>'
-        + '<button class="dk-btn ghost" onclick="DOTOGO.home()">К сегментам</button>';
+        + '<button class="dk-btn ghost" onclick="DOTOGO.openSupervizor()">🧭 Разобрать в Супервизоре</button>';
     }
     c.innerHTML = ''
       + '<div class="dk-wrap">'
@@ -424,19 +463,26 @@
     if (!ST || ST.busy) return;
     var ta = document.getElementById('dkInput'); if (!ta) return;
     var txt = (ta.value || '').trim();
-    if (txt.length < 5) { toast('Опишите свой сценарий чуть подробнее', 'warning'); return; }
+    if (txt.length < 50) {
+      toast('Опишите подробнее — минимум 50 символов (' + txt.length + ' пока).', 'warning');
+      ta.focus();
+      return;
+    }
     ST.answer = txt;
     ST.busy = true;
-    ta.value = '';
-    var c = document.getElementById('screenContainer');
-    if (c) c.querySelector('.dk-btn').textContent = 'Фреди думает…';
+    var btn = document.getElementById('dkSubmit');
+    if (btn) { btn.textContent = '⏳ Фреди думает…'; btn.disabled = true; btn.style.opacity = '0.7'; }
+    ta.disabled = true;
 
     var prompt = buildReviewPrompt();
     var resp = await aiGenerate(prompt, { max_tokens: 700, temperature: 0.55 });
     var review = clean((resp && resp.response) || (resp && resp.text) || '');
     if (!review) {
       toast('Не получилось получить разбор. Попробуйте ещё раз.', 'error');
-      ST.busy = false; renderSit(); return;
+      ST.busy = false;
+      if (btn) { btn.textContent = 'Получить разбор от Фреди'; btn.disabled = false; btn.style.opacity = ''; }
+      if (ta) ta.disabled = false;
+      return;
     }
     ST.review = review;
     ST.busy = false;
@@ -449,6 +495,39 @@
     saveProg();
     renderSit();
     track('feature_opened', { feature: 'dotogokak_review', idx: ST.idx });
+  }
+
+  function markApplied() {
+    if (!ST) return;
+    var ta = document.getElementById('dkApplied');
+    var txt = ta ? (ta.value || '').trim() : '';
+    if (txt.length < 10) { toast('Расскажите коротко — что случилось и как сработал сценарий.', 'warning'); if (ta) ta.focus(); return; }
+    ST.applied = txt;
+    // обновить в истории
+    for (var i = 0; i < PROG.history.length; i++) {
+      if (PROG.history[i].idx === ST.idx && !PROG.history[i].applied) {
+        PROG.history[i].applied = txt;
+        PROG.history[i].appliedTs = Date.now();
+        break;
+      }
+    }
+    if (!PROG.appliedCount) PROG.appliedCount = 0;
+    PROG.appliedCount += 1;
+    saveProg();
+    toast('Сохранено. ' + PROG.appliedCount + ' ситуаций уже отрепетировано и прожито.', 'success');
+    renderSit();
+    track('feature_opened', { feature: 'dotogokak_applied', idx: ST.idx });
+  }
+
+  function openSupervizor() {
+    if (typeof window.showSupervizorScreen === 'function') {
+      window.showSupervizorScreen();
+    } else {
+      var s = document.createElement('script');
+      s.src = 'supervizor.js';
+      s.onload = function () { if (typeof window.showSupervizorScreen === 'function') window.showSupervizorScreen(); };
+      document.head.appendChild(s);
+    }
   }
 
   function nextSit() {
@@ -483,7 +562,9 @@
   window.DOTOGO = {
     home: home, exit: exit, openPremium: openPremium,
     openSeg: openSeg, openSit: openSit,
-    speak: speak, submit: submit, nextSit: nextSit
+    speak: speak, submit: submit, nextSit: nextSit,
+    markApplied: markApplied, openSupervizor: openSupervizor,
+    openDaily: openDaily
   };
   window.showDotogokakScreen = home;
   console.log('✅ dotogokak.js loaded (игра «До того, как», 100 ситуаций в 8 сегментах)');
