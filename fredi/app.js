@@ -1894,13 +1894,17 @@ function renderDashboard() {
             <div class="quick-actions">
                 <div class="quick-actions-title">⚡ Быстрые действия</div>
                 <div class="quick-actions-grid">
+                    <div class="quick-action" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
+                    <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Сказки-катарсис</div></div>
+                    <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
+                    <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
                     <div class="quick-action" data-action="profile"><div class="action-icon">🧠</div><div class="action-name">Мой портрет</div></div>
                     <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div>
                     <div class="quick-action" data-action="prompter"><div class="action-icon">🎙️</div><div class="action-name">ИИ Суфлёр</div></div>
                     <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
                     <div class="quick-action" data-action="brand"><div class="action-icon">🏆</div><div class="action-name">Мой бренд</div></div>
                     <div class="quick-action" data-action="doubles"><div class="action-icon">👥</div><div class="action-name">Двойники</div></div>
-                    <div class="quick-action" data-action="interests"><div class="action-icon">🔮</div><div class="action-name">Интересы</div></div>
+                    <div class="quick-action" data-action="interests"><div class="action-icon">🎯</div><div class="action-name">Интересы</div></div>
                     <div class="quick-action" data-action="hormones"><div class="action-icon">🧬</div><div class="action-name">Гормоны</div></div>
                 </div>
             </div>
@@ -2078,6 +2082,11 @@ function renderDashboard() {
                 doubles: handleShowDoubles,
                 interests: () => { if (typeof showInterestsScreen === 'function') showInterestsScreen(); else { showToast('🎯 Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'interests.js'; s.onload = () => { if (typeof showInterestsScreen === 'function') showInterestsScreen(); }; document.head.appendChild(s); } },
                 hormones: () => { if (typeof showHormonesScreen==='function') showHormonesScreen(); else { const s=document.createElement('script');s.src='hormones.js';s.onload=()=>{if(typeof showHormonesScreen==='function')showHormonesScreen();};document.head.appendChild(s); } },
+                // Дубли пунктов левого меню в быстрых действиях (та же навигация).
+                kontur: () => { if (typeof showKonturScreen==='function') showKonturScreen(); else { const s=document.createElement('script');s.src='kontur.js';s.onload=()=>{if(typeof showKonturScreen==='function')showKonturScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } },
+                tales: () => { if (typeof showTalesScreen==='function') showTalesScreen(); else { const s=document.createElement('script');s.src='tales.js';s.onload=()=>{if(typeof showTalesScreen==='function')showTalesScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } },
+                dreams: () => { if (typeof showDreamsScreen==='function') showDreamsScreen(); else { const s=document.createElement('script');s.src='dreams.js';s.onload=()=>{if(typeof showDreamsScreen==='function')showDreamsScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } },
+                esoterica: () => { if (typeof showEsotericaScreen==='function') showEsotericaScreen(); else { const s=document.createElement('script');s.src='esoterica.js';s.onload=()=>{if(typeof showEsotericaScreen==='function')showEsotericaScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } },
                 habits: () => { if (typeof showHabitsScreen === 'function') showHabitsScreen(); else { showToast('🔄 Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'habits.js'; s.onload = () => { if (typeof showHabitsScreen === 'function') showHabitsScreen(); }; document.head.appendChild(s); } },
                 motivation: () => { if (typeof showMotivationScreen === 'function') showMotivationScreen(); else { showToast('🔥 Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'motivation.js'; s.onload = () => { if (typeof showMotivationScreen === 'function') showMotivationScreen(); }; document.head.appendChild(s); } },
                 strategy: () => { if (typeof showStrategyScreen === 'function') showStrategyScreen(); else { showToast('🗺️ Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'strategy.js'; s.onload = () => { if (typeof showStrategyScreen === 'function') showStrategyScreen(); }; document.head.appendChild(s); } }
