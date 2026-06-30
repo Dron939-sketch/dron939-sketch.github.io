@@ -88,29 +88,32 @@
   }
 
   // -------- голос --------
+  var _svRec = false;
   function attachMic(btnId, taId) {
     var btn = document.getElementById(btnId);
     var ta = document.getElementById(taId);
     if (!btn || !ta) return;
-    var rec = false;
-    btn.onclick = async function () {
-      if (!window.voiceManager || typeof window.voiceManager.startRecording !== 'function') {
-        toast('Голосовой ввод недоступен', 'warning'); return;
+    _svRec = false;
+    btn.onclick = function () {
+      var vm = window.voiceManager;
+      if (!vm || typeof vm.startRecording !== 'function') { toast('Голосовой ввод недоступен', 'info'); return; }
+      if (_svRec) {
+        try { vm.stopRecording(); } catch (e) {}
+        _svRec = false; btn.classList.remove('rec'); btn.textContent = '🎤';
+        return;
       }
-      if (rec) { try { window.voiceManager.stopRecording(); } catch (e) {} return; }
       try {
-        rec = true; btn.classList.add('rec');
-        await window.voiceManager.startRecording({
-          sttOnly: true,
-          onTranscript: function (text) {
-            if (!text) return;
-            var prev = ta.value || '';
-            ta.value = prev ? (prev + ' ' + text) : text;
-            ta.dispatchEvent(new Event('input'));
-          },
-          onStop: function () { rec = false; btn.classList.remove('rec'); }
-        });
-      } catch (e) { rec = false; btn.classList.remove('rec'); }
+        vm.sttOnly = true;
+        vm.onTranscript = function (t) {
+          if (!t) return;
+          var add = String(t).trim();
+          if (!add) return;
+          ta.value = (ta.value ? ta.value + ' ' : '') + add;
+          ta.focus();
+        };
+        vm.startRecording();
+        _svRec = true; btn.classList.add('rec'); btn.textContent = '⏹';
+      } catch (e) { _svRec = false; btn.classList.remove('rec'); btn.textContent = '🎤'; toast('Микрофон недоступен', 'error'); }
     };
   }
 
