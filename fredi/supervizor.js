@@ -249,7 +249,7 @@
 
     var resp = await aiGenerate(buildAskPrompt(), { max_tokens: 350, temperature: 0.6 });
     ST.messages.pop(); // убираем "думает"
-    var ans = clean((resp && resp.response) || (resp && resp.text) || '');
+    var ans = clean((resp && (resp.content || resp.response || resp.text || resp.data || resp.message)) || '');
     if (!ans) {
       toast('Не удалось получить ответ. Попробуйте ещё раз.', 'error');
       renderSession(); return;
@@ -274,7 +274,7 @@
 
   async function doReport() {
     var resp = await aiGenerate(buildReportPrompt(), { max_tokens: 1200, temperature: 0.5 });
-    var txt = clean((resp && resp.response) || (resp && resp.text) || '');
+    var txt = clean((resp && (resp.content || resp.response || resp.text || resp.data || resp.message)) || '');
     if (!txt) {
       toast('Не удалось сформировать разбор. Попробуйте ещё раз.', 'error');
       ST.messages.pop();

@@ -476,8 +476,10 @@
 
     var prompt = buildReviewPrompt();
     var resp = await aiGenerate(prompt, { max_tokens: 700, temperature: 0.55 });
-    var review = clean((resp && resp.response) || (resp && resp.text) || '');
+    var raw = (resp && (resp.content || resp.response || resp.text || resp.data || resp.message)) || '';
+    var review = clean(raw);
     if (!review) {
+      try { console.warn('[dotogokak] empty review, raw resp:', resp); } catch (e) {}
       toast('Не получилось получить разбор. Попробуйте ещё раз.', 'error');
       ST.busy = false;
       if (btn) { btn.textContent = 'Получить разбор от Фреди'; btn.disabled = false; btn.style.opacity = ''; }
