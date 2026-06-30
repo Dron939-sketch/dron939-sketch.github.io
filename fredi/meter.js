@@ -308,7 +308,11 @@
 
     // Список AI-эндпоинтов, которые должен предварять meter-чек.
     // Держим в синхроне с _METER_AI_REGEX в backend/main.py.
-    var AI_URL_REGEX = /\/api\/(?:chat|voice\/process|ai\/generate|deep-analysis|hypno\/support|psychologist-thoughts\/generate|dreams\/(?:interpret|clarify)|reality\/(?:check|parse\/[^/]+)|brand\/transformation|mirrors\/(?:complete|[^/]+\/complete)|morning\/send-now)(?:\/|$|\?)/;
+    // voice\/process РАНЬШЕ не матчил /api/voice/process_stream (после
+    // «process» шёл «_», а граница ждала /|$|? ) — из-за чего HTTP-путь
+    // голоса проходил мимо пейволла И мимо учёта расхода. Расширяем до
+    // process(_stream)?|stt|tts — в синхрон с _METER_AI_REGEX на бэке.
+    var AI_URL_REGEX = /\/api\/(?:chat|voice\/(?:process(?:_stream)?|stt|tts)|ai\/generate|deep-analysis|hypno\/support|psychologist-thoughts\/generate|dreams\/(?:interpret|clarify)|reality\/(?:check|parse\/[^/]+)|brand\/transformation|mirrors\/(?:complete|[^/]+\/complete)|morning\/send-now)(?:\/|$|\?)/;
 
     function _isAiRequest(urlStr) {
         return AI_URL_REGEX.test(urlStr || '');

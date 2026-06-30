@@ -439,7 +439,7 @@ async function getChallenges() {
 }
 
 async function getConfinementModel() {
-    try { return await apiCall(`/api/confinement-model?user_id=${CONFIG.USER_ID}`); }
+    try { return await apiCall(`/api/confinement/model/${CONFIG.USER_ID}`); }
     catch { return null; }
 }
 
