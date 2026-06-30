@@ -763,6 +763,15 @@ class VoiceTransport {
                         if (this._audioChunks.length > 0 || msg.data) {
                             if (msg.data) this._audioChunks.push(msg.data);
                             this._flushAudio();
+                            // Голосовой обмен завершён — списываем расход в счётчик
+                            // (как fetch-патч делает для текста). WS-путь идёт мимо
+                            // window.fetch, поэтому раньше голос НЕ учитывался вовсе:
+                            // дневной лимит от голоса не рос и пейволл по минутам не
+                            // наступал. 15с/обмен — та же цена, что у текстового AI.
+                            try {
+                                if (window.FrediMeter && typeof window.FrediMeter.recordUsage === 'function')
+                                    window.FrediMeter.recordUsage(15);
+                            } catch (e) {}
                         }
                     } else if (msg.data) {
                         // Защита от переполнения памяти (>10MB)
