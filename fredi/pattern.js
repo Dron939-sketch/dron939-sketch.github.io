@@ -163,7 +163,19 @@
   }
 
   // ---------- прогресс ----------
-  function loadProg() { try { return JSON.parse(localStorage.getItem('pattern_prog') || 'null') || { hunts: 0, solved: 0, byLvl: { easy: 0, mid: 0, hard: 0 } }; } catch (e) { return { hunts: 0, solved: 0, byLvl: { easy: 0, mid: 0, hard: 0 } }; } }
+  function loadProg() {
+    var d = { hunts: 0, solved: 0, byLvl: { easy: 0, mid: 0, hard: 0 } };
+    try {
+      var p = JSON.parse(localStorage.getItem('pattern_prog') || 'null');
+      if (!p || typeof p !== 'object') return d;
+      // Мерджим дефолты: старая/частичная запись могла быть без byLvl —
+      // тогда home()/renderWin обращались к p.byLvl.easy и роняли весь экран.
+      p.hunts = p.hunts || 0; p.solved = p.solved || 0;
+      p.byLvl = p.byLvl || {};
+      p.byLvl.easy = p.byLvl.easy || 0; p.byLvl.mid = p.byLvl.mid || 0; p.byLvl.hard = p.byLvl.hard || 0;
+      return p;
+    } catch (e) { return d; }
+  }
   function saveProg(p) { try { localStorage.setItem('pattern_prog', JSON.stringify(p)); } catch (e) {} }
 
   // ---------- состояние раунда ----------
@@ -269,7 +281,13 @@
       '[data-theme="light"] .pt-card b{color:#000}',
       '[data-theme="light"] .pt-btn{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.1);color:#111}',
       '[data-theme="light"] .pt-btn small{color:#666}',
-      '[data-theme="light"] .pt-ta{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.15);color:#111}'
+      '[data-theme="light"] .pt-ta{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.15);color:#111}',
+      '[data-theme="light"] .pt-h2{color:#1f1f3a}',
+      '[data-theme="light"] .pt-hint{color:#92600a}',
+      '[data-theme="light"] .pt-legend{color:#4a2a7a}',
+      '[data-theme="light"] .pt-chip{color:#3f2a6a;border-color:rgba(99,102,241,.4)}',
+      '[data-theme="light"] .pt-msg.y{color:#15803d}',
+      '[data-theme="light"] .pt-msg.n{color:#b91c1c}'
     ].join('\n');
     document.head.appendChild(s);
   }
@@ -359,7 +377,7 @@
       '<div class="pt-wrap">' +
         '<button class="pt-ghost" onclick="PATTERN.home()">← В меню</button>' +
         '<div class="pt-h1">🎯 Охота на правило</div>' +
-        '<div class="pt-legend">🎭 Фреди: <b>«' + esc(ST.rule.legend) + '»</b><br><span style="font-size:.85rem;color:#c4b5fd">У меня есть секретное правило. Пиши что хочешь — отвечу «да» или «нет» по нему. Поймай закономерность.</span></div>' +
+        '<div class="pt-legend">🎭 Фреди: <b>«' + esc(ST.rule.legend) + '»</b><br><span style="font-size:.85rem;opacity:.82">У меня есть секретное правило. Пиши что хочешь — отвечу «да» или «нет» по нему. Поймай закономерность.</span></div>' +
         statsHtml() +
         logHtml() +
         '<div class="pt-row">' +
@@ -436,12 +454,21 @@
       'РАЗБОР: <1–2 предложения, на «ты»: что в гипотезе попадает в правило, что мимо>\n' +
       '||OK:yes|| или ||OK:no||';
     var r = await aiGenerate(prompt, { temperature: 0.15, max_tokens: 140 });
-    var ok = false, note = '';
-    if (r && r.success && r.content) {
-      ok = /\|\|\s*OK\s*:\s*yes\s*\|\|/i.test(r.content);
-      note = clean(r.content);
-    }
     ST.busy = false;
+    // Сбой сети/ИИ — это НЕ «гипотеза мимо». Иначе верная догадка отклоняется
+    // при моргнувшем API, и игрок застревает (единственный выход — «Сдаюсь»).
+    if (!r || !r.success || !r.content) {
+      if (c) c.innerHTML =
+        '<div class="pt-wrap">' +
+          '<button class="pt-ghost" onclick="PATTERN.home()">← В меню</button>' +
+          '<div class="pt-h1">⚠️ Связь подвела</div>' +
+          '<div class="pt-fail">Не получилось проверить гипотезу (сеть или ИИ недоступны). Это не значит, что ты ошибся — попробуй отправить ещё раз.</div>' +
+          '<button class="pt-btn pt-primary" onclick="PATTERN.back()">▶ Вернуться к охоте</button>' +
+        '</div>';
+      return;
+    }
+    var ok = /\|\|\s*OK\s*:\s*yes\s*\|\|/i.test(r.content);
+    var note = clean(r.content);
     if (ok) {
       // переход к этапу «Применение»
       ST.phase = 'apply'; ST.applyStreak = 0; ST.applyTries = 0;

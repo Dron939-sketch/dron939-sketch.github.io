@@ -217,7 +217,7 @@
         '<div class="iv-h1">💎 Вариатика — Intensive</div>' +
         '<div class="iv-card" style="text-align:center;border-color:rgba(99,102,241,.45)">' +
           '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
-          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра в 3 уровня — с подпиской</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;margin-bottom:8px">Игра в 3 уровня — с подпиской</div>' +
           '<div style="color:#aeb1bd;line-height:1.55">«Intensive» — продвинутый тренажёр перспективного мышления УБ-масти: анализ → предсказание → формирование событий через «Хрустальный шар». Доступна в <b>Фреди Premium</b>.</div>' +
         '</div>' +
         '<button class="iv-btn iv-primary" onclick="INTENSIVE.openPremium()">💎 Открыть Premium</button>' +
@@ -307,7 +307,7 @@
       '</div>';
   }
   function exit() { if (typeof window.showKonturScreen === 'function') window.showKonturScreen(); else home(); }
-  function reset() { if (!confirm('Сбросить прогресс игры? Архив разборов останется.')) return; var p = loadProg(); p.done = {}; p.current = { lvl: 0, idx: 0, answers: {} }; saveProg(p); home(); }
+  function reset() { if (!confirm('Сбросить прогресс игры? Архив разборов останется.')) return; var p = loadProg(); p.done = {}; p.current = { lvl: 0, idx: 0, answers: {} }; p.totalScore = 0; p.solvedCases = {}; saveProg(p); home(); }
 
   // ---------- начало уровня (сбор ситуации) ----------
   function start(n) {
@@ -492,17 +492,22 @@
     } else {
       fb = 'Ты прошёл все 9 кружков — это уже сильный шаг. Перечитай свои ответы спокойно через час: часто после паузы становится видно, какой кружок ты обошёл (обычно тот, где правда «жмёт»). Один следующий шаг — сделать его подробнее.';
     }
+    var wasDone = !!p.done[L.n];
     p.done[L.n] = true;
     // засчитываем решённый канонический кейс
     if (caseId) {
       p.solvedCases = p.solvedCases || {};
       p.solvedCases[L.n] = p.solvedCases[L.n] || {};
       var prev = p.solvedCases[L.n][caseId] || 0;
+      // Дедуп фарма: в общий счёт и в серию идёт только ПРИРОСТ над прежним
+      // лучшим результатом по этому кейсу — иначе повтор одного кейса
+      // бесконечно накручивает звание общей серии «Вариатика».
+      var delta = Math.max(0, score - prev);
       if (score > prev) p.solvedCases[L.n][caseId] = score;
-      p.totalScore = (p.totalScore || 0) + score;
-      seriesAdd('intensive', score); // звёзды кейса → очки серии
+      p.totalScore = (p.totalScore || 0) + delta;
+      if (delta > 0) seriesAdd('intensive', delta); // звёзды кейса → очки серии
     } else {
-      seriesAdd('intensive', 2); // свой кейс — фиксировано +2 за прохождение 9 кружков
+      if (!wasDone) seriesAdd('intensive', 2); // +2 только за ПЕРВОЕ прохождение уровня своим кейсом
     }
     p.runs.unshift({ lvl: L.n, lvlName: L.name, situation: p.current.situation, answers: p.current.answers, fb: fb, ts: Date.now(), caseId: caseId, score: score, canon: canonAns });
     if (p.runs.length > 30) p.runs.length = 30;
