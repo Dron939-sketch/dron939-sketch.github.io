@@ -204,7 +204,7 @@
         '<div class="vr-h1">🔮 Вариатика — Basic</div>' +
         '<div class="vr-card" style="text-align:center;border-color:rgba(16,185,129,.4)">' +
           '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
-          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра доступна с подпиской</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;margin-bottom:8px">Игра доступна с подпиской</div>' +
           '<div style="color:#aeb1bd;line-height:1.55">«Вариатика — Basic» — первая часть серии: тренажёр чтения людей. С подпиской открыты все три «Вариатики» (Basic / Progressive / Intensive) и другие сильные игры.</div>' +
         '</div>' +
         '<button class="vr-btn vr-primary" onclick="VARIATIKA.openPremium()">💎 Открыть Premium</button>' +
@@ -361,28 +361,46 @@
       'Не называй масть и уровень внутри историй. Истории должны быть про РАЗНЫХ людей.';
   }
   function parseRound(raw) {
-    // Устойчивый разбор по ПОЗИЦИЯМ маркеров, а не вложенными lookahead'ами.
-    // Почему: LLM часто (а) ставит метки ИНЛАЙН без переноса строки
-    // («…при своих. ИСТОРИЯ2: …»), и (б) роняет цифру у завязки/развязки
-    // («ЗАВЯЗКА:» вместо «ЗАВЯЗКА3:»). Прежний grab требовал \n перед меткой
-    // и точного «ЗАВЯЗКА3» — из-за чего первая история сгребала весь текст.
+    // Разбор ПОСЛЕДОВАТЕЛЬНО в каноническом порядке: каждый следующий маркер
+    // ищется строго ПОСЛЕ предыдущего. Это защищает сразу от двух проблем:
+    //  • метки инлайн без переноса строки («…при своих. ИСТОРИЯ2: …») —
+    //    берём инлайн-совпадение, если нет совпадения в начале строки;
+    //  • слово-метка ВНУТРИ прозы истории («…а завязка такая…», «развязка:») —
+    //    раз ищем по порядку и только вперёд, ранняя проза-«завязка» в истории 1
+    //    не перехватывается как настоящая ЗАВЯЗКА3 (её ищем уже после ИСТОРИЯ2).
+    // Предпочитаем метку в начале строки (настоящий заголовок) инлайновой.
     var text = String(raw || '').replace(/\*\*/g, '').trim();
-    var markers = [
-      { key: 's1',      re: /ИСТОРИЯ\s*1\s*[:：]/i },
-      { key: 's2',      re: /ИСТОРИЯ\s*2\s*[:：]/i },
-      { key: 'setup',   re: /ЗАВЯЗКА\s*3?\s*[:：]/i },
-      { key: 'outcome', re: /РАЗВЯЗКА\s*3?\s*[:：]/i }
+    var defs = [
+      { key: 's1',      word: 'ИСТОРИЯ\\s*1' },
+      { key: 's2',      word: 'ИСТОРИЯ\\s*2' },
+      { key: 'setup',   word: 'ЗАВЯЗКА\\s*3?' },
+      { key: 'outcome', word: 'РАЗВЯЗКА\\s*3?' }
     ];
     var hits = [];
-    markers.forEach(function (mk) {
-      var m = mk.re.exec(text);
-      if (m) hits.push({ key: mk.key, start: m.index, contentStart: m.index + m[0].length });
-    });
-    hits.sort(function (a, b) { return a.start - b.start; });
+    var from = 0;
+    for (var i = 0; i < defs.length; i++) {
+      var rest = text.slice(from);
+      var idxInRest = -1, matchLen = 0;
+      var anchored = new RegExp('(?:^|\\n)[ \\t]*' + defs[i].word + '[ \\t]*[:：]', 'i');
+      var m = anchored.exec(rest);
+      if (m) {
+        var lead = m[0].search(/[^\s]/); if (lead < 0) lead = 0;
+        idxInRest = m.index + lead;
+        matchLen = m[0].length - lead;
+      } else {
+        var inline = new RegExp(defs[i].word + '[ \\t]*[:：]', 'i');
+        var m2 = inline.exec(rest);
+        if (m2) { idxInRest = m2.index; matchLen = m2[0].length; }
+      }
+      if (idxInRest < 0) continue;
+      var absStart = from + idxInRest;
+      hits.push({ key: defs[i].key, start: absStart, contentStart: absStart + matchLen });
+      from = absStart + matchLen;
+    }
     var out = { s1: '', s2: '', setup: '', outcome: '' };
-    for (var i = 0; i < hits.length; i++) {
-      var end = (i + 1 < hits.length) ? hits[i + 1].start : text.length;
-      out[hits[i].key] = text.slice(hits[i].contentStart, end).trim();
+    for (var j = 0; j < hits.length; j++) {
+      var end = (j + 1 < hits.length) ? hits[j + 1].start : text.length;
+      out[hits[j].key] = text.slice(hits[j].contentStart, end).trim();
     }
     // Фоллбэк: если модель не пометила первую историю, но начала со «ИСТОРИЯ2»,
     // считаем первой историей всё, что шло до неё.

@@ -227,7 +227,7 @@
         '<div class="pg-h1">🚀 Вариатика — Progressive</div>' +
         '<div class="pg-card" style="text-align:center;border-color:rgba(139,92,246,.45)">' +
           '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
-          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра в 7 уровней — с подпиской</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;margin-bottom:8px">Игра в 7 уровней — с подпиской</div>' +
           '<div style="color:#aeb1bd;line-height:1.55">«Progressive» — продвинутая игра по переходу в сектор ЧВ: 7 уровней, теория + практика в реальной жизни на каждом. Доступна в <b>Фреди Premium</b>.</div>' +
         '</div>' +
         '<button class="pg-btn pg-primary" onclick="PROGRESSIVE.openPremium()">💎 Открыть Premium</button>' +
@@ -505,7 +505,7 @@
         '<button class="pg-ghost" onclick="PROGRESSIVE.day(5)">← К дню 5</button>' +
         '<div class="pg-h1">🧬 Тест на масть · ' + (idx + 1) + '/' + TEST.length + '</div>' +
         '<div class="pg-prog"><i style="width:' + Math.round(idx / TEST.length * 100) + '%"></i></div>' +
-        '<div class="pg-card" style="font-size:1.04rem;color:#fff"><b>' + esc(Q.q) + '</b></div>' + opts +
+        '<div class="pg-card" style="font-size:1.04rem"><b>' + esc(Q.q) + '</b></div>' + opts +
       '</div>';
   }
   function testPick(idx, optIdx) {

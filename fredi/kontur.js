@@ -698,6 +698,10 @@
   async function verdict() {
     var userTurns = ST.history.filter(function (m) { return m.role === 'user'; }).length;
     if (userTurns < 2) { toast('Сначала пройди хотя бы пару кругов с Фреди', 'info'); return; }
+    // Гард от двойного клика: кнопка «Завершить» остаётся в DOM во время await,
+    // без флага повторные нажатия плодили дубли вердикта и CTA-кнопок.
+    if (ST.busy) return;
+    ST.busy = true;
     ST.history.push({ role: 'sys', text: '— Фреди читает твою карту осей —' });
     paintChat(); typing(true);
     var v;
@@ -705,6 +709,7 @@
       var r = await aiGenerate(buildPrompt('verdict'), { temperature: 0.6, max_tokens: 460 });
       v = (r && r.success && r.content) ? clean(r.content) : '';
     } catch (e) { v = ''; }
+    ST.busy = false;
     if (!v) v = 'Главное ты сделал — удержал мысль дольше привычного. Но заметь: почти весь разговор ты мерил тему одной меркой. Слепая ось — та, которую ты так и не включил. В следующий раз начни прямо с неё.';
     // вытащить машинный тег слепой оси и убрать его из текста
     var blindKey = null, mm = v.match(/\|\|\s*BLIND\s*:\s*([^|]+?)\s*\|\|/i);

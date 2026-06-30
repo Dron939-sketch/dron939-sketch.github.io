@@ -124,7 +124,9 @@
     var c = document.getElementById('screenContainer');
     if (!c) return;
     CONTAINER = c;
-    if (!isPremium()) { renderLocked(); return; }
+    // НЕ делаем ранний renderLocked по isPremium(): window.IS_PREMIUM = null до
+    // завершения async loadPremiumStatus(), поэтому платящий, открывший модуль
+    // сразу после загрузки, увидел бы замок навсегда. Ждём реальный статус.
     ensurePremium().then(function (ok) {
       if (!ok) { renderLocked(); return; }
       loadHistory();

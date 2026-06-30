@@ -127,7 +127,7 @@
         '<div class="im-h1">🛡️ Императив</div>' +
         '<div class="im-card" style="text-align:center;border-color:rgba(239,68,68,.45)">' +
           '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
-          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра в 9 уровней — с подпиской</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;margin-bottom:8px">Игра в 9 уровней — с подпиской</div>' +
           '<div style="color:#aeb1bd;line-height:1.55">«Императив» — высшие навыки СБ-масти: лидерство как «право имеющий», доминирование в общении, владение силой как ресурсом. 9 уровней пути от жертвы до законодателя. Доступна в <b>Фреди Premium</b>.</div>' +
         '</div>' +
         '<button class="im-btn im-primary" onclick="IMPERATIVE.openPremium()">💎 Открыть Premium</button>' +

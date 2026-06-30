@@ -313,7 +313,10 @@
     injectStyles();
     var c = document.getElementById('screenContainer');
     if (!c) return;
-    if (!isPremium()) { renderLocked(); return; }
+    // НЕ делаем ранний renderLocked по isPremium(): window.IS_PREMIUM = null
+    // до завершения async loadPremiumStatus(), поэтому платящий, открывший игру
+    // сразу после загрузки, увидел бы замок навсегда (ранний return пропускал
+    // ensurePremium). Ждём реальный статус — как в imperative/exponenta.
     ensurePremium().then(function (ok) {
       if (!ok) { renderLocked(); return; }
       loadProg();

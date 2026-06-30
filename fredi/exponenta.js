@@ -123,7 +123,7 @@
         '<div class="ex-h1">📈 Экспонента</div>' +
         '<div class="ex-card" style="text-align:center;border-color:rgba(34,197,94,.45)">' +
           '<div style="font-size:2.4rem;margin-bottom:6px">💎</div>' +
-          '<div style="font-weight:700;font-size:1.12rem;color:#fff;margin-bottom:8px">Игра в 9 уровней — с подпиской</div>' +
+          '<div style="font-weight:700;font-size:1.12rem;margin-bottom:8px">Игра в 9 уровней — с подпиской</div>' +
           '<div style="color:#aeb1bd;line-height:1.55">«Экспонента» — высшие навыки ТФ-масти: бизнес как война за клиентов, рост от ремесла к производству и созданию рынков. 9 уровней пути от «работай рядом с домом» до «создавай новый рынок». Доступна в <b>Фреди Premium</b>.</div>' +
         '</div>' +
         '<button class="ex-btn ex-primary" onclick="EXPONENTA.openPremium()">💎 Открыть Premium</button>' +
