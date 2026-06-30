@@ -23,6 +23,19 @@
     } catch (e) { return { success: false }; }
   }
   function clean(s) { return String(s || '').replace(/\|\|[^|]*\|\|/g, '').trim(); }
+  // Простой markdown → HTML для AI-ответа: **жирное**, переводы строк
+  function md(s) {
+    var t = esc(String(s == null ? '' : s));
+    // **жирный** → <strong>
+    t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    // *курсив* → <em> (опционально, осторожно)
+    t = t.replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s.,!?:;)])/g, '$1<em>$2</em>');
+    // двойной перенос — пустая строка между блоками
+    t = t.replace(/\n{2,}/g, '</p><p>');
+    // одинарный перенос — мягкий
+    t = t.replace(/\n/g, '<br>');
+    return '<p>' + t + '</p>';
+  }
 
   // ---------- сегменты ----------
   var SEG = [
@@ -221,8 +234,10 @@
       + '.dk-btn{display:block;width:100%;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;border:0;padding:13px 14px;border-radius:11px;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px}'
       + '.dk-btn:hover{filter:brightness(1.07)}'
       + '.dk-btn.ghost{background:transparent;border:1px solid #2c2f36;color:#cfd5dd;font-weight:500}'
-      + '.dk-review{background:#13161c;border:1px solid #2c2f36;border-radius:14px;padding:16px 18px;margin-top:14px;font-size:14px;line-height:1.65;color:#dde2e8;white-space:pre-wrap}'
-      + '.dk-review b,.dk-review strong{color:#fff}'
+      + '.dk-review{background:#13161c;border:1px solid #2c2f36;border-radius:14px;padding:16px 18px;margin-top:14px;font-size:14px;line-height:1.65;color:#dde2e8}'
+      + '.dk-review p{margin:0 0 12px 0}'
+      + '.dk-review p:last-child{margin-bottom:0}'
+      + '.dk-review b,.dk-review strong{color:#fff;display:inline-block;margin-top:2px}'
       + '.dk-step{font-size:11px;color:#8a93a0;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}'
       + '.dk-lock{background:linear-gradient(135deg,#f59e0b22,#ef444422);border:1px solid #f59e0b66;border-radius:14px;padding:22px;text-align:center}'
       + '.dk-lock h2{font-size:18px;margin:8px 0}'
@@ -429,22 +444,24 @@
         + '<div class="dk-step" style="margin-top:14px">Ваш сценарий</div>'
         + '<div class="dk-answer-box">' + nl2br(ST.answer) + '</div>'
         + '<div class="dk-step" style="margin-top:14px">Разбор Фреди</div>'
-        + '<div class="dk-review">' + nl2br(ST.review) + '</div>';
-      if (!ST.applied) {
-        body += ''
-          + '<div class="dk-step" style="margin-top:18px">Когда случится в жизни</div>'
-          + '<div class="dk-sub" style="margin-bottom:8px">Вернись и расскажи, что получилось. Это превращает репетицию в реальный навык.</div>'
-          + '<textarea class="dk-text" id="dkApplied" placeholder="Эта ситуация случилась? Что я сделал на самом деле? Сработал ли мой сценарий? Что бы изменил?" style="min-height:80px"></textarea>'
-          + '<button class="dk-btn" style="background:linear-gradient(135deg,#22c55e,#10b981)" onclick="DOTOGO.markApplied()">✓ Случилось в жизни — сохранить</button>';
-      } else {
+        + '<div class="dk-review">' + md(ST.review) + '</div>';
+      if (ST.applied) {
         body += ''
           + '<div class="dk-step" style="margin-top:18px">✓ Случилось в жизни</div>'
           + '<div class="dk-answer-box" style="border-left:4px solid #22c55e">' + nl2br(ST.applied) + '</div>';
+      } else if (ST.showApplied) {
+        body += ''
+          + '<div class="dk-step" style="margin-top:18px">Если случится в жизни — запишите здесь</div>'
+          + '<textarea class="dk-text" id="dkApplied" placeholder="Что произошло на самом деле? Сработал ли сценарий? Что бы изменили?" style="min-height:80px"></textarea>'
+          + '<button class="dk-btn" style="background:linear-gradient(135deg,#22c55e,#10b981)" onclick="DOTOGO.markApplied()">✓ Сохранить как прожитое</button>';
       }
       body += ''
         + '<button class="dk-btn" onclick="DOTOGO.nextSit()">▶️ Следующая ситуация</button>'
-        + '<button class="dk-btn ghost" onclick="DOTOGO.openSeg(\'' + ST.segId + '\')">К списку</button>'
-        + '<button class="dk-btn ghost" onclick="DOTOGO.openSupervizor()">🧭 Разобрать в Супервизоре</button>';
+        + '<button class="dk-btn ghost" onclick="DOTOGO.openSeg(\'' + ST.segId + '\')">К списку</button>';
+      if (!ST.applied && !ST.showApplied) {
+        body += '<button class="dk-btn ghost" onclick="DOTOGO.showApplied()">✓ Случилось в жизни — записать</button>';
+      }
+      body += '<button class="dk-btn ghost" onclick="DOTOGO.openSupervizor()">🧭 Разобрать в Супервизоре</button>';
     }
     c.innerHTML = ''
       + '<div class="dk-wrap">'
@@ -560,12 +577,23 @@
       + 'Тон: уважительный, на «вы», прямой, без воды. Никаких длинных рассуждений — только по делу. Не суди — помогай.';
   }
 
+  function showApplied() {
+    if (!ST) return;
+    ST.showApplied = true;
+    renderSit();
+    setTimeout(function () {
+      var el = document.getElementById('dkApplied');
+      if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    }, 50);
+  }
+
   // экспорт
   window.DOTOGO = {
     home: home, exit: exit, openPremium: openPremium,
     openSeg: openSeg, openSit: openSit,
     speak: speak, submit: submit, nextSit: nextSit,
-    markApplied: markApplied, openSupervizor: openSupervizor,
+    markApplied: markApplied, showApplied: showApplied,
+    openSupervizor: openSupervizor,
     openDaily: openDaily
   };
   window.showDotogokakScreen = home;
