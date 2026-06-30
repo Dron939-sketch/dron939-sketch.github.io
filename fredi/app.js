@@ -1894,7 +1894,7 @@ function renderDashboard() {
             <div class="quick-actions">
                 <div class="quick-actions-title">⚡ Быстрые действия</div>
                 <div class="quick-actions-grid">
-                    <div class="quick-action" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
+                    <div class="quick-action featured" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
                     <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Сказки-катарсис</div></div>
                     <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
                     <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
