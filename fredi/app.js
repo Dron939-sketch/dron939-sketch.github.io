@@ -2757,7 +2757,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!m) return;
         var ROUTES = {
             kontur: { fn: 'showKonturGame', src: 'kontur.js', chat: 'kontur' }, // прямо в игру «О чём ты умеешь думать»
-            games:  { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' } // в список игр
+            games:  { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' }, // в список игр
+            dvapotoka: { fn: 'showDvaPotokaGame', src: 'dvapotoka.js', chat: 'kontur' } // прямо в игру «Два потока»
         };
         var r = ROUTES[m];
         if (!r) return;
