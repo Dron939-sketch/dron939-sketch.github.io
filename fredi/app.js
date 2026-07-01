@@ -2766,7 +2766,8 @@ document.addEventListener('DOMContentLoaded', function() {
             oshibka: { fn: 'showOshibkaGame', src: 'oshibka.js', chat: 'kontur' }, // «Лови ошибку»
             danetki: { fn: 'showDanetkiGame', src: 'danetki.js', chat: 'kontur' }, // «Данетки»
             fermi: { fn: 'showFermiGame', src: 'fermi.js', chat: 'kontur' }, // «Прикидка» (Ферми)
-            advokat: { fn: 'showAdvokatGame', src: 'advokat.js', chat: 'kontur' } // «Адвокат дьявола»
+            advokat: { fn: 'showAdvokatGame', src: 'advokat.js', chat: 'kontur' }, // «Адвокат дьявола»
+            delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' } // «Своё дело» (бизнес-симулятор)
         };
         var r = ROUTES[m];
         if (!r) return;
