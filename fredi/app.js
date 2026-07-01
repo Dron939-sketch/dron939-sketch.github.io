@@ -2759,7 +2759,14 @@ document.addEventListener('DOMContentLoaded', function() {
             kontur: { fn: 'showKonturGame', src: 'kontur.js', chat: 'kontur' }, // прямо в игру «О чём ты умеешь думать»
             games:  { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' }, // в список игр
             dvapotoka: { fn: 'showDvaPotokaGame', src: 'dvapotoka.js', chat: 'kontur' }, // прямо в игру «Два потока»
-            mnemo: { fn: 'showMnemoGame', src: 'mnemo.js', chat: 'kontur' } // прямо в игру «Мнемо»
+            mnemo: { fn: 'showMnemoGame', src: 'mnemo.js', chat: 'kontur' }, // прямо в игру «Мнемо»
+            fokus: { fn: 'showFokusGame', src: 'fnback.js', chat: 'kontur' }, // «Фокус» N-back
+            schet: { fn: 'showSchetGame', src: 'schet.js', chat: 'kontur' }, // «Устный счёт»
+            kalibr: { fn: 'showKalibrGame', src: 'kalibr.js', chat: 'kontur' }, // «Калибровка»
+            oshibka: { fn: 'showOshibkaGame', src: 'oshibka.js', chat: 'kontur' }, // «Лови ошибку»
+            danetki: { fn: 'showDanetkiGame', src: 'danetki.js', chat: 'kontur' }, // «Данетки»
+            fermi: { fn: 'showFermiGame', src: 'fermi.js', chat: 'kontur' }, // «Прикидка» (Ферми)
+            advokat: { fn: 'showAdvokatGame', src: 'advokat.js', chat: 'kontur' } // «Адвокат дьявола»
         };
         var r = ROUTES[m];
         if (!r) return;
