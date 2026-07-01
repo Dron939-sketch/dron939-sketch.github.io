@@ -284,34 +284,54 @@
                 _showAiBusy();
             }
 
+            // Ретрай с бэкоффом для идемпотентных GET: холодный старт спящего
+            // контейнера и моргания мобильной сети обычно проходят со 2-й попытки.
+            // api_network_error пишем ТОЛЬКО когда исчерпаны все попытки — счётчик
+            // отражает реальные недоступности, а не разовые обрывы. Не-GET (POST
+            // /api/ai/generate и пр.) не ретраятся — они не идемпотентны.
+            var canRetry = (method==='GET');
+            var maxTries = canRetry ? 3 : 1;
+            var backoffs = [400, 1200];
             try{
-                var response=await _wrapped(url,options);
-                var latency=Date.now()-started;
-
-                if(isAi && response.ok && !alreadyTracked){
+                for(var attempt=0; ; attempt++){
+                    var opt = options;
+                    // на повторах убираем уже сработавший таймаут-signal (иначе мгновенный abort)
+                    if(attempt>0 && options && options.signal){ opt=Object.assign({},options); delete opt.signal; }
                     try{
-                        var cloned=response.clone();
-                        var data=await cloned.json();
-                        var respText=_extractResponseText(data);
-                        track('ai_response_received',{
-                            endpoint:_shortEndpoint(urlStr),
-                            text_length:respText.length,
-                            latency_ms:latency,
-                            success:!!(data && data.success !== false),
-                            via:'fetch'
-                        });
-                    }catch(e){}
-                }
+                        var response=await _wrapped(url,opt);
+                        var latency=Date.now()-started;
 
-                if(urlStr.indexOf('/api/')>=0 && response.status >= 400 && response.status !== 402){
-                    track('api_error',{endpoint:_shortEndpoint(urlStr),status:response.status,method:method});
+                        if(isAi && response.ok && !alreadyTracked){
+                            try{
+                                var cloned=response.clone();
+                                var data=await cloned.json();
+                                var respText=_extractResponseText(data);
+                                track('ai_response_received',{
+                                    endpoint:_shortEndpoint(urlStr),
+                                    text_length:respText.length,
+                                    latency_ms:latency,
+                                    success:!!(data && data.success !== false),
+                                    via:'fetch'
+                                });
+                            }catch(e){}
+                        }
+
+                        if(urlStr.indexOf('/api/')>=0 && response.status >= 400 && response.status !== 402){
+                            track('api_error',{endpoint:_shortEndpoint(urlStr),status:response.status,method:method});
+                        }
+                        return response;
+                    }catch(netErr){
+                        if(attempt < maxTries-1){
+                            // тихий повтор — промежуточный сбой не логируем
+                            await new Promise(function(res){ setTimeout(res, backoffs[attempt] + Math.floor(Math.random()*150)); });
+                            continue;
+                        }
+                        if(urlStr.indexOf('/api/')>=0){
+                            track('api_network_error',{endpoint:_shortEndpoint(urlStr),method:method,error:((netErr && netErr.message)||'').slice(0,100),retries:attempt});
+                        }
+                        throw netErr;
+                    }
                 }
-                return response;
-            }catch(netErr){
-                if(urlStr.indexOf('/api/')>=0){
-                    track('api_network_error',{endpoint:_shortEndpoint(urlStr),method:method,error:((netErr && netErr.message)||'').slice(0,100)});
-                }
-                throw netErr;
             }finally{
                 if(isAi && method==='POST' && !alreadyTracked) _hideAiBusy();
             }
