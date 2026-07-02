@@ -350,6 +350,58 @@
 
     window.renderSubscriptionSection = renderSubscriptionSection;
 
+    // Прямой чекаут: открывает оплату (email + ЮKassa) в фокус-модалке —
+    // без ухода в экран настроек, где подписка теряется среди прочего.
+    function openCheckout(source) {
+        try {
+            var existing = document.getElementById('fredCheckoutOverlay');
+            if (existing) existing.remove();
+
+            var overlay = document.createElement('div');
+            overlay.id = 'fredCheckoutOverlay';
+            overlay.setAttribute('style',
+                'position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,0.72);' +
+                '-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);' +
+                'display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 16px');
+
+            var sheet = document.createElement('div');
+            sheet.setAttribute('style', 'position:relative;width:100%;max-width:440px;margin:auto');
+
+            var closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&#10005;';
+            closeBtn.setAttribute('aria-label', 'Закрыть');
+            closeBtn.setAttribute('style',
+                'position:absolute;top:-8px;right:-8px;z-index:2;width:36px;height:36px;border-radius:50%;' +
+                'border:none;background:rgba(20,20,20,0.92);color:#fff;font-size:15px;line-height:36px;cursor:pointer');
+
+            var container = document.createElement('div');
+            container.setAttribute('data-subscription-container', '');
+
+            sheet.appendChild(closeBtn);
+            sheet.appendChild(container);
+            overlay.appendChild(sheet);
+            document.body.appendChild(overlay);
+
+            function _close() {
+                overlay.remove();
+                window.removeEventListener('fredi:subscription-updated', _close);
+            }
+            closeBtn.onclick = _close;
+            overlay.addEventListener('click', function (e) { if (e.target === overlay) _close(); });
+            // Успешная активация подписки закроет модалку.
+            window.addEventListener('fredi:subscription-updated', _close);
+
+            try {
+                if (window.FrediTracker && window.FrediTracker.track) {
+                    window.FrediTracker.track('checkout_opened', { source: source || 'unknown' });
+                }
+            } catch (e) {}
+
+            renderSubscriptionSection(container);
+        } catch (e) { console.error('openCheckout error:', e); }
+    }
+    window.openCheckout = openCheckout;
+
     function _findSubContainer() {
         return document.querySelector('[data-subscription-container]')
             || document.getElementById('subscriptionSection')

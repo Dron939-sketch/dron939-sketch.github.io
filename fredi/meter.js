@@ -250,7 +250,13 @@
         document.getElementById('meterSubscribeBtn').onclick = function() {
             _track('meter_subscribe_clicked', {});
             overlay.remove();
-            if (typeof showSettingsScreen === 'function') showSettingsScreen();
+            // Прямой чекаут из paywall (email + ЮKassa в один шаг),
+            // без ухода в настройки, где оплата терялась.
+            if (typeof window.openCheckout === 'function') {
+                window.openCheckout('paywall');
+            } else if (typeof showSettingsScreen === 'function') {
+                showSettingsScreen();
+            }
         };
 
         // \u0422\u0438\u043A\u0430\u044E\u0449\u0438\u0439 \u043E\u0431\u0440\u0430\u0442\u043D\u044B\u0439 \u043E\u0442\u0441\u0447\u0451\u0442 \u0434\u043E 00:00 UTC.
