@@ -2764,6 +2764,9 @@ document.addEventListener('DOMContentLoaded', function() {
             schet: { fn: 'showSchetGame', src: 'schet.js', chat: 'kontur' }, // «Устный счёт»
             kalibr: { fn: 'showKalibrGame', src: 'kalibr.js', chat: 'kontur' }, // «Калибровка»
             oshibka: { fn: 'showOshibkaGame', src: 'oshibka.js', chat: 'kontur' }, // «Лови ошибку»
+            chuvstva: { fn: 'showChuvstvaGame', src: 'chuvstva.js', chat: 'kontur' }, // «Чувства»
+            mysl: { fn: 'showMyslGame', src: 'mysl.js', chat: 'kontur' }, // «Мысль под допросом»
+            skazhinet: { fn: 'showSkazhiNetGame', src: 'skazhinet.js', chat: 'kontur' }, // «Скажи нет»
             danetki: { fn: 'showDanetkiGame', src: 'danetki.js', chat: 'kontur' }, // «Данетки»
             fermi: { fn: 'showFermiGame', src: 'fermi.js', chat: 'kontur' }, // «Прикидка» (Ферми)
             advokat: { fn: 'showAdvokatGame', src: 'advokat.js', chat: 'kontur' }, // «Адвокат дьявола»
