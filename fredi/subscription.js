@@ -304,6 +304,7 @@
                 </div>
                 <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 690 &#8381;</button>
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
+                <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-secondary)">Оформляя подписку, вы принимаете <a href="/oferta/" target="_blank" rel="noopener" style="color:#3b82ff">Оферту</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener" style="color:#3b82ff">Политику конфиденциальности</a>.</div>
             </div>`;
     }
 
