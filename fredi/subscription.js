@@ -403,6 +403,16 @@
     }
     window.openCheckout = openCheckout;
 
+    // Авто-открытие чекаута по ссылке /fredi/?checkout=1 (со страницы «Тарифы»).
+    setTimeout(function () {
+        try {
+            var sp = new URLSearchParams(window.location.search);
+            if (sp.get('checkout') === '1' || window.location.hash === '#subscribe') {
+                openCheckout('tariffs');
+            }
+        } catch (e) {}
+    }, 1200);
+
     function _findSubContainer() {
         return document.querySelector('[data-subscription-container]')
             || document.getElementById('subscriptionSection')
