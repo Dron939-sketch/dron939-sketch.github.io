@@ -1,686 +1,223 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <link rel="canonical" href="https://meysternlp.ru/blog/">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-
-  <title>Блог Андрея Мейстера — манифесты, исследования, психология 2026</title>
-  <meta name="description" content="350+ статей о психологии, манипуляциях, системном мышлении и виртуальном психологе Фреди. Манифесты Мейстера 2026, авторские концепты, мета-анализы.">
-  <meta name="keywords" content="блог психология, манифесты Мейстера, психология России 2026, виртуальный психолог Фреди, разговорный гипноз, системное мышление">
-  <meta name="author" content="Андрей Мейстер">
-
-  <meta property="og:type" content="blog">
-  <meta property="og:title" content="Блог Андрея Мейстера — 350+ статей о психологии">
-  <meta property="og:description" content="30 манифестов Мейстера 2026, авторские концепты, исследования и практические гиды.">
-  <meta property="og:url" content="https://meysternlp.ru/blog/">
-  <meta property="og:image" content="https://meysternlp.ru/og-image.jpg">
-  <meta property="og:site_name" content="Андрей Мейстер">
-  <meta property="og:locale" content="ru_RU">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Блог Андрея Мейстера — 350+ статей">
-  <meta name="twitter:description" content="Манифесты Мейстера 2026, исследования, психология России.">
-  <meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://meysternlp.ru/"},{"@type":"ListItem","position":2,"name":"Блог","item":"https://meysternlp.ru/blog/"}]}
-  </script>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Blog","name":"Блог Андрея Мейстера","description":"Манифесты, исследования и практические статьи о психологии 2026","url":"https://meysternlp.ru/blog/","author":{"@type":"Person","name":"Андрей Мейстер","url":"https://meysternlp.ru/obo-mne/","sameAs":["https://t.me/meysternlp","https://vk.com/meysternlp","https://rutube.ru/channel/29916593/","https://dzen.ru/89857788588"]}}
-  </script>
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;color:#1D1D1F;line-height:1.6;font-size:16px}
-    .container{max-width:1200px;margin:0 auto;padding:0 20px}
-    a{color:#3A86FF;text-decoration:none;transition:color .2s}
-    a:hover{color:#1D1D1F}
-    h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:200;letter-spacing:.05em;color:#1D1D1F;margin:50px 0 16px;line-height:1.1}
-    h2{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:300;color:#3A86FF;margin:60px 0 24px;letter-spacing:.05em}
-    h3{font-size:1.15rem;font-weight:500;line-height:1.35;color:#1D1D1F}
-    p{color:#3A3A3C;margin-bottom:1rem}
-    .blog-hero{padding:30px 0 20px;border-bottom:1px solid #E0E0E0;margin-bottom:30px}
-    .blog-hero p{font-size:1.2rem;color:#6E6E73;max-width:780px;font-weight:300}
-    .stats-row{display:flex;gap:40px;margin-top:20px;flex-wrap:wrap}
-    .stat{display:flex;flex-direction:column}
-    .stat-num{font-size:2rem;font-weight:600;color:#3A86FF;line-height:1}
-    .stat-lbl{font-size:.85rem;color:#6E6E73;text-transform:uppercase;letter-spacing:.1em;margin-top:6px}
-    .manifest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:24px 0 60px}
-    .manifesto-card{display:block;padding:20px 22px;border:1px solid #E0E0E0;border-radius:12px;background:linear-gradient(135deg,#FAFAFA,#F0F0F5);transition:all .2s;text-decoration:none}
-    .manifesto-card:hover{border-color:#3A86FF;transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,134,255,.15)}
-    .manifesto-card .m-num{display:inline-block;font-size:.75rem;font-weight:700;color:#3A86FF;letter-spacing:.1em;margin-bottom:8px;background:rgba(58,134,255,.1);padding:3px 8px;border-radius:8px}
-    .manifesto-card h3{color:#1D1D1F;font-weight:600;font-size:1.05rem;line-height:1.35}
-    .manifesto-card:hover h3{color:#3A86FF}
-    .section-intro{font-size:1.05rem;color:#6E6E73;margin-bottom:24px;max-width:780px}
-    .archive-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px 24px;margin:20px 0 40px}
-    .archive-list a{display:block;padding:10px 14px;color:#1D1D1F;border-bottom:1px solid #F0F0F0;font-size:.97rem;font-weight:400;line-height:1.4}
-    .archive-list a:hover{color:#3A86FF;background:#FAFAFA;padding-left:18px}
-    .wave-section{margin-bottom:48px;padding:24px;background:#FAFAFA;border-radius:14px;border-left:4px solid #3A86FF}
-    .wave-section h2{margin-top:0}
-    .wave-section .archive-list{margin-bottom:0}
-    .footer{padding:60px 0 30px;border-top:1px solid rgba(58,134,255,.2);background:#0C0C0C;margin-top:80px;color:#F0F0F0}
-    .footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
-    .footer-logo{font-size:1.2rem;letter-spacing:.3em}
-    .text-blue{color:#3A86FF}
-    .social-links{display:flex;gap:24px;flex-wrap:wrap}
-    .social-links a{color:#F0F0F0;text-transform:uppercase;letter-spacing:.1em;font-size:.9rem}
-    .social-links a:hover{color:#3A86FF}
-    .copyright{text-align:center;margin-top:40px;font-size:.85rem;opacity:.55}
-    
-    /* === Новые элементы дизайна (май 2026) === */
-    .start-here{margin:24px 0 0;padding:18px 22px;background:linear-gradient(135deg,rgba(58,134,255,0.08),rgba(58,134,255,0.02));border-left:4px solid #3A86FF;border-radius:10px;font-size:1.02rem;color:#1D1D1F}
-    .start-here strong{color:#3A86FF}
-    .start-here a{font-weight:600}
-    .quick-nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:16px 0;margin:30px -20px 0;border-bottom:1px solid #E0E0E0}
-    .quick-nav-inner{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px;max-width:1200px;margin:0 auto}
-    .quick-nav a{flex-shrink:0;padding:8px 14px;background:#F0F0F5;border:1px solid #E0E0E0;border-radius:20px;color:#1D1D1F;font-size:0.88rem;font-weight:500;white-space:nowrap;transition:all .15s}
-    .quick-nav a:hover{background:#3A86FF;color:#fff;border-color:#3A86FF}
-    .search-box{margin:30px 0 40px;position:relative}
-    .search-box input{width:100%;padding:16px 50px 16px 22px;border:2px solid #E0E0E0;border-radius:14px;font-size:1.05rem;font-family:inherit;color:#1D1D1F;background:#FFFFFF;transition:border-color .2s,box-shadow .2s}
-    .search-box input:focus{outline:none;border-color:#3A86FF;box-shadow:0 0 0 4px rgba(58,134,255,.1)}
-    .search-box::after{content:'🔍';position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:1.3rem;pointer-events:none}
-    .search-count{font-size:.9rem;color:#6E6E73;margin-top:10px;display:none}
-    .search-count.visible{display:block}
-    .featured-card{margin:40px 0 60px;padding:32px;background:linear-gradient(135deg,#1D1D1F,#2D2D3F);border-radius:20px;color:#FFFFFF;position:relative;overflow:hidden;border:1px solid rgba(58,134,255,0.3)}
-    .featured-card::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(58,134,255,0.15),transparent 70%);pointer-events:none}
-    .featured-tag{display:inline-block;font-size:.75rem;font-weight:700;color:#3A86FF;text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;padding:4px 10px;background:rgba(58,134,255,0.15);border-radius:6px}
-    .featured-card h2{font-size:clamp(1.4rem,3.5vw,2rem)!important;color:#FFFFFF!important;margin:8px 0 14px!important;font-weight:500!important;letter-spacing:.02em!important;line-height:1.2}
-    .featured-card p{color:rgba(255,255,255,0.82);margin-bottom:18px;font-size:1.02rem;line-height:1.6;max-width:780px}
-    .featured-link{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:#3A86FF;color:#fff!important;border-radius:30px;font-weight:600;font-size:.95rem;letter-spacing:.02em;transition:all .15s}
-    .featured-link:hover{background:#fff;color:#1D1D1F!important;transform:translateX(4px)}
-    .card-meta{display:block;font-size:.75rem;color:#6E6E73;margin-top:10px;font-weight:400;letter-spacing:.02em}
-    .manifesto-card.no-match{display:none}
-    .archive-list a.no-match{display:none}
-    .empty-search{display:none;text-align:center;padding:40px;color:#6E6E73;font-size:1.05rem}
-    .empty-search.visible{display:block}
-    @media(max-width:640px){.quick-nav{overflow-x:auto;-webkit-overflow-scrolling:touch}.quick-nav-inner{flex-wrap:nowrap}.featured-card{padding:24px;margin:30px 0 40px}}
-
-    @media(max-width:640px){.manifest-grid{grid-template-columns:1fr}.archive-list{grid-template-columns:1fr;gap:6px}.wave-section{padding:18px}}
-  </style>
-
-  <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');
-    ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-  </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""/></div></noscript>
-  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow">
+<title>Блог Андрея Мейстера — психология по полочкам: 374 статьи, 12 рубрик</title>
+<meta name="description" content="Психология без воды: 374 статьи в 12 рубриках с уровнями от новичка до профи. Страхи и тревога, отношения, мотивация, мышление, гипноз, деньги, тело — выберите рубрику, настроение или найдите тему.">
+<link rel="canonical" href="https://meysternlp.ru/blog/">
+<meta property="og:type" content="website"><meta property="og:title" content="Блог Андрея Мейстера — психология по полочкам"><meta property="og:description" content="374 статьи в 12 рубриках с уровнями от новичка до профи. Выберите рубрику, настроение или найдите тему."><meta property="og:url" content="https://meysternlp.ru/blog/">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Blog", "name": "Блог Андрея Мейстера", "description": "Психология без воды: 374 статьи в 12 рубриках.", "url": "https://meysternlp.ru/blog/", "inLanguage": "ru-RU", "publisher": {"@type": "Person", "name": "Андрей Мейстер"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>:root{--accent:#3A86FF;--paper:#F6F8FC;--surface:#FFFFFF;--surface-2:#EDF2FA;--border:#E1E8F2;--ink:#141D33;--muted:#586074;--faint:#8891A4;--lv-n:#1FA971;--lv-m:#3A86FF;--lv-p:#E5484D;--shadow:0 1px 2px rgba(16,32,58,.05),0 10px 30px rgba(16,32,58,.07);--radius:16px;--maxw:1160px}
+@media (prefers-color-scheme:dark){:root{--accent:#5B9BFF;--paper:#0A0D13;--surface:#131926;--surface-2:#1B2434;--border:#26324566;--ink:#E9EEF6;--muted:#98A4B8;--faint:#6B7688;--lv-n:#33C589;--lv-m:#5B9BFF;--lv-p:#F26A6E;--shadow:0 1px 2px rgba(0,0,0,.35),0 12px 34px rgba(0,0,0,.4)}}
+.blogpage *{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;margin:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.bhero a,.sec a{color:inherit;text-decoration:none}
+.bhero h1,.sec h2,.sec h3{text-wrap:balance;letter-spacing:-.025em;line-height:1.1;margin:0}
+.tnum{font-variant-numeric:tabular-nums}
+.bhero{position:relative;background:#07090F;color:#EAF0FB;overflow:hidden;border-bottom:1px solid #182234}
+#neural{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero-veil{position:absolute;inset:0;background:radial-gradient(120% 100% at 50% -10%,rgba(58,134,255,.18),transparent 55%),linear-gradient(180deg,rgba(7,9,15,0) 40%,rgba(7,9,15,.85) 100%)}
+.bhero .wrap{position:relative;z-index:2;padding:76px 24px 66px}
+.eyebrow{color:#7fb0ff;font-weight:600;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase}
+.eyebrow .tnum{color:#fff;background:rgba(91,155,255,.16);border:1px solid rgba(91,155,255,.3);padding:2px 9px;border-radius:99px}
+.bhero h1{font-size:clamp(2.5rem,7vw,4.6rem);font-weight:800;margin:18px 0 16px;letter-spacing:-.035em}
+.bhero h1 em{font-style:normal;color:#5B9BFF}
+.bhero p{font-size:clamp(1.05rem,2.4vw,1.3rem);color:#AEBBD2;max-width:56ch;font-weight:300}
+.searchrow{margin-top:28px;max-width:640px}
+.search{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:14px 17px;transition:border-color .2s,background .2s}
+.search:focus-within{border-color:#5B9BFF;background:rgba(91,155,255,.1)}
+.search input{border:none;background:transparent;outline:none;color:#fff;font-size:1.02rem;width:100%;font-family:inherit}
+.search input::placeholder{color:#8894ad}
+.search svg{flex:0 0 auto;stroke:#8894ad}
+.sec{padding:52px 0 8px}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.sec-h h2{font-size:clamp(1.4rem,3vw,1.7rem);font-weight:800}
+.sec-h .sub{color:var(--muted);font-size:.92rem}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.path{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:11px;transition:transform .18s,border-color .18s}
+.step:hover{transform:translateY(-4px);border-color:var(--accent)}
+.step .n{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#3A86FF,#5B9BFF);color:#fff;font-weight:800;font-size:.9rem;display:grid;place-items:center;box-shadow:0 4px 12px rgba(58,134,255,.4)}
+.step h3{font-size:.98rem;font-weight:600;line-height:1.3}
+.step .m{color:var(--faint);font-size:.78rem;margin-top:auto}
+@media(max-width:900px){.path{grid-template-columns:repeat(2,1fr)}}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;align-items:center}
+.chip{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:99px;padding:8px 15px;font-size:.88rem;cursor:pointer;transition:all .16s;font-family:inherit}
+.chip:hover{color:var(--ink);border-color:var(--accent)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.chip .d{display:inline-block;width:9px;height:9px;border-radius:99px;margin-right:6px;vertical-align:middle}
+.chip-lbl{color:var(--faint);font-size:.82rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:13px;transition:transform .18s,border-color .18s,box-shadow .18s;overflow:hidden}
+.card.hidden{display:none}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 0 0 0 transparent;transition:box-shadow .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--dom,var(--accent))}
+.card:hover::after{box-shadow:0 14px 40px -12px var(--dom,rgba(58,134,255,.4))}
+.card-top{display:flex;align-items:center;gap:12px}
+.ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:21px;flex:0 0 auto;background:color-mix(in srgb,var(--dom,var(--accent)) 15%,var(--surface-2));border:1px solid color-mix(in srgb,var(--dom,var(--accent)) 30%,transparent)}
+.card-top h3{font-size:1.06rem;font-weight:700;flex:1;line-height:1.2}
+.count{color:var(--faint);font-size:.85rem;font-weight:700}
+.bar{display:flex;height:7px;border-radius:99px;overflow:hidden;background:var(--surface-2)}
+.bar i{display:block;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.bar i.n{background:var(--lv-n);width:var(--wn)}.bar i.m{background:var(--lv-m);width:var(--wm)}.bar i.p{background:var(--lv-p);width:var(--wp)}
+.samples{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0;padding:0}
+.samples a{font-size:.9rem;color:var(--muted);display:flex;gap:8px;line-height:1.35}
+.samples a:hover{color:var(--accent)}
+.samples a::before{content:"→";color:var(--faint);flex:0 0 auto}
+.card .go{margin-top:auto;color:var(--accent);font-weight:600;font-size:.88rem;padding-top:2px}
+.card .go::after{content:"";position:absolute;inset:0;z-index:0}
+.card .card-top,.card .bar,.card .samples{position:relative;z-index:1}
+.deep{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:760px){.deep{grid-template-columns:1fr}}
+.dcard{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;overflow:hidden;transition:transform .18s}
+.dcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--accent),transparent)}
+.dcard:hover{transform:translateY(-4px)}
+.dcard .tag{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800}
+.dcard h3{font-size:1.24rem;font-weight:800}
+.dcard p{color:var(--muted);font-size:.92rem;margin:0}
+.dcard .meta{color:var(--faint);font-size:.8rem;margin-top:6px}
+.latest{display:flex;flex-direction:column;border-top:1px solid var(--border)}
+.li{display:flex;align-items:center;gap:16px;padding:15px 6px;border-bottom:1px solid var(--border);transition:padding-left .16s,background .16s}
+.li:hover{background:var(--surface);padding-left:14px}
+.li .dt{color:var(--faint);font-size:.8rem;width:78px;flex:0 0 auto}
+.li h3{font-size:1rem;font-weight:600;flex:1}
+.li .rb{font-size:.76rem;color:var(--accent);background:color-mix(in srgb,var(--accent) 13%,transparent);padding:3px 10px;border-radius:99px;white-space:nowrap}
+@media(max-width:640px){.li .dt{display:none}}
+.empty{display:none;color:var(--muted);padding:26px 0}
+.blogfoot{padding:30px 0 20px;color:var(--faint);font-size:.85rem;text-align:center}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}.bar i{transition:none}}
+.sec :focus-visible,.search input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+<link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
 </head>
 <body>
-
 <div id="header-placeholder"></div>
-<script>
-  fetch('/header.html').then(r=>r.text()).then(d=>{document.getElementById('header-placeholder').innerHTML=d;setTimeout(()=>{const nl=document.querySelectorAll('.nav-links a');nl.forEach(l=>{if(l.getAttribute('href')&&l.getAttribute('href').includes('/blog/'))l.classList.add('active')});const b=document.getElementById('burgerBtn'),n=document.getElementById('navLinks');if(b&&n){b.addEventListener('click',()=>{b.classList.toggle('active');n.classList.toggle('active');document.body.style.overflow=n.classList.contains('active')?'hidden':''});n.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{b.classList.remove('active');n.classList.remove('active');document.body.style.overflow=''}));window.addEventListener('resize',()=>{if(window.innerWidth>768){b.classList.remove('active');n.classList.remove('active');document.body.style.overflow=''}})}},100)}).catch(()=>{document.getElementById('header-placeholder').innerHTML='<header style="padding:20px 0;background:#0C0C0C;border-bottom:1px solid #3A86FF33;text-align:center;"><a href="/" style="color:#fff;font-size:1.5rem;letter-spacing:.3em;"><span style="color:#3A86FF;">А</span>МЕЙСТЕР</a></header>'});
-</script>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<header class="bhero"><canvas id="neural" aria-hidden="true"></canvas><div class="hero-veil"></div>
+<div class="wrap"><div class="eyebrow">Психология без воды · <span class="tnum" id="counter">0</span> материала</div>
+<h1>Разобраться в себе — <em>по полочкам</em></h1>
+<p>От первого понятного объяснения до профессиональных справочников. Выберите рубрику, настроение или найдите тему — 374 статьи разложены так, чтобы вы сразу поняли, что где искать.</p>
+<div class="searchrow"><label class="search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+<input id="q" type="search" placeholder="Найти тему: тревога, деньги, гипноз, отношения…" autocomplete="off"></label></div></div></header>
 
-<div class="container">
-  <div class="blog-hero">
-    <h1>Блог Андрея Мейстера</h1>
-    <p>350+ статей о психологии, манипуляциях, реакциях на страх, виртуальном психологе Фреди и системном мышлении. Манифесты, исследования, авторские концепты — обновление еженедельно.</p>
-    <div class="stats-row">
-      <div class="stat"><span class="stat-num">350+</span><span class="stat-lbl">Статей</span></div>
-      <div class="stat"><span class="stat-num">15</span><span class="stat-lbl">Серия «Кто тебя лепит»</span></div>
-      <div class="stat"><span class="stat-num">20</span><span class="stat-lbl">Серия о страхе</span></div>
-      <div class="stat"><span class="stat-num">20</span><span class="stat-lbl">Лет практики</span></div>
-    </div>
-    <div class="start-here">
-      <strong>Впервые здесь?</strong> Начните с авторской концепции — <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html">Закон Мейстера: 3 уровня внутренней правды</a>. Это семя, из которого выросла вся методология.
-    </div>
-  </div>
+<section class="sec" id="start"><div class="wrap rv"><div class="sec-h"><h2>Начните отсюда</h2><span class="sub">5 шагов, если вы впервые</span></div><div class="path"><a class="step" href="/blog/chetyre-reakcii-na-strah-bej-begi-zamri-ugodi.html"><span class="n">1</span><h3>«Бей, беги, замри, угоди»: узнай свою реакцию на страх</h3><span class="m">9 мин · новичку</span></a><a class="step" href="/blog/prokrastinaciya-eto-zamri-ne-len.html"><span class="n">2</span><h3>Прокрастинация — это «замри», а не лень</h3><span class="m">11 мин · новичку</span></a><a class="step" href="/blog/dofaminovaya-yama-vyuchennaya-bespomoshhnost.html"><span class="n">3</span><h3>Дофаминовая яма: почему «не поднимается рука»</h3><span class="m">12 мин · новичку</span></a><a class="step" href="/blog/chto-takoe-manipulyaciya.html"><span class="n">4</span><h3>Что такое манипуляция и как её распознать</h3><span class="m">10 мин · новичку</span></a><a class="step" href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html"><span class="n">5</span><h3>100 когнитивных искажений: справочник на будущее</h3><span class="m">18 мин · закладка</span></a></div></div></section>
 
-  <nav class="quick-nav">
-    <div class="quick-nav-inner">
-      <a href="#new">🔥 Новое</a>
-      <a href="#fear-series">😨 Страх</a>
-      <a href="#manifestos">🆕 Манифесты</a>
-      <a href="#fredi">🤖 Фреди</a>
-      <a href="#products">📚 Практика</a>
-      <a href="#research">🔬 Концепты</a>
-      <a href="#clinic">🩺 Клиника</a>
-      <a href="#archive">📁 Архив</a>
-    </div>
-  </nav>
+<section class="sec" id="rubrics"><div class="wrap"><div class="sec-h rv"><h2>Рубрики</h2><span class="sub">12 тем · выберите по настроению или уровню</span></div>
+<div class="chips rv" id="chips"><span class="chip-lbl">Мне сейчас:</span>
+<button class="chip on" data-f="all">Показать всё</button>
+<button class="chip" data-f="calm">😮‍💨 тревожно</button>
+<button class="chip" data-f="rel">❤️ про отношения</button>
+<button class="chip" data-f="think">🧠 прокачать ум</button>
+<button class="chip" data-f="money">💰 про деньги</button>
+<span class="chip-lbl" style="margin-left:8px">Уровень:</span>
+<button class="chip" data-f="ln"><span class="d" style="background:#1FA971"></span>новичку</button>
+<button class="chip" data-f="lp"><span class="d" style="background:#E5484D"></span>профи</button></div>
+<div class="grid" id="grid"><div class="card" data-tags="calm" data-dom="m" style="--dom:#3A86FF;--wn:26.08695652173913%;--wm:65.21739130434783%;--wp:8.695652173913043%">
+<div class="card-top"><span class="ic">😰</span><h3>Страхи и тревога</h3><span class="count tnum">23</span></div>
+<div class="bar" title="новичку 6 · среднему 15 · профи 2"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/body-memory-gde-zhivyot-vasha-reakciya-na-strah.html">Body memory: где живёт ваша реакция на страх и как обнаружить её в теле</a></li><li><a href="/blog/trevoga-bez-prichiny-7-trigerov.html">Тревожность без причины: 7 скрытых триггеров и как разобраться 2026</a></li><li><a href="/blog/adrenalinovye-narkomany-kogda-strah-stimulator.html">Адреналиновые наркоманы: почему некоторые ищут страх как стимулятор</a></li></ul><a class="go" href="/blog/rubrika/strahi/">Все 23 статей →</a></div><div class="card" data-tags="rel" data-dom="m" style="--dom:#3A86FF;--wn:16.0%;--wm:56.00000000000001%;--wp:28.000000000000004%">
+<div class="card-top"><span class="ic">❤️</span><h3>Отношения и семья</h3><span class="count tnum">25</span></div>
+<div class="bar" title="новичку 4 · среднему 14 · профи 7"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/emocionalnaya-zavisimost-priznaki-i-protokol.html">Эмоциональная зависимость: 5 признаков и протокол отделения без разрыва отношений</a></li><li><a href="/blog/epidemiya-odinochestva-v-brake-2026.html">Эпидемия одиночества в браке: Россия 2026</a></li><li><a href="/blog/kak-perezhit-rasstavanie.html">Как пережить расставание: 5 фаз, реальные сроки и протокол выхода, если застрял</a></li></ul><a class="go" href="/blog/rubrika/otnosheniya/">Все 25 статей →</a></div><div class="card" data-tags="rel" data-dom="m" style="--dom:#3A86FF;--wn:5.0%;--wm:85.0%;--wp:10.0%">
+<div class="card-top"><span class="ic">👶</span><h3>Родители и детство</h3><span class="count tnum">20</span></div>
+<div class="bar" title="новичку 1 · среднему 17 · профи 2"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/prinyatie-resheniy-pri-nepolnoy-informacii.html">Как принимать решения при неполной информации: каркас 4 шагов</a></li><li><a href="/blog/kogda-ploho-ne-durak-stressovyi-rezhim.html">Когда плохо — ты не «дурак», ты в стрессовом режиме. Современная нейронаука против мифа о тройном мозге</a></li><li><a href="/blog/deti-trevozhnyh-roditelej.html">Дети тревожных родителей: узнать себя и перестать жить чужим страхом</a></li></ul><a class="go" href="/blog/rubrika/roditeli/">Все 20 статей →</a></div><div class="card" data-tags="think calm" data-dom="m" style="--dom:#3A86FF;--wn:9.523809523809524%;--wm:80.95238095238095%;--wp:9.523809523809524%">
+<div class="card-top"><span class="ic">🔋</span><h3>Мотивация и беспомощность</h3><span class="count tnum">21</span></div>
+<div class="bar" title="новичку 2 · среднему 17 · профи 2"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/disciplina-bez-sily-voli.html">Дисциплина без силы воли: триггеры, ритуалы, среда</a></li><li><a href="/blog/12-podhodov-k-celepolaganiyu-sravnenie.html">12 подходов к целеполаганию: сравнение и какой выбрать</a></li><li><a href="/blog/5-modeley-lokusa-deystviya-kto-deystvuet.html">Кто действует — ты, мир или никто? 5 моделей локуса действия и где застряло 80% людей</a></li></ul><a class="go" href="/blog/rubrika/motivaciya/">Все 21 статей →</a></div><div class="card" data-tags="think" data-dom="m" style="--dom:#3A86FF;--wn:0.0%;--wm:83.33333333333334%;--wp:16.666666666666664%">
+<div class="card-top"><span class="ic">🧠</span><h3>Мышление и когнитивистика</h3><span class="count tnum">12</span></div>
+<div class="bar" title="новичку 0 · среднему 10 · профи 2"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html">100 когнитивных искажений: полный справочник с примерами</a></li><li><a href="/blog/kognitivnye-iskazheniya-12-lovushek.html">Когнитивные искажения: 12 ловушек мышления и как их ловить</a></li><li><a href="/blog/lateralnoe-myshlenie.html">Латеральное мышление: что это, техники развития и примеры</a></li></ul><a class="go" href="/blog/rubrika/myshlenie/">Все 12 статей →</a></div><div class="card" data-tags="think" data-dom="m" style="--dom:#3A86FF;--wn:23.25581395348837%;--wm:46.51162790697674%;--wp:30.23255813953488%">
+<div class="card-top"><span class="ic">🎙️</span><h3>Гипноз, влияние, речь</h3><span class="count tnum">43</span></div>
+<div class="bar" title="новичку 10 · среднему 20 · профи 13"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/chto-takoe-manipulyaciya.html">Что такое манипуляция: виды, признаки и техники защиты</a></li><li><a href="/blog/15-mifov-o-gipnoze-nauchnyi-razbor.html">15 мифов о гипнозе, в которые верят даже психологи. Научный разбор</a></li><li><a href="/blog/aktivnoe-slushanie.html">Активное слушание: почему «слушать» сломано у 80% и как его починить</a></li></ul><a class="go" href="/blog/rubrika/gipnoz/">Все 43 статей →</a></div><div class="card" data-tags="money think" data-dom="m" style="--dom:#3A86FF;--wn:23.52941176470588%;--wm:45.09803921568628%;--wp:31.372549019607842%">
+<div class="card-top"><span class="ic">💰</span><h3>Деньги, карьера, бизнес</h3><span class="count tnum">51</span></div>
+<div class="bar" title="новичку 12 · среднему 23 · профи 16"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/kogda-reakciya-rabotaet-a-kogda-stanovitsya-tyuremshikom.html">Когда реакция на страх работает, а когда становится тюрьмой</a></li><li><a href="/blog/depressiya-12-tipov-chto-rabotaet.html">Депрессия: 12 типов и что работает с каждым</a></li><li><a href="/blog/4-strategii-raboty-s-zaprosom-klienta.html">4 стратегии работы с запросом клиента: принятие, магия, масштаб, изменение</a></li></ul><a class="go" href="/blog/rubrika/dengi/">Все 51 статей →</a></div><div class="card" data-tags="calm rel" data-dom="m" style="--dom:#3A86FF;--wn:14.285714285714285%;--wm:60.0%;--wp:25.71428571428571%">
+<div class="card-top"><span class="ic">🎭</span><h3>Эмоции, самооценка, личность</h3><span class="count tnum">70</span></div>
+<div class="bar" title="новичку 10 · среднему 42 · профи 18"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/hsp-vysokochuvstvitelnyj-chelovek-7-podtipov.html">Высокочувствительные люди (HSP): тест Айрон и 7 подтипов</a></li><li><a href="/blog/25-kadr-mejstera-imprint-videoryad-vr.html">«25 кадр Мейстера»: импринт-видеоряд для VR. Авторская методика эмоционального якорения через зеркальные нейроны и звук</a></li><li><a href="/blog/4-modeli-vremeni-pochemu-zhizn-dlinnaya-ili-pustaya.html">Когда идёт твоё время: 4 модели и почему у одних жизнь длинная, а у других — пустые годы</a></li></ul><a class="go" href="/blog/rubrika/emocii/">Все 70 статей →</a></div><div class="card" data-tags="calm" data-dom="m" style="--dom:#3A86FF;--wn:0.0%;--wm:72.72727272727273%;--wp:27.27272727272727%">
+<div class="card-top"><span class="ic">🛌</span><h3>Тело, сон, выгорание</h3><span class="count tnum">11</span></div>
+<div class="bar" title="новичку 0 · среднему 8 · профи 3"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/epidemiya-onemeniya-30-procentov-psihicheskoj-moschnosti.html">Эпидемия онемения: 30% психической мощности уходит на подавление</a></li><li><a href="/blog/bessonnica-5-tipov-kpt-i.html">Бессонница: 5 типов и научные методы лечения (КПТ-И)</a></li><li><a href="/blog/bessonnica-prichiny-i-protokol.html">Бессонница: 5 психологических причин и протокол сна на 14 дней. Как заснуть без таблеток</a></li></ul><a class="go" href="/blog/rubrika/telo/">Все 11 статей →</a></div><div class="card" data-tags="think" data-dom="p" style="--dom:#E5484D;--wn:3.3333333333333335%;--wm:38.333333333333336%;--wp:58.333333333333336%">
+<div class="card-top"><span class="ic">🌍</span><h3>Общество и поколения</h3><span class="count tnum">60</span></div>
+<div class="bar" title="новичку 2 · среднему 23 · профи 35"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/psihologicheskij-test-7-voprosov.html">Психологический тест: 7 вопросов о вашем состоянии — самопроверка 2026</a></li><li><a href="/blog/12-nacionalnyh-psihologicheskih-konstant-rossiyan.html">12 национальных психологических констант россиян</a></li><li><a href="/blog/bezdetnye-po-vyboru-novyj-tip-odinochestva.html">Бездетные по выбору в России 2026: новый тип одиночества, которого не было у наших родителей</a></li></ul><a class="go" href="/blog/rubrika/obshchestvo/">Все 60 статей →</a></div><div class="card" data-tags="think" data-dom="m" style="--dom:#3A86FF;--wn:0.0%;--wm:71.42857142857143%;--wp:28.57142857142857%">
+<div class="card-top"><span class="ic">🤖</span><h3>AI-психология и Фреди</h3><span class="count tnum">14</span></div>
+<div class="bar" title="новичку 0 · среднему 10 · профи 4"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/budushchee-psihologii-12-trendov-2035.html">Будущее психологии: 12 трендов, которые перевернут всё к 2035 году</a></li><li><a href="/blog/ai-psiholog-2026-mozhno-li-zamenit-terapevta.html">AI-психолог в 2026: можно ли заменить терапевта? Честный разбор</a></li><li><a href="/blog/ai-psihologi-2026-prakticheskij-gid.html">AI-психологи 2026: какой сервис подходит для какой задачи. Практический гид</a></li></ul><a class="go" href="/blog/rubrika/ai/">Все 14 статей →</a></div><div class="card" data-tags="calm" data-dom="p" style="--dom:#E5484D;--wn:0.0%;--wm:41.66666666666667%;--wp:58.333333333333336%">
+<div class="card-top"><span class="ic">🔮</span><h3>Эзотерика vs наука</h3><span class="count tnum">24</span></div>
+<div class="bar" title="новичку 0 · среднему 10 · профи 14"><i class="n"></i><i class="m"></i><i class="p"></i></div>
+<ul class="samples"><li><a href="/blog/10-koldovskih-ritualov-navigator.html">10 колдовских ритуалов: какой выбрать для себя. Полный навигатор серии о ритуалах как поведенческих программах</a></li><li><a href="/blog/dva-tipa-ritualov-dostizhenie-i-prisutstvie.html">Два типа ритуала: ритуалы достижения и ритуалы присутствия. Когда «стать кем-то» — это не лекарство, а яд</a></li><li><a href="/blog/ezoterika-i-psihologiya-7-peresechenij.html">Эзотерика и психология: 7 пересечений и где граница</a></li></ul><a class="go" href="/blog/rubrika/ezoterika/">Все 24 статей →</a></div></div>
+<p class="empty" id="empty">Ничего не нашлось. Попробуйте другое слово или снимите фильтр.</p></div></section>
 
-  <div class="featured-card">
-    <span class="featured-tag">★ Флагман сайта</span>
-    <h2>Закон Мейстера: 3 уровня внутренней правды</h2>
-    <p>Авторская концепция, объясняющая почему 90% людей живут в иллюзии «одной правды о себе». Три уровня — декларативный, осознаваемый, глубинный — и почему их рассогласование рождает большинство психологических проблем взрослого человека. Базовая статья, после которой остальные концепты становятся понятнее.</p>
-    <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html" class="featured-link">Читать →</a>
-  </div>
+<section class="sec" id="deep"><div class="wrap rv"><div class="sec-h"><h2>Глубокие разборы</h2><span class="sub">для тех, кто хочет профессионально</span></div><div class="deep"><a class="dcard" href="/blog/47-tehnik-eriksonovskogo-gipnoza-spravochnik.html"><span class="tag">Справочник</span><h3>47 техник эриксоновского гипноза</h3><p>Полный разбор наведения, метафор и речевых конструкций с примерами.</p><span class="meta">28 мин · профи</span></a><a class="dcard" href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html"><span class="tag">Энциклопедия</span><h3>100 когнитивных искажений: 8 групп</h3><p>Все искажения мышления с примерами и способами замечать их у себя.</p><span class="meta">18 мин · средний–профи</span></a><a class="dcard" href="/blog/mejster-kod-transformacionnaya-igra.html"><span class="tag">Авторский метод</span><h3>МЕЙСТЕР-КОД: трансформационная игра</h3><p>Конструктор личности на 9 уровней — методика с PDF-материалами.</p><span class="meta">24 мин · профи</span></a><a class="dcard" href="/blog/8-klassifikacij-psihotipov-mbti-disc-variatika.html"><span class="tag">Сравнение</span><h3>8 классификаций психотипов</h3><p>MBTI, DISC, Big Five, Вариатика — что выбрать и где границы каждой.</p><span class="meta">20 мин · средний–профи</span></a></div></div></section>
 
-  <div class="search-box">
-    <input type="text" id="blogSearch" placeholder="Поиск по 350 статьям — введите ключевое слово">
-    <div class="search-count" id="searchCount"></div>
-    <div class="empty-search" id="emptySearch">Ничего не найдено. Попробуйте другое слово или сбросьте фильтр.</div>
-  </div>
-
-  <h2 id="fear-series">😨 Серия о реакциях на страх (20 статей)</h2>
-  <p class="section-intro">Цикл из 20 статей о том, как 4 базовые реакции на страх (Fight/Flight/Freeze/Fawn) формируют жизненные сценарии — в карьере, отношениях, деньгах, родительстве. С эксцентричными темами: адреналиновые наркоманы, контрфобия, страх собственного успеха, психология трусости.</p>
-  <div class="manifest-grid">
-    <a href="/blog/chetyre-reakcii-na-strah-bej-begi-zamri-ugodi.html" class="manifesto-card"><span class="m-num">1/20</span><h3>«Бей, беги, замри, угоди». 30 секунд, чтобы понять свой режим</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
-    <a href="/blog/pochemu-eta-reakciya-stala-vashej-formirovanie-do-6-let.html" class="manifesto-card"><span class="m-num">2/20</span><h3>Почему именно эта реакция стала вашей: формирование в первые 6 лет</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/body-memory-gde-zhivyot-vasha-reakciya-na-strah.html" class="manifesto-card"><span class="m-num">3/20</span><h3>Body memory: где живёт ваша реакция на страх и как её обнаружить в теле</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
-    <a href="/blog/test-glavnaya-i-tenevaya-reakciya-na-strah.html" class="manifesto-card"><span class="m-num">4/20</span><h3>Тест: какая у вас главная реакция и какая теневая (12 вопросов)</h3><span class="card-meta">25 мая 2026 · 11 мин</span></a>
-    <a href="/blog/kogda-reakciya-rabotaet-a-kogda-stanovitsya-tyuremshikom.html" class="manifesto-card"><span class="m-num">5/20</span><h3>Когда реакция на страх работает, а когда становится тюрьмой</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
-    <a href="/blog/zhizn-v-rezhime-begi-flight-pattern.html" class="manifesto-card"><span class="m-num">6/20</span><h3>Жизнь в режиме «Беги» (Flight): карьера-побег, отношения-побег, эмоции-побег</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/zhizn-v-rezhime-srazhajsya-fight-pattern.html" class="manifesto-card"><span class="m-num">7/20</span><h3>Жизнь в режиме «Сражайся» (Fight): почему вы воюете со всеми, не побеждая</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/zhizn-v-rezhime-zamri-freeze-pattern.html" class="manifesto-card"><span class="m-num">8/20</span><h3>Жизнь в режиме «Замри» (Freeze): эффект отложенной жизни и хроническое зависание</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/zhizn-v-rezhime-ugodi-fawn-pattern.html" class="manifesto-card"><span class="m-num">9/20</span><h3>Жизнь в режиме «Угоди» (Fawn): сценарий «хорошего человека» как форма побега</h3><span class="card-meta">25 мая 2026 · 11 мин</span></a>
-    <a href="/blog/gibridnye-reakcii-kogda-dva-rezhima-smeshivayutsya.html" class="manifesto-card"><span class="m-num">10/20</span><h3>Гибридные реакции: когда два режима смешиваются — самые сложные случаи</h3><span class="card-meta">25 мая 2026 · 11 мин</span></a>
-    <a href="/blog/strah-v-karere-5-tipichnyh-scenariev.html" class="manifesto-card"><span class="m-num">11/20</span><h3>Страх в карьере: 5 типичных сценариев и какая реакция за каждым</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/strah-v-otnosheniyah-pochemu-vy-vybiraete-takih-partnyorov.html" class="manifesto-card"><span class="m-num">12/20</span><h3>Страх в отношениях: почему вы выбираете именно «таких» партнёров</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/strah-v-dengah-4-arhetipa-otnoshenij-s-finansami.html" class="manifesto-card"><span class="m-num">13/20</span><h3>Страх в деньгах: 4 архетипа отношения с финансами</h3><span class="card-meta">25 мая 2026 · 9 мин</span></a>
-    <a href="/blog/strah-v-roditelstve-kak-vy-peredayote-svoyu-reakciyu.html" class="manifesto-card"><span class="m-num">14/20</span><h3>Страх в родительстве: как вы передаёте свою дефолтную реакцию детям</h3><span class="card-meta">25 мая 2026 · 10 мин</span></a>
-    <a href="/blog/strah-v-odinochestve-pochemu-odni-vygorayut-drugie-rasvetayut.html" class="manifesto-card"><span class="m-num">15/20</span><h3>Страх в одиночестве: почему одни выгорают, другие расцветают</h3><span class="card-meta">26 мая 2026 · 9 мин</span></a>
-    <a href="/blog/adrenalinovye-narkomany-kogda-strah-stimulator.html" class="manifesto-card"><span class="m-num">16/20</span><h3>Адреналиновые наркоманы: почему некоторые ищут страх как стимулятор</h3><span class="card-meta">26 мая 2026 · 10 мин</span></a>
-    <a href="/blog/kontrfobiya-paradox-kogda-strah-tolkaet-v-opasnost.html" class="manifesto-card"><span class="m-num">17/20</span><h3>Контрфобия: парадокс, когда страх толкает прямо в опасность</h3><span class="card-meta">26 мая 2026 · 9 мин</span></a>
-    <a href="/blog/strah-sobstvennogo-uspeha-7-priznakov-samosabotazha.html" class="manifesto-card"><span class="m-num">18/20</span><h3>Страх собственного успеха: 7 признаков, что вы саботируете себя</h3><span class="card-meta">26 мая 2026 · 10 мин</span></a>
-    <a href="/blog/psihologiya-trusosti-geroi-ne-protivopolozhnost-trusam.html" class="manifesto-card"><span class="m-num">19/20</span><h3>Психология трусости: почему герои — не противоположность трусам</h3><span class="card-meta">26 мая 2026 · 10 мин</span></a>
-    <a href="/blog/pereproshivka-reakcii-chto-rabotaet-i-chto-mif.html" class="manifesto-card"><span class="m-num">20/20 ★</span><h3>Перепрошивка реакции на страх: что реально работает и что — миф (ФИНАЛ)</h3><span class="card-meta">26 мая 2026 · 11 мин</span></a>
-  </div>
-
-  <h2 id="new">🔥 Свежие публикации (июнь–июль 2026)</h2>
-  <p class="section-intro">Серия «Кто тебя лепит» — 15 статей о незаметных установках, ярлыках и кодах, которые формируют нас годами: от поговорок родителей и выученной беспомощности до межпоколенческой травмы и коллективного запрета мечтать вслух. Каждая статья — с верифицированными источниками, разбором и safety-блоком.</p>
-  <div class="manifest-grid">
-    <a href="/blog/vyhod-iz-vyuchennoj-bespomoshchnosti-marshrut.html" class="manifesto-card"><span class="m-num">🗺</span><h3>Выход из выученной беспомощности: пошаговый маршрут</h3><span class="card-meta">5 июля 2026 · 14 мин</span></a>
-    <a href="/blog/telo-pervym-dvizhenie-poza-dyhanie.html" class="manifesto-card"><span class="m-num">🫁</span><h3>Тело первым: как движение, поза и дыхание выключают «замри»</h3><span class="card-meta">4 июля 2026 · 10 мин</span></a>
-    <a href="/blog/celi-chtoby-ne-brosit-namereniya-woop.html" class="manifesto-card"><span class="m-num">🎯</span><h3>Как ставить цели, чтобы не бросить: «если — то» и метод WOOP</h3><span class="card-meta">4 июля 2026 · 11 мин</span></a>
-    <a href="/blog/samosostradanie-vmesto-samokritiki.html" class="manifesto-card"><span class="m-num">💚</span><h3>Самосострадание вместо кнута: почему самокритика усиливает беспомощность</h3><span class="card-meta">4 июля 2026 · 11 мин</span></a>
-    <a href="/blog/zona-komforta-ne-pro-uyut.html" class="manifesto-card"><span class="m-num">🚪</span><h3>Зона комфорта — это не про уют, а про клетку</h3><span class="card-meta">3 июля 2026 · 10 мин</span></a>
-    <a href="/blog/malenkie-shagi-mikropobedy-motivaciya.html" class="manifesto-card"><span class="m-num">🌱</span><h3>Маленькие шаги: как микропобеды заново запускают мотивацию</h3><span class="card-meta">3 июля 2026 · 10 мин</span></a>
-    <a href="/blog/rumination-mysli-po-krugu.html" class="manifesto-card"><span class="m-num">🔁</span><h3>Руминация: когда мысли ходят по кругу — и как разорвать петлю</h3><span class="card-meta">3 июля 2026 · 10 мин</span></a>
-    <a href="/blog/tri-p-vyuchennoj-bespomoshhnosti-stil-obyasnenij.html" class="manifesto-card"><span class="m-num">🔤</span><h3>Три «П» беспомощности: как стиль объяснений превращает провал в приговор</h3><span class="card-meta">2 июля 2026 · 12 мин</span></a>
-    <a href="/blog/lokus-kontrolya-vnutrennij-vneshnij.html" class="manifesto-card"><span class="m-num">🧭</span><h3>Локус контроля: кто в твоей жизни главный — ты или обстоятельства</h3><span class="card-meta">2 июля 2026 · 11 мин</span></a>
-    <a href="/blog/prokrastinaciya-eto-zamri-ne-len.html" class="manifesto-card"><span class="m-num">🧊</span><h3>Прокрастинация — это «замри», а не лень: почему ты откладываешь важное</h3><span class="card-meta">2 июля 2026 · 11 мин</span></a>
-    <a href="/blog/dofaminovaya-yama-vyuchennaya-bespomoshhnost.html" class="manifesto-card"><span class="m-num">🕳</span><h3>Дофаминовая яма: почему «не поднимается рука», даже когда знаешь как</h3><span class="card-meta">2 июля 2026 · 12 мин</span></a>
-    <a href="/blog/razgovor-posle-kotorogo-ne-otpuskaet-samosuperviziya.html" class="manifesto-card"><span class="m-num">🧭</span><h3>Разговор, после которого не отпускает: техника супервизии для собственных конфликтов</h3><span class="card-meta">25 июня 2026 · 13 мин</span></a>
-    <a href="/blog/o-chyom-ty-umeesh-dumat.html" class="manifesto-card"><span class="m-num">🧠</span><h3>О чём ты умеешь думать? «Обо всём» — это другой способ сказать «ни о чём»</h3><span class="card-meta">6 июля 2026 · 15 мин</span></a>
-    <a href="/blog/pochemu-stesnyaemsya-mechtat-vsluh.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Почему мы стесняемся мечтать вслух — и что теряем целым народом</h3><span class="card-meta">5 июля 2026 · 15 мин</span></a>
-    <a href="/blog/vnuki-teh-kto-proshyol-vojnu-i-lagerya.html" class="manifesto-card"><span class="m-num">📖</span><h3>Внуки тех, кто прошёл войну и лагеря: травма, которую мы носим, не зная</h3><span class="card-meta">4 июля 2026 · 16 мин</span></a>
-    <a href="/blog/nas-bolshe-chem-kazhetsya.html" class="manifesto-card"><span class="m-num">📖</span><h3>Нас, кто хочет менять что-то здесь к лучшему, больше, чем кажется</h3><span class="card-meta">3 июля 2026 · 14 мин</span></a>
-    <a href="/blog/pokolenie-vyrosshee-na-slome.html" class="manifesto-card"><span class="m-num">📖</span><h3>Поколение, выросшее на сломе: почему нам так трудно строить долгое</h3><span class="card-meta">2 июля 2026 · 15 мин</span></a>
-    <a href="/blog/ne-slishkom-chuvstvitelnyj-zapretili-chuvstvovat.html" class="manifesto-card"><span class="m-num">📖</span><h3>Ты не «слишком чувствительный» — тебе в детстве запретили чувствовать</h3><span class="card-meta">1 июля 2026 · 15 мин</span></a>
-    <a href="/blog/muzhchina-kotoryj-vsyo-tashchit-molcha.html" class="manifesto-card"><span class="m-num">📖</span><h3>Мужчина, который всё тащит молча: почему это убивает раньше срока</h3><span class="card-meta">30 июня 2026 · 15 мин</span></a>
-    <a href="/blog/silnaya-zhenshchina-diagnoz-ustalosti.html" class="manifesto-card"><span class="m-num">📖</span><h3>«Сильная женщина» — это не комплимент. Часто это диагноз усталости</h3><span class="card-meta">29 июня 2026 · 15 мин</span></a>
-    <a href="/blog/deti-trevozhnyh-roditelej.html" class="manifesto-card"><span class="m-num">📖</span><h3>Дети тревожных родителей: узнать себя и перестать жить чужим страхом</h3><span class="card-meta">28 июня 2026 · 16 мин</span></a>
-    <a href="/blog/ne-lentyaj-kopish-i-vydayosh-zalpom.html" class="manifesto-card"><span class="m-num">📖</span><h3>Ты не лентяй и не прокрастинатор. Ты человек, который копит и выдаёт залпом</h3><span class="card-meta">27 июня 2026 · 14 мин</span></a>
-    <a href="/blog/vsyo-horosho-a-radosti-net-tomlenie.html" class="manifesto-card"><span class="m-num">📖</span><h3>Если «всё хорошо», а радости нет — это не депрессия и не неблагодарность. У этого есть имя</h3><span class="card-meta">26 июня 2026 · 15 мин</span></a>
-    <a href="/blog/pochemu-u-nas-ne-prinyato-hvalit-detej.html" class="manifesto-card"><span class="m-num">📖</span><h3>Почему у нас не принято хвалить детей — и что это сделало с целым поколением</h3><span class="card-meta">25 июня 2026 · 15 мин</span></a>
-    <a href="/blog/stradanie-ne-delaet-glubzhe.html" class="manifesto-card"><span class="m-num">📖</span><h3>Страдание не делает вас глубже. Иногда оно просто ломает — и это нормально</h3><span class="card-meta">24 июня 2026 · 14 мин</span></a>
-    <a href="/blog/ne-zhili-bogato-pogovorki-roditelej-potolok.html" class="manifesto-card"><span class="m-num">📖</span><h3>«Не жили богато — нечего начинать»: как поговорки родителей стали вашим потолком</h3><span class="card-meta">23 июня 2026 · 15 мин</span></a>
-    <a href="/blog/terpenie-ne-dobrodetel-vyuchennaya-bespomoshchnost.html" class="manifesto-card"><span class="m-num">📖</span><h3>Терпение — не всегда добродетель. Иногда это выученная беспомощность</h3><span class="card-meta">22 июня 2026 · 15 мин</span></a>
-    <a href="/blog/mejster-kod-transformacionnaya-igra.html" class="manifesto-card"><span class="m-num">🎲</span><h3>МЕЙСТЕР-КОД: трансформационная игра — конструктор личности на 9 уровней (+ PDF)</h3><span class="card-meta">21 июня 2026 · 24 мин</span></a>
-    <a href="/blog/arhetipy-proshivki-lichnosti.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Прошивки личности: 8 архетипов на 9 уровнях скрытой декларации</h3><span class="card-meta">21 июня 2026 · 26 мин</span></a>
-    <a href="/blog/pochemu-pozitivnoe-myshlenie-ne-rabotaet.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Почему «просто мысли позитивно» не работает в России — и что работает вместо этого</h3><span class="card-meta">21 июня 2026 · 14 мин</span></a>
-    <a href="/blog/informacionnaya-emigraciya-zhizn-cherez-vpn.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Информационная эмиграция»: жизнь через VPN — 4 часа в день в другой реальности. Манифест массового феномена</h3><span class="card-meta">7 июня 2026 · 23 мин</span></a>
-    <a href="/blog/sindrom-tvorcheskogo-stupora.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром творческого ступора»: когда художник, режиссёр, дизайнер вдруг перестаёт творить. Кейс Т-39</h3><span class="card-meta">6 июня 2026 · 22 мин</span></a>
-    <a href="/blog/deti-90h-v-2026-pokolencheskij-portret.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Дети 90-х в 2026»: поколенческий портрет тех, кому сейчас 30–45. Манифест об отдельном поколении</h3><span class="card-meta">5 июня 2026 · 24 мин</span></a>
-    <a href="/blog/sindrom-umnogo-otca-ne-dognat.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром умного отца»: почему дети успешных всю жизнь чувствуют «я не дотянулся». Кейс У-34</h3><span class="card-meta">4 июня 2026 · 23 мин</span></a>
-    <a href="/blog/sindrom-stokgolmskogo-menedzhera.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром Стокгольмского менеджера»: почему топ-менеджеры защищают токсичных боссов годами. Кейс М-44</h3><span class="card-meta">3 июня 2026 · 22 мин</span></a>
-    <a href="/blog/sindrom-zhduna-kogda-vse-vernetsya.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром ждуна»: миллионы россиян живут в режиме «когда всё вернётся». Кейс маркетолога Ж-42</h3><span class="card-meta">2 июня 2026 · 26 мин</span></a>
-    <a href="/blog/25-kadr-mejstera-imprint-videoryad-vr.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«25 кадр Мейстера»: импринт-видеоряд для VR. Авторская методика эмоционального якорения</h3><span class="card-meta">1 июня 2026 · 26 мин</span></a>
-    <a href="/blog/konec-epohi-kopirovaniya-manifest-2026.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Конец эпохи копирования»: 7 признаков, что Россия 2026 живёт в новой эпохе. Финальный манифест</h3><span class="card-meta">31 мая 2026 · 30 мин</span></a>
-    <a href="/blog/sindrom-vtorogo-pokoleniya-nasledniki-90h.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром второго поколения»: почему дети предпринимателей 90-х не знают, что делать с папиным бизнесом</h3><span class="card-meta">30 мая 2026 · 26 мин</span></a>
-    <a href="/blog/sindrom-partnerskoy-semyi-5-lovushek.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром партнёрской семьи»: 5 ловушек пар, которые вместе живут и работают</h3><span class="card-meta">29 мая 2026 · 25 мин</span></a>
-    <a href="/blog/sindrom-emigracii-pochemu-emigraciya-ne-lechit.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром эмиграции»: почему эмиграция не лечит. Кейс владелицы IT в Тбилиси, 14 месяцев</h3><span class="card-meta">28 мая 2026 · 26 мин</span></a>
-    <a href="/blog/telo-pervogo-raza-programma-30-dney.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Тело первого раза»: 30 дней практики для тех, кто разучился действовать без образца</h3><span class="card-meta">27 мая 2026 · 24 мин</span></a>
-    <a href="/blog/postzapadnyi-chelovek-krizis-pokoleniya-2026.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Постзападный человек»: 10 признаков того, что вы воспитанник эпохи, которой больше нет</h3><span class="card-meta">26 мая 2026 · 28 мин</span></a>
-    <a href="/blog/protokol-grob-dnevnik-12-mesyacev-keys-direktora.html" class="manifesto-card"><span class="m-num">🆕</span><h3>«Синдром автомойки»: почему собственник в 40 хочет бросить завод ради кофейни. Диагноз эпохи</h3><span class="card-meta">25 мая 2026 · 32 мин</span></a>
-    <a href="/blog/pohoronnaya-terapiya-konfrontaciya-so-smertyu.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Лечь в гроб, чтобы жить: похоронная терапия — психология, физика, риски</h3><span class="card-meta">24 мая 2026 · 14 мин</span></a>
-    <a href="/blog/narciss-naoborot-vy-vyrosli-s-narcissom.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Вы выросли с нарциссом — теперь нарцисс это вы. 7 признаков повторения сценария</h3><span class="card-meta">24 мая 2026 · 14 мин</span></a>
-    <a href="/blog/cherez-5-let-polovina-psihologov-nenuzhna.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Через 5 лет половина психологов станет ненужной. Что останется и почему</h3><span class="card-meta">24 мая 2026 · 11 мин</span></a>
-    <a href="/blog/karta-zhelaniy-ne-rabotaet-47-issledovanij.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Карта желаний не работает: разбор 47 исследований</h3><span class="card-meta">24 мая 2026 · 10 мин</span></a>
-    <a href="/blog/prokrastinaciya-soprotivlenie-chuzhoj-celi.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Прокрастинация — это сопротивление чужой цели</h3><span class="card-meta">24 мая 2026 · 10 мин</span></a>
-    <a href="/blog/rasstanovki-hellingera-6-prichin-psevdonauka.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Расстановки Хеллингера: 6 причин, почему это псевдонаука</h3><span class="card-meta">23 мая 2026 · 13 мин</span></a>
-    <a href="/blog/samoocenka-pridumannaya-kategoriya-5-edinic.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Самооценка — придуманная категория. 5 единиц, которые работают на самом деле</h3><span class="card-meta">23 мая 2026 · 10 мин</span></a>
-    <a href="/blog/psiholog-sam-ne-hodit-k-psihologu.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Психолог сам не ходит к психологу. Разбор табу профессии</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
-    <a href="/blog/lyubov-eto-kontrakt-7-skrytyh-punktov.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Любовь — это контракт, которого никто не читал. 7 скрытых пунктов</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
-    <a href="/blog/bezdetnye-po-vyboru-novyj-tip-odinochestva.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Бездетные по выбору: новый тип одиночества в России 2026</h3><span class="card-meta">23 мая 2026 · 10 мин</span></a>
-    <a href="/blog/rossiyane-kto-ne-uehal-vina-i-zlost.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Россияне, которые не уехали: 6 невыговоренных эмоций оставшихся</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
-    <a href="/blog/emigraciya-kak-travma-7-stadij.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Эмиграция как травма: 7 стадий 2022–2024</h3><span class="card-meta">23 мая 2026 · 13 мин</span></a>
-    <a href="/blog/setevoj-marketing-lider-kak-produkt.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Сетевой маркетинг: главный фокус — ЛОМ передаёт сигнал, у которого нет товара</h3><span class="card-meta">23 мая 2026 · 11 мин</span></a>
-    <a href="/blog/psihologiya-barmena-gumanisticheskij-podhod.html" class="manifesto-card"><span class="m-num">🆕</span><h3>Психология бармена: научное объяснение от Маслоу-Маслова до Роджерса и Фреди</h3><span class="card-meta">23 мая 2026 · 12 мин</span></a>
-  </div>
-
-  <h2 id="manifestos">🆕 Манифесты Мейстера 2026 (30/30)</h2>
-  <p class="section-intro">Серия из 30 манифестов, разделённых на 5 блоков: новые понятия, разоблачения, российская специфика, исследования, будущее. Авторские концепты — Закон Мейстера, Эпидемия онемения, 7 уровней эволюции.</p>
-  <div class="manifest-grid">
-    <a href="/blog/zakon-mejstera-3-urovnya-vnutrennej-pravdy.html" class="manifesto-card"><span class="m-num">№1</span><h3>Закон Мейстера: 3 уровня внутренней правды</h3><span class="card-meta">21 мая 2026 · 32 мин</span></a>
-    <a href="/blog/epidemiya-onemeniya-30-procentov-psihicheskoj-moschnosti.html" class="manifesto-card"><span class="m-num">№2</span><h3>Эпидемия онемения: 30% психической мощности россиян</h3><span class="card-meta">21 мая 2026 · 30 мин</span></a>
-    <a href="/blog/manifest-psihologicheskoj-svobody-2026.html" class="manifesto-card"><span class="m-num">№3</span><h3>Манифест психологической свободы 2026: 7 свобод Мейстера</h3><span class="card-meta">21 мая 2026 · 28 мин</span></a>
-    <a href="/blog/alfa-scenarij-7-rolej-uspeshnogo-cheloveka-v-rossii.html" class="manifesto-card"><span class="m-num">№4</span><h3>Альфа-сценарий: 7 ролей успешного человека в России</h3><span class="card-meta">22 мая 2026 · 29 мин</span></a>
-    <a href="/blog/paradoks-vyzhivaniya-1990-2026.html" class="manifesto-card"><span class="m-num">№5</span><h3>Парадокс выживания: 1990–2026</h3><span class="card-meta">22 мая 2026 · 30 мин</span></a>
-    <a href="/blog/konec-epohi-psiholog-celitel-2035.html" class="manifesto-card"><span class="m-num">№6</span><h3>Конец эпохи: психолог-целитель 2035</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
-    <a href="/blog/pochemu-psihoterapiya-v-rossii-ne-rabotaet.html" class="manifesto-card"><span class="m-num">№7</span><h3>Почему психотерапия в России не работает</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
-    <a href="/blog/kolonizaciya-russkogo-soznaniya-23-ustanovki.html" class="manifesto-card"><span class="m-num">№8</span><h3>Колонизация русского сознания: 23 установки</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
-    <a href="/blog/bolshaya-lozh-samopomoschi-7-mifov.html" class="manifesto-card"><span class="m-num">№9</span><h3>Большая ложь самопомощи: 7 мифов индустрии</h3><span class="card-meta">22 мая 2026 · 26 мин</span></a>
-    <a href="/blog/tajnaya-ekonomika-boli-industriya-psihologii.html" class="manifesto-card"><span class="m-num">№10</span><h3>Тайная экономика боли: индустрия психологии</h3><span class="card-meta">22 мая 2026 · 27 мин</span></a>
-    <a href="/blog/rossijskij-abyuz-9-unikalnyh-patternov.html" class="manifesto-card"><span class="m-num">№11</span><h3>Российский абъюз: 9 уникальных паттернов</h3><span class="card-meta">22 мая 2026 · 27 мин</span></a>
-    <a href="/blog/epidemiya-odinochestva-v-brake-2026.html" class="manifesto-card"><span class="m-num">№12</span><h3>Эпидемия одиночества в браке: Россия 2026</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
-    <a href="/blog/12-nacionalnyh-psihologicheskih-konstant-rossiyan.html" class="manifesto-card"><span class="m-num">№13</span><h3>12 национальных психологических констант россиян</h3><span class="card-meta">22 мая 2026 · 28 мин</span></a>
-    <a href="/blog/psihologicheskij-pasport-rossiyanina-23-fakta.html" class="manifesto-card"><span class="m-num">№14</span><h3>Психологический паспорт россиянина: 23 факта</h3><span class="card-meta">22 мая 2026 · 25 мин</span></a>
-    <a href="/blog/travma-pokoleniya-8-shramov-rossiyan-1985-2025.html" class="manifesto-card"><span class="m-num">№15</span><h3>Травма поколения: 8 шрамов россиян 1985–2025</h3><span class="card-meta">22 мая 2026 · 26 мин</span></a>
-    <a href="/blog/rossiya-vs-zapad-11-razlichij.html" class="manifesto-card"><span class="m-num">№16</span><h3>Россия vs Запад: 11 психологических различий</h3><span class="card-meta">22 мая 2026 · 25 мин</span></a>
-    <a href="/blog/rossijskij-semejnyj-scenarij-5-modelej.html" class="manifesto-card"><span class="m-num">№17</span><h3>Российский семейный сценарий: 5 моделей</h3><span class="card-meta">22 мая 2026 · 24 мин</span></a>
-    <a href="/blog/psihologiya-dolgosrochnoj-osady-2022-2026.html" class="manifesto-card"><span class="m-num">№18</span><h3>Психология долгосрочной осады: 2022–2026</h3><span class="card-meta">22 мая 2026 · 23 мин</span></a>
-    <a href="/blog/analiz-10000-dialogov-fredi-2026.html" class="manifesto-card"><span class="m-num">№19</span><h3>Анализ 10 000 диалогов Фреди: данные 2026</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
-    <a href="/blog/bolshoe-issledovanie-schastya-2026.html" class="manifesto-card"><span class="m-num">№20</span><h3>Большое исследование счастья 2026</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
-    <a href="/blog/longityud-1000-rossiyan-10-let-2016-2026.html" class="manifesto-card"><span class="m-num">№21</span><h3>Лонгитюд: 1000 россиян за 10 лет (2016–2026)</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
-    <a href="/blog/pokolencheskij-razryv-4-pokoleniya-rossii.html" class="manifesto-card"><span class="m-num">№22</span><h3>Поколенческий разрыв: 4 поколения России</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
-    <a href="/blog/metaanaliz-200-issledovanij-russkaya-psihologiya.html" class="manifesto-card"><span class="m-num">№23</span><h3>Метаанализ 200 исследований русской психологии</h3><span class="card-meta">22 мая 2026 · 21 мин</span></a>
-    <a href="/blog/karta-psihologicheskih-konfliktov-rossii-2026.html" class="manifesto-card"><span class="m-num">№24</span><h3>Карта психологических конфликтов России 2026</h3><span class="card-meta">22 мая 2026 · 20 мин</span></a>
-    <a href="/blog/budushchee-psihologii-12-trendov-2035.html" class="manifesto-card"><span class="m-num">№25</span><h3>Будущее психологии: 12 трендов до 2035</h3><span class="card-meta">22 мая 2026 · 22 мин</span></a>
-    <a href="/blog/pokolenie-x-plus-rossiyane-35-50.html" class="manifesto-card"><span class="m-num">№26</span><h3>Поколение X+: россияне 35–50 лет</h3><span class="card-meta">22 мая 2026 · 20 мин</span></a>
-    <a href="/blog/novyj-protokol-vyzhivaniya-2026.html" class="manifesto-card"><span class="m-num">№27</span><h3>Новый протокол выживания 2026</h3><span class="card-meta">22 мая 2026 · 21 мин</span></a>
-    <a href="/blog/psihologiya-posle-ii-5-cennejshih-sposobnostej.html" class="manifesto-card"><span class="m-num">№28</span><h3>Психология после ИИ: 5 ценнейших способностей</h3><span class="card-meta">22 мая 2026 · 19 мин</span></a>
-    <a href="/blog/ot-zhertvy-k-tvorcu-7-urovnej-evolyucii.html" class="manifesto-card"><span class="m-num">№29</span><h3>От жертвы к творцу: 7 уровней эволюции</h3><span class="card-meta">22 мая 2026 · 7 мин</span></a>
-    <a href="/blog/manifest-russkoj-psihologii-2030.html" class="manifesto-card"><span class="m-num">№30</span><h3>Манифест русской психологии 2030</h3><span class="card-meta">22 мая 2026 · 7 мин</span></a>
-  </div>
-
-  <div class="wave-section">
-    <h2 id="fredi">🤖 Виртуальный психолог Фреди — 15 статей</h2>
-    <p class="section-intro">Гайды по работе с ИИ-психологом, экстренная помощь, тесты, советы по разговору с Фреди.</p>
-    <div class="archive-list">
-      <a href="/blog/ii-psiholog-2026-vozmozhnosti-i-predely.html">ИИ-психолог 2026: возможности и пределы</a>
-      <a href="/blog/srochnaya-psihologicheskaya-pomoshch-chto-delat.html">Срочная психологическая помощь: что делать</a>
-      <a href="/blog/mozhno-li-zamenit-psihologa-ii.html">Можно ли заменить психолога ИИ?</a>
-      <a href="/blog/kak-razgovarivat-s-ii-psihologom-7-pravil.html">Как разговаривать с ИИ-психологом: 7 правил</a>
-      <a href="/blog/kogda-idti-k-psihologu-12-signalov.html">Когда идти к психологу: 12 сигналов</a>
-      <a href="/blog/anonimnaya-psihologicheskaya-pomoshch-onlajn-gajd.html">Анонимная психологическая помощь онлайн: гид</a>
-      <a href="/blog/psihologicheskij-test-7-voprosov.html">Психологический тест: 7 вопросов</a>
-      <a href="/blog/net-deneg-na-psihologa-5-strategij.html">Нет денег на психолога: 5 стратегий</a>
-      <a href="/blog/panicheskie-ataki-nochyu-chto-delat.html">Панические атаки ночью: что делать</a>
-      <a href="/blog/trevoga-bez-prichiny-7-trigerov.html">Тревога без причины: 7 триггеров</a>
-      <a href="/blog/chatgpt-vs-specializirovannyj-psiho-ii.html">ChatGPT vs специализированный психо-ИИ</a>
-      <a href="/blog/psihologicheskaya-pomoshch-v-rossii-2026-karta.html">Психологическая помощь в России 2026: карта</a>
-      <a href="/blog/etika-psihologa-10-priznakov.html">Этика психолога: 10 признаков</a>
-      <a href="/blog/psihologicheskij-samokouching-6-tehnik.html">Психологический самокоучинг: 6 техник</a>
-      <a href="/blog/besplatnaya-psihologicheskaya-konsultaciya-onlajn.html">Бесплатная психологическая консультация онлайн</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2 id="products">📚 Психология практическая — 20 статей</h2>
-    <p class="section-intro">Влияние, переговоры, наблюдательность, психотипы, защита от давления — натив книги Мейстера, Вариатики, тренингов.</p>
-    <div class="archive-list">
-      <a href="/blog/6-principov-vliyaniya-chaldini-2026.html">6 принципов влияния Чалдини 2026</a>
-      <a href="/blog/psihologiya-prodazh-2026-7-patternov.html">Психология продаж 2026: 7 паттернов</a>
-      <a href="/blog/psihologiya-peregovorov-metod-voss-fbi.html">Психология переговоров: метод Восса (ФБР)</a>
-      <a href="/blog/neverbalnoe-obshchenie-12-markerov.html">Невербальное общение: 12 маркеров</a>
-      <a href="/blog/eriksonovskij-gipnoz-dlya-nachinayushchih.html">Эриксоновский гипноз для начинающих</a>
-      <a href="/blog/kak-chitat-lyudej-7-urovnej-nablyudatelnosti.html">Как читать людей: 7 уровней наблюдательности</a>
-      <a href="/blog/sistemnoe-myshlenie-5-praktik.html">Системное мышление: 5 практик</a>
-      <a href="/blog/8-klassifikacij-psihotipov-mbti-disc-variatika.html">8 классификаций психотипов: MBTI, DISC, Вариатика</a>
-      <a href="/blog/trenirovka-nablyudatelnosti-30-dnej-uprazhnenij.html">Тренировка наблюдательности: 30 дней упражнений</a>
-      <a href="/blog/patterny-povedeniya-kak-zamechat.html">Паттерны поведения: как замечать</a>
-      <a href="/blog/psihologicheskij-portret-za-odnu-vstrechu.html">Психологический портрет за одну встречу</a>
-      <a href="/blog/stimulnyj-kontrol-7-rychagov-izmeneniya-povedeniya.html">Стимульный контроль: 7 рычагов изменения</a>
-      <a href="/blog/sreda-opredelyaet-povedenie-nauchnyj-vzglyad-2026.html">Среда определяет поведение: научный взгляд 2026</a>
-      <a href="/blog/kak-raspoznat-lozh-12-markerov-ekmana.html">Как распознать ложь: 12 маркеров Экмана</a>
-      <a href="/blog/konflikt-v-kommunikacii-6-tipov.html">Конфликт в коммуникации: 6 типов</a>
-      <a href="/blog/zashchita-ot-davleniya-10-tekhnik.html">Защита от давления: 10 техник</a>
-      <a href="/blog/soft-skills-2026-8-klyuchevyh-navykov.html">Soft Skills 2026: 8 ключевых навыков</a>
-      <a href="/blog/psihologiya-lichnogo-brenda-7-principov.html">Психология личного бренда: 7 принципов</a>
-      <a href="/blog/aktivnoe-slushanie-6-urovnej.html">Активное слушание: 6 уровней</a>
-      <a href="/blog/rapport-za-60-sekund-5-tekhnik.html">Раппорт за 60 секунд: 5 техник</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2 id="research">🔬 Авторские концепты и исследования — 24 статьи</h2>
-    <p class="section-intro">Авторские шкалы и фреймворки Мейстера (триада идентичности, манипулятивный градиент), мета-анализы, лонгитюды.</p>
-    <div class="archive-list">
-      <a href="/blog/shkala-emocionalnoj-gramotnosti-mejstera.html">Шкала Мейстера эмоциональной грамотности</a>
-      <a href="/blog/princip-urovnya-dveri-mejstera.html">Принцип уровня двери Мейстера</a>
-      <a href="/blog/triada-identichnosti-mejstera.html">Триада идентичности Мейстера</a>
-      <a href="/blog/manipulyativnyj-gradient-12-urovnej.html">Манипулятивный градиент: 12 уровней</a>
-      <a href="/blog/analiz-500-dialogov-fredi-2026.html">Анализ 500 диалогов с Фреди 2026</a>
-      <a href="/blog/analiz-500-sessij-7-patternov-pervoj-konsultacii.html">Анализ 500 первых консультаций: 7 паттернов</a>
-      <a href="/blog/meta-analiz-manifestacii-47-issledovanij.html">Мета-анализ манифестации: 47 исследований</a>
-      <a href="/blog/opros-200-terapevtov-rasstanovki-hellingera.html">Опрос 200 терапевтов: расстановки Хеллингера</a>
-      <a href="/blog/longityud-300-par-8-let-privyazannost.html">Лонгитюд 300 пар за 8 лет: привязанность</a>
-      <a href="/blog/cifrovaya-vs-zhivaya-terapiya-18-mesyacev.html">Цифровая vs живая терапия: 18 месяцев</a>
-      <a href="/blog/47-tehnik-eriksonovskogo-gipnoza-spravochnik.html">47 техник эриксоновского гипноза: справочник</a>
-      <a href="/blog/kpt-za-30-dnej-prakticheskij-gid.html">КПТ за 30 дней: практический гид</a>
-      <a href="/blog/rasshifrovka-snov-nauchnyj-podhod-praktika.html">Расшифровка снов: научный подход</a>
-      <a href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html">100 когнитивных искажений: справочник</a>
-      <a href="/blog/23-manipulyacii-v-otnosheniyah-spravochnik.html">23 манипуляции в отношениях: справочник</a>
-      <a href="/blog/12-podhodov-k-celepolaganiyu-sravnenie.html">12 подходов к целеполаганию: сравнение</a>
-      <a href="/blog/erik-bern-tranzaktnyj-analiz-glubokij-razbor.html">Эрик Берн: транзактный анализ — глубокий разбор</a>
-      <a href="/blog/ifs-vnutrennyaya-semejnaya-sistema-shvarc.html">IFS — внутренняя семейная система Шварца</a>
-      <a href="/blog/geshtalt-terapiya-2026-sostoyanie-i-praktika.html">Гештальт-терапия 2026: состояние и практика</a>
-      <a href="/blog/soznanie-100-let-nauchnyh-teorij.html">Сознание: 100 лет научных теорий</a>
-      <a href="/blog/psihologiya-eto-ne-nauka-provokaciya.html">Психология — это не наука (провокация)</a>
-      <a href="/blog/knigi-samopomoschi-vredyat-90-procentov.html">90% книг самопомощи вредят — данные</a>
-      <a href="/blog/terapiya-ne-dlya-vseh-chestno.html">Терапия не для всех: честный разбор</a>
-      <a href="/blog/zhenskoj-psihologii-net-eto-marketing.html">«Женской психологии» нет — это маркетинг</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2 id="clinic">🩺 Клиника и психотерапия — статьи о методах</h2>
-    <p class="section-intro">EMDR, КПТ, ACT, DBT, IFS, гештальт, разборы методов и клинических подходов.</p>
-    <div class="archive-list">
-      <a href="/blog/emdr-terapiya-glubokij-razbor.html">EMDR-терапия: глубокий разбор</a>
-      <a href="/blog/mindfulness-bez-ezoteriki-8-tehnik.html">Mindfulness без эзотерики: 8 техник</a>
-      <a href="/blog/dbt-navyki-4-modulya-linehan.html">DBT-навыки: 4 модуля Линехан</a>
-      <a href="/blog/act-terapiya-6-processov-geksaflex.html">ACT-терапия: 6 процессов (гексафлекс)</a>
-      <a href="/blog/travma-6-tipov-i-protokoly-raboty.html">Травма: 6 типов и протоколы работы</a>
-      <a href="/blog/depressiya-12-tipov-chto-rabotaet.html">Депрессия: 12 типов — что работает</a>
-      <a href="/blog/trevoga-polnaya-karta-rasstrojstv.html">Тревога: полная карта расстройств</a>
-      <a href="/blog/zavisimosti-9-vidov-nauchnyj-vzglyad.html">Зависимости: 9 видов — научный взгляд</a>
-      <a href="/blog/socseti-i-psihika-50-issledovanij.html">Соцсети и психика: 50 исследований</a>
-      <a href="/blog/pokolencheskie-razlichiya-pravda-i-mify.html">Поколенческие различия: правда и мифы</a>
-      <a href="/blog/stoicizm-vs-terapiya-chto-luchshe.html">Стоицизм vs терапия: что лучше</a>
-      <a href="/blog/ezoterika-i-psihologiya-7-peresechenij.html">Эзотерика и психология: 7 пересечений</a>
-      <a href="/blog/tri-strategii-uspeha-pioner-posledovatel-postavshchik.html">Три стратегии успеха: пионер, последователь, поставщик</a>
-      <a href="/blog/hochu-stat-znamenitym-5-tipov-slavy.html">Хочу стать знаменитым: 5 типов славы</a>
-      <a href="/blog/kak-ostatsya-v-istorii-9-sposobov-sled.html">Как остаться в истории: 9 способов оставить след</a>
-      <a href="/blog/cifrovoj-sled-chto-google-rasskazhet-cherez-20-let.html">Цифровой след: что Google расскажет о вас через 20 лет</a>
-      <a href="/blog/sdvg-u-vzroslyh-7-tipov-pochemu-propuskayut.html">СДВГ у взрослых: 7 типов — почему пропускают</a>
-      <a href="/blog/autizm-u-vzroslyh-zhenshchin-14-priznakov.html">Аутизм у взрослых женщин: 14 признаков</a>
-      <a href="/blog/hsp-vysokochuvstvitelnyj-chelovek-7-podtipov.html">HSP — высокочувствительный человек: 7 подтипов</a>
-      <a href="/blog/kontrzavisimost-12-priznakov-distancii.html">Контрзависимость: 12 признаков дистанции</a>
-      <a href="/blog/emocionalnyj-incest-7-tipov-posledstviya.html">Эмоциональный инцест: 7 типов — последствия</a>
-      <a href="/blog/psihologiya-deneg-6-arhetipov-test.html">Психология денег: 6 архетипов + тест</a>
-      <a href="/blog/psihologiya-odinochestva-4-tipa-2026.html">Психология одиночества: 4 типа 2026</a>
-      <a href="/blog/prizvanie-vs-karyera-5-tipov-zhiznennogo-puti.html">Призвание vs карьера: 5 типов жизненного пути</a>
-      <a href="/blog/krizis-40-let-7-etapov-nauchnyj-podhod.html">Кризис 40 лет: 7 этапов — научный подход</a>
-      <a href="/blog/styd-vs-vina-raznica-kotoraya-kalechit.html">Стыд vs вина: разница, которая калечит</a>
-      <a href="/blog/vygoranie-5-tipov-i-protokoly-vosstanovleniya.html">Выгорание: 5 типов и протоколы восстановления</a>
-      <a href="/blog/psihologiya-izmeny-8-prichin-nauchnyj-vzglyad.html">Психология измены: 8 причин — научный взгляд</a>
-      <a href="/blog/krizis-25-let-5-etapov.html">Кризис 25 лет: 5 этапов</a>
-      <a href="/blog/psihologiya-razvoda-7-etapov.html">Психология развода: 7 этапов</a>
-      <a href="/blog/kak-vybrat-psihologa-10-kriteriev.html">Как выбрать психолога: 10 критериев</a>
-      <a href="/blog/psihologiya-seksualnosti-2026-5-sdvigov.html">Психология сексуальности 2026: 5 сдвигов</a>
-      <a href="/blog/pishchevye-rasstrojstva-6-tipov.html">Пищевые расстройства: 6 типов</a>
-      <a href="/blog/psihologiya-roditelstva-4-etapa-razvitiya.html">Психология родительства: 4 этапа развития</a>
-      <a href="/blog/kak-prostit-neprostitelnoe-4-urovnya.html">Как простить непростительное: 4 уровня</a>
-      <a href="/blog/odinochestvo-v-pare-5-tipov.html">Одиночество в паре: 5 типов</a>
-      <a href="/blog/psihologiya-revnosti-6-tipov.html">Психология ревности: 6 типов</a>
-      <a href="/blog/bessonnica-5-tipov-kpt-i.html">Бессонница: 5 типов и КПТ-И</a>
-      <a href="/blog/uspeshnaya-odinokaya-zhenshchina-35.html">Успешная одинокая женщина 35+</a>
-      <a href="/blog/vozvrashchenie-posle-vygoraniya-7-etapov.html">Возвращение после выгорания: 7 этапов</a>
-      <a href="/blog/zdorovye-granicy-8-tipov.html">Здоровые границы: 8 типов</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2 id="archive">📁 Архив — 115 статей</h2>
-    <p class="section-intro">Полный архив предыдущих статей блога: разговорный гипноз, нейропсихология, газлайтинг, привязанность, кризисы возраста, эзотерика vs наука.</p>
-    <div class="archive-list">
-      <a href="/blog/yalom-cherez-sistemu-koordinat-4-ekzistencialnyh-voprosa.html">Ялом через систему координат: 4 экзистенциальных вопроса и типы ответов, по которым ты живёшь</a>
-      <a href="/blog/mir-kak-process-ili-fotografiya-ontologiya-razvitiya.html">Мир как процесс или мир как фотография: онтология, которая определяет, сможешь ли ты меняться</a>
-      <a href="/blog/5-modeley-lokusa-deystviya-kto-deystvuet.html">Кто действует — ты, мир или никто? 5 моделей локуса действия и где застряло 80% людей</a>
-      <a href="/blog/4-modeli-vremeni-pochemu-zhizn-dlinnaya-ili-pustaya.html">Когда идёт твоё время: 4 модели и почему у одних жизнь длинная, а у других — пустые годы</a>
-      <a href="/blog/sistema-koordinat-soznaniya-4-osi.html">Система координат сознания: 4 оси, по которым ты тайно живёшь</a>
-      <a href="/blog/manipulyacii-v-blizkih-otnosheniyah-7-priznakov-rechevogo-gipnoza.html">Манипуляции в близких отношениях: 7 признаков речевого гипноза партнёра</a>
-      <a href="/blog/ya-delayu-vse-pravilno-pochemu-ne-poluchaetsya.html">«Я делаю всё правильно — почему не получается?» Разбор иллюзии правильности</a>
-      <a href="/blog/vopros-kak-oruzhie-5-tipov-manipulyacii.html">Вопрос как оружие: 5 типов манипулятивных вопросов и как защищаться</a>
-      <a href="/blog/barhatnyi-katok-dlya-infantilnogo-kogda-rabotaet.html">«Бархатный каток» для инфантильного: когда работает, кому усугубляет инфантильность</a>
-      <a href="/blog/samogipnoz-nauchnyi-razbor-5-tehnik.html">Самогипноз: 5 техник без терапевта. Что работает по мета-анализам, чего избегать</a>
-      <a href="/blog/privychka-ekonomit-4-tipa-skuposti.html">Привычка экономить как симптом: 4 типа «скупости» и протокол выхода</a>
-      <a href="/blog/bessoznatelnoe-v-2026-nauka-i-nlp.html">Бессознательное в 2026: что в нём действительно есть. Что из НЛП работает, что устарело</a>
-      <a href="/blog/trudolyubie-vs-proizvoditelnost.html">Трудолюбие vs производительность: что измеряют люди, объявляющие трудолюбие «обманом»</a>
-      <a href="/blog/trans-v-obychnoy-rechi-6-priznakov.html">Транс в обычной речи: 6 признаков, что собеседник в трансе. И что с этим делать</a>
-      <a href="/blog/kontekstualnye-vnusheniya-8-tipov.html">Контекстуальные внушения: 8 типов скрытого влияния в обычной речи. Полный каталог</a>
-      <a href="/blog/rapport-4-urovnya-i-test-na-kazhdyi.html">Раппорт: 4 уровня (поведенческий, вербальный, эмоциональный, ценностный) и тест на каждый</a>
-      <a href="/blog/chsv-nauchnyi-ekvivalent-stalkinga.html">Чувство собственной важности (ЧСВ): научный эквивалент сталкинга без эзотерики</a>
-      <a href="/blog/uverennost-7-urovney.html">Уверенность в себе: 7 уровней от телесного до экзистенциального. Какой ваш</a>
-      <a href="/blog/len-kak-simptom-6-prichin.html">Лень как симптом: 6 причин и почему «лекарство от лени» — это лечить следствие</a>
-      <a href="/blog/vnushenie-vzglyadom-chto-rabotaet-chto-mif.html">Внушение взглядом: что работает, что миф. Научное объяснение силы взгляда</a>
-      <a href="/blog/15-mifov-o-gipnoze-nauchnyi-razbor.html">15 мифов о гипнозе, в которые верят даже психологи. Научный разбор</a>
-      <a href="/blog/zashchita-ot-gipnoza-7-urovney.html">Защита от разговорного гипноза: 7 уровней и 21-дневный протокол тренировки</a>
-      <a href="/blog/motivaciya-kak-struktura-4-tipa.html">Мотивация как структура: 4 типа и почему «мотивация — это проблема» верно только в одном из них</a>
-      <a href="/blog/temnaya-storona-dalnego-planirovaniya.html">Тёмная сторона дальнего планирования: 5 ловушек горизонта на десятилетия</a>
-      <a href="/blog/kogda-ploho-ne-durak-stressovyi-rezhim.html">Когда плохо — ты не «дурак», ты в стрессовом режиме. Современная нейронаука против мифа о тройном мозге</a>
-      <a href="/blog/svincovye-gvozdi-kak-ii-menyaet-kurs.html">Свинцовые гвозди в левом каблуке: как ИИ незаметно меняет ваш курс</a>
-      <a href="/blog/skrytoe-vnushenie-7-primerov.html">Скрытое внушение в обычной речи: 7 примеров и как услышать</a>
-      <a href="/blog/psihologiya-ubezhdeniya-5-mehanizmov.html">Психология убеждения: 5 базовых механизмов влияния и как ими этично пользоваться</a>
-      <a href="/blog/kak-raspoznat-manipulyatora-10-priznakov.html">Как распознать манипулятора в обычном разговоре. 10 признаков, которые срабатывают за минуту</a>
-      <a href="/blog/eq-kak-kontrol-partnera.html">Эмоциональный интеллект как новый способ контролировать партнёра. 5 признаков EQ-манипуляции</a>
-      <a href="/blog/celepolaganie-naoborot-5-celey-iz-straha.html">Целеполагание наоборот: 5 целей, которые на самом деле ставит ваш страх</a>
-      <a href="/blog/trener-lichnostnogo-rosta-priznaki.html">Тренер личностного роста, который не справился со своей жизнью. Как распознать</a>
-      <a href="/blog/razvitie-naoborot-kak-uhodish-ot-sebya.html">Развитие наоборот: как мы развиваемся в сторону от себя. 5 признаков «ложного роста»</a>
-      <a href="/blog/kak-prostit-4-urovnya-proshcheniya.html">Как простить: 4 уровня прощения и почему «отпустить» — это последний шаг, а не первый</a>
-      <a href="/blog/emocionalnaya-zavisimost-priznaki-i-protokol.html">Эмоциональная зависимость: 5 признаков и протокол отделения без разрыва</a>
-      <a href="/blog/narcissizm-7-priznakov-i-kak-vyyti.html">Нарциссизм: 7 признаков нарциссической личности по DSM-5 и как выходить из отношений</a>
-      <a href="/blog/refleks-uznavaniya-formula-uvidel-uznal.html">Рефлекс узнавания: формула «увидел — узнал — захотел — купил» и методика её формирования</a>
-      <a href="/blog/ne-mogu-delegirovat-kak-otpustit.html">Не могу делегировать: почему держишь всё на себе и как отпустить</a>
-      <a href="/blog/kak-postavit-normalnuyu-cenu.html">Как поставить нормальную цену на свои услуги: 5 причин заниженного тарифа</a>
-      <a href="/blog/sindrom-samozvanca-priznaki-i-protokol.html">Синдром самозванца: 5 признаков и протокол выхода без аффирмаций</a>
-      <a href="/blog/perfekcionizm-priznaki-i-protokol.html">Перфекционизм: 5 признаков невротического и парадоксальное предписание</a>
-      <a href="/blog/tipy-privyazannosti-test-i-rabota.html">Типы привязанности: тест за 5 минут и что делать каждому</a>
-      <a href="/blog/psihosomatika-7-svyazok-telo-psihika.html">Психосоматика: 7 классических связок тело-психика и как с ними работать</a>
-      <a href="/blog/nizkaya-samoocenka-priznaki-i-protokol.html">Низкая самооценка: 5 признаков и протокол восстановления без аффирмаций</a>
-      <a href="/blog/bessonnica-prichiny-i-protokol.html">Бессонница: 5 психологических причин и протокол сна на 14 дней</a>
-      <a href="/blog/panicheskie-ataki-chto-delat.html">Панические атаки: что делать в момент и как вылечить за 6-12 недель</a>
-      <a href="/blog/kak-perezhit-rasstavanie.html">Как пережить расставание: 5 фаз, реальные сроки и протокол выхода, если застрял</a>
-      <a href="/blog/granicy-kak-pobeg.html">«Я еду к маме». Когда личные границы — это побег от близости. 5 признаков псевдограниц</a>
-      <a href="/blog/ne-hochu-rabotat-nad-soboy.html">«Я больше не хочу работать над собой». Почему отказ от саморазвития часто и есть взросление</a>
-      <a href="/blog/sem-treningov-i-nol-izmeneniy.html">Семь тренингов за пять лет — и ноль изменений. Почему сертификаты копятся, а жизнь стоит</a>
-      <a href="/blog/osoznannost-sposob-ne-chuvstvovat.html">Осознанность — это новый способ не чувствовать. 5 признаков духовного бегства</a>
-      <a href="/blog/muzhchina-posle-40-vsyo-shvacheno.html">Мужчина после 40, у которого «всё схвачено». Невидимая ловушка эффективности</a>
-      <a href="/blog/discipline-kak-pobeg.html">Не дисциплина — это страх остановиться. 4 признака беглеца под маской</a>
-      <a href="/blog/kak-razvit-kreativnost-6-tehnik.html">Как развить креативность: 6 техник, работающих на бумаге и в голове</a>
-      <a href="/blog/mentalnye-modeli-7-konceptov.html">7 ментальных моделей, которые меняют качество решений</a>
-      <a href="/blog/stimulnyy-kontrol-triggery-resheniy.html">Стимульный контроль: триггеры решений в маркетинге и переговорах</a>
-      <a href="/blog/upravlenie-emociyami-gruppy.html">Управление эмоциями группы: первые 90 секунд решают всё</a>
-      <a href="/blog/rechevoe-vozdejstvie-5-patternov.html">Речевое воздействие: 5 паттернов лучших переговорщиков</a>
-      <a href="/blog/vozvrat-sobesednika-iz-reaktiva.html">Вернуть собеседника из реактива: 3 шага за 30 секунд</a>
-      <a href="/blog/netvorking-dlya-introvertov.html">Нетворкинг для тех, кто терпеть не может «сетевиться»</a>
-      <a href="/blog/obratnaya-svyaz-formula-pixar.html">Обратная связь: формула, разработанная в Pixar</a>
-      <a href="/blog/liderstvo-otnoshenie-k-otvetstvennosti.html">Лидерство — не стиль, а отношение к ответственности</a>
-      <a href="/blog/kommunikaciya-3-frazy-razrushiteli.html">Коммуникация: 3 фразы-разрушителя в близком разговоре, и чем их заменить</a>
-      <a href="/blog/planirovanie-celi-sredstva-usloviya.html">Планирование цели → средства → условия: схема, которой большинству не хватает</a>
-      <a href="/blog/prinyatie-resheniy-pri-nepolnoy-informacii.html">Как принимать решения при неполной информации: каркас 4 шагов</a>
-      <a href="/blog/upravlenie-vremenem-odna-bolshaya-zadacha.html">Управление временем: почему «список дел» не работает, и что приходит на смену</a>
-      <a href="/blog/ustanovka-na-rost-poka.html">Установка на рост: разница между «я плохо это делаю» и «я этому учусь»</a>
-      <a href="/blog/stressoustojchivost-okno-tolerantnosti.html">Стрессоустойчивость: как восстанавливаться за минуты, а не за дни</a>
-      <a href="/blog/fokus-i-koncentraciya.html">Фокус и концентрация: 3 техники, которые реально работают</a>
-      <a href="/blog/emocionalnyj-intellekt-kak-razvit.html">Эмоциональный интеллект — навык различения, а не контроля</a>
-      <a href="/blog/disciplina-bez-sily-voli.html">Дисциплина без силы воли: триггеры, ритуалы, среда</a>
-      <a href="/blog/uverennost-v-sebe-telesnyj-navyk.html">Уверенность как телесный навык: почему советы из книг не работают</a>
-      <a href="/blog/ne-znayu-chego-ya-hochu.html">Не знаю, чего я хочу: 3 признака жизни на «надо» и одна практика</a>
-      <a href="/blog/lichnye-granicy-kak-vystroit.html">Личные границы — не стена, а маркер: 5 ситуаций и как их собрать</a>
-      <a href="/blog/rechevoy-portret-kak-sostavit.html">Как составить речевой портрет собеседника за один разговор</a>
-      <a href="/blog/eriksonovskiy-vs-razgovornyy-gipnoz.html">Эриксоновский vs разговорный гипноз: в чём разница</a>
-      <a href="/blog/navyk-shchedrovickogo-smd-myshlenie.html">Навык Щедровицкого: четыре различения, которые меняют качество ваших совещаний</a>
-      <a href="/blog/storytelling-geroj-perelom-urok.html">Сторителлинг по структуре «герой → перелом → урок»: рабочий каркас на 30 секунд</a>
-      <a href="/blog/kalibrovka-sobesednika-yazyk-tela.html">Калибровка собеседника: почему «язык тела» из книг — миф, и что работает</a>
-      <a href="/blog/delegirovanie-bez-peredelki.html">Делегирование без переделки: что не отдают (и зря), что отдают (и зря)</a>
-      <a href="/blog/refrejming-tri-sposoba-bez-obescenivaniya.html">Рефрейминг: три способа увидеть ситуацию по-другому без обесценивания боли</a>
-      <a href="/blog/navyk-rassela-chetyre-yarlyka-uma.html">Четыре ярлыка ума, из-за которых вы откладываете и повторяете одни ошибки — навык Рассела</a>
-      <a href="/blog/yakorenie-v-peregovorah.html">Якорение в переговорах: как назвать цену первым, не извиняясь</a>
-      <a href="/blog/uchitsya-uchitsya.html">Учиться учиться: почему перечитывание не работает и три техники, которые работают</a>
-      <a href="/blog/aktivnoe-slushanie.html">Активное слушание: почему «слушать» сломано у 80% и как его починить</a>
-      <a href="/blog/razgovornyy-gipnoz-chto-eto-i-pochemu-ne-magiya.html">Что такое разговорный гипноз: простыми словами, без магии</a>
-      <a href="/blog/serendipiti-kak-stat-vezuchim.html">Серендипити: как научно создавать счастливые случайности</a>
-      <a href="/blog/sistemnoe-myshlenie-7-uprazhneniy.html">Системное мышление: 7 упражнений для руководителя</a>
-      <a href="/blog/psihotipy-po-povedeniyu.html">Психотипы по поведению: как читать характер за 5 минут</a>
-      <a href="/blog/kak-napisat-prodayushchiy-tekst.html">Как написать продающий текст: 6 правил рекламного нарратива</a>
-      <a href="/blog/transaktnyj-analiz-berna-na-praktike.html">Транзактный анализ Берна на практике: эго-состояния и игры</a>
-      <a href="/blog/metaforicheskie-karty-samoanaliz.html">Метафорические карты для самоанализа: как работать самостоятельно</a>
-      <a href="/blog/psihologicheskij-portret-zachem-znat-psihotip.html">Психологический портрет: зачем знать свой психотип</a>
-      <a href="/blog/tolkovanie-snov-nauchnyj-podhod.html">Толкование снов: научный подход без эзотерики</a>
-      <a href="/blog/nlp-yakorya-resursnoe-sostoyanie.html">НЛП-якоря: как создать ресурсное состояние за 5 минут</a>
-      <a href="/blog/gazlayting-chto-eto.html">Газлайтинг: что это, признаки и как противостоять</a>
-      <a href="/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html">Техники КПТ для самостоятельной работы: 7 рабочих упражнений</a>
-      <a href="/blog/prokrastinaciya-prichiny-i-tehniki.html">Прокрастинация: почему мы откладываем и 5 рабочих техник</a>
-      <a href="/blog/pochemu-umnye-lyudi-chasto-neschastny.html">Почему умные люди часто несчастны</a>
-      <a href="/blog/kognitivnye-iskazheniya-12-lovushek.html">Когнитивные искажения: 12 ловушек мышления и как их ловить</a>
-      <a href="/blog/pochemu-znaniya-ne-menyayut-povedenie.html">Почему знания не меняют поведение</a>
-      <a href="/blog/kak-spravitsya-s-trevogoj.html">Как справиться с тревогой: 7 техник, которые реально работают</a>
-      <a href="/blog/lateralnoe-myshlenie.html">Что такое латеральное мышление и чем оно отличается от критического?</a>
-      <a href="/blog/psihologiya-polzy-dengi.html">Психология пользы денег</a>
-      <a href="/blog/kak-vesti-dnevnik-emocij.html">Как вести дневник эмоций: 5 шагов и шаблон записи</a>
-      <a href="/blog/skazki-katarsis-terapiya-metafor.html">Сказки-катарсис: как метафоры лечат то, к чему не подойти напрямую</a>
-      <a href="/blog/razgovornyy-gipnoz-tekhniki.html">Разговорный гипноз: техники и применение</a>
-      <a href="/blog/trenirovka-navykov-za-21-den.html">Тренировка психологических навыков за 21 день: 15 направлений в Фреди</a>
-      <a href="/blog/chto-takoe-manipulyaciya.html">Теория манипуляции: как распознать скрытое воздействие</a>
-      <a href="/blog/andrej-mejster-20-let-i-pochemu-fredi.html">Андрей Мейстер: 20 лет в НЛП и почему я создал ИИ-психолога Фреди</a>
-      <a href="/blog/ai-psihologi-2026-prakticheskij-gid.html">AI-психологи 2026: какой сервис подходит для решения той или иной задачи. Практический гид</a>
-      <a href="/blog/cifrovye-dvojniki-soznaniya.html">Цифровые двойники сознания: как НЛП и констрейнты оживляют личности великих</a>
-      <a href="/blog/4-strategii-raboty-s-zaprosom-klienta.html">4 стратегии работы с запросами клиента</a>
-      <a href="/blog/samogipnoz-dlya-nachinayushih.html">Самогипноз для начинающих: пошаговая инструкция</a>
-      <a href="/blog/sistemnoe-myshlenie-v-biznese.html">Как системное мышление помогает в бизнесе</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2>🎯 HR и отбор персонала</h2>
-    <p class="section-intro">Скрытое поведенческое наблюдение в отборе персонала + 8 реальных кейсов под разные позиции (от менеджера продаж до бригадира). 4 компетенции, 4 теста на день отбора.</p>
-    <div class="archive-list">
-      <a href="/blog/skrytyj-povedencheskij-test-podbora-personala.html">Скрытое наблюдение в отборе персонала: как создать тест, о котором кандидат не знает, и почему это работает в десятки раз лучше...</a>
-      <a href="/blog/sistema-otbora-personala-kejs-menedzher-prodazh.html">Скрытые тесты для отбора менеджера по продажам: 4 ключевых компетенции и 4 теста, которые их выявляют</a>
-      <a href="/blog/sistema-otbora-personala-kejs-buhgalter.html">Скрытые тесты для отбора бухгалтера: 4 ключевых компетенции и 4 теста, которые их выявляют</a>
-      <a href="/blog/sistema-otbora-personala-kejs-timlid.html">Скрытые тесты для отбора тимлида: 4 ключевых компетенции и 4 теста, которые отличают руководителя от микроменеджера</a>
-      <a href="/blog/sistema-otbora-personala-kejs-razrabotchik.html">Скрытые тесты для отбора senior-разработчика: 4 компетенции и 4 теста, которые leetcode не покажет</a>
-      <a href="/blog/sistema-otbora-personala-kejs-assistent.html">Скрытые тесты для отбора личного ассистента руководителя: 4 компетенции и 4 теста, которые покажут реальную точность, многозада...</a>
-      <a href="/blog/sistema-otbora-personala-kejs-marketolog.html">Скрытые тесты для отбора маркетолога: 4 компетенции и 4 теста, которые отличают тех, кто делает выручку, от тех, кто «настраива...</a>
-      <a href="/blog/sistema-otbora-personala-kejs-brigadir.html">Скрытые тесты для отбора бригадира строительной бригады: 4 компетенции и 4 теста для премиум-ремонтов</a>
-      <a href="/blog/sistema-otbora-personala-kejs-menedzher-reklamy.html">Скрытые тесты для отбора менеджера по рекламе: 4 компетенции и 4 теста, которые отличают того, кто не сольёт бюджет, от того, к...</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2>🪄 Колдовские ритуалы — серия</h2>
-    <p class="section-intro">Колдовство как поведенческая программа: почему ритуал работает там, где не работает «просто захоти». Навигатор + 12 ритуалов под разные запросы (зависимость, призвание, любовь, бизнес, тело).</p>
-    <div class="archive-list">
-      <a href="/blog/10-koldovskih-ritualov-navigator.html">10 колдовских ритуалов: какой выбрать для себя</a>
-      <a href="/blog/koldovstvo-povedencheskaya-programma.html">Колдовство как поведенческая программа: почему ритуал работает там, где не работает «просто захоти»</a>
-      <a href="/blog/koldovskoj-ritual-brosit-zavisimost-7-chetok.html">Колдовской ритуал для тех, кто хочет бросить курить, пить или любую другую зависимость: «Семь чёток воздержания»</a>
-      <a href="/blog/koldovskoj-ritual-naiti-prizvanie-zerkalo-delfov.html">Колдовской ритуал для тех, у кого «всё есть, а смысла нет»: «Зеркало Дельфийского оракула»</a>
-      <a href="/blog/koldovskoj-ritual-vstretit-lyubov-7-klyuchei-venery.html">Колдовской ритуал для тех, кто хочет встретить любовь: «Семь ключей Венеры»</a>
-      <a href="/blog/koldovskoj-ritual-prokrastinaciya-7-molotkov.html">Колдовской ритуал «Семь молотков мастера»: реальный кейс режиссёра-документалиста, у которого 3 года «висел» сценарий полного м...</a>
-      <a href="/blog/koldovskoj-ritual-novyy-uroven-dohoda-pechat-solomona.html">Колдовской ритуал «Печать Соломона»: реальный кейс IT-специалиста, который вырос с 250 до 630 тысяч в месяц за 12 месяцев</a>
-      <a href="/blog/koldovskoj-ritual-najti-biznes-nishu-keys.html">Колдовской ритуал для тех, кто хочет своё дело: «Карта несовершенств мира»</a>
-      <a href="/blog/koldovskoj-ritual-krug-sostoyatelnyh-kodeks-pompadur.html">Колдовской ритуал для тех, кто хочет войти в круг состоятельных людей: «Кодекс мадам де Помпадур»</a>
-      <a href="/blog/koldovskoj-ritual-uspeshnost-keys-banker.html">Колдовской ритуал для банковского менеджера: реальный кейс из практики</a>
-      <a href="/blog/koldovskoj-ritual-telo-bez-diet-afonskaya-gora.html">Колдовской ритуал «Семь камней Афонской горы»: тело в форме без диет</a>
-      <a href="/blog/koldovskoj-ritual-trevoga-son-7-pokrovov-nochi.html">Колдовской ритуал «Семь покровов ночи»: реальный кейс юриста, которая после 4 лет бессонницы вернула 7 часов сна без снотворных</a>
-      <a href="/blog/koldovskoj-ritual-primirenie-7-svechei.html">Колдовской ритуал «Семь свечей примирения»: как простить близкого после многолетнего конфликта</a>
-      <a href="/blog/koldovskoj-ritual-stroitel-3d-printer-keys.html">Колдовской ритуал для менеджера в строительстве: реальный кейс</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2>🧘 Ритуалы присутствия — серия</h2>
-    <p class="section-intro">Два типа ритуала: достижение vs присутствие. Когда «стать кем-то» — это не лекарство, а яд. 6 ритуалов присутствия для выгоревших, отрезанных от тела, с шумом в голове.</p>
-    <div class="archive-list">
-      <a href="/blog/dva-tipa-ritualov-dostizhenie-i-prisutstvie.html">Два типа ритуала: ритуалы достижения и ритуалы присутствия</a>
-      <a href="/blog/ritual-prisutstviya-devyat-chashek-tishiny.html">«Девять чашек тишины»: ритуал присутствия для выгоревшего руководителя</a>
-      <a href="/blog/ritual-prisutstviya-sem-drovej-banya.html">«Семь дровей»: ритуал присутствия для тех, кто отрезан от тела</a>
-      <a href="/blog/ritual-prisutstviya-sem-molchanij-isihazm.html">«Семь молчаний»: ритуал присутствия для тех, у кого «слишком шумно в голове»</a>
-      <a href="/blog/ritual-prisutstviya-sem-sidenij-shikantadza.html">«Семь сидений»: ритуал присутствия для тех, кто разучился ничего не делать</a>
-      <a href="/blog/ritual-prisutstviya-sem-trop-bez-napravleniya-flaner.html">«Семь троп без направления»: ритуал присутствия для тех, кто разучился отдыхать</a>
-      <a href="/blog/ritual-prisutstviya-sorok-devyat-utr-stranitsy.html">«Сорок девять утр»: ритуал присутствия для тех, кто потерял себя в роли</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2>💭 Мифы, провокации, разоблачения</h2>
-    <p class="section-intro">Что говорит доказательная психология про манифестацию, психосоматику Луизы Хей, расстановки Хеллингера. Провокационные взгляды на «будь собой» и прокрастинацию.</p>
-    <div class="archive-list">
-      <a href="/blog/sonnaya-bolezn-sytyh.html">Сонная болезнь сытых: почему без долгов и желаний человек медленно умирает + колода «Будильник»</a>
-      <a href="/blog/verbalnyj-potencial-skrytaya-deklaraciya.html">Что произносишь — тем и становишься: вербальный потенциал и упражнение «Скрытая декларация» (9 уровней)</a>
-      <a href="/blog/skrytaya-deklaraciya-dialogi.html">Девять диалогов-практик «Скрытой декларации»: проживи каждый уровень и произнеси нужные слова</a>
-      <a href="/blog/koktejl-emocij-smeshenie.html">Что будет, если смешать 5 граммов вины и 10 граммов раздражения: химия эмоционального коктейля + таблица смешений</a>
-      <a href="/blog/steny-delayut-cheloveka-arhitektura-velichiya.html">Стены делают человека: почему архитектура Рима обязывала к величию, а нас окружают стимулы, которые делают мельче</a>
-      <a href="/blog/yakor-zippo-zerkalnye-nejrony-sostoyanie-iz-filma.html">Один щелчок вместо силы воли: якорь Зиппо, зеркальные нейроны и состояния из старых фильмов</a>
-      <a href="/blog/manifestaciya-ne-rabotaet-meta-analizy.html">Манифестация не работает: что показали исследования 2018–2024</a>
-      <a href="/blog/psihosomatika-nauka-i-luiza-hej.html">Психосоматика: где наука, а где Луиза Хей</a>
-      <a href="/blog/rasstanovki-hellingera-razbor.html">Расстановки Хеллингера: что говорит доказательная психология</a>
-      <a href="/blog/pochemu-bud-soboj-hudshij-sovet.html">Почему «будь собой» — худший совет, который тебе дали</a>
-      <a href="/blog/prokrastinaciya-polezna.html">Прокрастинация полезна</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2>🤖 ИИ-психология и инфопространство</h2>
-    <p class="section-intro">AI-психолог в 2026: можно ли заменить терапевта. Как ежедневные посты «зарабатывающих» в VK дрессируют твоё внимание.</p>
-    <div class="archive-list">
-      <a href="/blog/ai-psiholog-2026-mozhno-li-zamenit-terapevta.html">AI-психолог в 2026: можно ли заменить терапевта? Честный разбор</a>
-      <a href="/blog/kak-rabotaet-infopole-vk.html">Информационное поле в VK: как ежедневные посты «зарабатывающих» дрессируют твоё внимание</a>
-    </div>
-  </div>
-
-  <div class="wave-section">
-    <h2>💔 Личные истории и темы</h2>
-    <p class="section-intro">Хорошая девочка 35 лет, ненависть к матери, тест Боулби, энергетические вампиры через нейропсихологию.</p>
-    <div class="archive-list">
-      <a href="/blog/horoshaya-devochka-35-let.html">Я была «хорошей девочкой» 35 лет</a>
-      <a href="/blog/ya-nenavizhu-svoyu-mat.html">Я ненавижу свою мать</a>
-      <a href="/blog/test-stil-privyazannosti-boulbi.html">Тест: какой у тебя стиль привязанности? Боулби, 12 вопросов</a>
-      <a href="/blog/energeticheskie-vampiry-neuro.html">Энергетические вампиры: что это с точки зрения нейропсихологии</a>
-    </div>
-  </div>
-</div>
+<section class="sec" id="new"><div class="wrap rv"><div class="sec-h"><h2>Свежее</h2><span class="sub">июль 2026</span></div><div class="latest"><a class="li" href="/blog/vyhod-iz-vyuchennoj-bespomoshchnosti-marshrut.html"><span class="dt tnum">5 июля</span><h3>Выход из выученной беспомощности: пошаговый маршрут</h3><span class="rb">Мотивация</span></a><a class="li" href="/blog/telo-pervym-dvizhenie-poza-dyhanie.html"><span class="dt tnum">4 июля</span><h3>Тело первым: как движение и дыхание выключают «замри»</h3><span class="rb">Тело и сон</span></a><a class="li" href="/blog/celi-chtoby-ne-brosit-namereniya-woop.html"><span class="dt tnum">4 июля</span><h3>Как ставить цели, чтобы не бросить: «если — то» и WOOP</h3><span class="rb">Мотивация</span></a><a class="li" href="/blog/samosostradanie-vmesto-samokritiki.html"><span class="dt tnum">4 июля</span><h3>Самосострадание вместо кнута</h3><span class="rb">Эмоции и личность</span></a><a class="li" href="/blog/zona-komforta-ne-pro-uyut.html"><span class="dt tnum">3 июля</span><h3>Зона комфорта — это не про уют, а про клетку</h3><span class="rb">Мотивация</span></a><a class="li" href="/blog/lokus-kontrolya-vnutrennij-vneshnij.html"><span class="dt tnum">2 июля</span><h3>Локус контроля: ты или обстоятельства</h3><span class="rb">Мотивация</span></a></div></div></section>
 
 <div id="footer-placeholder"></div>
-<script>
-  (function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});}).catch(function(){document.getElementById('footer-placeholder').innerHTML='<footer class="footer"><div class="container"><div class="footer-content"><div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div><div class="social-links"><a href="https://t.me/meysternlp" target="_blank" rel="noopener">Telegram</a><a href="https://vk.com/meysternlp" target="_blank" rel="noopener">VK</a><a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener">Rutube</a><a href="https://dzen.ru/89857788588" target="_blank" rel="noopener">Дзен</a></div></div><div class="copyright">© Андрей Мейстер · 2026</div></div></footer>';});})();
-</script>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script>(function(){
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var cards=[].slice.call(document.querySelectorAll('#grid .card'));
+var empty=document.getElementById('empty');
+var curFilter='all',curQ='';
+var FILT={all:function(c){return true;},
+ calm:function(c){return c.dataset.tags.indexOf('calm')>=0;},
+ rel:function(c){return c.dataset.tags.indexOf('rel')>=0;},
+ think:function(c){return c.dataset.tags.indexOf('think')>=0;},
+ money:function(c){return c.dataset.tags.indexOf('money')>=0;},
+ ln:function(c){return c.dataset.dom==='n';},
+ lp:function(c){return c.dataset.dom==='p';}};
+function apply(){
+ var shown=0;
+ cards.forEach(function(c){
+  var ok=FILT[curFilter](c) && (!curQ || c.textContent.toLowerCase().indexOf(curQ)>=0);
+  c.classList.toggle('hidden',!ok); if(ok)shown++;
+ });
+ empty.style.display=shown?'none':'block';
+}
+var chips=document.getElementById('chips');
+if(chips)chips.addEventListener('click',function(e){
+ var b=e.target.closest('.chip'); if(!b)return;
+ [].forEach.call(chips.querySelectorAll('.chip'),function(c){c.classList.remove('on');});
+ b.classList.add('on'); curFilter=b.dataset.f; apply();
+});
+var q=document.getElementById('q');
+if(q)q.addEventListener('input',function(e){curQ=e.target.value.trim().toLowerCase();apply();});
 
+/* count-up */
+var cEl=document.getElementById('counter');
+if(cEl){ if(reduce){cEl.textContent='374';} else {var s=null;var step=function(t){if(!s)s=t;var p=Math.min((t-s)/900,1);cEl.textContent=Math.floor(p*374);if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);} }
 
-<script>
-(function(){
-  const input = document.getElementById('blogSearch');
-  const count = document.getElementById('searchCount');
-  const empty = document.getElementById('emptySearch');
-  if (!input) return;
-  
-  const cards = document.querySelectorAll('.manifesto-card');
-  const links = document.querySelectorAll('.archive-list a');
-  
-  function filter(){
-    const q = input.value.trim().toLowerCase();
-    let matched = 0;
-    let total = cards.length + links.length;
-    
-    cards.forEach(c => {
-      const t = c.textContent.toLowerCase();
-      if (!q || t.includes(q)){
-        c.classList.remove('no-match');
-        matched++;
-      } else {
-        c.classList.add('no-match');
-      }
-    });
-    links.forEach(a => {
-      const t = a.textContent.toLowerCase();
-      if (!q || t.includes(q)){
-        a.classList.remove('no-match');
-        matched++;
-      } else {
-        a.classList.add('no-match');
-      }
-    });
-    
-    if (q){
-      count.textContent = matched === 1 ? '1 статья найдена' : matched + ' статей найдено';
-      count.classList.add('visible');
-      empty.classList.toggle('visible', matched === 0);
-    } else {
-      count.classList.remove('visible');
-      empty.classList.remove('visible');
-    }
-  }
-  
-  input.addEventListener('input', filter);
+/* reveal + bar animation */
+if(!reduce && 'IntersectionObserver' in window){
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+ document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+ var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io2.unobserve(e.target);}});},{threshold:.2});
+ cards.forEach(function(c){io2.observe(c);});
+}else{
+ document.querySelectorAll('.rv,#grid .card').forEach(function(el){el.classList.add('in');});
+}
+
+/* neural constellation */
+var cv=document.getElementById('neural'); if(cv){var cx=cv.getContext('2d');var W,H,DPR=Math.min(devicePixelRatio||1,2),pts=[],raf;
+ function size(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);
+  var N=Math.round(Math.min(72,W/16));pts=[];for(var i=0;i<N;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.6+.6});}
+ function draw(){cx.clearRect(0,0,W,H);
+  for(var i=0;i<pts.length;i++){var a=pts[i];a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1;
+   for(var j=i+1;j<pts.length;j++){var b=pts[j],dx=a.x-b.x,dy=a.y-b.y,dd=Math.sqrt(dx*dx+dy*dy);if(dd<118){cx.strokeStyle='rgba(91,155,255,'+(1-dd/118)*.28+')';cx.lineWidth=.6;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();}}}
+  for(var k=0;k<pts.length;k++){var p=pts[k];cx.fillStyle='rgba(140,180,255,.75)';cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.3);cx.fill();}
+  raf=requestAnimationFrame(draw);}
+ size(); if(!reduce)draw(); else {for(var k2=0;k2<pts.length;k2++){var p2=pts[k2];cx.fillStyle='rgba(140,180,255,.6)';cx.beginPath();cx.arc(p2.x,p2.y,p2.r,0,6.3);cx.fill();}}
+ addEventListener('resize',function(){cancelAnimationFrame(raf);size();if(!reduce)draw();});
+}
 })();
 </script>
-
-</body>
-</html>
+</body></html>
