@@ -37,6 +37,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 @media(max-width:600px){.req dl{grid-template-columns:1fr;gap:2px 0}.req dd{margin-bottom:10px}}
 .note{background:color-mix(in srgb,var(--accent) 7%,transparent);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:.92rem;color:var(--muted);margin:18px 0}
 .back{display:inline-block;margin:30px 0 60px;color:var(--accent);padding:11px 26px;border:1px solid var(--accent);border-radius:30px;font-weight:500}.back:hover{background:var(--accent);color:#fff;text-decoration:none}
+.btn-pay{display:inline-block;margin-top:14px;padding:14px 28px;background:linear-gradient(135deg,#3b82ff,#6366f1);color:#fff;border-radius:14px;font-weight:600;font-size:1rem}.btn-pay:hover{opacity:.92;text-decoration:none;color:#fff}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}</style>
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
 </head>
@@ -47,7 +48,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
   <div class="crumbs"><a href="/">Главная</a> / <span>Контакты</span></div>
   <div class="lead"><h1>Контакты и реквизиты</h1><div class="upd">Редакция от 6 июля 2026 г.</div></div>
   <div class="doc">
-<div class="note">⚠️ Поля, выделенные <span class="ph">жёлтым</span>, — это реквизиты, которые нужно вписать перед запуском (наименование, ИНН, ОГРНИП, адрес, телефон). Пришлите их — подставлю, либо замените сами.</div>
+<div class="note">⚠️ Поля, выделенные <span class="ph">жёлтым</span>, — это реквизиты, которые ещё нужно вписать (ОГРНИП, адрес регистрации, телефон). Пришлите их — подставлю, либо замените сами.</div>
 <p>По вопросам услуг, оплаты, подписки и возвратов свяжитесь с нами удобным способом.</p>
 
 <div class="card">
@@ -63,8 +64,8 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 <div class="card req">
 <h3>Реквизиты</h3>
 <dl>
-<dt>Наименование</dt><dd><span class="ph">{{ИП / ООО — полное наименование}}</span></dd>
-<dt>ИНН</dt><dd><span class="ph">{{ИНН}}</span></dd>
+<dt>Наименование</dt><dd>ИП Медведев Андрей Юрьевич</dd>
+<dt>ИНН</dt><dd>502238728185</dd>
 <dt>ОГРНИП / ОГРН</dt><dd><span class="ph">{{ОГРНИП / ОГРН}}</span></dd>
 <dt>Адрес регистрации</dt><dd><span class="ph">{{адрес}}</span></dd>
 <dt>Расчётный счёт</dt><dd><span class="ph">{{р/с (по желанию)}}</span></dd>
