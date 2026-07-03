@@ -9,6 +9,12 @@
         <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer" aria-label="Rutube">Rutube</a>
       </div>
     </div>
+    <nav class="footer-legal" aria-label="Документы">
+      <a href="/oferta/">Оферта</a>
+      <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a>
+      <a href="/tarify/">Тарифы</a>
+      <a href="/kontakty/">Контакты и реквизиты</a>
+    </nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
@@ -95,12 +101,32 @@
   transform: translateY(0);
 }
 
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  justify-content: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(58, 134, 255, 0.12);
+}
+
+.footer-legal a {
+  color: #9aa4b2;
+  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-legal a:hover {
+  color: #3A86FF;
+}
+
 .copyright {
   text-align: center;
   font-size: clamp(0.7rem, 2.5vw, 0.8rem);
   color: #666;
   letter-spacing: 0.1em;
-  margin-top: clamp(30px, 5vw, 40px);
+  margin-top: clamp(20px, 4vw, 28px);
   opacity: 0.6;
   transition: opacity 0.3s ease;
 }
