@@ -33,6 +33,15 @@
   .epigraph { font-style:italic; color:#475569; border-left:3px solid #3A86FF; padding:6px 0 6px 18px; margin:20px 0 30px; font-size:1.02em; }
   .pull { background:#FFF7ED; border-left:4px solid #F59E0B; padding:14px 18px; margin:22px 0; font-size:1.02em; }
   .pull b { color:#92400E; }
+  .status-draft { display:inline-flex; align-items:center; gap:7px; background:#FEF2F2; color:#B91C1C; border:1px solid #FECACA; border-radius:20px; padding:3px 13px; font-size:0.82em; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; }
+  .status-draft::before { content:""; width:8px; height:8px; border-radius:50%; background:#EF4444; box-shadow:0 0 0 3px rgba(239,68,68,0.18); }
+  .download-block { display:flex; align-items:center; gap:20px; flex-wrap:wrap; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:22px 26px; margin:34px 0; }
+  .download-block .dl-text { flex:1; min-width:220px; }
+  .download-block .dl-text b { color:#1E293B; font-size:1.05em; }
+  .download-block .dl-text span { display:block; color:#64748B; font-size:0.9em; margin-top:4px; }
+  .download-block .btn-download { display:inline-flex; align-items:center; gap:10px; background:#3A86FF; color:#fff !important; text-decoration:none !important; font-weight:600; font-size:1em; padding:14px 26px; border-radius:12px; white-space:nowrap; transition:background 0.2s, transform 0.2s; }
+  .download-block .btn-download:hover { background:#1D1D1F; color:#fff !important; transform:translateY(-2px); }
+  .btn-download .ic { font-size:1.2em; }
 </style>
 </head>
 <body>
@@ -45,11 +54,22 @@
 <div class="article-meta">
   <span class="tag">Том III</span>
   <span>39 глав + 5 приложений · 2026</span> · <span>Андрей Мейстер</span>
+  <span class="status-draft">Черновик · в производстве</span>
 </div>
 
 <h1>Настольная книга депутата</h1>
 
 <p class="subtitle">Не справочник и не мемуары. Тренажёр. Каждая глава — один навык, по которому отличают депутата от человека на должности депутата. Жёсткая внутренняя структура, упражнения, кейсы, сигналы поломки. Книга для тех, кто пришёл в выборную работу делать дело, а не присутствовать.</p>
+
+<div class="download-block">
+  <div class="dl-text">
+    <b>Скачать черновик книги (PDF)</b>
+    <span>Рабочая версия целиком — все 39 глав и 5 приложений в одном файле. Текст в производстве и может меняться; актуальная версия всегда здесь, на странице.</span>
+  </div>
+  <a class="btn-download" href="/knigi/nastolnaya-kniga-deputata/nastolnaya-kniga-deputata-chernovik.pdf" download>
+    <span class="ic">⬇</span> Скачать PDF
+  </a>
+</div>
 
 <div class="epigraph">
   Власть — это не должность. Должность — это место, на которое вас поставили. Власть — это способность сделать так, чтобы после вашего слова в реальности что-то изменилось. Эти две вещи путают только те, у кого нет ни того, ни другого.
