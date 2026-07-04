@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 15 июля 2026</span><span>⏱️ 12 мин чтения</span><span>😰 Страхи и тревога · для начинающих</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Социальная тревога: почему страшно на людях и что с этим делать</h1></div>
 <div class="article-content">
 <p>Вы за минуту до реплики на совещании — и сердце колотится, будто вы на краю обрыва. Вы прокручиваете вчерашний разговор и морщитесь от «как я мог такое сказать». Вы отменяете встречу, потому что от одной мысли о ней сжимается всё внутри. Если это про вас — вы не «слабак» и не одиноки. Это социальная тревога, одна из самых распространённых и при этом самых стыдных для признания проблем.</p>
@@ -125,4 +126,6 @@
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>

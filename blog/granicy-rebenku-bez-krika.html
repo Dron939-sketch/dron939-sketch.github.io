@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 23 июля 2026</span><span>⏱️ 11 мин чтения</span><span>👶 Родители и детство · для начинающих</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Границы ребёнку без крика: как говорить «нет», чтобы работало</h1></div>
 <div class="article-content">
 <p>Сцена, знакомая до зубной боли: вы просите убрать планшет — раз, второй, пятый. Спокойно, потом с нажимом, потом сквозь зубы. На восьмой раз вы орёте — и о чудо, планшет отложен. Вывод, который делает уставший родитель: «по-хорошему не понимает». Вывод, который на самом деле выучил ребёнок: <em>«всерьёз — это когда мама кричит; до крика можно не реагировать»</em>.</p>
@@ -117,4 +118,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>

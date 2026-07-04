@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 16 мая 2026</span><span>⏱️ 12 мин чтения</span><span>📚 Психология</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Целеполагание наоборот: 5 целей, которые на самом деле ставит ваш страх</h1></div>
 <div class="article-content">
 
@@ -212,4 +213,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>

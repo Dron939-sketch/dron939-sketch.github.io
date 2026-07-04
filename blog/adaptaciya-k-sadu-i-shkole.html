@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 24 июля 2026</span><span>⏱️ 11 мин чтения</span><span>👶 Родители и детство · для начинающих</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Адаптация к саду и школе: как помочь ребёнку без слёз у дверей</h1></div>
 <div class="article-content">
 <p>Первое сентября или первое утро в саду — и вместо умилительной картинки: ребёнок вцепился в ногу, воспитатель отдирает, вы уходите под крик и весь день не находите себе места. Спокойно: слёзы у дверей — не признак того, что «ему там плохо» или «мы поторопились». Это нормальная цена перехода в новый мир. Задача родителя — не отменить эту цену, а не увеличивать её.</p>
@@ -105,4 +106,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>
