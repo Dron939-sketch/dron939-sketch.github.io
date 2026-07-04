@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 23 июля 2026</span><span>⏱️ 10 мин чтения</span><span>👶 Родители и детство · для начинающих</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Как хвалить ребёнка, чтобы не вырастить зависимого от похвалы</h1></div>
 <div class="article-content">
 <p>Есть два способа испортить ребёнка похвалой. Первый — не хвалить вовсе («нечего захваливать, зазнается») и вырастить взрослого, который всю жизнь докапывается до чужого одобрения. Второй — хвалить автоматически и за всё («молодец! умница! гений!») и вырастить взрослого... который всю жизнь докапывается до чужого одобрения. Забавно, но крайности сходятся в одной точке: ребёнок так и не научился опираться на себя.</p>
@@ -110,4 +111,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>

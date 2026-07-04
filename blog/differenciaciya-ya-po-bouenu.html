@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 13 июля 2026</span><span>⏱️ 17 мин чтения</span><span>👶 Родители и детство · продвинутый уровень</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Дифференциация «Я» по Боуэну: как повзрослеть от семьи, не разрывая связь</h1></div>
 <div class="article-content">
 <p>Есть люди, которые в свои сорок всё ещё звонят родителям в раздёрганном состоянии после каждого разговора с ними. Есть те, кто «решил вопрос» радикально — не общается годами и считает это зрелостью. И есть третьи: они в тёплом контакте с роднёй, но их не выбивает из колеи материнская тревога и отцовская критика — они остаются собой. Разницу между этими тремя описывает одна из самых глубоких моделей в психологии — теория семейных систем Мюррея Боуэна.</p>
@@ -130,4 +131,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>

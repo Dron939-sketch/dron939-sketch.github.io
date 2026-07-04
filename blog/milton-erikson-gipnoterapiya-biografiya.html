@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 28 июля 2026</span><span>⏱️ 12 мин чтения</span><span>🏛️ Школы психологии · для начинающих</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Милтон Эриксон: человек, который дважды учился ходить и переизобрёл гипноз</h1></div>
 <div class="article-content">
 <p>Летом 1919 года семнадцатилетний фермерский сын из Висконсина слёг с полиомиелитом. Ночью он услышал, как врач сказал матери: до утра не доживёт. Мальчик дожил — назло, попросив передвинуть комод, чтобы видеть рассвет, — но остался парализованным: двигались только глаза. Следующий год он провёл, часами <em>вспоминая телом</em> движения и наблюдая, как учится ходить младшая сестра. Через год он ходил на костылях. Так Милтон Эриксон получил свой главный университет: тело слушает образы и слова — если говорить с ним правильно.</p>
@@ -100,4 +101,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>

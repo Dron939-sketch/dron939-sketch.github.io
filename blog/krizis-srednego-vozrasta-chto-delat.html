@@ -25,6 +25,7 @@
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
 <div class="article-header"><div class="article-meta"><span>📅 25 июля 2026</span><span>⏱️ 13 мин чтения</span><span>🎭 Эмоции, самооценка, личность · средний уровень</span><span>✅ Проверено · июль 2026</span></div>
+<div id="listenBox"></div>
 <h1>Кризис среднего возраста: что это на самом деле и как его пройти</h1></div>
 <div class="article-content">
 <p>Это редко выглядит как в кино. Чаще так: всё «нормально» — работа, семья, ипотека почти закрыта, — а внутри глухо. Утром тяжело придумать, зачем вставать именно в эту жизнь. Раздражают вещи, которые годами устраивали. Появляется арифметика: «мне сорок два; активных лет осталось меньше, чем прошло». И вопрос, от которого хочется отмахнуться делами: <em>а того ли я вообще живу?</em></p>
@@ -107,4 +108,6 @@
 </article></div>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
 </body></html>
