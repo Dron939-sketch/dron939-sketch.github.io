@@ -165,7 +165,7 @@
     var ready = cur.ans !== null && cur.conf !== null;
     c.innerHTML =
       '<div class="kb-wrap">' +
-        '<div class="kb-top"><span>Утверждение ' + (ST.idx + 1) + ' из ' + total + '</span><span>🎲 Калибровка</span></div>' +
+        '<div class="kb-top"><span>Утверждение ' + (ST.idx + 1) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="KALIBR.home()">✕ Выйти</button></div>' +
         '<div class="kb-bar"><i style="width:' + (ST.idx / total * 100) + '%"></i></div>' +
         '<div class="kb-state">«' + esc(q.s) + '»</div>' +
         '<div class="kb-ab">' +

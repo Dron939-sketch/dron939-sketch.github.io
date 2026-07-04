@@ -182,7 +182,7 @@
     }
     c.innerHTML =
       '<div class="skn-wrap">' +
-        '<div class="skn-top"><span>' + sc.em + ' ' + esc(sc.who) + ' · ход ' + Math.min(ST.step + 1, total) + ' из ' + total + '</span><span>🛑 Скажи «нет»</span></div>' +
+        '<div class="skn-top"><span>' + sc.em + ' ' + esc(sc.who) + ' · ход ' + Math.min(ST.step + 1, total) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="SKAZHINET.home()">✕ Выйти</button></div>' +
         '<div class="skn-setup">🎬 ' + esc(sc.setup) + '</div>' +
         msgs + inputHtml +
       '</div>';
