@@ -925,12 +925,26 @@ function showFullContentScreen(title, content, contentType) {
 // ПЕРЕКЛЮЧЕНИЕ РЕЖИМА
 // ============================================
 
+// Короткое «чем отличается режим» — показывается под селектором на дашборде
+const MODE_DESCS = {
+    basic: 'Выберите стиль общения — или просто начните говорить',
+    coach: 'Коуч помогает сформулировать цель и найти свои решения — без советов сверху',
+    psychologist: 'Психолог выслушает, поддержит и мягко разберёт, что с вами происходит',
+    trainer: 'Тренер даёт конкретные задания и следит за прогрессом'
+};
+
 function updateModeUI() {
     const config = MODES[currentMode];
     const label = document.getElementById('modeLabel');
     const indicator = document.getElementById('modeIndicator');
     if (label) label.textContent = config.name;
     if (indicator) indicator.style.background = config.color;
+    // Дашборд: подсветка активной кнопки режима + строка-описание.
+    // Раньше active-класс не обновлялся без полного ререндера.
+    document.querySelectorAll('.mode-btn[data-mode]').forEach(b =>
+        b.classList.toggle('active', b.dataset.mode === currentMode));
+    const desc = document.getElementById('modeDesc');
+    if (desc && MODE_DESCS[currentMode]) desc.textContent = MODE_DESCS[currentMode];
 }
 
 function showPremiumLockPopup(modeName) {
@@ -1879,6 +1893,7 @@ function renderDashboard() {
                 <button class="mode-btn ${currentMode === 'psychologist' ? 'active' : ''}" data-mode="psychologist">🧠 ПСИХОЛОГ</button>
                 <button class="mode-btn ${currentMode === 'trainer' ? 'active' : ''}" data-mode="trainer">⚡ ТРЕНЕР</button>
             </div>
+            <div class="mode-desc" id="modeDesc">${MODE_DESCS[currentMode] || ''}</div>
             ${IS_PREMIUM !== true ? `
             <div class="mode-hint" style="text-align:center;font-size:11px;color:var(--text-secondary);margin:-6px 0 16px;line-height:1.5;opacity:0.85">
                 Сейчас работает базовый режим. Выбор роли —
@@ -1896,19 +1911,26 @@ function renderDashboard() {
 
             <div class="quick-actions">
                 <div class="quick-actions-title">⚡ Быстрые действия</div>
+                <div class="qa-group-title">Развлечься с пользой</div>
                 <div class="quick-actions-grid">
                     <div class="quick-action featured" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
                     <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Сказки-катарсис</div></div>
                     <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
-                    <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
+                    <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
+                </div>
+                <div class="qa-group-title">Разобраться в себе</div>
+                <div class="quick-actions-grid">
                     <div class="quick-action" data-action="profile"><div class="action-icon">🧠</div><div class="action-name">Мой портрет</div></div>
                     <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div>
-                    <div class="quick-action" data-action="prompter"><div class="action-icon">🎙️</div><div class="action-name">ИИ Суфлёр</div></div>
-                    <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
-                    <div class="quick-action" data-action="brand"><div class="action-icon">🏆</div><div class="action-name">Мой бренд</div></div>
-                    <div class="quick-action" data-action="doubles"><div class="action-icon">👥</div><div class="action-name">Двойники</div></div>
                     <div class="quick-action" data-action="interests"><div class="action-icon">🎯</div><div class="action-name">Интересы</div></div>
                     <div class="quick-action" data-action="hormones"><div class="action-icon">🧬</div><div class="action-name">Гормоны</div></div>
+                </div>
+                <div class="qa-group-title">Инструменты</div>
+                <div class="quick-actions-grid">
+                    <div class="quick-action" data-action="prompter"><div class="action-icon">🎙️</div><div class="action-name">ИИ Суфлёр</div></div>
+                    <div class="quick-action" data-action="brand"><div class="action-icon">🏆</div><div class="action-name">Мой бренд</div></div>
+                    <div class="quick-action" data-action="doubles"><div class="action-icon">👥</div><div class="action-name">Двойники</div></div>
+                    <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
                 </div>
             </div>
 
