@@ -9,13 +9,13 @@
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Дидактические игры для развития мышления | Андрей Мейстер</title>
-  <meta name="description" content="Настольные игры для развития системного мышления: Маркетолог и серия Вариатика (Basic, Intensive, Progressive). Учимся мыслить через игру.">
+  <meta name="description" content="Настольные игры для развития мышления: Маркетолог, серия Вариатика, МЕЙСТЕР-КОД — плюс 20+ бесплатных онлайн игр-тренажёров во Фреди. Учимся мыслить через игру.">
   <meta name="keywords" content="дидактические игры, настольные игры, системное мышление, маркетолог, вариатика, Андрей Мейстер">
   <meta name="author" content="Андрей Мейстер">
   
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Дидактические игры — Андрей Мейстер">
-  <meta property="og:description" content="Инструменты для изменения реальности. Маркетолог + Вариатика (Basic, Intensive, Progressive).">
+  <meta property="og:description" content="Инструменты для изменения реальности. Маркетолог + Вариатика + МЕЙСТЕР-КОД + бесплатные онлайн-игры во Фреди.">
   <meta property="og:image" content="/Маркетолог.png">
   <meta property="og:url" content="https://meysternlp.ru/igry/">
   <meta property="og:type" content="website">
@@ -466,6 +466,81 @@
       text-align: center;
     }
 
+    /* ===== КАРТОЧКА ОНЛАЙН-ИГР ВО ФРЕДИ ===== */
+    .game-card--fredi {
+      border-color: rgba(58, 134, 255, 0.45);
+      background: linear-gradient(180deg, rgba(58, 134, 255, 0.07), rgba(255, 255, 255, 0.02));
+      position: relative;
+    }
+
+    .fredi-free {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(31, 169, 113, 0.15);
+      border: 1px solid rgba(31, 169, 113, 0.5);
+      color: #34D399;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .fredi-tile {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fredi-appicon {
+      width: clamp(110px, 18vw, 150px);
+      aspect-ratio: 1;
+      border-radius: 26%;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      box-shadow: 0 12px 32px rgba(58, 134, 255, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .fredi-appicon span {
+      font-size: clamp(3rem, 8vw, 4.2rem);
+      line-height: 1;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+    }
+
+    .fredi-appicon b {
+      color: #FFFFFF;
+      font-size: clamp(0.7rem, 2vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      margin-left: 0.3em;
+    }
+
+    .game-card--fredi:hover .fredi-appicon { transform: scale(1.05); }
+
+    .fredi-chip {
+      position: absolute;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+      transition: transform 0.3s ease;
+    }
+
+    .fredi-chip.c1 { top: 10%; left: 16%; }
+    .fredi-chip.c2 { top: 18%; right: 14%; }
+    .fredi-chip.c3 { bottom: 12%; left: 20%; }
+    .fredi-chip.c4 { bottom: 18%; right: 18%; }
+
+    .game-card--fredi:hover .fredi-chip { transform: translateY(-4px); }
+
     /* ===== ПРИЗЫВ ===== */
     .cta-block {
       text-align: center;
@@ -846,12 +921,32 @@
         <a href="/blog/mejster-kod-transformacionnaya-igra.html" class="btn" aria-label="Подробнее об игре МЕЙСТЕР-КОД">ПОДРОБНЕЕ</a>
       </div>
     </div>
+
+    <!-- Онлайн-игры во Фреди -->
+    <div class="game-card game-card--fredi">
+      <span class="fredi-free">Бесплатно</span>
+      <div class="game-image">
+        <div class="fredi-tile" role="img" aria-label="Фреди — виртуальный психолог с играми-тренажёрами онлайн">
+          <div class="fredi-appicon" aria-hidden="true"><span>🧠</span><b>ФРЕДИ</b></div>
+          <span class="fredi-chip c1" aria-hidden="true">🎯</span>
+          <span class="fredi-chip c2" aria-hidden="true">🧩</span>
+          <span class="fredi-chip c3" aria-hidden="true">💬</span>
+          <span class="fredi-chip c4" aria-hidden="true">🔢</span>
+        </div>
+      </div>
+      <div class="game-title">Игры во Фреди</div>
+      <div class="game-subtitle"><i class="fas fa-brain"></i> Онлайн · без установки</div>
+      <div class="game-description">Больше 20 игр-тренажёров в приложении «Фреди»: внимание и память, устный счёт, эмоции, границы, критическое мышление. Открывается прямо в браузере, раунд занимает 3–7 минут.</div>
+      <div class="game-actions">
+        <a href="/fredi/?m=games" class="btn" aria-label="Открыть онлайн-игры во Фреди">ИГРАТЬ ОНЛАЙН</a>
+      </div>
+    </div>
   </div>
 
   <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
   <div class="cta-block">
-    <p>Выберите свой инструмент и начните менять свою реальность</p>
-    <a href="#" class="btn" style="padding: clamp(10px, 3vw, 12px) clamp(30px, 6vw, 40px);" aria-label="К играм">К ИГРАМ</a>
+    <p>Выберите свой инструмент — а пока посылка едет, тренируйтесь онлайн</p>
+    <a href="/fredi/?m=games" class="btn" style="padding: clamp(10px, 3vw, 12px) clamp(30px, 6vw, 40px);" aria-label="Бесплатные онлайн-игры во Фреди">ИГРАТЬ БЕСПЛАТНО ВО ФРЕДИ</a>
   </div>
 </div>
 
@@ -981,6 +1076,24 @@
       "description": "Искусство везения — превращение маловероятных позитивных исходов в реальность",
       "image": "https://meysternlp.ru/progresive.webp",
       "url": "https://meysternlp.ru/igry/variatika-progressive.html"
+    },
+    {
+      "@type": "Product",
+      "position": 5,
+      "name": "МЕЙСТЕР-КОД",
+      "description": "Трансформационная игра — конструктор личности на 9 уровней, полный набор карт бесплатно в PDF",
+      "image": "https://meysternlp.ru/mejster-kod-igra.png",
+      "url": "https://meysternlp.ru/blog/mejster-kod-transformacionnaya-igra.html"
+    },
+    {
+      "@type": "WebApplication",
+      "position": 6,
+      "name": "Игры во Фреди",
+      "description": "Больше 20 бесплатных онлайн игр-тренажёров: внимание, память, устный счёт, эмоции, границы, критическое мышление",
+      "image": "https://meysternlp.ru/fredi/icon-512.png",
+      "url": "https://meysternlp.ru/fredi/?m=games",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web"
     }
   ]
 }
