@@ -85,15 +85,22 @@
     // создавая шум (43 ошибки/неделя при том, что причина — одна и та же).
     // Троттлим повторы по ключу endpoint+method+status: один раз в 5 минут.
     var _errKeyLastAt = Object.create(null);
+    var _errKeySuppressed = Object.create(null); // сколько повторов съел троттлинг
     var _ERR_DEDUPE_MS = 5 * 60 * 1000;
+    var _DEDUPED_EVENTS = { api_network_error: 1, api_error: 1, api_aborted: 1 };
     function _shouldDedupeError(event, data) {
-        if (event !== 'api_network_error' && event !== 'api_error') return false;
+        if (!_DEDUPED_EVENTS[event]) return false;
         if (!data) return false;
-        var key = (data.endpoint || '') + '|' + (data.method || '') + '|' + (data.status || '');
+        var key = event + '|' + (data.endpoint || '') + '|' + (data.method || '') + '|' + (data.status || '');
         var now = Date.now();
         var last = _errKeyLastAt[key] || 0;
-        if (now - last < _ERR_DEDUPE_MS) return true;
+        if (now - last < _ERR_DEDUPE_MS) {
+            _errKeySuppressed[key] = (_errKeySuppressed[key] || 0) + 1;
+            return true;
+        }
         _errKeyLastAt[key] = now;
+        // объём не теряем: следующая пропущенная запись несёт число съеденных повторов
+        if (_errKeySuppressed[key]) { data.suppressed_repeats = _errKeySuppressed[key]; _errKeySuppressed[key] = 0; }
         return false;
     }
 
@@ -326,8 +333,13 @@
                             await new Promise(function(res){ setTimeout(res, backoffs[attempt] + Math.floor(Math.random()*150)); });
                             continue;
                         }
-                        if(urlStr.indexOf('/api/')>=0){
-                            track('api_network_error',{endpoint:_shortEndpoint(urlStr),method:method,error:((netErr && netErr.message)||'').slice(0,100),retries:attempt});
+                        if(urlStr.indexOf('/api/')>=0 && !alreadyTracked){
+                            // alreadyTracked: AI-вызов через apiCall — тот сам пишет ai_response_error,
+                            // здесь молчим, иначе один сбой считается дважды.
+                            var isAbort = !!(netErr && (netErr.name==='AbortError' || /abort/i.test(String(netErr.message||''))));
+                            // AbortError — это таймаут-сигнал или отменённый пользователем запрос,
+                            // а не недоступность сети: считаем отдельным событием.
+                            track(isAbort?'api_aborted':'api_network_error',{endpoint:_shortEndpoint(urlStr),method:method,error:((netErr && netErr.message)||'').slice(0,100),retries:attempt});
                         }
                         throw netErr;
                     }
@@ -385,6 +397,7 @@
                     track('ai_response_error',{
                         endpoint:_shortEndpoint(urlStr),
                         error:((err && err.message)||'').slice(0,100),
+                        kind:(err && (err.name==='AbortError' || /abort/i.test(String(err.message||''))))?'abort_or_timeout':'network_or_server',
                         latency_ms:Date.now()-started
                     });
                 }
@@ -399,7 +412,7 @@
 
     // JS runtime errors
     window.addEventListener('error',function(e){
-        track('error',{message:(e.message||'').slice(0,200),filename:(e.filename||'').split('/').pop(),line:e.lineno,col:e.colno});
+        track('js_error',{message:(e.message||'').slice(0,200),filename:(e.filename||'').split('/').pop(),line:e.lineno,col:e.colno});
     });
     window.addEventListener('unhandledrejection',function(e){
         var msg='';
