@@ -169,6 +169,7 @@
         details { background: var(--surface-hi); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; margin-top: 4px; font-size: 12px; font-family: "SF Mono",Menlo,Consolas,monospace; color: var(--text-dim); }
         summary { cursor: pointer; color: var(--accent); }
         pre { margin: 6px 0 0; white-space: pre-wrap; word-wrap: break-word; }
+    .hint-line{margin-top:10px;padding:9px 12px;border-left:3px solid #3A86FF;background:rgba(58,134,255,.08);border-radius:6px;font-size:12px;color:var(--text-dim);line-height:1.5}
     </style>
 </head>
 <body>
@@ -191,6 +192,7 @@
 
     <div class="nav" id="navBar" style="display:none">
         <button data-tab="summary" class="active">Сводка (7 дней)</button>
+        <button data-tab="product">🎯 Продукт</button>
         <button data-tab="recent">Последние события</button>
         <button data-tab="dialogs">Диалоги</button>
         <button data-tab="costs">💰 Расходы</button>
@@ -247,7 +249,44 @@
         <div id="byScreenTable"></div>
 
         <h2>Активность по дням (DAU)</h2>
-        <div id="dauTable"></div>
+        <div id="productTab" style="display:none">
+      <div class="section">
+        <h2>🎯 Удержание новичков <span style="font-weight:400;font-size:12px;color:var(--text-dim)" id="prodCohortNote"></span></h2>
+        <div class="kv-grid" id="prodKv"></div>
+        <div class="hint-line" id="prodRetHint"></div>
+      </div>
+      <div class="section">
+        <h2>Активация: первая сессия</h2>
+        <div id="prodActivation"></div>
+        <div class="hint-line">Каждый шаг ниже 100% — место, где новичок теряется. Самый дешёвый рост удержания — довести первую сессию до «отправил 3+ сообщения».</div>
+      </div>
+      <div class="section">
+        <h2>Фичи первых 24 часов → возврат за неделю</h2>
+        <div id="prodLift"></div>
+        <div class="hint-line">Фичи с возвратом выше базового уровня — то, что стоит показывать новичку раньше и заметнее (онбординг, подсказки). Ниже базового — либо фича слабая, либо её находят не те.</div>
+      </div>
+      <div class="section">
+        <h2>Глубина сессий (30 дней)</h2>
+        <div class="kv-grid" id="prodDepth"></div>
+        <div id="prodSpu"></div>
+        <div class="hint-line">«0 сообщений» — зашёл и ушёл: это цена пустого первого экрана. «5+ сессий» — ваше ядро: смотрите, чем оно живёт, в таблице фич.</div>
+      </div>
+      <div class="section">
+        <h2>Игры: доигрываемость (30 дней)</h2>
+        <div id="prodGames"></div>
+        <div class="hint-line">Низкий % завершения = игра теряет людей внутри раунда: слишком длинно или непонятны правила. Высокий % и мало стартов = игру не находят — поднять в списке.</div>
+      </div>
+      <div class="section">
+        <h2>Paywall → подписка (30 дней, уникальные)</h2>
+        <div id="prodPaywall"></div>
+      </div>
+      <div class="section">
+        <h2>Здоровье клиента (7 дней)</h2>
+        <div id="prodHealth"></div>
+      </div>
+    </div>
+
+    <div id="dauTable"></div>
     </section>
 
     <section id="recentTab" style="display:none">
@@ -1841,6 +1880,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         document.getElementById('loading').style.display = 'block';
         document.getElementById('summaryTab').style.display = 'none';
         document.getElementById('recentTab').style.display = 'none';
+        var prodTab = document.getElementById('productTab');
+        if (prodTab) prodTab.style.display = 'none';
         var dlgTab = document.getElementById('dialogsTab');
         if (dlgTab) dlgTab.style.display = 'none';
         var costsTab = document.getElementById('costsTab');
@@ -1866,6 +1907,11 @@ POV: ты на семейном ужине, и мама такая «как у �
                 var d = await _fetch('/api/analytics/summary');
                 renderSummary(d);
                 document.getElementById('summaryTab').style.display = 'block';
+            } else if (currentTab === 'product') {
+                var pd = await _fetch('/api/analytics/product');
+                renderProduct(pd);
+                var pt = document.getElementById('productTab');
+                if (pt) pt.style.display = 'block';
             } else if (currentTab === 'recent') {
                 var r = await _fetch('/api/analytics/recent?limit=100');
                 renderRecent(r);
@@ -2228,6 +2274,89 @@ POV: ты на семейном ужине, и мама такая «как у �
         } else {
             ub.innerHTML = '<div style="color:var(--text-dim);padding:14px;font-size:12px">Нет данных. Эндпоинт /api/admin/recent-users пуст или недоступен.</div>';
         }
+    }
+
+    function _pctBar(label, pct, extra){
+        var w = Math.max(0, Math.min(100, pct == null ? 0 : pct));
+        return '<div style="margin:7px 0">' +
+            '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>' + label + '</span><span>' + (pct == null ? '—' : pct + ' %') + (extra ? ' <span style="color:var(--text-dim)">' + extra + '</span>' : '') + '</span></div>' +
+            '<div style="height:8px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden"><div style="height:100%;width:' + w + '%;background:linear-gradient(90deg,#3A86FF,#8b5cf6)"></div></div></div>';
+    }
+    function renderProduct(d){
+        if (!d || d.error) { document.getElementById('prodKv').innerHTML = '<div class="err">Ошибка загрузки: ' + ((d && d.error) || '') + '</div>'; return; }
+        var c = d.cohort || {}, act = c.activation || {};
+        var note = document.getElementById('prodCohortNote');
+        if (note) note.textContent = '· когорта: ' + (c.size || 0) + ' новичков (' + (c.window || '') + ')';
+        document.getElementById('prodKv').innerHTML =
+            _kvCard('D1 — вернулись на след. день', (c.d1_pct == null ? '—' : c.d1_pct + ' %'), 'из ' + (c.size || 0) + ' новичков') +
+            _kvCard('Ret7 — вернулись за неделю', (c.ret7_pct == null ? '—' : c.ret7_pct + ' %'), 'хотя бы 1 визит в дни 1–7') +
+            _kvCard('Отправили сообщение', (act.sent_message_pct == null ? '—' : act.sent_message_pct + ' %'), 'в первый час') +
+            _kvCard('Дошли до 3+ сообщений', (act.sent_3plus_pct == null ? '—' : act.sent_3plus_pct + ' %'), 'диалог состоялся') +
+            _kvCard('Попробовали игру', (act.tried_game_pct == null ? '—' : act.tried_game_pct + ' %'), 'в первые 24 часа');
+        var hint = document.getElementById('prodRetHint');
+        if (hint) {
+            var h = 'Ориентиры для приложений-помощников: D1 20–30% — норма, Ret7 15–25% — хорошо. ';
+            if (c.ret7_pct != null && c.ret7_pct < 15) h += 'Сейчас возврат ниже нормы: главный кандидат — онбординг (пустой чат) и отсутствие причины возвращаться (стрик/минутка дня).';
+            else if (c.ret7_pct != null) h += 'Возврат в норме — фокус на глубине сессий и конверсии.';
+            hint.textContent = h;
+        }
+        // активация — воронка
+        var actEl = document.getElementById('prodActivation');
+        if (actEl) actEl.innerHTML =
+            _pctBar('Пришёл (100%)', 100) +
+            _pctBar('Отправил сообщение в первый час', act.sent_message_pct) +
+            _pctBar('Дошёл до 3+ сообщений', act.sent_3plus_pct) +
+            _pctBar('Вернулся в течение недели', c.ret7_pct);
+        // фичи → возврат
+        var lift = d.feature_lift || [];
+        var base = c.ret7_pct;
+        var lel = document.getElementById('prodLift');
+        if (lel) {
+            if (!lift.length) lel.innerHTML = '<div style="color:var(--text-dim);font-size:12px">Мало данных (нужно ≥3 новичков на фичу).</div>';
+            else lel.innerHTML = '<table><thead><tr><th>Фича (в первые 24 ч)</th><th>Новичков</th><th>Вернулись за 7 дн</th><th>vs база ' + (base == null ? '—' : base + '%') + '</th></tr></thead><tbody>' +
+                lift.map(function(f){
+                    var diff = (base == null || f.returned_pct == null) ? null : Math.round((f.returned_pct - base) * 10) / 10;
+                    var badge = diff == null ? '—' : (diff >= 0 ? '<span style="color:#34d399">+' + diff + ' пп</span>' : '<span style="color:#f87171">' + diff + ' пп</span>');
+                    return '<tr><td>' + f.feature + '</td><td>' + f.users + '</td><td>' + f.returned_pct + ' %</td><td>' + badge + '</td></tr>';
+                }).join('') + '</tbody></table>';
+        }
+        // глубина
+        var dep = d.depth || {}, sp = dep.sessions_per_user || {};
+        document.getElementById('prodDepth').innerHTML =
+            _kvCard('Сессий за 30 дней', dep.sessions_30d || 0, '') +
+            _kvCard('Медиана длительности', _fmtSec(dep.median_duration_sec), 'active time') +
+            _kvCard('Медиана сообщений/сессию', (dep.median_msgs == null ? '—' : dep.median_msgs), 'message_sent') +
+            _kvCard('Сессии с 0 сообщений', (dep.zero_msg_pct == null ? '—' : dep.zero_msg_pct + ' %'), 'зашёл и ушёл');
+        var spuEl = document.getElementById('prodSpu');
+        var tot = sp.total_users || 0;
+        function spuPct(x){ return tot ? Math.round(100.0 * x / tot * 10) / 10 : 0; }
+        if (spuEl) spuEl.innerHTML =
+            _pctBar('1 сессия за месяц («мимо проходил»)', spuPct(sp.one), sp.one + ' чел') +
+            _pctBar('2–4 сессии («присматривается»)', spuPct(sp.two_four), sp.two_four + ' чел') +
+            _pctBar('5+ сессий («ядро»)', spuPct(sp.five_plus), sp.five_plus + ' чел');
+        // игры
+        var g = d.games || [];
+        var gel = document.getElementById('prodGames');
+        if (gel) gel.innerHTML = !g.length ? '<div style="color:var(--text-dim);font-size:12px">Нет раундов за 30 дней.</div>' :
+            '<table><thead><tr><th>Игра</th><th>Стартов</th><th>Финишей</th><th>Доигрывают</th><th>Ср. балл</th></tr></thead><tbody>' +
+            g.map(function(x){
+                var col = x.completion_pct >= 60 ? '#34d399' : (x.completion_pct >= 35 ? '#fbbf24' : '#f87171');
+                return '<tr><td>' + x.game + '</td><td>' + x.starts + '</td><td>' + x.finishes + '</td><td style="color:' + col + '">' + x.completion_pct + ' %</td><td>' + (x.avg_score == null ? '—' : x.avg_score) + '</td></tr>';
+            }).join('') + '</tbody></table>';
+        // paywall
+        var p = d.paywall || {};
+        var pel = document.getElementById('prodPaywall');
+        function conv(a2, b2){ return a2 ? Math.round(1000.0 * b2 / a2) / 10 + ' %' : '—'; }
+        if (pel) pel.innerHTML =
+            _pctBar('Упёрлись в лимит (paywall)', 100, p.blocked_users + ' чел') +
+            _pctBar('Нажали «Оформить»', p.blocked_users ? Math.round(1000.0 * p.subscribe_clicked / p.blocked_users) / 10 : 0, p.subscribe_clicked + ' чел · конв. ' + conv(p.blocked_users, p.subscribe_clicked)) +
+            _pctBar('Открыли оплату', p.blocked_users ? Math.round(1000.0 * p.checkout_opened / p.blocked_users) / 10 : 0, p.checkout_opened + ' чел · конв. ' + conv(p.subscribe_clicked, p.checkout_opened));
+        // здоровье
+        var hel = document.getElementById('prodHealth');
+        var hh = d.health_7d || [];
+        if (hel) hel.innerHTML = !hh.length ? '<div style="color:#34d399;font-size:12px">Ошибок за 7 дней не зафиксировано 🎉</div>' :
+            '<table><thead><tr><th>Событие</th><th>Событий за 7 дн</th></tr></thead><tbody>' +
+            hh.map(function(x){ return '<tr><td>' + x.event + '</td><td>' + x.count + '</td></tr>'; }).join('') + '</tbody></table>';
     }
 
     function renderSummary(d){
