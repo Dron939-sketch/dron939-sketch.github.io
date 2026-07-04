@@ -548,10 +548,10 @@ img.emoji {
 }
 
 .profile-code {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     background: linear-gradient(135deg, var(--chrome), var(--silver-brushed));
     -webkit-background-clip: text;
     background-clip: text;
@@ -829,6 +829,29 @@ img.emoji {
 /* ===== БЫСТРЫЕ ДЕЙСТВИЯ ===== */
 .quick-actions { margin-bottom: 24px; }
 .quick-actions-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+
+/* Подзаголовки смысловых групп быстрых действий */
+.qa-group-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin: 14px 2px 8px;
+    opacity: 0.85;
+}
+.quick-actions-title + .qa-group-title { margin-top: 0; }
+
+/* Строка-описание активного режима под селектором */
+.mode-desc {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: -6px 0 14px;
+    min-height: 16px;
+    opacity: 0.9;
+}
 
 .quick-actions-grid {
     display: grid;
