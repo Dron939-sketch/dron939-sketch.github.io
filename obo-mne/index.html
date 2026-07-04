@@ -393,17 +393,62 @@
     }
 
     .manifest-credentials {
-      padding: 50px 0;
-      text-align: center;
+      padding: 60px 0;
       border-top: 1px solid rgba(58, 134, 255, 0.1);
     }
 
-    .manifest-credentials p {
-      font-size: clamp(0.8rem, 3vw, 0.9rem);
-      margin-bottom: 0;
-      color: #666;
-      max-width: 600px;
+    .cred-card {
+      display: flex;
+      align-items: center;
+      gap: clamp(20px, 4vw, 36px);
+      max-width: 720px;
       margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      border-radius: 16px;
+      padding: clamp(20px, 4vw, 32px);
+    }
+
+    .cred-card img {
+      width: clamp(110px, 18vw, 150px);
+      height: auto;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 14px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .cred-name {
+      color: #FFFFFF;
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .cred-card p {
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      color: #999;
+      margin: 0 0 14px;
+      line-height: 1.65;
+    }
+
+    .cred-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cred-links a {
+      color: #3A86FF;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 560px) {
+      .cred-card { flex-direction: column; text-align: center; }
+      .cred-links { justify-content: center; }
     }
 
     .tools-grid {
@@ -825,7 +870,19 @@
 <!-- РЕГАЛИИ -->
 <section class="manifest-credentials">
   <div class="container">
-    <p>Андрей Мейстер — психолог, когнитивный тренер, кандидат наук, автор бестселлера «Теория манипуляции», разработчик технологии системного мышления «Вариатика».</p>
+    <div class="cred-card">
+      <img src="/obo-mne/andrey-meyster-portret.jpg" alt="Андрей Мейстер — психолог, кандидат психологических наук" loading="lazy" width="480" height="480">
+      <div>
+        <div class="cred-name">Андрей Мейстер</div>
+        <p>Психолог, когнитивный тренер, кандидат наук. Автор бестселлера «Теория манипуляции», разработчик технологии системного мышления «Вариатика», создатель виртуального психолога Фреди. Статьи пишу с 2008 года — в блоге их больше четырёхсот.</p>
+        <div class="cred-links">
+          <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+          <a href="/blog/">Блог</a>
+          <a href="/fredi/">Фреди</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -857,7 +914,7 @@
         
         navLinks.forEach(link => {
           const href = link.getAttribute('href');
-          if (href && href.includes('/manifest/')) {
+          if (href && (href.includes('/obo-mne/') || href.includes('/manifest/'))) {
             link.classList.add('active');
           }
         });
