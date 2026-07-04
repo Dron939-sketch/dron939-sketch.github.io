@@ -1875,6 +1875,8 @@ function renderDashboard() {
                 <div style="flex-shrink:0;background:linear-gradient(135deg,rgba(168,196,224,0.25),rgba(120,160,210,0.15));border:1px solid rgba(168,196,224,0.5);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:700;color:rgba(168,196,224,0.95);white-space:nowrap">Начать →</div>
             </div>
 
+            <div class="dash-cols">
+            <div class="dash-main">
             <!-- Сначала голосовая кнопка (главное действие — говорить с Фреди),
                  потом селектор стиля общения. Раньше было наоборот, и юзер
                  уходил, не дойдя до микрофона. -->
@@ -1900,6 +1902,8 @@ function renderDashboard() {
                 <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">с подпиской</a>.
             </div>` : ''}
 
+            <button class="sos-strip" id="sosStrip">🆘 <b>Мне плохо прямо сейчас</b><span> — дыхание и первая помощь, 2 минуты</span></button>
+
             <div class="modules-grid">
                 ${modules.map(m => `
                     <div class="module-card" data-module="${m.id}">
@@ -1908,7 +1912,9 @@ function renderDashboard() {
                         <div class="module-desc">${m.desc}</div>
                     </div>`).join('')}
             </div>
+            </div>
 
+            <div class="dash-side">
             <div class="quick-actions">
                 <div class="quick-actions-title">⚡ Быстрые действия</div>
                 <div class="qa-group-title">Развлечься с пользой</div>
@@ -1933,11 +1939,23 @@ function renderDashboard() {
                     <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
                 </div>
             </div>
+            </div>
 
             <!-- Скроллящийся поток сообщений диалога. -->
             <div class="dashboard-chat-stream" id="dashChatStream"></div>
+            </div>
         </div>
     `;
+
+    // Широкий экран: виджет «Сегодня» и быстрые действия — в правую колонку.
+    // На мобильном порядок остаётся прежним (обёртки схлопнуты display:contents).
+    try {
+        if (window.matchMedia && window.matchMedia('(min-width: 1100px)').matches) {
+            const side = container.querySelector('.dash-side');
+            const today = container.querySelector('#todayMount');
+            if (side && today) side.prepend(today);
+        }
+    } catch (e) {}
 
     // Виджет «Сегодня» монтируется после вставки разметки дашборда
     try { window.FrediToday && window.FrediToday.mount(); } catch (e) {}
@@ -2040,6 +2058,15 @@ function renderDashboard() {
                 switchMode(btn.dataset.mode);
             }
         });
+    });
+
+    document.getElementById('sosStrip')?.addEventListener('click', () => {
+        try { window.FrediTracker?.track('dashboard_cta_clicked', { cta: 'sos' }); } catch {}
+        if (typeof window.showSosScreen === 'function') { window.showSosScreen(); return; }
+        const s = document.createElement('script');
+        s.src = 'sos.js';
+        s.onload = () => { if (typeof window.showSosScreen === 'function') window.showSosScreen(); };
+        document.head.appendChild(s);
     });
 
     document.getElementById('modeUpgradeLink')?.addEventListener('click', (e) => {
@@ -2798,7 +2825,8 @@ document.addEventListener('DOMContentLoaded', function() {
             danetki: { fn: 'showDanetkiGame', src: 'danetki.js', chat: 'kontur' }, // «Данетки»
             fermi: { fn: 'showFermiGame', src: 'fermi.js', chat: 'kontur' }, // «Прикидка» (Ферми)
             advokat: { fn: 'showAdvokatGame', src: 'advokat.js', chat: 'kontur' }, // «Адвокат дьявола»
-            delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' } // «Своё дело» (бизнес-симулятор)
+            delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' }, // «Своё дело» (бизнес-симулятор)
+            sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
         if (!r) return;
