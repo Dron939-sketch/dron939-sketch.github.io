@@ -323,7 +323,7 @@
     }
     c.innerHTML =
       '<div class="chv-wrap">' +
-        '<div class="chv-top"><span>Ситуация ' + (ST.idx + 1) + ' из ' + total + '</span><span>💠 Чувства</span></div>' +
+        '<div class="chv-top"><span>Ситуация ' + (ST.idx + 1) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="CHUVSTVA.home()">✕ Выйти</button></div>' +
         '<div class="chv-bar"><i style="width:' + (ST.idx / total * 100) + '%"></i></div>' +
         '<div class="chv-sit">' + esc(q.sit) + '</div>' +
         '<div class="chv-body">🫀 В теле: ' + esc(q.body) + '</div>' +

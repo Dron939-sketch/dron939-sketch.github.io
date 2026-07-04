@@ -286,6 +286,7 @@
     var c = container(); if (!c) return;
     c.innerHTML =
       '<div class="kt-wrap">' +
+        '<button class="kt-ghost" onclick="(window.renderDashboard||function(){})()">← На главную</button>' +
         '<div class="kt-h1">🎮 Игры</div>' +
         '<div class="kt-lead">Игры, которые помогают думать яснее и жить осознаннее — не «убить время», а потренировать то, что реально меняет жизнь. Каждая новая игра появляется здесь только после того, как доведена до ума и проверена. Качество важнее количества.</div>' +
         '<button class="kt-btn" onclick="KONTUR.gameHome()"><span class="em">🧠</span>О чём ты умеешь думать<small>Тренажёр мышления: тест + игра с Фреди. Учишься думать о конкретных темах вместо «обо всём».</small></button>' +

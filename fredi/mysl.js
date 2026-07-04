@@ -203,7 +203,7 @@
     }
     c.innerHTML =
       '<div class="my-wrap">' +
-        '<div class="my-top"><span>Мысль ' + (ST.idx + 1) + ' из ' + total + '</span><span>🔍 Мысль под допросом</span></div>' +
+        '<div class="my-top"><span>Мысль ' + (ST.idx + 1) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="MYSL.home()">✕ Выйти</button></div>' +
         '<div class="my-bar"><i style="width:' + (ST.idx / total * 100) + '%"></i></div>' +
         '<div class="my-sit">📍 ' + esc(q.sit) + '</div>' +
         '<div class="my-th">💭 «' + esc(q.th) + '»</div>' +

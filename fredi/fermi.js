@@ -176,7 +176,7 @@
     if (!ST.revealed) {
       c.innerHTML =
         '<div class="fe-wrap">' +
-          '<div class="fe-top"><span>Вопрос ' + (ST.idx + 1) + ' из ' + total + '</span><span>📐 Прикидка</span></div>' +
+          '<div class="fe-top"><span>Вопрос ' + (ST.idx + 1) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="FERMI.home()">✕ Выйти</button></div>' +
           '<div class="fe-bar"><i style="width:' + (ST.idx / total * 100) + '%"></i></div>' +
           '<div class="fe-q">' + esc(q.q) + '</div>' +
           '<textarea class="fe-ta" id="feReason" placeholder="Как ты прикидываешь? Распиши шаги (необязательно, но полезно)…"></textarea>' +
@@ -190,7 +190,7 @@
       var closeness = sc >= 9 ? 'В точку по порядку! 🎯' : sc >= 6 ? 'Близко — верный масштаб' : sc >= 3 ? 'Мимо на порядок-другой' : 'Далеко по масштабу';
       c.innerHTML =
         '<div class="fe-wrap">' +
-          '<div class="fe-top"><span>Вопрос ' + (ST.idx + 1) + ' из ' + total + '</span><span>📐 Прикидка</span></div>' +
+          '<div class="fe-top"><span>Вопрос ' + (ST.idx + 1) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="FERMI.home()">✕ Выйти</button></div>' +
           '<div class="fe-q" style="font-size:1.1rem">' + esc(q.q) + '</div>' +
           '<div class="fe-reveal">' +
             '<div class="fe-big">Твоя оценка: ' + esc(fmt(val)) + '</div>' +

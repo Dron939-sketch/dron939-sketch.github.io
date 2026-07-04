@@ -200,7 +200,7 @@
     }
     c.innerHTML =
       '<div class="os-wrap">' +
-        '<div class="os-top"><span>Довод ' + (ST.idx + 1) + ' из ' + total + '</span><span>🧯 Лови ошибку</span></div>' +
+        '<div class="os-top"><span>Довод ' + (ST.idx + 1) + ' из ' + total + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.88rem;cursor:pointer;padding:0" onclick="OSHIBKA.home()">✕ Выйти</button></div>' +
         '<div class="os-bar"><i style="width:' + (ST.idx / total * 100) + '%"></i></div>' +
         '<div class="os-arg">«' + esc(q.arg) + '»</div>' +
         '<div class="os-q">Какая здесь ошибка мышления?</div>' +
