@@ -1848,6 +1848,9 @@ function renderDashboard() {
                 </div>
             </div>
 
+            <!-- Виджет «Сегодня»: стрик + один рекомендованный шаг (segodnya.js) -->
+            <div id="todayMount"></div>
+
             <!-- CTA-баннер для новых пользователей -->
             <div id="ctaTestBanner" style="display:none;background:linear-gradient(135deg,rgba(168,196,224,0.12),rgba(120,160,210,0.06));border:1px solid rgba(168,196,224,0.3);border-radius:20px;padding:18px 20px;margin-bottom:20px;align-items:center;gap:16px;cursor:pointer" onclick="startTest()">
                 <div style="font-size:36px;flex-shrink:0">🧬</div>
@@ -1913,6 +1916,9 @@ function renderDashboard() {
             <div class="dashboard-chat-stream" id="dashChatStream"></div>
         </div>
     `;
+
+    // Виджет «Сегодня» монтируется после вставки разметки дашборда
+    try { window.FrediToday && window.FrediToday.mount(); } catch (e) {}
 
     // Загружаем статус профиля
     getUserStatus().then(status => {
