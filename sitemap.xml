@@ -682,4 +682,28 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lektorij/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-1-chto-takoe-teoriya-lichnosti.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-2-frejd-psihodinamika.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/rubrika/lektorij/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
