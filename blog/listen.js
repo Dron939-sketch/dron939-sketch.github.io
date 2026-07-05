@@ -5,10 +5,87 @@
 // ============================================
 (function () {
     'use strict';
-    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') return;
 
     var box = document.getElementById('listenBox');
     if (!box) return;
+
+    var API = 'https://ffred-ddd989.amvera.io';
+    var slug = location.pathname.split('/').pop().replace('.html', '');
+
+    // ===== Режим 1: серверная озвучка (Yandex SpeechKit, mp3 с кэшем) =====
+    // Генерируется один раз, дальше отдаётся файл. Если бэкенд недоступен
+    // или ключ не настроен — тихо падаем в режим 2 (голос браузера).
+    function tryServerAudio() {
+        return fetch(API + '/api/tts/blog/' + slug + '/status')
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (!d || !d.enabled) return false;
+                cssServer();
+                renderServer(d.ready);
+                return true;
+            })
+            .catch(function () { return false; });
+    }
+
+    function cssServer() {
+        if (document.getElementById('lsn2-css')) return;
+        var s = document.createElement('style');
+        s.id = 'lsn2-css';
+        s.textContent =
+            '#listenBox{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:12px 16px;margin:18px 0 4px}' +
+            '.lsn2-row{display:flex;align-items:center;gap:12px}' +
+            '.lsn2-t{font-size:.9rem;color:#1D1D1F;font-weight:500}' +
+            '.lsn2-sub{font-size:.76rem;color:#6E6E73;margin-top:2px}' +
+            '.lsn2-btn{border:none;background:#3A86FF;color:#fff;border-radius:30px;padding:10px 20px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}' +
+            '.lsn2-btn[disabled]{opacity:.6;cursor:wait}' +
+            '#listenBox audio{width:100%;margin-top:10px;display:block}';
+        document.head.appendChild(s);
+    }
+
+    function goal(name) {
+        try { if (typeof ym === 'function') ym(108138656, 'reachGoal', name, { slug: slug }); } catch (e) {}
+    }
+
+    function renderServer(ready) {
+        box.innerHTML =
+            '<div class="lsn2-row"><div style="flex:1"><div class="lsn2-t">🎧 Аудиоверсия статьи</div>' +
+            '<div class="lsn2-sub">Профессиональный голос · можно слушать в дороге</div></div>' +
+            '<button class="lsn2-btn" id="lsn2Go">' + (ready ? '▶ Слушать' : '▶ Озвучить и слушать') + '</button></div>';
+        document.getElementById('lsn2Go').addEventListener('click', function () {
+            var btn = this;
+            btn.disabled = true;
+            btn.textContent = ready ? 'Загружаю…' : 'Готовлю озвучку… ~30 сек';
+            goal('listen_tts_start');
+            var audio = document.createElement('audio');
+            audio.controls = true;
+            audio.preload = 'auto';
+            audio.src = API + '/api/tts/blog/' + slug + '.mp3';
+            audio.addEventListener('canplay', function () {
+                btn.parentElement.style.display = 'none';
+                audio.play().catch(function () {});
+                goal('listen_tts_play');
+            });
+            audio.addEventListener('error', function () {
+                // сервер не смог — откатываемся на браузерный голос
+                box.innerHTML = '';
+                initBrowserTTS();
+            });
+            box.appendChild(audio);
+        });
+    }
+
+    // ===== Режим 2: браузерный синтез (как раньше) =====
+    function initBrowserTTS() {
+        if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+            box.style.display = 'none';
+            return;
+        }
+        legacyInit();
+    }
+
+    tryServerAudio().then(function (ok) { if (!ok) initBrowserTTS(); });
+
+    function legacyInit() {
 
     var chunks = [], idx = 0, playing = false, rate = 1, voice = null, total = 0;
 
@@ -121,4 +198,5 @@
     }
 
     window.addEventListener('beforeunload', function () { try { speechSynthesis.cancel(); } catch (e) {} });
+    } // конец legacyInit
 })();
