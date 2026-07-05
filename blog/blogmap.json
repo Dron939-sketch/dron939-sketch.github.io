@@ -3254,6 +3254,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-vliyanie-3-manipulyacii-v-blizkih-otnosheniyah",
+   "title": "Лекция 3. Манипуляции в близких отношениях: вина, долг, жалость",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-4-gazlajting",
+   "title": "Лекция 4. Газлайтинг: как у человека отнимают реальность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
