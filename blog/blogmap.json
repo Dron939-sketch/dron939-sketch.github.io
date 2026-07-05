@@ -3205,6 +3205,20 @@
    "rubric": "lektorij",
    "level": "m",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-9-bandura-rotter-socialno-kognitivnoe",
+   "title": "Лекция 9. Бандура и Роттер: научение через наблюдение и вера «я смогу»",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-10-kelli-lichnye-konstrukty",
+   "title": "Лекция 10. Келли: человек-учёный и психология личных конструктов",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 22
   }
  ]
 }
