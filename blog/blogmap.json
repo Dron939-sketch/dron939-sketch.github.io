@@ -3240,6 +3240,20 @@
    "rubric": "lektorij",
    "level": "m",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-vliyanie-1-granica-mezhdu-vliyaniem-i-manipulyaciej",
+   "title": "Лекция 1. Что такое манипуляция: граница между влиянием и управлением",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-vliyanie-2-chaldini-shest-principov",
+   "title": "Лекция 2. Чалдини: шесть принципов влияния — и антидоты к каждому",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
   }
  ]
 }
