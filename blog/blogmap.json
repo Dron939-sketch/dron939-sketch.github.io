@@ -3310,6 +3310,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-11-zashchita-i-granicy",
+   "title": "Лекция 11. Защита: распознавание давления и техника личных границ",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-12-etika-vliyaniya-itogi",
+   "title": "Лекция 12. Этика влияния: как убеждать, не манипулируя — итоги курса",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
   }
  ]
 }
