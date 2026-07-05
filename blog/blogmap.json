@@ -3219,6 +3219,27 @@
    "rubric": "lektorij",
    "level": "m",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-11-maslou-gumanisticheskoe-napravlenie",
+   "title": "Лекция 11. Маслоу: иерархия потребностей и психология здорового человека",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-12-rodzhers-fenomenologicheskoe-napravlenie",
+   "title": "Лекция 12. Роджерс: безусловное принятие и полноценно функционирующий человек",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-13-itogi-sravnenie-teorij-lichnosti",
+   "title": "Лекция 13. Итоги курса: карта теорий личности и как выбрать свою линзу",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 22
   }
  ]
 }
