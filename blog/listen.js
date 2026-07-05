@@ -21,7 +21,7 @@
             .then(function (d) {
                 if (!d || !d.enabled) return false;
                 cssServer();
-                renderServer(d.ready);
+                renderServer(d.ready, d.v || 0);
                 return true;
             })
             .catch(function () { return false; });
@@ -46,31 +46,62 @@
         try { if (typeof ym === 'function') ym(108138656, 'reachGoal', name, { slug: slug }); } catch (e) {}
     }
 
-    function renderServer(ready) {
+    function renderServer(ready, v) {
+        var isLecture = slug.indexOf('lekciya-') === 0;
         box.innerHTML =
-            '<div class="lsn2-row"><div style="flex:1"><div class="lsn2-t">🎧 Аудиоверсия статьи</div>' +
-            '<div class="lsn2-sub">Профессиональный голос · можно слушать в дороге</div></div>' +
+            '<div class="lsn2-row"><div style="flex:1"><div class="lsn2-t">🎧 ' +
+            (isLecture ? 'Лекцию читает Фреди' : 'Аудиоверсия статьи') + '</div>' +
+            '<div class="lsn2-sub">' + (isLecture ? 'Голос Фреди · живое чтение' : 'Голос Фреди') +
+            ' · можно слушать в дороге</div></div>' +
             '<button class="lsn2-btn" id="lsn2Go">' + (ready ? '▶ Слушать' : '▶ Озвучить и слушать') + '</button></div>';
         document.getElementById('lsn2Go').addEventListener('click', function () {
             var btn = this;
             btn.disabled = true;
-            btn.textContent = ready ? 'Загружаю…' : 'Готовлю озвучку… ~30 сек';
             goal('listen_tts_start');
-            var audio = document.createElement('audio');
-            audio.controls = true;
-            audio.preload = 'auto';
-            audio.src = API + '/api/tts/blog/' + slug + '.mp3';
-            audio.addEventListener('canplay', function () {
-                btn.parentElement.style.display = 'none';
-                audio.play().catch(function () {});
-                goal('listen_tts_play');
-            });
-            audio.addEventListener('error', function () {
-                // сервер не смог — откатываемся на браузерный голос
-                box.innerHTML = '';
-                initBrowserTTS();
-            });
-            box.appendChild(audio);
+
+            function play(vv) {
+                var audio = document.createElement('audio');
+                audio.controls = true;
+                audio.preload = 'auto';
+                // v меняется при переозвучке — иначе браузер вечно играет
+                // старый закэшированный голос (mp3 отдаётся с immutable)
+                audio.src = API + '/api/tts/blog/' + slug + '.mp3?v=' + vv;
+                audio.addEventListener('canplay', function () {
+                    btn.parentElement.style.display = 'none';
+                    audio.play().catch(function () {});
+                    goal('listen_tts_play');
+                });
+                audio.addEventListener('error', function () {
+                    // сервер не смог — откатываемся на браузерный голос
+                    box.innerHTML = '';
+                    initBrowserTTS();
+                });
+                box.appendChild(audio);
+            }
+
+            if (ready) {
+                btn.textContent = 'Загружаю…';
+                play(v);
+                return;
+            }
+
+            // Генерация идёт на сервере минуты (рерайт + синтез голосом
+            // Фреди): пинаем её и поллим статус, а не держим соединение.
+            btn.textContent = isLecture ? 'Фреди готовит лекцию… это займёт пару минут' : 'Готовлю озвучку… ~1–2 мин';
+            fetch(API + '/api/tts/blog/' + slug + '.mp3?v=' + v).then(function (r) {
+                if (r.status === 200) { play(v); return; }
+                var tries = 0;
+                var t = setInterval(function () {
+                    if (++tries > 75) { clearInterval(t); box.innerHTML = ''; initBrowserTTS(); return; }
+                    fetch(API + '/api/tts/blog/' + slug + '/status')
+                        .then(function (rr) { return rr.json(); })
+                        .then(function (d) {
+                            if (d && d.error) { clearInterval(t); box.innerHTML = ''; initBrowserTTS(); return; }
+                            if (d && d.ready) { clearInterval(t); play(d.v || v); }
+                        })
+                        .catch(function () {});
+                }, 8000);
+            }).catch(function () { box.innerHTML = ''; initBrowserTTS(); });
         });
     }
 
