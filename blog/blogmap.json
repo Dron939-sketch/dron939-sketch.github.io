@@ -1,0 +1,3196 @@
+{
+ "rubrics": [
+  {
+   "key": "strahi",
+   "name": "Страхи и тревога",
+   "ic": "😰"
+  },
+  {
+   "key": "otnosheniya",
+   "name": "Отношения и семья",
+   "ic": "❤️"
+  },
+  {
+   "key": "roditeli",
+   "name": "Родители и детство",
+   "ic": "👶"
+  },
+  {
+   "key": "motivaciya",
+   "name": "Мотивация и беспомощность",
+   "ic": "🔋"
+  },
+  {
+   "key": "myshlenie",
+   "name": "Мышление и когнитивистика",
+   "ic": "🧠"
+  },
+  {
+   "key": "gipnoz",
+   "name": "Гипноз, влияние, речь",
+   "ic": "🎙️"
+  },
+  {
+   "key": "dengi",
+   "name": "Деньги, карьера, бизнес",
+   "ic": "💰"
+  },
+  {
+   "key": "emocii",
+   "name": "Эмоции, самооценка, личность",
+   "ic": "🎭"
+  },
+  {
+   "key": "telo",
+   "name": "Тело, сон, выгорание",
+   "ic": "🛌"
+  },
+  {
+   "key": "obshchestvo",
+   "name": "Общество и поколения",
+   "ic": "🌍"
+  },
+  {
+   "key": "ai",
+   "name": "AI-психология и Фреди",
+   "ic": "🤖"
+  },
+  {
+   "key": "ezoterika",
+   "name": "Эзотерика vs наука",
+   "ic": "🔮"
+  },
+  {
+   "key": "shkoly",
+   "name": "Школы психологии",
+   "ic": "🏛️"
+  },
+  {
+   "key": "zavisimosti",
+   "name": "Зависимости и привычки",
+   "ic": "⛓️"
+  },
+  {
+   "key": "lektorij",
+   "name": "Лекторий",
+   "ic": "🎓"
+  }
+ ],
+ "articles": [
+  {
+   "slug": "10-koldovskih-ritualov-navigator",
+   "title": "10 колдовских ритуалов: какой выбрать для себя. Полный навигатор серии о ритуалах как поведенческих программах",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 14
+  },
+  {
+   "slug": "100-kognitivnyh-iskazhenij-spravochnik",
+   "title": "100 когнитивных искажений: полный справочник с примерами — Андрей Мейстер",
+   "rubric": "myshlenie",
+   "level": "p",
+   "mins": 35
+  },
+  {
+   "slug": "12-nacionalnyh-psihologicheskih-konstant-rossiyan",
+   "title": "12 национальных психологических констант россиян",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "12-podhodov-k-celepolaganiyu-sravnenie",
+   "title": "12 подходов к целеполаганию: сравнение и какой выбрать — Андрей Мейстер",
+   "rubric": "motivaciya",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "15-mifov-o-gipnoze-nauchnyi-razbor",
+   "title": "15 мифов о гипнозе, в которые верят даже психологи. Научный разбор",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 14
+  },
+  {
+   "slug": "23-manipulyacii-v-otnosheniyah-spravochnik",
+   "title": "23 манипуляции в отношениях: как распознать и противостоять — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "25-kadr-mejstera-imprint-videoryad-vr",
+   "title": "«25 кадр Мейстера»: импринт-видеоряд для VR. Авторская методика эмоционального якорения через зеркальные нейроны и звук",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "4-modeli-vremeni-pochemu-zhizn-dlinnaya-ili-pustaya",
+   "title": "Когда идёт твоё время: 4 модели и почему у одних жизнь длинная, а у других — пустые годы",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "4-strategii-raboty-s-zaprosom-klienta",
+   "title": "4 стратегии работы с запросом клиента: принятие, магия, масштаб, изменение",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "47-tehnik-eriksonovskogo-gipnoza-spravochnik",
+   "title": "47 техник эриксоновского гипноза: полный справочник с примерами — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "5-modeley-lokusa-deystviya-kto-deystvuet",
+   "title": "Кто действует — ты, мир или никто? 5 моделей локуса действия и где застряло 80% людей",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "6-principov-vliyaniya-chaldini-2026",
+   "title": "6 принципов влияния Чалдини: научный разбор и практика 2026 — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "8-klassifikacij-psihotipov-mbti-disc-variatika",
+   "title": "8 классификаций психотипов: MBTI, DISC, Big Five, Вариатика — сравнение 2026",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "act-terapiya-6-processov-geksaflex",
+   "title": "ACT-терапия: 6 процессов психологической гибкости — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "adrenalinovye-narkomany-kogda-strah-stimulator",
+   "title": "Адреналиновые наркоманы: почему некоторые ищут страх как стимулятор",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "ai-psiholog-2026-mozhno-li-zamenit-terapevta",
+   "title": "AI-психолог в 2026: можно ли заменить терапевта? Честный разбор",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "ai-psihologi-2026-prakticheskij-gid",
+   "title": "AI-психологи 2026: какой сервис подходит для какой задачи. Практический гид",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "aktivnoe-slushanie-6-urovnej",
+   "title": "Активное слушание: 6 уровней мастерства 2026",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 21
+  },
+  {
+   "slug": "aktivnoe-slushanie",
+   "title": "Активное слушание: почему «слушать» сломано у 80% и как его починить — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "alfa-scenarij-7-rolej-uspeshnogo-cheloveka-v-rossii",
+   "title": "Альфа-сценарий: 7 ролей успешного человека в России",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 29
+  },
+  {
+   "slug": "analiz-10000-dialogov-fredi-2026",
+   "title": "Анализ 10 000 диалогов с Фреди: что волнует россиян в 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "analiz-500-dialogov-fredi-2026",
+   "title": "Анализ 500 диалогов с Фреди: что работает в AI-терапии (наблюдения 2026)",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "analiz-500-sessij-7-patternov-pervoj-konsultacii",
+   "title": "Анализ 500 сессий: 7 паттернов первой консультации — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 50
+  },
+  {
+   "slug": "andrej-mejster-20-let-i-pochemu-fredi",
+   "title": "Андрей Мейстер: 20 лет в НЛП и почему я создал ИИ-психолога Фреди",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "anonimnaya-psihologicheskaya-pomoshch-onlajn-gajd",
+   "title": "Анонимная психологическая помощь онлайн: полный гайд 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 19
+  },
+  {
+   "slug": "arhetipy-proshivki-lichnosti",
+   "title": "Прошивки личности: 8 архетипов на 9 уровнях скрытой декларации",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "autizm-u-vzroslyh-zhenshchin-14-priznakov",
+   "title": "Аутизм у взрослых женщин: 14 признаков, которые маскируют 30 лет — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "barhatnyi-katok-dlya-infantilnogo-kogda-rabotaet",
+   "title": "«Бархатный каток» для инфантильного: когда работает, кому усугубляет инфантильность",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "besplatnaya-psihologicheskaya-konsultaciya-onlajn",
+   "title": "Бесплатная психологическая консультация онлайн: где найти качество 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 90
+  },
+  {
+   "slug": "bessonnica-5-tipov-kpt-i",
+   "title": "Бессонница: 5 типов и научные методы лечения (КПТ-И) — Андрей Мейстер",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "bessonnica-prichiny-i-protokol",
+   "title": "Бессонница: 5 психологических причин и протокол сна на 14 дней. Как заснуть без таблеток",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "bessoznatelnoe-v-2026-nauka-i-nlp",
+   "title": "Бессознательное в 2026: что в нём действительно есть. Что из НЛП работает, что устарело",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "bezdetnye-po-vyboru-novyj-tip-odinochestva",
+   "title": "Бездетные по выбору в России 2026: новый тип одиночества, которого не было у наших родителей",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "body-memory-gde-zhivyot-vasha-reakciya-na-strah",
+   "title": "Body memory: где живёт ваша реакция на страх и как обнаружить её в теле",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "bolshaya-lozh-samopomoschi-7-mifov",
+   "title": "Большая ложь самопомощи: 7 разоблачённых мифов",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "bolshoe-issledovanie-schastya-2026",
+   "title": "Большое исследование счастья 2026: что делает россиян счастливыми",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "budushchee-psihologii-12-trendov-2035",
+   "title": "Будущее психологии: 12 трендов, которые перевернут всё к 2035 году",
+   "rubric": "ai",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "celepolaganie-naoborot-5-celey-iz-straha",
+   "title": "Целеполагание наоборот: 5 целей, которые на самом деле ставит ваш страх",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "celi-chtoby-ne-brosit-namereniya-woop",
+   "title": "Как ставить цели, чтобы не бросить: намерения-реализации и метод WOOP",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "chatgpt-vs-specializirovannyj-psiho-ii",
+   "title": "ChatGPT vs специализированный психо-ИИ: что выбрать для самопомощи 2026",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "cherez-5-let-polovina-psihologov-nenuzhna",
+   "title": "Через 5 лет половина психологов станет ненужной. Объясняю, что останется и почему",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "chetyre-reakcii-na-strah-bej-begi-zamri-ugodi",
+   "title": "«Бей, беги, замри, угоди». 30 секунд, чтобы понять, какой режим у вас по умолчанию",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "chsv-nauchnyi-ekvivalent-stalkinga",
+   "title": "Чувство собственной важности (ЧСВ): научный эквивалент сталкинга без эзотерики",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "chto-takoe-manipulyaciya",
+   "title": "Что такое манипуляция: виды, признаки и техники защиты",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "cifrovaya-vs-zhivaya-terapiya-18-mesyacev",
+   "title": "Цифровая vs живая терапия: 18 месяцев параллельной работы — Андрей Мейстер",
+   "rubric": "ai",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "cifrovoj-sled-chto-google-rasskazhet-cherez-20-let",
+   "title": "Цифровой след: что Google расскажет о вас через 20 лет — Андрей Мейстер",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "cifrovye-dvojniki-soznaniya",
+   "title": "Цифровые двойники сознания: как НЛП и констрейнты оживляют личности великих",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "dbt-navyki-4-modulya-linehan",
+   "title": "DBT-навыки: 4 модуля диалектико-поведенческой терапии — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "delegirovanie-bez-peredelki",
+   "title": "Делегирование без переделки: что не отдают (и зря), что отдают (и зря) — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "depressiya-12-tipov-chto-rabotaet",
+   "title": "Депрессия: 12 типов и что работает с каждым — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "deti-90h-v-2026-pokolencheskij-portret",
+   "title": "«Дети 90-х в 2026»: поколенческий портрет тех, кому сейчас 30–45. Манифест об отдельном поколении",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "deti-trevozhnyh-roditelej",
+   "title": "Дети тревожных родителей: узнать себя и перестать жить чужим страхом",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "disciplina-bez-sily-voli",
+   "title": "Дисциплина без силы воли: триггеры, ритуалы, среда",
+   "rubric": "motivaciya",
+   "level": "n",
+   "mins": 1
+  },
+  {
+   "slug": "discipline-kak-pobeg",
+   "title": "Не дисциплина — это страх остановиться. 4 признака беглеца под маской организованного человека",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "dofaminovaya-yama-vyuchennaya-bespomoshhnost",
+   "title": "Дофаминовая яма: почему «не поднимается рука», даже когда знаешь как",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "dva-tipa-ritualov-dostizhenie-i-prisutstvie",
+   "title": "Два типа ритуала: ритуалы достижения и ритуалы присутствия. Когда «стать кем-то» — это не лекарство, а яд",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 17
+  },
+  {
+   "slug": "emdr-terapiya-glubokij-razbor",
+   "title": "EMDR-терапия: глубокий разбор метода работы с травмой — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 21
+  },
+  {
+   "slug": "emigraciya-kak-travma-7-stadij",
+   "title": "Эмиграция как травма: 7 стадий, через которые проходят все, кто уехал в 2022–2024",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "emocionalnaya-zavisimost-priznaki-i-protokol",
+   "title": "Эмоциональная зависимость: 5 признаков и протокол отделения без разрыва отношений",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "emocionalnyj-incest-7-tipov-posledstviya",
+   "title": "Эмоциональный инцест: 7 типов и последствия на 30 лет — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 21
+  },
+  {
+   "slug": "emocionalnyj-intellekt-kak-razvit",
+   "title": "Эмоциональный интеллект — навык различения, а не контроля",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "energeticheskie-vampiry-neuro",
+   "title": "Энергетические вампиры: что это с точки зрения нейропсихологии",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "epidemiya-odinochestva-v-brake-2026",
+   "title": "Эпидемия одиночества в браке: Россия 2026",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "epidemiya-onemeniya-30-procentov-psihicheskoj-moschnosti",
+   "title": "Эпидемия онемения: 30% психической мощности уходит на подавление",
+   "rubric": "telo",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "eq-kak-kontrol-partnera",
+   "title": "Эмоциональный интеллект как новый способ контролировать партнёра. 5 признаков «EQ-манипуляции»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "erik-bern-tranzaktnyj-analiz-glubokij-razbor",
+   "title": "Эрик Берн и транзактный анализ: глубокий разбор 60 лет спустя — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "eriksonovskij-gipnoz-dlya-nachinayushchih",
+   "title": "Эриксоновский гипноз для начинающих: с чего начать в 2026 — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 17
+  },
+  {
+   "slug": "eriksonovskiy-vs-razgovornyy-gipnoz",
+   "title": "Эриксоновский vs разговорный гипноз: в чём разница — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 90
+  },
+  {
+   "slug": "etika-psihologa-10-priznakov",
+   "title": "Этика работы психолога: 10 признаков хорошего специалиста 2026",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "ezoterika-i-psihologiya-7-peresechenij",
+   "title": "Эзотерика и психология: 7 пересечений и где граница — Андрей Мейстер",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "fokus-i-koncentraciya",
+   "title": "Фокус и концентрация: что съедает внимание и какие 3 техники работают",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "gazlayting-chto-eto",
+   "title": "Газлайтинг: что это, признаки и как противостоять тонкой манипуляции",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "geshtalt-terapiya-2026-sostoyanie-i-praktika",
+   "title": "Гештальт-терапия в 2026: состояние, техники, что подтверждено наукой — Андрей Мейстер",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "gibridnye-reakcii-kogda-dva-rezhima-smeshivayutsya",
+   "title": "Гибридные реакции: когда два режима смешиваются — самые сложные случаи",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "granicy-kak-pobeg",
+   "title": "«Я еду к маме». Когда личные границы — это побег от близости. 5 признаков псевдограниц",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "hochu-stat-znamenitym-5-tipov-slavy",
+   "title": "Хочу стать знаменитым: 5 типов славы и психология жажды признания",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "horoshaya-devochka-35-let",
+   "title": "Я была «хорошей девочкой» 35 лет. Что произошло, когда я перестала",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "hsp-vysokochuvstvitelnyj-chelovek-7-podtipov",
+   "title": "Высокочувствительные люди (HSP): тест Айрон и 7 подтипов — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 21
+  },
+  {
+   "slug": "ifs-vnutrennyaya-semejnaya-sistema-shvarc",
+   "title": "IFS-терапия Ричарда Шварца: глубокий разбор внутренней семейной системы — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "ii-psiholog-2026-vozmozhnosti-i-predely",
+   "title": "ИИ-психолог 2026: что умеют виртуальные психологи и где их предел",
+   "rubric": "ai",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "informacionnaya-emigraciya-zhizn-cherez-vpn",
+   "title": "«Информационная эмиграция»: жизнь через VPN — 4 часа в день в другой реальности. Психологический портрет феномена",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
+   "title": "Как читать людей: 7 уровней наблюдательности — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "kak-napisat-prodayushchiy-tekst",
+   "title": "Как написать продающий текст: 6 правил рекламного нарратива — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 5
+  },
+  {
+   "slug": "kak-ostatsya-v-istorii-9-sposobov-sled",
+   "title": "Как остаться в истории: 9 способов оставить след — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 17
+  },
+  {
+   "slug": "kak-perezhit-rasstavanie",
+   "title": "Как пережить расставание: 5 фаз, реальные сроки и протокол выхода, если застрял",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "kak-postavit-normalnuyu-cenu",
+   "title": "Как поставить нормальную цену на свои услуги: 5 причин заниженного тарифа и протокол поднятия",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "kak-prostit-4-urovnya-proshcheniya",
+   "title": "Как простить: 4 уровня прощения и почему «отпустить» — это последний шаг, а не первый",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "kak-prostit-neprostitelnoe-4-urovnya",
+   "title": "Как простить непростительное: 4 уровня прощения — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "kak-rabotaet-infopole-vk",
+   "title": "Информационное поле в VK: как ежедневные посты «зарабатывающих» дрессируют твоё внимание",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "kak-raspoznat-lozh-12-markerov-ekmana",
+   "title": "Как распознать ложь: 12 маркеров от Пола Экмана 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "kak-raspoznat-manipulyatora-10-priznakov",
+   "title": "Как распознать манипулятора в обычном разговоре. 10 признаков, которые срабатывают за минуту",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "kak-razgovarivat-s-ii-psihologom-7-pravil",
+   "title": "Как разговаривать с ИИ-психологом: 7 правил эффективного диалога 2026",
+   "rubric": "ai",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "kak-razvit-kreativnost-6-tehnik",
+   "title": "Как развить креативность: 6 техник, работающих на бумаге и в голове",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "kak-spravitsya-s-trevogoj",
+   "title": "Как справиться с тревогой: 7 техник, которые реально работают",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "kak-vesti-dnevnik-emocij",
+   "title": "Как вести дневник эмоций: 5 шагов и шаблон записи",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "kak-vybrat-psihologa-10-kriteriev",
+   "title": "Как выбрать психолога: 10 критериев и 7 красных флагов — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "kalibrovka-sobesednika-yazyk-tela",
+   "title": "Калибровка собеседника: почему «язык тела» из книг — миф, и что работает — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "karta-psihologicheskih-konfliktov-rossii-2026",
+   "title": "Карта психологических конфликтов России 2026: 6 главных разломов общества",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "karta-zhelaniy-ne-rabotaet-47-issledovanij",
+   "title": "Карта желаний не работает: разбор 47 исследований, которые показали обратное",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "knigi-samopomoschi-vredyat-90-procentov",
+   "title": "90% книг по самопомощи вредят. Какие 10% — нет — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 17
+  },
+  {
+   "slug": "kogda-idti-k-psihologu-12-signalov",
+   "title": "Когда идти к психологу: 12 явных сигналов 2026",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "kogda-ploho-ne-durak-stressovyi-rezhim",
+   "title": "Когда плохо — ты не «дурак», ты в стрессовом режиме. Современная нейронаука против мифа о тройном мозге",
+   "rubric": "roditeli",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "kogda-reakciya-rabotaet-a-kogda-stanovitsya-tyuremshikom",
+   "title": "Когда реакция на страх работает, а когда становится тюрьмой",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "kognitivnye-iskazheniya-12-lovushek",
+   "title": "Когнитивные искажения: 12 ловушек мышления и как их ловить",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "koktejl-emocij-smeshenie",
+   "title": "Что будет, если смешать 5 граммов вины и 10 граммов раздражения. Химия эмоционального коктейля",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "koldovskoj-ritual-brosit-zavisimost-7-chetok",
+   "title": "Колдовской ритуал для тех, кто хочет бросить курить, пить или любую другую зависимость: «Семь чёток воздержания». Реальный кейс предпринимателя Дмитрия и нейробиология децентрации от влечения",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "koldovskoj-ritual-krug-sostoyatelnyh-kodeks-pompadur",
+   "title": "Колдовской ритуал для тех, кто хочет войти в круг состоятельных людей: «Кодекс мадам де Помпадур». Реальный кейс журналистки Карины и теория культурного капитала Бурдьё",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "koldovskoj-ritual-naiti-prizvanie-zerkalo-delfov",
+   "title": "Колдовской ритуал для тех, у кого «всё есть, а смысла нет»: «Зеркало Дельфийского оракула». Реальный кейс финансового аналитика Елены и теория ценностной картографии",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "koldovskoj-ritual-najti-biznes-nishu-keys",
+   "title": "Колдовской ритуал для тех, кто хочет своё дело: «Карта несовершенств мира». Реальный кейс маркетолога Игоря и нейробиология предпринимательского зрения",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "koldovskoj-ritual-novyy-uroven-dohoda-pechat-solomona",
+   "title": "Колдовской ритуал «Печать Соломона»: реальный кейс IT-специалиста, который вырос с 250 до 630 тысяч в месяц за 12 месяцев",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "koldovskoj-ritual-primirenie-7-svechei",
+   "title": "Колдовской ритуал «Семь свечей примирения»: как простить близкого после многолетнего конфликта. Реальный кейс архитектора Ольги и теория эмоциональной сложности",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "koldovskoj-ritual-prokrastinaciya-7-molotkov",
+   "title": "Колдовской ритуал «Семь молотков мастера»: реальный кейс режиссёра-документалиста, у которого 3 года «висел» сценарий полного метра — и который доснял фильм за 12 месяцев",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "koldovskoj-ritual-stroitel-3d-printer-keys",
+   "title": "Колдовской ритуал для менеджера в строительстве: реальный кейс. Как «Семь камней основания» родили маркетинговую идею с 3D-принтером и коробкой из-под торта",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "koldovskoj-ritual-telo-bez-diet-afonskaya-gora",
+   "title": "Колдовской ритуал «Семь камней Афонской горы»: тело в форме без диет. Реальный кейс маркетолога Светланы и нейробиология интероцепции",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "koldovskoj-ritual-trevoga-son-7-pokrovov-nochi",
+   "title": "Колдовской ритуал «Семь покровов ночи»: реальный кейс юриста, которая после 4 лет бессонницы вернула 7 часов сна без снотворных",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "koldovskoj-ritual-uspeshnost-keys-banker",
+   "title": "Колдовской ритуал для банковского менеджера: реальный кейс из практики. Меркурианский кодекс торговцев — 7 практик, каждая обучает навыку успеха",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "koldovskoj-ritual-vstretit-lyubov-7-klyuchei-venery",
+   "title": "Колдовской ритуал для тех, кто хочет встретить любовь: «Семь ключей Венеры». Реальный кейс дизайнера Марины и нейробиология эмоциональной самонастройки",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "koldovstvo-povedencheskaya-programma",
+   "title": "Колдовство как поведенческая программа: почему ритуал работает там, где не работает «просто захоти». Антропология, бихевиоризм и парадокс желания",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "kolonizaciya-russkogo-soznaniya-23-ustanovki",
+   "title": "Колонизация русского сознания: 23 введённые «психо-установки» за 30 лет",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "kommunikaciya-3-frazy-razrushiteli",
+   "title": "Коммуникация в близких отношениях: 3 фразы-разрушителя и чем их заменить",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "konec-epohi-kopirovaniya-manifest-2026",
+   "title": "«Конец эпохи копирования»: 7 признаков, что Россия 2026 года живёт в новой исторической эпохе. Манифест",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "konec-epohi-psiholog-celitel-2035",
+   "title": "Конец эпохи «психолог-целитель»: психология «ремесленников психики» 2035",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "konflikt-v-kommunikacii-6-tipov",
+   "title": "Конфликт в коммуникации: 6 типов и техники работы 2026",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "kontekstualnye-vnusheniya-8-tipov",
+   "title": "Контекстуальные внушения: 8 типов скрытого влияния в обычной речи. Полный каталог",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kontrfobiya-paradox-kogda-strah-tolkaet-v-opasnost",
+   "title": "Контрфобия: парадокс, когда страх толкает прямо в опасность",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "kontrzavisimost-12-priznakov-distancii",
+   "title": "Контрзависимость: 12 признаков того, что вы держите всех на расстоянии — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "kpt-za-30-dnej-prakticheskij-gid",
+   "title": "КПТ за 30 дней: практический гид с упражнениями на каждый день — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "krizis-25-let-5-etapov",
+   "title": "Кризис 25 лет (Quarter Life Crisis): 5 этапов и что делать — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "krizis-40-let-7-etapov-nauchnyj-podhod",
+   "title": "Кризис 40 лет: 7 этапов и что с ними делать (научный подход) — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lateralnoe-myshlenie",
+   "title": "Латеральное мышление: что это, техники развития и примеры — Андрей Мейстер",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "len-kak-simptom-6-prichin",
+   "title": "Лень как симптом: 6 причин и почему «лекарство от лени» — это лечить следствие",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "lichnye-granicy-kak-vystroit",
+   "title": "Личные границы — не стена, а маркер: 5 ситуаций и как их собрать",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "liderstvo-otnoshenie-k-otvetstvennosti",
+   "title": "Лидерство — не стиль, а отношение к ответственности. С чего начинают новые лиды",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "lokus-kontrolya-vnutrennij-vneshnij",
+   "title": "Локус контроля: кто в твоей жизни главный — ты или обстоятельства",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "longityud-1000-rossiyan-10-let-2016-2026",
+   "title": "Лонгитюд: 1000 россиян за 10 лет (2016–2026) — что изменилось",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "longityud-300-par-8-let-privyazannost",
+   "title": "Лонгитюд 300 пар за 8 лет: что предсказывает развод, а что — крепость — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lyubov-eto-kontrakt-7-skrytyh-punktov",
+   "title": "Любовь — это контракт, которого никто не читал. 7 скрытых пунктов вашего соглашения",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "malenkie-shagi-mikropobedy-motivaciya",
+   "title": "Маленькие шаги: как микропобеды заново запускают мотивацию",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "manifest-psihologicheskoj-svobody-2026",
+   "title": "Манифест психологической свободы 2026: 7 свобод современного человека",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "manifest-russkoj-psihologii-2030",
+   "title": "Манифест русской психологии 2030: путь за 5 лет",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 35
+  },
+  {
+   "slug": "manifestaciya-ne-rabotaet-meta-analizy",
+   "title": "Манифестация не работает: что показали исследования 2018–2024",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "manipulyacii-v-blizkih-otnosheniyah-7-priznakov-rechevogo-gipnoza",
+   "title": "Манипуляции в близких отношениях: 7 признаков речевого гипноза партнёра",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "manipulyativnyj-gradient-12-urovnej",
+   "title": "Манипулятивный градиент: 12 уровней речевого воздействия (Мейстер, 2026)",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "mejster-kod-transformacionnaya-igra",
+   "title": "МЕЙСТЕР-КОД: трансформационная игра — конструктор личности на 9 уровней",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "mentalnye-modeli-7-konceptov",
+   "title": "7 ментальных моделей, которые меняют качество решений",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "meta-analiz-manifestacii-47-issledovanij",
+   "title": "Мета-анализ 47 исследований манифестации: что на самом деле работает — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "metaanaliz-200-issledovanij-russkaya-psihologiya",
+   "title": "Метаанализ 200 исследований русской психологии: что наука знает о нас",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 21
+  },
+  {
+   "slug": "metaforicheskie-karty-samoanaliz",
+   "title": "Метафорические карты для самоанализа: как работать самостоятельно",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "mindfulness-bez-ezoteriki-8-tehnik",
+   "title": "Mindfulness без эзотерики: 8 техник с доказательной базой — Андрей Мейстер",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "mir-kak-process-ili-fotografiya-ontologiya-razvitiya",
+   "title": "Мир как процесс или мир как фотография: онтология, которая определяет, сможешь ли ты меняться",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "motivaciya-kak-struktura-4-tipa",
+   "title": "Мотивация как структура: 4 типа и почему «мотивация — это проблема» верно только в одном из них",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "mozhno-li-zamenit-psihologa-ii",
+   "title": "Можно ли заменить психолога ИИ? Честный разбор 2026",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "muzhchina-kotoryj-vsyo-tashchit-molcha",
+   "title": "Мужчина, который всё тащит молча: почему это убивает раньше срока",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "muzhchina-posle-40-vsyo-shvacheno",
+   "title": "Мужчина после 40, у которого «всё схвачено». Невидимая ловушка эффективности",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "nado-bylo-skazat",
+   "title": "«Надо было сказать…» Почему правильный ответ всегда приходит постфактум",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "narciss-naoborot-vy-vyrosli-s-narcissom",
+   "title": "Вы выросли с нарциссом — теперь нарцисс это вы. 7 признаков повторения сценария",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "narcissizm-7-priznakov-i-kak-vyyti",
+   "title": "Нарциссизм: 7 признаков нарциссической личности по DSM-5 и как выходить из отношений с нарциссом",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "nas-bolshe-chem-kazhetsya",
+   "title": "Нас, кто хочет менять что-то здесь к лучшему, больше, чем кажется",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "navyk-rassela-chetyre-yarlyka-uma",
+   "title": "Четыре ярлыка ума, из-за которых вы откладываете и повторяете одни ошибки — навык Рассела — Андрей Мейстер",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "navyk-shchedrovickogo-smd-myshlenie",
+   "title": "Навык Щедровицкого: четыре различения, которые меняют качество ваших совещаний — Андрей Мейстер",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "ne-hochu-rabotat-nad-soboy",
+   "title": "«Я больше не хочу работать над собой». Почему отказ от саморазвития часто и есть взросление",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "ne-lentyaj-kopish-i-vydayosh-zalpom",
+   "title": "Ты не лентяй и не прокрастинатор. Ты человек, который копит и выдаёт залпом",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "ne-mogu-delegirovat-kak-otpustit",
+   "title": "Не могу делегировать: почему держишь всё на себе и как отпустить без потери качества",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "ne-slishkom-chuvstvitelnyj-zapretili-chuvstvovat",
+   "title": "Ты не «слишком чувствительный» — тебе в детстве запретили чувствовать",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "ne-zhili-bogato-pogovorki-roditelej-potolok",
+   "title": "«Не жили богато — нечего начинать»: как поговорки родителей стали вашим потолком",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "ne-znayu-chego-ya-hochu",
+   "title": "Не знаю, чего я хочу: 3 признака жизни на «надо» и одна практика",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "net-deneg-na-psihologa-5-strategij",
+   "title": "Что делать, если нет денег на психолога: 5 рабочих стратегий 2026",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "netvorking-dlya-introvertov",
+   "title": "Нетворкинг для тех, кто терпеть не может «сетевиться»: 4 правила",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "neverbalnoe-obshchenie-12-markerov",
+   "title": "Невербальное общение: 12 маркеров, которые легко научиться видеть — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 3
+  },
+  {
+   "slug": "nizkaya-samoocenka-priznaki-i-protokol",
+   "title": "Низкая самооценка: 5 признаков и протокол восстановления без аффирмаций",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "nlp-yakorya-resursnoe-sostoyanie",
+   "title": "НЛП-якоря: как создать ресурсное состояние за 5 минут",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 5
+  },
+  {
+   "slug": "novyj-protokol-vyzhivaniya-2026",
+   "title": "Новый протокол выживания 2026: как жить в эпоху перманентной неопределённости",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 21
+  },
+  {
+   "slug": "o-chyom-ty-umeesh-dumat",
+   "title": "О чём ты умеешь думать? «Обо всём» — это другой способ сказать «ни о чём»",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "obratnaya-svyaz-formula-pixar",
+   "title": "Обратная связь: формула, разработанная в Pixar и работающая в семье",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "odinochestvo-v-pare-5-tipov",
+   "title": "Одиночество в паре: 5 типов и почему вдвоём, но порознь — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 17
+  },
+  {
+   "slug": "opros-200-terapevtov-rasstanovki-hellingera",
+   "title": "Опрос 200 терапевтов о расстановках Хеллингера: где работает, где вредит — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "osoznannost-sposob-ne-chuvstvovat",
+   "title": "Осознанность — это новый способ не чувствовать. 5 признаков духовного бегства",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "ot-zhertvy-k-tvorcu-7-urovnej-evolyucii",
+   "title": "От жертвы к творцу: 7-уровневая модель эволюции взрослого",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "panicheskie-ataki-chto-delat",
+   "title": "Панические атаки: что делать в момент и как вылечить за 6-12 недель. Полное руководство",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "panicheskie-ataki-nochyu-chto-delat",
+   "title": "Панические атаки ночью: что делать в момент приступа 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "paradoks-vyzhivaniya-1990-2026",
+   "title": "Парадокс выживания 1990-2026: почему навыки «vыживания» лишают жизни",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "patterny-povedeniya-kak-zamechat",
+   "title": "Паттерны поведения: как замечать то, что пропускают другие — гид 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 60
+  },
+  {
+   "slug": "pereproshivka-reakcii-chto-rabotaet-i-chto-mif",
+   "title": "Перепрошивка реакции на страх: что реально работает и что — миф",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "perfekcionizm-priznaki-i-protokol",
+   "title": "Перфекционизм: 5 признаков невротического, как отличить от здорового и парадоксальное предписание",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "pishchevye-rasstrojstva-6-tipov",
+   "title": "Пищевые расстройства: 6 типов и научный подход 2026 — Андрей Мейстер",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "planirovanie-celi-sredstva-usloviya",
+   "title": "Планирование цели → средства → условия: схема, которой большинству не хватает",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "pochemu-bud-soboj-hudshij-sovet",
+   "title": "Почему «будь собой» — худший совет, который тебе дали",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "pochemu-eta-reakciya-stala-vashej-formirovanie-do-6-let",
+   "title": "Почему именно эта реакция стала вашей: формирование в первые 6 лет",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "pochemu-pozitivnoe-myshlenie-ne-rabotaet",
+   "title": "Почему «просто мысли позитивно» не работает в России — и что работает вместо этого",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "pochemu-psihoterapiya-v-rossii-ne-rabotaet",
+   "title": "Почему психотерапия в России не работает: 5 причин",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "pochemu-stesnyaemsya-mechtat-vsluh",
+   "title": "Почему мы стесняемся мечтать вслух — и что теряем целым народом",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "pochemu-u-nas-ne-prinyato-hvalit-detej",
+   "title": "Почему у нас не принято хвалить детей — и что это сделало с целым поколением",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "pochemu-umnye-lyudi-chasto-neschastny",
+   "title": "Почему умные люди часто несчастны? 7 причин от психолога",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "pochemu-znaniya-ne-menyayut-povedenie",
+   "title": "Почему знания не меняют поведение? Парадокс инсайта",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "pohoronnaya-terapiya-konfrontaciya-so-smertyu",
+   "title": "Лечь в гроб, чтобы жить: похоронная терапия — психология, физика, риски",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "pokolencheskie-razlichiya-pravda-i-mify",
+   "title": "Поколенческие различия: правда и мифы — Андрей Мейстер",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "pokolencheskij-razryv-4-pokoleniya-rossii",
+   "title": "Поколенческий разрыв в России: исследование 4 поколений психологии",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "pokolenie-vyrosshee-na-slome",
+   "title": "Поколение, выросшее на сломе: почему нам так трудно строить долгое",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "pokolenie-x-plus-rossiyane-35-50",
+   "title": "Поколение Х+: как россияне 35-50 переписывают правила жизни",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "postzapadnyi-chelovek-krizis-pokoleniya-2026",
+   "title": "«Постзападный человек»: 10 признаков того, что вы воспитанник эпохи, которой больше нет",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "princip-urovnya-dveri-mejstera",
+   "title": "Принцип «Уровня двери» — авторская модель Мейстера для границ в отношениях",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "prinyatie-resheniy-pri-nepolnoy-informacii",
+   "title": "Как принимать решения при неполной информации: каркас 4 шагов",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 5
+  },
+  {
+   "slug": "privychka-ekonomit-4-tipa-skuposti",
+   "title": "Привычка экономить как симптом: 4 типа «скупости» и протокол выхода",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "prizvanie-vs-karyera-5-tipov-zhiznennogo-puti",
+   "title": "Призвание vs карьера: 5 типов жизненного пути и как найти своё — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "prodavaj-lopaty-4-pravila-biznesa",
+   "title": "«Во время золотой лихорадки продавай лопаты»: 4 правила, по которым выживает бизнес",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "prokrastinaciya-eto-zamri-ne-len",
+   "title": "Прокрастинация — это «замри», а не лень",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "prokrastinaciya-polezna",
+   "title": "Прокрастинация полезна. И вот почему — научный взгляд",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "prokrastinaciya-prichiny-i-tehniki",
+   "title": "Прокрастинация: почему мы откладываем и 5 рабочих техник",
+   "rubric": "motivaciya",
+   "level": "n",
+   "mins": 2
+  },
+  {
+   "slug": "prokrastinaciya-soprotivlenie-chuzhoj-celi",
+   "title": "Прокрастинация — это сопротивление чужой цели. Если откладываешь — значит цель не твоя",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "protokol-grob-dnevnik-12-mesyacev-keys-direktora",
+   "title": "«Синдром автомойки»: почему собственник в 40 хочет бросить завод ради кофейни. Кейс 12 месяцев — диагноз эпохи",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 32
+  },
+  {
+   "slug": "psiholog-sam-ne-hodit-k-psihologu",
+   "title": "Психолог сам не ходит к психологу. Разбор табу профессии",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "psihologicheskaya-pomoshch-v-rossii-2026-karta",
+   "title": "Психологическая помощь в России 2026: куда идти, что работает",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "psihologicheskij-pasport-rossiyanina-23-fakta",
+   "title": "Психологический паспорт россиянина: 23 ключевых факта 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "psihologicheskij-portret-za-odnu-vstrechu",
+   "title": "Психологический портрет: как составить за 1 встречу — методика 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 90
+  },
+  {
+   "slug": "psihologicheskij-portret-zachem-znat-psihotip",
+   "title": "Психологический портрет: зачем знать свой психотип",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "psihologicheskij-samokouching-6-tehnik",
+   "title": "Психологический самокоучинг: 6 техник работы с собой 2026",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "psihologicheskij-test-7-voprosov",
+   "title": "Психологический тест: 7 вопросов о вашем состоянии — самопроверка 2026",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 18
+  },
+  {
+   "slug": "psihologiya-barmena-gumanisticheskij-podhod",
+   "title": "Психология бармена: научное объяснение от Маслоу-Маслова до Роджерса и Фреди",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "psihologiya-deneg-6-arhetipov-test",
+   "title": "Психология денег: 6 архетипов отношения к финансам (с тестом) — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 21
+  },
+  {
+   "slug": "psihologiya-dolgosrochnoj-osady-2022-2026",
+   "title": "Психология долгосрочной осады: уроки 5 лет внешнего давления для россиян",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "psihologiya-eto-ne-nauka-provokaciya",
+   "title": "Психология — это не наука. И вот почему — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "psihologiya-izmeny-8-prichin-nauchnyj-vzglyad",
+   "title": "Психология измены: 8 причин и научный взгляд — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 21
+  },
+  {
+   "slug": "psihologiya-lichnogo-brenda-7-principov",
+   "title": "Психология личного бренда: 7 принципов 2026",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 21
+  },
+  {
+   "slug": "psihologiya-odinochestva-4-tipa-2026",
+   "title": "Психология одиночества 2026: 4 типа и почему 60% одиноки не по тем причинам — Андрей Мейстер",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "psihologiya-peregovorov-metod-voss-fbi",
+   "title": "Психология переговоров: 8 техник из FBI (метод Voss) — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "psihologiya-polzy-dengi",
+   "title": "Как получать больше денег, работая меньше? Психология пользы",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "psihologiya-posle-ii-5-cennejshih-sposobnostej",
+   "title": "Психология после ИИ: 5 человеческих способностей, которые будут стоить дороже всего к 2030",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "psihologiya-prodazh-2026-7-patternov",
+   "title": "Психология продаж 2026: 7 паттернов общения с клиентом — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "psihologiya-razvoda-7-etapov",
+   "title": "Психология развода: 7 этапов и что делать на каждом — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "psihologiya-revnosti-6-tipov",
+   "title": "Психология ревности: 6 типов и протоколы работы — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "psihologiya-roditelstva-4-etapa-razvitiya",
+   "title": "Психология родительства: 4 этапа развития РОДИТЕЛЯ (не ребёнка) — Андрей Мейстер",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "psihologiya-seksualnosti-2026-5-sdvigov",
+   "title": "Психология сексуальности 2026: 5 главных сдвигов — Андрей Мейстер",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "psihologiya-trusosti-geroi-ne-protivopolozhnost-trusam",
+   "title": "Психология трусости: почему герои — не противоположность трусам",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "psihologiya-ubezhdeniya-5-mehanizmov",
+   "title": "Психология убеждения: 5 базовых механизмов влияния и как ими этично пользоваться",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "psihosomatika-7-svyazok-telo-psihika",
+   "title": "Психосоматика: 7 классических связок тело-психика и как с ними работать. Научный подход",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "psihosomatika-nauka-i-luiza-hej",
+   "title": "Психосоматика: где наука, а где Луиза Хей",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "psihotipy-po-povedeniyu",
+   "title": "Психотипы по поведению: как читать характер за 5 минут — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 5
+  },
+  {
+   "slug": "rapport-4-urovnya-i-test-na-kazhdyi",
+   "title": "Раппорт: 4 уровня (поведенческий, вербальный, эмоциональный, ценностный) и тест на каждый",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "rapport-za-60-sekund-5-tekhnik",
+   "title": "Раппорт за 60 секунд: 5 техник быстрого контакта 2026",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "rasshifrovka-snov-nauchnyj-podhod-praktika",
+   "title": "Расшифровка снов: научный подход и практический гид — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "rasstanovki-hellingera-6-prichin-psevdonauka",
+   "title": "Расстановки по Хеллингеру: 6 причин, почему это псевдонаука (и при чём здесь идеология основателя)",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "rasstanovki-hellingera-razbor",
+   "title": "Расстановки Хеллингера: что говорит доказательная психология",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "razgovor-posle-kotorogo-ne-otpuskaet-samosuperviziya",
+   "title": "Разговор, после которого не отпускает: техника супервизии для собственных конфликтов",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "razgovornyy-gipnoz-chto-eto-i-pochemu-ne-magiya",
+   "title": "Что такое разговорный гипноз: простыми словами, без магии — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "razgovornyy-gipnoz-tekhniki",
+   "title": "Разговорный гипноз: техники повседневного влияния",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "razvitie-naoborot-kak-uhodish-ot-sebya",
+   "title": "Развитие наоборот: как мы развиваемся в сторону от себя. 5 признаков «ложного роста»",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "rebenok-uchitsya-svoemu-treneru",
+   "title": "Ребёнок не учится плаванию. Он учится своему тренеру",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "rechevoe-vozdejstvie-5-patternov",
+   "title": "Речевое воздействие: 5 паттернов, которые слышно у лучших переговорщиков",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 1
+  },
+  {
+   "slug": "rechevoy-portret-kak-sostavit",
+   "title": "Как составить речевой портрет собеседника за один разговор — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "refleks-uznavaniya-formula-uvidel-uznal",
+   "title": "Рефлекс узнавания: формула «увидел — узнал — захотел — купил» и методика её формирования",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 14
+  },
+  {
+   "slug": "refrejming-tri-sposoba-bez-obescenivaniya",
+   "title": "Рефрейминг: три способа увидеть ситуацию по-другому без обесценивания боли — Андрей Мейстер",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "ritual-prisutstviya-devyat-chashek-tishiny",
+   "title": "«Девять чашек тишины»: ритуал присутствия для выгоревшего руководителя. Реальный кейс топ-менеджера, восстановившегося через ежедневную чайную церемонию",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "ritual-prisutstviya-sem-drovej-banya",
+   "title": "«Семь дровей»: ритуал присутствия для тех, кто отрезан от тела. Реальный кейс программиста и нейропсихология банного контраста",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "ritual-prisutstviya-sem-molchanij-isihazm",
+   "title": "«Семь молчаний»: ритуал присутствия для тех, у кого «слишком шумно в голове». Реальный кейс владелицы сети ресторанов и нейропсихология исихастского трезвения",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 19
+  },
+  {
+   "slug": "ritual-prisutstviya-sem-sidenij-shikantadza",
+   "title": "«Семь сидений»: ритуал присутствия для тех, кто разучился ничего не делать. Реальный кейс врача-реаниматолога и нейропсихология шикантадзы",
+   "rubric": "ezoterika",
+   "level": "p",
+   "mins": 35
+  },
+  {
+   "slug": "ritual-prisutstviya-sem-trop-bez-napravleniya-flaner",
+   "title": "«Семь троп без направления»: ритуал присутствия для тех, кто разучился отдыхать. Реальный кейс директора по маркетингу и философия фланёра",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "ritual-prisutstviya-sorok-devyat-utr-stranitsy",
+   "title": "«Сорок девять утр»: ритуал присутствия для тех, кто потерял себя в роли. Реальный кейс молодой матери и практика утренних страниц",
+   "rubric": "ezoterika",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "rossijskij-abyuz-9-unikalnyh-patternov",
+   "title": "Российский абъюз: 9 уникальных паттернов абъюза в русских отношениях",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 27
+  },
+  {
+   "slug": "rossijskij-semejnyj-scenarij-5-modelej",
+   "title": "Российский семейный сценарий: 5 моделей российской семьи 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "rossiya-vs-zapad-11-razlichij",
+   "title": "Россия vs Запад: 11 фундаментальных психологических различий",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "rossiyane-kto-ne-uehal-vina-i-zlost",
+   "title": "Россияне, которые не уехали: 6 невыговоренных эмоций оставшихся",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "rumination-mysli-po-krugu",
+   "title": "Руминация: когда мысли ходят по кругу — и как разорвать петлю",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "samogipnoz-dlya-nachinayushih",
+   "title": "Самогипноз для начинающих: пошаговая инструкция и научные основы",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "samogipnoz-nauchnyi-razbor-5-tehnik",
+   "title": "Самогипноз: 5 техник без терапевта. Что работает по мета-анализам, чего избегать",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "samoocenka-pridumannaya-kategoriya-5-edinic",
+   "title": "Самооценка — придуманная категория. Что на самом деле формирует ощущение себя",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "samosostradanie-vmesto-samokritiki",
+   "title": "Самосострадание вместо кнута: почему самокритика усиливает беспомощность",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "sdvg-u-vzroslyh-7-tipov-pochemu-propuskayut",
+   "title": "СДВГ у взрослых: 7 типов и почему его пропускают до 35 лет — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "sem-treningov-i-nol-izmeneniy",
+   "title": "Семь тренингов за пять лет — и ноль изменений. Почему сертификаты копятся, а жизнь стоит",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "serendipiti-kak-stat-vezuchim",
+   "title": "Серендипити: как научно создавать счастливые случайности — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "setevoj-marketing-lider-kak-produkt",
+   "title": "Сетевой маркетинг: главный психологический фокус — ЛОМ передаёт сигнал, у которого нет товара",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "shkala-emocionalnoj-gramotnosti-mejstera",
+   "title": "Шкала эмоциональной грамотности Мейстера: 7 уровней + тест на 14 вопросов",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "silnaya-zhenshchina-diagnoz-ustalosti",
+   "title": "«Сильная женщина» — это не комплимент. Часто это диагноз усталости",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "sindrom-emigracii-pochemu-emigraciya-ne-lechit",
+   "title": "«Синдром эмиграции»: почему эмиграция не лечит. Кейс владелицы IT в Тбилиси, 14 месяцев наблюдения",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "sindrom-partnerskoy-semyi-5-lovushek",
+   "title": "«Синдром партнёрской семьи»: 5 ловушек пар, которые вместе живут и работают. Кейс 12 месяцев",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 25
+  },
+  {
+   "slug": "sindrom-samozvanca-priznaki-i-protokol",
+   "title": "Синдром самозванца: 5 признаков и протокол выхода без аффирмаций. Особенно для женщин в бизнесе",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "sindrom-stokgolmskogo-menedzhera",
+   "title": "«Синдром Стокгольмского менеджера»: почему топ-менеджеры защищают токсичных боссов годами. Кейс М-44, 9 месяцев",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "sindrom-tvorcheskogo-stupora",
+   "title": "«Синдром творческого ступора»: когда художник, режиссёр, дизайнер вдруг перестаёт творить. Кейс Т-39, 10 месяцев",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "sindrom-umnogo-otca-ne-dognat",
+   "title": "«Синдром умного отца»: почему дети успешных людей всю жизнь чувствуют «я не дотянулся». Кейс У-34, 11 месяцев",
+   "rubric": "roditeli",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "sindrom-vtorogo-pokoleniya-nasledniki-90h",
+   "title": "«Синдром второго поколения»: почему дети предпринимателей 90-х не знают, что делать с папиным бизнесом",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "sindrom-zhduna-kogda-vse-vernetsya",
+   "title": "«Синдром ждуна»: миллионы людей живут в режиме «когда всё вернётся». Кейс маркетолога Ж-42, 12 месяцев",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "sistema-koordinat-soznaniya-4-osi",
+   "title": "Система координат сознания: 4 оси, по которым ты тайно живёшь",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-assistent",
+   "title": "Скрытые тесты для отбора личного ассистента руководителя: 4 компетенции и 4 теста, которые покажут реальную точность, многозадачность и дискретность",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-brigadir",
+   "title": "Скрытые тесты для отбора бригадира строительной бригады: 4 компетенции и 4 теста для премиум-ремонтов. Реальный кейс",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 18
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-buhgalter",
+   "title": "Скрытые тесты для отбора бухгалтера: 4 ключевых компетенции и 4 теста, которые их выявляют. Реальный кейс",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 18
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-marketolog",
+   "title": "Скрытые тесты для отбора маркетолога: 4 компетенции и 4 теста, которые отличают тех, кто делает выручку, от тех, кто «настраивает таргет». Реальный кейс",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 18
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-menedzher-prodazh",
+   "title": "Скрытые тесты для отбора менеджера по продажам: 4 ключевых компетенции и 4 теста, которые их выявляют. Реальный кейс",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 20
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-menedzher-reklamy",
+   "title": "Скрытые тесты для отбора менеджера по рекламе: 4 компетенции и 4 теста, которые отличают того, кто не сольёт бюджет, от того, кто «вёл крупные бренды». Реальный кейс",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 17
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-razrabotchik",
+   "title": "Скрытые тесты для отбора senior-разработчика: 4 компетенции и 4 теста, которые leetcode не покажет. Реальный кейс CTO",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 19
+  },
+  {
+   "slug": "sistema-otbora-personala-kejs-timlid",
+   "title": "Скрытые тесты для отбора тимлида: 4 ключевых компетенции и 4 теста, которые отличают руководителя от микроменеджера. Реальный кейс",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 19
+  },
+  {
+   "slug": "sistemnoe-myshlenie-5-praktik",
+   "title": "Системное мышление: 5 ежедневных практик тренировки в 2026 году",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "sistemnoe-myshlenie-7-uprazhneniy",
+   "title": "Системное мышление: 7 упражнений для руководителя — Андрей Мейстер",
+   "rubric": "myshlenie",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "sistemnoe-myshlenie-v-biznese",
+   "title": "Системное мышление в бизнесе: как принимать решения",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "skazki-katarsis-terapiya-metafor",
+   "title": "Сказки-катарсис: как метафоры лечат то, к чему не подойти напрямую",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "skrytaya-deklaraciya-dialogi",
+   "title": "Девять диалогов-практик «Скрытой декларации»: проживи каждый уровень",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "skrytoe-vnushenie-7-primerov",
+   "title": "Скрытое внушение в обычной речи: 7 примеров и как услышать. Разговорный гипноз доступно",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "skrytyj-povedencheskij-test-podbora-personala",
+   "title": "Скрытое наблюдение в отборе персонала: как создать тест, о котором кандидат не знает, и почему это работает в десятки раз лучше классического собеседования",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "socseti-i-psihika-50-issledovanij",
+   "title": "Соцсети и психика: 50 исследований 2020-2026 — что мы узнали — Андрей Мейстер",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "soft-skills-2026-8-klyuchevyh-navykov",
+   "title": "Soft skills 2026: 8 ключевых навыков для карьерного роста",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "sonnaya-bolezn-sytyh",
+   "title": "Сонная болезнь сытых. Почему без долгов и желаний человек медленно умирает",
+   "rubric": "motivaciya",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "soznanie-100-let-nauchnyh-teorij",
+   "title": "Сознание: 100 лет научных теорий — от Джеймса до Тонони — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "sreda-opredelyaet-povedenie-nauchnyj-vzglyad-2026",
+   "title": "Среда определяет поведение: научный взгляд 2026",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "srochnaya-psihologicheskaya-pomoshch-chto-delat",
+   "title": "Срочная психологическая помощь: что делать прямо сейчас 2026",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 2
+  },
+  {
+   "slug": "steny-delayut-cheloveka-arhitektura-velichiya",
+   "title": "Стены делают человека. Почему архитектура Рима обязывала к величию — а нас окружают стимулы, которые делают мельче",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "stimulnyj-kontrol-7-rychagov-izmeneniya-povedeniya",
+   "title": "Стимульный контроль в личной жизни: 7 рычагов изменения поведения 2026",
+   "rubric": "otnosheniya",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "stimulnyy-kontrol-triggery-resheniy",
+   "title": "Стимульный контроль: как работают триггеры решений в маркетинге и переговорах",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "stoicizm-vs-terapiya-chto-luchshe",
+   "title": "Стоицизм vs терапия: что лучше работает в 2026 — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "storytelling-geroj-perelom-urok",
+   "title": "Сторителлинг по структуре «герой → перелом → урок»: рабочий каркас на 30 секунд — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "stradanie-ne-delaet-glubzhe",
+   "title": "Страдание не делает вас глубже. Иногда оно просто ломает — и это нормально",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "strah-sobstvennogo-uspeha-7-priznakov-samosabotazha",
+   "title": "Страх собственного успеха: 7 признаков, что вы саботируете себя",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "strah-v-dengah-4-arhetipa-otnoshenij-s-finansami",
+   "title": "Страх в деньгах: 4 архетипа отношения с финансами через реакцию на страх",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "strah-v-karere-5-tipichnyh-scenariev",
+   "title": "Страх в карьере: 5 типичных сценариев и какая реакция за каждым",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "strah-v-odinochestve-pochemu-odni-vygorayut-drugie-rasvetayut",
+   "title": "Страх в одиночестве: почему одни выгорают, другие расцветают",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "strah-v-otnosheniyah-pochemu-vy-vybiraete-takih-partnyorov",
+   "title": "Страх в отношениях: почему вы выбираете именно «таких» партнёров",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "strah-v-roditelstve-kak-vy-peredayote-svoyu-reakciyu",
+   "title": "Страх в родительстве: как вы передаёте свою дефолтную реакцию детям",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "stressoustojchivost-okno-tolerantnosti",
+   "title": "Стрессоустойчивость: как восстанавливаться за минуты, а не за дни",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 5
+  },
+  {
+   "slug": "styd-vs-vina-raznica-kotoraya-kalechit",
+   "title": "Стыд vs вина: разница, которую путают 90% — и почему это калечит — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "svincovye-gvozdi-kak-ii-menyaet-kurs",
+   "title": "Свинцовые гвозди в левом каблуке: как ИИ незаметно меняет ваш курс. И как взять управление обратно",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "tajnaya-ekonomika-boli-industriya-psihologii",
+   "title": "Тайная экономика боли: индустрия психологии $13 млрд/год",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 27
+  },
+  {
+   "slug": "tehniki-kpt-dlya-samostoyatelnoj-raboty",
+   "title": "Техники КПТ для самостоятельной работы: 7 рабочих упражнений",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "telo-pervogo-raza-programma-30-dney",
+   "title": "«Тело первого раза»: 30 дней практики для тех, кто разучился действовать без образца",
+   "rubric": "telo",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "telo-pervym-dvizhenie-poza-dyhanie",
+   "title": "Тело первым: как движение, поза и дыхание выключают «замри»",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "temnaya-storona-dalnego-planirovaniya",
+   "title": "Тёмная сторона дальнего планирования: 5 ловушек горизонта на десятилетия. Когда «думать наперёд» — это ошибка",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "terapiya-ne-dlya-vseh-chestno",
+   "title": "Терапия не для всех. Кому она бесполезна или вредна — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "terpenie-ne-dobrodetel-vyuchennaya-bespomoshchnost",
+   "title": "Терпение — не всегда добродетель. Иногда это выученная беспомощность",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "test-glavnaya-i-tenevaya-reakciya-na-strah",
+   "title": "Тест: какая у вас главная реакция на страх и какая теневая (вторая по силе)",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "test-stil-privyazannosti-boulbi",
+   "title": "Тест: какой у тебя стиль привязанности? Боулби, 12 вопросов",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "tipy-privyazannosti-test-i-rabota",
+   "title": "Типы привязанности: тест за 5 минут и что делать каждому. Тревожный, избегающий, безопасный, дезорганизованный",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 5
+  },
+  {
+   "slug": "tolkovanie-snov-nauchnyj-podhod",
+   "title": "Толкование снов: научный подход без эзотерики",
+   "rubric": "ai",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "trans-v-obychnoy-rechi-6-priznakov",
+   "title": "Транс в обычной речи: 6 признаков, что собеседник в трансе. И что с этим делать",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "transaktnyj-analiz-berna-na-praktike",
+   "title": "Транзактный анализ Берна на практике: эго-состояния и игры",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "travma-6-tipov-i-protokoly-raboty",
+   "title": "Травма: 6 типов и протоколы работы — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "travma-pokoleniya-8-shramov-rossiyan-1985-2025",
+   "title": "Травма поколения: 8 шрамов россиян за 40 лет (1985-2025)",
+   "rubric": "obshchestvo",
+   "level": "p",
+   "mins": 26
+  },
+  {
+   "slug": "trener-lichnostnogo-rosta-priznaki",
+   "title": "Тренер личностного роста, который не справился со своей жизнью. Как распознать. 6 признаков",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "trenirovka-mozga-9-kognitivnyh-navykov",
+   "title": "Тренировка мозга: почему «игры для ума» не работают и какие 9 когнитивных навыков реально прокачиваются",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "trenirovka-nablyudatelnosti-30-dnej-uprazhnenij",
+   "title": "Тренировка наблюдательности: 30 дней упражнений 2026",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 20
+  },
+  {
+   "slug": "trenirovka-navykov-za-21-den",
+   "title": "Тренировка психологических навыков за 21 день: 15 направлений в Фреди",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "trevoga-bez-prichiny-7-trigerov",
+   "title": "Тревожность без причины: 7 скрытых триггеров и как разобраться 2026",
+   "rubric": "strahi",
+   "level": "p",
+   "mins": 60
+  },
+  {
+   "slug": "trevoga-polnaya-karta-rasstrojstv",
+   "title": "Тревога: полная карта расстройств и техник 2026 — Андрей Мейстер",
+   "rubric": "strahi",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "tri-p-vyuchennoj-bespomoshhnosti-stil-obyasnenij",
+   "title": "Три «П» беспомощности: как стиль объяснений превращает провал в приговор",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "tri-strategii-uspeha-pioner-posledovatel-postavshchik",
+   "title": "3 стратегии успеха: создатель, последователь, поставщик — какая твоя?",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 90
+  },
+  {
+   "slug": "triada-identichnosti-mejstera",
+   "title": "Триада идентичности: модель Мейстера для работы с self-концепцией",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "trudolyubie-vs-proizvoditelnost",
+   "title": "Трудолюбие vs производительность: что измеряют люди, объявляющие трудолюбие «обманом»",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "uchitsya-uchitsya",
+   "title": "Учиться учиться: почему перечитывание не работает и три техники, которые работают — Андрей Мейстер",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 30
+  },
+  {
+   "slug": "upravlenie-emociyami-gruppy",
+   "title": "Управление эмоциями группы: что делает зал «вашим» за первые 90 секунд",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 3
+  },
+  {
+   "slug": "upravlenie-vremenem-odna-bolshaya-zadacha",
+   "title": "Управление временем: почему «список дел» не работает, и что приходит на смену",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 90
+  },
+  {
+   "slug": "uspeshnaya-odinokaya-zhenshchina-35",
+   "title": "«Успешная одинокая женщина 35+»: психология феномена — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "ustanovka-na-rost-poka",
+   "title": "Установка на рост: разница между «я плохо это делаю» и «я этому учусь»",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "uverennost-7-urovney",
+   "title": "Уверенность в себе: 7 уровней от телесного до экзистенциального. Какой ваш",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "uverennost-v-sebe-telesnyj-navyk",
+   "title": "Уверенность как телесный навык: почему советы из книг не работают",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "verbalnyj-potencial-skrytaya-deklaraciya",
+   "title": "Что произносишь — тем и становишься. Даже когда говоришь «не я»",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 28
+  },
+  {
+   "slug": "vnuki-teh-kto-proshyol-vojnu-i-lagerya",
+   "title": "Внуки тех, кто прошёл войну и лагеря: травма, которую мы носим, не зная",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "vnushenie-vzglyadom-chto-rabotaet-chto-mif",
+   "title": "Внушение взглядом: что работает, что миф. Научное объяснение силы взгляда",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "vopros-kak-oruzhie-5-tipov-manipulyacii",
+   "title": "Вопрос как оружие: 5 типов манипулятивных вопросов и как защищаться",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "vozvrashchenie-posle-vygoraniya-7-etapov",
+   "title": "Возвращение после выгорания: 7 этапов восстановления — Андрей Мейстер",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "vozvrat-sobesednika-iz-reaktiva",
+   "title": "Вернуть собеседника из реактива: 3 шага за 30 секунд",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "vsyo-horosho-a-radosti-net-tomlenie",
+   "title": "Если «всё хорошо», а радости нет — это не депрессия и не неблагодарность. У этого есть имя",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "vygoranie-5-tipov-i-protokoly-vosstanovleniya",
+   "title": "Выгорание: 5 типов и почему классические тренинги его не лечат — Андрей Мейстер",
+   "rubric": "telo",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "vyhod-iz-vyuchennoj-bespomoshchnosti-marshrut",
+   "title": "Выход из выученной беспомощности: пошаговый маршрут",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "ya-delayu-vse-pravilno-pochemu-ne-poluchaetsya",
+   "title": "«Я делаю всё правильно — почему не получается?» Разбор иллюзии правильности",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "ya-nenavizhu-svoyu-mat",
+   "title": "Я ненавижу свою мать. Что с этим делать без чувства вины",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "yakor-zippo-zerkalnye-nejrony-sostoyanie-iz-filma",
+   "title": "Один щелчок вместо силы воли. Якорь Зиппо, зеркальные нейроны и состояния из старых фильмов",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "yakorenie-v-peregovorah",
+   "title": "Якорение в переговорах: как назвать цену первым, не извиняясь — Андрей Мейстер",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "yalom-cherez-sistemu-koordinat-4-ekzistencialnyh-voprosa",
+   "title": "Ялом через систему координат: 4 экзистенциальных вопроса и типы ответов, по которым ты живёшь",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "zakon-mejstera-3-urovnya-vnutrennej-pravdy",
+   "title": "Закон Мейстера: 3 уровня внутренней правды",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 32
+  },
+  {
+   "slug": "zashchita-ot-davleniya-10-tekhnik",
+   "title": "Защита от давления и манипуляций: 10 техник 2026",
+   "rubric": "gipnoz",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "zashchita-ot-gipnoza-7-urovney",
+   "title": "Защита от разговорного гипноза: 7 уровней и 21-дневный протокол тренировки",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "zavisimosti-9-vidov-nauchnyj-vzglyad",
+   "title": "Зависимости: 9 видов и научный взгляд 2026 — Андрей Мейстер",
+   "rubric": "zavisimosti",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "zdorovye-granicy-8-tipov",
+   "title": "Здоровые границы: 8 типов и как их выстроить — Андрей Мейстер",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 18
+  },
+  {
+   "slug": "zhenskoj-psihologii-net-eto-marketing",
+   "title": "«Женской психологии» не существует. Это маркетинг — Андрей Мейстер",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 17
+  },
+  {
+   "slug": "zhizn-v-rezhime-begi-flight-pattern",
+   "title": "Жизнь в режиме «Беги» (Flight): карьера-побег, отношения-побег, эмоции-побег",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "zhizn-v-rezhime-srazhajsya-fight-pattern",
+   "title": "Жизнь в режиме «Сражайся» (Fight): почему вы воюете со всеми, не побеждая",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "zhizn-v-rezhime-ugodi-fawn-pattern",
+   "title": "Жизнь в режиме «Угоди» (Fawn): сценарий «хорошего человека» как форма побега",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "zhizn-v-rezhime-zamri-freeze-pattern",
+   "title": "Жизнь в режиме «Замри» (Freeze): эффект отложенной жизни и хроническое зависание",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "zona-komforta-ne-pro-uyut",
+   "title": "Зона комфорта — это не про уют, а про клетку",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "kak-my-dumaem-kognitivnye-iskazheniya-vvedenie",
+   "title": "Как мы думаем: что такое когнитивные искажения и зачем их знать",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "telo-i-psihika-kak-sostoyanie-zhivet-v-tele",
+   "title": "Тело и психика: как ваше состояние живёт в теле — и что с этим делать",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "chto-takoe-virtualnyj-psiholog-chestno",
+   "title": "Что такое виртуальный психолог и может ли он помочь: честный разбор",
+   "rubric": "ai",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "rabotayut-li-ritualy-taro-astrologiya",
+   "title": "Работают ли ритуалы, таро и астрология? Психологический взгляд",
+   "rubric": "ezoterika",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "pochemu-vremya-i-pokolenie-vliyayut-na-nas",
+   "title": "Почему время и поколение так на нас влияют: введение",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "kak-naladit-son-gigiena-sna",
+   "title": "Как наладить сон: гигиена сна простыми словами",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "hronicheskij-stress-kak-razgruzhaet-telo",
+   "title": "Хронический стресс: как он живёт в теле и как его разгрузить",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "kriticheskoe-myshlenie-kak-ne-dat-sebya-obmanut",
+   "title": "Критическое мышление: как не дать себя обмануть",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "kak-poluchit-maksimum-ot-virtualnogo-psihologa",
+   "title": "Как получить максимум от виртуального психолога",
+   "rubric": "ai",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "scenarii-iz-detstva-kak-najti-i-perepisat",
+   "title": "Сценарии из детства: как найти свои и переписать",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "pochemu-goroskopy-rabotayut-effekt-barnuma",
+   "title": "Почему гороскопы «работают»: эффект Барнума простыми словами",
+   "rubric": "ezoterika",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "bajesovskoe-myshlenie-kak-obnovlyat-ubezhdeniya",
+   "title": "Байесовское мышление: как правильно обновлять убеждения",
+   "rubric": "myshlenie",
+   "level": "p",
+   "mins": 16
+  },
+  {
+   "slug": "differenciaciya-ya-po-bouenu",
+   "title": "Дифференциация «Я» по Боуэну: как повзрослеть от семьи, не разрывая связь",
+   "rubric": "roditeli",
+   "level": "p",
+   "mins": 17
+  },
+  {
+   "slug": "teoriya-samodeterminacii-tri-opory-motivacii",
+   "title": "Теория самодетерминации: три опоры устойчивой мотивации",
+   "rubric": "motivaciya",
+   "level": "p",
+   "mins": 16
+  },
+  {
+   "slug": "socialnaya-trevoga-strah-na-lyudyah",
+   "title": "Социальная тревога: почему страшно на людях и что с этим делать",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-otpustit-obidu",
+   "title": "Как отпустить обиду (без «просто прости»)",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "gnev-kak-perestat-vzryvatsya",
+   "title": "Гнев: как перестать взрываться и не глотать злость",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "kak-perezhit-utratu-blizkogo-etapy-gorya",
+   "title": "Как пережить утрату близкого: этапы горя и что реально помогает",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "trevoga-o-zdorove-ipohondriya",
+   "title": "Тревога о здоровье: когда это ипохондрия и как выйти из круга симптомов",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-prinyat-trudnoe-reshenie",
+   "title": "Как принять трудное решение, когда не можешь выбрать",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "panika-chto-delat-pryamo-sejchas",
+   "title": "Паническая атака прямо сейчас: 5 шагов",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 4
+  },
+  {
+   "slug": "ne-mogu-usnut-pryamo-sejchas",
+   "title": "Не могу уснуть: что сделать прямо сейчас",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 4
+  },
+  {
+   "slug": "tryaset-pered-vystupleniem",
+   "title": "Трясёт перед выступлением: экспресс-протокол за 5 минут",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 3
+  },
+  {
+   "slug": "vspyshka-gneva-90-sekund",
+   "title": "Вспышка гнева: 90 секунд, чтобы не наломать дров",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 3
+  },
+  {
+   "slug": "trevozhnaya-spiral-kak-ostanovit",
+   "title": "Тревожная спираль мыслей: как остановить прямо сейчас",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 4
+  },
+  {
+   "slug": "nakrylo-na-rabote-5-minut",
+   "title": "Накрыло на работе: протокол на 5 минут",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 4
+  },
+  {
+   "slug": "shkoly-psihoterapii-sravnenie-kak-vybrat",
+   "title": "Школы психотерапии: честное сравнение и как выбрать свою",
+   "rubric": "shkoly",
+   "level": "m",
+   "mins": 15
+  },
+  {
+   "slug": "zigmund-frejd-psihoanaliz-biografiya-metod",
+   "title": "Зигмунд Фрейд и психоанализ: биография, метод и что от него осталось",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "yakob-moreno-psihodrama-biografiya-metod",
+   "title": "Якоб Морено и психодрама: как театр стал терапией",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "detskie-isteriki-chto-delat",
+   "title": "Детские истерики: что делать в моменте и как их становится меньше",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "kak-pravilno-hvalit-rebenka",
+   "title": "Как хвалить ребёнка, чтобы не вырастить зависимого от похвалы",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "granicy-rebenku-bez-krika",
+   "title": "Границы ребёнку без крика: как говорить «нет», чтобы работало",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "rebenok-i-gadzhety-pravila-bez-vojny",
+   "title": "Ребёнок и гаджеты: правила экрана без ежедневной войны",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "rebenok-vret-chto-delat",
+   "title": "Ребёнок врёт: почему это нормально и что делать",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "adaptaciya-k-sadu-i-shkole",
+   "title": "Адаптация к саду и школе: как помочь ребёнку без слёз у дверей",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "krizis-srednego-vozrasta-chto-delat",
+   "title": "Кризис среднего возраста: что это на самом деле и как его пройти",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "ekzistencialnaya-pustota-net-smysla",
+   "title": "«Всё есть, а смысла нет»: экзистенциальная пустота и что с ней делать",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "strah-smerti-kak-s-nim-zhit",
+   "title": "Страх смерти: почему он нормален и как с ним жить",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "fric-perlz-geshtalt-biografiya-metod",
+   "title": "Фриц Перлз и гештальт-терапия: биография, метод и «пустой стул»",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "berres-skinner-biheviorizm-biografiya-metod",
+   "title": "Беррес Скиннер и бихевиоризм: наука о том, почему мы делаем то, что делаем",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "karl-rodzhers-biografiya-metod",
+   "title": "Карл Роджерс: человек, который доказал, что лечит принятие",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "aaron-bek-kpt-biografiya-metod",
+   "title": "Аарон Бек и КПТ: как разочарованный психоаналитик создал самую проверенную терапию",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "viktor-frankl-logoterapiya-biografiya-metod",
+   "title": "Виктор Франкл и логотерапия: смысл как лекарство",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "erik-bern-tranzaktnyj-analiz-biografiya-metod",
+   "title": "Эрик Берн и транзактный анализ: Родитель, Взрослый, Ребёнок",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "karl-yung-analiticheskaya-psihologiya-biografiya",
+   "title": "Карл Юнг: архетипы, тень и разрыв с Фрейдом",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "alfred-adler-individualnaya-psihologiya-biografiya",
+   "title": "Альфред Адлер: комплекс неполноценности и смелость быть несовершенным",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "milton-erikson-gipnoterapiya-biografiya",
+   "title": "Милтон Эриксон: человек, который дважды учился ходить и переизобрёл гипноз",
+   "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "dvizhenie-kak-antidepressant",
+   "title": "Движение как антидепрессант: что на самом деле говорит наука",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "eda-i-nastroenie-kak-pitanie-vliyaet-na-psihiku",
+   "title": "Еда и настроение: как питание влияет на психику на самом деле",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kofein-alkogol-i-trevoga",
+   "title": "Кофеин, алкоголь и тревога: как любимые допинги делают вас тревожнее",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "effekt-danninga-kryugera",
+   "title": "Эффект Даннинга — Крюгера: почему уверенность — не признак ума",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "infoperegruzka-kak-vernut-vnimanie",
+   "title": "Информационная перегрузка: почему устаёт голова и как вернуть себе внимание",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-formiruyutsya-privychki-petlya",
+   "title": "Как на самом деле формируются привычки: петля, среда и почему срывы — часть процесса",
+   "rubric": "motivaciya",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "krizis-chetverti-zhizni-25",
+   "title": "Кризис четверти жизни: почему в 25 кажется, что жизнь не удалась",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "krizis-30-let-perezagruzka",
+   "title": "Кризис 30 лет: ревизия, а не катастрофа",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "krizis-srednego-vozrasta-bez-klishe",
+   "title": "Кризис среднего возраста: что происходит на самом деле — без клише",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "sindrom-pustogo-gnezda",
+   "title": "Синдром пустого гнезда: когда дети выросли, а тишина оглушает",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "vyhod-na-pensiyu-psihologiya",
+   "title": "Выход на пенсию: почему свобода ощущается как потеря — и что с этим делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "vozrastnye-krizisy-karta",
+   "title": "Возрастные кризисы: полная карта от 17 до 70+ и как проходить любой",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 14
+  },
+  {
+   "slug": "alkogol-seraya-zona-tihiy-alkogolizm",
+   "title": "Серая зона алкоголя: когда «по бокалу вечером» — уже не просто привычка",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "nikotin-veypy-mehanika-zavisimosti",
+   "title": "Никотин и вейпы: почему «просто пар» держит крепче сигарет",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "stavki-lyudomaniya-mehanika",
+   "title": "Ставки и лудомания: почему мозг проигрывает казино ещё до первой ставки",
+   "rubric": "zavisimosti",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "shopogolizm-kompulsivnye-pokupki",
+   "title": "Шопоголизм: когда покупки лечат настроение — и почему это дорогой антидепрессант",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "cifrovaya-zavisimost-telefon-um",
+   "title": "Цифровая зависимость: что телефон делает с умом и как забрать его обратно",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "sozavisimost-zhizn-ryadom-s-zavisimym",
+   "title": "Созависимость: почему спасение зависимого топит вас обоих",
+   "rubric": "zavisimosti",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-1-chto-takoe-teoriya-lichnosti",
+   "title": "Лекция 1. Что такое теория личности и зачем их целых двадцать",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-2-frejd-psihodinamika",
+   "title": "Лекция 2. Фрейд: психодинамическое направление — устройство душевного конфликта",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-3-adler-individualnaya-psihologiya",
+   "title": "Лекция 3. Адлер: индивидуальная психология — от неполноценности к цели",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-4-yung-analiticheskaya-psihologiya",
+   "title": "Лекция 4. Юнг: аналитическая психология — карта коллективной души",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-5-erikson-vosem-vozrastov",
+   "title": "Лекция 5. Эриксон: восемь возрастов человека и изобретение идентичности",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-6-horni-fromm-sociokulturnyj-psihoanaliz",
+   "title": "Лекция 6. Хорни и Фромм: невроз как продукт культуры",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 23
+  }
+ ]
+}
