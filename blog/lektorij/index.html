@@ -3,70 +3,195 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
 <meta name="robots" content="index, follow">
-<title>Лекторий: курс «Теории личности» — 13 лекций с озвучкой | Андрей Мейстер</title>
-<meta name="description" content="Бесплатный курс лекций «Теории личности» по классической программе: от Фрейда до Роджерса. Каждую лекцию можно читать или слушать профессиональным голосом. План курса и открытые лекции.">
+<title>Лекторий: бесплатные курсы лекций по психологии с озвучкой | Андрей Мейстер</title>
+<meta name="description" content="Лекторий психолога Андрея Мейстера: полноценные курсы лекций по психологии — теории личности, влияние и манипуляции, эмоции, мышление, отношения. Каждую лекцию можно читать или слушать голосом Фреди.">
 <link rel="canonical" href="https://meysternlp.ru/blog/lektorij/">
-<meta property="og:type" content="website"><meta property="og:title" content="Лекторий: курс «Теории личности»"><meta property="og:description" content="13 лекций с озвучкой: от Фрейда до Роджерса. Слушайте как подкаст или читайте с конспектом."><meta property="og:image" content="https://meysternlp.ru/blog/og/lektorij.png"><meta property="og:url" content="https://meysternlp.ru/blog/lektorij/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"Теории личности","description":"Курс из 13 лекций по теориям личности: психоанализ, теории черт, бихевиоризм, когнитивное и гуманистическое направления.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta property="og:type" content="website"><meta property="og:title" content="Лекторий: курсы лекций по психологии"><meta property="og:description" content="Полноценные университетские курсы — бесплатно, с озвучкой. Читайте с конспектом или слушайте как подкаст."><meta property="og:image" content="https://meysternlp.ru/blog/og/lektorij.png"><meta property="og:url" content="https://meysternlp.ru/blog/lektorij/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Лекторий: курсы лекций по психологии","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Course","name":"Теории личности","url":"https://meysternlp.ru/blog/lektorij/teorii-lichnosti/","description":"13 лекций: от психоанализа Фрейда до феноменологии Роджерса.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-body{background:#F6F8FC;color:#141D33;font-family:'Inter',system-ui,sans-serif;line-height:1.6;margin:0}
-.wrap{max-width:820px;margin:0 auto;padding:0 20px}
-.hero{background:#07090F;color:#EAF0FB;padding:60px 0 50px;border-bottom:1px solid #182234}
-.eyebrow{color:#7fb0ff;font-weight:700;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;margin:0 0 12px}
-h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:800;margin:0 0 14px;letter-spacing:-.02em}
-.hero p{color:#AEBBD2;font-size:1.05rem;max-width:58ch;margin:0}
-.hero .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;color:#8891A4;font-size:.86rem}
-.sec{padding:40px 0 70px}
-.lec{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #E1E8F2;border-radius:14px;padding:16px 18px;margin:0 0 10px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
-.lec.ready:hover{border-color:#3A86FF;transform:translateX(4px)}
-.lec .n{flex-shrink:0;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,#3A86FF,#5B9BFF);color:#fff}
-.lec.soon .n{background:#E7ECF5;color:#8891A4}
-.lec .t{flex:1;min-width:0}
-.lec .t b{display:block;font-weight:600;line-height:1.35}
-.lec .t i{font-style:normal;color:#8891A4;font-size:.8rem}
-.lec.soon{opacity:.65}
-.lec .go{color:#3A86FF;font-weight:700}
-.note{background:#EFF6FF;border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:12px;padding:16px 20px;margin:26px 0;font-size:.95rem;color:#334155}
-.crumbs{padding:14px 0 0;font-size:.82rem}
-.crumbs a{color:#7fb0ff;text-decoration:none}
-@media(prefers-color-scheme:dark){body{background:#0A0D13;color:#E9EEF6}.lec{background:#131926;border-color:#263245}.lec.soon .n{background:#1B2434;color:#6B7688}.note{background:#101c30;border-color:#1e3a5f;color:#98A4B8}}
+:root{--ink:#0B0E15;--paper:#F7F5F0;--card:#FFFFFF;--line:#E6E1D6;--gold:#B8965A;--gold-soft:#D8C39A;--txt:#1C2130;--mut:#6B7280;--serif:'Spectral',Georgia,serif;--sans:'Inter',system-ui,sans-serif}
+body{background:var(--paper);color:var(--txt);font-family:var(--sans);line-height:1.65;margin:0}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}
+/* ==== hero ==== */
+.hero{background:radial-gradient(1100px 500px at 75% -10%,#1A2338 0%,#0B0E15 55%) ,var(--ink);color:#EDE9DF;padding:72px 0 64px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold) 70%,transparent)}
+.crumbs{font-size:.8rem;letter-spacing:.02em;margin-bottom:34px}
+.crumbs a{color:#8FA3C8;text-decoration:none}
+.crumbs span{color:#5C6780}
+.eyebrow{display:flex;align-items:center;gap:14px;color:var(--gold-soft);font-weight:600;font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;margin:0 0 18px}
+.eyebrow::before{content:"";height:1px;width:44px;background:var(--gold)}
+h1{font-family:var(--serif);font-size:clamp(2.6rem,6vw,4.2rem);font-weight:600;margin:0 0 20px;letter-spacing:.01em;line-height:1.08}
+h1 em{font-style:italic;color:var(--gold-soft)}
+.hero .lead{color:#B9BFCE;font-size:1.08rem;max-width:62ch;margin:0;font-weight:300}
+.hero .lead b{color:#E7E2D5;font-weight:500}
+.stats{display:flex;gap:0;flex-wrap:wrap;margin-top:44px;border-top:1px solid rgba(216,195,154,.25);padding-top:0}
+.stats div{padding:20px 34px 0 0;margin-right:34px}
+.stats b{display:block;font-family:var(--serif);font-size:1.7rem;font-weight:600;color:#F2EEE3;line-height:1.2}
+.stats span{font-size:.78rem;color:#8891A4;letter-spacing:.08em;text-transform:uppercase}
+/* ==== sections ==== */
+.sec{padding:56px 0 84px}
+h2.gh{display:flex;align-items:center;gap:16px;font-family:var(--serif);font-size:1.45rem;font-weight:600;margin:52px 0 8px;color:var(--txt)}
+h2.gh:first-child{margin-top:0}
+h2.gh::after{content:"";flex:1;height:1px;background:var(--line)}
+p.gs{margin:0 0 22px;color:var(--mut);font-size:.92rem}
+/* ==== featured course ==== */
+.feat{display:grid;grid-template-columns:1.5fr 1fr;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;transition:box-shadow .2s,border-color .2s}
+.feat:hover{border-color:var(--gold);box-shadow:0 12px 40px rgba(20,25,40,.10)}
+.feat .fl{padding:34px 38px}
+.feat .fnum{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:.95rem;margin-bottom:10px}
+.feat h3{font-family:var(--serif);font-size:2rem;font-weight:600;margin:0 0 12px;line-height:1.15}
+.feat p{margin:0 0 18px;color:var(--mut);font-size:.95rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chips i{font-style:normal;font-size:.76rem;border:1px solid var(--line);border-radius:20px;padding:4px 12px;color:#4B5563;background:#FBFAF7}
+.fbtn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#F2EEE3;border-radius:12px;padding:13px 26px;font-weight:600;font-size:.92rem}
+.fbtn s{text-decoration:none;color:var(--gold-soft)}
+.feat .fr{background:linear-gradient(160deg,#141A2A,#0B0E15);color:#D5DAE6;padding:34px 30px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.feat .fr .pt{font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);font-weight:600}
+.pbar{height:6px;border-radius:6px;background:#232B40;overflow:hidden}
+.pbar i{display:block;height:100%;width:46%;background:linear-gradient(90deg,var(--gold),#E2CC9B)}
+.feat .fr .pl{font-size:.88rem;color:#B9BFCE}
+.feat .fr .pl b{color:#F2EEE3}
+.feat .fr ul{list-style:none;margin:6px 0 0;padding:0;font-size:.84rem;color:#98A1B5}
+.feat .fr li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.feat .fr li:last-child{border-bottom:none}
+.feat .fr li::before{content:"—";color:var(--gold);margin-right:10px}
+/* ==== direction cards ==== */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.course{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 26px 22px;text-decoration:none;color:inherit;transition:border-color .2s,box-shadow .2s}
+.course .num{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:var(--gold);margin-bottom:12px}
+.course b{font-family:var(--serif);font-weight:600;font-size:1.22rem;line-height:1.3;margin-bottom:10px}
+.course p{margin:0;color:var(--mut);font-size:.87rem;line-height:1.6}
+.course .st{margin-top:auto;padding-top:18px;font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9AA1AE}
+.course.next{border-color:var(--gold-soft)}
+.course.next .st{color:var(--gold)}
+.course.next:hover{box-shadow:0 10px 30px rgba(20,25,40,.08)}
+.badge{position:absolute;top:22px;right:22px;font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--gold-soft);color:var(--gold);border-radius:20px;padding:4px 11px;background:#FDFBF6}
+/* ==== manifesto ==== */
+.manif{margin:64px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:38px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:30px}
+.manif div b{display:block;font-family:var(--serif);font-size:1.06rem;font-weight:600;margin-bottom:6px}
+.manif div b::before{content:"";display:block;width:26px;height:2px;background:var(--gold);margin-bottom:12px}
+.manif div p{margin:0;font-size:.86rem;color:var(--mut)}
+.finis{margin:56px auto 0;text-align:center;max-width:56ch}
+.finis p{font-family:var(--serif);font-style:italic;font-size:1.18rem;color:#3E4557;margin:0 0 8px}
+.finis span{font-size:.84rem;color:var(--mut)}
+.finis a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-soft)}
+@media(max-width:760px){.feat{grid-template-columns:1fr}.feat .fl{padding:28px 24px}.stats div{padding-right:22px;margin-right:22px}}
+@media(prefers-color-scheme:dark){
+:root{--paper:#0C0F16;--card:#12161F;--line:#242B3A;--txt:#E9EAEE;--mut:#98A1B3}
+.chips i{background:#171C28;color:#AEB6C6;border-color:#2A3244}
+.badge{background:#171C28}
+.finis p{color:#C9CEDB}
+.feat:hover{box-shadow:0 12px 40px rgba(0,0,0,.5)}
+}
 </style>
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true});</script>
 </head>
 <body>
 <div id="header-placeholder"></div>
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
-<header class="hero"><div class="wrap">
-<div class="crumbs"><a href="/blog/">Блог</a> / Лекторий</div>
-<p class="eyebrow">🎓 Лекторий · курс первый</p>
-<h1>Теории личности</h1>
-<p>Полноценный курс лекций по классической университетской программе: от психоанализа Фрейда до феноменологии Роджерса. Каждая лекция — с планом, примерами, вопросами для самопроверки и литературой. Читайте с конспектом или слушайте как подкаст — кнопка озвучки в каждой лекции.</p>
-<div class="meta"><span>13 лекций</span><span>·</span><span>~5 часов аудио</span><span>·</span><span>бесплатно</span><span>·</span><span>по канве Хьелла и Зиглера</span></div>
-</div></header>
-<section class="sec"><div class="wrap">
-<a class="lec ready" href="/blog/lekciya-1-chto-takoe-teoriya-lichnosti.html">
-<span class="n">1</span><span class="t"><b>Что такое теория личности и зачем их целых двадцать</b><i>~22 мин · читать или слушать 🎧</i></span><span class="go">→</span></a>
-<a class="lec ready" href="/blog/lekciya-2-frejd-psihodinamika.html">
-<span class="n">2</span><span class="t"><b>Фрейд: психодинамическое направление</b><i>~24 мин · читать или слушать 🎧</i></span><span class="go">→</span></a>
-<a class="lec ready" href="/blog/lekciya-3-adler-individualnaya-psihologiya.html">
-<span class="n">3</span><span class="t"><b>Адлер: индивидуальная психология</b><i>~23 мин · читать или слушать 🎧</i></span><span class="go">→</span></a>
-<a class="lec ready" href="/blog/lekciya-4-yung-analiticheskaya-psihologiya.html">
-<span class="n">4</span><span class="t"><b>Юнг: аналитическая психология</b><i>~24 мин · читать или слушать 🎧</i></span><span class="go">→</span></a>
-<a class="lec ready" href="/blog/lekciya-5-erikson-vosem-vozrastov.html">
-<span class="n">5</span><span class="t"><b>Эриксон: психосоциальное развитие</b><i>~24 мин · читать или слушать 🎧</i></span><span class="go">→</span></a>
-<a class="lec ready" href="/blog/lekciya-6-horni-fromm-sociokulturnyj-psihoanaliz.html">
-<span class="n">6</span><span class="t"><b>Хорни и Фромм: социокультурный психоанализ</b><i>~23 мин · читать или слушать 🎧</i></span><span class="go">→</span></a>
-<div class="lec soon"><span class="n">7</span><span class="t"><b>Олпорт, Кеттелл, Айзенк: теории черт</b><i>готовится</i></span><span class="go">🔒</span></div>
-<div class="lec soon"><span class="n">8</span><span class="t"><b>Скиннер: научающе-бихевиоральное направление</b><i>готовится</i></span><span class="go">🔒</span></div>
-<div class="lec soon"><span class="n">9</span><span class="t"><b>Бандура и Роттер: социально-когнитивное направление</b><i>готовится</i></span><span class="go">🔒</span></div>
-<div class="lec soon"><span class="n">10</span><span class="t"><b>Келли: психология личных конструктов</b><i>готовится</i></span><span class="go">🔒</span></div>
-<div class="lec soon"><span class="n">11</span><span class="t"><b>Маслоу: гуманистическое направление</b><i>готовится</i></span><span class="go">🔒</span></div>
-<div class="lec soon"><span class="n">12</span><span class="t"><b>Роджерс: феноменологическое направление</b><i>готовится</i></span><span class="go">🔒</span></div>
-<div class="lec soon"><span class="n">13</span><span class="t"><b>Итоги: сравнение теорий и как выбрать свою линзу</b><i>готовится</i></span><span class="go">🔒</span></div>
 
-<div class="note"><b>Как проходить курс.</b> Лекции выстроены по порядку — каждая опирается на предыдущие. Блог запоминает, где вы остановились. К лекциям о школах есть «семинары» — биографии создателей в рубрике <a href="/blog/rubrika/shkoly/">«Школы психологии»</a>, а проверить теорию на себе можно у <a href="/fredi/">Фреди</a>. Новые лекции выходят регулярно — страница пополняется.</div>
+<header class="hero"><div class="wrap">
+<div class="crumbs"><a href="/blog/">Блог</a> <span>/</span> Лекторий</div>
+<p class="eyebrow">Лекторий Андрея Мейстера</p>
+<h1>Психология — <em>как её читают</em> в университете</h1>
+<p class="lead">Двенадцать направлений, выстроенных как настоящие курсы: лекция за лекцией, от основ к вершинам. С планами, схемами и вопросами для самопроверки. <b>Каждую лекцию читает вслух Фреди</b> — живым голосом, как лектор в аудитории. Бесплатно и без регистраций.</p>
+<div class="stats">
+<div><b>12</b><span>направлений</span></div>
+<div><b>100+</b><span>лекций в программе</span></div>
+<div><b>🎧</b><span>озвучка каждой лекции</span></div>
+<div><b>0 ₽</b><span>навсегда</span></div>
+</div>
+</div></header>
+
+<section class="sec"><div class="wrap">
+
+<h2 class="gh">Идёт сейчас</h2>
+<p class="gs">Первое направление уже открыто — лекции выходят каждую неделю.</p>
+<a class="feat" href="/blog/lektorij/teorii-lichnosti/">
+<div class="fl">
+<div class="fnum">Направление I</div>
+<h3>Теории личности</h3>
+<p>От психоанализа Фрейда до феноменологии Роджерса — по канве классического учебника Хьелла и Зиглера. Каждая теория разбирается по одной сетке: структура, мотивация, развитие, патология, здоровье — и суд: что подтвердила наука.</p>
+<div class="chips"><i>Фрейд</i><i>Адлер</i><i>Юнг</i><i>Эриксон</i><i>Хорни · Фромм</i><i>Олпорт · Айзенк</i><i>Скиннер</i><i>Бандура</i><i>Келли</i><i>Маслоу</i><i>Роджерс</i></div>
+<span class="fbtn">Войти в курс <s>→</s></span>
+</div>
+<div class="fr">
+<span class="pt">Прогресс курса</span>
+<div class="pbar"><i></i></div>
+<span class="pl"><b>Открыто 6 лекций из 13</b> · ~2,5 часа аудио уже доступно</span>
+<ul>
+<li>план и схемы в каждой лекции</li>
+<li>вопросы для самопроверки</li>
+<li>читает Фреди — как живой лектор</li>
+</ul>
+</div>
+</a>
+
+<h2 class="gh">Программа Лектория</h2>
+<p class="gs">Направления открываются по очереди. Порядок может уточняться — заглядывайте.</p>
+<div class="grid">
+<div class="course next">
+<span class="badge">Следующее</span>
+<span class="num">II</span><b>Влияние и манипуляции</b>
+<p>Шесть принципов Чалдини, манипуляции в близких отношениях, газлайтинг, пропаганда, вербовка в культы — и главное: как распознавать давление и защищать границы.</p>
+<span class="st">Готовится к запуску</span></div>
+<div class="course">
+<span class="num">III</span><b>Эмоции: наука о чувствах</b>
+<p>Откуда берутся эмоции — Экман против Барретт. Тревога, гнев, стыд, вина, зависть: зачем они нужны и как ими управлять по науке, а не по советам из интернета.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">IV</span><b>Мышление и когнитивные искажения</b>
+<p>Канеман и Тверски: две системы мышления, эвристики и систематические ошибки. Как мозг обманывает нас каждый день — и что с этим делать.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">V</span><b>Привязанность и близкие отношения</b>
+<p>Боулби и типы привязанности у взрослых, математика брака Готтмана, треугольник любви Стернберга. Почему мы выбираем «не тех» и как строить надёжную близость.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">VI</span><b>Стресс, травма и психосоматика</b>
+<p>Селье и Сапольски: что стресс делает с телом. Выгорание, психосоматика, посттравма — и посттравматический рост.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">VII</span><b>Психотерапия: как она работает</b>
+<p>Честный гид по школам: КПТ, психоанализ, гештальт, ACT, EMDR. Что доказано наукой, что нет, и как выбрать своего терапевта.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">VIII</span><b>Социальная психология</b>
+<p>Милгрэм, Зимбардо, Аш: самые знаменитые эксперименты о власти, конформизме и толпе — и что они говорят о каждом из нас.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">IX</span><b>Мозг и поведение</b>
+<p>Память, сон, дофамин, нейропластичность — нейронаука для жизни, без формул и мифов о «десяти процентах мозга».</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">X</span><b>Мотивация и воля</b>
+<p>Самодетерминация Деси и Райана, наука привычек, прокрастинация и сила воли: почему «просто соберись» не работает и что работает вместо этого.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">XI</span><b>Развитие ребёнка</b>
+<p>Пиаже, Выготский, темперамент и стили воспитания: как растёт психика — от первой привязанности до подросткового бунта.</p>
+<span class="st">В программе</span></div>
+<div class="course">
+<span class="num">XII</span><b>Психодиагностика: наука против попсы</b>
+<p>Как устроены настоящие тесты — и почему соционика, MBTI и «тип личности по картинке» наукой не являются. Курс-разоблачение.</p>
+<span class="st">В программе</span></div>
+</div>
+
+<div class="manif">
+<div><b>Университетская канва</b><p>Каждый курс идёт по классической программе и первоисточникам — это образование, а не пересказ пабликов.</p></div>
+<div><b>Живая озвучка</b><p>Лекции читает Фреди: с приветствием, интонацией и паузами. Включайте в дороге — как подкаст.</p></div>
+<div><b>Схемы и самопроверка</b><p>В лекциях — наглядные схемы, вопросы для размышления и литература для тех, кто хочет глубже.</p></div>
+<div><b>Свободный доступ</b><p>Без оплат, подписок и регистраций. Знание о себе должно быть доступным — это позиция автора.</p></div>
+</div>
+
+<div class="finis">
+<p>«Чтобы стать лучшими — нужно работать на опережение и думать как лучшие»</p>
+<span>Обсудить услышанное и примерить теорию на себя можно с <a href="/fredi/">Фреди</a> — виртуальным психологом проекта.</span>
+</div>
+
 </div></section>
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
