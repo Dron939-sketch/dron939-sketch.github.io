@@ -3268,6 +3268,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-5-strah-styd-srochnost",
+   "title": "Лекция 5. Эмоциональные рычаги: страх, стыд, срочность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-vliyanie-6-reklama-i-marketing",
+   "title": "Лекция 6. Реклама и маркетинг: как нам продают",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
