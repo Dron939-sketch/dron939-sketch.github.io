@@ -3191,6 +3191,20 @@
    "rubric": "lektorij",
    "level": "m",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-7-olport-kettell-ajzenk-teorii-chert",
+   "title": "Лекция 7. Олпорт, Кеттелл, Айзенк: теории черт — как измерили личность",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-8-skinner-operantnoe-nauchenie",
+   "title": "Лекция 8. Скиннер: а что, если личности нет — есть только подкрепление",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 23
   }
  ]
 }
