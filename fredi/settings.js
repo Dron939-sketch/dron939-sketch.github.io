@@ -182,6 +182,68 @@
         return '<div class="st-link-row" onclick="event.stopPropagation()"><span class="st-link-status">Не связан</span><a class="st-link-btn" href="' + link + '" target="_blank" rel="noopener">Связать</a></div>';
     }
 
+    // ===== Платёжные данные: привязанная карта и её отвязка =====
+    // Требование ЮKassa: пользователь может удалить привязку сам,
+    // в любой момент, из личного кабинета — без запросов в поддержку.
+    function _renderPaymentSection(el) {
+        var uid = _uid();
+        if (!uid) {
+            el.innerHTML = '<div class="st-hint">Войдите в аккаунт, чтобы управлять платёжными данными.</div>';
+            return;
+        }
+        el.innerHTML = '<div class="st-hint">Загружаю платёжные данные…</div>';
+        fetch(_api() + '/api/subscription/status/' + uid)
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                var card = d && d.card;
+                if (!card) {
+                    el.innerHTML =
+                        '<div class="st-hint">Карта не привязана.</div>' +
+                        '<div class="st-hint" style="opacity:.8">Карта сохраняется при оформлении подписки с автопродлением, если вы отметите «Запомнить данные карты». Здесь её можно будет отвязать в любой момент.</div>';
+                    return;
+                }
+                var type = (card.type || 'Карта');
+                var last4 = (card.last4 || '····');
+                el.innerHTML =
+                    '<div class="st-hint">Эта карта используется для автопродления подписки. Вы можете отвязать её в любой момент — данные карты будут удалены, автопродление отключится, доступ сохранится до конца оплаченного периода.</div>' +
+                    '<div style="display:flex;align-items:center;gap:12px;background:rgba(224,224,224,0.05);border:1px solid rgba(224,224,224,0.12);border-radius:14px;padding:14px 16px;margin:10px 0">' +
+                    '  <span style="font-size:26px">💳</span>' +
+                    '  <div style="flex:1;min-width:0">' +
+                    '    <div style="font-weight:700;color:var(--text-primary)">' + type + ' •••• ' + last4 + '</div>' +
+                    '    <div style="font-size:11px;color:var(--text-secondary)">Автопродление: ' + (d.auto_renew ? 'включено' : 'отключено') + '</div>' +
+                    '  </div>' +
+                    '  <button id="stDeleteCard" style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.45);color:#F87171;border-radius:10px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Отвязать карту</button>' +
+                    '</div>';
+                var btn = document.getElementById('stDeleteCard');
+                if (btn) btn.onclick = function () {
+                    if (!confirm('Отвязать карту ' + type + ' •••• ' + last4 + '?\n\nДанные карты будут удалены, автопродление подписки отключится. Доступ сохранится до конца оплаченного периода.')) return;
+                    btn.disabled = true;
+                    btn.textContent = 'Удаляю…';
+                    fetch(_api() + '/api/subscription/delete-card', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: uid })
+                    }).then(function (r) { return r.json(); }).then(function (res) {
+                        if (res && res.success) {
+                            _toast('Карта отвязана и удалена', 'success');
+                            _renderPaymentSection(el);
+                        } else {
+                            _toast('Не удалось отвязать карту, попробуйте позже', 'error');
+                            btn.disabled = false;
+                            btn.textContent = 'Отвязать карту';
+                        }
+                    }).catch(function () {
+                        _toast('Ошибка сети', 'error');
+                        btn.disabled = false;
+                        btn.textContent = 'Отвязать карту';
+                    });
+                };
+            })
+            .catch(function () {
+                el.innerHTML = '<div class="st-hint">Не удалось загрузить платёжные данные. Попробуйте позже.</div>';
+            });
+    }
+
     function _renderSettings() {
         _injectStyles();
         var c = document.getElementById('screenContainer');
@@ -194,6 +256,7 @@
             '<p style="font-size:12px;color:var(--text-secondary);margin-top:4px">Управление Фреди</p></div>' +
             _accordion('account', '🔑', 'Аккаунт') +
             _accordion('subscription', '💎', 'Подписка') +
+            _accordion('payment', '💳', 'Платёжные данные') +
             _accordion('tasks', '📋', 'Активные задачи') +
             _accordion('notifications', '🔔', 'Уведомления') +
             _accordion('appearance', '🎨', 'Оформление') +
@@ -365,6 +428,10 @@
             el.innerHTML = '<div class="st-hint">Управление подпиской Фреди Premium. С подпиской Фреди работает без ограничений по времени и с премиум-функциями.</div><div id="subscriptionSection"></div>';
             var sub = document.getElementById('subscriptionSection');
             if (sub && typeof window.renderSubscriptionSection === 'function') window.renderSubscriptionSection(sub);
+        }
+
+        if (id === 'payment') {
+            _renderPaymentSection(el);
         }
 
         if (id === 'tasks') {
