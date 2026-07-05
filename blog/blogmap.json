@@ -3324,6 +3324,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-emocii-1-chto-takoe-emociya",
+   "title": "Лекция 1. Что такое эмоция и зачем она нужна",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-emocii-2-ekman-protiv-barrett",
+   "title": "Лекция 2. Откуда берутся эмоции: Экман против Барретт",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
