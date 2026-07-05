@@ -3296,6 +3296,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-9-kulty-i-verbovka",
+   "title": "Лекция 9. Культы и вербовка: как промывают мозги обычным людям",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-10-socialnaya-inzheneriya",
+   "title": "Лекция 10. Социальная инженерия: от звонка «из банка» до романтических афер",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
