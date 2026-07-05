@@ -3282,6 +3282,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-7-tyomnye-patterny",
+   "title": "Лекция 7. Тёмные паттерны: интерфейсы, алгоритмы и ленты против вас",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-vliyanie-8-propaganda",
+   "title": "Лекция 8. Пропаганда: как убеждают целые общества",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
