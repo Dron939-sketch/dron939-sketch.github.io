@@ -3380,6 +3380,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-emocii-9-regulyaciya-po-grossu",
+   "title": "Лекция 9. Регуляция эмоций по Гроссу: пять точек вмешательства",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-emocii-10-ei-v-otnosheniyah-itogi",
+   "title": "Лекция 10. Эмоциональный интеллект в отношениях и работе — итоги курса",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
   }
  ]
 }
