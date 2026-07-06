@@ -17,7 +17,7 @@
 body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;margin:0}
 .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
 a{color:inherit}
-.ic{fill:none;stroke:url(#ig);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(58,134,255,.35))}
+.pic{filter:drop-shadow(0 6px 12px rgba(0,0,0,.45))}
 
 /* hero */
 .hero{position:relative;text-align:center;padding:72px 0 52px;overflow:hidden}
@@ -55,7 +55,7 @@ h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margi
 .c::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.85}
 .c.soon::before{opacity:.22}
 a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-3px);box-shadow:0 14px 40px rgba(58,134,255,.16)}
-.c .ic{width:52px;height:52px;margin-bottom:14px}
+.c .pic{width:72px;height:72px;margin-bottom:12px}
 .c b{display:block;font-size:1.02rem;font-weight:500;margin-bottom:14px;line-height:1.3}
 .c .pb{height:5px;border-radius:6px;background:rgba(58,134,255,.14);overflow:hidden;width:100%;margin-bottom:12px}
 .c .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:6px}
@@ -64,7 +64,7 @@ a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:t
 .tag{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;padding:4px 11px;border-radius:20px}
 .tag.live{color:#bfe0ff;border:1px solid var(--accent);background:rgba(58,134,255,.12)}
 .tag.soon{color:var(--mut);border:1px solid rgba(255,255,255,.12)}
-.c.soon{opacity:.74}.c.soon .ic{opacity:.7}
+.c.soon{opacity:.85}
 
 /* tabs */
 .tabs{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 22px}
@@ -76,9 +76,9 @@ a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:t
 .dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px}
 .dcard{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 14px 18px;transition:.2s}
 a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-2px)}
-.dcard .ic{width:42px;height:42px;margin-bottom:12px}
+.dcard .pic{width:56px;height:56px;margin-bottom:10px}
 .dcard b{font-size:.92rem;font-weight:500;line-height:1.28;margin-bottom:10px}
-.dcard.soon{opacity:.72}.dcard.soon .ic{opacity:.68}
+.dcard.soon{opacity:.85}
 .st{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:auto}
 .st.open{color:#7fd8ff;border:1px solid var(--accent);background:rgba(58,134,255,.12)}
 .st.soon{color:#cdb36b;border:1px solid rgba(220,190,110,.4);background:rgba(220,190,110,.08)}
@@ -91,7 +91,7 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .feat{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 18px}
 .feat:hover{border-color:var(--accent)}
-.feat .ic{width:40px;height:40px;margin-bottom:12px}
+.feat .pic{width:54px;height:54px;margin:0 auto 12px}
 .feat b{display:block;font-weight:500;margin-bottom:6px}.feat p{color:var(--mut);font-size:.82rem;font-weight:300;margin:0}
 .band{text-align:center;padding:52px 24px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(0,168,232,.10),rgba(58,134,255,.10))}
 .band h2{font-size:1.8rem;font-weight:300;margin:0 0 10px}.band p{color:var(--body);font-weight:300;margin:0 0 24px}
@@ -105,37 +105,329 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <body>
 <!-- SVG-иконки (сине-голубой градиент) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#3A86FF"/></linearGradient>
-<symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 6a2.4 2.4 0 0 0-4.7-.6A2.5 2.5 0 0 0 4 7.6a2.5 2.5 0 0 0-.5 4A2.6 2.6 0 0 0 5 16.2 2.4 2.4 0 0 0 9.4 18a2.3 2.3 0 0 0 2.6.4Z"/><path d="M12 6a2.4 2.4 0 0 1 4.7-.6A2.5 2.5 0 0 1 20 7.6a2.5 2.5 0 0 1 .5 4A2.6 2.6 0 0 1 19 16.2 2.4 2.4 0 0 1 14.6 18a2.3 2.3 0 0 1-2.6.4Z"/><path d="M12 6v13"/></symbol>
-<symbol id="i-masks" viewBox="0 0 24 24"><path d="M4 5h7v5.5a3.5 3.5 0 0 1-7 0Z"/><path d="M13 8h7v3a3.5 3.5 0 0 1-7 0"/><path d="M6.4 8h.01M8.6 8h.01"/></symbol>
-<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.2A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.8C19 15.6 12 20 12 20Z"/></symbol>
-<symbol id="i-bond" viewBox="0 0 24 24"><path d="M9.2 15.5S5 13 5 9.9A2.4 2.4 0 0 1 9.2 8a2.4 2.4 0 0 1 4.2 1.9c0 3.1-4.2 5.6-4.2 5.6Z"/><path d="M15.4 17.5s-3.4-2-3.4-4.5A1.9 1.9 0 0 1 15.4 11a1.9 1.9 0 0 1 3.4 1.5c0 2.5-3.4 5-3.4 5Z"/></symbol>
-<symbol id="i-storm" viewBox="0 0 24 24"><path d="M7 15a3.6 3.6 0 0 1 .4-7.2A4.6 4.6 0 0 1 16.6 9 3.3 3.3 0 0 1 16 15"/><path d="m12 12-2 3.5h3L11 20"/></symbol>
-<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r="1"/></symbol>
-<symbol id="i-couch" viewBox="0 0 24 24"><path d="M4 13a2 2 0 0 1 4 0v1h8v-1a2 2 0 0 1 4 0v4H4Z"/><path d="M6 18v2M18 18v2"/></symbol>
-<symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 20v-7"/><path d="M12 13c0-3 2-4.8 6-4.8 0 3-2 4.8-6 4.8Z"/><path d="M12 15.5c0-2.4-1.6-4.2-5-4.2 0 2.4 1.6 4.2 5 4.2Z"/></symbol>
-<symbol id="i-micro" viewBox="0 0 24 24"><path d="M5 20h13"/><path d="M9 20a5.5 5.5 0 0 0 6.4-8.4"/><path d="m11 5 3.2 3.2-2.2 2.2L8.8 7.2z"/><path d="m8.5 8-2 2"/></symbol>
-<symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M10.2 5.5a1.5 1.5 0 0 1 3 0c0 .8.4.8 1 .8H16v2.4c0 .6 0 1 .8 1a1.5 1.5 0 0 1 0 3c-.8 0-.8.4-.8 1V17h-2.2c-.6 0-1 0-1 .8a1.5 1.5 0 0 1-3 0c0-.8-.4-.8-1-.8H6v-2.3c0-.6 0-1-.8-1a1.5 1.5 0 0 1 0-3c.8 0 .8-.4.8-1V6.3h2.2c.6 0 1 0 1-.8Z"/></symbol>
-<symbol id="i-scales" viewBox="0 0 24 24"><path d="M12 4v16M7.5 20h9"/><path d="m12 6-6 1.6M12 6l6 1.6"/><path d="M6 7.6 3.8 12a2.2 2.2 0 0 0 4.4 0Zm12 0L15.8 12a2.2 2.2 0 0 0 4.4 0Z"/></symbol>
-<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4 4"/></symbol>
-<symbol id="i-temple" viewBox="0 0 24 24"><path d="M4 9 12 5l8 4Z"/><path d="M6 9v7M10 9v7M14 9v7M18 9v7"/><path d="M4 19h16"/></symbol>
-<symbol id="i-castle" viewBox="0 0 24 24"><path d="M5 20V9l2 1.2V7l2 1.2V6h6v2.2L17 7v3.2L19 9v11Z"/><path d="M10.5 20v-3h3v3"/></symbol>
-<symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.2 18h5.6M10.4 21h3.2"/><path d="M12 3a6 6 0 0 1 3.9 10.6c-.7.6-.9 1-.9 1.9H9c0-.9-.2-1.3-.9-1.9A6 6 0 0 1 12 3Z"/></symbol>
-<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M15.2 6.8a3.5 3.5 0 0 1-4.5 4.6l-4.3 4.3a1.6 1.6 0 0 1-2.3-2.3l4.3-4.3A3.5 3.5 0 0 1 12.6 4l-2 2 1.5 1.5 2-2a3.5 3.5 0 0 1 1.1 1.3Z"/></symbol>
-<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.2h5l-1 7.8 8-11h-5z"/></symbol>
-<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="10" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v3M9 20h6"/></symbol>
-<symbol id="i-hands" viewBox="0 0 24 24"><path d="m3.5 9 3-1 4.5 3 3-3 6.5 2v5l-3 1-3.2-2.2"/><path d="m10.8 11 2 1.8-1.5 1.6L8.6 12"/></symbol>
-<symbol id="i-film" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16M9 6l-1.5 4M14 6l-1.5 4"/></symbol>
-<symbol id="i-news" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="1.6"/><path d="M7 9h6M7 12h6M7 15h4M16 9v7"/></symbol>
-<symbol id="i-city" viewBox="0 0 24 24"><path d="M4 20V10h6v10M10 20V5h10v15H4"/><path d="M13.5 9h1M17 9h1M13.5 13h1M17 13h1"/></symbol>
-<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M4 19a5 5 0 0 1 10 0M14.5 19a4 4 0 0 1 5.5-3.7"/></symbol>
-<symbol id="i-bone" viewBox="0 0 24 24"><path d="M8 16a2 2 0 1 1-2.6-2.6 2 2 0 1 1 2.6-2.7l3.3 3.3 3.3 3.3a2 2 0 1 1 2.6 2.6 2 2 0 1 1-2.6 2.7Z"/></symbol>
-<symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="9.5" cy="7" rx="5" ry="2.4"/><path d="M4.5 7v4c0 1.3 2.2 2.4 5 2.4s5-1.1 5-2.4V7"/><path d="M9.6 15.6c.4 1 2.4 1.8 4.9 1.8 2.8 0 5-1.1 5-2.4v-4c0-1.2-1.8-2.2-4.4-2.4"/></symbol>
-<symbol id="i-scroll" viewBox="0 0 24 24"><path d="M7 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8"/><path d="M6 5a2 2 0 0 0-2 2v1h4M18 19a2 2 0 0 0 2-2v-1"/><path d="M9 9h6M9 12h6"/></symbol>
-<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m15.5 8.5-2.2 4.8L8.5 15.5l2.2-4.8z"/></symbol>
-<symbol id="i-image" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 17 4-4 3 3 3-3.5 4 4.5"/></symbol>
-<symbol id="i-stars" viewBox="0 0 24 24"><path d="m13 3 1.5 3.7L18 8l-3.5 1.3L13 13l-1.5-3.7L8 8l3.5-1.3z"/><circle cx="6" cy="16.5" r="1"/><circle cx="17.5" cy="16" r="1"/><circle cx="12" cy="19.5" r="1"/></symbol>
-<symbol id="i-headphone" viewBox="0 0 24 24"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="4" y="13" width="3.5" height="6" rx="1.4"/><rect x="16.5" y="13" width="3.5" height="6" rx="1.4"/></symbol>
+<linearGradient id="mStone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E8E4E0"/><stop offset="1" stop-color="#9A948E"/></linearGradient>
+<linearGradient id="mStone2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7B1AA"/><stop offset="1" stop-color="#7E7872"/></linearGradient>
+<linearGradient id="mGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FCD34D"/><stop offset="1" stop-color="#D97706"/></linearGradient>
+<linearGradient id="mVio" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A78BFA"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+<linearGradient id="mRose" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FB7185"/><stop offset="1" stop-color="#E11D48"/></linearGradient>
+<linearGradient id="mPink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9A8D4"/><stop offset="1" stop-color="#EC4899"/></linearGradient>
+<linearGradient id="mBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#60A5FA"/><stop offset="1" stop-color="#2563EB"/></linearGradient>
+<linearGradient id="mCyan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67E8F9"/><stop offset="1" stop-color="#0891B2"/></linearGradient>
+<linearGradient id="mGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6EE7B7"/><stop offset="1" stop-color="#059669"/></linearGradient>
+<linearGradient id="mSilver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E5E7EB"/><stop offset="1" stop-color="#6B7280"/></linearGradient>
+<linearGradient id="mBrainP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBB6CE"/><stop offset="1" stop-color="#C08AF0"/></linearGradient>
+<linearGradient id="mTerra" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FB923C"/><stop offset="1" stop-color="#C2410C"/></linearGradient>
+<linearGradient id="mBeige" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5E9DA"/><stop offset="1" stop-color="#D8C3A5"/></linearGradient>
+<linearGradient id="mSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#93C5FD"/><stop offset="1" stop-color="#BFDBFE"/></linearGradient>
+
+<symbol id="p-thinker" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="20" ry="3.4" fill="#000" opacity=".35"/>
+<path d="M17 48h30l-2 8H19Z" fill="url(#mStone2)"/>
+<rect x="20" y="46" width="24" height="4" rx="1.2" fill="#CFC9C2"/>
+<path d="M36.5 8a5 5 0 0 1 4.6 6.9c2.1.9 3.4 2.6 3.9 4.8l1.5 7.6c.3 1.7-.3 2.9-1.7 3.7l-4.6 2.5 1.2 9.5h-15l1.6-7.8c-3.6-.6-6-2.7-6.6-6.2-.6-3.4.8-6.4 3.7-8.2l4.7-2.8A5 5 0 0 1 36.5 8Z" fill="url(#mStone)"/>
+<path d="M35.8 15.6c-1.6 1.1-2.4 2.6-2.4 4.4 0 1.3.5 2.4 1.4 3.4l-4.6 1.4c-1.9.6-3.1 1.8-3.5 3.7l7.9-1.2 1.5 8.4-4.7 2.7h11l-1.2-9.5 4.6-2.5c.6-.4.9-.8.8-1.5l-1.5-7.5c-.4-1.8-1.4-3-3.1-3.7Z" fill="#8F8983" opacity=".55"/>
+<circle cx="37" cy="13" r="1.4" fill="#FFF" opacity=".5"/>
+</symbol>
+
+<symbol id="p-masks" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="20" ry="3" fill="#000" opacity=".3"/>
+<path d="M12 12h22v14a11 11 0 0 1-22 0Z" fill="url(#mGold)" transform="rotate(-8 23 25)"/>
+<path d="M17.5 19.5a2 2 0 1 1 3.4 1.4Zm8.6-1.2a2 2 0 1 1 3.4 1.4Z" fill="#7C4A03" transform="rotate(-8 23 25)"/>
+<path d="M18 28c2.8 2.6 7.2 2.6 10 0l-1.6 4.2c-2.2 1.5-4.6 1.5-6.8 0Z" fill="#7C4A03" transform="rotate(-8 23 25)"/>
+<path d="M30 20h22v14a11 11 0 0 1-22 0Z" fill="url(#mVio)" transform="rotate(8 41 33)"/>
+<path d="M35.5 27.5a2 2 0 1 0 3.4 1.4Zm8.6-1.2a2 2 0 1 0 3.4 1.4Z" fill="#3B1673" transform="rotate(8 41 33)"/>
+<path d="M36.5 40c2-2.4 6.4-2.6 9-.4l.5 3.4c-3-1.8-7-1.6-9.6.6Z" fill="#3B1673" transform="rotate(8 41 33)"/>
+</symbol>
+
+<symbol id="p-puzzle" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="3" fill="#000" opacity=".3"/>
+<path d="M12 14h16v6.4a3.6 3.6 0 0 0 0 7.2V34H12Z" fill="url(#mBlue)"/>
+<path d="M28 14h16v20h-6.4a3.6 3.6 0 0 0-7.2 0H28v-6.4a3.6 3.6 0 0 1 0-7.2Z" fill="url(#mGold)"/>
+<path d="M12 34h16a3.6 3.6 0 0 1 7.2 0H44v20H28v-6.4a3.6 3.6 0 0 0-7.2 0V54H12Z" fill="url(#mRose)"/>
+<path d="M44 34h8v20H30.8a3.6 3.6 0 0 1 6.8-2H44Z" fill="url(#mGreen)"/>
+<path d="M12 14h16v2.4H12Zm16 0h16v2.4H28Z" fill="#fff" opacity=".28"/>
+</symbol>
+
+<symbol id="p-heart" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="17" ry="3" fill="#000" opacity=".3"/>
+<path d="M32 54S9 40 9 24.6C9 16 15.6 10 23 10c4 0 7.2 1.8 9 4.6C33.8 11.8 37 10 41 10c7.4 0 14 6 14 14.6C55 40 32 54 32 54Z" fill="url(#mRose)"/>
+<path d="M18 17c-3 1.6-5 4.6-5 8 0 2 .5 3.9 1.4 5.7C10.5 24 12.6 18.4 18 17Z" fill="#FFF" opacity=".45"/>
+<ellipse cx="24" cy="19" rx="6" ry="4" fill="#FFF" opacity=".35" transform="rotate(-22 24 19)"/>
+</symbol>
+
+<symbol id="p-bond" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="3" fill="#000" opacity=".3"/>
+<path d="M24 44S7 33.6 7 22.4C7 16 12 11.6 17.4 11.6c3 0 5.4 1.3 6.6 3.3 1.2-2 3.6-3.3 6.6-3.3C36 11.6 41 16 41 22.4 41 33.6 24 44 24 44Z" fill="url(#mPink)"/>
+<path d="M42 54S28.4 45.7 28.4 36.8c0-5.1 4-8.6 8.3-8.6 2.4 0 4.3 1 5.3 2.6 1-1.6 2.9-2.6 5.3-2.6 4.3 0 8.3 3.5 8.3 8.6C55.6 45.7 42 54 42 54Z" fill="url(#mVio)" opacity=".96"/>
+<ellipse cx="17" cy="18" rx="4.6" ry="3" fill="#FFF" opacity=".4" transform="rotate(-20 17 18)"/>
+<ellipse cx="37.5" cy="33.5" rx="3.6" ry="2.3" fill="#FFF" opacity=".4" transform="rotate(-20 37.5 33.5)"/>
+</symbol>
+
+<symbol id="p-scales" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="18" ry="3" fill="#000" opacity=".3"/>
+<rect x="30.6" y="10" width="2.8" height="40" rx="1.4" fill="url(#mGold)"/>
+<path d="M22 54h20l-2.4-4H24.4Z" fill="url(#mGold)"/>
+<rect x="14" y="14" width="36" height="2.8" rx="1.4" fill="url(#mGold)"/>
+<circle cx="32" cy="12" r="3" fill="url(#mGold)"/>
+<path d="M16 17l-5.6 12h11.2Zm32 0-5.6 12h11.2Z" fill="none" stroke="#C98A0B" stroke-width="1.4"/>
+<path d="M10.4 29a5.6 3.4 0 0 0 11.2 0Zm32 0a5.6 3.4 0 0 0 11.2 0Z" fill="url(#mGold)"/>
+<path d="M14 15.4h18" stroke="#FFF" stroke-width="1" opacity=".45"/>
+</symbol>
+
+<symbol id="p-storm" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="16" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M17 33a9.5 9.5 0 0 1 1.4-18.8A12.5 12.5 0 0 1 43 15.6 8.6 8.6 0 0 1 45.5 33Z" fill="url(#mSilver)"/>
+<path d="M13 22a9.5 9.5 0 0 1 5.4-7.8" stroke="#FFF" stroke-width="2" opacity=".5" fill="none" stroke-linecap="round"/>
+<path d="M34 29l-8 13h6l-3 12 10-15h-6l4-10Z" fill="url(#mGold)"/>
+<path d="M17 39l-2.4 6M23 41l-2.4 6M45 39l-2.4 6" stroke="#60A5FA" stroke-width="2.2" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-target" viewBox="0 0 64 64">
+<ellipse cx="30" cy="58" rx="18" ry="2.8" fill="#000" opacity=".3"/>
+<circle cx="28" cy="32" r="18" fill="#FFF"/>
+<circle cx="28" cy="32" r="13.4" fill="#EF4444"/>
+<circle cx="28" cy="32" r="8.6" fill="#FFF"/>
+<circle cx="28" cy="32" r="4" fill="#EF4444"/>
+<path d="M28 32 47 13" stroke="url(#mGold)" stroke-width="3" stroke-linecap="round"/>
+<path d="M45 8l6 3-3 6-4.4-4.6Z" fill="#EF4444"/>
+<path d="M28 32l6.5-2-4.5 4Z" fill="#374151"/>
+</symbol>
+
+<symbol id="p-couch" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="20" ry="2.8" fill="#000" opacity=".3"/>
+<rect x="14" y="18" width="36" height="16" rx="6" fill="#059669"/>
+<rect x="10" y="28" width="44" height="14" rx="5" fill="url(#mGreen)"/>
+<rect x="6" y="24" width="11" height="18" rx="5" fill="url(#mGreen)"/>
+<rect x="47" y="24" width="11" height="18" rx="5" fill="url(#mGreen)"/>
+<rect x="20" y="24" width="10" height="8" rx="3" fill="url(#mGold)" transform="rotate(-6 25 28)"/>
+<rect x="12" y="42" width="4" height="8" rx="1.6" fill="#7C4A03"/>
+<rect x="48" y="42" width="4" height="8" rx="1.6" fill="#7C4A03"/>
+<path d="M16 21a10 5 0 0 1 8-2" stroke="#FFF" stroke-width="1.6" opacity=".4" fill="none" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-sprout" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="15" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M20 34h24l-3 22H23Z" fill="url(#mTerra)"/>
+<rect x="17" y="30" width="30" height="6" rx="2.4" fill="#EA580C"/>
+<path d="M32 32V18" stroke="#059669" stroke-width="3" stroke-linecap="round"/>
+<path d="M32 20c0-7 5-11 13-11 0 7-5 11-13 11Z" fill="url(#mGreen)"/>
+<path d="M32 26c0-5.6-4-8.8-10.6-8.8 0 5.6 4 8.8 10.6 8.8Z" fill="#34D399"/>
+<path d="M23 36a26 3 0 0 1 8-1" stroke="#FFF" stroke-width="1.4" opacity=".35" fill="none" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-lens" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="17" ry="2.8" fill="#000" opacity=".3"/>
+<circle cx="27" cy="25" r="16" fill="rgba(103,232,249,.18)" stroke="url(#mCyan)" stroke-width="3.4"/>
+<circle cx="27" cy="25" r="4" fill="#FB923C"/>
+<g stroke="#FB923C" stroke-width="1.7" stroke-linecap="round">
+<path d="M27 21v-6M31 23l5.4-3M31 27l5.4 3M27 29v6M23 27l-5.4 3M23 23l-5.4-3"/>
+</g>
+<circle cx="27" cy="15" r="1.8" fill="#FDBA74"/><circle cx="36.4" cy="20" r="1.8" fill="#FDBA74"/><circle cx="36.4" cy="30" r="1.8" fill="#FDBA74"/>
+<circle cx="27" cy="35" r="1.8" fill="#FDBA74"/><circle cx="17.6" cy="30" r="1.8" fill="#FDBA74"/><circle cx="17.6" cy="20" r="1.8" fill="#FDBA74"/>
+<path d="M38.8 36.8 51 49" stroke="url(#mSilver)" stroke-width="6" stroke-linecap="round"/>
+<path d="M16.5 15.5a13 13 0 0 1 6-4.6" stroke="#FFF" stroke-width="2" opacity=".5" stroke-linecap="round" fill="none"/>
+</symbol>
+
+<symbol id="p-search" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="17" ry="2.8" fill="#000" opacity=".3"/>
+<rect x="14" y="8" width="30" height="40" rx="3" fill="#F8FAFC" transform="rotate(-4 29 28)"/>
+<g stroke="#94A3B8" stroke-width="2" stroke-linecap="round" transform="rotate(-4 29 28)">
+<path d="M19 16h20M19 22h20M19 28h13M19 34h16"/>
+</g>
+<circle cx="36" cy="32" r="11" fill="rgba(103,232,249,.2)" stroke="url(#mCyan)" stroke-width="3"/>
+<path d="M31.5 32.5l3 3 6-6.4" fill="none" stroke="#059669" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44 40.5 53 50" stroke="url(#mSilver)" stroke-width="5.4" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-temple" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="21" ry="3" fill="#000" opacity=".3"/>
+<path d="M10 22 32 8l22 14Z" fill="url(#mStone)"/>
+<path d="M13 22h38l-2 4H15Z" fill="url(#mStone2)"/>
+<g fill="url(#mStone)">
+<rect x="16" y="28" width="5.4" height="18" rx="1"/><rect x="26" y="28" width="5.4" height="18" rx="1"/>
+<rect x="36" y="28" width="5.4" height="18" rx="1"/><rect x="46" y="28" width="5.4" height="18" rx="1"/>
+</g>
+<rect x="13" y="46" width="38" height="4" rx="1" fill="url(#mStone2)"/>
+<rect x="10" y="50" width="44" height="5" rx="1.4" fill="url(#mStone)"/>
+<circle cx="32" cy="16.6" r="2.4" fill="url(#mGold)"/>
+</symbol>
+
+<symbol id="p-castle" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="20" ry="3" fill="#000" opacity=".3"/>
+<rect x="12" y="18" width="12" height="38" fill="url(#mStone)"/>
+<rect x="40" y="18" width="12" height="38" fill="url(#mStone)"/>
+<path d="M12 18v-6h3v3h3v-3h3v3h3v-3h3v6Zm28 0v-6h3v3h3v-3h3v3h3v-3h3v6Z" fill="url(#mStone2)"/>
+<rect x="22" y="30" width="20" height="26" fill="url(#mStone2)"/>
+<path d="M22 30v-4h4v2h4v-2h4v2h4v-2h4v4Z" fill="#8F8983"/>
+<path d="M27 56V44a5 5 0 0 1 10 0v12Z" fill="#4B3621"/>
+<path d="M46 12V4l7 2.4L46 9Z" fill="url(#mGold)"/>
+<rect x="15.6" y="26" width="3.4" height="6" rx="1.4" fill="#4B3621"/>
+<rect x="44.6" y="26" width="3.4" height="6" rx="1.4" fill="#4B3621"/>
+</symbol>
+
+<symbol id="p-bulb" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="14" ry="2.6" fill="#000" opacity=".3"/>
+<g stroke="url(#mGold)" stroke-width="2.4" stroke-linecap="round">
+<path d="M32 4v5M13 11l3.6 3.6M51 11l-3.6 3.6M8 30h5M51 30h5"/>
+</g>
+<path d="M32 12a15 15 0 0 1 9.8 26.4c-1.7 1.5-2.3 2.6-2.3 4.6h-15c0-2-.6-3.1-2.3-4.6A15 15 0 0 1 32 12Z" fill="url(#mGold)"/>
+<path d="M25.5 17.5c-3.4 2-5.5 5.4-5.5 9.5 0 1.6.3 3 .9 4.4-3-4.9-1.5-11 4.6-13.9Z" fill="#FFF" opacity=".5"/>
+<path d="M27 30l3.4 4 2.8-6 3 5" fill="none" stroke="#B45309" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="26" y="44" width="12" height="3" rx="1.5" fill="url(#mSilver)"/>
+<rect x="26.8" y="48" width="10.4" height="3" rx="1.5" fill="url(#mSilver)"/>
+<path d="M28.5 52.5h7a3.5 3.5 0 0 1-7 0Z" fill="url(#mSilver)"/>
+</symbol>
+
+<symbol id="p-wrench" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="18" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M44.5 8a9.5 9.5 0 0 0-9 12.6L14 42a5 5 0 1 0 7 7l21.4-21.4A9.5 9.5 0 0 0 55 15.6l-6 6-5.6-1.6L41.8 14l6-6a9.4 9.4 0 0 0-3.3 0Z" fill="url(#mSilver)"/>
+<circle cx="17.5" cy="45.5" r="2.2" fill="#374151"/>
+<path d="M46 30a8 8 0 1 1-8 8" fill="none" stroke="url(#mGold)" stroke-width="4.6"/>
+<g stroke="url(#mGold)" stroke-width="3" stroke-linecap="round">
+<path d="M46 26v-3M46 50v3M34 38h-3M58 38h3M37.5 29.5l-2-2M54.5 46.5l2 2M37.5 46.5l-2 2M54.5 29.5l2-2"/>
+</g>
+</symbol>
+
+<symbol id="p-brain" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="17" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M32 12c-5-4-13-2.6-15.4 3-4.8.2-7.6 4-5.6 8-3.8 2.2-3.6 8 .8 9.6-.6 5 4.6 8.6 9.6 6.6 2.4 4.4 9 4.2 10.6-.6Z" fill="url(#mBrainP)"/>
+<path d="M32 12c5-4 13-2.6 15.4 3 4.8.2 7.6 4 5.6 8 3.8 2.2 3.6 8-.8 9.6.6 5-4.6 8.6-9.6 6.6-2.4 4.4-9 4.2-10.6-.6Z" fill="url(#mBrainP)" opacity=".92"/>
+<path d="M32 12v27" stroke="#B0619E" stroke-width="1.6"/>
+<g fill="none" stroke="#C4699F" stroke-width="1.7" stroke-linecap="round" opacity=".75">
+<path d="M20 20c3 1.4 2.4 4.6 5.6 4.6M18 28c3.4-.8 4 2.6 7.4 2M44 20c-3 1.4-2.4 4.6-5.6 4.6M46 28c-3.4-.8-4 2.6-7.4 2"/>
+</g>
+<path d="M29 41q3 5-1.6 9M35 41q-3 5 1.6 9" fill="none" stroke="#B0619E" stroke-width="3.4" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-mic" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="15" ry="2.8" fill="#000" opacity=".3"/>
+<rect x="24" y="6" width="16" height="26" rx="8" fill="url(#mSilver)"/>
+<path d="M24.5 12h15M24.5 17h15M24.5 22h15M24.5 27h15" stroke="#4B5563" stroke-width="1.3"/>
+<path d="M18 24v3a14 14 0 0 0 28 0v-3" fill="none" stroke="url(#mBlue)" stroke-width="3" stroke-linecap="round"/>
+<rect x="30.6" y="41" width="2.8" height="9" fill="url(#mSilver)"/>
+<rect x="23" y="50" width="18" height="3.4" rx="1.7" fill="url(#mSilver)"/>
+<ellipse cx="28" cy="10" rx="3" ry="4.6" fill="#FFF" opacity=".35" transform="rotate(-14 28 10)"/>
+</symbol>
+
+<symbol id="p-talk" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M8 12h30a5 5 0 0 1 5 5v12a5 5 0 0 1-5 5H22l-8 8v-8h-6a5 5 0 0 1-5-5V17a5 5 0 0 1 5-5Z" fill="url(#mBlue)" transform="translate(3 0)"/>
+<circle cx="19" cy="23" r="2.4" fill="#FFF"/><circle cx="28" cy="23" r="2.4" fill="#FFF"/><circle cx="37" cy="23" r="2.4" fill="#FFF"/>
+<path d="M56 28H36a5 5 0 0 0-5 5v9a5 5 0 0 0 5 5h12l7 7v-7a5 5 0 0 0 5-5v-9a5 5 0 0 0-4-4.9Z" fill="url(#mPink)" transform="translate(-3 0)"/>
+<path d="M38 38h14M38 43h9" stroke="#FFF" stroke-width="2.2" stroke-linecap="round" transform="translate(-3 0)"/>
+</symbol>
+
+<symbol id="p-film" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M10 22 50 14l2.4 9-40 8Z" fill="#1F2937"/>
+<path d="M14 21.4 20 20l3 6-6 1.4Zm12-2.6 6-1.4 3 6-6 1.4Zm12-2.6 6-1.4 3 6-6 1.4Z" fill="#F8FAFC"/>
+<rect x="12" y="30" width="40" height="24" rx="3" fill="#374151"/>
+<rect x="12" y="30" width="40" height="6" fill="#111827"/>
+<path d="M18 42h18M18 47h12" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/>
+<circle cx="45" cy="45" r="4.6" fill="url(#mGold)"/>
+</symbol>
+
+<symbol id="p-news" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="2.8" fill="#000" opacity=".3"/>
+<rect x="10" y="12" width="40" height="42" rx="3" fill="#F8FAFC"/>
+<path d="M50 20h4v30a4 4 0 0 1-4 4Z" fill="#CBD5E1"/>
+<rect x="15" y="17" width="30" height="7" rx="1.5" fill="#1F2937"/>
+<rect x="15" y="28" width="14" height="12" rx="1.5" fill="url(#mBlue)"/>
+<path d="M33 30h12M33 35h12M33 40h12M15 45h30M15 49.6h22" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-city" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="21" ry="2.8" fill="#000" opacity=".3"/>
+<rect x="10" y="26" width="14" height="28" fill="url(#mBlue)"/>
+<rect x="26" y="14" width="15" height="40" fill="url(#mVio)"/>
+<rect x="43" y="32" width="12" height="22" fill="url(#mCyan)"/>
+<g fill="#FDE68A">
+<rect x="13" y="30" width="3" height="3"/><rect x="18.5" y="30" width="3" height="3"/><rect x="13" y="37" width="3" height="3"/><rect x="18.5" y="37" width="3" height="3"/><rect x="13" y="44" width="3" height="3"/>
+<rect x="29" y="19" width="3" height="3"/><rect x="34.5" y="19" width="3" height="3"/><rect x="29" y="26" width="3" height="3"/><rect x="34.5" y="26" width="3" height="3"/><rect x="29" y="33" width="3" height="3"/><rect x="34.5" y="40" width="3" height="3"/>
+<rect x="46" y="36" width="3" height="3"/><rect x="51" y="36" width="3" height="3"/><rect x="46" y="43" width="3" height="3"/>
+</g>
+<rect x="8" y="54" width="48" height="2.4" rx="1.2" fill="#6B7280"/>
+</symbol>
+
+<symbol id="p-net" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="18" ry="2.8" fill="#000" opacity=".3"/>
+<g stroke="#94A3B8" stroke-width="1.6">
+<path d="M32 30 15 14M32 30l17-16M32 30 10 34M32 30l22 4M32 30 20 50M32 30l12 20"/>
+</g>
+<circle cx="32" cy="30" r="7" fill="url(#mVio)"/>
+<circle cx="15" cy="14" r="4.6" fill="#FB923C"/><circle cx="49" cy="14" r="4.6" fill="#FB923C"/>
+<circle cx="10" cy="34" r="4.6" fill="#FB923C"/><circle cx="54" cy="34" r="4.6" fill="#FB923C"/>
+<circle cx="20" cy="50" r="4.6" fill="#FB923C"/><circle cx="44" cy="50" r="4.6" fill="#FB923C"/>
+<circle cx="30" cy="27.6" r="2" fill="#FFF" opacity=".5"/>
+</symbol>
+
+<symbol id="p-bone" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="18" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M18.6 27.4a6 6 0 1 1-8-8 6 6 0 1 1 8-8l1.2 1.2 24 24 1.2 1.2a6 6 0 1 1 8 8 6 6 0 1 1-8 8l-1.2-1.2-24-24Z" fill="url(#mBeige)" transform="rotate(4 32 32)"/>
+<path d="M14 16a4 4 0 0 1 3-3" stroke="#FFF" stroke-width="1.8" opacity=".55" fill="none" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-coins" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="2.8" fill="#000" opacity=".3"/>
+<circle cx="42" cy="24" r="13" fill="url(#mGold)"/>
+<circle cx="42" cy="24" r="9.4" fill="none" stroke="#B45309" stroke-width="1.8"/>
+<path d="M42 18v12M38.6 21.4h6.8a2.8 2.8 0 0 1 0 5.6h-6.8" fill="none" stroke="#7C4A03" stroke-width="2" stroke-linecap="round"/>
+<g>
+<ellipse cx="22" cy="48" rx="13" ry="4.6" fill="#B45309"/>
+<path d="M9 43h26v5H9Z" fill="url(#mGold)"/><ellipse cx="22" cy="43" rx="13" ry="4.6" fill="#FCD34D"/>
+<path d="M9 37h26v5H9Z" fill="url(#mGold)"/><ellipse cx="22" cy="37" rx="13" ry="4.6" fill="#FBBF24"/>
+</g>
+<path d="M35 14a10 10 0 0 1 5-2" stroke="#FFF" stroke-width="1.8" opacity=".6" fill="none" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-scroll" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="19" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M16 10h34a5 5 0 0 1 5 5v2a5 5 0 0 1-5 5h-2" fill="none"/>
+<rect x="14" y="10" width="38" height="44" rx="4" fill="url(#mBeige)"/>
+<path d="M14 14a4 4 0 0 1 8 0v40a4 4 0 0 1-8 0Z" fill="#C9AE87"/>
+<path d="M28 20h18M28 27h18M28 34h12M28 41h16" stroke="#8B6F47" stroke-width="2.2" stroke-linecap="round"/>
+<circle cx="46" cy="46" r="5" fill="#B91C1C"/>
+<path d="M44 44l4 4M48 44l-4 4" stroke="#FCA5A5" stroke-width="1.2"/>
+</symbol>
+
+<symbol id="p-compass" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="16" ry="2.8" fill="#000" opacity=".3"/>
+<circle cx="32" cy="30" r="21" fill="url(#mGold)"/>
+<circle cx="32" cy="30" r="16" fill="#F8FAFC"/>
+<path d="M32 12v4M32 44v4M14 30h4M46 30h4" stroke="#B45309" stroke-width="2" stroke-linecap="round"/>
+<path d="M32 30 40 18l-5.4 12Z" fill="#DC2626"/>
+<path d="M32 30 24 42l5.4-12Z" fill="#2563EB"/>
+<circle cx="32" cy="30" r="2.6" fill="url(#mGold)"/>
+<path d="M18 18a16 16 0 0 1 7-5" stroke="#FFF" stroke-width="2" opacity=".5" fill="none" stroke-linecap="round"/>
+</symbol>
+
+<symbol id="p-image" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="20" ry="2.8" fill="#000" opacity=".3"/>
+<rect x="10" y="12" width="44" height="38" rx="3" fill="url(#mGold)"/>
+<rect x="15" y="17" width="34" height="28" fill="url(#mSky)"/>
+<circle cx="24" cy="25" r="4" fill="#FCD34D"/>
+<path d="M15 45l10-12 7 8 6-7 11 11Z" fill="url(#mGreen)"/>
+<rect x="15" y="17" width="34" height="28" fill="none" stroke="#B45309" stroke-width="1.4"/>
+</symbol>
+
+<symbol id="p-stars" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="17" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M40 8a20 20 0 1 0 14 34A22 22 0 0 1 40 8Z" fill="url(#mGold)"/>
+<path d="M28 46a20 20 0 0 1-9-28" stroke="#FFF" stroke-width="2" opacity=".4" fill="none" stroke-linecap="round"/>
+<path d="M49 12l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6Z" fill="#FDE68A"/>
+<path d="M56 30l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2Z" fill="#FDE68A"/>
+<circle cx="52" cy="46" r="1.6" fill="#FDE68A"/>
+</symbol>
+
+<symbol id="p-headphone" viewBox="0 0 64 64">
+<ellipse cx="32" cy="58" rx="18" ry="2.8" fill="#000" opacity=".3"/>
+<path d="M12 38v-6a20 20 0 0 1 40 0v6" fill="none" stroke="url(#mBlue)" stroke-width="5" stroke-linecap="round"/>
+<rect x="8" y="36" width="11" height="18" rx="5" fill="url(#mBlue)"/>
+<rect x="45" y="36" width="11" height="18" rx="5" fill="url(#mBlue)"/>
+<rect x="11" y="39" width="5" height="12" rx="2.5" fill="#1E3A8A"/>
+<rect x="48" y="39" width="5" height="12" rx="2.5" fill="#1E3A8A"/>
+<path d="M16 20a20 20 0 0 1 10-6" stroke="#FFF" stroke-width="2" opacity=".45" fill="none" stroke-linecap="round"/>
+</symbol>
 </defs></svg>
 
 <div id="header-placeholder"></div>
@@ -162,12 +454,12 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <section class="sec"><div class="wrap">
 <div class="sh"><h2>Популярные направления</h2><span>4 курса открыты целиком, пятый идёт</span></div>
 <div class="grid">
-<a class="c" href="/blog/lektorij/teorii-lichnosti/"><svg class="ic"><use href="#i-brain"/></svg><b>Теории личности</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">13 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/vliyanie-i-manipulyacii/"><svg class="ic"><use href="#i-masks"/></svg><b>Влияние и манипуляции</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">12 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/myshlenie/"><svg class="ic"><use href="#i-puzzle"/></svg><b>Когнитивные искажения</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/emocionalnyj-intellekt/"><svg class="ic"><use href="#i-heart"/></svg><b>Эмоциональный интеллект</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/privyazannost-i-otnosheniya/"><svg class="ic"><use href="#i-bond"/></svg><b>Привязанность и отношения</b><div class="pb"><i style="width:40%"></i></div><span class="ft"><span class="cnt">4 из 10 лекций</span><span class="tag live">Доступно</span></span></a>
-<div class="c soon"><svg class="ic"><use href="#i-scales"/></svg><b>Логика</b><span class="ft"><span class="cnt">~10 лекций</span><span class="tag soon">Скоро</span></span></div>
+<a class="c" href="/blog/lektorij/teorii-lichnosti/"><svg class="pic"><use href="#p-thinker"/></svg><b>Теории личности</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">13 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c" href="/blog/lektorij/vliyanie-i-manipulyacii/"><svg class="pic"><use href="#p-masks"/></svg><b>Влияние и манипуляции</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">12 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c" href="/blog/lektorij/myshlenie/"><svg class="pic"><use href="#p-puzzle"/></svg><b>Когнитивные искажения</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c" href="/blog/lektorij/emocionalnyj-intellekt/"><svg class="pic"><use href="#p-heart"/></svg><b>Эмоциональный интеллект</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c" href="/blog/lektorij/privyazannost-i-otnosheniya/"><svg class="pic"><use href="#p-bond"/></svg><b>Привязанность и отношения</b><div class="pb"><i style="width:40%"></i></div><span class="ft"><span class="cnt">4 из 10 лекций</span><span class="tag live">Доступно</span></span></a>
+<div class="c soon"><svg class="pic"><use href="#p-scales"/></svg><b>Логика</b><span class="ft"><span class="cnt">~10 лекций</span><span class="tag soon">Скоро</span></span></div>
 </div>
 </div></section>
 
@@ -182,47 +474,47 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div>
 
 <div class="panel on" id="b1"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><svg class="ic"><use href="#i-brain"/></svg><b>Теории личности</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><svg class="ic"><use href="#i-masks"/></svg><b>Влияние и манипуляции</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/emocionalnyj-intellekt/"><svg class="ic"><use href="#i-heart"/></svg><b>Эмоциональный интеллект</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/privyazannost-i-otnosheniya/"><svg class="ic"><use href="#i-bond"/></svg><b>Привязанность и отношения</b><span class="st open">Открыто</span></a>
-<div class="dcard soon"><svg class="ic"><use href="#i-storm"/></svg><b>Стресс-менеджмент</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-target"/></svg><b>Прокрастинация и мотивация</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-couch"/></svg><b>Психотерапия</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-sprout"/></svg><b>Развитие ребёнка</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-micro"/></svg><b>Психодиагностика</b><span class="st soon">Скоро</span></div>
+<a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><svg class="pic"><use href="#p-thinker"/></svg><b>Теории личности</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><svg class="pic"><use href="#p-masks"/></svg><b>Влияние и манипуляции</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/emocionalnyj-intellekt/"><svg class="pic"><use href="#p-heart"/></svg><b>Эмоциональный интеллект</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/privyazannost-i-otnosheniya/"><svg class="pic"><use href="#p-bond"/></svg><b>Привязанность и отношения</b><span class="st open">Открыто</span></a>
+<div class="dcard soon"><svg class="pic"><use href="#p-storm"/></svg><b>Стресс-менеджмент</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-target"/></svg><b>Прокрастинация и мотивация</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-couch"/></svg><b>Психотерапия</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-sprout"/></svg><b>Развитие ребёнка</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-lens"/></svg><b>Психодиагностика</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b2"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/myshlenie/"><svg class="ic"><use href="#i-puzzle"/></svg><b>Когнитивные искажения</b><span class="st open">Открыто</span></a>
-<div class="dcard soon"><svg class="ic"><use href="#i-scales"/></svg><b>Логика</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-search"/></svg><b>Критическое мышление</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-temple"/></svg><b>Философия</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-castle"/></svg><b>Мнемоника</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-bulb"/></svg><b>ТРИЗ</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-wrench"/></svg><b>Траблшутинг</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-bolt"/></svg><b>Мозг и поведение</b><span class="st soon">Скоро</span></div>
+<a class="dcard" href="/blog/lektorij/myshlenie/"><svg class="pic"><use href="#p-puzzle"/></svg><b>Когнитивные искажения</b><span class="st open">Открыто</span></a>
+<div class="dcard soon"><svg class="pic"><use href="#p-scales"/></svg><b>Логика</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-search"/></svg><b>Критическое мышление</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-temple"/></svg><b>Философия</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-castle"/></svg><b>Мнемоника</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-bulb"/></svg><b>ТРИЗ</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-wrench"/></svg><b>Траблшутинг</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-brain"/></svg><b>Мозг и поведение</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b3"><div class="dgrid">
-<div class="dcard soon"><svg class="ic"><use href="#i-mic"/></svg><b>Ораторское искусство</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-hands"/></svg><b>Переговоры</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-film"/></svg><b>Актёрское мастерство</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-news"/></svg><b>Медиаграмотность</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-mic"/></svg><b>Ораторское искусство</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-talk"/></svg><b>Переговоры</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-film"/></svg><b>Актёрское мастерство</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-news"/></svg><b>Медиаграмотность</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b4"><div class="dgrid">
-<div class="dcard soon"><svg class="ic"><use href="#i-city"/></svg><b>Социология</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-people"/></svg><b>Социальная психология</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-bone"/></svg><b>Антропология</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-coins"/></svg><b>Экономика</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-city"/></svg><b>Социология</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-net"/></svg><b>Социальная психология</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-bone"/></svg><b>Антропология</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-coins"/></svg><b>Экономика</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b5"><div class="dgrid">
-<div class="dcard soon"><svg class="ic"><use href="#i-scroll"/></svg><b>История идей</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-compass"/></svg><b>Этика</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-image"/></svg><b>Эстетика</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-stars"/></svg><b>Экзистенциальные вопросы</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-scroll"/></svg><b>История идей</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-compass"/></svg><b>Этика</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-image"/></svg><b>Эстетика</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><svg class="pic"><use href="#p-stars"/></svg><b>Экзистенциальные вопросы</b><span class="st soon">Скоро</span></div>
 </div></div>
 </div></section>
 
@@ -238,10 +530,10 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <section class="sec"><div class="wrap">
 <div class="sh"><h2>Почему Лекторий</h2><span>коротко, честно, бесплатно</span></div>
 <div class="feats">
-<div class="feat"><svg class="ic"><use href="#i-micro"/></svg><b>Научный подход</b><p>Университетские программы и первоисточники, без «успешного успеха».</p></div>
-<div class="feat"><svg class="ic"><use href="#i-headphone"/></svg><b>Формат подкаста</b><p>Каждая лекция озвучена голосом Фреди. Слушай в дороге.</p></div>
-<div class="feat"><svg class="ic"><use href="#i-puzzle"/></svg><b>Схемы и практика</b><p>Не пересказ учебника, а понимание с примерами из жизни.</p></div>
-<div class="feat"><svg class="ic"><use href="#i-coins"/></svg><b>Бесплатно навсегда</b><p>Без оплат, подписок и рекламы. Знание должно быть доступным.</p></div>
+<div class="feat"><svg class="pic"><use href="#p-lens"/></svg><b>Научный подход</b><p>Университетские программы и первоисточники, без «успешного успеха».</p></div>
+<div class="feat"><svg class="pic"><use href="#p-headphone"/></svg><b>Формат подкаста</b><p>Каждая лекция озвучена голосом Фреди. Слушай в дороге.</p></div>
+<div class="feat"><svg class="pic"><use href="#p-puzzle"/></svg><b>Схемы и практика</b><p>Не пересказ учебника, а понимание с примерами из жизни.</p></div>
+<div class="feat"><svg class="pic"><use href="#p-coins"/></svg><b>Бесплатно навсегда</b><p>Без оплат, подписок и рекламы. Знание должно быть доступным.</p></div>
 </div>
 </div></section>
 
