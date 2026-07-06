@@ -10,11 +10,10 @@
       </div>
     </div>
     <nav class="footer-legal" aria-label="Документы">
-      <a href="/v-razrabotke/">В разработке</a>
       <a href="/oferta/">Оферта</a>
-      <a href="/politika-konfidencialnosti/">Политика конфиденциальности</a>
+      <a href="/politika-konfidencialnosti/">Конфиденциальность</a>
       <a href="/tarify/">Тарифы</a>
-      <a href="/kontakty/">Контакты и реквизиты</a>
+      <a href="/kontakty/">Контакты</a>
     </nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
@@ -163,10 +162,21 @@
     font-size: 0.9rem;
     padding-bottom: 3px;
   }
-  
+
+  .footer-legal {
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    padding-top: 22px;
+  }
+
+  .footer-legal a {
+    font-size: 0.88rem;
+  }
+
   .copyright {
     font-size: 0.7rem;
-    margin-top: 25px;
+    margin-top: 22px;
   }
 }
 
