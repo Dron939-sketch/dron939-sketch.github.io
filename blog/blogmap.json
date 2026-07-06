@@ -3436,6 +3436,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-mysl-7-lovushki-veroyatnosti",
+   "title": "Лекция 7. Ловушки вероятности: интуиция против статистики",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-8-lovushki-resheniy",
+   "title": "Лекция 8. Ловушки решений: потери, невозвратные затраты и выбор",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
