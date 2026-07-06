@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-prokr-1-chto-takoe-prokrastinaciya",
+   "title": "Лекция 1. Прокрастинация — это не лень: бегство от неприятного чувства",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-stress-1-chto-takoe-stress",
    "title": "Лекция 1. Что такое стресс: не враг, а сигнал тела",
    "rubric": "lektorij",
