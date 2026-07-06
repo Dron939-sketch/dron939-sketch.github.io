@@ -3555,6 +3555,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-logika-4-sillogizmy",
+   "title": "Лекция 4. Силлогизмы: как из «всех» и «некоторых» следует вывод",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
