@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-krit-1-chto-takoe-kriticheskoe-myshlenie",
+   "title": "Лекция 1. Что такое критическое мышление: сомнение как инструмент",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-prokr-1-chto-takoe-prokrastinaciya",
    "title": "Лекция 1. Прокрастинация — это не лень: бегство от неприятного чувства",
    "rubric": "lektorij",
