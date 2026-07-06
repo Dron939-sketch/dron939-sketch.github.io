@@ -3569,6 +3569,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-logika-6-formalnye-oshibki",
+   "title": "Лекция 6. Формальные ошибки: где ломается сама структура",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
