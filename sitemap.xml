@@ -707,6 +707,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/myshlenie/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-mysl-1-dve-sistemy.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-mysl-2-evristiki.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lekciya-emocii-1-chto-takoe-emociya.html</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>

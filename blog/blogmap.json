@@ -3394,6 +3394,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-mysl-1-dve-sistemy",
+   "title": "Лекция 1. Две системы мышления: быстрая и медленная",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-2-evristiki",
+   "title": "Лекция 2. Эвристики: полезные ярлыки, которые нас подводят",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
