@@ -3338,6 +3338,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-emocii-3-trevoga-i-strah",
+   "title": "Лекция 3. Тревога и страх: анатомия сигнализации",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-emocii-4-gnev",
+   "title": "Лекция 4. Гнев: как злиться правильно",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
