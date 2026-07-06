@@ -3366,6 +3366,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-emocii-7-radost-i-interes",
+   "title": "Лекция 7. Радость и интерес: чем они питаются",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-emocii-8-emocii-v-tele",
+   "title": "Лекция 8. Эмоции в теле: соматика и алекситимия",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
