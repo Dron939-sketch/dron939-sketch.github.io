@@ -3597,6 +3597,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-logika-10-logika-v-zhizni",
+   "title": "Лекция 10. Логика в жизни: как строить и проверять аргументы — итоги курса",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
   }
  ]
 }
