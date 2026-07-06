@@ -3541,6 +3541,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-logika-2-skrytye-posylki",
+   "title": "Лекция 2. Скрытые посылки: невысказанное допущение аргумента",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
   }
  ]
 }
