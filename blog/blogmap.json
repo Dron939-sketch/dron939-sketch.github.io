@@ -3478,6 +3478,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-3-trevozhnyj-i-izbegayushchij",
+   "title": "Лекция 3. Тревожный и избегающий: почему они находят друг друга",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-4-rodom-iz-detstva",
+   "title": "Лекция 4. Родом из детства — но не приговор: как меняется тип",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
