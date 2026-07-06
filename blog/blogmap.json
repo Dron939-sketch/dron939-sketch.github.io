@@ -3576,6 +3576,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-logika-7-ulovki-podmeny",
+   "title": "Лекция 7. Уловки подмены: чучело, ложная дилемма, скользкая дорожка",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
   }
  ]
 }
