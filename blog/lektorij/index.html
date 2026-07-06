@@ -6,108 +6,151 @@
 <title>Лекторий — бесплатные курсы лекций с озвучкой | Андрей Мейстер</title>
 <meta name="description" content="Лекторий — бесплатные курсы лекций по психологии, мышлению, логике, философии и общению. Коротко, с примерами и схемами, с озвучкой голосом Фреди.">
 <link rel="canonical" href="https://meysternlp.ru/blog/lektorij/">
-<meta property="og:type" content="website"><meta property="og:title" content="Лекторий — бесплатные курсы лекций"><meta property="og:description" content="29 направлений: психология, мышление, философия, общение. Слушай как подкаст или читай с конспектом — бесплатно."><meta property="og:image" content="https://meysternlp.ru/blog/og/lektorij.png"><meta property="og:url" content="https://meysternlp.ru/blog/lektorij/">
+<meta property="og:type" content="website"><meta property="og:title" content="Лекторий — бесплатные курсы лекций"><meta property="og:description" content="20 направлений: психология, мышление, философия, общение. Слушай как подкаст или читай с конспектом — бесплатно."><meta property="og:image" content="https://meysternlp.ru/blog/og/lektorij.png"><meta property="og:url" content="https://meysternlp.ru/blog/lektorij/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Лекторий: курсы лекций","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Course","name":"Теории личности","url":"https://meysternlp.ru/blog/lektorij/teorii-lichnosti/","description":"13 лекций: от психоанализа Фрейда до феноменологии Роджерса.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}},{"@type":"ListItem","position":2,"item":{"@type":"Course","name":"Влияние и манипуляции","url":"https://meysternlp.ru/blog/lektorij/vliyanie-i-manipulyacii/","description":"12 лекций о психологии влияния: от принципов Чалдини до защиты от давления.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}},{"@type":"ListItem","position":3,"item":{"@type":"Course","name":"Эмоциональный интеллект","url":"https://meysternlp.ru/blog/lektorij/emocionalnyj-intellekt/","description":"10 лекций о науке эмоций: от Экмана и Барретт до регуляции по Гроссу.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}},{"@type":"ListItem","position":4,"item":{"@type":"Course","name":"Мышление и когнитивные искажения","url":"https://meysternlp.ru/blog/lektorij/myshlenie/","description":"10 лекций: две системы Канемана, эвристики, искажения и критическое мышление.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}},{"@type":"ListItem","position":5,"item":{"@type":"Course","name":"Привязанность и отношения","url":"https://meysternlp.ru/blog/lektorij/privyazannost-i-otnosheniya/","description":"10 лекций о науке отношений: теория привязанности, четыре типа, математика любви Готтмана и четыре всадника.","provider":{"@type":"Person","name":"Андрей Мейстер"},"inLanguage":"ru-RU","isAccessibleForFree":true}}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=%F0%9F%A7%A0%F0%9F%8E%AD%F0%9F%97%A3%EF%B8%8F%F0%9F%8C%8D%F0%9F%8E%A8%F0%9F%8E%93%F0%9F%8E%A7&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-:root{--bg:#0C0C0C;--panel:rgba(255,255,255,.02);--accent:#3A86FF;--accent2:#00A8E8;
-  --line:rgba(58,134,255,.20);--txt:#FFFFFF;--body:#CCCCCC;--mut:#8b93a3}
-body{font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7;margin:0}
+.kicker,.tab,.snum{font-family:'Inter','Noto Color Emoji',system-ui,sans-serif}
+:root{--cyan:#22D3EE;--vio:#8B5CF6;--pink:#F472B6;
+--txt:#EDF1FF;--mut:#A6ADCE;--dim:#727AA0;
+--glass:linear-gradient(160deg,rgba(38,34,76,.55),rgba(13,12,30,.72));
+--gb:rgba(150,140,255,.20);
+--grad:linear-gradient(90deg,#22D3EE,#8B5CF6 55%,#F472B6)}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--txt);line-height:1.7;margin:0;
+background:
+radial-gradient(900px 560px at 82% 0%,rgba(139,92,246,.26),transparent 60%),
+radial-gradient(760px 520px at 6% 10%,rgba(34,211,238,.14),transparent 60%),
+radial-gradient(760px 560px at 55% 100%,rgba(244,114,182,.12),transparent 66%),
+radial-gradient(700px 500px at 20% 55%,rgba(139,92,246,.12),transparent 62%),
+linear-gradient(135deg,#0a0a1a 0%,#1a0b2e 50%,#0d1b2a 100%);
+background-color:#0d0c22}
 .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
 a{color:inherit}
-.ic{fill:none;stroke:url(#ig);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(58,134,255,.35))}
+
+/* частицы */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.pt{position:absolute;bottom:-12px;width:4px;height:4px;border-radius:50%;opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{0%{opacity:0;transform:translateY(0) translateX(0)}8%{opacity:.9}88%{opacity:.6}100%{opacity:0;transform:translateY(-105vh) translateX(60px)}}
+main{position:relative;z-index:1}
+
+/* иконки-чипы */
+.ic-chip{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;margin-bottom:13px;
+background:radial-gradient(circle at 50% 38%,var(--gc),transparent 74%);border:1px solid rgba(255,255,255,.09)}
+.ic{width:31px;height:31px;fill:none;stroke:var(--gs);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px var(--gc))}
+.dcard .ic-chip{width:50px;height:50px;border-radius:15px}.dcard .ic{width:27px;height:27px}
 
 /* hero */
-.hero{position:relative;text-align:center;padding:72px 0 52px;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(760px 380px at 50% -10%,rgba(58,134,255,.16),transparent 62%),
-    radial-gradient(1.6px 1.6px at 18% 30%,rgba(58,134,255,.5),transparent 60%),
-    radial-gradient(1.6px 1.6px at 78% 22%,rgba(0,168,232,.45),transparent 60%),
-    radial-gradient(1.4px 1.4px at 62% 60%,rgba(255,255,255,.28),transparent 60%),
-    radial-gradient(1.4px 1.4px at 30% 66%,rgba(58,134,255,.4),transparent 60%),
-    radial-gradient(1.4px 1.4px at 88% 54%,rgba(255,255,255,.22),transparent 60%),
-    radial-gradient(1.4px 1.4px at 44% 16%,rgba(0,168,232,.4),transparent 60%)}
-.hero>*{position:relative;z-index:1}
-.crumbs{text-align:left;font-size:.78rem;color:var(--mut);margin-bottom:32px}.crumbs a{color:#7FB0FF;text-decoration:none}
-.kicker{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:30px;padding:7px 18px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#bcd4ff;background:rgba(58,134,255,.05);margin-bottom:22px}
-h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margin:0 0 10px;text-shadow:0 0 26px rgba(58,134,255,.45)}
-.subhead{color:var(--accent);font-weight:300;letter-spacing:.15em;font-size:clamp(1rem,2.4vw,1.35rem);margin-bottom:22px}
-.lead{color:var(--body);font-weight:300;max-width:58ch;margin:0 auto 28px;font-size:1.05rem}.lead b{color:#fff;font-weight:500}
-.stats{display:inline-flex;flex-wrap:wrap;justify-content:center;border:1px solid var(--line);border-radius:16px;background:var(--panel);backdrop-filter:blur(8px);margin-bottom:30px}
-.stats span{display:flex;flex-direction:column;padding:14px 26px;border-right:1px solid rgba(58,134,255,.14)}.stats span:last-child{border-right:none}
-.stats b{font-size:1.5rem;font-weight:400;color:var(--accent)}.stats i{font-style:normal;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:3px}
-.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:30px;padding:13px 30px;font-size:.82rem;text-transform:uppercase;letter-spacing:.18em;transition:.25s;cursor:pointer;border:none}
-.btn.solid{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;box-shadow:0 6px 22px rgba(58,134,255,.35)}
-.btn.solid:hover{box-shadow:0 0 22px rgba(58,134,255,.6);transform:translateY(-2px);color:#fff}
-.btn.ghost{border:1px solid var(--accent);color:#fff;background:transparent}.btn.ghost:hover{background:var(--accent)}
+.hero{position:relative;padding:56px 0 44px;overflow:hidden}
+.hero .row{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.hero .txt{flex:1;min-width:300px}
+.hero .art{flex:0 0 380px;max-width:42%;min-width:280px;margin:0 auto}
+.crumbs{font-size:.78rem;color:var(--dim);margin-bottom:26px}
+.crumbs a{color:#9DB4EE;text-decoration:none}
+.kicker{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--gb);border-radius:30px;padding:7px 18px;font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9C4FF;background:rgba(60,50,110,.32);backdrop-filter:blur(8px);margin-bottom:20px}
+h1{font-size:clamp(2.8rem,7vw,4.6rem);font-weight:900;letter-spacing:.02em;line-height:1.02;margin:0 0 12px}
+h1 .neon{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;animation:glow 3s ease-in-out infinite alternate}
+@keyframes glow{from{filter:drop-shadow(0 0 22px rgba(34,211,238,.45))}to{filter:drop-shadow(0 0 34px rgba(244,114,182,.5))}}
+.subhead{color:#BDB8E8;font-weight:300;font-size:1.12rem;margin:0 0 24px}
+.stats{display:inline-flex;flex-wrap:wrap;border:1px solid var(--gb);border-radius:18px;background:var(--glass);backdrop-filter:blur(12px);box-shadow:0 14px 44px rgba(4,4,18,.55);margin-bottom:24px}
+.stats span{display:flex;flex-direction:column;padding:14px 24px;border-right:1px solid rgba(150,140,255,.14)}
+.stats span:last-child{border-right:none}
+.stats b{font-size:1.55rem;font-weight:800;background:linear-gradient(90deg,#7DF3FF,#C79BFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stats i{font-style:normal;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-top:3px}
+.cta{display:flex;gap:13px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:30px;padding:14px 32px;font-weight:700;font-size:.88rem;text-decoration:none;transition:transform .15s,box-shadow .25s,filter .2s}
+.btn:active{transform:scale(.97)}
+.btn.p{background:var(--grad);color:#fff;box-shadow:0 0 26px rgba(34,211,238,.32),0 10px 34px rgba(139,92,246,.42)}
+.btn.p:hover{transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 0 40px rgba(34,211,238,.5),0 14px 44px rgba(244,114,182,.45)}
+.btn.g{border:1px solid rgba(150,180,255,.5);color:#D5E2FF;background:rgba(38,42,86,.42);backdrop-filter:blur(8px)}
+.btn.g:hover{background:rgba(80,90,170,.35)}
+/* мозг */
+.syn{transform-box:fill-box;transform-origin:center;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.55);opacity:1}}
 
-/* sections */
-.sec{padding:46px 0}
-.sh{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
-.sh h2{font-size:1.7rem;font-weight:300;letter-spacing:.04em;margin:0}.sh span{color:var(--mut);font-size:.9rem}
+/* секции */
+.sec{padding:44px 0 8px}
+.sh{display:flex;align-items:baseline;gap:14px;margin:0 0 22px}
+.sh h2{font-size:1.65rem;font-weight:800;letter-spacing:-.01em;margin:0;background:linear-gradient(90deg,#9BE9FF,#D9C4FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sh span{color:var(--dim);font-size:.86rem}
 
-/* course cards — иконка-вперёд, минимум текста */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
-.c{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 18px 20px;transition:.25s;overflow:hidden}
-.c::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.85}
-.c.soon::before{opacity:.22}
-a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-3px);box-shadow:0 14px 40px rgba(58,134,255,.16)}
-.c .ic{width:52px;height:52px;margin-bottom:14px}
-.c b{display:block;font-size:1.02rem;font-weight:500;margin-bottom:14px;line-height:1.3}
-.c .pb{height:5px;border-radius:6px;background:rgba(58,134,255,.14);overflow:hidden;width:100%;margin-bottom:12px}
-.c .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:6px}
-.c .ft{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:8px}
-.c .cnt{font-size:.76rem;color:var(--mut)}
-.tag{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;padding:4px 11px;border-radius:20px}
-.tag.live{color:#bfe0ff;border:1px solid var(--accent);background:rgba(58,134,255,.12)}
-.tag.soon{color:var(--mut);border:1px solid rgba(255,255,255,.12)}
-.c.soon{opacity:.74}.c.soon .ic{opacity:.7}
+/* карточки курсов */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:16px}
+.c{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;
+background:var(--glass);border:1px solid var(--gb);border-radius:20px;padding:26px 16px 20px;overflow:hidden;
+backdrop-filter:blur(10px);box-shadow:0 14px 40px rgba(4,4,18,.4);transition:transform .22s,border-color .22s,box-shadow .25s}
+.c::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:.9}
+.c.soon::before{opacity:.28}
+a.c:hover{transform:translateY(-6px);border-color:rgba(180,160,255,.6);box-shadow:0 0 0 1px rgba(180,160,255,.22),0 22px 56px rgba(60,30,120,.55)}
+.c b{font-size:1.02rem;font-weight:700;margin-bottom:13px;line-height:1.3;color:#fff}
+.c .pb{height:6px;border-radius:6px;background:rgba(255,255,255,.09);width:100%;overflow:hidden;margin-bottom:12px}
+.c .pb i{display:block;height:100%;background:var(--grad);border-radius:6px;box-shadow:0 0 12px rgba(139,92,246,.55)}
+.c .ft{margin-top:auto;display:flex;flex-direction:column;gap:8px;align-items:center}
+.c .cnt{font-size:.75rem;color:var(--mut)}
+.tag{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;padding:4px 12px;border-radius:20px}
+.tag.live{color:#8FF0FF;border:1px solid rgba(103,232,249,.5);background:rgba(34,211,238,.12);box-shadow:0 0 14px rgba(34,211,238,.2)}
+.tag.soon{color:var(--mut);border:1px solid rgba(150,140,255,.24)}
+.c.soon{opacity:.85}
 
-/* tabs */
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 22px}
-.tab{padding:9px 18px;border:1px solid var(--line);border-radius:30px;background:var(--panel);color:var(--mut);font-size:.84rem;cursor:pointer;transition:.2s}
-.tab:hover{color:#fff;border-color:var(--accent)}
-.tab.on{background:linear-gradient(135deg,rgba(0,168,232,.22),rgba(58,134,255,.22));border-color:var(--accent);color:#fff}
-.panel{display:none}.panel.on{display:block;animation:fade .4s ease}
-@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px}
-.dcard{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 14px 18px;transition:.2s}
-a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-2px)}
-.dcard .ic{width:42px;height:42px;margin-bottom:12px}
-.dcard b{font-size:.92rem;font-weight:500;line-height:1.28;margin-bottom:10px}
-.dcard.soon{opacity:.72}.dcard.soon .ic{opacity:.68}
-.st{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:auto}
-.st.open{color:#7fd8ff;border:1px solid var(--accent);background:rgba(58,134,255,.12)}
-.st.soon{color:#cdb36b;border:1px solid rgba(220,190,110,.4);background:rgba(220,190,110,.08)}
+/* табы + мини-карточки */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 24px}
+.tab{padding:10px 20px;border:1px solid var(--gb);border-radius:30px;background:rgba(30,28,60,.5);color:var(--mut);font-size:.86rem;font-weight:500;cursor:pointer;transition:.2s;backdrop-filter:blur(8px)}
+.tab:hover{color:#fff;border-color:rgba(180,160,255,.55)}
+.tab.on{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 6px 22px rgba(139,92,246,.4)}
+.panel{display:none}.panel.on{display:block;animation:fadein .45s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:13px}
+.dcard{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;
+background:var(--glass);border:1px solid var(--gb);border-radius:16px;padding:20px 12px 16px;backdrop-filter:blur(8px);transition:.2s}
+a.dcard:hover{transform:translateY(-3px);border-color:rgba(180,160,255,.55);box-shadow:0 14px 34px rgba(60,30,120,.45)}
+.dcard b{font-size:.9rem;font-weight:600;line-height:1.26;margin-bottom:10px;color:#fff}
+.dcard.soon{opacity:.85}
+.st{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:auto}
+.st.open{color:#8FF0FF;border:1px solid rgba(103,232,249,.5);background:rgba(34,211,238,.12)}
+.st.soon{color:var(--mut);border:1px solid rgba(150,140,255,.24)}
 
-/* how / why / cta */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.step{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:32px 24px}
-.snum{width:50px;height:50px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:500;color:#fff;background:linear-gradient(135deg,var(--accent2),var(--accent));box-shadow:0 0 20px rgba(58,134,255,.35)}
-.step b{display:block;font-size:1.1rem;font-weight:500;margin-bottom:8px}.step p{color:var(--mut);font-size:.88rem;font-weight:300;margin:0}
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.feat{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 18px}
-.feat:hover{border-color:var(--accent)}
-.feat .ic{width:40px;height:40px;margin-bottom:12px}
-.feat b{display:block;font-weight:500;margin-bottom:6px}.feat p{color:var(--mut);font-size:.82rem;font-weight:300;margin:0}
-.band{text-align:center;padding:52px 24px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(0,168,232,.10),rgba(58,134,255,.10))}
-.band h2{font-size:1.8rem;font-weight:300;margin:0 0 10px}.band p{color:var(--body);font-weight:300;margin:0 0 24px}
-.finis{margin:34px auto 0;text-align:center;max-width:60ch}
-.finis .q{font-size:1.08rem;font-weight:300;color:#e6ebf5;margin:0 0 10px;font-style:italic}
-.finis span{font-size:.86rem;color:var(--mut)}.finis a{color:#7FB0FF;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.4)}
-@media(max-width:640px){.hero{padding:56px 0 44px}.stats span{padding:12px 16px}}
+/* шаги и фишки */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.step{text-align:center;background:var(--glass);border:1px solid var(--gb);border-radius:20px;padding:32px 24px;backdrop-filter:blur(10px)}
+.snum{width:54px;height:54px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;background:var(--grad);box-shadow:0 0 24px rgba(139,92,246,.45)}
+.step b{display:block;font-size:1.1rem;font-weight:700;margin-bottom:8px;color:#fff}
+.step p{color:var(--mut);font-size:.88rem;font-weight:300;margin:0}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:14px}
+.feat{text-align:center;background:var(--glass);border:1px solid var(--gb);border-radius:16px;padding:26px 18px;backdrop-filter:blur(8px);transition:.2s}
+.feat:hover{border-color:rgba(180,160,255,.5)}
+.feat b{display:block;font-weight:700;margin-bottom:6px;color:#fff}
+.feat p{color:var(--mut);font-size:.83rem;font-weight:300;margin:0}
+.feat .ic-chip{margin-left:auto;margin-right:auto}
+
+/* финал */
+.band{text-align:center;padding:54px 24px;border-radius:26px;border:1px solid var(--gb);
+background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(34,211,238,.14));backdrop-filter:blur(10px);margin-bottom:26px}
+.band h2{font-size:1.9rem;font-weight:800;margin:0 0 10px;color:#fff}
+.band p{color:var(--mut);font-weight:300;margin:0 0 24px}
+.finis{margin:30px auto 0;max-width:60ch;font-size:.88rem;color:var(--mut)}
+.finis a{color:#8FF0FF;text-decoration:none;border-bottom:1px solid rgba(103,232,249,.45)}
+/* появление при скролле */
+.fade{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.fade.visible{opacity:1;transform:none}
+@media(max-width:760px){.hero{padding:44px 0 36px}.hero .art{max-width:78%}.stats span{padding:12px 16px}}
 </style>
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true});</script>
 </head>
 <body>
-<!-- SVG-иконки (сине-голубой градиент) -->
+<!-- градиенты и иконки -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#3A86FF"/></linearGradient>
+<linearGradient id="gCyanVio" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+<linearGradient id="gVioPink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#F472B6"/></linearGradient>
+<linearGradient id="gRose" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FB7185"/><stop offset="1" stop-color="#F472B6"/></linearGradient>
+<linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#F0961E"/></linearGradient>
+<linearGradient id="gBlueCyan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38BDF8"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+<linearGradient id="gEmerald" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34D399"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+<linearGradient id="gSlate" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A8B4CC"/><stop offset="1" stop-color="#38BDF8"/></linearGradient>
+<linearGradient id="gPinkVio" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F472B6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
 <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 6a2.4 2.4 0 0 0-4.7-.6A2.5 2.5 0 0 0 4 7.6a2.5 2.5 0 0 0-.5 4A2.6 2.6 0 0 0 5 16.2 2.4 2.4 0 0 0 9.4 18a2.3 2.3 0 0 0 2.6.4Z"/><path d="M12 6a2.4 2.4 0 0 1 4.7-.6A2.5 2.5 0 0 1 20 7.6a2.5 2.5 0 0 1 .5 4A2.6 2.6 0 0 1 19 16.2 2.4 2.4 0 0 1 14.6 18a2.3 2.3 0 0 1-2.6.4Z"/><path d="M12 6v13"/></symbol>
-<symbol id="i-masks" viewBox="0 0 24 24"><path d="M4 5h7v5.5a3.5 3.5 0 0 1-7 0Z"/><path d="M13 8h7v3a3.5 3.5 0 0 1-7 0"/><path d="M6.4 8h.01M8.6 8h.01"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9.2A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.8C19 15.6 12 20 12 20Z"/></symbol>
 <symbol id="i-bond" viewBox="0 0 24 24"><path d="M9.2 15.5S5 13 5 9.9A2.4 2.4 0 0 1 9.2 8a2.4 2.4 0 0 1 4.2 1.9c0 3.1-4.2 5.6-4.2 5.6Z"/><path d="M15.4 17.5s-3.4-2-3.4-4.5A1.9 1.9 0 0 1 15.4 11a1.9 1.9 0 0 1 3.4 1.5c0 2.5-3.4 5-3.4 5Z"/></symbol>
 <symbol id="i-storm" viewBox="0 0 24 24"><path d="M7 15a3.6 3.6 0 0 1 .4-7.2A4.6 4.6 0 0 1 16.6 9 3.3 3.3 0 0 1 16 15"/><path d="m12 12-2 3.5h3L11 20"/></symbol>
@@ -117,62 +160,97 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <symbol id="i-micro" viewBox="0 0 24 24"><path d="M5 20h13"/><path d="M9 20a5.5 5.5 0 0 0 6.4-8.4"/><path d="m11 5 3.2 3.2-2.2 2.2L8.8 7.2z"/><path d="m8.5 8-2 2"/></symbol>
 <symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M10.2 5.5a1.5 1.5 0 0 1 3 0c0 .8.4.8 1 .8H16v2.4c0 .6 0 1 .8 1a1.5 1.5 0 0 1 0 3c-.8 0-.8.4-.8 1V17h-2.2c-.6 0-1 0-1 .8a1.5 1.5 0 0 1-3 0c0-.8-.4-.8-1-.8H6v-2.3c0-.6 0-1-.8-1a1.5 1.5 0 0 1 0-3c.8 0 .8-.4.8-1V6.3h2.2c.6 0 1 0 1-.8Z"/></symbol>
 <symbol id="i-scales" viewBox="0 0 24 24"><path d="M12 4v16M7.5 20h9"/><path d="m12 6-6 1.6M12 6l6 1.6"/><path d="M6 7.6 3.8 12a2.2 2.2 0 0 0 4.4 0Zm12 0L15.8 12a2.2 2.2 0 0 0 4.4 0Z"/></symbol>
-<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 4 4"/></symbol>
-<symbol id="i-temple" viewBox="0 0 24 24"><path d="M4 9 12 5l8 4Z"/><path d="M6 9v7M10 9v7M14 9v7M18 9v7"/><path d="M4 19h16"/></symbol>
-<symbol id="i-castle" viewBox="0 0 24 24"><path d="M5 20V9l2 1.2V7l2 1.2V6h6v2.2L17 7v3.2L19 9v11Z"/><path d="M10.5 20v-3h3v3"/></symbol>
 <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.2 18h5.6M10.4 21h3.2"/><path d="M12 3a6 6 0 0 1 3.9 10.6c-.7.6-.9 1-.9 1.9H9c0-.9-.2-1.3-.9-1.9A6 6 0 0 1 12 3Z"/></symbol>
-<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M15.2 6.8a3.5 3.5 0 0 1-4.5 4.6l-4.3 4.3a1.6 1.6 0 0 1-2.3-2.3l4.3-4.3A3.5 3.5 0 0 1 12.6 4l-2 2 1.5 1.5 2-2a3.5 3.5 0 0 1 1.1 1.3Z"/></symbol>
 <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 5 13.2h5l-1 7.8 8-11h-5z"/></symbol>
+<symbol id="i-masks" viewBox="0 0 24 24"><path d="M4 5h7v5.5a3.5 3.5 0 0 1-7 0Z"/><path d="M13 8h7v3a3.5 3.5 0 0 1-7 0"/><path d="M6.4 8h.01M8.6 8h.01"/></symbol>
 <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="10" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><path d="M12 17v3M9 20h6"/></symbol>
-<symbol id="i-hands" viewBox="0 0 24 24"><path d="m3.5 9 3-1 4.5 3 3-3 6.5 2v5l-3 1-3.2-2.2"/><path d="m10.8 11 2 1.8-1.5 1.6L8.6 12"/></symbol>
-<symbol id="i-film" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16M9 6l-1.5 4M14 6l-1.5 4"/></symbol>
-<symbol id="i-news" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="1.6"/><path d="M7 9h6M7 12h6M7 15h4M16 9v7"/></symbol>
 <symbol id="i-city" viewBox="0 0 24 24"><path d="M4 20V10h6v10M10 20V5h10v15H4"/><path d="M13.5 9h1M17 9h1M13.5 13h1M17 13h1"/></symbol>
-<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M4 19a5 5 0 0 1 10 0M14.5 19a4 4 0 0 1 5.5-3.7"/></symbol>
 <symbol id="i-bone" viewBox="0 0 24 24"><path d="M8 16a2 2 0 1 1-2.6-2.6 2 2 0 1 1 2.6-2.7l3.3 3.3 3.3 3.3a2 2 0 1 1 2.6 2.6 2 2 0 1 1-2.6 2.7Z"/></symbol>
 <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="9.5" cy="7" rx="5" ry="2.4"/><path d="M4.5 7v4c0 1.3 2.2 2.4 5 2.4s5-1.1 5-2.4V7"/><path d="M9.6 15.6c.4 1 2.4 1.8 4.9 1.8 2.8 0 5-1.1 5-2.4v-4c0-1.2-1.8-2.2-4.4-2.4"/></symbol>
+<symbol id="i-temple" viewBox="0 0 24 24"><path d="M4 9 12 5l8 4Z"/><path d="M6 9v7M10 9v7M14 9v7M18 9v7"/><path d="M4 19h16"/></symbol>
 <symbol id="i-scroll" viewBox="0 0 24 24"><path d="M7 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8"/><path d="M6 5a2 2 0 0 0-2 2v1h4M18 19a2 2 0 0 0 2-2v-1"/><path d="M9 9h6M9 12h6"/></symbol>
-<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m15.5 8.5-2.2 4.8L8.5 15.5l2.2-4.8z"/></symbol>
 <symbol id="i-image" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 17 4-4 3 3 3-3.5 4 4.5"/></symbol>
-<symbol id="i-stars" viewBox="0 0 24 24"><path d="m13 3 1.5 3.7L18 8l-3.5 1.3L13 13l-1.5-3.7L8 8l3.5-1.3z"/><circle cx="6" cy="16.5" r="1"/><circle cx="17.5" cy="16" r="1"/><circle cx="12" cy="19.5" r="1"/></symbol>
 <symbol id="i-headphone" viewBox="0 0 24 24"><path d="M5 13v-1a7 7 0 0 1 14 0v1"/><rect x="4" y="13" width="3.5" height="6" rx="1.4"/><rect x="16.5" y="13" width="3.5" height="6" rx="1.4"/></symbol>
 </defs></svg>
 
+<div class="particles" id="particles"></div>
 <div id="header-placeholder"></div>
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 
+<main>
 <header class="hero"><div class="wrap">
 <div class="crumbs"><a href="/blog/">Блог</a> / Лекторий</div>
+<div class="row">
+<div class="txt">
 <span class="kicker">🎓 лекции о том, как мы устроены</span>
-<h1>ЛЕКТОРИЙ</h1>
-<div class="subhead">Про мысли, чувства и людей — без воды и пафоса.</div>
-<p class="lead">Курсы лекций по психологии, мышлению и общению — коротко, с примерами и схемами. <b>Каждую читает вслух Фреди</b> — можно слушать как подкаст.</p>
+<h1><span class="neon">ЛЕКТОРИЙ</span></h1>
+<p class="subhead">Про мысли, чувства и людей — без воды и пафоса. Каждую лекцию читает вслух Фреди: включай как подкаст.</p>
 <div class="stats">
-<span><b data-count="29">29</b><i>направлений</i></span>
+<span><b data-count="20">20</b><i>направлений</i></span>
 <span><b data-count="39">39</b><i>лекций открыто</i></span>
 <span><b data-count="5">5</b><i>курсов идут</i></span>
 <span><b>0 ₽</b><i>навсегда</i></span>
 </div>
 <div class="cta">
-<a class="btn solid" href="/blog/lektorij/teorii-lichnosti/">Начать обучение →</a>
-<a class="btn ghost" href="#programma">Выбрать направление</a>
+<a class="btn p" href="/blog/lektorij/teorii-lichnosti/">Начать обучение →</a>
+<a class="btn g" href="#programma">Выбрать направление</a>
+</div>
+</div>
+<div class="art">
+<svg viewBox="0 0 360 330" width="100%" style="overflow:visible" role="img" aria-label="Мозг с нейронными связями">
+<defs>
+<radialGradient id="bGlow" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#B78CFF" stop-opacity=".5"/><stop offset="1" stop-color="#B78CFF" stop-opacity="0"/></radialGradient>
+<linearGradient id="bFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBB6CE"/><stop offset=".55" stop-color="#E9A0E0"/><stop offset="1" stop-color="#B78CF5"/></linearGradient>
+<linearGradient id="bFold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D96FA8"/><stop offset="1" stop-color="#9A64D8"/></linearGradient>
+</defs>
+<circle cx="182" cy="152" r="150" fill="url(#bGlow)"/>
+<g stroke="#8B5CF6" stroke-width="1.2" opacity=".55">
+<path d="M62 72 L122 122 M300 62 L237 117 M42 202 L112 177 M328 212 L250 182 M180 22 L177 70 M152 300 L166 236 M250 300 L216 236"/>
+</g>
+<g>
+<path d="M180 62 C150 42 108 48 96 80 C70 80 54 102 66 124 C44 136 44 170 70 180 C66 208 96 228 124 216 C138 242 176 240 180 212 Z" fill="url(#bFill)" stroke="#C77AB8" stroke-width="1.5"/>
+<path d="M180 62 C210 42 252 48 264 80 C290 80 306 102 294 124 C316 136 316 170 290 180 C294 208 264 228 236 216 C222 242 184 240 180 212 Z" fill="url(#bFill)" stroke="#A578D8" stroke-width="1.5" opacity=".97"/>
+<g fill="none" stroke="url(#bFold)" stroke-width="2.1" stroke-linecap="round" opacity=".6">
+<path d="M110 94 c14 6 10 20 24 20 s16 -14 30 -8"/>
+<path d="M96 132 c16 -4 18 14 34 10 s14 -16 30 -10"/>
+<path d="M108 174 c14 2 16 16 30 12"/>
+<path d="M250 94 c-14 6 -10 20 -24 20 s-16 -14 -30 -8"/>
+<path d="M264 132 c-16 -4 -18 14 -34 10 s-14 -16 -30 -10"/>
+<path d="M252 174 c-14 2 -16 16 -30 12"/>
+</g>
+<path d="M172 228 q8 22 -6 40 M188 228 q-8 22 6 40" fill="none" stroke="#A578D8" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+</g>
+<g>
+<circle class="syn" cx="62" cy="72" r="5" fill="#22D3EE"/>
+<circle class="syn" cx="300" cy="62" r="5" fill="#F472B6" style="animation-delay:.4s"/>
+<circle class="syn" cx="42" cy="202" r="4.5" fill="#8B5CF6" style="animation-delay:.9s"/>
+<circle class="syn" cx="328" cy="212" r="4.5" fill="#FBBF24" style="animation-delay:1.3s"/>
+<circle class="syn" cx="180" cy="22" r="4.5" fill="#22D3EE" style="animation-delay:.6s"/>
+<circle class="syn" cx="152" cy="300" r="4" fill="#34D399" style="animation-delay:1.7s"/>
+<circle class="syn" cx="250" cy="300" r="4" fill="#F472B6" style="animation-delay:2s"/>
+<circle cx="122" cy="122" r="3" fill="#fff" stroke="#22D3EE" stroke-width="1.5"/>
+<circle cx="237" cy="117" r="3" fill="#fff" stroke="#F472B6" stroke-width="1.5"/>
+<circle cx="177" cy="152" r="3" fill="#fff" stroke="#8B5CF6" stroke-width="1.5"/>
+</g>
+</svg>
+</div>
 </div>
 </div></header>
 
 <section class="sec"><div class="wrap">
-<div class="sh"><h2>Популярные направления</h2><span>4 курса открыты целиком, пятый идёт</span></div>
+<div class="sh"><h2>Популярные направления</h2><span>с чего начинают чаще всего</span></div>
 <div class="grid">
-<a class="c" href="/blog/lektorij/teorii-lichnosti/"><svg class="ic"><use href="#i-brain"/></svg><b>Теории личности</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">13 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/vliyanie-i-manipulyacii/"><svg class="ic"><use href="#i-masks"/></svg><b>Влияние и манипуляции</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">12 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/myshlenie/"><svg class="ic"><use href="#i-puzzle"/></svg><b>Когнитивные искажения</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/emocionalnyj-intellekt/"><svg class="ic"><use href="#i-heart"/></svg><b>Эмоциональный интеллект</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
-<a class="c" href="/blog/lektorij/privyazannost-i-otnosheniya/"><svg class="ic"><use href="#i-bond"/></svg><b>Привязанность и отношения</b><div class="pb"><i style="width:40%"></i></div><span class="ft"><span class="cnt">4 из 10 лекций</span><span class="tag live">Доступно</span></span></a>
-<div class="c soon"><svg class="ic"><use href="#i-scales"/></svg><b>Логика</b><span class="ft"><span class="cnt">~10 лекций</span><span class="tag soon">Скоро</span></span></div>
+<a class="c fade" href="/blog/lektorij/teorii-lichnosti/"><div class="ic-chip" style="--gc:rgba(139,92,246,.34)"><svg class="ic" style="--gs:url(#gCyanVio)"><use href="#i-brain"/></svg></div><b>Теории личности</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">13 лекций · ~5 ч аудио</span><span class="tag live">Доступно</span></span></a>
+<a class="c fade" href="/blog/lektorij/vliyanie-i-manipulyacii/"><div class="ic-chip" style="--gc:rgba(139,92,246,.34)"><svg class="ic" style="--gs:url(#gVioPink)"><use href="#i-masks"/></svg></div><b>Влияние и манипуляции</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">12 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c fade" href="/blog/lektorij/myshlenie/"><div class="ic-chip" style="--gc:rgba(34,211,238,.34)"><svg class="ic" style="--gs:url(#gBlueCyan)"><use href="#i-puzzle"/></svg></div><b>Когнитивные искажения</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c fade" href="/blog/lektorij/emocionalnyj-intellekt/"><div class="ic-chip" style="--gc:rgba(251,113,133,.34)"><svg class="ic" style="--gs:url(#gRose)"><use href="#i-heart"/></svg></div><b>Эмоциональный интеллект</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
+<a class="c fade" href="/blog/lektorij/privyazannost-i-otnosheniya/"><div class="ic-chip" style="--gc:rgba(244,114,182,.34)"><svg class="ic" style="--gs:url(#gPinkVio)"><use href="#i-bond"/></svg></div><b>Привязанность и отношения</b><div class="pb"><i style="width:40%"></i></div><span class="ft"><span class="cnt">4 из 10 лекций</span><span class="tag live">Доступно</span></span></a>
+<div class="c soon fade"><div class="ic-chip" style="--gc:rgba(251,191,36,.3)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-scales"/></svg></div><b>Логика и критическое мышление</b><span class="ft"><span class="cnt">~10 лекций</span><span class="tag soon">Скоро</span></span></div>
 </div>
 </div></section>
 
 <section class="sec" id="programma"><div class="wrap">
-<div class="sh"><h2>Все направления</h2><span>пять блоков знаний</span></div>
+<div class="sh"><h2>Все направления</h2><span>20 направлений в пяти блоках</span></div>
 <div class="tabs">
 <div class="tab on" data-p="b1">🧠 Познай себя</div>
 <div class="tab" data-p="b2">🎭 Думай лучше</div>
@@ -182,81 +260,87 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div>
 
 <div class="panel on" id="b1"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><svg class="ic"><use href="#i-brain"/></svg><b>Теории личности</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><svg class="ic"><use href="#i-masks"/></svg><b>Влияние и манипуляции</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/emocionalnyj-intellekt/"><svg class="ic"><use href="#i-heart"/></svg><b>Эмоциональный интеллект</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/privyazannost-i-otnosheniya/"><svg class="ic"><use href="#i-bond"/></svg><b>Привязанность и отношения</b><span class="st open">Открыто</span></a>
-<div class="dcard soon"><svg class="ic"><use href="#i-storm"/></svg><b>Стресс-менеджмент</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-target"/></svg><b>Прокрастинация и мотивация</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-couch"/></svg><b>Психотерапия</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-sprout"/></svg><b>Развитие ребёнка</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-micro"/></svg><b>Психодиагностика</b><span class="st soon">Скоро</span></div>
+<a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><div class="ic-chip" style="--gc:rgba(139,92,246,.32)"><svg class="ic" style="--gs:url(#gCyanVio)"><use href="#i-brain"/></svg></div><b>Теории личности</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/emocionalnyj-intellekt/"><div class="ic-chip" style="--gc:rgba(251,113,133,.32)"><svg class="ic" style="--gs:url(#gRose)"><use href="#i-heart"/></svg></div><b>Эмоциональный интеллект</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/privyazannost-i-otnosheniya/"><div class="ic-chip" style="--gc:rgba(244,114,182,.32)"><svg class="ic" style="--gs:url(#gPinkVio)"><use href="#i-bond"/></svg></div><b>Привязанность и отношения</b><span class="st open">Открыто</span></a>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(56,189,248,.28)"><svg class="ic" style="--gs:url(#gSlate)"><use href="#i-storm"/></svg></div><b>Стресс-менеджмент</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,113,133,.28)"><svg class="ic" style="--gs:url(#gRose)"><use href="#i-target"/></svg></div><b>Прокрастинация и мотивация</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(52,211,153,.28)"><svg class="ic" style="--gs:url(#gEmerald)"><use href="#i-couch"/></svg></div><b>Психотерапия</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(52,211,153,.28)"><svg class="ic" style="--gs:url(#gEmerald)"><use href="#i-sprout"/></svg></div><b>Развитие ребёнка</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(56,189,248,.28)"><svg class="ic" style="--gs:url(#gBlueCyan)"><use href="#i-micro"/></svg></div><b>Психодиагностика</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b2"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/myshlenie/"><svg class="ic"><use href="#i-puzzle"/></svg><b>Когнитивные искажения</b><span class="st open">Открыто</span></a>
-<div class="dcard soon"><svg class="ic"><use href="#i-scales"/></svg><b>Логика</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-search"/></svg><b>Критическое мышление</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-temple"/></svg><b>Философия</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-castle"/></svg><b>Мнемоника</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-bulb"/></svg><b>ТРИЗ</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-wrench"/></svg><b>Траблшутинг</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-bolt"/></svg><b>Мозг и поведение</b><span class="st soon">Скоро</span></div>
+<a class="dcard" href="/blog/lektorij/myshlenie/"><div class="ic-chip" style="--gc:rgba(34,211,238,.32)"><svg class="ic" style="--gs:url(#gBlueCyan)"><use href="#i-puzzle"/></svg></div><b>Когнитивные искажения</b><span class="st open">Открыто</span></a>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.28)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-scales"/></svg></div><b>Логика и критическое мышление</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.28)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-bulb"/></svg></div><b>ТРИЗ и решение проблем</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.28)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-bolt"/></svg></div><b>Мозг и поведение</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b3"><div class="dgrid">
-<div class="dcard soon"><svg class="ic"><use href="#i-mic"/></svg><b>Ораторское искусство</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-hands"/></svg><b>Переговоры</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-film"/></svg><b>Актёрское мастерство</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-news"/></svg><b>Медиаграмотность</b><span class="st soon">Скоро</span></div>
+<a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><div class="ic-chip" style="--gc:rgba(139,92,246,.32)"><svg class="ic" style="--gs:url(#gVioPink)"><use href="#i-masks"/></svg></div><b>Влияние и манипуляции</b><span class="st open">Открыто</span></a>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(244,114,182,.28)"><svg class="ic" style="--gs:url(#gPinkVio)"><use href="#i-mic"/></svg></div><b>Ораторское и актёрское мастерство</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b4"><div class="dgrid">
-<div class="dcard soon"><svg class="ic"><use href="#i-city"/></svg><b>Социология</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-people"/></svg><b>Социальная психология</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-bone"/></svg><b>Антропология</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-coins"/></svg><b>Экономика</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(52,211,153,.28)"><svg class="ic" style="--gs:url(#gEmerald)"><use href="#i-city"/></svg></div><b>Социология повседневности</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.26)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-bone"/></svg></div><b>Антропология</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.28)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-coins"/></svg></div><b>Экономика</b><span class="st soon">Скоро</span></div>
 </div></div>
 
 <div class="panel" id="b5"><div class="dgrid">
-<div class="dcard soon"><svg class="ic"><use href="#i-scroll"/></svg><b>История идей</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-compass"/></svg><b>Этика</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-image"/></svg><b>Эстетика</b><span class="st soon">Скоро</span></div>
-<div class="dcard soon"><svg class="ic"><use href="#i-stars"/></svg><b>Экзистенциальные вопросы</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.28)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-temple"/></svg></div><b>Философия для жизни</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(251,191,36,.26)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-scroll"/></svg></div><b>История идей</b><span class="st soon">Скоро</span></div>
+<div class="dcard soon"><div class="ic-chip" style="--gc:rgba(34,211,238,.28)"><svg class="ic" style="--gs:url(#gEmerald)"><use href="#i-image"/></svg></div><b>Эстетика</b><span class="st soon">Скоро</span></div>
 </div></div>
 </div></section>
 
 <section class="sec"><div class="wrap">
 <div class="sh"><h2>Как это работает</h2><span>три простых шага</span></div>
 <div class="steps">
-<div class="step"><div class="snum">1</div><b>Выбери направление</b><p>29 тем — от теорий личности до философии. Начни с того, что болит или интересно.</p></div>
-<div class="step"><div class="snum">2</div><b>Слушай или читай</b><p>Читай с конспектом и схемами — или включай озвучку: Фреди читает как живой лектор.</p></div>
-<div class="step"><div class="snum">3</div><b>Применяй в жизни</b><p>Практикумы, вопросы для самопроверки и разбор с Фреди — знание, которое работает.</p></div>
+<div class="step fade"><div class="snum">1</div><b>Выбери направление</b><p>20 тем — от теорий личности до философии. Начни с того, что болит или интересно.</p></div>
+<div class="step fade"><div class="snum">2</div><b>Слушай или читай</b><p>Читай с конспектом и схемами — или включай озвучку: Фреди читает как живой лектор.</p></div>
+<div class="step fade"><div class="snum">3</div><b>Применяй в жизни</b><p>Практикумы, вопросы для самопроверки и разбор с Фреди — знание, которое работает.</p></div>
 </div>
 </div></section>
 
 <section class="sec"><div class="wrap">
 <div class="sh"><h2>Почему Лекторий</h2><span>коротко, честно, бесплатно</span></div>
 <div class="feats">
-<div class="feat"><svg class="ic"><use href="#i-micro"/></svg><b>Научный подход</b><p>Университетские программы и первоисточники, без «успешного успеха».</p></div>
-<div class="feat"><svg class="ic"><use href="#i-headphone"/></svg><b>Формат подкаста</b><p>Каждая лекция озвучена голосом Фреди. Слушай в дороге.</p></div>
-<div class="feat"><svg class="ic"><use href="#i-puzzle"/></svg><b>Схемы и практика</b><p>Не пересказ учебника, а понимание с примерами из жизни.</p></div>
-<div class="feat"><svg class="ic"><use href="#i-coins"/></svg><b>Бесплатно навсегда</b><p>Без оплат, подписок и рекламы. Знание должно быть доступным.</p></div>
+<div class="feat fade"><div class="ic-chip" style="--gc:rgba(56,189,248,.3)"><svg class="ic" style="--gs:url(#gBlueCyan)"><use href="#i-micro"/></svg></div><b>Научный подход</b><p>Университетские программы и первоисточники, без «успешного успеха».</p></div>
+<div class="feat fade"><div class="ic-chip" style="--gc:rgba(139,92,246,.3)"><svg class="ic" style="--gs:url(#gCyanVio)"><use href="#i-headphone"/></svg></div><b>Формат подкаста</b><p>Каждая лекция озвучена голосом Фреди. Слушай в дороге.</p></div>
+<div class="feat fade"><div class="ic-chip" style="--gc:rgba(34,211,238,.3)"><svg class="ic" style="--gs:url(#gEmerald)"><use href="#i-puzzle"/></svg></div><b>Схемы и практика</b><p>Не пересказ учебника, а понимание с примерами из жизни.</p></div>
+<div class="feat fade"><div class="ic-chip" style="--gc:rgba(251,191,36,.3)"><svg class="ic" style="--gs:url(#gGold)"><use href="#i-coins"/></svg></div><b>Бесплатно навсегда</b><p>Без оплат, подписок и рекламы. Знание должно быть доступным.</p></div>
 </div>
 </div></section>
 
-<section class="sec"><div class="wrap"><div class="band">
+<section class="sec"><div class="wrap"><div class="band fade">
 <h2>С чего начнём?</h2>
 <p>39 лекций уже открыто · новые выходят каждую неделю</p>
-<a class="btn solid" href="/blog/lektorij/teorii-lichnosti/">Начать с первого курса →</a>
-<div class="finis">
-<span>Захотите примерить услышанное на себя — рядом всегда <a href="/fredi/">Фреди</a>, с ним можно всё обсудить.</span>
-</div>
+<a class="btn p" href="/blog/lektorij/teorii-lichnosti/">Начать с первого курса →</a>
+<div class="finis">Захотите примерить услышанное на себя — рядом всегда <a href="/fredi/">Фреди</a>, с ним можно всё обсудить.</div>
 </div></div></section>
+</main>
 
 <div id="footer-placeholder"></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script>
+// частицы
+(function(){
+  var box=document.getElementById('particles');if(!box)return;
+  var colors=['#22D3EE','#8B5CF6','#F472B6','#7DF3FF'];
+  for(var i=0;i<38;i++){
+    var d=document.createElement('div');d.className='pt';
+    d.style.left=Math.random()*100+'%';
+    d.style.background=colors[i%colors.length];
+    d.style.boxShadow='0 0 8px '+colors[i%colors.length];
+    d.style.animationDelay=(Math.random()*14)+'s';
+    d.style.animationDuration=(12+Math.random()*14)+'s';
+    var s=(2+Math.random()*3);d.style.width=s+'px';d.style.height=s+'px';
+    box.appendChild(d);
+  }
+})();
+// табы
 document.querySelectorAll('.tab').forEach(function(t){
   t.addEventListener('click',function(){
     document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
@@ -265,12 +349,31 @@ document.querySelectorAll('.tab').forEach(function(t){
     var el=document.getElementById(t.getAttribute('data-p'));if(el)el.classList.add('on');
   });
 });
-(function(){var run=false;function animate(){if(run)return;run=true;
-  document.querySelectorAll('.stats b[data-count]').forEach(function(b){
-    var end=parseInt(b.getAttribute('data-count'),10),cur=0,step=Math.max(1,Math.round(end/40));
-    var id=setInterval(function(){cur+=step;if(cur>=end){cur=end;clearInterval(id);}b.textContent=cur;},28);});}
-  var h=document.querySelector('.stats');
-  if('IntersectionObserver' in window && h){new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)animate();});},{threshold:.4}).observe(h);}else{animate();}
+// счётчики + появление при скролле
+(function(){
+  var counted=false;
+  function count(){
+    if(counted)return;counted=true;
+    document.querySelectorAll('.stats b[data-count]').forEach(function(b){
+      var end=parseInt(b.getAttribute('data-count'),10),cur=0,step=Math.max(1,Math.round(end/45));
+      var id=setInterval(function(){cur+=step;if(cur>=end){cur=end;clearInterval(id);}b.textContent=cur;},26);
+    });
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(en){
+      en.forEach(function(e){
+        if(!e.isIntersecting)return;
+        if(e.target.classList.contains('stats'))count();
+        else e.target.classList.add('visible');
+        io.unobserve(e.target);
+      });
+    },{threshold:.15});
+    var st=document.querySelector('.stats');if(st)io.observe(st);
+    document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
+  }else{
+    count();
+    document.querySelectorAll('.fade').forEach(function(el){el.classList.add('visible');});
+  }
 })();
 </script>
 </body></html>
