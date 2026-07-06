@@ -3422,6 +3422,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-5-illyuzii-uverennosti",
+   "title": "Лекция 5. Иллюзии уверенности: задним числом и сверхуверенность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-6-oshibki-pamyati",
+   "title": "Лекция 6. Ошибки памяти: как мозг переписывает прошлое",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
   }
  ]
 }
