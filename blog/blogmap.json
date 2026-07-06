@@ -3352,6 +3352,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-emocii-5-styd-i-vina",
+   "title": "Лекция 5. Стыд и вина: социальные эмоции",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-emocii-6-pechal-i-gore",
+   "title": "Лекция 6. Печаль, горе и утрата",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
   }
  ]
 }
