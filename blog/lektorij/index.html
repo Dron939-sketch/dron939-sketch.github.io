@@ -31,6 +31,8 @@ img.pic{border-radius:14px;object-fit:cover}
     radial-gradient(1.4px 1.4px at 88% 54%,rgba(255,255,255,.22),transparent 60%),
     radial-gradient(1.4px 1.4px at 44% 16%,rgba(0,168,232,.4),transparent 60%)}
 .hero>*{position:relative;z-index:1}
+.hero-brain{display:block;width:250px;height:auto;margin:0 auto 4px;filter:drop-shadow(0 12px 40px rgba(58,134,255,.45))}
+@media(max-width:600px){.hero-brain{width:180px}}
 .crumbs{text-align:left;font-size:.78rem;color:var(--mut);margin-bottom:32px}.crumbs a{color:#7FB0FF;text-decoration:none}
 .kicker{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:30px;padding:7px 18px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#bcd4ff;background:rgba(58,134,255,.05);margin-bottom:22px}
 h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margin:0 0 10px;text-shadow:0 0 26px rgba(58,134,255,.45)}
@@ -436,6 +438,7 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 
 <header class="hero"><div class="wrap">
 <div class="crumbs"><a href="/blog/">Блог</a> / Лекторий</div>
+<img class="hero-brain" src="/blog/lektorij/img/hero-brain.webp" alt="" width="250" height="205" loading="eager">
 <span class="kicker">🎓 лекции о том, как мы устроены</span>
 <h1>ЛЕКТОРИЙ</h1>
 <div class="subhead">Про мысли, чувства и людей — без воды и пафоса.</div>
