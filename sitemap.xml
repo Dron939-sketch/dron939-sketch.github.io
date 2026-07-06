@@ -839,6 +839,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/logika/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-logika-1-chto-takoe-logika.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lekciya-emocii-1-chto-takoe-emociya.html</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
