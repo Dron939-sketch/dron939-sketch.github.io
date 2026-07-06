@@ -3590,6 +3590,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-logika-9-prichinnost",
+   "title": "Лекция 9. Причинность: почему корреляция — ещё не причина",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
   }
  ]
 }
