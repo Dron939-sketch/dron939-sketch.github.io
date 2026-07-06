@@ -3408,6 +3408,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-3-yakorya-ramki",
+   "title": "Лекция 3. Искажения восприятия: якоря, рамки, доступность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-mysl-4-effekt-podtverzhdeniya",
+   "title": "Лекция 4. Искажения убеждений: эффект подтверждения и его родня",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
