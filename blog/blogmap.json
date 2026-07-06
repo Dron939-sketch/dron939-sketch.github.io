@@ -3450,6 +3450,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-9-kriticheskoe-myshlenie",
+   "title": "Лекция 9. Критическое мышление: инструменты защиты ума",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-mysl-10-kak-dumat-luchshe",
+   "title": "Лекция 10. Как думать лучше: решения и итоги курса",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
   }
  ]
 }
