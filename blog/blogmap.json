@@ -3562,6 +3562,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-logika-5-uslovnye-vyskazyvaniya",
+   "title": "Лекция 5. Если — то: условные высказывания и их ловушки",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
   }
  ]
 }
