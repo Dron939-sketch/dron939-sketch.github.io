@@ -773,6 +773,24 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/privyazannost-i-otnosheniya/</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-otn-1-chto-takoe-privyazannost.html</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-otn-2-tipy-privyazannosti.html</loc>
+    <lastmod>2026-08-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lekciya-emocii-1-chto-takoe-emociya.html</loc>
     <lastmod>2026-07-16</lastmod>
     <changefreq>monthly</changefreq>
