@@ -32,13 +32,28 @@
         var s = document.createElement('style');
         s.id = 'lsn2-css';
         s.textContent =
-            '#listenBox{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:14px;padding:12px 16px;margin:18px 0 4px}' +
-            '.lsn2-row{display:flex;align-items:center;gap:12px}' +
-            '.lsn2-t{font-size:.9rem;color:#1D1D1F;font-weight:500}' +
-            '.lsn2-sub{font-size:.76rem;color:#6E6E73;margin-top:2px}' +
-            '.lsn2-btn{border:none;background:#3A86FF;color:#fff;border-radius:30px;padding:10px 20px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}' +
-            '.lsn2-btn[disabled]{opacity:.6;cursor:wait}' +
-            '#listenBox audio{width:100%;margin-top:10px;display:block}';
+            '#listenBox{position:relative;overflow:hidden;background:linear-gradient(135deg,#EAF2FF 0%,#F3F8FF 55%,#FFFFFF 100%);border:1px solid #CFE0FB;border-radius:18px;padding:18px 20px;margin:24px 0 6px;box-shadow:0 12px 32px rgba(58,134,255,.12)}' +
+            '.lsn2-row{display:flex;align-items:center;gap:16px;position:relative;z-index:1}' +
+            '.lsn2-play{position:relative;flex-shrink:0;width:56px;height:56px;border-radius:50%;border:none;background:linear-gradient(145deg,#3A86FF,#2E6FE0);color:#fff;font-size:1.35rem;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 6px 18px rgba(58,134,255,.45);transition:transform .12s}' +
+            '.lsn2-play:hover{transform:scale(1.06)}' +
+            '.lsn2-play:active{transform:scale(.95)}' +
+            '.lsn2-play[disabled]{cursor:wait}' +
+            '.lsn2-play::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(58,134,255,.5);animation:lsnPulse 2s ease-out infinite;pointer-events:none}' +
+            '.lsn2-play.busy{background:linear-gradient(145deg,#8AB4FF,#6E9FF0)}' +
+            '.lsn2-play.busy::after{inset:-4px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:lsnSpin .8s linear infinite}' +
+            '@keyframes lsnPulse{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.4);opacity:0}}' +
+            '@keyframes lsnSpin{to{transform:rotate(360deg)}}' +
+            '.lsn2-txt{flex:1;min-width:0}' +
+            '.lsn2-badge{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#2E6FE0;background:#DCEAFF;border-radius:6px;padding:2px 8px;margin-bottom:7px}' +
+            '.lsn2-t{font-size:1.06rem;color:#1D1D1F;font-weight:700;line-height:1.25}' +
+            '.lsn2-sub{font-size:.82rem;color:#5A6472;margin-top:3px;line-height:1.4}' +
+            '.lsn2-eq{display:flex;align-items:flex-end;gap:3px;height:28px;flex-shrink:0}' +
+            '.lsn2-eq i{display:block;width:4px;border-radius:2px;background:linear-gradient(#5B9BFF,#3A86FF);animation:lsnEq 1s ease-in-out infinite}' +
+            '.lsn2-eq i:nth-child(1){animation-delay:-.4s}.lsn2-eq i:nth-child(2){animation-delay:-.9s}.lsn2-eq i:nth-child(3){animation-delay:-.2s}.lsn2-eq i:nth-child(4){animation-delay:-.6s}.lsn2-eq i:nth-child(5){animation-delay:0s}' +
+            '@keyframes lsnEq{0%,100%{height:6px}50%{height:26px}}' +
+            '#listenBox audio{width:100%;margin-top:14px;display:block;position:relative;z-index:1}' +
+            '@media(max-width:600px){#listenBox{padding:16px}.lsn2-eq{display:none}.lsn2-t{font-size:1rem}.lsn2-play{width:52px;height:52px}}' +
+            '@media(prefers-reduced-motion:reduce){.lsn2-play::after,.lsn2-eq i{animation:none}}';
         document.head.appendChild(s);
     }
 
@@ -49,14 +64,25 @@
     function renderServer(ready, v) {
         var isLecture = slug.indexOf('lekciya-') === 0;
         box.innerHTML =
-            '<div class="lsn2-row"><div style="flex:1"><div class="lsn2-t">🎧 ' +
-            (isLecture ? 'Лекцию читает Фреди' : 'Аудиоверсия статьи') + '</div>' +
-            '<div class="lsn2-sub">' + (isLecture ? 'Голос Фреди · живое чтение' : 'Голос Фреди') +
-            ' · можно слушать в дороге</div></div>' +
-            '<button class="lsn2-btn" id="lsn2Go">' + (ready ? '▶ Слушать' : '▶ Озвучить и слушать') + '</button></div>';
+            '<div class="lsn2-row">' +
+            '<button class="lsn2-play" id="lsn2Go" aria-label="Слушать">▶</button>' +
+            '<div class="lsn2-txt">' +
+            '<span class="lsn2-badge">🎧 Аудиоверсия</span>' +
+            '<div class="lsn2-t">' + (isLecture ? 'Лекцию читает Фреди' : 'Слушайте статью голосом Фреди') + '</div>' +
+            '<div class="lsn2-sub" id="lsn2Sub">' +
+            (ready
+                ? 'Нажмите ▶ — слушайте как подкаст, хоть в дороге'
+                : (isLecture ? 'Живое чтение · озвучит за пару минут, потом играет мгновенно' : 'Голос Фреди · можно слушать в дороге')) +
+            '</div></div>' +
+            '<div class="lsn2-eq" aria-hidden="true"><i style="height:10px"></i><i style="height:20px"></i><i style="height:8px"></i><i style="height:24px"></i><i style="height:14px"></i></div>' +
+            '</div>';
+        var subEl = document.getElementById('lsn2Sub');
+        function setStatus(t) { if (subEl) subEl.textContent = t; }
         document.getElementById('lsn2Go').addEventListener('click', function () {
             var btn = this;
             btn.disabled = true;
+            btn.classList.add('busy');
+            btn.textContent = '';
             goal('listen_tts_start');
 
             function play(vv) {
@@ -80,14 +106,14 @@
             }
 
             if (ready) {
-                btn.textContent = 'Загружаю…';
+                setStatus('Загружаю аудио…');
                 play(v);
                 return;
             }
 
             // Генерация идёт на сервере минуты (рерайт + синтез голосом
             // Фреди): пинаем её и поллим статус, а не держим соединение.
-            btn.textContent = isLecture ? 'Фреди готовит лекцию… это займёт пару минут' : 'Готовлю озвучку… ~1–2 мин';
+            setStatus(isLecture ? 'Фреди готовит лекцию… это займёт пару минут' : 'Готовлю озвучку… ~1–2 мин');
             fetch(API + '/api/tts/blog/' + slug + '.mp3?v=' + v).then(function (r) {
                 if (r.status === 200) { play(v); return; }
                 var tries = 0;
