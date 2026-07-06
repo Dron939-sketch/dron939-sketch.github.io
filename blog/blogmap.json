@@ -3492,6 +3492,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-5-matematika-lyubvi",
+   "title": "Лекция 5. Математика любви: что Готтман увидел в «лаборатории любви»",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-6-chetyre-vsadnika",
+   "title": "Лекция 6. Четыре всадника апокалипсиса: что разрушает пары",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
