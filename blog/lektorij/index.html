@@ -49,11 +49,17 @@ h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margi
 
 /* sections */
 .sec{padding:46px 0}
+@media(max-width:600px){.hero{padding:38px 0 30px}.sec{padding:30px 0}.stats{display:flex;width:100%}.stats span{flex:1;padding:12px 6px}.stats b{font-size:1.3rem}.stats i{font-size:.58rem;letter-spacing:.06em}}
 .sh{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
 .sh h2{font-size:1.7rem;font-weight:300;letter-spacing:.04em;margin:0}.sh span{color:var(--mut);font-size:.9rem}
 
 /* course cards — иконка-вперёд, минимум текста */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 0 14px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(58,134,255,.4) transparent}
+.grid::-webkit-scrollbar{height:8px}
+.grid::-webkit-scrollbar-thumb{background:rgba(58,134,255,.35);border-radius:8px}
+.grid::-webkit-scrollbar-track{background:transparent}
+.grid>.c{flex:0 0 210px;scroll-snap-align:start}
+@media(max-width:600px){.grid>.c{flex-basis:64%}.c{padding:20px 14px 16px}.c .pic{width:60px;height:60px;margin-bottom:10px}.c b{font-size:.96rem;margin-bottom:10px}}
 .c{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 18px 20px;transition:.25s;overflow:hidden}
 .c::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:44px;height:3px;border-radius:0 0 3px 3px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.7}
 .c.soon::before{opacity:.25}
@@ -76,7 +82,12 @@ a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:t
 .tab.on{background:linear-gradient(135deg,rgba(0,168,232,.22),rgba(58,134,255,.22));border-color:var(--accent);color:#fff}
 .panel{display:none}.panel.on{display:block;animation:fade .4s ease}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px}
+.dgrid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(58,134,255,.4) transparent}
+.dgrid::-webkit-scrollbar{height:8px}
+.dgrid::-webkit-scrollbar-thumb{background:rgba(58,134,255,.35);border-radius:8px}
+.dgrid::-webkit-scrollbar-track{background:transparent}
+.dgrid>.dcard{flex:0 0 158px;scroll-snap-align:start}
+@media(max-width:600px){.dgrid>.dcard{flex-basis:44%}}
 .dcard{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 14px 18px;transition:.2s}
 a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-2px)}
 .dcard .pic{width:56px;height:56px;margin-bottom:10px}
@@ -447,7 +458,6 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <span><b data-count="29">29</b><i>направлений</i></span>
 <span><b data-count="45">45</b><i>лекций открыто</i></span>
 <span><b data-count="5">5</b><i>курсов идут</i></span>
-<span><b>0 ₽</b><i>навсегда</i></span>
 </div>
 <div class="cta">
 <a class="btn solid" href="/blog/lektorij/teorii-lichnosti/">Начать обучение →</a>
@@ -532,12 +542,11 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div></section>
 
 <section class="sec"><div class="wrap">
-<div class="sh"><h2>Почему Лекторий</h2><span>коротко, честно, бесплатно</span></div>
+<div class="sh"><h2>Почему Лекторий</h2><span>коротко, честно, по делу</span></div>
 <div class="feats">
 <div class="feat"><svg class="pic"><use href="#p-lens"/></svg><b>Научный подход</b><p>Университетские программы и первоисточники, без «успешного успеха».</p></div>
 <div class="feat"><svg class="pic"><use href="#p-headphone"/></svg><b>Формат подкаста</b><p>Каждая лекция озвучена голосом Фреди. Слушай в дороге.</p></div>
 <div class="feat"><svg class="pic"><use href="#p-puzzle"/></svg><b>Схемы и практика</b><p>Не пересказ учебника, а понимание с примерами из жизни.</p></div>
-<div class="feat"><svg class="pic"><use href="#p-coins"/></svg><b>Бесплатно навсегда</b><p>Без оплат, подписок и рекламы. Знание должно быть доступным.</p></div>
 </div>
 </div></section>
 
