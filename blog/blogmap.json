@@ -3464,6 +3464,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-otn-1-chto-takoe-privyazannost",
+   "title": "Лекция 1. Что такое привязанность: наука о том, как мы любим",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-2-tipy-privyazannosti",
+   "title": "Лекция 2. Четыре типа привязанности: надёжный, тревожный, избегающий",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
