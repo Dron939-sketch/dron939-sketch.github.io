@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Лекция 8. Как лгут с помощью статистики | Андрей Мейстер</title>
+<meta name="description" content="Восьмая лекция курса «Критическое мышление»: как вводят в заблуждение цифрами, не соврав ни в одном числе. Проценты без базы, обрезанная ось графика, среднее против медианы, перекошенная выборка и пять вопросов к любой цифре.">
+<meta name="keywords" content="как лгут статистикой, обрезанная ось графика, относительный и абсолютный риск, среднее и медиана, перекошенная выборка, ловушка выжившего, критическое мышление, лекторий, Андрей Мейстер">
+<meta property="og:type" content="article"><meta property="og:title" content="Лекция 8. Как лгут с помощью статистики"><meta property="og:description" content="Проценты без базы, обрезанная ось графика, среднее против медианы и пять вопросов к любой цифре. Восьмая лекция курса «Критическое мышление»."><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-krit-8-lozh-so-statistikoj.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-08-12T09:00:00+03:00"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-krit-8-lozh-so-statistikoj.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Лекция 8. Как лгут с помощью статистики", "description": "Ложь со статистикой: обрезанная ось графика раздувает крошечную разницу в пропасть; пять вопросов к любой цифре — относительно чего, база, среднее или медиана, выборка, с чем сравнить.", "datePublished": "2026-08-12T09:00:00+03:00", "author": {"@type": "Person", "name": "Андрей Мейстер", "jobTitle": "Психолог, НЛП-тренер"}, "publisher": {"@type": "Organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/apple-touch-icon.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-krit-8-lozh-so-statistikoj.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Лекция 8. Ложь со статистикой", "item": "https://meysternlp.ru/blog/lekciya-krit-8-lozh-so-statistikoj.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Как понять, что статистика вводит в заблуждение?", "acceptedAnswer": {"@type": "Answer", "text": "Чаще всего все числа при этом точны — обманывает подача. Задайте цифре пять вопросов: относительно чего она (проценты без базы пусты), какова база (сколько всего), среднее это или медиана, кого спросили (какова выборка) и с чем сравнить. Эти вопросы не требуют математики и вскрывают большинство статистических манипуляций."}}, {"@type": "Question", "name": "Почему «риск вырос на 100%» может ничего не значить?", "acceptedAnswer": {"@type": "Answer", "text": "Потому что это относительное изменение без исходной величины. Удвоение риска с одного случая на сто тысяч до двух — почти безобидно, а звучит грозно. Относительное («на столько-то процентов») всегда драматичнее абсолютного («с стольких-то до стольких-то случаев»), поэтому в заголовках любят первое и умалчивают второе. Всегда спрашивайте, от чего считается процент."}}, {"@type": "Question", "name": "Как график обманывает обрезанной осью?", "acceptedAnswer": {"@type": "Answer", "text": "Столбчатую диаграмму по правилам рисуют от нуля — тогда высота честно отражает величины. Если начать вертикальную ось не с нуля, крошечная разница раздувается до пропасти: 48 и 52 при честной оси почти равны, а при обрезанной один столбик выглядит втрое выше. Числа те же — обманывает ось. Увидев резкий скачок, первым делом проверьте, с нуля ли ось."}}, {"@type": "Question", "name": "Чем среднее отличается от медианы?", "acceptedAnswer": {"@type": "Answer", "text": "Среднее складывает все значения и делит на количество — одно огромное значение его перекашивает. Если девять человек получают по 30 тысяч, а десятый миллион, «средняя зарплата» около 127 тысяч не описывает никого. Медиана — значение посередине ряда (здесь 30 тысяч) — честнее говорит о типичном случае, потому что её не задирают редкие выбросы."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 12 августа 2026</span><span>⏱️ 24 мин чтения</span><span>🎓 Лекторий · Критическое мышление</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Лекция 8. Как лгут с помощью статистики</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">«Есть ложь, наглая ложь и статистика», — шутили ещё в позапрошлом веке. Цифры кажутся объективными и неопровержимыми: против фактов, мол, не поспоришь. Но именно этой репутацией и пользуются, чтобы вводить в заблуждение — причём часто не единым ложным числом, а честными цифрами, поданными так, что вывод получается неверным. Сегодня разберём главные способы лгать статистикой, не соврав ни в одной цифре, и вооружимся пятью вопросами, которые разоблачают большинство таких фокусов. Это защита от рекламы, заголовков и недобросовестных «исследований».</p>
+
+<div class="key-takeaway"><span class="takeaway-label">План лекции</span><p>1. Почему цифрам верят слишком легко. 2. Проценты без базы. 3. Обрезанная ось графика. 4. Среднее, которое лжёт. 5. Кого спросили: выборка. 6. Пять вопросов к любой цифре. 7. Не бояться цифр, но проверять.</p></div>
+
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Почему цифрам верят слишком легко</a></li><li><a href="#s-2">Проценты без базы</a></li><li><a href="#s-3">Обрезанная ось графика</a></li><li><a href="#s-4">Среднее, которое лжёт</a></li><li><a href="#s-5">Кого спросили: выборка</a></li><li><a href="#s-6">Пять вопросов к любой цифре</a></li><li><a href="#s-7">Не бояться цифр, но проверять</a></li><li><a href="#s-8">Итоги</a></li><li><a href="#s-9">Вопросы для самопроверки</a></li><li><a href="#s-10">Литература</a></li></ol></nav>
+
+<h2 id="s-1">1. Почему цифрам верят слишком легко</h2>
+<p>У чисел особая власть над нами. Слова кажутся мнением, а цифра — фактом: «многие считают» можно оспорить, а «73% опрошенных» звучит как приговор. Мы инстинктивно принимаем цифру за объективную истину и редко спрашиваем, откуда она и что на самом деле означает. Этой-то доверчивостью и пользуются.</p>
+<p>Важно понять главное: цифра почти никогда не лжёт сама по себе — лжёт то, как её подают и что из неё выводят. Чаще всего в манипуляции все числа абсолютно точны, а обманывает подача: с чем сравнили, что скрыли, как нарисовали. Поэтому наш подход будет не «а точная ли цифра», а «а что она в действительности значит и не подсунули ли мне неверный вывод из верных данных». Разберём самые частые приёмы — вы удивитесь, как часто будете их теперь замечать.</p>
+
+<h2 id="s-2">2. Проценты без базы</h2>
+<p>Самый ходовой фокус — проценты и относительные величины без указания, от чего они считаются. «Новое лекарство снижает риск на 50%!» — звучит как прорыв. Но 50% от чего? Если риск был один на миллион, а стал один на два миллиона, то абсолютная польза ничтожна, хотя формально «риск снижен вдвое». А если был высоким — польза реальна. Без исходной величины процент не значит ничего.</p>
+<p>Тот же приём наоборот пугает: «этот продукт повышает риск болезни на 100%!». Удвоение! Но если речь о росте с одного случая на сто тысяч до двух, волноваться особо не о чем. Относительное изменение («на столько-то процентов») почти всегда звучит драматичнее, чем абсолютное («с стольких-то до стольких-то случаев»), и именно поэтому в заголовках любят первое, умалчивая второе. Родственный трюк — процент без общего числа: «90% пользователей довольны» — а пользователей было десять? Или «продажи выросли втрое» — с двух штук до шести? Всегда спрашивайте, что стоит за процентом: относительно чего он и какова база. Голый процент создан, чтобы впечатлять, а не информировать.</p>
+
+<h2 id="s-3">3. Обрезанная ось графика</h2>
+<p>Графики убеждают ещё сильнее цифр — картинку мозг считывает мгновенно и доверчиво. И самый распространённый графический обман предельно прост: манипуляция вертикальной осью.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 300" role="img" aria-label="Схема: обрезанная ось превращает крохотную разницу в пропасть" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="360" y="26" text-anchor="middle" font-size="18" font-weight="600" fill="#1D1D1F">Те же числа — две разные картины</text>
+<text x="180" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2E7D32">Ось от нуля: честно</text>
+<line x1="70" y1="250" x2="330" y2="250" stroke="#C9D2DE" stroke-width="1.4"/>
+<line x1="70" y1="70" x2="70" y2="250" stroke="#C9D2DE" stroke-width="1.4"/>
+<text x="62" y="254" text-anchor="end" font-size="9.5" fill="#8A93A3">0</text>
+<text x="62" y="76" text-anchor="end" font-size="9.5" fill="#8A93A3">100</text>
+<rect x="120" y="163" width="60" height="87" fill="#A9C7EE"/>
+<text x="150" y="268" text-anchor="middle" font-size="10.5" fill="#6E6E73">48</text>
+<rect x="220" y="156" width="60" height="94" fill="#3A86FF"/>
+<text x="250" y="268" text-anchor="middle" font-size="10.5" fill="#6E6E73">52</text>
+<text x="180" y="290" text-anchor="middle" font-size="10.5" fill="#6E6E73">разница почти незаметна</text>
+<text x="540" y="52" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B3413D">Обрезанная ось: «пропасть!»</text>
+<line x1="430" y1="250" x2="690" y2="250" stroke="#C9D2DE" stroke-width="1.4"/>
+<line x1="430" y1="70" x2="430" y2="250" stroke="#C9D2DE" stroke-width="1.4"/>
+<text x="422" y="254" text-anchor="end" font-size="9.5" fill="#8A93A3">47</text>
+<text x="422" y="76" text-anchor="end" font-size="9.5" fill="#8A93A3">53</text>
+<rect x="480" y="190" width="60" height="60" fill="#E7A9A6"/>
+<text x="510" y="268" text-anchor="middle" font-size="10.5" fill="#6E6E73">48</text>
+<rect x="580" y="86" width="60" height="164" fill="#B3413D"/>
+<text x="610" y="268" text-anchor="middle" font-size="10.5" fill="#6E6E73">52</text>
+<text x="540" y="290" text-anchor="middle" font-size="10.5" fill="#6E6E73">та же разница — «в разы»!</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Взгляните на схему: два графика показывают одни и те же числа — 48 и 52, — но рассказывают совершенно разные истории. Слева, зелёным, ось начинается с нуля, как и положено: столбики почти одинаковы, разница в четыре единицы едва заметна — честная картина «чуть больше». Справа, красным, ось обрезана и начинается не с нуля, а с 47: те же 48 и 52 вдруг превращаются в крошечный и огромный столбики, будто один показатель в разы превосходит другой. Ни одно число не подделано — обманывает сама ось. Это один из самых частых приёмов: увидев впечатляющий график с резким скачком, первым делом посмотрите, с какого значения начинается вертикальная ось. Если не с нуля — вас, возможно, пытаются испугать или восхитить на пустом месте.</figcaption></figure>
+
+<p>Хитрость в том, где ось начинается. По правилам столбчатую диаграмму рисуют от нуля — тогда высота столбиков честно отражает величины. Но если начать ось не с нуля, а, скажем, с числа чуть меньше самих значений, крошечная разница раздувается до пропасти. На нашей схеме 48 и 52 при честной оси почти равны, а при обрезанной один столбик выглядит втрое выше другого — хотя числа те же самые. Так «рисуют» драматический рост там, где его почти нет, или пугающее падение на ровном месте. Тем же целям служат искажённые пропорции, хитрый выбор промежутка времени (показать только удобный кусок), картинки-иконки разного размера. Правило простое: встретив впечатляющий график, первым делом гляньте на ось — с нуля ли она и что именно по ней отложено. Половина «шокирующих» графиков обезвреживается одним этим взглядом.</p>
+
+<h2 id="s-4">4. Среднее, которое лжёт</h2>
+<p>Слово «среднее» звучит надёжно, но прячет ловушку. Обычное среднее (арифметическое) складывает все значения и делит на количество — и одно-единственное огромное значение способно перекосить его так, что «среднее» перестаёт описывать типичный случай.</p>
+<p>Классический пример: в компании из десяти человек девять получают по 30 тысяч, а директор — миллион. «Средняя зарплата» выходит около 127 тысяч — цифра, которая не описывает никого: девятеро получают вчетверо меньше, а один — в разы больше. Здесь честнее другая величина — медиана: значение ровно посередине, если всех выстроить по росту дохода. Медиана в нашем примере — 30 тысяч, и она куда вернее говорит о «типичном» работнике, потому что её не задирает один богач. Этим и пользуются: когда хотят приукрасить, берут среднее (его легко задрать выбросами), когда хотят напугать — тоже подбирают удобную из двух мер. Услышав «в среднем», спросите: это среднее или медиана и нет ли в данных редких, но огромных значений, которые перекашивают картину. Одно слово «средний» скрывает целый веер разных историй.</p>
+
+<h2 id="s-5">5. Кого спросили: выборка</h2>
+<p>Любая статистика о людях получена, спросив не всех, а некоторую выборку, — и весь вопрос в том, кого именно спросили. Если выборка перекошена, точные цифры описывают искажённый мирок, а не реальность, хотя выглядят солидно.</p>
+<p>Примеры повсюду. «80% наших читателей поддерживают эту идею» — но читатели издания заведомо не случайные люди, они уже разделяют его взгляды. Опрос на тематическом форуме отражает мнение завсегдатаев форума, а не населения. Голосование в соцсети собирает тех, кто подписан на автора. Отдельная коварная разновидность — самоотбор: когда откликаются лишь неравнодушные (очень довольные или очень злые), а молчаливое большинство остаётся за кадром, о чём мы говорили, разбирая отзывы. Есть и знаменитая ловушка выжившего: если изучать только «выживших» (успешные компании, дошедшие самолёты, долгожителей), выводы получаются обманчивыми, потому что провалившиеся в данные не попали и молчат. Поэтому за каждой цифрой о людях ищите выборку: кого спросили, сколько их было, как отобрали и кто не попал. Цифра надёжна ровно настолько, насколько представительна выборка за ней.</p>
+
+<h2 id="s-6">6. Пять вопросов к любой цифре</h2>
+<p>Соберём защиту в компактный набор. Столкнувшись с любой впечатляющей цифрой, статистикой или графиком, прогоните их через пять вопросов — они вскрывают почти все приёмы, что мы разобрали.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 316" role="img" aria-label="Схема: пять вопросов к любой цифре" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="360" y="26" text-anchor="middle" font-size="18" font-weight="600" fill="#1D1D1F">Пять вопросов к любой цифре</text>
+<rect x="16" y="44" width="688" height="48" rx="9" fill="#FFF" stroke="#E4E7EC"/>
+<circle cx="46" cy="68" r="14" fill="#3A86FF"/><text x="46" y="73" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text>
+<text x="72" y="63" font-size="12.5" font-weight="700" fill="#1D1D1F">Относительно чего?</text>
+<text x="72" y="82" font-size="11" fill="#6E6E73">«вырос на 100%» — это с одного до двух или с миллиона до двух?</text>
+<rect x="16" y="98" width="688" height="48" rx="9" fill="#FFF" stroke="#E4E7EC"/>
+<circle cx="46" cy="122" r="14" fill="#3A86FF"/><text x="46" y="127" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text>
+<text x="72" y="117" font-size="12.5" font-weight="700" fill="#1D1D1F">Какова база — сколько всего?</text>
+<text x="72" y="136" font-size="11" fill="#6E6E73">«90% выбрали нас» — из скольких? из десяти?</text>
+<rect x="16" y="152" width="688" height="48" rx="9" fill="#FFF" stroke="#E4E7EC"/>
+<circle cx="46" cy="176" r="14" fill="#3A86FF"/><text x="46" y="181" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text>
+<text x="72" y="171" font-size="12.5" font-weight="700" fill="#1D1D1F">Среднее или медиана?</text>
+<text x="72" y="190" font-size="11" fill="#6E6E73">одна большая зарплата поднимает «среднее» для всех</text>
+<rect x="16" y="206" width="688" height="48" rx="9" fill="#FFF" stroke="#E4E7EC"/>
+<circle cx="46" cy="230" r="14" fill="#3A86FF"/><text x="46" y="235" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">4</text>
+<text x="72" y="225" font-size="12.5" font-weight="700" fill="#1D1D1F">Кого спросили — какова выборка?</text>
+<text x="72" y="244" font-size="11" fill="#6E6E73">опрос на форуме ≠ мнение всех людей</text>
+<rect x="16" y="260" width="688" height="48" rx="9" fill="#F1F9F1" stroke="#2E7D32"/>
+<circle cx="46" cy="284" r="14" fill="#2E7D32"/><text x="46" y="289" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">5</text>
+<text x="72" y="279" font-size="12.5" font-weight="700" fill="#2E7D32">С чем сравнить?</text>
+<text x="72" y="298" font-size="11" fill="#6E6E73">«погибло N человек» — много это или мало без сравнения не понять</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Взгляните на схему: чтобы не дать цифре себя обмануть, задайте ей пять вопросов. Первый — относительно чего? «Риск вырос на сто процентов» звучит грозно, но это может быть рост с одного случая на миллион до двух. Второй — какова база, сколько всего? «Девяносто процентов выбрали нас» — а из скольких, из десяти человек? Третий — среднее это или медиана? Одна огромная зарплата задирает «средний» доход, хотя большинство получает куда меньше — медиана честнее. Четвёртый — кого вообще спросили, какова выборка? Опрос на профильном форуме — не мнение всех людей. И пятый, зелёный, — с чем сравнить? Голое число «пострадало столько-то» ничего не говорит, пока рядом нет точки отсчёта. Пять вопросов — и большинство статистических фокусов рассыпается.</figcaption></figure>
+
+<p>Первый — относительно чего? Проценты и «во столько-то раз» требуют исходной величины, иначе они пусты. Второй — какова база, сколько всего? Процент без общего числа за спиной ничего не весит. Третий — среднее или медиана? Не задрало ли «среднее» одно огромное значение. Четвёртый — кого спросили? Какова выборка, представительна ли она, кто в неё не попал. Пятый — с чем сравнить? Одинокое число без точки отсчёта не говорит, много это или мало: «выросло», «упало», «погибло столько-то» осмысленны лишь в сравнении с чем-то. Эти пять вопросов не требуют математики — только привычки не проглатывать цифру целиком. Задайте их, и большинство статистических манипуляций рассыплются у вас на глазах.</p>
+
+<h2 id="s-7">7. Не бояться цифр, но проверять</h2>
+<p>Из этой лекции легко вынести неверный урок: «статистике верить нельзя». Это было бы печальной ошибкой — противоположной той, что мы лечим. Статистика — не враг, а один из лучших инструментов познания мира: именно она позволяет увидеть то, чего не разглядишь на единичных примерах, и отличить закономерность от случайности. Хорошие данные бесценны; проблема не в цифрах, а в их недобросовестной подаче.</p>
+<p>Поэтому цель — не отмахиваться от всякой статистики («знаем, цифрами что угодно докажешь»), потому что это удобная лазейка отвергать любые неудобные данные и верить только чувствам. Цель — читать цифры грамотно: отличать корректную статистику от манипулятивной, задавать пять вопросов и уважать хорошие данные ровно так же, как не доверять кривым. Грамотный человек не боится чисел и не преклоняется перед ними — он умеет их допрашивать. И последнее, что стоит держать в уме: тяжелее всего мы допрашиваем ту статистику, которая подтверждает нашу правоту, и легче всего верим цифрам, которые нам приятны. Об этой, самой коварной ловушке — предвзятости подтверждения — как раз следующая, девятая лекция: про главного оппонента критического мышления, которым оказываемся мы сами.</p>
+
+<h2 id="s-8">Итоги</h2>
+<ul>
+<li>Цифра почти никогда не лжёт сама — лжёт подача: с чем сравнили, что скрыли, как нарисовали; часто все числа при этом точны.</li>
+<li>Проценты без базы пусты: «на 100%» может быть ростом с одного случая на миллион до двух; относительное всегда драматичнее абсолютного.</li>
+<li>Обрезанная ось графика раздувает крошечную разницу в пропасть — смотрите, с нуля ли начинается вертикальная ось.</li>
+<li>«Среднее» задирается редкими огромными значениями; медиана честнее описывает типичный случай.</li>
+<li>Статистика о людях надёжна ровно настолько, насколько представительна выборка; берегитесь самоотбора и ловушки выжившего.</li>
+<li>Пять вопросов к цифре: относительно чего, какова база, среднее или медиана, кого спросили, с чем сравнить.</li>
+</ul>
+
+<h2 id="s-9">Вопросы для самопроверки</h2>
+<ol>
+<li>Почему «риск вырос на 100%» может быть почти безобидным? Чем относительное изменение отличается от абсолютного?</li>
+<li>Как обрезанная ось искажает график? Что проверить в первую очередь, увидев резкий скачок?</li>
+<li>В чём разница между средним и медианой? Придумайте случай, где среднее вводит в заблуждение.</li>
+<li>Что такое перекошенная выборка, самоотбор и ловушка выжившего? Приведите пример каждого.</li>
+<li>Назовите пять вопросов к любой цифре. Примерьте их к статистике из недавней рекламы или заголовка.</li>
+</ol>
+
+<h2 id="s-10">Литература</h2>
+<ul>
+<li>Дарел Хафф. «Как лгать при помощи статистики» — классический разбор статистических уловок.</li>
+<li>Чарльз Уилан. «Голая статистика» — как понимать данные без страха и обмана.</li>
+<li>Тим Харфорд. «Как найти правду в цифрах» — о честном и нечестном обращении со статистикой.</li>
+</ul>
+<div class="cta-block">
+<h3>🧠 Проверить цифру по пяти вопросам</h3>
+<p>Встретили впечатляющую статистику или пугающий график в рекламе или новости? Опишите цифру Фреди — он поможет задать ей пять вопросов: относительно чего она, какова база, среднее или медиана, кого спросили и с чем сравнить.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Открыть Фреди →</a>
+<a href="/treningi/proryv.html" class="btn btn-outline">Тренинг «Прорыв»</a>
+</div>
+</div>
+<p style="color:#6E6E73;font-style:italic;margin-top:30px">Это восьмая лекция курса «Критическое мышление». В следующей доберёмся до самого трудного противника — самих себя: разберём предвзятость подтверждения и почему тяжелее всего проверять то, во что уже веришь. А любую подозрительную цифру всегда можно прогнать по пяти вопросам вместе с Фреди.</p>
+</div>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: бесплатно, круглосуточно и без записи. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
+
+<div class="related-articles"><h3>📚 Читайте также:</h3><div class="related-grid">
+<div class="related-item"><a href="/blog/lekciya-krit-7-proverka-informacii.html">Лекция 7. Проверка информации</a><span>24 мин · лекторий</span></div>
+<div class="related-item"><a href="/blog/lekciya-krit-9-glavnyj-vrag-ty-sam.html">Лекция 9. Главный враг — ты сам</a><span>24 мин · лекторий</span></div>
+<div class="related-item"><a href="/blog/lekciya-krit-3-kachestvo-dokazatelstv.html">Лекция 3. Качество доказательств</a><span>24 мин · лекторий</span></div>
+</div></div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</article></div>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body></html>
