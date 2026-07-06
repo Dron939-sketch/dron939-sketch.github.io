@@ -55,13 +55,13 @@ h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margi
 /* course cards — иконка-вперёд, минимум текста */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
 .c{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px 18px 20px;transition:.25s;overflow:hidden}
-.c::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.85}
-.c.soon::before{opacity:.22}
+.c::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:44px;height:3px;border-radius:0 0 3px 3px;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.7}
+.c.soon::before{opacity:.25}
 a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-3px);box-shadow:0 14px 40px rgba(58,134,255,.16)}
 .c .pic{width:72px;height:72px;margin-bottom:12px}
 .c b{display:block;font-size:1.02rem;font-weight:500;margin-bottom:14px;line-height:1.3}
-.c .pb{height:5px;border-radius:6px;background:rgba(58,134,255,.14);overflow:hidden;width:100%;margin-bottom:12px}
-.c .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:6px}
+.c .pb{height:3px;border-radius:6px;background:rgba(58,134,255,.10);overflow:hidden;width:60%;max-width:180px;margin:0 auto 14px}
+.c .pb i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));opacity:.75;border-radius:6px}
 .c .ft{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:8px}
 .c .cnt{font-size:.76rem;color:var(--mut)}
 .tag{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;padding:4px 11px;border-radius:20px}
