@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Лекция 4. Силлогизмы: как из «всех» и «некоторых» следует вывод | Андрей Мейстер</title>
+<meta name="description" content="Четвёртая лекция курса «Логика»: что такое категорический силлогизм, четыре типа посылок, метод кругов и две классические ошибки — незаконный оборот («все A суть B» ≠ «все B суть A») и общий средний термин.">
+<meta name="keywords" content="силлогизм, категорический силлогизм, средний термин, метод кругов, незаконный оборот, все и некоторые, логические ошибки, логика, лекторий, Андрей Мейстер">
+<meta property="og:type" content="article"><meta property="og:title" content="Лекция 4. Силлогизмы: как из «всех» и «некоторых» следует вывод"><meta property="og:description" content="Почему «все A суть B» не то же самое, что «все B суть A», как средний термин связывает вывод и как проверить любой силлогизм кругами. Четвёртая лекция курса «Логика»."><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-logika-4-sillogizmy.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-07-09T09:00:00+03:00"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-logika-4-sillogizmy.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Лекция 4. Силлогизмы: как из «всех» и «некоторых» следует вывод", "description": "Категорический силлогизм: средний и крайние термины, четыре типа посылок, проверка методом кругов, ошибки незаконного оборота и нераспределённого среднего термина.", "datePublished": "2026-07-09T09:00:00+03:00", "author": {"@type": "Person", "name": "Андрей Мейстер", "jobTitle": "Психолог, НЛП-тренер"}, "publisher": {"@type": "Organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/apple-touch-icon.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-logika-4-sillogizmy.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Лекция 4. Силлогизмы", "item": "https://meysternlp.ru/blog/lekciya-logika-4-sillogizmy.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Что такое силлогизм простыми словами?", "acceptedAnswer": {"@type": "Answer", "text": "Это рассуждение из двух посылок и вывода о том, как соотносятся группы вещей: «Все люди смертны; Сократ — человек; значит, Сократ смертен». В нём три термина; средний (здесь «люди») есть в обеих посылках и связывает два крайних, попадающих в вывод."}}, {"@type": "Question", "name": "Почему «все A суть B» не то же самое, что «все B суть A»?", "acceptedAnswer": {"@type": "Answer", "text": "Потому что включение одной группы в другую не работает в обе стороны. Все яблоки — фрукты, но не все фрукты — яблоки: круг яблок лежит внутри круга фруктов, который гораздо больше. Подмена одного на другое называется незаконным оборотом."}}, {"@type": "Question", "name": "Что такое ошибка среднего термина?", "acceptedAnswer": {"@type": "Answer", "text": "Это вывод о связи двух групп из того, что у них есть общее свойство. «Все кошки — млекопитающие; все собаки — млекопитающие; значит, кошки — собаки» — обе посылки верны, а вывод абсурден: общее свойство лишь помещает группы в один круг, но не делает их одной группой."}}, {"@type": "Question", "name": "Как проверить силлогизм?", "acceptedAnswer": {"@type": "Answer", "text": "Методом кругов. Разместите группы так, чтобы обе посылки были истинны, и посмотрите, обязан ли при этом быть истинным вывод. Если удаётся нарисовать хотя бы одну картинку с истинными посылками и ложным выводом — силлогизм невалиден."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 9 июля 2026</span><span>⏱️ 23 мин чтения</span><span>🎓 Лекторий · Логика</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Лекция 4. Силлогизмы: как из «всех» и «некоторых» следует вывод</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Помните гладкую фразу из первой лекции: «все успешные встают рано; он встаёт рано; значит, он успешен»? Она звучит как строгий вывод из двух посылок — и всё-таки неверна. Сегодня мы разберём, почему именно. Силлогизм — это дедукция, ставшая конкретной: два утверждения со словами «все», «некоторые», «ни один» — и вывод, который из них то ли следует, то ли лишь притворяется. Научиться отличать одно от другого можно буквально глазами — с помощью кругов.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">План лекции</span><p>1. Что такое силлогизм. 2. Четыре кирпичика: все, ни один, некоторые, некоторые не. 3. Как из посылок рождается вывод. 4. Ловушка оборота: «все A суть B» — не «все B суть A». 5. Ловушка общего среднего термина. 6. Метод кругов: проверяем любой силлогизм. 7. Итоги и вопросы для самопроверки.</p></div>
+
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Что такое силлогизм</a></li><li><a href="#s-2">Четыре кирпичика: все, ни один, некоторые, некоторые не</a></li><li><a href="#s-3">Как из посылок рождается вывод</a></li><li><a href="#s-4">Ловушка оборота: «все A суть B» — не «все B суть A»</a></li><li><a href="#s-5">Ловушка общего среднего термина</a></li><li><a href="#s-6">Метод кругов: как проверить любой силлогизм</a></li><li><a href="#s-7">Итоги лекции</a></li><li><a href="#s-8">Вопросы для самопроверки</a></li><li><a href="#s-9">Литература</a></li></ol></nav>
+
+<h2 id="s-1">1. Что такое силлогизм</h2>
+<p>В прошлой лекции дедукция была общим принципом: от общего правила к частному случаю, с гарантией при верных посылках. Силлогизм — это её самая изученная форма, придуманная ещё Аристотелем. Он состоит ровно из трёх частей: двух посылок и вывода, и говорит о том, как соотносятся группы, категории вещей.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-number">Понятие</span></div><h3>Силлогизм</h3><p><b>Категорический силлогизм</b> — рассуждение из двух посылок и вывода, где утверждается принадлежность одних групп другим. Классический образец: «Все люди смертны; Сократ — человек; значит, Сократ смертен».</p><p>В нём всегда три группы-термина. «Люди» — средний термин, он есть в обеих посылках и служит мостом. «Сократ» и «смертные» — крайние термины, они встречаются в выводе. Весь фокус в том, как средний термин связывает крайние. Свяжет правильно — вывод железный. Свяжет криво — вывод рассыплется, даже если звучит уверенно.</p></div>
+
+<h2 id="s-2">2. Четыре кирпичика: все, ни один, некоторые, некоторые не</h2>
+<p>Любая посылка силлогизма — это одно из четырёх простых утверждений о группах. «Все A суть B» — одна группа целиком лежит внутри другой. «Ни один A не есть B» — группы не пересекаются вовсе. «Некоторые A суть B» — группы частично налегают. «Некоторые A не суть B» — часть одной группы лежит вне другой.</p>
+<p>Эти четыре кирпичика — весь строительный материал. И уже здесь прячется главная опасность: словечки «все» и «некоторые» кажутся мелочью, а на деле именно они решают, следует вывод или нет. Подмена «всех» на «некоторых» или обратно — самый частый способ незаметно сломать рассуждение. Поэтому в силлогизме нельзя читать бегло: каждое «все» и «некоторые» несёт вес.</p>
+
+<h2 id="s-3">3. Как из посылок рождается вывод</h2>
+<p>Возьмём образцовый силлогизм и увидим его глазами. «Все люди смертны; Сократ — человек; значит, Сократ смертен». Нарисуем группы кругами: кто внутри кого.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 340" role="img" aria-label="Схема: вложенные круги силлогизма — Сократ, люди, смертные" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="360" y="28" text-anchor="middle" font-size="18" font-weight="600" fill="#1D1D1F">Как из двух посылок рождается вывод</text>
+<ellipse cx="360" cy="185" rx="300" ry="115" fill="#F4F7FC" stroke="#C7CDD6"/>
+<text x="360" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#6E6E73">Смертные</text>
+<ellipse cx="360" cy="200" rx="185" ry="82" fill="#EAF2FF" stroke="#3A86FF"/>
+<text x="360" y="150" text-anchor="middle" font-size="14" font-weight="600" fill="#2E6FE0">Люди</text>
+<ellipse cx="360" cy="212" rx="66" ry="40" fill="#F1F9F1" stroke="#2E7D32"/>
+<text x="360" y="217" text-anchor="middle" font-size="13" font-weight="600" fill="#2E7D32">Сократ</text>
+<text x="360" y="322" text-anchor="middle" font-size="13" fill="#6E6E73">Сократ внутри людей, люди внутри смертных — значит, Сократ внутри смертных</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Силлогизм удобно видеть как вложенные круги. Большой круг — «смертные». Внутри него целиком лежит круг поменьше — «люди»: это посылка «все люди смертны». Ещё внутри — маленький круг «Сократ»: это посылка «Сократ — человек». Раз Сократ лежит внутри людей, а люди целиком внутри смертных, то Сократ неизбежно оказывается внутри смертных. Вывод «Сократ смертен» не добавлен извне — он просто виден на картинке. Так и работает дедуктивный силлогизм: если круги вложены, вывод следует сам собой.</figcaption></figure>
+
+<p>На картинке вывод не нужно доказывать — он виден. Сократ лежит внутри круга людей, люди целиком лежат внутри круга смертных, значит, Сократ не может не оказаться среди смертных. Эту безупречную форму — «все M суть P; все S суть M; значит, все S суть P» — со времён средневековья называют красивым женским именем «Барбара», и она до сих пор образец того, как средний термин честно соединяет крайние.</p>
+<p>Ключевая мысль: в валидном силлогизме вывод не приносит нового знания, он лишь проявляет то, что уже заложено расположением кругов. Это ровно та черта дедукции, о которой мы говорили в прошлой лекции. А теперь посмотрим, что происходит, когда круги расставлены иначе, чем кажется на слух.</p>
+
+<h2 id="s-4">4. Ловушка оборота: «все A суть B» — не «все B суть A»</h2>
+<p>Вернёмся к фразе про ранний подъём. «Все успешные встают рано; он встаёт рано; значит, успешен». Даже если первая посылка верна, вывод не следует. Почему — видно на кругах: «успешные» лежат внутри «встающих рано», но круг встающих рано гораздо больше и полон людей, которые рано встают и при этом ничего не добились. Наш герой может быть как раз оттуда.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-number">Понятие</span></div><h3>Незаконный оборот</h3><p><b>Незаконный оборот</b> — подмена утверждения «все A суть B» на «все B суть A», как будто это одно и то же. Это не одно и то же: включение одной группы в другую не работает в обе стороны.</p><p>Пример на слуху: «Все воры лгут; этот человек солгал; значит, он вор». Круг «воров» лежит внутри круга «лгущих», но лгущих несопоставимо больше, и солгавший запросто окажется вне воров. Та же ошибка — в «настоящие профессионалы работают по выходным; он работает по выходным; значит, профессионал».</p></div>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 300" role="img" aria-label="Схема: две классические ошибки силлогизма — незаконный оборот и общий средний термин" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="185" y="30" text-anchor="middle" font-size="15" font-weight="600" fill="#1D1D1F">Ловушка оборота</text>
+<ellipse cx="185" cy="150" rx="150" ry="90" fill="#F4F7FC" stroke="#C7CDD6"/>
+<text x="185" y="90" text-anchor="middle" font-size="13" font-weight="600" fill="#6E6E73">Фрукты</text>
+<ellipse cx="185" cy="168" rx="80" ry="52" fill="#EAF2FF" stroke="#3A86FF"/>
+<text x="185" y="172" text-anchor="middle" font-size="13" font-weight="600" fill="#2E6FE0">Яблоки</text>
+<text x="185" y="272" text-anchor="middle" font-size="12" fill="#6E6E73">все яблоки — фрукты, но не наоборот</text>
+<line x1="360" y1="55" x2="360" y2="250" stroke="#E4E7EC" stroke-width="1"/>
+<text x="535" y="30" text-anchor="middle" font-size="15" font-weight="600" fill="#1D1D1F">Общий средний термин</text>
+<ellipse cx="535" cy="150" rx="155" ry="90" fill="#F4F7FC" stroke="#C7CDD6"/>
+<text x="535" y="86" text-anchor="middle" font-size="13" font-weight="600" fill="#6E6E73">Млекопитающие</text>
+<ellipse cx="478" cy="168" rx="52" ry="40" fill="#EAF2FF" stroke="#3A86FF"/>
+<text x="478" y="172" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2E6FE0">Кошки</text>
+<ellipse cx="596" cy="168" rx="52" ry="40" fill="#FDF2F2" stroke="#B3413D"/>
+<text x="596" y="172" text-anchor="middle" font-size="12.5" font-weight="600" fill="#B3413D">Собаки</text>
+<text x="535" y="272" text-anchor="middle" font-size="12" fill="#6E6E73">общее свойство не делает их одним и тем же</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Две самые частые ошибки видно на кругах сразу. Слева — ловушка оборота: круг «яблоки» лежит внутри круга «фрукты», поэтому «все яблоки — фрукты» верно, а вот обратное «все фрукты — яблоки» ложно, ведь фрукты — круг больше. «Все A суть B» не то же самое, что «все B суть A». Справа — ловушка общего среднего термина: круги «кошки» и «собаки» оба лежат внутри «млекопитающих», но друг друга не касаются. Из того, что у двух групп есть общее свойство, никак не следует, что это одна и та же группа. Кошки — не собаки, хотя и те, и другие млекопитающие.</figcaption></figure>
+
+<h2 id="s-5">5. Ловушка общего среднего термина</h2>
+<p>Вторая классическая поломка тоньше. «Все кошки — млекопитающие; все собаки — млекопитающие; значит, кошки — это собаки». Обе посылки — чистая правда, а вывод абсурден. Что сломалось? Средний термин «млекопитающие» есть в обеих посылках, но он не связывает кошек с собаками — он лишь помещает и тех, и других в один большой круг, где они спокойно лежат порознь.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-number">Понятие</span></div><h3>Нераспределённый средний термин</h3><p><b>Ошибка среднего термина</b> — вывод о связи двух групп из того, что у них есть общее свойство. Общее свойство помещает группы в один круг, но не делает их одной группой.</p><p>Так работает большинство бытовых наветов. «Террористы читают эту книгу; ты читаешь эту книгу — с тобой всё ясно». «Мошенники улыбчивы; он улыбчив — жди подвоха». Общая черта есть, но она объединяет слишком многих, чтобы что-то доказывать. Стоит спросить: а этот средний термин вообще связывает крайние — или просто накрывает их одним куполом?</p></div>
+
+<h2 id="s-6">6. Метод кругов: как проверить любой силлогизм</h2>
+<p>Отсюда — простой и почти непогрешимый приём проверки. Не спорьте с выводом на слух; нарисуйте круги. Разместите группы так, чтобы обе посылки были истинны, — а потом посмотрите, обязан ли при этом быть истинным вывод.</p>
+<p>Секрет в слове «обязан». Силлогизм валиден, только если при любом расположении кругов, где посылки верны, вывод тоже верен. Если вы сумели нарисовать хоть одну картинку, где посылки истинны, а вывод ложен, — рассуждение невалидно, и точка. Именно так мы поймали фразу про ранний подъём: нашлась картинка, где «встающие рано» верны, а «успешен» — нет.</p>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span><p>Возьмите вывод-обобщение, который недавно услышали или сделали: «раз он делает то-то, он такой-то». Разложите его на две посылки и вывод, назовите три группы-термина и определите средний — тот, что связывает.</p><p>Теперь нарисуйте круги — хоть в уме, хоть на салфетке. Попробуйте расставить их так, чтобы посылки были истинны, а вывод — ложен. Получилось? Значит, перед вами незаконный оборот или общий средний термин, а не доказательство. Чаще всего получается — и это отрезвляет.</p></div>
+
+<h2 id="s-7">7. Итоги лекции</h2>
+<ul>
+<li>Силлогизм — это дедукция в конкретной форме: две посылки о группах и вывод; три термина, где средний связывает два крайних.</li>
+<li>Все посылки строятся из четырёх кирпичиков — «все», «ни один», «некоторые», «некоторые не»; словечки «все» и «некоторые» решают судьбу вывода.</li>
+<li>Валидный силлогизм виден на вложенных кругах: вывод не добавляется, а проявляется расположением групп.</li>
+<li>Ловушка оборота: «все A суть B» не равно «все B суть A» — включение не работает в обе стороны.</li>
+<li>Ловушка среднего термина: общее свойство помещает группы в один круг, но не делает их одной группой.</li>
+<li>Универсальная проверка — метод кругов: если можно нарисовать картинку с истинными посылками и ложным выводом, силлогизм невалиден.</li>
+</ul>
+
+<h2 id="s-8">Вопросы для самопроверки</h2>
+<ol>
+<li>Что такое средний термин и почему именно от него зависит, следует вывод или нет? Приведите свой силлогизм и укажите в нём все три термина.</li>
+<li>Объясните на кругах, почему «все A суть B» не даёт «все B суть A». Придумайте свой пример незаконного оборота.</li>
+<li>«Все рыбы плавают; дельфин плавает; значит, дельфин — рыба». Какая это ошибка и как её видно на кругах?</li>
+<li>Почему разница между «все» и «некоторые» так важна? Придумайте пару, где замена одного слова на другое ломает вывод.</li>
+<li>Опишите метод кругов своими словами: что именно нужно суметь нарисовать, чтобы признать силлогизм невалидным?</li>
+</ol>
+
+<h2 id="s-9">Литература</h2>
+<ul>
+<li>Аристотель. «Первая аналитика» — первоисточник учения о силлогизме, откуда пошли все «все» и «некоторые».</li>
+<li>Ирвинг Копи, Карл Коэн. «Введение в логику» — подробный современный разбор категорических силлогизмов и их ошибок.</li>
+<li>Мадсен Пири. «Как правильно спорить» — короткие живые примеры незаконного оборота и общего среднего термина в реальных спорах.</li>
+</ul>
+<div class="cta-block">
+<h3>🧠 Проверить вывод-обобщение на прочность</h3>
+<p>Кто-то делает из пары фактов уверенный вывод о человеке, и что-то не сходится? Опишите ситуацию Фреди — он поможет разложить рассуждение на посылки и проверить его методом кругов.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Открыть Фреди →</a>
+<a href="/treningi/proryv.html" class="btn btn-outline">Тренинг «Прорыв»</a>
+</div>
+</div>
+<p style="color:#6E6E73;font-style:italic;margin-top:30px">В следующей лекции переходим от «все» и «некоторые» к «если — то»: разберём условные высказывания, две законные фигуры вывода из них и две коварные ловушки, на которых спотыкается почти каждый, — отрицание условия и утверждение следствия.</p>
+</div>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: бесплатно, круглосуточно и без записи. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
+
+<div class="related-articles"><h3>📚 Читайте также:</h3><div class="related-grid">
+<div class="related-item"><a href="/blog/lekciya-logika-3-dedukciya-indukciya-abdukciya.html">Лекция 3. Дедукция, индукция, абдукция</a><span>24 мин · лекторий</span></div>
+<div class="related-item"><a href="/blog/lekciya-logika-1-chto-takoe-logika.html">Лекция 1. Что такое логика: истина и валидность</a><span>23 мин · лекторий</span></div>
+<div class="related-item"><a href="/blog/lekciya-mysl-9-kriticheskoe-myshlenie.html">Критическое мышление: как не дать себя обмануть</a><span>23 мин · лекторий</span></div>
+</div></div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</article></div>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body></html>
