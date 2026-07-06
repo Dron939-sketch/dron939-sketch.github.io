@@ -2619,6 +2619,7 @@ async function init() {
                 supervizor: () => { if (typeof showSupervizorScreen==='function') showSupervizorScreen(); else { const s=document.createElement('script');s.src='supervizor.js';s.onload=()=>{if(typeof showSupervizorScreen==='function')showSupervizorScreen();};document.head.appendChild(s); } },
                 esoterica: () => { if (typeof showEsotericaScreen==='function') showEsotericaScreen(); else { const s=document.createElement('script');s.src='esoterica.js';s.onload=()=>{if(typeof showEsotericaScreen==='function')showEsotericaScreen();};document.head.appendChild(s); } },
                 statistics: () => showStatistics(),
+                lektorij: () => { window.location.href = '/blog/lektorij/'; },
                 mirrors: () => { if (typeof showMirrorsScreen==='function') showMirrorsScreen(); },
                 settings: () => {
                     if (typeof showSettingsScreen === 'function') showSettingsScreen();
