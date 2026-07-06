@@ -3506,6 +3506,20 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-7-kak-ssoritsya-pravilno",
+   "title": "Лекция 7. Как ссориться правильно: конфликт без разрушения",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-otn-8-emocionalnyj-bank",
+   "title": "Лекция 8. Эмоциональный банк: близость, карты любви и «повернуться к»",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
