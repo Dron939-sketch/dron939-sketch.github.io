@@ -3534,6 +3534,13 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-logika-1-chto-takoe-logika",
+   "title": "Лекция 1. Что такое логика: истина, валидность и форма мысли",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
   }
  ]
 }
