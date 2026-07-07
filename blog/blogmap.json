@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-pereg-1-chto-takoe-peregovory",
+   "title": "Лекция 1. Что такое переговоры: не победить, а договориться",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
    "slug": "lekciya-orator-1-zachem-govorit-horosho",
    "title": "Лекция 1. Что такое ораторское искусство: зачем говорить хорошо",
    "rubric": "lektorij",
