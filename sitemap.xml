@@ -857,6 +857,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/peregovory/</loc>
+    <lastmod>2026-07-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-pereg-1-chto-takoe-peregovory.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lekciya-orator-10-svoya-manera.html</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
