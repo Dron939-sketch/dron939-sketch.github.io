@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Лекция 3. Воспроизвести и локализовать сбой | Андрей Мейстер</title>
+<meta name="description" content="Третья лекция курса «Траблшутинг»: два базовых приёма диагностики. Как надёжно воспроизвести сбой (рецепт, минимальный пример, плавающие сбои) и как локализовать причину методом «дели и проверяй».">
+<meta name="keywords" content="воспроизведение сбоя, локализация неисправности, минимальный пример, плавающий сбой, дели и проверяй, траблшутинг, диагностика, поиск причины, лекторий, Андрей Мейстер">
+<meta property="og:type" content="article"><meta property="og:title" content="Лекция 3. Воспроизвести и локализовать сбой"><meta property="og:description" content="Два базовых приёма диагностики: как надёжно воспроизвести сбой и локализовать причину методом «дели и проверяй». Третья лекция курса «Траблшутинг»."><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-trabl-3-vosproizvesti-lokalizovat.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-10-08T09:00:00+03:00"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-trabl-3-vosproizvesti-lokalizovat.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Лекция 3. Воспроизвести и локализовать сбой", "description": "Воспроизведение и локализация в траблшутинге: путь от плавающего сбоя к воспроизводимому по команде и локализация причины проверкой на границах узлов системы.", "datePublished": "2026-10-08T09:00:00+03:00", "author": {"@type": "Person", "name": "Андрей Мейстер", "jobTitle": "Психолог, НЛП-тренер"}, "publisher": {"@type": "Organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/apple-touch-icon.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-trabl-3-vosproizvesti-lokalizovat.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Лекция 3. Воспроизвести и локализовать", "item": "https://meysternlp.ru/blog/lekciya-trabl-3-vosproizvesti-lokalizovat.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Почему важно воспроизвести сбой?", "acceptedAnswer": {"@type": "Answer", "text": "Действует железное правило: чего не можешь воспроизвести, того не починишь уверенно. Только повторяемый сбой позволяет изучить, что происходит, проверить, помог ли ремонт (вызвал по команде — воспроизводится или нет), и подтвердить победу. Пока сбой появляется когда вздумается и пропадает сам, вы бессильны: не проверить догадку и не убедиться, что починили."}}, {"@type": "Question", "name": "Как найти «рецепт» воспроизведения сбоя?", "acceptedAnswer": {"@type": "Answer", "text": "Систематическим перебором обстоятельств: когда сбой случается, после какого действия, при каких условиях (нагрузка, данные, температура, устройство). Меняя обстоятельства по одному, нащупываешь спусковой крючок. Затем рецепт ужимают до минимума — убирают лишние шаги, пока не останется голый набор условий; такой минимальный пример удобен и часто сам вскрывает причину."}}, {"@type": "Question", "name": "Что делать с плавающим сбоем?", "acceptedAnswer": {"@type": "Answer", "text": "Не считать его «случайным» — у него тоже есть причина, просто спусковой крючок скрытый. Тактики: повышать наблюдаемость (запись, журнал, фиксация обстановки в момент сбоя), искать скрытый фактор (температура, время работы, редкое сочетание данных, влияние соседней системы) и усиливать подозреваемое (нагрузить сильнее, прогреть) — если сбой участится, вы на верном пути."}}, {"@type": "Question", "name": "Что такое локализация «дели и проверяй»?", "acceptedAnswer": {"@type": "Answer", "text": "Приём сужения зоны поиска: систему разбивают на узлы, по которым что-то течёт (сигнал, данные, вода, ток), и проверяют на границах между ними, где хорошее превращается в плохое. Узел, в который входит правильное, а выходит неправильное, и есть виновник. Всё до него исправно, всё после проверять незачем — так система сжимается до одного подозрительного узла."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 8 октября 2026</span><span>⏱️ 23 мин чтения</span><span>🎓 Лекторий · Траблшутинг</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Лекция 3. Воспроизвести и локализовать сбой</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Мы знаем, что искать надо причину, а не симптом. Но где она прячется? Система большая, мест много — с чего начать? С двух базовых приёмов, которые превращают расплывчатое «что-то сломалось» в конкретное «поломка вот здесь». Первый — воспроизвести сбой: научиться вызывать его по своему желанию, а не ждать, пока случится сам. Второй — локализовать: сузить зону, где живёт причина, отсечь всё исправное. Вместе они — фундамент всей практической диагностики: пока сбой не пойман и не загнан в угол, чинить нечего. Сегодня разберём оба приёма: почему без воспроизведения нельзя чинить, как ловить капризные, плавающие сбои и как быстро сужать место поиска.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">План лекции</span><p>1. Сначала поймать. 2. Зачем воспроизведение. 3. Рецепт воспроизведения. 4. Плавающие сбои. 5. Локализация: сузить зону. 6. Проверка на границах. 7. Как применять.</p></div>
+
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Сначала поймать</a></li><li><a href="#s-2">Зачем воспроизведение</a></li><li><a href="#s-3">Рецепт воспроизведения</a></li><li><a href="#s-4">Плавающие сбои</a></li><li><a href="#s-5">Локализация: сузить зону</a></li><li><a href="#s-6">Проверка на границах</a></li><li><a href="#s-7">Как применять</a></li><li><a href="#s-8">Итоги</a></li><li><a href="#s-9">Вопросы для самопроверки</a></li><li><a href="#s-10">Литература</a></li></ol></nav>
+
+<h2 id="s-1">1. Сначала поймать</h2>
+<p>Есть железное правило диагностики: чего не можешь воспроизвести, того не починишь уверенно. Пока сбой появляется когда вздумается и пропадает сам, вы бессильны: не разглядеть, что именно происходит, не проверить догадку, не убедиться, что ремонт помог. Поэтому первый шаг — не искать причину, а поймать сам сбой: добиться, чтобы он возникал по вашей команде, стабильно и предсказуемо.</p>
+<p>Звучит очевидно, но именно этот шаг чаще всего проскакивают. Человеку не терпится сразу чинить — и он начинает лечить сбой, который толком даже не наблюдал. А потом гадает, помогло или нет. Диагност поступает наоборот: сначала тратит время на то, чтобы уверенно вызывать сбой, и лишь потом переходит к поиску причины. Это вложение, которое окупается сторицей. Пойманный, повторяемый сбой — это и подтверждение, что проблема реальна, а не померещилась, и полигон, на котором можно спокойно ставить опыты, и, главное, надёжный способ узнать, что вы победили: сбой перестал воспроизводиться. Как охотник сначала выслеживает и загоняет зверя и лишь потом стреляет, так диагност сначала ловит сбой и лишь потом чинит. Разберёмся, зачем это так важно и как этого добиваться.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 226" role="img" aria-label="Схема: от плавающего сбоя к воспроизводимому" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="360" y="26" text-anchor="middle" font-size="18" font-weight="600" fill="#1D1D1F">Поймать сбой: сделать его повторяемым</text>
+<rect x="20" y="54" width="196" height="112" rx="12" fill="#FDF2F2" stroke="#B3413D"/>
+<text x="118" y="80" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B3413D">Плавающий сбой</text>
+<text x="118" y="106" text-anchor="middle" font-size="11" fill="#1D1D1F"><tspan x="118" dy="0">иногда есть,</tspan><tspan x="118" dy="15">иногда нет</tspan></text>
+<text x="118" y="150" text-anchor="middle" font-size="10.5" fill="#6E6E73">нельзя ни изучить, ни проверить</text>
+<rect x="262" y="54" width="196" height="112" rx="12" fill="#EEF4FF" stroke="#2E6FE0"/>
+<text x="360" y="80" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2E6FE0">Найти условия</text>
+<text x="360" y="106" text-anchor="middle" font-size="11" fill="#1D1D1F"><tspan x="360" dy="0">когда именно? после</tspan><tspan x="360" dy="15">чего? при чём ещё?</tspan></text>
+<text x="360" y="150" text-anchor="middle" font-size="10.5" fill="#6E6E73">ищем спусковой крючок</text>
+<rect x="504" y="54" width="196" height="112" rx="12" fill="#F1F9F1" stroke="#2E7D32"/>
+<text x="602" y="80" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2E7D32">Срабатывает по команде</text>
+<text x="602" y="106" text-anchor="middle" font-size="11" fill="#1D1D1F"><tspan x="602" dy="0">повторяю шаги —</tspan><tspan x="602" dy="15">сбой каждый раз</tspan></text>
+<text x="602" y="150" text-anchor="middle" font-size="10.5" fill="#2E7D32">теперь можно чинить и проверять</text>
+<path d="M216 110 L260 110" stroke="#8A93A3" stroke-width="1.6" marker-end="url(#a3)"/>
+<path d="M458 110 L502 110" stroke="#8A93A3" stroke-width="1.6" marker-end="url(#a3)"/>
+<text x="360" y="206" text-anchor="middle" font-size="12" fill="#6E6E73">чего не можешь вызвать по желанию — того не починишь уверенно</text>
+<defs>
+<marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M2 0 L8 4 L2 8 z" fill="#8A93A3"/></marker>
+</defs>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Взгляните на схему: первый шаг диагностики — поймать сбой, то есть научиться вызывать его по своему желанию. Слева красным — худший случай: плавающий сбой, который то появляется, то исчезает сам собой. С таким невозможно работать: не разглядишь толком, что происходит, и, главное, не поймёшь, помог ли ремонт, — вроде починил, а он потом снова вылезет. В центре синим — что делать: искать условия, при которых сбой возникает. Когда именно он случается? После какого действия? Что ещё в этот момент происходит — нагрузка, время, определённые данные, температура? Мы нащупываем спусковой крючок. Справа зелёным — цель: сбой, срабатывающий по команде. Повторяю известные шаги — и он появляется каждый раз. Вот теперь с ним можно работать: спокойно изучать, а после ремонта проверить, что он и правда исчез. Правило простое и жёсткое: чего не можешь вызвать по желанию, того не починишь уверенно. Поэтому, прежде чем искать причину, диагност добивается устойчивого воспроизведения — превращает капризный, случайный сбой в послушный, повторяемый.</figcaption></figure>
+
+<h2 id="s-2">2. Зачем воспроизведение</h2>
+<p>Разложим, что именно даёт устойчивое воспроизведение, — на схеме показан путь от неуловимого сбоя к послушному. Первое: воспроизведение подтверждает, что проблема реальна и вы понимаете, в чём она. Часто уже попытка воспроизвести сбой уточняет саму жалобу: «не работает» превращается в «не включается, если сначала сделать вот так». Второе, и главное: только воспроизводимый сбой позволяет проверить ремонт. Представьте, что сбой случается раз в неделю. Вы что-то поправили — и как узнать, помогло ли? Придётся ждать неделю, а то и больше, и всё равно не будет уверенности: может, просто повезло. А если сбой вызывается по команде, вы чините и тут же проверяете: воспроизводится? Значит, не помогло, чиним дальше. Не воспроизводится? Похоже, победа.</p>
+<p>Третье: воспроизведение сужает условия и уже этим подсказывает причину. Нащупывая, при каких обстоятельствах сбой возникает, а при каких нет, вы очерчиваете его портрет — и портрет часто указывает пальцем на виновника. «Зависает только при печати больших файлов» — и вот уже понятно, что копать в сторону памяти или обработки объёма, а не в сотне других мест. Именно поэтому диагносты так носятся с воспроизведением: это не бюрократическая формальность, а самый мощный ранний инструмент. Пойманный сбой наполовину разгадан. Отсюда практическое следствие: не спешите чинить непойманное. Сначала добейтесь, чтобы сбой стал повторяемым, — а как это сделать, разберём дальше.</p>
+
+<h2 id="s-3">3. Рецепт воспроизведения</h2>
+<p>Как поймать сбой? Нужно найти его спусковой крючок — набор условий и действий, при которых он неизбежно возникает. Иначе говоря, составить «рецепт»: сделай то-то и то-то — и получишь сбой. Ищут рецепт систематическим перебором обстоятельств. Задавайте вопросы: когда сбой случается — в какое время, на каком шаге? После чего — что вы делали прямо перед ним? При каких условиях — при большой нагрузке, определённых данных, на холоде, на конкретном устройстве? Что должно совпасть, чтобы он проявился? Меняя эти обстоятельства по одному и глядя, появляется сбой или нет, вы нащупываете точный рецепт.</p>
+<p>Отдельно ценно искать минимальный рецепт — самый короткий набор условий, всё ещё вызывающий сбой. Начните с длинной последовательности, в которой он точно возникает, и по одному убирайте лишние шаги: без этого действия сбой ещё есть? Значит, действие лишнее, выбрасываем. Так вы отсекаете всё несущественное, пока не останется голый минимум — те самые условия, без которых сбоя не будет. Этот минимум бесценен вдвойне: во-первых, воспроизводить его быстро и удобно; во-вторых, он сам по себе почти показывает причину — ведь в нём не осталось ничего, кроме того, что впрямую связано с поломкой. Программисты называют это «минимальным воспроизводимым примером» и знают: часто, пока ужимаешь пример до минимума, причина и вскрывается сама собой. Правило: не довольствуйтесь тем, что сбой хоть как-то повторяется, — ужмите условия до самых необходимых.</p>
+
+<h2 id="s-4">4. Плавающие сбои</h2>
+<p>Самый трудный и раздражающий случай — плавающий, перемежающийся сбой: он то есть, то нет, и рецепт никак не находится. Такие сбои выматывают больше всего, но и с ними есть что делать. Главное — не сдаваться и не считать их «случайными»: у плавающего сбоя тоже есть причина и свой рецепт, просто спусковой крючок хитрее и зависит от чего-то, что вы пока не замечаете.</p>
+<p>Тактика с плавающими сбоями такая. Во-первых, повышайте наблюдаемость: раз сбой редкий, надо не пропустить его, когда случится, — включите запись, ведите журнал, фиксируйте каждую деталь обстановки в момент сбоя (об инструментах наблюдения будет отдельная лекция). Во-вторых, ищите скрытый фактор: раз явные условия не объясняют, значит, дело в чём-то менее очевидном — температуре, времени с момента включения, редком сочетании данных, влиянии соседней системы, случайном порядке событий. Собирайте статистику: когда сбой был, а когда нет, и чем эти моменты отличались. В-третьих, попробуйте усилить подозреваемый фактор: думаете, дело в нагрузке — нагрузите сильнее, думаете, в перегреве — прогрейте; если сбой участится, вы на верном пути. Плавающий сбой — это не «нет рецепта», а «рецепт с редким или скрытым ингредиентом». Найдёте ингредиент — и капризный сбой станет послушным. Это самая кропотливая часть диагностики, но и она поддаётся терпению и методу.</p>
+
+<h2 id="s-5">5. Локализация: сузить зону</h2>
+<p>Сбой пойман — переходим ко второму приёму: локализации. Её задача — сузить зону поиска, определить, в какой части системы сидит причина, чтобы не перебирать всё подряд. Ведь система обычно состоит из многих узлов, и причина где-то в одном из них; найти этот узел — половина дела.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 220" role="img" aria-label="Схема: локализация по границам блоков" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="360" y="26" text-anchor="middle" font-size="18" font-weight="600" fill="#1D1D1F">Локализация: где хорошее стало плохим</text>
+<rect x="30" y="70" width="130" height="52" rx="10" fill="#F1F9F1" stroke="#2E7D32"/>
+<text x="95" y="100" text-anchor="middle" font-size="12" fill="#1D1D1F">узел A</text>
+<rect x="200" y="70" width="130" height="52" rx="10" fill="#F1F9F1" stroke="#2E7D32"/>
+<text x="265" y="100" text-anchor="middle" font-size="12" fill="#1D1D1F">узел B</text>
+<rect x="370" y="70" width="130" height="52" rx="10" fill="#FDF2F2" stroke="#B3413D" stroke-width="1.8"/>
+<text x="435" y="94" text-anchor="middle" font-size="12" fill="#1D1D1F">узел C</text>
+<text x="435" y="112" text-anchor="middle" font-size="10" fill="#B3413D">здесь ломается</text>
+<rect x="540" y="70" width="130" height="52" rx="10" fill="#F8F9FB" stroke="#E4E7EC"/>
+<text x="605" y="100" text-anchor="middle" font-size="12" fill="#9AA3B2">узел D</text>
+<path d="M160 96 L198 96" stroke="#8A93A3" stroke-width="1.4" marker-end="url(#a3b)"/>
+<path d="M330 96 L368 96" stroke="#8A93A3" stroke-width="1.4" marker-end="url(#a3b)"/>
+<path d="M500 96 L538 96" stroke="#B3413D" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#a3r)"/>
+<text x="180" y="150" text-anchor="middle" font-size="14" font-weight="700" fill="#2E7D32">✓</text>
+<text x="180" y="166" text-anchor="middle" font-size="10" fill="#6E6E73">тут ещё хорошо</text>
+<text x="350" y="150" text-anchor="middle" font-size="14" font-weight="700" fill="#2E7D32">✓</text>
+<text x="350" y="166" text-anchor="middle" font-size="10" fill="#6E6E73">и тут хорошо</text>
+<text x="520" y="150" text-anchor="middle" font-size="14" font-weight="700" fill="#B3413D">✗</text>
+<text x="520" y="166" text-anchor="middle" font-size="10" fill="#B3413D">а тут уже плохо</text>
+<text x="360" y="200" text-anchor="middle" font-size="12" fill="#6E6E73">причина — в узле между последней «✓» и первой «✗»</text>
+<defs>
+<marker id="a3b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M2 0 L8 4 L2 8 z" fill="#8A93A3"/></marker>
+<marker id="a3r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M2 0 L8 4 L2 8 z" fill="#B3413D"/></marker>
+</defs>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Взгляните на схему: поймав сбой, надо его локализовать — сузить место, где прячется причина. Для этого систему мысленно делят на узлы, по которым что-то течёт: сигнал, данные, вода, ток, — и проверяют на границах между ними, где хорошее превращается в плохое. Слева зелёным — узлы A и B: на выходе из A всё ещё в порядке, ставим галочку; на выходе из B тоже в порядке, ещё галочка. А после узла C, красным, на выходе уже неправильно — крестик. Вывод очевиден: раз в C входит хорошее, а выходит плохое, значит, поломка именно в узле C, между последней галочкой и первым крестиком. Узел D, справа, проверять уже незачем — причина найдена раньше. Это и есть суть локализации: вместо того чтобы перебирать всю систему целиком, мы находим границу, на которой всё портится, и загоняем причину в один конкретный узел. Дальше можно либо чинить уже его, либо, если узел большой, снова поделить его на части и повторить тот же приём внутри. Так огромная зона поиска быстро сжимается до маленькой.</figcaption></figure>
+
+<p>Идея локализации — делить и проверять, как показано на схеме. Представьте систему как цепочку узлов, по которой что-то течёт от входа к выходу: сигнал, данные, вода, ток, усилие. На входе всё хорошо, на выходе — плохо; значит, где-то по пути хорошее превратилось в плохое. Задача — найти это место. Для этого проверяют на границах между узлами: что на выходе из первого узла — ещё хорошо или уже плохо? А из второго? Двигаясь по цепочке, вы находите границу, за которой начинается «плохо»: узел, в который входит правильное, а выходит неправильное, и есть виновник. Всё, что до него, исправно и из поиска исключается; всё, что после, проверять незачем. Так огромная система в несколько шагов сжимается до одного подозрительного узла. А если узел сам большой, приём повторяют внутри него: снова делят на части и ищут границу поломки. Это разбиение системы на узлы и проверка потоков на их стыках — самый общий и мощный приём локализации, годный и для электроники, и для водопровода, и для программы, и для любого процесса.</p>
+
+<h2 id="s-6">6. Проверка на границах</h2>
+<p>Ключевой момент локализации — уметь проверять, «хорошо» или «плохо» в промежуточной точке, не доходя до конца. Это называют проверкой на границах, и на ней держится вся локализация. В технике это буквально измерение: есть ли ток в этой точке провода, доходит ли вода до этого крана, правильный ли сигнал на выходе из этого блока. В программе — посмотреть, какие данные приходят в середину обработки: ещё верные или уже испорченные. В процессе — проверить промежуточный результат на этапе: до этого шага заготовка годная, а после — брак.</p>
+<p>Смысл всегда один: не гадать, где поломка, а замерить в промежуточной точке и разделить систему на «до» (исправно) и «после» (сбоит). Каждая такая проверка вдвое, а то и больше, сокращает зону поиска. Тут действует уже знакомое правило из первой лекции: меняйте и проверяйте что-то одно за раз, иначе запутаетесь, где граница. И ещё важный принцип — проверяйте от начала к концу или методично сужайте, а не тыкайте в случайные точки. Случайные замеры дают случайную информацию; систематическая проверка границ гарантированно загоняет причину в угол. В следующей лекции мы увидим, что проверять границы можно ещё умнее — не подряд, а начиная с середины, и это резко ускоряет поиск. А пока запомните сам приём: локализация — это серия проверок на границах, отделяющих исправную часть от сбойной, пока не останется один узел.</p>
+
+<h2 id="s-7">7. Как применять</h2>
+<p>Соберём в практику. Столкнувшись со сбоем, действуйте в два такта. Такт первый — поймать: не бросайтесь чинить, а сначала добейтесь, чтобы сбой воспроизводился по вашей команде. Найдите рецепт (когда, после чего, при каких условиях), ужмите его до минимума, а если сбой плавающий — повышайте наблюдаемость и охотьтесь за скрытым фактором. Убедитесь, что можете вызвать сбой, когда захотите. Такт второй — локализовать: мысленно разбейте систему на узлы и проверяйте на границах, где хорошее становится плохим, сужая зону до одного подозрительного узла. Только теперь, зная точное место, имеет смысл искать и устранять конкретную причину.</p>
+<p>И эти приёмы, как всё в курсе, работают шире техники. Воспроизведение — это по сути умение чётко очертить проблему, поймать её в конкретных условиях вместо расплывчатых жалоб. «Мы вечно ссоримся» — а когда именно, при каких обстоятельствах, после чего? Найдёте рецепт — уже полдела. Локализация — это привычка сужать, а не хвататься за всё сразу: где именно в процессе теряется время, на каком этапе разговор сворачивает не туда, в каком звене цепочки прячется сбой. Разбивай на части, проверяй на стыках, отсекай исправное — так распутывается почти любая сложная проблема, не только техническая. В следующей лекции возьмём приём локализации и доведём его до мастерского уровня — познакомимся с методом половинного деления, который находит поломку в системе из тысячи узлов всего за десяток проверок.</p>
+
+<h2 id="s-8">Итоги</h2>
+<ul>
+<li>Два базовых приёма диагностики: воспроизвести сбой (вызывать по своей команде) и локализовать (сузить зону, где сидит причина). Пока сбой не пойман и не загнан в угол, чинить нечего.</li>
+<li>Чего не можешь воспроизвести, того не починишь уверенно: только повторяемый сбой позволяет изучить его, проверить ремонт и понять, что победил. Не спеши чинить непойманное.</li>
+<li>Рецепт воспроизведения ищут перебором условий (когда, после чего, при чём) и ужимают до минимума — минимальный рецепт удобен и часто сам вскрывает причину.</li>
+<li>Плавающий сбой — не «случайность», а рецепт с редким или скрытым ингредиентом: повышай наблюдаемость, ищи скрытый фактор, усиливай подозреваемое, собирай статистику.</li>
+<li>Локализация — «дели и проверяй»: разбей систему на узлы, по которым что-то течёт, и проверяй на границах, где хорошее стало плохим; виновник — узел между последней «✓» и первой «✗».</li>
+<li>Проверка на границах замеряет промежуточную точку и делит систему на исправное «до» и сбойное «после»; проверяй методично и по одному, а не тыкай наугад.</li>
+</ul>
+
+<h2 id="s-9">Вопросы для самопроверки</h2>
+<ol>
+<li>Почему воспроизведение сбоя важнее, чем кажется? Что оно даёт для проверки ремонта?</li>
+<li>Как ищут «рецепт» воспроизведения и зачем ужимать его до минимума?</li>
+<li>Что делать с плавающим, перемежающимся сбоем? Назовите три тактики.</li>
+<li>В чём суть локализации методом «дели и проверяй»? Где сидит причина относительно «✓» и «✗»?</li>
+<li>Возьмите знакомую проблему и опишите, как бы вы её воспроизвели и локализовали.</li>
+</ol>
+
+<h2 id="s-10">Литература</h2>
+<ul>
+<li>Дэвид Аганс. «Отладка. 9 незыблемых правил» — правила «сделай так, чтобы сбой повторялся» и «разделяй и властвуй».</li>
+<li>Эндрю Хант, Дэвид Томас. «Программист-прагматик» — воспроизведение и локализация ошибок.</li>
+<li>Стив Макконнелл. «Совершенный код» — систематический поиск и сужение места дефекта.</li>
+</ul>
+<div class="cta-block">
+<h3>🧠 Локализовать сбой с Фреди</h3>
+<p>Сбой есть, а где причина — непонятно? Разберите с Фреди по шагам: как надёжно воспроизвести проблему (когда, после чего, при каких условиях) и как разбить систему на узлы, чтобы проверкой на границах загнать причину в один узел. Пойманный и локализованный сбой почти разгадан.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Открыть Фреди →</a>
+<a href="/treningi/proryv.html" class="btn btn-outline">Тренинг «Прорыв»</a>
+</div>
+</div>
+<p style="color:#6E6E73;font-style:italic;margin-top:30px">Это третья лекция курса «Траблшутинг». В следующей доведём локализацию до мастерства — разберём метод половинного деления, который находит поломку в огромной системе всего за считаные проверки. А поймать и локализовать свой сбой всегда можно вместе с Фреди.</p>
+</div>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: бесплатно, круглосуточно и без записи. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
+
+<div class="related-articles"><h3>📚 Читайте также:</h3><div class="related-grid">
+<div class="related-item"><a href="/blog/lekciya-trabl-2-simptom-i-prichina.html">Лекция 2. Симптом не есть причина</a><span>23 мин · лекторий</span></div>
+<div class="related-item"><a href="/blog/lekciya-trabl-4-polovinnoe-delenie.html">Лекция 4. Метод половинного деления</a><span>23 мин · лекторий</span></div>
+<div class="related-item"><a href="/blog/lekciya-trabl-8-nablyudenie.html">Лекция 8. Сделать невидимое видимым</a><span>23 мин · лекторий</span></div>
+</div></div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</article></div>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body></html>
