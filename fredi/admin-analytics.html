@@ -464,7 +464,7 @@
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
             <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">🎓 Озвучка лекций Лектория</div>
             <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">
-                Какие лекции уже записаны в MP3 (голос Фреди), а какие ещё нет. Файлы лежат на постоянном диске и переживают редеплой. Кнопкой ниже можно разом озвучить всё недостающее — уже готовые пропускаются, деньги на Fish не тратятся повторно.
+                Какие лекции уже записаны в MP3 (голос Фреди), а какие ещё нет. Файлы лежат на постоянном диске и переживают редеплой. Озвучивать можно по одной — кнопкой «🔊 Сгенерировать» в строке лекции, — либо разом всё недостающее. Уже готовые пропускаются, деньги на Fish не тратятся повторно; «↻» у готовой лекции переозвучивает её заново.
             </div>
 
             <div id="lekStats" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
@@ -3711,18 +3711,24 @@ POV: ты на семейном ужине, и мама такая «как у �
         }
         body.innerHTML = items.map(function (it, i) {
             var title = (titles && titles[it.slug]) || _lekPretty(it.slug);
+            var genBtn = function (label, force, tip) {
+                return '<button class="lekGen" data-slug="' + _lekEsc(it.slug) + '" data-force="' + (force ? '1' : '') + '"' +
+                    (tip ? ' title="' + tip + '"' : '') +
+                    ' style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer;font-size:12px">' + label + '</button>';
+            };
             var badge, action;
             if (it.ready) {
                 badge = '<span style="color:#10b981">● готово</span>';
                 if (it.degraded) badge += ' <span style="color:#f59e0b;font-size:11px">(запасной голос)</span>';
                 action = '<button class="lekDl" data-slug="' + _lekEsc(it.slug) + '" data-url="' + _lekEsc(it.url) + '" ' +
-                    'style="padding:6px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer;font-size:12px">💾 Скачать</button>';
+                    'style="padding:6px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer;font-size:12px">💾 Скачать</button> ' +
+                    genBtn('↻', true, 'Переозвучить заново');
             } else if (it.stale) {
                 badge = '<span style="color:#f59e0b">↻ устарело</span>';
-                action = '<span style="font-size:11px;color:var(--text-dim)">переозвучится</span>';
+                action = genBtn('🔊 Сгенерировать', false, 'Озвучить эту лекцию');
             } else {
                 badge = '<span style="color:var(--text-dim)">○ нет</span>';
-                action = '<span style="font-size:11px;color:var(--text-dim)">—</span>';
+                action = genBtn('🔊 Сгенерировать', false, 'Озвучить эту лекцию');
             }
             var voice = it.voice === 'fish' ? '🎙️ Фреди' : it.voice === 'yandex' ? 'Яндекс' : '—';
             return '<tr style="border-bottom:1px solid var(--border)">' +
@@ -3798,6 +3804,34 @@ POV: ты на семейном ужине, и мама такая «как у �
         }, 4000);
     }
 
+    async function _lekGenOne(btn) {
+        var slug = btn.dataset.slug, force = btn.dataset.force === '1';
+        var old = btn.textContent;
+        btn.disabled = true; btn.textContent = '⏳…';
+        try {
+            var res = await fetch(API + '/api/tts/blog/pregenerate', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ slugs: [slug], force: force }),
+            });
+            var j = await res.json().catch(function () { return {}; });
+            if (res.status === 403) throw new Error('Неверный ADMIN_TOKEN');
+            if (res.status === 503) throw new Error(j.message || 'Озвучка отключена на сервере');
+            if (res.status === 409) {
+                _lekSetStatus('Идёт озвучка — дождитесь окончания', 'err');
+                btn.disabled = false; btn.textContent = old;
+                return;
+            }
+            if (!res.ok) throw new Error(j.error || ('HTTP ' + res.status));
+            _lekSetStatus('🔊 озвучиваю лекцию: ' + slug + ' — это займёт пару минут…');
+            _lekPollStart();
+            // кнопку не восстанавливаем: строка перерисуется после _lekLoad
+        } catch (e) {
+            _lekSetStatus(e.message || 'Ошибка', 'err');
+            btn.disabled = false; btn.textContent = old;
+        }
+    }
+
     async function _lekPregen() {
         var btn = document.getElementById('lekPregen');
         var ps = document.getElementById('lekPregenStatus');
@@ -3834,8 +3868,12 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (pb) pb.addEventListener('click', _lekPregen);
         var body = document.getElementById('lekBody');
         if (body) body.addEventListener('click', function (e) {
-            var btn = e.target && e.target.closest ? e.target.closest('.lekDl') : null;
-            if (btn) _lekDownload(btn);
+            var t = e.target;
+            if (!t || !t.closest) return;
+            var dl = t.closest('.lekDl');
+            if (dl) { _lekDownload(dl); return; }
+            var gen = t.closest('.lekGen');
+            if (gen) { _lekGenOne(gen); return; }
         });
     })();
     window._lekLoad = _lekLoad;
