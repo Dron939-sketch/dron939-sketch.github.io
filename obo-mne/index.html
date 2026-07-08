@@ -448,7 +448,8 @@
 
     @media (max-width: 560px) {
       .cred-card { flex-direction: column; text-align: center; }
-      .cred-links { justify-content: center; }
+      /* три ссылки ровным центрированным столбиком вместо кривого 2+1 переноса */
+      .cred-links { flex-direction: column; align-items: center; gap: 12px; }
     }
 
     .tools-grid {
