@@ -78,6 +78,15 @@
             '</div>';
         var subEl = document.getElementById('lsn2Sub');
         function setStatus(t) { if (subEl) subEl.textContent = t; }
+        // Готовую лекцию греем заранее (preload) уже при открытии страницы,
+        // чтобы по ▶ она играла из готового mp3 почти мгновенно, а не ждала
+        // загрузку файла. Для неготовых — ничего не грузим (пойдёт генерация).
+        var preAudio = null;
+        if (ready) {
+            preAudio = document.createElement('audio');
+            preAudio.preload = 'auto';
+            preAudio.src = API + '/api/tts/blog/' + slug + '.mp3?v=' + v;
+        }
         document.getElementById('lsn2Go').addEventListener('click', function () {
             var btn = this;
             btn.disabled = true;
@@ -86,23 +95,28 @@
             goal('listen_tts_start');
 
             function play(vv) {
-                var audio = document.createElement('audio');
+                var audio = preAudio || document.createElement('audio');
+                if (!preAudio) {
+                    audio.preload = 'auto';
+                    // v меняется при переозвучке — иначе браузер вечно играет
+                    // старый закэшированный голос (mp3 отдаётся с immutable)
+                    audio.src = API + '/api/tts/blog/' + slug + '.mp3?v=' + vv;
+                }
+                preAudio = null;
                 audio.controls = true;
-                audio.preload = 'auto';
-                // v меняется при переозвучке — иначе браузер вечно играет
-                // старый закэшированный голос (mp3 отдаётся с immutable)
-                audio.src = API + '/api/tts/blog/' + slug + '.mp3?v=' + vv;
-                audio.addEventListener('canplay', function () {
+                function onReady() {
                     btn.parentElement.style.display = 'none';
                     audio.play().catch(function () {});
                     goal('listen_tts_play');
-                });
+                }
+                audio.addEventListener('canplay', onReady);
                 audio.addEventListener('error', function () {
                     // сервер не смог — откатываемся на браузерный голос
                     box.innerHTML = '';
                     initBrowserTTS();
                 });
                 box.appendChild(audio);
+                if (audio.readyState >= 3) onReady();  // уже прогрелось — играем сразу
             }
 
             if (ready) {
