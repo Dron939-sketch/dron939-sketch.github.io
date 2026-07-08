@@ -200,6 +200,7 @@
         <button data-tab="control">🎛️ Пульт</button>
         <button data-tab="reeng">📨 Возврат</button>
         <button data-tab="tts">🔊 Озвучка</button>
+        <button data-tab="lektorij">🎓 Лекторий</button>
         <button data-tab="parse">🎣 Парсинг</button>
         <button data-tab="messengers">📱 Messenger</button>
         <button data-tab="wave">🌊 2-я волна</button>
@@ -456,6 +457,47 @@
             </div>
 
             <div id="ttsStatus" style="font-size:12px;color:var(--text-dim);min-height:16px"></div>
+        </div>
+    </section>
+
+    <section id="lektorijTab" style="display:none">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
+            <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">🎓 Озвучка лекций Лектория</div>
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">
+                Какие лекции уже записаны в MP3 (голос Фреди), а какие ещё нет. Файлы лежат на постоянном диске и переживают редеплой. Кнопкой ниже можно разом озвучить всё недостающее — уже готовые пропускаются, деньги на Fish не тратятся повторно.
+            </div>
+
+            <div id="lekStats" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+                <button id="lekRefresh"
+                    style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer">
+                    🔄 Обновить
+                </button>
+                <button id="lekPregen"
+                    style="padding:10px 16px;border-radius:10px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:700;cursor:pointer">
+                    ⚡ Озвучить недостающее
+                </button>
+                <span id="lekPregenStatus" style="font-size:12px;color:var(--text-dim)"></span>
+            </div>
+
+            <div id="lekStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-bottom:8px"></div>
+
+            <div style="overflow-x:auto">
+                <table style="width:100%;border-collapse:collapse;font-size:13px">
+                    <thead>
+                        <tr style="text-align:left;color:var(--text-dim);border-bottom:1px solid var(--border)">
+                            <th style="padding:8px 6px;width:34px">#</th>
+                            <th style="padding:8px 6px">Лекция</th>
+                            <th style="padding:8px 6px;width:120px">Статус</th>
+                            <th style="padding:8px 6px;width:80px">Голос</th>
+                            <th style="padding:8px 6px;width:80px;text-align:right">Размер</th>
+                            <th style="padding:8px 6px;width:170px;text-align:right">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lekBody"></tbody>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -1896,6 +1938,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (ttsTab) ttsTab.style.display = 'none';
         var parseTab = document.getElementById('parseTab');
         if (parseTab) parseTab.style.display = 'none';
+        var lektorijTab = document.getElementById('lektorijTab');
+        if (lektorijTab) lektorijTab.style.display = 'none';
         var messengersTab = document.getElementById('messengersTab');
         if (messengersTab) messengersTab.style.display = 'none';
         var waveTab = document.getElementById('waveTab');
@@ -1944,6 +1988,9 @@ POV: ты на семейном ужине, и мама такая «как у �
             } else if (currentTab === 'tts') {
                 // TTS — это форма, fetch не нужен. Просто показываем UI.
                 if (ttsTab) ttsTab.style.display = 'block';
+            } else if (currentTab === 'lektorij') {
+                if (lektorijTab) lektorijTab.style.display = 'block';
+                if (typeof _lekLoad === 'function') _lekLoad();
             } else if (currentTab === 'parse') {
                 if (parseTab) parseTab.style.display = 'block';
                 // Подгрузим очередь сразу при открытии
@@ -3586,6 +3633,212 @@ POV: ты на семейном ужине, и мама такая «как у �
 
     // expose для refresh() — он вызывает _parseLoadQueue при открытии таба
     window._parseLoadQueue = _parseLoadQueue;
+
+    // ============================================================
+    // 🎓 ЛЕКТОРИЙ — озвучка лекций (список mp3 + скачивание + пре-генерация)
+    // ============================================================
+    var _lekTitles = null;      // кэш slug -> заголовок из blogmap
+    var _lekPoll = null;        // таймер опроса прогресса пре-генерации
+
+    function _lekSetStatus(msg, kind) {
+        var s = document.getElementById('lekStatus');
+        if (!s) return;
+        s.textContent = msg || '';
+        s.style.color = kind === 'err' ? '#e11d48' : kind === 'ok' ? '#10b981' : 'var(--text-dim)';
+    }
+
+    function _lekBytes(n) {
+        if (!n) return '—';
+        if (n >= 1048576) return (n / 1048576).toFixed(1) + ' МБ';
+        if (n >= 1024) return Math.round(n / 1024) + ' КБ';
+        return n + ' Б';
+    }
+
+    function _lekDate(ts) {
+        if (!ts) return '';
+        try { return new Date(ts * 1000).toLocaleDateString('ru-RU'); } catch (e) { return ''; }
+    }
+
+    function _lekPretty(slug) {
+        return slug.replace(/^lekciya-/, '').replace(/-/g, ' ');
+    }
+
+    function _lekEsc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+    }
+
+    async function _lekTitlesLoad() {
+        if (_lekTitles) return _lekTitles;
+        _lekTitles = {};
+        try {
+            // blogmap лежит на том же статическом сайте, что и админка
+            var r = await fetch('/blog/blogmap.json', { cache: 'no-cache' });
+            if (r.ok) {
+                var bm = await r.json();
+                (bm.articles || []).forEach(function (a) {
+                    if (a && a.slug) _lekTitles[a.slug] = a.title || '';
+                });
+            }
+        } catch (e) { /* локально/оффлайн — обойдёмся слагами */ }
+        return _lekTitles;
+    }
+
+    function _lekRender(data, titles) {
+        var stats = document.getElementById('lekStats');
+        var body = document.getElementById('lekBody');
+        if (!stats || !body) return;
+        var chip = function (label, val, color) {
+            return '<div style="background:' + color + '12;border:1px solid ' + color + '40;border-radius:10px;padding:8px 12px">' +
+                '<div style="font-size:20px;font-weight:700;color:var(--text);line-height:1">' + val + '</div>' +
+                '<div style="font-size:10px;color:var(--text-dim);margin-top:4px">' + label + '</div></div>';
+        };
+        var notReady = (data.total || 0) - (data.ready || 0);
+        stats.innerHTML =
+            chip('лекций всего', data.total || 0, '#3A86FF') +
+            chip('озвучено', data.ready || 0, '#10b981') +
+            chip('осталось', notReady, notReady ? '#f59e0b' : '#10b981') +
+            chip('объём mp3', _lekBytes(data.bytes), '#7A5AF8') +
+            '<div style="align-self:center;font-size:11px;color:var(--text-dim);padding:0 4px">' +
+              (data.persistent ? '💾 постоянный диск' : '⚠️ временный каталог') +
+              ' · <code>' + _lekEsc(data.dir || '') + '</code></div>';
+
+        var items = data.items || [];
+        if (!items.length) {
+            body.innerHTML = '<tr><td colspan="6" style="padding:16px;color:var(--text-dim)">Лекции не найдены в sitemap.</td></tr>';
+            return;
+        }
+        body.innerHTML = items.map(function (it, i) {
+            var title = (titles && titles[it.slug]) || _lekPretty(it.slug);
+            var badge, action;
+            if (it.ready) {
+                badge = '<span style="color:#10b981">● готово</span>';
+                if (it.degraded) badge += ' <span style="color:#f59e0b;font-size:11px">(запасной голос)</span>';
+                action = '<button class="lekDl" data-slug="' + _lekEsc(it.slug) + '" data-url="' + _lekEsc(it.url) + '" ' +
+                    'style="padding:6px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer;font-size:12px">💾 Скачать</button>';
+            } else if (it.stale) {
+                badge = '<span style="color:#f59e0b">↻ устарело</span>';
+                action = '<span style="font-size:11px;color:var(--text-dim)">переозвучится</span>';
+            } else {
+                badge = '<span style="color:var(--text-dim)">○ нет</span>';
+                action = '<span style="font-size:11px;color:var(--text-dim)">—</span>';
+            }
+            var voice = it.voice === 'fish' ? '🎙️ Фреди' : it.voice === 'yandex' ? 'Яндекс' : '—';
+            return '<tr style="border-bottom:1px solid var(--border)">' +
+                '<td style="padding:8px 6px;color:var(--text-dim)">' + (i + 1) + '</td>' +
+                '<td style="padding:8px 6px"><div style="font-weight:600">' + _lekEsc(title) + '</div>' +
+                  '<div style="font-size:11px;color:var(--text-dim)"><code>' + _lekEsc(it.slug) + '</code>' +
+                  (it.orphan ? ' <span style="color:#f59e0b">· нет в sitemap</span>' : '') + '</div></td>' +
+                '<td style="padding:8px 6px">' + badge + '</td>' +
+                '<td style="padding:8px 6px;font-size:12px">' + voice + '</td>' +
+                '<td style="padding:8px 6px;text-align:right;color:var(--text-dim)">' + _lekBytes(it.bytes) +
+                  (it.ts ? '<br><span style="font-size:10px">' + _lekDate(it.ts) + '</span>' : '') + '</td>' +
+                '<td style="padding:8px 6px;text-align:right">' + action + '</td>' +
+                '</tr>';
+        }).join('');
+    }
+
+    async function _lekLoad() {
+        _lekSetStatus('Загрузка…');
+        try {
+            var res = await Promise.all([
+                _fetch('/api/tts/blog/list'),
+                _lekTitlesLoad(),
+            ]);
+            _lekRender(res[0], res[1]);
+            _lekSetStatus('');
+            if (res[0].running) _lekPollStart();
+        } catch (e) {
+            _lekSetStatus(e.message || 'Ошибка', 'err');
+        }
+    }
+
+    async function _lekDownload(btn) {
+        var url = btn.dataset.url, slug = btn.dataset.slug;
+        var old = btn.textContent;
+        btn.disabled = true; btn.textContent = '⏳…';
+        try {
+            var res = await fetch(API + url);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            var blob = await res.blob();
+            var href = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = href; a.download = slug + '.mp3';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            setTimeout(function () { URL.revokeObjectURL(href); }, 4000);
+        } catch (e) {
+            // кросс-доменный blob не удался — откроем в новой вкладке
+            window.open(API + url, '_blank');
+        } finally {
+            btn.disabled = false; btn.textContent = old;
+        }
+    }
+
+    function _lekPollStart() {
+        if (_lekPoll) return;
+        _lekPoll = setInterval(async function () {
+            try {
+                var p = await _fetch('/api/tts/blog/pregenerate');
+                var ps = document.getElementById('lekPregenStatus');
+                if (p.running) {
+                    if (ps) { ps.style.color = 'var(--text-dim)';
+                        ps.textContent = '⚡ озвучиваю: ' + (p.done || 0) + ' / ' + (p.total || 0) +
+                        ' (готово ' + (p.generated || 0) + ', пропущено ' + (p.skipped || 0) +
+                        (p.errors && p.errors.length ? ', ошибок ' + p.errors.length : '') + ')'; }
+                } else {
+                    clearInterval(_lekPoll); _lekPoll = null;
+                    if (ps) { ps.style.color = '#10b981';
+                        ps.textContent = '✅ готово: записано ' + (p.generated || 0) +
+                        ', пропущено ' + (p.skipped || 0) +
+                        (p.errors && p.errors.length ? ', ошибок ' + p.errors.length : ''); }
+                    _lekLoad();
+                }
+            } catch (e) { clearInterval(_lekPoll); _lekPoll = null; }
+        }, 4000);
+    }
+
+    async function _lekPregen() {
+        var btn = document.getElementById('lekPregen');
+        var ps = document.getElementById('lekPregenStatus');
+        btn.disabled = true;
+        if (ps) { ps.style.color = 'var(--text-dim)'; ps.textContent = 'запускаю…'; }
+        try {
+            var res = await fetch(API + '/api/tts/blog/pregenerate', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: '{}',
+            });
+            var j = await res.json().catch(function () { return {}; });
+            if (res.status === 403) throw new Error('Неверный ADMIN_TOKEN');
+            if (res.status === 503) throw new Error(j.message || 'Озвучка отключена на сервере');
+            if (res.status === 409) {
+                if (ps) ps.textContent = 'уже идёт…';
+            } else if (!res.ok) {
+                throw new Error(j.error || ('HTTP ' + res.status));
+            } else if (ps) {
+                ps.textContent = '⚡ запущено: ' + (j.total || 0) + ' лекций';
+            }
+            _lekPollStart();
+        } catch (e) {
+            if (ps) { ps.textContent = '⚠ ' + (e.message || 'ошибка'); ps.style.color = '#e11d48'; }
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    (function _lekWire() {
+        var rb = document.getElementById('lekRefresh');
+        if (rb) rb.addEventListener('click', _lekLoad);
+        var pb = document.getElementById('lekPregen');
+        if (pb) pb.addEventListener('click', _lekPregen);
+        var body = document.getElementById('lekBody');
+        if (body) body.addEventListener('click', function (e) {
+            var btn = e.target && e.target.closest ? e.target.closest('.lekDl') : null;
+            if (btn) _lekDownload(btn);
+        });
+    })();
+    window._lekLoad = _lekLoad;
 
     // ============================================================
     // 📱 MESSENGER LINKS STATS
