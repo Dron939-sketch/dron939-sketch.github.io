@@ -78,6 +78,41 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-trevoga-1-chto-takoe",
+   "title": "Лекция 1. Что такое тревога и зачем она нужна",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-trevoga-2-kak-ustroena",
+   "title": "Лекция 2. Как устроена тревога: тело, мысли, поведение",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-trevoga-3-porochnyj-krug",
+   "title": "Лекция 3. Порочный круг: почему избегание кормит тревогу",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-trevoga-4-katastrofizaciya",
+   "title": "Лекция 4. Катастрофизация и мысли-ловушки",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-trevoga-5-panicheskaya-ataka",
+   "title": "Лекция 5. Паническая атака: почему она пугает, но не опасна",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-samoocenka-1-chto-takoe",
    "title": "Лекция 1. Что такое самооценка и почему она не то, что вы думаете",
    "rubric": "lektorij",
