@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-trevoga-1-chto-takoe",
+   "title": "Лекция 1. Что такое тревога и зачем она нужна",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
    "slug": "lekciya-samoocenka-1-chto-takoe",
    "title": "Лекция 1. Что такое самооценка и почему она не то, что вы думаете",
    "rubric": "lektorij",
