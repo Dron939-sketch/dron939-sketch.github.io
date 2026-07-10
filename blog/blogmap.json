@@ -92,6 +92,13 @@
    "mins": 23
   },
   {
+   "slug": "lekciya-zavis-3-petlya",
+   "title": "Лекция 3. Петля зависимости: триггер, ритуал, толерантность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-samoreg-1-emocii-ne-vragi",
    "title": "Лекция 1. Эмоции — не враги: что такое саморегуляция",
    "rubric": "lektorij",
