@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-uchit-1-illyuziya-znaniya",
+   "title": "Лекция 1. Иллюзия знания: почему привычная учёба не работает",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-diag-1-izmerit-cheloveka",
    "title": "Лекция 1. Можно ли измерить человека",
    "rubric": "lektorij",
