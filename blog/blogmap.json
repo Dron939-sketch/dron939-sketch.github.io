@@ -85,6 +85,13 @@
    "mins": 24
   },
   {
+   "slug": "lekciya-diag-2-nadezhnost-validnost",
+   "title": "Лекция 2. Что такое хороший тест: надёжность и валидность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-razv-1-zakony",
    "title": "Лекция 1. Как развивается ребёнок: природа и среда",
    "rubric": "lektorij",
