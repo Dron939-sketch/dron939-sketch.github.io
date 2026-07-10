@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-dengi-1-ne-pro-matematiku",
+   "title": "Лекция 1. Деньги в голове: почему это не про математику",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-zavis-1-ne-slabost",
    "title": "Лекция 1. Зависимость — не слабость воли: что это такое",
    "rubric": "lektorij",
