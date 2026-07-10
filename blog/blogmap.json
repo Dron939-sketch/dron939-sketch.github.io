@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-stor-1-pochemu-istorii-silnee-faktov",
+   "title": "Лекция 1. Почему истории сильнее фактов",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-kogn-1-nauka-o-razume",
    "title": "Лекция 1. Наука о разуме: когнитивная революция",
    "rubric": "lektorij",
