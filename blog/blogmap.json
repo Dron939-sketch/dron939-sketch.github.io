@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-psihoterapiya-1-chto-eto",
+   "title": "Лекция 1. Что такое психотерапия и как она лечит",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-dengi-1-ne-pro-matematiku",
    "title": "Лекция 1. Деньги в голове: почему это не про математику",
    "rubric": "lektorij",
