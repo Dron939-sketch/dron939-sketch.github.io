@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-diag-1-izmerit-cheloveka",
+   "title": "Лекция 1. Можно ли измерить человека",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-razv-1-zakony",
    "title": "Лекция 1. Как развивается ребёнок: природа и среда",
    "rubric": "lektorij",
