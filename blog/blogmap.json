@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-kogn-1-nauka-o-razume",
+   "title": "Лекция 1. Наука о разуме: когнитивная революция",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-uchit-1-illyuziya-znaniya",
    "title": "Лекция 1. Иллюзия знания: почему привычная учёба не работает",
    "rubric": "lektorij",
