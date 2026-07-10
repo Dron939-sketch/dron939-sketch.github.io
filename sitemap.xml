@@ -1103,6 +1103,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/storitelling/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-stor-1-pochemu-istorii-silnee-faktov.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lekciya-kogn-10-karta-razuma.html</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
