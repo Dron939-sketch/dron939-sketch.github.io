@@ -7,7 +7,9 @@ on:
 
 concurrency:
   group: sync-${{ github.ref }}
-  cancel-in-progress: false
+  # новый пуш отменяет устаревшую синхронизацию: при массовых публикациях
+  # собирается только последнее состояние, а не вся очередь промежуточных
+  cancel-in-progress: true
 
 jobs:
   sync:
