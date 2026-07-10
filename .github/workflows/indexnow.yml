@@ -8,6 +8,10 @@ on:
       - 'sitemap.xml'
       - 'feed.xml'
 
+concurrency:
+  group: indexnow-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ping-indexnow:
     runs-on: ubuntu-latest
