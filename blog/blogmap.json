@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-relig-1-chto-takoe-religiya",
+   "title": "Лекция 1. Что такое религия и зачем она человеку",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-evo-1-kamennyj-um",
    "title": "Лекция 1. Что такое эволюционная психология: ваш каменный ум",
    "rubric": "lektorij",
