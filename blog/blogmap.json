@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-idej-1-chto-takoe-istoriya-idej",
+   "title": "Лекция 1. Что такое история идей: вы мыслите чужими мыслями",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-peregr-1-zhizn-vo-vremena-izobiliya",
    "title": "Лекция 1. Жизнь во времена изобилия: почему мозг не справляется",
    "rubric": "lektorij",
