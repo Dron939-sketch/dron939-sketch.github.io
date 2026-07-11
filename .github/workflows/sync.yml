@@ -21,7 +21,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Зеркало GitVerse вторично: его сбой (напр. HTTP 413 на большом паке)
+      # не должен блокировать деплой на Amvera — потому continue-on-error.
+      # http.postBuffer вынуждает git слать пак одним запросом с Content-Length
+      # вместо chunked-encoding, который nginx GitVerse отклоняет как 413.
       - name: Push to GitVerse (mirror main)
+        continue-on-error: true
         env:
           GV_USER: ${{ secrets.GITVERSE_USER }}
           GV_PASS: ${{ secrets.GITVERSE_PASSWORD }}
@@ -31,10 +36,12 @@ jobs:
             echo "GITVERSE_PATH not set — skipping GitVerse push"
             exit 0
           fi
-          git push "https://${GV_USER}:${GV_PASS}@gitverse.ru/${GV_PATH}.git" \
+          git -c http.postBuffer=524288000 \
+            push "https://${GV_USER}:${GV_PASS}@gitverse.ru/${GV_PATH}.git" \
             "refs/heads/main:refs/heads/main" --force
 
       - name: Deploy to Amvera (push main to master)
+        if: always()
         env:
           AM_USER: ${{ secrets.AMVERA_USER }}
           AM_PASS: ${{ secrets.AMVERA_PASSWORD }}
@@ -44,5 +51,6 @@ jobs:
             echo "AMVERA_PATH not set — skipping Amvera deploy"
             exit 0
           fi
-          git push "https://${AM_USER}:${AM_PASS}@git.msk0.amvera.ru/${AM_PATH}" \
+          git -c http.postBuffer=524288000 \
+            push "https://${AM_USER}:${AM_PASS}@git.msk0.amvera.ru/${AM_PATH}" \
             "refs/heads/main:refs/heads/master" --force
