@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-etika-1-chto-takoe-etika",
+   "title": "Лекция 1. Что такое этика и зачем она",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-mif-1-chto-takoe-mif",
    "title": "Лекция 1. Что такое миф и зачем он человеку",
    "rubric": "lektorij",
