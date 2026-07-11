@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-mif-1-chto-takoe-mif",
+   "title": "Лекция 1. Что такое миф и зачем он человеку",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-relig-1-chto-takoe-religiya",
    "title": "Лекция 1. Что такое религия и зачем она человеку",
    "rubric": "lektorij",
