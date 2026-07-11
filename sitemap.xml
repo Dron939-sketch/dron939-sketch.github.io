@@ -1145,6 +1145,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/etika/</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-etika-1-chto-takoe-etika.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lekciya-mif-10-sovremennaya-mifologiya.html</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
