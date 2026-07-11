@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-evo-1-kamennyj-um",
+   "title": "Лекция 1. Что такое эволюционная психология: ваш каменный ум",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-ekon-1-chto-takoe-ekonomika",
    "title": "Лекция 1. Что такое экономика: выбор в мире нехватки",
    "rubric": "lektorij",
