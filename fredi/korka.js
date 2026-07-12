@@ -21,7 +21,7 @@
   function container() { return document.getElementById('screenContainer'); }
   function vibe(ms) { if (navigator.vibrate) { try { navigator.vibrate(ms); } catch (e) {} } }
   function ri(n) { return Math.floor(Math.random() * n); }
-  function pick(a) { return a[ri(a.length)]; }
+  function rpick(a) { return a[ri(a.length)]; }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = ri(i + 1); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
   async function aiGenerate(prompt, opts) {
@@ -42,6 +42,14 @@
            tell: 'уважает только силу; договориться можно, лишь став полезным его власти' },
     chv: { id: 'chv', name: 'Хитрый Проныра', em: '🦊', value: 'connection', valueName: 'связи и возможности', askT: 46,
            tell: 'ищет ходы и нужные знакомства, легко идёт на обмен «ты — мне, я — тебе»' }
+  };
+  // Услуга, которая ГРУБО не в валюту типа, — оскорбляет (роняет доверие).
+  var INSULT = { ub: 'power', tf: 'connection', sb: 'recognition', chv: 'recognition' };
+  var INSULT_MSG = {
+    ub: 'счёл грубую силу за хамство — тонкая натура оскорблена',
+    tf: 'отмахнулся: «мне твои знакомства ни к чему, ты делом помоги»',
+    sb: 'принял похвалу за слабость и заискивание — презрительно поморщился',
+    chv: 'раскусил пустую лесть насквозь — проныру так не купишь'
   };
   var FAVORS = [
     { id: 'recognition', name: 'Признание', em: '🎖️', desc: 'публично похвалить, поднять статус' },
@@ -102,12 +110,12 @@
     var npcs = CAST.map(function (c) {
       var arch = c.arch || archPool[ai++ % archPool.length];
       return { id: c.id, name: c.name, sector: c.sector, level: c.level, broker: !!c.broker,
-        arch: arch, trust: c.broker ? 18 : (26 + ri(16)), balance: 0, pledged: false, known: false, met: false };
+        arch: arch, trust: c.broker ? 18 : (26 + ri(16)), balance: 0, pledged: false, known: false, hunch: null, met: false };
     });
     return {
       sector: sector, level: 1, turn: 1, actsLeft: ACTS, phase: 'status', over: false, won: false,
       npcs: npcs, grind: 0, grindTotal: 0,
-      favorsGiven: 0, asksOk: 0, asksFailed: 0, matched: 0, mism: 0, reads: 0, archKnown: 0,
+      favorsGiven: 0, asksOk: 0, asksFailed: 0, matched: 0, mism: 0, insults: 0, reads: 0, archKnown: 0,
       msg: '', log: []
     };
   }
@@ -223,8 +231,8 @@
           Object.keys(ARCH).map(function (k) { var a = ARCH[k]; return '<div class="kk-li">' + a.em + ' <b>' + a.name + '</b> — ценит ' + a.valueName + '.</div>'; }).join('') +
           '<div class="kk-mini" style="margin-top:6px">Тип скрыт — его надо вычислить, «прощупав» человека.</div></div>' +
         '<div class="kk-card"><div class="kk-ch">Ход месяца — 2 действия</div>' +
-          '🔎 <b>Прощупать</b> — узнать тип человека (чем выше доверие, тем надёжнее ответ).<br>' +
-          '🎁 <b>Оказать услугу</b> — выбираешь вид услуги. Попал в его валюту — доверие взлетает, и он теперь «тебе должен». Промазал — эффект слабый.<br>' +
+          '🔎 <b>Прощупать</b> — узнать тип человека. Доверие высоко — узнаёшь <b>точно</b>; низко — получишь лишь <b>догадку</b>, которая может оказаться ложной. Прощупай ещё, чтобы знать наверняка.<br>' +
+          '🎁 <b>Оказать услугу</b> — выбираешь вид услуги. Попал в валюту — доверие взлетает, он «тебе должен». Мимо — доверие подрастёт чуть-чуть. А грубо <b>не в ту</b> валюту — <b>оскорбишь</b>, и доверие упадёт. Поэтому сперва читай человека, а не действуй по догадке.<br>' +
           '🤝 <b>Позвать за собой</b> (попросить поддержку) — согласится, если доверие высоко <b>и ты уже дал больше, чем взял</b>. Просишь, не дав, — «сядешь на шею» и всё испортишь.</div>' +
         '<div class="kk-card"><div class="kk-ch">Главные правила связей</div>• <b>Давай раньше, чем просишь</b> (3–4 услуги на 1 просьбу).<br>• <b>Говори на языке человека</b> — услуга должна попасть в его валюту.<br>• Покровители — крепкий орешек: доверие набирается тяжело, но их поддержка открывает верх.</div>' +
         '<div class="kk-card"><div class="kk-ch">Выслуга</div>Можно ползти вверх и «по выслуге» — просто пережидая месяцы. Но это <b>медленно</b> (3 месяца на ступень) и почти наверняка не успеешь. Связи быстрее силы и терпения.</div>' +
@@ -254,7 +262,9 @@
 
   function npcHTML(n, idx) {
     var arch = ARCH[n.arch];
-    var info = n.known ? arch.em + ' <b>' + arch.name + '</b> — ценит ' + arch.valueName : '<span style="color:#9ca3af">тип пока не разгадан</span>';
+    var info = n.known ? arch.em + ' <b>' + arch.name + '</b> — ценит ' + arch.valueName
+      : n.hunch ? '<span style="color:#fcd34d">🤔 предположительно ' + ARCH[n.hunch].em + ' ' + ARCH[n.hunch].name + ' — не точно</span>'
+      : '<span style="color:#9ca3af">тип пока не разгадан</span>';
     return '<div class="kk-npc' + (n.pledged ? ' pl' : '') + '">' +
       '<div class="nr"><span class="nm">' + SECTORS[n.sector].em + ' ' + esc(n.name) + (n.broker ? ' <span style="color:#f0b45b;font-size:.72rem">★ покровитель</span>' : '') + '</span>' +
         '<span style="color:#9ca3af;font-size:.76rem">ур. ' + n.level + '</span></div>' +
@@ -320,8 +330,13 @@
   function favorMenu(fi) {
     var box = document.getElementById('kkSub'); if (!box) return;
     var n = ST.npcs[fi];
+    var guide = n.known
+      ? 'Ты знаешь точно: ' + ARCH[n.arch].em + ' ценит «' + ARCH[n.arch].valueName + '». Попади в валюту.'
+      : n.hunch
+        ? '🤔 Только догадка (можешь ошибаться): похоже, ценит «' + ARCH[n.hunch].valueName + '». Промажешь мимо типа — рискуешь <b>оскорбить</b> и уронить доверие.'
+        : 'Тип не разгадан — угадываешь вслепую. Грубо не в ту валюту — <b>оскорбишь</b>. Лучше сперва прощупать.';
     var html = '<div class="kk-card"><div class="kk-ch">🎁 Услуга: ' + esc(n.name) + '</div>' +
-      '<div class="kk-mini">' + (n.known ? 'Ты знаешь: ' + ARCH[n.arch].em + ' ценит «' + ARCH[n.arch].valueName + '». Попади в валюту.' : 'Тип не разгадан — придётся угадывать, что ему по душе.') + '</div><div style="margin-top:6px">';
+      '<div class="kk-mini">' + guide + '</div><div style="margin-top:6px">';
     FAVORS.forEach(function (f) { html += '<span class="kk-chip" onclick="KORKA.favor(' + fi + ',\'' + f.id + '\')">' + f.em + ' ' + f.name + '</span>'; });
     html += '</div><button class="kk-secondary" style="margin-top:6px" onclick="document.getElementById(\'kkSub\').innerHTML=\'\'">Отмена</button></div>';
     box.innerHTML = html;
@@ -334,12 +349,15 @@
     var reliable = Math.random() < (0.4 + n.trust / 160);
     var out;
     if (!n.known && reliable) {
-      n.known = true; ST.archKnown++;
-      out = 'Пригляделся: «' + n.name + '» — ' + ARCH[n.arch].em + ' <b>' + ARCH[n.arch].name + '</b>. ' + ARCH[n.arch].tell + '. Значит, его валюта — «' + ARCH[n.arch].valueName + '».';
+      n.known = true; n.hunch = null; ST.archKnown++;
+      out = '✅ Пригляделся и понял точно: «' + n.name + '» — ' + ARCH[n.arch].em + ' <b>' + ARCH[n.arch].name + '</b>. ' + ARCH[n.arch].tell + '. Его валюта — «' + ARCH[n.arch].valueName + '».';
     } else if (n.known) {
       out = 'Ты и так знаешь: ' + ARCH[n.arch].em + ' ' + ARCH[n.arch].name + ' (ценит «' + ARCH[n.arch].valueName + '»). Доверие чуть подросло.';
     } else {
-      out = 'Толком не разобрал — держится ровно. Ходят слухи, что он из тех, кто ' + pick(['падок на лесть', 'считает каждую копейку', 'уважает только силу', 'обожает нужные знакомства']) + ', но это только слух. Подними доверие — прочитаешь вернее.';
+      // ненадёжное прочтение → ДОГАДКА, которая может оказаться ложной
+      var correct = Math.random() < 0.55;
+      n.hunch = correct ? n.arch : rpick(['ub', 'tf', 'sb', 'chv'].filter(function (a) { return a !== n.arch; }));
+      out = '🤔 Толком не разобрал. По первому впечатлению — вроде ' + ARCH[n.hunch].em + ' <b>' + ARCH[n.hunch].name + '</b> (ценит «' + ARCH[n.hunch].valueName + '»). Но это лишь догадка, можешь и ошибаться. Подними доверие и прощупай ещё, чтобы знать наверняка.';
     }
     n.trust = clamp(n.trust + 2, 0, 100); ST.reads++;
     spend(out); vibe(10);
@@ -349,13 +367,20 @@
     if (ST.actsLeft <= 0) return;
     var n = ST.npcs[fi], f = FAVORS.filter(function (x) { return x.id === ftype; })[0];
     var match = ftype === ARCH[n.arch].value;
-    n.trust = clamp(n.trust + (match ? 18 : 6), 0, 100);
-    n.balance += 1; ST.favorsGiven++;
-    if (match) ST.matched++; else ST.mism++;
-    var out = match
-      ? '🎯 «' + n.name + '» ' + f.em + ' — ты попал в самую его валюту! Он растроган, доверие взлетело, и теперь он твой должник.'
-      : f.em + ' Услуга принята, «' + n.name + '» благодарен, но это не совсем его валюта — доверие подросло скромно.';
-    spend(out); vibe(12);
+    var insult = ftype === INSULT[n.arch];
+    ST.favorsGiven++;
+    var out;
+    if (match) {
+      n.trust = clamp(n.trust + 18, 0, 100); n.balance += 1; ST.matched++;
+      out = '🎯 «' + n.name + '» ' + f.em + ' — ты попал в самую его валюту! Он растроган, доверие взлетело, и теперь он твой должник.';
+    } else if (insult) {
+      n.trust = clamp(n.trust - 12, 0, 100); ST.mism++; ST.insults++;
+      out = '😠 Осечка! ' + f.em + ' «' + n.name + '» ' + INSULT_MSG[n.arch] + '. Доверие упало — ты неверно прочёл человека.';
+    } else {
+      n.trust = clamp(n.trust + 3, 0, 100); n.balance += 1; ST.mism++;
+      out = f.em + ' Услуга принята, «' + n.name + '» вежливо благодарен, но это не его валюта — доверие подросло чуть-чуть.';
+    }
+    spend(out); vibe(insult ? 25 : 12);
   }
 
   function doAsk(fi) {
@@ -421,13 +446,14 @@
     var favN = ST.matched + ST.mism;
     var langPct = favN ? Math.round(ST.matched / favN * 100) : 0;
     var readN = ST.npcs.filter(function (n) { return n.known; }).length;
-    var style = ST.grindTotal >= 4 ? 'Служака (лез выслугой)' : (ST.matched >= ST.mism && ST.asksFailed <= 1 && langPct >= 50 ? 'Крантехник (мастер связей)' : 'Идёт напролом');
+    var style = ST.grindTotal >= 4 ? 'Служака (лез выслугой)' : (ST.matched >= ST.mism && ST.asksFailed <= 1 && ST.insults <= 1 && langPct >= 50 ? 'Крантехник (мастер связей)' : 'Идёт напролом');
     var topTitle = LADDERS[ST.sector][ST.level - 1];
 
     var stt = loadStats(); stt.plays = (stt.plays || 0) + 1; if (ST.won) stt.wins = (stt.wins || 0) + 1; if (ST.level > (stt.best || 0)) stt.best = ST.level; saveStats(stt);
 
     var localText = 'Стиль: «' + style + '». В услугах ты попадал в валюту человека в ' + langPct + '% случаев — ' +
       (langPct >= 60 ? 'ты говорил с людьми на их языке, и это окупалось. ' : 'часто дарил не то, что человеку нужно, — доверие росло вхолостую. ') +
+      (ST.insults >= 2 ? 'Ты ' + ST.insults + ' раз грубо промахнулся мимо типа и оскорбил человека не той услугой — самая дорогая ошибка: неверно прочёл, кто перед тобой. ' : (ST.insults === 1 ? 'Один раз ты оскорбил человека, промахнувшись мимо его валюты, — читай людей внимательнее. ' : 'Ни разу не оскорбил чужой валютой — людей ты чувствовал верно. ')) +
       (ST.asksFailed >= 2 ? 'Ты ' + ST.asksFailed + ' раз просил, не дав повода, — «садился на шею», и это било по доверию. ' : 'Просил ты аккуратно — сперва давал, потом звал. ') +
       (ST.grindTotal >= 4 ? 'Много времени ушло на глухую выслугу — а наверх тут поднимают не за терпение, а за связи. ' : '') +
       (ST.won ? 'И ты добрался до самого верха — «' + topTitle + '». Причём не силой и не выслугой, а тем, что нужные люди сами захотели тебя туда протолкнуть.' :
@@ -437,8 +463,8 @@
     try {
       var resp = await aiGenerate(
         'Ты — Фреди, тёплый, остроумный и точный психолог. Человек сыграл в игру-метафору «Короли и капуста»: карьера в вымышленной банановой республике, где наверх поднимают не выслугой, а поддержкой людей. У каждого своя «валюта» мотивации (признание / выгода / сила / связи), и надо читать тип человека, оказывать услуги в его валюте и просить поддержку, только сперва дав больше, чем берёшь.\n' +
-        'Итоги: ' + (ST.won ? 'добрался до вершины' : 'застрял на «' + topTitle + '»') + ', уровень ' + ST.level + ' из 6. Стиль: ' + style + '. Попадание в валюту человека: ' + langPct + '% (услуг: ' + favN + '). Разгадано типов людей: ' + readN + '. Просьб «на шею» (просил, не дав): ' + ST.asksFailed + '. Месяцев глухой выслуги: ' + ST.grindTotal + '.\n\n' +
-        'Дай короткий разбор по-русски, на «ты», без морализаторства (игра про социальную ловкость — это нормально), 4–5 фраз: 1) назови его стиль (мастер связей / служака / напролом) и что это даёт в реальной жизни; 2) умеет ли он говорить с людьми на их языке (валюта мотивации) — с опорой на цифру попадания; 3) держит ли он ритм «дай раньше, чем попросишь», или садится на шею; 4) один практичный вывод про нетворкинг и социальный капитал в реальной жизни. Живо, с лёгкой иронией.',
+        'Итоги: ' + (ST.won ? 'добрался до вершины' : 'застрял на «' + topTitle + '»') + ', уровень ' + ST.level + ' из 6. Стиль: ' + style + '. Попадание в валюту человека: ' + langPct + '% (услуг: ' + favN + '). Разгадано типов людей: ' + readN + '. Раз оскорбил человека услугой не в ту валюту (неверно прочёл тип): ' + ST.insults + '. Просьб «на шею» (просил, не дав): ' + ST.asksFailed + '. Месяцев глухой выслуги: ' + ST.grindTotal + '.\n\n' +
+        'Дай короткий разбор по-русски, на «ты», без морализаторства (игра про социальную ловкость — это нормально), 4–5 фраз: 1) назови его стиль (мастер связей / служака / напролом) и что это даёт в реальной жизни; 2) насколько точно он ЧИТАЛ людей — с опорой на цифры попадания в валюту и числа оскорблений (промахов мимо типа); 3) держит ли он ритм «дай раньше, чем попросишь», или садится на шею; 4) один практичный вывод про нетворкинг и социальный капитал в реальной жизни. Живо, с лёгкой иронией.',
         { max_tokens: 470 });
       var t = (resp && resp.success && resp.content) ? String(resp.content).trim() : '';
       if (t) { verdict = t; ai = true; }
@@ -448,7 +474,7 @@
     var html = '<div class="kk-wrap">' +
       '<div class="kk-big">' + (ST.won ? '👑 Ты на вершине Анчурии!' : '🪑 Карьера застряла') + '</div>' +
       '<div class="kk-card" style="text-align:center">Итог: <b>' + esc(topTitle) + '</b> (' + SECTORS[ST.sector].em + ' уровень ' + ST.level + '/6)</div>' +
-      '<div class="kk-card" style="text-align:center">Стиль: <b>' + style + '</b> · язык людей: <b>' + langPct + '%</b> · разгадано типов: <b>' + readN + '/' + ST.npcs.length + '</b> · «на шею»: <b>' + ST.asksFailed + '</b></div>' +
+      '<div class="kk-card" style="text-align:center">Стиль: <b>' + style + '</b> · язык людей: <b>' + langPct + '%</b> · разгадано типов: <b>' + readN + '/' + ST.npcs.length + '</b> · оскорбил не в валюту: <b>' + ST.insults + '</b> · «на шею»: <b>' + ST.asksFailed + '</b></div>' +
       '<div class="kk-verdict">💬 ' + esc(verdict).replace(/\n/g, '<br>') + '</div>' +
       '<div class="kk-card" style="font-size:.86rem;color:#9ca3af">💡 Перенос в жизнь: нетворкинг — не про «использовать людей», а про то, чтобы <b>понимать, чем каждый живёт</b> (признание, выгода, безопасность, возможности), помогать в его валюте и <b>давать раньше, чем просишь</b>. Социальный капитал копится медленно и тратится быстро — береги доверие.</div>' +
       '<div class="kk-row"><button class="kk-primary" style="margin:0" onclick="KORKA.begin(\'' + ST.sector + '\')">🔁 Ещё карьера</button><button class="kk-secondary" onclick="KORKA.home()">Сменить касту</button></div>' +
