@@ -68,9 +68,25 @@
     { t: 'Ясность цели: +2 КЦ.', kc: 2 }
   ];
 
+  // Ранги достигатора — мета-прогрессия между партиями (только косметика/статус, баланс не трогает).
+  var RANKS = [
+    { xp: 0,   name: 'Пешеход',              em: '🚶' },
+    { xp: 60,  name: 'Ловец ветра',          em: '🍃' },
+    { xp: 150, name: 'Сёрфер',               em: '🏄' },
+    { xp: 320, name: 'Мастер потока',        em: '🌊' },
+    { xp: 550, name: 'Гуру достигаторства',  em: '🧘' }
+  ];
+  function rankFor(xp) {
+    xp = xp || 0;
+    var cur = RANKS[0], idx = 0;
+    for (var i = 0; i < RANKS.length; i++) { if (xp >= RANKS[i].xp) { cur = RANKS[i]; idx = i; } }
+    var next = RANKS[idx + 1] || null;
+    return { cur: cur, next: next, idx: idx, need: next ? next.xp - xp : 0, span: next ? next.xp - RANKS[idx].xp : 1, into: xp - RANKS[idx].xp };
+  }
+
   var ST = null;
 
-  function loadStats() { try { var s = JSON.parse(localStorage.getItem('dg_stats') || 'null'); if (s && typeof s === 'object') return s; } catch (e) {} return { plays: 0, wins: 0, best: 0 }; }
+  function loadStats() { try { var s = JSON.parse(localStorage.getItem('dg_stats') || 'null'); if (s && typeof s === 'object') { if (s.xp == null) s.xp = 0; return s; } } catch (e) {} return { plays: 0, wins: 0, best: 0, xp: 0 }; }
   function saveStats(s) { try { localStorage.setItem('dg_stats', JSON.stringify(s)); } catch (e) {} }
 
   // ---------- сферы клетки ----------
@@ -91,14 +107,21 @@
     var W = 7, H = 7;
     var cells = [];
     for (var y = 0; y < H; y++) { var row = []; for (var x = 0; x < W; x++) row.push({ sph: spheresAt(W, H, x, y), flow: null, goal: null, dj: false }); cells.push(row); }
-    // потоки: линии по dir/str
+    // потоки: ветвящиеся русла (1–2 сегмента с поворотом ±45°) + редкие сильные течения
     for (var f = 0; f < level.flows; f++) {
-      var dir = ri(8), str = 1 + ri(3), len = 3 + ri(3);
-      var sx = ri(W), sy = ri(H);
-      for (var k = 0; k < len; k++) {
-        var cx = sx + DX[dir] * k, cy = sy + DY[dir] * k;
-        if (cx < 0 || cx >= W || cy < 0 || cy >= H) break;
-        cells[cy][cx].flow = { dir: dir, str: str };
+      // сила: обычно 1–2, ~1 из 4 — сильное течение (3), иногда бурное (4)
+      var str = Math.random() < 0.25 ? (Math.random() < 0.35 ? 4 : 3) : (1 + ri(2));
+      var dir = ri(8);
+      var cx = ri(W), cy = ri(H);
+      var segs = Math.random() < 0.55 ? 2 : 1;                 // больше половины русел — с изгибом
+      for (var sgi = 0; sgi < segs; sgi++) {
+        var slen = 2 + ri(3);
+        for (var k = 0; k < slen; k++) {
+          if (cx < 0 || cx >= W || cy < 0 || cy >= H) break;
+          cells[cy][cx].flow = { dir: dir, str: str };         // последний сегмент «побеждает» на общей клетке — русло читается как поворот
+          cx += DX[dir]; cy += DY[dir];
+        }
+        dir = (dir + (Math.random() < 0.5 ? 1 : 7)) % 8;       // поворот русла на ±45°
       }
     }
     // цели: свои (gold) + чужие (grey)
@@ -127,8 +150,35 @@
       freeNext: false,
       // трекеры для разбора
       flowKc: 0, pushKc: 0, againstKc: 0, againstN: 0, passGoals: 0, landGoals: 0, ridesN: 0, pushN: 0, lowKc: lv.kc, sphSeen: {},
+      moments: [],                 // конкретные моменты пути для разбора Фреди
       msg: '', log: []
     };
+  }
+
+  function turnNo() { return ST.maxActs - ST.actsLeft + 1; }
+  function noteMoment(kind, data) { data = data || {}; data.kind = kind; data.turn = turnNo(); ST.moments.push(data); }
+  // самый сильный поток среди соседних клеток (str) — чтобы заметить упущенную возможность
+  function strongestFlowNear() {
+    var best = 0;
+    var here = ST.cells[ST.py][ST.px]; if (here.flow) best = here.flow.str;
+    for (var d = 0; d < 8; d++) { var nx = ST.px + DX[d], ny = ST.py + DY[d]; if (nx < 0 || nx >= ST.W || ny < 0 || ny >= ST.H) continue; var fc = ST.cells[ny][nx].flow; if (fc && fc.str > best) best = fc.str; }
+    return best;
+  }
+  // человекочитаемые «ключевые моменты» пути — по 1 позитивному и 1 поучительному + добор до 3
+  function momentPhrases() {
+    var P = {
+      lob: function (m) { return 'ход ' + m.turn + ': пошёл в лоб против потока силой ' + m.str + ' — дорогая борьба с течением'; },
+      ignoredStrong: function (m) { return 'ход ' + m.turn + ': под ногами бурлил поток силой ' + m.str + ', а ты двинул натужно мимо'; },
+      bigride: function (m) { return 'ход ' + m.turn + ': поймал мощное течение силой ' + m.str + ' — вот это по-достигаторски'; },
+      combo: function (m) { return 'ход ' + m.turn + ': одним потоком снял ' + m.n + ' цели разом'; }
+    };
+    var pos = ST.moments.filter(function (m) { return m.kind === 'bigride' || m.kind === 'combo'; });
+    var neg = ST.moments.filter(function (m) { return m.kind === 'lob' || m.kind === 'ignoredStrong'; });
+    var out = [];
+    if (pos.length) out.push(P[pos[pos.length - 1].kind](pos[pos.length - 1]));
+    if (neg.length) out.push(P[neg[0].kind](neg[0]));
+    ST.moments.forEach(function (m) { if (out.length < 3) { var s = P[m.kind](m); if (out.indexOf(s) < 0) out.push(s); } });
+    return out.slice(0, 3);
   }
 
   // ---------- рендер ----------
@@ -148,7 +198,9 @@
       '.dg-board{display:grid;gap:2px;margin:0 0 12px;touch-action:manipulation}',
       '.dg-cell{position:relative;aspect-ratio:1;border-radius:6px;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:clamp(13px,3.6vw,20px);background:rgba(255,255,255,.02);overflow:hidden}',
       '.dg-cell .fl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#9fb4d8;font-weight:700;pointer-events:none}',
-      '.dg-cell .fl.s1{opacity:.4}.dg-cell .fl.s2{opacity:.62}.dg-cell .fl.s3{opacity:.9}',
+      '.dg-cell .fl.s1{opacity:.4}.dg-cell .fl.s2{opacity:.62}',
+      '.dg-cell .fl.s3{opacity:1;color:#38bdf8;text-shadow:0 0 6px rgba(56,189,248,.7)}',
+      '.dg-cell .fl.s4{opacity:1;color:#22d3ee;text-shadow:0 0 9px rgba(34,211,238,.9);font-size:1.15em}',
       '.dg-cell .ic{position:relative;z-index:2}',
       '.dg-cell .badge{position:absolute;top:1px;right:2px;z-index:3;font-size:.6rem;font-weight:800;padding:0 3px;border-radius:6px;line-height:1.3}',
       '.dg-cell.legal{cursor:pointer;box-shadow:inset 0 0 0 2px rgba(124,168,255,.6)}',
@@ -172,6 +224,12 @@
       '.dg-li{margin:6px 0;line-height:1.5;font-size:.92rem}',
       '.dg-row{display:flex;gap:9px}.dg-row>*{flex:1;margin-bottom:0}',
       '.dg-warn{color:#fca5a5}.dg-good{color:#a7f3d0}.dg-neu{color:#fcd34d}',
+      '.dg-rank{border:1px solid rgba(58,160,208,.35);background:rgba(58,160,208,.07);border-radius:13px;padding:11px 14px;margin:0 0 11px}',
+      '.dg-rank .rt{display:flex;justify-content:space-between;align-items:center;font-size:.92rem;font-weight:700;margin-bottom:7px}',
+      '.dg-rank .rt .nx{font-weight:500;color:#9ca3af;font-size:.8rem}',
+      '.dg-xpbar{height:8px;border-radius:5px;background:rgba(255,255,255,.09);overflow:hidden}',
+      '.dg-xpbar>i{display:block;height:100%;background:linear-gradient(90deg,#3aa0d0,#22d3ee);transition:width .5s}',
+      '.dg-moment{border-left:3px solid rgba(58,160,208,.6);background:rgba(255,255,255,.03);border-radius:0 8px 8px 0;padding:7px 11px;margin:0 0 7px;font-size:.88rem;line-height:1.45}',
       '[data-theme="light"] .dg-wrap{color:#1f2430}',
       '[data-theme="light"] .dg-lead{color:#4b5566}',
       '[data-theme="light"] .dg-card{background:#fff;border-color:rgba(0,0,0,.08)}',
@@ -180,6 +238,14 @@
       '@media(max-width:560px){.dg-wrap{padding:12px 8px 100px}}'
     ].join('\n');
     document.head.appendChild(s);
+  }
+
+  function rankBarHTML(xp) {
+    var r = rankFor(xp);
+    var pct = r.next ? Math.round(r.into / r.span * 100) : 100;
+    return '<div class="dg-rank"><div class="rt"><span>' + r.cur.em + ' Ранг: ' + esc(r.cur.name) + '</span>' +
+      (r.next ? '<span class="nx">до «' + esc(r.next.name) + '» — ' + r.need + ' опыта</span>' : '<span class="nx">высший ранг ✦</span>') +
+      '</div><div class="dg-xpbar"><i style="width:' + pct + '%"></i></div></div>';
   }
 
   // ---------- главный экран ----------
@@ -193,6 +259,7 @@
         '<button class="dg-ghost" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button>' +
         '<div class="dg-h1">🧭 Достигатор: поймай поток</div>' +
         '<div class="dg-lead">Доска — это жизнь. По ней текут <b>потоки</b> — стрелки-возможности. Твоя энергия — <b>КЦ («к цели»)</b>: её тратишь, когда прёшь <b>натужно</b> (−1 за клетку), и <b>зарабатываешь</b>, когда ловишь поток (+сила). Идти в лоб против течения — разорительно. Кончилось КЦ вне потока — выгорел.<br><br>Смысл достигаторства: не ломиться к цели силой воли, а <b>ловить momentum</b> и собирать цели, которые попались по пути. В финале Фреди разберёт, кем ты играл — сёрфером возможностей или пахарем.</div>' +
+        rankBarHTML(st.xp) +
         (st.plays ? '<div class="dg-card" style="text-align:center">Партий: <b>' + st.plays + '</b> · доведено до цели: <b>' + (st.wins || 0) + '</b> · рекорд собранных целей: <b>' + (st.best || 0) + '</b></div>' : '') +
         '<button class="dg-secondary" onclick="DG.rules()">📖 Как играть: потоки, КЦ, сферы, цели</button>' +
         '<div class="dg-ch" style="margin:8px 0 9px">Уровень достигатора:</div>' +
@@ -211,7 +278,7 @@
         '<div class="dg-h1" style="font-size:1.22rem">Как играть</div>' +
         '<div class="dg-card"><div class="dg-ch">Цель</div>Собрать все свои <b>🎯 золотые цели</b>, пока не кончились действия и КЦ. Цель засчитывается, даже если ты просто <b>прошёл сквозь неё</b> — не только при остановке. Свои цели дают +5 КЦ, чужие ⚪ — +2 КЦ (тоже бери попутно).</div>' +
         '<div class="dg-card"><div class="dg-ch">КЦ — твоя энергия</div>Каждое действие тратит или приносит КЦ.<br>• <b>Натужный ход</b> (по пустому полю): −1 КЦ за клетку, 1 клетка за действие.<br>• <b>Оседлать поток</b>: несёт на «силу потока» клеток за одно действие и <b>даёт +силу КЦ</b>. Так собираешь энергию и покрываешь расстояние.<br>• <b>В лоб против потока</b>: −сила КЦ за клетку. Дорого — не воюй с течением.<br>Кончились КЦ вне потока — двигаться нечем, игра окончена.</div>' +
-        '<div class="dg-card"><div class="dg-ch">Как ходишь</div>Тапни соседнюю клетку — пойдёшь туда натужно (на клетке видно цену). Если стоишь на потоке — жми <b>«Оседлать поток →»</b>, и тебя пронесёт по стрелке (через все цели и ромбики на пути).</div>' +
+        '<div class="dg-card"><div class="dg-ch">Как ходишь</div>Тапни соседнюю клетку — пойдёшь туда натужно (на клетке видно цену). Если стоишь на потоке — жми <b>«Оседлать поток →»</b>, и тебя пронесёт по стрелке (через все цели и ромбики на пути). Русла бывают <b>с изгибом</b> — сойдя с одного, можно поймать следующий. Ярко-голубые стрелки — <b>сильные течения</b> (сила 3–4): несут далеко и дают много энергии, ради них стоит сделать крюк.</div>' +
         '<div class="dg-card"><div class="dg-ch">🔶 Дай жизни!</div>Прошёл через ромбик — тянешь карточку случайного события (плюс или минус). Применяется сразу.</div>' +
         '<div class="dg-card"><div class="dg-ch">Четыре сферы</div>' +
           Object.keys(SPH).map(function (k) { var s = SPH[k]; return '<div class="dg-li">' + s.em + ' <b>' + s.name + '</b> — ' + s.bonus + '.</div>'; }).join('') +
@@ -370,6 +437,10 @@
     if (hasSph('byt') && !lg.lob) cost = 0;         // Быт: инерция бесплатна
     if (ST.freeNext) { cost = 0; ST.freeNext = false; }
     if (cost > ST.kc) { ST.msg = 'Не хватает КЦ на этот ход (нужно ' + cost + '). Ищи поток — он даёт энергию.'; return render(); }
+    // заметки для разбора: борьба с течением / упущенный сильный поток под ногами
+    var hereFlow = ST.cells[ST.py][ST.px].flow;
+    if (lg.lob) noteMoment('lob', { str: cost });
+    else if (hereFlow && hereFlow.str >= 3) noteMoment('ignoredStrong', { str: hereFlow.str });
     // Дела: 2 клетки по цене 1 (если вторая в поле и не в лоб)
     var steps = [[x, y]];
     if (hasSph('dela') && !lg.lob) { var x2 = x + DX[lg.dir], y2 = y + DY[lg.dir]; if (x2 >= 0 && x2 < ST.W && y2 >= 0 && y2 < ST.H) steps.push([x2, y2]); }
@@ -391,6 +462,8 @@
     var goalsHit = 0;
     rp.path.forEach(function (p, i) { ST.px = p[0]; ST.py = p[1]; if (triggerCell(p[0], p[1], i < rp.path.length - 1)) goalsHit++; });
     markSphere();
+    if (rp.str >= 3) noteMoment('bigride', { str: rp.str });
+    if (goalsHit >= 2) noteMoment('combo', { n: goalsHit });
     ST.msg = '🌊 Поймал поток ' + ARR[rp.dir] + ': +' + rp.str + ' КЦ, ' + rp.path.length + ' клеток' + (goalsHit ? ', собрал ' + goalsHit + ' цел.' : '') + '.';
     vibe([15, 20, 15]);
     afterAction(true);
@@ -477,12 +550,22 @@
     var flowShare = (ST.flowKc + ST.pushKc + ST.againstKc) > 0 ? Math.round(ST.flowKc / (ST.flowKc + ST.pushKc + ST.againstKc) * 100) : 0;
     var style = flowShare >= 60 ? 'Сёрфер потоков' : flowShare >= 35 ? 'Гибкий прагматик' : 'Пахарь силой воли';
     var oppShare = (ST.passGoals + ST.landGoals) > 0 ? Math.round(ST.passGoals / (ST.passGoals + ST.landGoals) * 100) : 0;
+    var phrases = momentPhrases();
+    var momText = phrases.length ? phrases.join('; ') : '';
 
-    var stt = loadStats(); stt.plays = (stt.plays || 0) + 1; if (ST.won) stt.wins = (stt.wins || 0) + 1; if (ST.goalsGot > (stt.best || 0)) stt.best = ST.goalsGot; saveStats(stt);
+    // мета-прогрессия: опыт и ранг
+    var bigrides = ST.moments.filter(function (m) { return m.kind === 'bigride'; }).length;
+    var xpGain = ST.goalsGot * 10 + (ST.won ? 40 : 0) + Math.round(flowShare / 5) + bigrides * 3;
+    var stt = loadStats();
+    stt.plays = (stt.plays || 0) + 1; if (ST.won) stt.wins = (stt.wins || 0) + 1; if (ST.goalsGot > (stt.best || 0)) stt.best = ST.goalsGot;
+    var xpBefore = stt.xp || 0; stt.xp = xpBefore + xpGain;
+    var rankUp = rankFor(xpBefore).idx !== rankFor(stt.xp).idx;
+    saveStats(stt);
 
     var localText = 'Стиль: «' + style + '». Из энергии на движение ' + flowShare + '% ты добыл на потоках, а не выгрыз натужно. ' +
       (ST.againstN ? 'Против течения ты пошёл ' + ST.againstN + ' раз — дорогое удовольствие. ' : 'Против течения в лоб почти не лез — хорошо. ') +
       (oppShare >= 50 ? 'Половину и больше целей ты снял мимоходом, по пути — это и есть достигаторский опортунизм. ' : 'Цели ты чаще брал прицельно, останавливаясь на них — попробуй чаще собирать их транзитом, по вектору потока. ') +
+      (phrases.length ? 'Показательный момент — ' + phrases[0] + '. ' : '') +
       (ST.won ? 'И ты дошёл: собрал все свои цели. Причём, скорее всего, не тем путём, что задумывал вначале — а тем, куда понесли потоки.' :
                 (ST.stuck ? 'Ты выгорел — КЦ кончились там, где не было потока. Урок: не трать энергию на борьбу с течением, держи резерв и лови поток раньше.' : 'Действия кончились раньше целей. Часто дело в том, что слишком много ходов ушло на натужное продавливание вместо поиска попутного потока.'));
 
@@ -490,9 +573,10 @@
     try {
       var resp = await aiGenerate(
         'Ты — Фреди, тёплый, остроумный и точный психолог. Человек сыграл в игру-метафору «Достигатор: поймай поток»: доска — жизнь, по ней текут потоки-возможности, КЦ — энергия, которую тратишь на движение силой воли и зарабатываешь, ловя потоки. Идея — достигаторство: не переть к цели напролом, а ловить momentum и собирать цели попутно.\n' +
-        'Итоги: ' + (ST.won ? 'дошёл до всех целей' : 'не дошёл') + '. Собрано целей: ' + ST.goalsGot + ' из ' + ST.goalsNeed + '. Стиль: ' + style + ' (' + flowShare + '% энергии добыто на потоках). Против течения в лоб: ' + ST.againstN + ' раз. Доля целей, взятых мимоходом (транзитом): ' + oppShare + '%. ' + (ST.stuck ? 'Выгорел — кончилась энергия вне потока. ' : '') + '\n\n' +
-        'Дай короткий разбор по-русски, на «ты», без морализаторства, 4–5 фраз: 1) назови его стиль достижения целей (ловит поток vs. прёт силой воли) и что это даёт/стоит в реальной жизни; 2) про энергию — умеет ли беречь ресурс и ловить попутный ветер; 3) про опортунизм — собирает ли возможности по пути или зациклен на одной цели; 4) один практичный вывод про то, как в жизни ловить потоки вместо выгорания. Живо, с лёгкой иронией, без канцелярита.',
-        { max_tokens: 460 });
+        'Итоги: ' + (ST.won ? 'дошёл до всех целей' : 'не дошёл') + '. Собрано целей: ' + ST.goalsGot + ' из ' + ST.goalsNeed + '. Стиль: ' + style + ' (' + flowShare + '% энергии добыто на потоках). Против течения в лоб: ' + ST.againstN + ' раз. Доля целей, взятых мимоходом (транзитом): ' + oppShare + '%. ' + (ST.stuck ? 'Выгорел — кончилась энергия вне потока. ' : '') + '\n' +
+        (momText ? 'Конкретные моменты его партии (обязательно сошлись хотя бы на один из них дословно, с номером хода): ' + momText + '.\n' : '') + '\n' +
+        'Дай короткий разбор по-русски, на «ты», без морализаторства, 4–5 фраз: 1) назови его стиль достижения целей (ловит поток vs. прёт силой воли) и что это даёт/стоит в реальной жизни; 2) сошлись на КОНКРЕТНЫЙ момент выше (с номером хода) как иллюстрацию; 3) про опортунизм — собирает ли возможности по пути или зациклен на одной цели; 4) один практичный вывод про то, как в жизни ловить потоки вместо выгорания. Живо, с лёгкой иронией, без канцелярита.',
+        { max_tokens: 480 });
       var t = (resp && resp.success && resp.content) ? String(resp.content).trim() : '';
       if (t) { verdict = t; ai = true; }
     } catch (e) {}
@@ -502,7 +586,10 @@
       '<div class="dg-big">' + (ST.won ? '🏆 Ты дошёл до цели!' : ST.stuck ? '🔥 Выгорел в пути' : '⏳ Время вышло') + '</div>' +
       '<div class="dg-card" style="text-align:center">Собрано целей: <b>' + ST.goalsGot + ' / ' + ST.goalsNeed + '</b> · осталось КЦ: <b>' + Math.max(0, ST.kc) + '</b></div>' +
       '<div class="dg-card" style="text-align:center">Стиль: <b>' + style + '</b> · энергии с потоков: <b>' + flowShare + '%</b> · целей мимоходом: <b>' + oppShare + '%</b> · в лоб против течения: <b>' + ST.againstN + '</b></div>' +
+      (phrases.length ? '<div class="dg-card"><div class="dg-ch">🔎 Ключевые моменты пути</div>' + phrases.map(function (p) { return '<div class="dg-moment">' + esc(p) + '</div>'; }).join('') + '</div>' : '') +
       '<div class="dg-verdict">💬 ' + esc(verdict).replace(/\n/g, '<br>') + '</div>' +
+      '<div class="dg-card" style="text-align:center">Опыт достигатора: <b>+' + xpGain + '</b>' + (rankUp ? ' <span class="dg-good">🎉 новый ранг!</span>' : '') + '</div>' +
+      rankBarHTML(stt.xp) +
       '<div class="dg-card" style="font-size:.86rem;color:#9ca3af">💡 Перенос в жизнь: достигаторство — не про то, чтобы задавить цель усилием, а про то, чтобы <b>замечать потоки</b> (обстоятельства, тренды, чужую энергию), вставать на них и собирать цели по пути. Сила воли — расходник; попутный ветер — бесплатен.</div>' +
       '<div class="dg-row"><button class="dg-primary" style="margin:0" onclick="DG.begin(' + ST.lv.id + ')">🔁 Ещё путь</button><button class="dg-secondary" onclick="DG.home()">Сменить уровень</button></div>' +
       '</div>';
