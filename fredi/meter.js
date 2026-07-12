@@ -105,10 +105,12 @@
         var rem = check.remaining_minutes;
         if (rem == null) return;
 
-        // Critical: осталось < 2 мин — последний шанс предложить Premium.
+        // Critical: осталось ≤ 2 мин — показываем полноценную карточку
+        // апселла (а не тост), чтобы предложение Premium вообще появилось
+        // в достижимой точке ДО блокировки. Раз за 2-мин окно.
         if (rem <= 2 && !_criticalShown) {
             _criticalShown = true;
-            _toast('⏱ Осталось ' + Math.max(1, Math.round(rem)) + ' мин на сегодня. С Premium — без лимитов.', 'warn');
+            showUpsellCard(check);
             _trackWarning('critical', rem);
             setTimeout(function() { _criticalShown = false; }, 120000);
             return;
@@ -283,6 +285,50 @@
                 }
             }, 1000);
         }
+    }
+
+    // Мягкий апселл ДО блокировки. Показывается один раз за 2-мин окно
+    // на critical-уровне (≤2 мин остатка). В отличие от soft-тоста —
+    // это полноценная карточка с достижимой кнопкой Premium, поэтому
+    // предложение вообще появляется до исчерпания лимита (по аналитике
+    // paywall на самом блоке видели ~0 юзеров: сессия короче лимита).
+    // Не блокирует ввод — юзер может закрыть и продолжить оставшиеся минуты.
+    function showUpsellCard(check) {
+        _injectMeterStyles();
+        if (document.getElementById('meterUpsellOverlay')) return;
+        var rem = (check && check.remaining_minutes != null) ? Math.max(1, Math.round(check.remaining_minutes)) : 2;
+        _track('meter_upsell_shown', { remaining_minutes: rem });
+
+        var overlay = document.createElement('div');
+        overlay.className = 'meter-overlay';
+        overlay.id = 'meterUpsellOverlay';
+        overlay.innerHTML =
+            '<div class="meter-modal">' +
+                '<div class="meter-emoji">⏱️</div>' +
+                '<div class="meter-title">Осталось ~' + rem + ' мин на сегодня</div>' +
+                '<div class="meter-text">Дальше — дневной лимит бесплатного режима. С Premium Фреди не устаёт — общайтесь сколько нужно, голосом и текстом.</div>' +
+                PREMIUM_FEATURES +
+                '<button class="meter-btn meter-btn-primary" id="meterUpsellSub">✨ Premium — 690 ₽/мес, без лимитов</button>' +
+                '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
+            '</div>';
+        document.body.appendChild(overlay);
+
+        document.getElementById('meterUpsellClose').onclick = function() {
+            _track('meter_upsell_dismissed', { reason: 'later' });
+            overlay.remove();
+        };
+        overlay.onclick = function(e) {
+            if (e.target === overlay) { _track('meter_upsell_dismissed', { reason: 'outside' }); overlay.remove(); }
+        };
+        document.getElementById('meterUpsellSub').onclick = function() {
+            _track('meter_subscribe_clicked', { source: 'upsell_critical' });
+            overlay.remove();
+            if (typeof window.openCheckout === 'function') {
+                window.openCheckout('upsell');
+            } else if (typeof showSettingsScreen === 'function') {
+                showSettingsScreen();
+            }
+        };
     }
 
     function _patchApiCall() {
@@ -504,6 +550,6 @@
         _applyPatches();
     }
 
-    window.FrediMeter = { checkCanSend: checkCanSend, recordUsage: recordUsage, showFatigueModal: showFatigueModal };
+    window.FrediMeter = { checkCanSend: checkCanSend, recordUsage: recordUsage, showFatigueModal: showFatigueModal, showUpsellCard: showUpsellCard };
     console.log('meter.js loaded');
 })();
