@@ -2830,6 +2830,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sovet: { fn: 'showSovetGame', src: 'sovet.js', chat: 'kontur' }, // «Земля в опасности» (интрига/переговоры)
             dostigator: { fn: 'showDostigatorGame', src: 'dostigator.js', chat: 'kontur' }, // «Достигатор: поймай поток»
             korka: { fn: 'showKorkaGame', src: 'korka.js', chat: 'kontur' }, // «Короли и капуста» (нетворкинг/чтение людей)
+            mandat: { fn: 'showMandatGame', src: 'mandat.js', chat: 'kontur' }, // «Мандат: цена кресла» (психология власти и компромисса)
             delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' }, // «Своё дело» (бизнес-симулятор)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
