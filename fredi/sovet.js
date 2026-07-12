@@ -78,33 +78,44 @@
     chameleon:{id: 'chameleon',name: 'Хамелеон',keep: 0.45, drift: 1.0, greed: 0.7, trustNeed: 0.2, tell: 'липнет к восходящему тренду, бросает слабых' }
   };
 
+  // Реплики фракций по архетипу и ситуации — чтобы у характеров был голос.
+  var VOICE = {
+    loyal:    { accept: 'Договорились. Моё слово — кремень.', refuse: 'Пока не готовы связываться, но зла не держим.', bandwagon: 'Раз уж все туда — и мы туда, так честнее.', betray: 'Мы своих не бросаем… обычно.', sabotage: 'К этому пути у нас, простите, принципиальные возражения.', hit: 'Ты будто прочитал наши мысли. Это… кстати.' },
+    shark:    { accept: 'По рукам. Посмотрим, как оно пойдёт.', refuse: 'Невыгодно. Ничего личного.', bandwagon: 'Мы всегда на стороне победителя.', betray: 'Извини — подвернулось кое-что послаще.', sabotage: 'Этот путь мы утопим с удовольствием.', hit: 'Хм. А ты неплохо копаешь. Идёт.' },
+    zealot:   { accept: 'Ладно, но мой путь — прежде всего.', refuse: 'Нам не по пути. У нас своя дорога.', bandwagon: 'Так и быть, разок поддержим общее.', betray: 'Наш путь важнее любых обещаний.', sabotage: 'Всё, что не наш путь, — тупик.', hit: 'Ты угадал, чего мы хотим. Редкость.' },
+    trader:   { accept: 'О, взаимовыгодно — обожаю! По рукам.', refuse: 'Сейчас невыгодно, но давай ещё поторгуемся.', bandwagon: 'Где выгода — там и мы.', betray: 'Появилось предложение получше, извини.', sabotage: 'Этот размен нам невыгоден, увы.', hit: 'Вот это оффер! От такого не отказываются.' },
+    paranoid: { accept: 'Хорошо… но я слежу за тобой.', refuse: 'Слишком мало доверия. Не сейчас.', bandwagon: 'Раз безопаснее с большинством — примкнём.', betray: 'Я так и знал, что нельзя доверять. Ушёл.', sabotage: 'Этот путь мне не нравится. Против.', hit: 'Ты копнул то, о чём я молчал. Тревожно… но по рукам.' },
+    chameleon:{ accept: 'Отлично, пока это в тренде — я с тобой.', refuse: 'Ветер дует не туда. Мимо.', bandwagon: 'Тренд качнулся — я уже там.', betray: 'Дрейф поменялся, и я вместе с ним.', sabotage: 'Этот путь на спаде — я против.', hit: 'Ты попал в самую жилку. Держи руку.' }
+  };
+  function voice(f, sit) { var v = f.arch && VOICE[f.arch.id]; return v && v[sit] ? '«' + v[sit] + '»' : ''; }
+
   var ST = null;
 
   function loadStats() { try { var s = JSON.parse(localStorage.getItem('sovet_stats') || 'null'); if (s && typeof s === 'object') return s; } catch (e) {} return { plays: 0, wins: 0, bestVP: 0 }; }
   function saveStats(s) { try { localStorage.setItem('sovet_stats', JSON.stringify(s)); } catch (e) {} }
 
   // ---------- генерация тайных побочных целей ----------
-  function makeSideGoals(ownPath, n) {
+  function makeSideGoals(ownPath, n, isPlayer) {
     var others = [0, 1, 2, 3, 4, 5].filter(function (x) { return x !== ownPath; });
     var pool = [];
-    // продвинуть чужой путь до этапа
-    var adv = pick(others), advN = 5 + ri(3);
-    pool.push({ kind: 'adv', path: adv, need: advN, vp: 1,
-      text: 'Тайно: путь «' + PATHS[adv].name + '» должен дойти до этапа ' + advN + ' к финалу.',
+    // продвинуть чужой путь до этапа — со СРОКОМ (временно́е окно)
+    var adv = pick(others), advN = 5 + ri(3), advBy = 10 + ri(5);
+    pool.push({ kind: 'adv', path: adv, need: advN, by: advBy, vp: 1,
+      text: 'Тайно: путь «' + PATHS[adv].name + '» должен дойти до этапа ' + advN + ' уже к месяцу ' + advBy + '.',
       clue: 'подозрительно спокойно относится к успехам «' + PATHS[adv].name + '»',
-      check: function (s) { return s.progress[adv] >= advN; } });
+      check: function (s) { var k = adv + '.' + advN; return s.reachedTurn[k] != null && s.reachedTurn[k] <= advBy; } });
     // не дать чужому пути финишировать
     var blk = pick(others.filter(function (x) { return x !== adv; }) || others);
     pool.push({ kind: 'blk', path: blk, vp: 1,
       text: 'Тайно: путь «' + PATHS[blk].name + '» НЕ должен быть завершён.',
       clue: 'то и дело мягко топит «' + PATHS[blk].name + '»',
       check: function (s) { return s.progress[blk] < 10; } });
-    // общая технология
-    var t = pick(SHARED);
-    pool.push({ kind: 'tech', tech: t.tech, vp: 1,
-      text: 'Тайно: технология «' + t.tech + '» должна быть реализована.',
+    // общая технология — тоже со СРОКОМ
+    var t = pick(SHARED), techBy = 9 + ri(5);
+    pool.push({ kind: 'tech', tech: t.tech, by: techBy, vp: 1,
+      text: 'Тайно: технология «' + t.tech + '» должна быть реализована к месяцу ' + techBy + '.',
       clue: 'странно радеет за технологию «' + t.tech + '»',
-      check: function (s) { return s.techDone[t.tech]; } });
+      check: function (s) { return s.techTurn[t.tech] != null && s.techTurn[t.tech] <= techBy; } });
     // богатство
     pool.push({ kind: 'rich', vp: 1, need: 130,
       text: 'Тайно: сохранить влияние не ниже 130 к финалу.',
@@ -116,6 +127,12 @@
       text: 'Тайно: у команды «' + PATHS[foe].name + '» влияния к финалу меньше, чем у тебя.',
       clue: 'радуется, когда у «' + PATHS[foe].name + '» падает влияние',
       check: function (s, fi) { return s.factions[foe].inf < s.factions[fi].inf; } });
+    // вето (только у игрока — ИИ вето не владеет): рискни, но пусти в ход своё право
+    if (isPlayer) {
+      pool.push({ kind: 'veto', vp: 1,
+        text: 'Тайно: хотя бы раз воспользуйся правом вето — сорви принятый Советом этап.',
+        clue: '', check: function (s) { return !!s.vetoUsed; } });
+    }
     return shuffle(pool).slice(0, n);
   }
 
@@ -131,11 +148,14 @@
       progress: [0, 0, 0, 0, 0, 0],                    // сколько этапов пройдено на каждом пути
       done: PATHS.map(function () { return [0,0,0,0,0,0,0,0,0,0]; }),
       techDone: {}, drift: 0,                            // drift: +A(уехать) … −B(остаться)
+      reachedTurn: {}, techTurn: {},                     // когда путь достиг уровня / техно реализовано (для сроков целей)
       kuluarLeft: 2, dealsThisTurn: {},                  // сделки, заключённые на этот ход {factionId: stageObjKey}
       log: [], radio: '', lastResolve: null,
       guesses: {},                                       // досье игрока: {fi: {arch: id, foe: pathId}}
       deceived: {},                                      // кому вы скормили дезу
       betrayCount: 0, leakCount: 0, keptCount: 0, brokeVsAI: 0,
+      vetoUsed: false, vetoBlockPath: -1, vetoBlockTurn: -1, // одноразовое вето; путь, заблокированный на след. месяц
+      accelTurn: 11 + ri(4), accelDone: false, _accelMsg: '', // поздняя эскалация: срок ужмётся на месяце accelTurn
       factions: []
     };
     var ai = 0;
@@ -143,9 +163,10 @@
       var f = { path: p, inf: 100, isPlayer: p === playerPath,
         arch: p === playerPath ? null : ARCHES[arches[ai]],
         trust: 50,                    // доверие фракции к ИГРОКУ (0..100)
-        side: makeSideGoals(p, 2),    // тайные побочные
+        side: makeSideGoals(p, 2, p === playerPath), // тайные побочные
         revenge: 0,                   // накопленная жажда мести игроку
         deal: null,                   // активная сделка с игроком на этот ход: stage key
+        leverHeld: false,             // связаны адресной сделкой (рычагом) — держат крепче
         intel: { arch: false, side: [] } // что игрок про них уже узнал
       };
       if (p !== playerPath) ai++;
@@ -158,7 +179,10 @@
   function stageKey(p, i) { return p + '.' + i; }
   function nearestStages(s) { // список {p, i, key, label, camp}
     var out = [];
-    for (var p = 0; p < 6; p++) { var i = nearestStage(s, p); if (i >= 0) out.push({ p: p, i: i, key: stageKey(p, i), label: PATHS[p].stages[i], camp: PATHS[p].camp }); }
+    for (var p = 0; p < 6; p++) {
+      if (s.vetoBlockPath === p && s.vetoBlockTurn === s.turn) continue;  // путь под вето — в этом месяце его не двигают
+      var i = nearestStage(s, p); if (i >= 0) out.push({ p: p, i: i, key: stageKey(p, i), label: PATHS[p].stages[i], camp: PATHS[p].camp });
+    }
     return out;
   }
   // враждебна ли фракция f к пути p (тайно топит его)?
@@ -184,8 +208,9 @@
     // сделка с игроком: фракция согласилась поддержать этот этап
     if (f.deal === st.key) {
       var keep = f.arch ? f.arch.keep : 0.7;
+      if (f.leverHeld) keep = Math.max(keep, 0.94);          // адресная сделка держится крепче
       var alignedAnyway = (st.p === f.path);
-      if (alignedAnyway) sc += 40; else sc += 45 * keep * (0.6 + f.trust / 250);
+      if (alignedAnyway) sc += 40; else sc += (f.leverHeld ? 60 : 45) * keep * (0.6 + f.trust / 250);
     }
     // месть игроку: топит путь игрока
     if (f.revenge > 0 && st.p === s.player) sc -= f.revenge * 8;
@@ -200,6 +225,7 @@
     var broke = false;
     if (f.deal && best.key !== f.deal) {
       var keep = f.arch ? f.arch.keep : 0.7;
+      if (f.leverHeld) keep = Math.max(keep, 0.94);
       if (Math.random() < keep * (0.55 + f.trust / 300)) {
         var dealSt = opts.filter(function (o) { return o.key === f.deal; })[0];
         if (dealSt) best = dealSt;             // сдержал слово
@@ -237,8 +263,9 @@
         var f = v.f;
         if (opposesPath(f, leader.p)) return;                // тайно топит лидера — не примкнёт
         if (f.deal && f.deal !== leader.key && v.st.key === f.deal) {
-          // держит сделку с игроком вместо бандвагона (по характеру)
-          if (Math.random() < (f.arch.keep * (0.55 + f.trust / 300))) return;
+          // держит сделку с игроком вместо бандвагона (по характеру; рычаг — крепче)
+          var kp = f.leverHeld ? Math.max(f.arch.keep, 0.94) : f.arch.keep;
+          if (Math.random() < (kp * (0.55 + f.trust / 300))) return;
         }
         var joinP = clamp(0.28 + (f.arch.drift * 0.32) + (f.arch.greed * 0.18), 0.15, 0.9);
         if (f.arch.id === 'zealot' && leader.p !== f.path) joinP *= 0.35; // фанатик редко сходит с курса
@@ -259,23 +286,38 @@
     Object.keys(votes).forEach(function (k) { var vv = votes[k].infl; if (vv > winInfl) { winInfl = vv; winKey = k; tie = false; } else if (vv === winInfl) { tie = true; } });
     var winBackers = winKey ? votes[winKey].backers.length : 0;
     var passed = winKey && !tie && committed > 0 && (winInfl >= committed * 0.3 || winBackers >= 2);
-    var res = { votes: votes, committed: committed, passed: passed, winKey: passed ? winKey : null, stageName: '', broke: [], leaksFired: [] };
+    var res = { votes: votes, committed: committed, passed: passed, winKey: passed ? winKey : null, stageName: '', broke: [], leaksFired: [], moves: [], winStagePath: -1 };
+
+    // снимок состояния ДО применения итога — для одноразового вето
+    res.snap = {
+      done: s.done.map(function (r) { return r.slice(); }),
+      progress: s.progress.slice(),
+      techDone: (function () { var o = {}; Object.keys(s.techDone).forEach(function (k) { o[k] = s.techDone[k]; }); return o; })(),
+      drift: s.drift,
+      inf: s.factions.map(function (f) { return f.inf; }),
+      reachedTurn: (function () { var o = {}; Object.keys(s.reachedTurn).forEach(function (k) { o[k] = s.reachedTurn[k]; }); return o; })(),
+      techTurn: (function () { var o = {}; Object.keys(s.techTurn).forEach(function (k) { o[k] = s.techTurn[k]; }); return o; })()
+    };
 
     // экономика влияния
     var counts = s.factions.map(function (f) { return f.inf; });
     if (passed) {
       var win = votes[winKey];
       res.stageName = PATHS[win.st.p].name + ' · ' + win.st.label;
+      res.winStagePath = win.st.p;
       // отметить этап + общий двойник
       s.done[win.st.p][win.st.i] = 1; s.progress[win.st.p] = s.done[win.st.p].reduce(function (a, b) { return a + b; }, 0);
       SHARED.forEach(function (t) {
         var hitA = t.a[0] === win.st.p && t.a[1] === win.st.i, hitB = t.b[0] === win.st.p && t.b[1] === win.st.i;
         if (hitA || hitB) {
+          if (!s.techDone[t.tech]) s.techTurn[t.tech] = s.turn;   // засечь месяц реализации техно
           s.techDone[t.tech] = true;
           var tw = hitA ? t.b : t.a;
           if (!s.done[tw[0]][tw[1]]) { s.done[tw[0]][tw[1]] = 1; s.progress[tw[0]] = s.done[tw[0]].reduce(function (a, b) { return a + b; }, 0); res.combo = t.tech + ' → «' + PATHS[tw[0]].name + '»'; }
         }
       });
+      // засечь, на каком месяце каждый путь достиг своих уровней (для сроков целей)
+      for (var pp = 0; pp < 6; pp++) { for (var L = 1; L <= s.progress[pp]; L++) { var rk = pp + '.' + L; if (s.reachedTurn[rk] == null) s.reachedTurn[rk] = s.turn; } }
       // дрейф
       s.drift = clamp(s.drift + (win.st.camp === 'A' ? 14 : -14), -100, 100);
       // ±5
@@ -293,6 +335,26 @@
     // нарушенные сделки ИИ → игрок видит; доверие игрока к ним падает (в его глазах),
     // но механически это сигнал: акула/хамелеон кинули
     perFaction.forEach(function (v) { if (v.broke) res.broke.push(v.fi); });
+
+    // видимая причинность: почему каждая фракция проголосовала именно так (+ её реплика)
+    perFaction.forEach(function (v) {
+      if (v.player || !v.f || !v.st) return;
+      var f = v.f, reason, sit = null;
+      if (v.broke) { reason = 'нарушил вашу сделку — ушёл на выгодный этап'; sit = 'betray'; }
+      else if (v.switched) { reason = 'примкнул к лидеру (бандвагон)'; sit = 'bandwagon'; }
+      else if (f.deal === v.st.key) { reason = 'сдержал слово по сделке с тобой'; sit = 'accept'; }
+      else if (v.st.p === f.path) { reason = 'двигает собственный путь'; }
+      else {
+        var motive = '';
+        f.side.forEach(function (g) {
+          if (g.kind === 'adv' && g.path === v.st.p) motive = 'тайно продвигает выгодный ему путь';
+          if (g.kind === 'tech') { SHARED.forEach(function (t) { if (t.tech === g.tech && ((t.a[0] === v.st.p && t.a[1] === v.st.i) || (t.b[0] === v.st.p && t.b[1] === v.st.i))) motive = 'тайно тащит нужную ему технологию'; }); }
+        });
+        if (!motive && f.revenge > 0 && v.st.p !== s.player) motive = 'уводит голоса от твоего пути';
+        reason = motive || 'ставит на восходящий тренд';
+      }
+      res.moves.push({ fi: v.fi, path: v.st.p, label: v.st.label, reason: reason, voice: sit ? voice(f, sit) : '' });
+    });
 
     // отложенные утечки (если игрок сливал минусы — эффект уже применён к trust соперника)
     s.lastResolve = res;
@@ -394,7 +456,10 @@
         '<button class="sv-ghost" onclick="SOVET.home()">← Назад</button>' +
         '<div class="sv-h1" style="font-size:1.24rem">Как играть</div>' +
         '<div class="sv-card"><div class="sv-ch">Цель</div>Набрать больше всех очков за 18 месяцев. <b>Главная цель</b> (твой путь пройден целиком) = 2 очка. Каждая <b>тайная побочная цель</b> = 1 очко. У ИИ-фракций тоже есть тайные цели — их ты не видишь и должен вычислить.</div>' +
-        '<div class="sv-card"><div class="sv-ch">Ход месяца</div>1) <b>Кулуары</b> — 2 действия: расспросить (собрать интел, могут соврать), сделка (размен голосов), деза (соврать о своей цели), слить чужой «минус» (настроить Совет против соперника).<br>2) <b>Голосование</b> — вложи влияние в один из ближайших этапов. Проходит этап с большинством, если набрал ≥30% всех вложенных голосов.<br>3) <b>Итог</b> — этап реализован, сводка от радио Фреди.</div>' +
+        '<div class="sv-card"><div class="sv-ch">Ход месяца</div>1) <b>Кулуары</b> — 2 действия: расспросить (собрать интел, могут соврать), сделка (размен голосов), деза (соврать о своей цели), слить чужой «минус» (настроить Совет против соперника).<br>2) <b>Голосование</b> — вложи влияние в один из ближайших этапов. Проходит этап с большинством, если набрал ≥30% всех вложенных голосов.<br>3) <b>Итог</b> — этап реализован, видно, кто как и почему голосовал; сводка от радио Фреди.</div>' +
+        '<div class="sv-card"><div class="sv-ch">🎯 Рычаг: интел в дело</div>Разведал в кулуарах <b>тайную цель</b> фракции — и появляется «Адресная сделка»: предложи ровно то, что им нужно. Соглашаются почти наверняка и держат слово <b>крепче</b> обычной сделки. Знание — это не галочка в досье, это рычаг.</div>' +
+        '<div class="sv-card"><div class="sv-ch">🛑 Право вето</div>Один раз за игру можно <b>отменить</b> только что принятый Советом этап — как будто месяц прошёл впустую. Плюс этот путь застопорится на следующий месяц. Козырь на крайний случай: сорвать чужую победу у финиша.</div>' +
+        '<div class="sv-card"><div class="sv-ch">⏰ Сроки и эскалация</div>Часть тайных целей привязана к <b>месяцу-дедлайну</b>: успел провести чужой путь/технологию вовремя — очко, опоздал — сгорело. А в середине игры Солнце может «поторопиться»: срок финала внезапно ужмётся. Не тяни.</div>' +
         '<div class="sv-card"><div class="sv-ch">Влияние</div>Старт — 100 у каждой фракции. Поддержал принятый этап: +5. Поддержал проигравший: −5. Не прошло ничего: все −5, самый крупный −10, самый мелкий 0.</div>' +
         '<div class="sv-card"><div class="sv-ch">Комбинации</div>Два пути делят общие технологии (корабль-ковчег, реакторы, убежища…). Реализовал общий этап в одном пути — он <b>сразу засчитан и в другом</b>. Двигая «чужой» этап, ты втихую тащишь и свой.</div>' +
         '<div class="sv-card"><div class="sv-ch">Дрейф мира</div>Лагерь «уехать» (Пилигримы, Терраформисты, Орбиталисты) против «остаться» (Атланты, Евгеники, Мезо-ионисты). Каждый принятый этап двигает общий тренд. Фракции липнут к восходящему лагерю — читай дрейф и лови или ломай его.</div>' +
@@ -434,15 +499,23 @@
     var f = ST.factions[ST.player];
     var mainWon = ST.progress[ST.player] >= 10;
     var html = '<div class="sv-goal main' + (mainWon ? ' won' : '') + '">🎯 <b>Главная цель (2 очка):</b> провести свой путь «' + PATHS[ST.player].name + '» целиком. ' + (mainWon ? '✓ выполнено' : ST.progress[ST.player] + '/10') + '</div>';
-    f.side.forEach(function (g) { var w = g.check(ST, ST.player); html += '<div class="sv-goal' + (w ? ' won' : '') + '">🕵️ ' + esc(g.text) + (w ? ' <span class="sv-good">✓</span>' : '') + '</div>'; });
+    f.side.forEach(function (g) {
+      var w = g.check(ST, ST.player);
+      var expired = g.by && !w && ST.turn > g.by;
+      html += '<div class="sv-goal' + (w ? ' won' : '') + '"' + (expired ? ' style="opacity:.55"' : '') + '>🕵️ ' + esc(g.text) + (w ? ' <span class="sv-good">✓</span>' : (expired ? ' <span class="sv-warn">✗ срок вышел</span>' : '')) + '</div>';
+    });
     return html;
   }
 
   function renderStatus() {
     var c = container(); if (!c) return;
+    var accel = ST._accelMsg ? '<div class="sv-radio" style="border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.09);color:#fecaca">⏰ <b>Срочно!</b> ' + esc(ST._accelMsg) + '</div>' : '';
+    ST._accelMsg = '';
+    var hasIntel = ST.factions.some(function (f) { return !f.isPlayer && f.intel.side.length; });
     c.innerHTML =
       '<div class="sv-wrap">' +
         '<div class="sv-top"><span>' + PATHS[ST.player].em + ' ' + esc(PATHS[ST.player].name) + ' · месяц ' + ST.turn + ' из ' + ST.maxTurn + ' · влияние ' + ST.factions[ST.player].inf + '</span><button style="background:none;border:none;color:#8b93a7;font-size:.85rem;cursor:pointer;padding:0" onclick="SOVET.home()">✕ Выйти</button></div>' +
+        accel +
         driftBar() +
         '<div class="sv-card" style="padding:11px 13px">' + pathsBoard() + '</div>' +
         '<div class="sv-ch">Твои цели</div>' + goalsPanel() +
@@ -451,7 +524,8 @@
           ? '<button class="sv-act" onclick="SOVET.pickFaction(\'ask\')">🔎 Расспросить фракцию<small>Узнать про её тайную цель или характер. Чем ниже доверие — тем туманнее ответ.</small></button>' +
             '<button class="sv-act" onclick="SOVET.pickFaction(\'deal\')">🤝 Предложить сделку<small>«Я поддержу твой этап — ты мой». Держат слово не все.</small></button>' +
             '<button class="sv-act" onclick="SOVET.pickFaction(\'deza\')">🎭 Скормить дезу<small>Соврать о своей цели, чтобы тебя неверно читали.</small></button>' +
-            '<button class="sv-act" onclick="SOVET.pickFaction(\'leak\')">🗞️ Слить чужой «минус»<small>Настроить фракцию против соперника. Могут узнать — и это ударит по тебе.</small></button>'
+            '<button class="sv-act" onclick="SOVET.pickFaction(\'leak\')">🗞️ Слить чужой «минус»<small>Настроить фракцию против соперника. Могут узнать — и это ударит по тебе.</small></button>' +
+            (hasIntel ? '<button class="sv-act" style="border-color:rgba(240,180,75,.45)" onclick="SOVET.pickFaction(\'lever\')">🎯 Адресная сделка (рычаг)<small>Ты знаешь их тайную цель — предложи ровно то, что им нужно. Согласятся почти наверняка и держат крепко.</small></button>' : '')
           : '<div class="sv-card" style="color:#9ca3af;font-size:.88rem">Кулуарные действия на этот месяц исчерпаны.</div>') +
         '<div id="svKul"></div>' +
         '<button class="sv-secondary" onclick="SOVET.openDossier()">📁 Досье на фракции (записать догадки)</button>' +
@@ -463,12 +537,17 @@
   // ---------- выбор фракции для кулуарного действия ----------
   function pickFaction(kind) {
     var box = document.getElementById('svKul'); if (!box) return;
-    var titles = { ask: '🔎 Кого расспросить', deal: '🤝 Кому предложить сделку', deza: '🎭 Кому скормить дезу', leak: '🗞️ Кому слить чужой «минус»' };
+    var titles = { ask: '🔎 Кого расспросить', deal: '🤝 Кому предложить сделку', deza: '🎭 Кому скормить дезу', leak: '🗞️ Кому слить чужой «минус»', lever: '🎯 На кого нажать рычагом (известна их цель)' };
     var html = '<div class="sv-card"><div class="sv-ch">' + titles[kind] + '</div>';
+    var shown = 0;
     ST.factions.forEach(function (f, fi) {
       if (f.isPlayer) return;
-      html += '<button class="sv-act" onclick="SOVET.doKuluar(\'' + kind + '\',' + fi + ')">' + PATHS[fi].em + ' <b>' + esc(PATHS[fi].name) + '</b>' + trustChip(f.trust) + '</button>';
+      if (kind === 'lever' && !f.intel.side.filter(function (g) { return g && g.vp > 0; }).length) return; // рычаг — только по разведанным целям
+      shown++;
+      var extra = (kind === 'lever') ? ' <span class="sv-mini sv-good" style="display:inline">цель разведана</span>' : '';
+      html += '<button class="sv-act" onclick="SOVET.doKuluar(\'' + kind + '\',' + fi + ')">' + PATHS[fi].em + ' <b>' + esc(PATHS[fi].name) + '</b>' + trustChip(f.trust) + extra + '</button>';
     });
+    if (kind === 'lever' && !shown) html += '<div class="sv-mini">Пока не разведана ни одна тайная цель. Сначала «Расспросить».</div>';
     html += '<button class="sv-secondary" onclick="document.getElementById(\'svKul\').innerHTML=\'\'">Отмена</button></div>';
     box.innerHTML = html;
   }
@@ -482,7 +561,7 @@
       // достоверность зависит от доверия
       var reliable = Math.random() < (0.35 + f.trust / 160);
       var learn;
-      if (!f.intel.arch && (reliable || Math.random() < 0.5)) {
+      if (!f.intel.arch && Math.random() < 0.4) {   // смещение к разведке тайных ЦЕЛЕЙ (это рычаг), характер — реже
         f.intel.arch = reliable; // если ненадёжно — отметим как «слух»
         learn = reliable
           ? 'Судя по всему, «' + PATHS[fi].name + '» — <b>' + f.arch.name + '</b>: ' + f.arch.tell + '.'
@@ -506,10 +585,10 @@
         if (accept) {
           f.deal = stageKey(ST.player, myStage); // фракция обещала поддержать МОЙ этап
           ST._pendingDeal = { fi: fi, yourStage: stageKey(fi, yourStage) };
-          out = '🤝 «' + PATHS[fi].name + '» согласны: они поддержат твой этап «' + PATHS[ST.player].stages[myStage] + '», ты — их «' + PATHS[fi].stages[yourStage] + '». <span class="sv-mini">Сдержишь слово на голосовании — доверие вырастет. Кинешь — жди мести.</span>';
+          out = '🤝 ' + (voice(f, 'accept') ? voice(f, 'accept') + ' ' : '') + '«' + PATHS[fi].name + '» согласны: они поддержат твой этап «' + PATHS[ST.player].stages[myStage] + '», ты — их «' + PATHS[fi].stages[yourStage] + '». <span class="sv-mini">Сдержишь слово на голосовании — доверие вырастет. Кинешь — жди мести.</span>';
         } else {
           f.trust = clamp(f.trust - 3, 0, 100);
-          out = '«' + PATHS[fi].name + '» отказались: ' + (f.arch.trustNeed >= 0.5 ? 'мало доверия, чтобы связываться.' : 'сейчас им это невыгодно.');
+          out = (voice(f, 'refuse') ? voice(f, 'refuse') + ' ' : '') + '«' + PATHS[fi].name + '» отказались: ' + (f.arch.trustNeed >= 0.5 ? 'мало доверия, чтобы связываться.' : 'сейчас им это невыгодно.');
         }
       }
     } else if (kind === 'deza') {
@@ -528,6 +607,20 @@
       if (caught) { ST.factions[target].trust = clamp(ST.factions[target].trust - 22, 0, 100); ST.factions[target].revenge += 2; }
       out = '🗞️ Ты шепнул «' + PATHS[fi].name + '» про изъян пути «' + PATHS[target].name + '»: «' + esc(PATHS[target].minus) + '» Теперь «' + PATHS[fi].name + '» будет прохладнее к «' + PATHS[target].name + '».' +
         (caught ? ' <span class="sv-warn">⚠️ «' + PATHS[target].name + '» прознали, кто источник — их доверие к тебе рухнуло, жди мести.</span>' : ' <span class="sv-mini">Пока сошло с рук.</span>');
+    } else if (kind === 'lever') {
+      // адресная сделка: играем на РАЗВЕДАННОЙ тайной цели фракции → почти железное согласие
+      var known = f.intel.side.filter(function (g) { return g && g.vp > 0; });
+      var myStg = nearestStage(ST, ST.player), yrStg = nearestStage(ST, fi);
+      if (!known.length) { out = 'Рычага пока нет: сначала разведай их тайную цель в «Расспросить».'; }
+      else if (myStg < 0 || yrStg < 0) { out = 'Не о чем договариваться — чей-то путь уже пройден.'; }
+      else {
+        var g0 = pick(known);
+        f.deal = stageKey(ST.player, myStg);
+        f.leverHeld = true;
+        f.trust = clamp(f.trust + 3, 0, 100);
+        ST._pendingDeal = { fi: fi, yourStage: stageKey(fi, yrStg) };
+        out = '🎯 Ты бьёшь точно в их интерес — «' + esc(g0.text.replace('Тайно: ', '')) + '» От такого не отказываются. ' + (voice(f, 'hit') ? voice(f, 'hit') + ' ' : '') + 'Они <b>железно</b> поддержат твой этап «' + PATHS[ST.player].stages[myStg] + '», ты — их «' + PATHS[fi].stages[yrStg] + '». <span class="sv-mini">Рычаг держит куда крепче обычной сделки — но кинуть в ответ всё ещё можно (и опасно: месть будет злее).</span>';
+      }
     }
     ST.kuluarLeft--;
     box.innerHTML = '<div class="sv-card"><div class="sv-ch">' + PATHS[fi].em + ' ' + esc(PATHS[fi].name) + '</div>' + out + '<button class="sv-secondary" style="margin-top:10px" onclick="SOVET.render()">Дальше</button></div>';
@@ -609,7 +702,9 @@
     res = res || ST.lastResolve; if (!res) { ST.phase = 'status'; return renderStatus(); }
     var c = container(); if (!c) return;
     var html = '<div class="sv-wrap"><div class="sv-h1" style="font-size:1.16rem">🗳️ Итог месяца ' + ST.turn + '</div>';
-    if (res.passed) {
+    if (res.vetoed) {
+      html += '<div class="sv-card sv-warn" style="border-color:rgba(248,113,113,.45)">🛑 <b>Ты наложил вето.</b> Принятый этап «' + esc(res.stageName) + '» аннулирован — как будто месяц прошёл впустую. Этот путь на следующий месяц заблокирован, и право вето израсходовано.</div>';
+    } else if (res.passed) {
       html += '<div class="sv-card sv-good" style="border-color:rgba(52,211,153,.4)">✅ Совет принял: <b>' + esc(res.stageName) + '</b>' + (res.combo ? '<br>🔗 Комбинация: технология «' + esc(res.combo) + '» засчитана.' : '') + '</div>';
     } else {
       html += '<div class="sv-card sv-neu" style="border-color:rgba(252,211,77,.35)">🤷 Голосование прошло впустую — ни один этап не набрал большинства. Все теряют влияние.</div>';
@@ -623,6 +718,14 @@
       html += '<div class="sv-li">' + PATHS[v.st.p].em + ' <b>' + esc(PATHS[v.st.p].name) + '</b> · ' + esc(v.st.label) + ' — <b>' + v.infl + '</b> (' + esc(names) + ')' + (res.winKey === k ? ' ✅' : '') + '</div>';
     });
     html += '</div>';
+    // видимая причинность: почему фракции проголосовали так
+    if (res.moves && res.moves.length) {
+      html += '<div class="sv-card"><div class="sv-ch">Почему они так проголосовали</div>';
+      res.moves.forEach(function (m) {
+        html += '<div class="sv-li">' + PATHS[m.fi].em + ' <b>' + esc(PATHS[m.fi].name) + '</b> — ' + esc(m.reason) + (m.voice ? ' <span style="color:#bcd; font-style:italic">' + esc(m.voice) + '</span>' : '') + '</div>';
+      });
+      html += '</div>';
+    }
     // предательства/верность
     if (ST._keptDealFi != null) { html += '<div class="sv-card sv-good">🤝 Ты сдержал слово перед «' + esc(PATHS[ST._keptDealFi].name) + '» — их доверие выросло.</div>'; ST.factions[ST._keptDealFi].trust = clamp(ST.factions[ST._keptDealFi].trust + 16, 0, 100); }
     if (ST._brokeDealFi != null) { html += '<div class="sv-card sv-warn">🔪 Ты кинул «' + esc(PATHS[ST._brokeDealFi].name) + '»: доверие рухнуло, они затаили месть.</div>'; }
@@ -630,10 +733,35 @@
     ST._keptDealFi = null; ST._brokeDealFi = null; ST._pendingDeal = null;
     // радио Фреди
     html += '<div class="sv-radio">📻 <b>Радио «Совет FM»:</b> ' + esc(radioLine(res)) + '</div>';
+    // право вето — один раз за игру, только на принятый этап
+    if (res.passed && !res.vetoed && !ST.vetoUsed) {
+      html += '<button class="sv-secondary" style="border-color:rgba(248,113,113,.5);color:#fca5a5" onclick="SOVET.vetoNow()">🛑 Наложить вето на этот этап (один раз за игру)</button>';
+    }
     var done = ST.progress.some(function (x) { return x >= 10; }) || ST.turn >= ST.maxTurn;
     html += '<button class="sv-primary" onclick="SOVET.nextTurn()">' + (done ? 'К итогам игры →' : 'Следующий месяц →') + '</button></div>';
     c.innerHTML = html; try { c.scrollTop = 0; } catch (e) {}
     vibe(res.passed ? [20, 25, 20] : 15);
+  }
+
+  // одноразовое право вето: откатить принятый в этом месяце этап
+  function vetoNow() {
+    var res = ST.lastResolve;
+    if (!res || !res.passed || res.vetoed || ST.vetoUsed || !res.snap) return;
+    var sn = res.snap, cp = function (o) { var r = {}; Object.keys(o).forEach(function (k) { r[k] = o[k]; }); return r; };
+    ST.done = sn.done.map(function (r) { return r.slice(); });
+    ST.progress = sn.progress.slice();
+    ST.techDone = cp(sn.techDone);
+    ST.drift = sn.drift;
+    ST.reachedTurn = cp(sn.reachedTurn);
+    ST.techTurn = cp(sn.techTurn);
+    ST.factions.forEach(function (f, fi) { f.inf = sn.inf[fi]; });
+    ST.vetoUsed = true;
+    ST.vetoBlockPath = res.winStagePath;   // этот путь заблокирован...
+    ST.vetoBlockTurn = ST.turn + 1;        // ...ровно на следующий месяц
+    res.vetoed = true;
+    track('sovet_veto', { turn: ST.turn });
+    vibe([30, 20, 30]);
+    renderResolve(res);
   }
 
   function radioLine(res) {
@@ -652,11 +780,18 @@
   }
 
   function nextTurn() {
-    // сброс сделок и временных «блоков» от утечек
-    ST.factions.forEach(function (f) { f.deal = null; f.side = f.side.filter(function (g) { return !g.temp; }); });
+    // сброс сделок, рычагов и временных «блоков» от утечек
+    ST.factions.forEach(function (f) { f.deal = null; f.leverHeld = false; f.side = f.side.filter(function (g) { return !g.temp; }); });
     var done = ST.progress.some(function (x) { return x >= 10; });
     if (done || ST.turn >= ST.maxTurn) return endGame(done);
-    ST.turn++; ST.kuluarLeft = 2; ST.phase = 'status'; renderStatus();
+    ST.turn++; ST.kuluarLeft = 2; ST.phase = 'status';
+    // поздняя эскалация: на заранее выбранном месяце срок ужимается — давление на финал
+    if (!ST.accelDone && ST.turn >= ST.accelTurn) {
+      ST.accelDone = true;
+      ST.maxTurn = Math.max(ST.turn + 2, ST.maxTurn - 3);
+      ST._accelMsg = 'Солнце нестабильно — учёные пересчитали срок. До взрыва осталось меньше времени: финал теперь на месяце ' + ST.maxTurn + '. Успевай добрать очки — и следи за чужими дедлайнами.';
+    }
+    renderStatus();
   }
 
   // ---------- финал ----------
@@ -726,7 +861,7 @@
     pickFaction: pickFaction, doKuluar: doKuluar,
     openDossier: openDossier, guessArch: guessArch, backToStatus: backToStatus,
     toVote: toVote, selStage: selStage, selAmt: selAmt, castVote: castVote,
-    nextTurn: nextTurn, getState: function () { return ST; }
+    vetoNow: vetoNow, nextTurn: nextTurn, getState: function () { return ST; }
   };
   window.showSovetGame = home;
   console.log('✅ sovet.js loaded (игра «Земля в опасности»)');
