@@ -2827,6 +2827,7 @@ document.addEventListener('DOMContentLoaded', function() {
             danetki: { fn: 'showDanetkiGame', src: 'danetki.js', chat: 'kontur' }, // «Данетки»
             fermi: { fn: 'showFermiGame', src: 'fermi.js', chat: 'kontur' }, // «Прикидка» (Ферми)
             advokat: { fn: 'showAdvokatGame', src: 'advokat.js', chat: 'kontur' }, // «Адвокат дьявола»
+            sovet: { fn: 'showSovetGame', src: 'sovet.js', chat: 'kontur' }, // «Земля в опасности» (интрига/переговоры)
             delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' }, // «Своё дело» (бизнес-симулятор)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
