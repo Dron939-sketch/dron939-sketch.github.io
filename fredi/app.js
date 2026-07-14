@@ -2832,6 +2832,7 @@ document.addEventListener('DOMContentLoaded', function() {
             korka: { fn: 'showKorkaGame', src: 'korka.js', chat: 'kontur' }, // «Короли и капуста» (нетворкинг/чтение людей)
             mandat: { fn: 'showMandatGame', src: 'mandat.js', chat: 'kontur' }, // «Мандат: цена кресла» (психология власти и компромисса)
             delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' }, // «Своё дело» (бизнес-симулятор)
+            spiral: { fn: 'showSpiralGame', src: 'spiral.js', chat: 'kontur' }, // «Спираль» — симулятор дня (курс «Снова живой»)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
