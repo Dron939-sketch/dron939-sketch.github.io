@@ -442,7 +442,8 @@
     }).join('');
     c.innerHTML = '<div class="sp-wrap">' +
       '<button class="sp-ghost" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button>' +
-      '<div class="sp-eyebrow">🎮 Тренажёр к курсу «Снова живой»</div><h1 class="sp-h1">Спираль</h1>' + achHTML() +
+      '<div class="sp-eyebrow">🎮 Тренажёр к курсу «Снова живой»</div><h1 class="sp-h1">Спираль</h1>' +
+      '<p class="sp-tagline" style="margin:2px 0 14px;color:#9FB4D4;font-size:1.02rem;line-height:1.5">Тренажёр навыка <b style="color:#EAF0F8">вытаскивать себя из спада обратно в жизнь</b> — действовать раньше настроения и разворачивать спираль вверх с любого дня.</p>' + achHTML() +
       (topNote ? '<div class="sp-echo" style="background:rgba(58,134,255,.1);border-color:rgba(58,134,255,.3);color:#Bdd4ff">' + topNote + '</div>' : '') +
       '<p class="sp-lead">Проживи <b>неделю оживания</b> — до пяти дней подряд. Три системы — <b>⚡ драйв</b>, <b>🌫 тяжесть</b>, <b>🤝 связь</b> — отвечают на каждый выбор, а состояние переносится изо дня в день. У каждой жизни свой стартовый расклад — <b>выбери, чью проживёшь.</b></p>' +
       roles + '</div>';
