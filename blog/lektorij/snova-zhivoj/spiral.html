@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow">
+<title>«Спираль» — симулятор дня к курсу «Снова живой» | Андрей Мейстер</title>
+<meta name="description" content="Интерактивный тренажёр «Спираль» к курсу «Снова живой»: проживите смоделированный день и почувствуйте, как маленькие выборы — встать или полежать, выйти или уткнуться в ленту — разворачивают спираль угасания вверх или вниз. Главный тезис курса на практике: действие раньше настроения.">
+<link rel="canonical" href="https://meysternlp.ru/blog/lektorij/snova-zhivoj/spiral.html">
+<meta property="og:type" content="website"><meta property="og:title" content="«Спираль» — симулятор дня"><meta property="og:description" content="Проживите день по выборам и увидите, как действие раньше настроения разворачивает спираль вверх. Тренажёр к курсу «Снова живой»."><meta property="og:image" content="https://meysternlp.ru/blog/og/lektorij.png"><meta property="og:url" content="https://meysternlp.ru/blog/lektorij/snova-zhivoj/spiral.html">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#1D1D1F;line-height:1.6;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.hero{background:linear-gradient(180deg,#F3F7FF 0%,#fff 100%);padding:44px 0 30px;border-bottom:1px solid #E4E7EC}
+.crumbs{font-size:.82rem;color:#8A93A3;margin-bottom:12px}
+.crumbs a{color:#3A86FF;text-decoration:none}
+.eyebrow{color:#3A86FF;font-weight:700;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;margin:0 0 10px}
+h1{font-size:clamp(1.8rem,5vw,2.7rem);font-weight:800;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:#5A6472;font-size:1.03rem;max-width:56ch;margin:0}
+.sec{padding:30px 0 70px}
+/* сцена */
+.stage{background:#0E1420;border-radius:22px;padding:26px 22px 30px;color:#EAF0F8;box-shadow:0 18px 50px rgba(15,25,50,.25);position:relative;overflow:hidden}
+.core-wrap{display:flex;flex-direction:column;align-items:center;margin:4px 0 22px}
+.core{width:118px;height:118px;border-radius:50%;transition:background .8s ease,box-shadow .8s ease;display:grid;place-items:center}
+.core b{font-size:1.7rem;font-weight:800;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.core small{display:block;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:600;margin-top:2px}
+.daypart{text-align:center;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:#7C8BA6;font-weight:700;margin-bottom:12px}
+.scene{font-size:1.14rem;line-height:1.55;color:#EAF0F8;margin:0 0 22px;font-weight:500}
+.opts{display:flex;flex-direction:column;gap:12px}
+.opt{text-align:left;background:#182236;border:1px solid #26324A;color:#EAF0F8;border-radius:14px;padding:15px 17px;font:inherit;font-size:1rem;cursor:pointer;transition:border-color .15s,transform .12s,background .15s;line-height:1.4;width:100%}
+.opt:hover{border-color:#3A86FF;transform:translateY(-1px);background:#1C283F}
+.react{background:#141D2E;border-left:3px solid #3A86FF;border-radius:12px;padding:15px 17px;margin:2px 0 20px}
+.react .rt{font-size:1.02rem;color:#EAF0F8;margin:0 0 8px}
+.react .delta{font-weight:800;font-size:.95rem}
+.react .why{font-size:.9rem;color:#9FB0C9;margin:8px 0 0}
+.next{display:inline-block;background:#3A86FF;color:#fff;border:none;border-radius:12px;padding:13px 26px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer;transition:background .15s}
+.next:hover{background:#2E6FE0}
+.progress{display:flex;gap:6px;justify-content:center;margin-top:20px}
+.progress i{width:22px;height:4px;border-radius:2px;background:#26324A}
+.progress i.done{background:#3A86FF}
+.progress i.cur{background:#7FB0FF}
+/* финал */
+.result h2{font-size:1.5rem;font-weight:800;margin:6px 0 10px;text-align:center}
+.result .lead{color:#C6D2E4;text-align:center;margin:0 0 18px}
+.result .body{background:#141D2E;border-radius:14px;padding:18px 18px;color:#D4DEEE;font-size:.98rem;line-height:1.6}
+.cta{margin-top:22px;text-align:center;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.cta a,.restart{display:inline-block;border-radius:12px;padding:13px 22px;font-weight:700;font-size:.98rem;text-decoration:none;cursor:pointer;font-family:inherit;border:none}
+.cta a.primary{background:#3A86FF;color:#fff}
+.cta a.ghost{background:#182236;color:#EAF0F8;border:1px solid #26324A}
+.restart{background:#182236;color:#EAF0F8;border:1px solid #26324A}
+.note{background:linear-gradient(135deg,#E8F1FF,#F0F8FF);border:1px solid #CFE0FB;border-left:4px solid #3A86FF;border-radius:12px;padding:15px 18px;margin:24px 0 0;font-size:.92rem;color:#4A5563}
+.note a{color:#2E6FE0}
+.disclaimer{font-size:.82rem;color:#8A93A3;margin-top:18px;text-align:center}
+</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true});</script>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<header class="hero"><div class="wrap">
+<div class="crumbs"><a href="/blog/">Блог</a> / <a href="/blog/lektorij/">Лекторий</a> / <a href="/blog/lektorij/snova-zhivoj/">Снова живой</a> / Спираль</div>
+<p class="eyebrow">🎮 Тренажёр к курсу «Снова живой»</p>
+<h1>Спираль</h1>
+<p>Один обычный день человека, у которого будто выключили свет. Шесть маленьких развилок — встать или полежать, выйти или уткнуться в ленту, ответить другу или отложить. Проживите этот день по своим выборам и почувствуйте на шкале, как крошечные решения разворачивают спираль угасания — вверх или вниз. Здесь нет «правильных» ответов и оценок. Есть только то, что происходит по-настоящему.</p>
+</div></header>
+<section class="sec"><div class="wrap">
+<div class="stage" id="stage"></div>
+<div class="disclaimer">Это учебный тренажёр, а не диагностика. Если тяжесть держится неделями — тренажёр рядом с помощью специалиста, а не вместо неё.</div>
+<div class="note"><b>Как это связано с курсом.</b> «Спираль» проигрывает главный тезис курса «Снова живой»: <b>жизнь возвращается через действие, а не через настроение</b>. Разобрать свой настоящий день можно в лекциях или с <a href="/fredi/">Фреди</a>. <a href="/blog/lektorij/snova-zhivoj/">Вернуться к курсу →</a></div>
+</div></section>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+
+<script>
+var SCENES = [
+ {part:'Утро · 7:00', text:'Будильник. Тело как ватное, вставать не хочется совсем. За окном серо.',
+  opts:[
+   {kind:'live', label:'Встать сразу, пока не передумал',
+    react:'Тело сопротивлялось секунд десять — а ты уже на ногах. Первая микро-победа дня.',
+    why:'Действие раньше настроения: сначала встаёшь, желание приходит следом.', d:10},
+   {kind:'dim', label:'«Ещё пять минут» (стало сорок)',
+    react:'В моменте — сладкое облегчение. Но день начался с того, что ты уступил, и это задаёт тон.',
+    why:'Прозябание даёт мгновенный минус усилия — и долгий осадок.', d:-7}
+  ]},
+ {part:'Утро · 8:30', text:'Первое, что тянется рука сделать, — открыть ленту. Есть ещё не хочется.',
+  opts:[
+   {kind:'live', label:'Отложить телефон, вода и завтрак у окна',
+    react:'Медленное живое утро вместо шума. Приёмник радости чуть очистился.',
+    why:'Медленные удовольствия возвращают чувствительность, которую крадёт дешёвый поток.', d:9},
+   {kind:'dim', label:'Залипнуть в ленту на час',
+    react:'Час растворился. Проголодался, слегка обозлился, и непонятно на что.',
+    why:'Дешёвый дофамин — это тяга без радости: сосёт время и оставляет осадок.', d:-8}
+  ]},
+ {part:'День · 13:00', text:'Сообщение от друга: «Ты куда пропал? Живой вообще? Давай прогуляемся».',
+  opts:[
+   {kind:'live', label:'Ответить честно и согласиться',
+    react:'Было неловко и немного страшно. Но вы договорились — и стало теплее.',
+    why:'Связь — это топливо: близкий контакт буквально снижает уровень стресса в теле.', d:12},
+   {kind:'dim', label:'«Потом как-нибудь» и убрать телефон',
+    react:'Отложил — и будто выдохнул. А через минуту стало ещё более одиноко.',
+    why:'Избегание бережёт от усилия и отрезает от опоры. Спираль вниз любит одиночество.', d:-8}
+  ]},
+ {part:'День · 16:00', text:'Есть дело, которое откладываешь неделю. Оно давит фоном, хотя ты к нему даже не прикасался.',
+  opts:[
+   {kind:'live', label:'Сделать один маленький кусочек, 15 минут',
+    react:'Не всё, но ты начал. Давящий фон стал заметно тише.',
+    why:'Начать важнее, чем закончить: 15 минут разряжают то, что висело неделю.', d:11},
+   {kind:'dim', label:'«Не сегодня, нет сил»',
+    react:'Минута облегчения — и дело снова висит, теперь ещё и с виной сверху.',
+    why:'Незакрытое тянет вниз тихо, но постоянно. Откладывание кормит спираль.', d:-7}
+  ]},
+ {part:'Вечер · 19:30', text:'Хочется просто лечь и не шевелиться. А за окном — красивый закат.',
+  opts:[
+   {kind:'live', label:'Выйти пройтись на 20 минут, даже без настроения',
+    react:'Шёл через силу первые пять минут. Вернулся будто другим человеком — хотя ничего не решилось.',
+    why:'Движение и дневной свет меняют состояние там, где мысли бессильны.', d:10},
+   {kind:'dim', label:'Лечь и открыть сериал до ночи',
+    react:'Вечер испарился. Тело не устало по-хорошему, а голова гудит.',
+    why:'Пассивный экран не восстанавливает — он глушит. Разница чувствуется наутро.', d:-6}
+  ]},
+ {part:'Ночь · 23:30', text:'Пора спать. Но рука по привычке тянется к телефону в кровати.',
+  opts:[
+   {kind:'live', label:'Оставить телефон заряжаться в другой комнате',
+    react:'Кровать снова стала только про сон. Завтра начнётся с ресурса, а не с долга.',
+    why:'Управляй сигналом, а не собой: нет телефона под рукой — нет ночного залипания.', d:8},
+   {kind:'dim', label:'Листать в кровати «пять минут» (до двух ночи)',
+    react:'Сон украден. Всё завтра будет казаться тяжелее, чем есть на самом деле.',
+    why:'Недосып поднимает гормоны стресса — и серое утро становится ещё серее.', d:-7}
+  ]}
+];
+
+var START = 28, score = START, i = 0, chosen = [];
+var stage = document.getElementById('stage');
+
+function coreStyle(s){
+  var t = Math.max(0, Math.min(100, s)) / 100;
+  // холодный тусклый -> тёплый светящийся
+  var c1 = [58,74,99], c2 = [240,176,110];
+  var r = Math.round(c1[0]+(c2[0]-c1[0])*t), g = Math.round(c1[1]+(c2[1]-c1[1])*t), b = Math.round(c1[2]+(c2[2]-c1[2])*t);
+  var glow = 8 + t*54, op = 0.15 + t*0.6;
+  return 'background:radial-gradient(circle at 50% 42%, rgb('+r+','+g+','+b+'), rgb('+Math.round(r*0.5)+','+Math.round(g*0.5)+','+Math.round(b*0.55)+'));'
+       + 'box-shadow:0 0 '+glow+'px rgba('+c2[0]+','+c2[1]+','+c2[2]+','+op.toFixed(2)+')';
+}
+function coreHTML(s){
+  return '<div class="core-wrap"><div class="core" style="'+coreStyle(s)+'"><div style="text-align:center"><b>'+Math.max(0,Math.round(s))+'</b><small>жизнь в тебе</small></div></div></div>';
+}
+function progressHTML(){
+  var h='<div class="progress">';
+  for(var k=0;k<SCENES.length;k++){ h+='<i class="'+(k<i?'done':(k===i?'cur':''))+'"></i>'; }
+  return h+'</div>';
+}
+
+function renderScene(){
+  var sc = SCENES[i];
+  var h = coreHTML(score);
+  h += '<div class="daypart">'+sc.part+'</div>';
+  h += '<p class="scene">'+sc.text+'</p><div class="opts">';
+  sc.opts.forEach(function(o,idx){ h += '<button class="opt" data-idx="'+idx+'">'+o.label+'</button>'; });
+  h += '</div>'+progressHTML();
+  stage.innerHTML = h;
+  Array.prototype.forEach.call(stage.querySelectorAll('.opt'), function(btn){
+    btn.addEventListener('click', function(){ choose(parseInt(btn.getAttribute('data-idx'),10)); });
+  });
+}
+
+function choose(idx){
+  var sc = SCENES[i], o = sc.opts[idx];
+  score += o.d; if(score<0) score=0; if(score>100) score=100;
+  chosen.push(o.kind);
+  var sign = o.d>0 ? '+'+o.d : ''+o.d;
+  var col = o.d>0 ? '#7FE0A6' : '#F0A0A0';
+  var h = coreHTML(score);
+  h += '<div class="daypart">'+sc.part+'</div>';
+  h += '<div class="react"><p class="rt">'+o.react+'</p><span class="delta" style="color:'+col+'">'+sign+' к жизни в тебе</span><p class="why">'+o.why+'</p></div>';
+  h += '<button class="next" id="nx">'+(i<SCENES.length-1?'Дальше →':'Чем закончился день →')+'</button>';
+  h += progressHTML();
+  stage.innerHTML = h;
+  document.getElementById('nx').addEventListener('click', function(){
+    i++; if(i<SCENES.length){ renderScene(); } else { renderResult(); }
+  });
+}
+
+function renderResult(){
+  var live = chosen.filter(function(k){return k==='live';}).length;
+  var title, lead, body;
+  if(score>=68){
+    title='Спираль развернулась вверх';
+    lead='Ты почти всё выбрал в сторону живого — и день это вернул.';
+    body='Заметь главное: ни один живой выбор не был про вдохновение. Вставать не хотелось, выходить было лень, отвечать другу — неловко. Ты делал <b>раньше</b>, чем появлялось желание, — и желание приходило следом. Так и работает возвращение к жизни: сначала маленькое действие, потом настроение. Ты сегодня прожил это, а не прочитал.';
+  } else if(score>=45){
+    title='Смешанный день';
+    lead='Где-то ты встал, где-то уступил. И знаешь — так и выглядит настоящее возвращение.';
+    body='Оживание — это не идеальный день, а перевес живых выборов над прозябанием, день за днём. Ты сделал '+live+' живых шага из шести — и уже видно, как каждый из них подтягивал шкалу вверх, а каждое «потом» роняло её вниз. Не нужно выигрывать всё. Нужно, чтобы живых выборов было чуть больше, чем вчера.';
+  } else {
+    title='День прошёл вниз — и это не приговор';
+    lead='Знакомо, правда? Так и живёт спираль угасания. Но она разворачивается одним маленьким действием.';
+    body='Тут нет осуждения. Каждый выбор «полежать, отложить, полистать» в моменте казался облегчением — и честно давал его на минуту. Просто цена приходила позже: осадок, вина, украденный сон. Хорошая новость в том, что спираль работает в обе стороны. Один живой выбор завтра утром — встать сразу — уже начнёт разворачивать её вверх. С этого и начинается курс.';
+  }
+  var h = coreHTML(score);
+  h += '<div class="result"><h2>'+title+'</h2><p class="lead">'+lead+'</p><div class="body">'+body+'</div>';
+  h += '<div class="cta">'
+     + '<a class="primary" href="/blog/lekciya-snova-1-pochemu-pogaslo.html">Начать курс «Снова живой»</a>'
+     + '<a class="ghost" href="/fredi/">Разобрать свой день с Фреди</a></div>';
+  h += '<div style="text-align:center;margin-top:16px"><button class="restart" id="rs">↻ Прожить день заново</button></div>';
+  h += '</div>';
+  stage.innerHTML = h;
+  document.getElementById('rs').addEventListener('click', function(){ score=START; i=0; chosen=[]; renderScene(); });
+  if(window.ym){ ym(108138656,'reachGoal','spiral_finish',{score:Math.round(score)}); }
+}
+
+renderScene();
+</script>
+</body></html>
