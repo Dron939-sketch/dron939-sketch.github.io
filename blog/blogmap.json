@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-snova-1-pochemu-pogaslo",
+   "title": "Почему погасло: жизнь против прозябания",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-2-vyuchennaya-bespomoshchnost",
+   "title": "Выученная беспомощность: как среда учит «от меня ничего не зависит»",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-3-trezvaya-karta-sredy",
+   "title": "Как устроена жизнь в России: трезвая карта среды",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-snova-4-krug-vliyaniya",
+   "title": "Круг влияния: что в моей власти",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-5-poslednyaya-svoboda",
+   "title": "Последняя свобода: смысл, который не отнять",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-snova-6-kuda-propala-radost",
+   "title": "Куда пропала радость: почему мир стал тусклым",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-7-vernut-vkus",
+   "title": "Вернуть вкус: поток, тело, связи",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-8-zhivi-a-ne-dozhivaj",
+   "title": "Живи, а не доживай: смелость и азарт быть живым",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-9-kuda-dvigatsya",
+   "title": "Куда двигаться: направление, ценности и мечта",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-snova-10-lichnyj-plan",
+   "title": "Личный план: снова живой — итоги курса",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-perepr-1-ty-ne-s-nulya",
    "title": "Ты — не с нуля: почему «здравый смысл» — чужая прошивка",
    "rubric": "lektorij",
