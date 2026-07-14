@@ -307,10 +307,55 @@
       '.sp-cta{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}',
       '.sp-cta a,.sp-cta button{display:inline-block;border-radius:12px;padding:12px 20px;font-weight:700;font-size:.96rem;text-decoration:none;cursor:pointer;font-family:inherit;border:none}',
       '.sp-cta a.p{background:#3A86FF;color:#fff}.sp-cta button.g{background:#161F31;color:#EAF0F8;border:1px solid #26324A}',
-      '.sp-disc{font-size:.8rem;color:#8A93A3;margin-top:16px;text-align:center;line-height:1.5}'
+      '.sp-disc{font-size:.8rem;color:#8A93A3;margin-top:16px;text-align:center;line-height:1.5}',
+      '@keyframes spBreath{0%,100%{filter:drop-shadow(0 0 5px rgba(240,176,110,.12))}50%{filter:drop-shadow(0 0 13px rgba(240,176,110,.26))}}',
+      '.sp-svg{animation:spBreath 6s ease-in-out infinite}',
+      '@keyframes spFlash{0%{box-shadow:0 16px 44px rgba(10,18,40,.4)}25%{box-shadow:0 0 44px rgba(127,224,166,.45)}100%{box-shadow:0 16px 44px rgba(10,18,40,.4)}}',
+      '.sp-stage.flash{animation:spFlash 1.3s ease}',
+      '.sp-whisper{display:block;margin-top:6px;font-size:.82rem;font-style:italic;color:#8894A8}',
+      '.sp-low{background:rgba(120,150,200,.1);border:1px solid rgba(120,150,200,.3);color:#B7C6DE;border-radius:11px;padding:10px 13px;margin:0 0 14px;font-size:.86rem;line-height:1.45}',
+      '.sp-daychip{text-align:center;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:#3A86FF;font-weight:800;margin:0 0 6px}',
+      '.sp-spark{display:block;margin:12px auto 4px;max-width:340px}',
+      '.sp-badge{background:linear-gradient(135deg,rgba(240,176,110,.16),rgba(240,176,110,.04));border:1px solid rgba(240,176,110,.4);border-radius:12px;padding:12px 14px;margin:12px 0 0;color:#F1C79B;font-size:.9rem;text-align:center;line-height:1.45}',
+      '.sp-voice{background:none;border:1px solid #33415B;color:#AEBBD0;border-radius:20px;padding:7px 15px;font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;margin-top:12px}',
+      '.sp-voice:hover{border-color:#3A86FF;color:#fff}'
     ].join('');
     document.head.appendChild(st);
   }
+
+  // помечаем вечернюю сцену каждой роли (индекс 6 из 8) — для последствий и лайфхака движения
+  for (var _r in SCENES) { if (SCENES[_r][6]) SCENES[_r][6].ev = true; }
+
+  // «внутренний голос» саботажа и называние искажения (КПТ + Селигман)
+  var WHISPER = {
+    cheap: ['«Ещё пять минут, я заслужил»', '«Только гляну одним глазком»', '«Мне бы просто отвлечься»'],
+    avoid: ['«Потом, сейчас не до этого»', '«Да зачем, всё равно без толку»', '«В другой раз, честно»'],
+    ruminate: ['«Надо понять, кто виноват»', '«Как они могли, это несправедливо»', '«А если бы я поступил иначе…»']
+  };
+  var DISTORT = { cheap: 'поиск быстрого облегчения', avoid: 'обесценивание и «потом»', ruminate: 'катастрофизация и прокрутка неподвластного' };
+  function whisper(k) { var p = WHISPER[k]; return p ? p[Math.floor(Math.random() * p.length)] : ''; }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+  // мини-график траектории «жизни»
+  function sparkline(vals, labels) {
+    if (!vals || vals.length < 2) return '';
+    var W = 320, H = 60, pad = 6, n = vals.length;
+    var pts = vals.map(function (v, i) { return [pad + i * (W - 2 * pad) / (n - 1), H - pad - clamp(v) / 100 * (H - 2 * pad)]; });
+    var d = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var up = vals[n - 1] >= vals[0];
+    var col = up ? '#7FE0A6' : '#F0A0A0';
+    var dots = pts.map(function (p, i) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3" fill="' + (clamp(vals[i]) >= 55 ? '#F0B06E' : clamp(vals[i]) >= 40 ? '#7FB0FF' : '#8894A8') + '"/>'; }).join('');
+    var lab = labels ? labels.map(function (t, i) { return '<text x="' + pts[i][0].toFixed(1) + '" y="' + (H - 0) + '" text-anchor="middle" font-size="8" fill="#7C8BA6">' + t + '</text>'; }).join('') : '';
+    return '<svg class="sp-spark" viewBox="0 0 ' + W + ' ' + (H + (labels ? 8 : 0)) + '" width="100%"><path d="' + d + '" fill="none" stroke="' + col + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>' + dots + lab + '</svg>';
+  }
+
+  // озвучка Фреди
+  function voiceOn() { return !!(window.voiceManager && typeof window.voiceManager.textToSpeech === 'function'); }
+  function say() { if (voiceOn() && ST && ST.lastSay) { try { window.voiceManager.textToSpeech(ST.lastSay); } catch (e) {} } }
+
+  // достижение «прожил N жизней»
+  function playedRoles() { try { return (LS('spiralRoles') || '').split(',').filter(Boolean); } catch (e) { return []; } }
+  function addPlayedRole(id) { var a = playedRoles(); if (a.indexOf(id) < 0) { a.push(id); LS('spiralRoles', a.join(',')); } }
 
   function lifeVal() { return Math.round(clamp(0.4 * ST.drive + 0.4 * (100 - ST.cort) + 0.2 * ST.svyaz)); }
   function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
@@ -354,9 +399,11 @@
     return h + '</div>';
   }
 
+  function roleStat() { for (var i = 0; i < ROLES.length; i++) if (ROLES[i].id === ST.role) return ROLES[i].st; return { d: 30, c: 62, s: 35 }; }
+
   function showSpiralGame() {
     injectCSS();
-    ST = { role: null, drive: 30, cort: 62, svyaz: 35, i: 0, chosen: [], liveStreak: 0, dimStreak: 0, pending: null, meaning: null };
+    ST = { role: null, drive: 30, cort: 62, svyaz: 35, day: 1, week: [], allChosen: [], i: 0, chosen: [], trace: [], flags: {}, liveStreak: 0, dimStreak: 0, pending: null, meaning: null, mopts: null, lastSay: '' };
     track('spiral_open');
     var last = LS('spiralStep');
     if (last) { renderCheckin(last); return; }
@@ -378,7 +425,14 @@
   function checkin(done) {
     try { localStorage.removeItem('spiralStep'); } catch (e) {}
     track('spiral_checkin', { done: done });
-    renderRoles(done ? 'Отлично. Одно живое действие — и спираль уже качнулась вверх. Проживём ещё день?' : 'Ничего. Спираль разворачивается не виной, а следующим шагом. Попробуем ещё раз — прямо сейчас.');
+    renderRoles(done ? 'Отлично. Одно живое действие — и спираль уже качнулась вверх. Проживём неделю?' : 'Ничего. Спираль разворачивается не виной, а следующим шагом. Попробуем ещё раз — прямо сейчас.');
+  }
+
+  function achHTML() {
+    var n = playedRoles().length;
+    if (n >= 7) return '<div class="sp-badge">🏆 Ты прожил все 7 жизней. Разные роли — одна правда: спираль у каждого разворачивается одним живым действием.</div>';
+    if (n >= 1) return '<div class="sp-goal">Прожито жизней: <b>' + n + ' из 7</b></div>';
+    return '';
   }
 
   function renderRoles(topNote) {
@@ -388,32 +442,41 @@
     }).join('');
     c.innerHTML = '<div class="sp-wrap">' +
       '<button class="sp-ghost" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button>' +
-      '<div class="sp-eyebrow">🎮 Тренажёр к курсу «Снова живой»</div><h1 class="sp-h1">Спираль</h1>' +
+      '<div class="sp-eyebrow">🎮 Тренажёр к курсу «Снова живой»</div><h1 class="sp-h1">Спираль</h1>' + achHTML() +
       (topNote ? '<div class="sp-echo" style="background:rgba(58,134,255,.1);border-color:rgba(58,134,255,.3);color:#Bdd4ff">' + topNote + '</div>' : '') +
-      '<p class="sp-lead">Проживи один день человека, у которого будто выключили свет. Смотри, как три системы — <b>⚡ драйв</b>, <b>🌫 тяжесть</b> и <b>🤝 связь</b> — отвечают на выбор, и как спираль раскручивается или затягивается. У каждой жизни свой стартовый расклад — <b>выбери, чью проживёшь.</b></p>' +
+      '<p class="sp-lead">Проживи <b>неделю оживания</b> — до пяти дней подряд. Три системы — <b>⚡ драйв</b>, <b>🌫 тяжесть</b>, <b>🤝 связь</b> — отвечают на каждый выбор, а состояние переносится изо дня в день. У каждой жизни свой стартовый расклад — <b>выбери, чью проживёшь.</b></p>' +
       roles + '</div>';
     try { window.scrollTo(0, 0); } catch (e) {}
   }
 
   function pick(id) {
-    var r = null; for (var i = 0; i < ROLES.length; i++) if (ROLES[i].id === id) r = ROLES[i];
-    var s = (r && r.st) || { d: 30, c: 62, s: 35 };
-    ST.role = id; ST.drive = s.d; ST.cort = s.c; ST.svyaz = s.s; ST.i = 0; ST.chosen = []; ST.liveStreak = 0; ST.dimStreak = 0; ST.pending = null; ST.meaning = null;
+    var s = null; for (var i = 0; i < ROLES.length; i++) if (ROLES[i].id === id) s = ROLES[i].st;
+    s = s || { d: 30, c: 62, s: 35 };
+    addPlayedRole(id);
+    ST.role = id; ST.drive = s.d; ST.cort = s.c; ST.svyaz = s.s; ST.day = 1; ST.week = []; ST.allChosen = [];
     track('spiral_role', { role: id });
+    startDay();
+  }
+
+  function startDay() {
+    ST.i = 0; ST.chosen = []; ST.flags = {}; ST.liveStreak = 0; ST.dimStreak = 0; ST.pending = null; ST.meaning = null;
+    ST.trace = [lifeVal()];
     renderMeaning();
   }
 
   function renderMeaning() {
     var c = container(); if (!c) return;
-    var ms = MEANINGS[ST.role].map(function (m, i) { return '<button class="sp-mean" onclick="SPIRAL.setMeaning(' + i + ')"><b>' + m + '</b></button>'; }).join('');
+    ST.mopts = shuffle(MEANINGS[ST.role]);
+    var ms = ST.mopts.map(function (m, i) { return '<button class="sp-mean" onclick="SPIRAL.setMeaning(' + i + ')"><b>' + m + '</b></button>'; }).join('');
     c.innerHTML = '<div class="sp-wrap">' +
-      '<button class="sp-ghost" onclick="SPIRAL.again()">← Сменить роль</button>' +
+      '<button class="sp-ghost" onclick="SPIRAL.again()">← Сменить жизнь</button>' +
+      '<div class="sp-daychip">День ' + ST.day + ' из недели</div>' +
       '<div class="sp-eyebrow">🎯 Вопрос дня</div><h1 class="sp-h1">Ради чего ты встанешь сегодня?</h1>' +
-      '<p class="sp-lead">Виктор Франкл называл это последней свободой — той, что нельзя отнять. Не «смысл жизни» с большой буквы, а маленький ответ на один день. Выбери свой — он придёт на помощь в самый страшный момент.</p>' +
+      '<p class="sp-lead">Виктор Франкл называл это последней свободой — той, что нельзя отнять. Маленький ответ на один день. Выбери свой — он придёт на помощь в самый страшный момент.</p>' +
       ms + '</div>';
     try { window.scrollTo(0, 0); } catch (e) {}
   }
-  function setMeaning(i) { ST.meaning = MEANINGS[ST.role][i]; track('spiral_meaning', { role: ST.role, meaning: ST.meaning }); renderScene(); }
+  function setMeaning(i) { ST.meaning = (ST.mopts || MEANINGS[ST.role])[i]; track('spiral_meaning', { role: ST.role, meaning: ST.meaning }); renderScene(); }
 
   function applyPending() {
     var p = ST.pending; ST.pending = null;
@@ -426,80 +489,127 @@
   function renderScene() {
     var p = applyPending();
     var sc = SCENES[ST.role][ST.i], c = container(); if (!c) return;
+    var life = lifeVal();
     var ticks = p ? { drive: p.drive || null, cort: p.cort || null } : {};
     var echo = '';
     if (p) echo = '<div class="sp-echo' + (p.hack ? ' hack' : '') + '">' + (p.hack ? '' : '⏳ ') + p.note + (p.buffered ? ' <span style="color:#AEDBFF">(🤝 связь смягчила: −' + p.buffered + ' тяжести)</span>' : '') + '</div>';
-    var opts = sc.opts.map(function (o, idx) { return '<button class="sp-opt" onclick="SPIRAL.choose(' + idx + ')">' + o.label + '</button>'; }).join('');
+    var low = life < 24 ? '<div class="sp-low">🪫 Ты почти на дне — большие действия сейчас как гора. И всё-таки: сделать отсюда хоть что-то живое — это и есть то, что разжимает беспомощность. Начни с самого маленького.</div>' : '';
+    var evc = (sc.ev && ST.flags.skipConn) ? '<div class="sp-echo">🌫 Днём ты не вышел к людям — вечер сегодня одиночнее и тяжелее.</div>' : '';
     var mrem = (sc.mn && ST.meaning) ? '<div class="sp-echo" style="background:rgba(58,134,255,.1);border-color:rgba(58,134,255,.3);color:#Bdd4ff">🎯 Вспомни, ради чего ты сегодня встал: «' + ST.meaning + '». Сейчас — момент, где решается смелость.</div>' : '';
-    c.innerHTML = '<div class="sp-wrap"><div class="sp-stage">' +
-      hud(ticks) + goalHTML() + '<div class="sp-part">' + sc.part + '</div>' + echo + mrem +
+    var opts = sc.opts.map(function (o, idx) {
+      var w = isLive(o.k) ? '' : '<span class="sp-whisper">💭 ' + whisper(o.k) + '</span>';
+      return '<button class="sp-opt" onclick="SPIRAL.choose(' + idx + ')">' + o.label + w + '</button>';
+    }).join('');
+    c.innerHTML = '<div class="sp-wrap"><div class="sp-stage' + (p && p.hack ? ' flash' : '') + '">' +
+      hud(ticks) + goalHTML() + '<div class="sp-daychip">День ' + ST.day + '</div><div class="sp-part">' + sc.part + '</div>' + echo + low + evc + mrem +
       '<p class="sp-scene">' + sc.text + '</p><div class="sp-opts">' + opts + '</div>' + progHTML() + '</div></div>';
     try { window.scrollTo(0, 0); } catch (e) {}
   }
 
   function choose(idx) {
     var sc = SCENES[ST.role][ST.i], o = sc.opts[idx], e = eff(o.k), live = isLive(o.k);
-    var mom = '', meaningNote = '';
+    var lifeBefore = lifeVal();
+    var mom = '', meaningNote = '', distNote = '', lowWin = '';
     if (live) { ST.liveStreak++; ST.dimStreak = 0; } else { ST.dimStreak++; ST.liveStreak = 0; }
     var dDrive = e.drive, dCortRaw = e.cort;
     if (live && ST.liveStreak >= 2) { var b = Math.min(ST.liveStreak - 1, 3) * 2; dDrive += b; mom = '<div class="sp-momentum" style="color:#7FE0A6">🌀 Спираль раскручивается: серия живых выборов — начинать всё легче (+' + b + ' драйв)</div>'; }
     if (!live && ST.dimStreak >= 2) { var bc = Math.min(ST.dimStreak - 1, 3) * 2; dCortRaw += bc; mom = '<div class="sp-momentum" style="color:#F0A0A0">🌀 Спираль затягивается: прозябание тянет за собой (+' + bc + ' тяжесть)</div>'; }
     if (live && ST.meaning && sc.mn) { dDrive += 6; dCortRaw -= 5; meaningNote = '<div class="sp-momentum" style="color:#Bdd4ff">🎯 Ты вспомнил, ради чего — и это дало сил решиться через страх.</div>'; }
+    if (live && lifeBefore < 24) { dDrive += 3; lowWin = '<div class="sp-momentum" style="color:#B7C6DE">🪫 Ты сделал это с самого дна. Именно так, по одному микрошагу, беспомощность и разжимается.</div>'; }
+    if (!live && DISTORT[o.k]) { distNote = '<div class="sp-momentum" style="color:#C9A0F0">🧠 Искажение, которое толкнуло вниз: ' + DISTORT[o.k] + '.</div>'; }
+    if (sc.soc && !live) ST.flags.skipConn = true;
+    if (sc.ev && ST.flags.skipConn) dCortRaw += 3;
     var dSv = svyazDelta(o.k, sc.soc); ST.svyaz = clamp(ST.svyaz + dSv);
     ST.drive = clamp(ST.drive + dDrive);
     var cr = addCort(dCortRaw);
     ST.pending = e.delay || null;
     ST.chosen.push(o.k);
+    ST.trace.push(lifeVal());
     var bufNote = cr.buffered ? '<div class="sp-momentum" style="color:#AEDBFF">🤝 Связь смягчила удар по тяжести (−' + cr.buffered + ').</div>' : '';
     var last = ST.i >= SCENES[ST.role].length - 1;
     var c = container(); if (!c) return;
     c.innerHTML = '<div class="sp-wrap"><div class="sp-stage">' +
       hud({ drive: dDrive || null, cort: cr.applied || null, svyaz: dSv || null }) + goalHTML() + '<div class="sp-part">' + sc.part + '</div>' +
-      '<div class="sp-react"><p class="sp-rt">' + o.react + '</p><p class="sp-why">' + o.why + '</p>' + mom + meaningNote + bufNote + '</div>' +
+      '<div class="sp-react"><p class="sp-rt">' + o.react + '</p><p class="sp-why">' + o.why + '</p>' + mom + meaningNote + lowWin + distNote + bufNote + '</div>' +
       (ST.pending ? '<div class="sp-echo" style="opacity:.75">…цена/награда этого выбора догонит на следующем шаге.</div>' : '') +
       '<button class="sp-next" onclick="SPIRAL.adv()">' + (last ? 'Чем закончился день →' : 'Дальше →') + '</button>' + progHTML() + '</div></div>';
     try { window.scrollTo(0, 0); } catch (e2) {}
   }
 
-  function adv() { ST.i++; if (ST.i < SCENES[ST.role].length) renderScene(); else renderResult(); }
+  function adv() { ST.i++; if (ST.i < SCENES[ST.role].length) renderScene(); else renderDayResult(); }
 
-  function renderResult() {
-    applyPending();
-    var life = lifeVal(), ch = ST.chosen;
-    var live = ch.filter(isLive).length;
+  function dayPattern() {
+    var ch = ST.chosen;
     var cheap = ch.filter(function (k) { return k === 'cheap'; }).length;
     var avoid = ch.filter(function (k) { return k === 'avoid' || k === 'ruminate'; }).length;
     var brave = ch.filter(function (k) { return k === 'brave'; }).length;
+    if (brave >= 1) return '💡 Ты рискнул смелостью — заметил, как страх (адреналин) схлынул за минуты, а эндорфины и гордость остались? Награда держится дольше страха.';
+    if (cheap >= 3) return 'Сегодня правил дешёвый дофамин: драйв вспыхивал от ленты и тут же падал ниже прежнего.';
+    if (avoid >= 3) return 'Сегодня копилась тяжесть от «потом» и прокрутки неподвластного — цена невыбора.';
+    return 'Живое поднимало драйв и связь, прозябание роняло всё вниз — как и в жизни.';
+  }
+
+  function renderDayResult() {
+    applyPending();
+    var life = lifeVal(); ST.week.push(life); ST.allChosen = ST.allChosen.concat(ST.chosen);
+    var title = life >= 64 ? 'День вытянул вверх' : life >= 42 ? 'Смешанный день' : 'День ушёл вниз';
+    var note = dayPattern();
+    var sryv = '';
+    if (life < 42 && ST.week.length > 1 && Math.max.apply(null, ST.week.slice(0, -1)) >= 50)
+      sryv = '<div class="sp-echo" style="margin-top:12px">Это срыв — но <b>неделя не обнуляется</b>. Важен не идеальный день, а следующий. Завтра можно иначе.</div>';
+    ST.lastSay = title + '. ' + note;
+    track('spiral_day', { role: ST.role, day: ST.day, life: life });
+    var c = container(); if (!c) return;
+    var voice = voiceOn() ? '<div style="text-align:center"><button class="sp-voice" onclick="SPIRAL.say()">🔊 Послушать голосом Фреди</button></div>' : '';
+    var btns = ST.day < 5
+      ? '<a class="p" onclick="SPIRAL.nextDay()" style="cursor:pointer">Следующий день (' + (ST.day + 1) + ') →</a><button class="g" onclick="SPIRAL.week()">Завершить неделю</button>'
+      : '<a class="p" onclick="SPIRAL.week()" style="cursor:pointer">Итог недели →</a>';
+    c.innerHTML = '<div class="sp-wrap"><div class="sp-stage sp-res">' +
+      hud({}) + '<div class="sp-daychip">День ' + ST.day + ' из недели</div>' +
+      '<h2>' + title + '</h2>' + sparkline(ST.trace) +
+      '<div class="bd">' + note + sryv + '</div>' + voice +
+      '<div class="sp-cta">' + btns + '</div></div></div>';
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  function nextDay() {
+    var b = roleStat();
+    ST.drive = Math.round(0.5 * b.d + 0.5 * ST.drive);
+    ST.cort = Math.round(0.5 * b.c + 0.5 * ST.cort);
+    ST.svyaz = Math.round(0.5 * b.s + 0.5 * ST.svyaz);
+    ST.day++; startDay();
+  }
+
+  function weekSummary() {
+    var days = ST.week.slice(); if (!days.length) days = [lifeVal()];
+    var first = days[0], lastv = days[days.length - 1], up = lastv - first;
+    var labels = days.map(function (_, i) { return 'Дн' + (i + 1); });
     var title, lead, body;
-    if (life >= 64) {
-      title = 'Спираль развернулась вверх';
-      lead = 'Драйв поднялся, тяжесть отступила, связь окрепла — и день это вернул.';
-      body = 'Заметь главное: ни один живой выбор не был про вдохновение. Вставать не хотелось, выходить было лень, решаться — страшно. Ты делал <b>раньше</b>, чем появлялось желание, — и системы ответили. Так и работает возвращение к жизни: сначала действие, потом настроение.';
-    } else if (life >= 42) {
-      title = 'Смешанный день';
-      lead = 'Где-то ты встал, где-то уступил — и шкалы это честно показали.';
-      body = 'Оживание — не идеальный день, а перевес живых выборов над прозябанием, день за днём. Ты сделал ' + live + ' живых шага. Видел, как движение и смелость через паузу возвращали драйв, а «потом» и руминация роняли всё вниз? Не нужно выигрывать всё — нужно, чтобы живого было чуть больше, чем вчера.';
-    } else {
-      title = 'День прошёл вниз — и это не приговор';
-      lead = 'Знакомо? Так и живёт спираль угасания. Но она разворачивается в обе стороны.';
-      body = 'Тут нет осуждения. Каждый выбор «полежать, отложить, полистать» в моменте давал облегчение — короткий плюс. Но цена приходила на следующем шаге: драйв проваливался, тяжесть накатывала. Хорошая новость — один живой выбор завтра утром уже качнёт спираль вверх.';
-    }
-    var pat = '';
-    if (cheap >= 3) pat = '<b>Твой паттерн — дешёвый дофамин.</b> Видел, как драйв подскакивал от ленты и тут же обрушивался ниже прежнего? Это он: тяга без радости, крадущая силы.';
-    else if (avoid >= 3) pat = '<b>Твой паттерн — избегание и руминация.</b> Заметил, что тяжесть копилась даже без ленты — от «потом» и прокрутки неподвластного? Это цена невыбора.';
-    else if (live >= 5) pat = '<b>Твой паттерн — действие через «не хочется».</b> Именно так спираль и разворачивается: телу сначала тяжело, а потом легче — не наоборот.';
-    if (brave >= 1) pat += (pat ? '<br><br>' : '') + '<b>И ты рискнул смелостью.</b> Заметил лайфхак тела? Страх (адреналин) схлынул за минуты, а эндорфины и гордость «я смог» остались — награда держится дольше страха. Так же работает и движение: нагрузка даёт своё «обезболивающее», близкое к дофамину.';
-    if (ST.svyaz >= 60) pat += (pat ? '<br><br>' : '') + '<b>И ещё:</b> ты много вложил в связь — окситоцин весь день смягчал удары тяжести. Люди — не роскошь, а амортизатор.';
-    if (pat) body += '<br><br>' + pat;
-    track('spiral_finish', { role: ST.role, life: life, live: live, cheap: cheap, avoid: avoid, brave: brave, svyaz: ST.svyaz });
+    if (up >= 12 && lastv >= 55) { title = 'Неделя развернула спираль вверх'; lead = 'От ' + first + ' к ' + lastv + ' — жизнь набирала от живых выборов день за днём.'; }
+    else if (up > -6) { title = 'Неделя удержала тебя на плаву'; lead = 'Спираль не рухнула — а это уже перелом привычного скольжения вниз.'; }
+    else { title = 'Неделя ушла вниз — и это тоже данные'; lead = 'Прозябание перевешивало живое. Но спираль работает в обе стороны — с любого дня.'; }
+    var ac = ST.allChosen;
+    var cheap = ac.filter(function (k) { return k === 'cheap'; }).length;
+    var avoid = ac.filter(function (k) { return k === 'avoid' || k === 'ruminate'; }).length;
+    var brave = ac.filter(function (k) { return k === 'brave'; }).length;
+    body = 'Главное за неделю: возвращение к жизни — не идеальные дни, а <b>перевес живого над прозябанием</b>, день за днём. Срыв не обнуляет неделю; важен следующий шаг, а не вчерашний провал.';
+    if (brave >= 2) body += '<br><br><b>Ты не раз выбирал смелость</b> — и тело показало лайфхак: страх схлынет, а эндорфины и гордость останутся дольше него.';
+    if (cheap >= 4) body += '<br><br><b>Осторожно с дешёвым дофамином:</b> лента давала вспышку и роняла драйв ниже прежнего — это он держит в яме.';
+    if (avoid >= 4) body += '<br><br><b>Твой частый ход — избегание и руминация:</b> тяжесть копилась даже без ленты, от «потом» и прокрутки неподвластного.';
+    ST.lastSay = title + '. ' + lead;
+    track('spiral_finish', { role: ST.role, days: days.length, first: first, last: lastv, cheap: cheap, avoid: avoid, brave: brave });
     var steps = STEPS.map(function (s, i) { return '<button class="sp-step" onclick="SPIRAL.saveStep(' + i + ',this)">' + s + '</button>'; }).join('');
+    var voice = voiceOn() ? '<div style="text-align:center"><button class="sp-voice" onclick="SPIRAL.say()">🔊 Послушать голосом Фреди</button></div>' : '';
     var c = container(); if (!c) return;
     c.innerHTML = '<div class="sp-wrap"><div class="sp-stage sp-res">' +
-      hud({}) + '<h2>' + title + '</h2><p class="rl">' + lead + '</p><div class="bd">' + body + '</div>' +
+      '<div class="sp-daychip">Итог недели оживания</div>' +
+      sparkline(days, labels) +
+      '<h2>' + title + '</h2><p class="rl">' + lead + '</p><div class="bd">' + body + '</div>' + voice +
+      achHTML() +
       '<div class="sp-tool" id="spTool"><div class="th">🌀 Вытащи себя из спирали — по-настоящему</div>' +
       '<div class="ts">Спираль разворачивается одним живым действием, сделанным раньше, чем захочется. Выбери СВОЙ шаг на завтра — я напомню о нём, когда вернёшься:</div>' + steps + '</div>' +
       '<div class="sp-cta"><a class="p" href="/blog/lekciya-snova-1-pochemu-pogaslo.html">Начать курс «Снова живой»</a>' +
-      '<button class="g" onclick="SPIRAL.again()">↻ Прожить другой день</button></div>' +
+      '<button class="g" onclick="SPIRAL.again()">↻ Прожить другую жизнь</button></div>' +
       '<div class="sp-disc">Это учебный тренажёр, а не диагностика. Если тяжесть держится неделями — это повод обратиться к специалисту.</div>' +
       '</div></div>';
     try { window.scrollTo(0, 0); } catch (e) {}
@@ -512,8 +622,8 @@
       '<div class="sp-saved">Твой шаг на завтра:<br><b>«' + txt + '»</b><br><span style="font-size:.86rem;color:#9FB0C9">Сделай его раньше, чем захочется. Вернёшься — спрошу, получилось ли.</span></div>';
   }
 
-  function again() { ST.role = null; ST.drive = 30; ST.cort = 62; ST.svyaz = 35; ST.i = 0; ST.chosen = []; ST.liveStreak = 0; ST.dimStreak = 0; ST.pending = null; ST.meaning = null; renderRoles(); }
+  function again() { ST.role = null; ST.drive = 30; ST.cort = 62; ST.svyaz = 35; ST.day = 1; ST.week = []; ST.allChosen = []; ST.i = 0; ST.chosen = []; ST.trace = []; ST.flags = {}; ST.liveStreak = 0; ST.dimStreak = 0; ST.pending = null; ST.meaning = null; renderRoles(); }
 
-  window.SPIRAL = { pick: pick, setMeaning: setMeaning, choose: choose, adv: adv, again: again, saveStep: saveStep, checkin: checkin };
+  window.SPIRAL = { pick: pick, setMeaning: setMeaning, choose: choose, adv: adv, again: again, saveStep: saveStep, checkin: checkin, nextDay: nextDay, week: weekSummary, say: say };
   window.showSpiralGame = showSpiralGame;
 })();
