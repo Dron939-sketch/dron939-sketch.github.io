@@ -531,6 +531,17 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div>
 </div></section>
 
+<section class="sec"><div class="wrap">
+<div class="sh"><h2>Новый набор — запись по заявке</h2><span>эти курсы готовятся · оставьте заявку и попадёте в первый поток</span></div>
+<div class="grid">
+<div class="dcard join" data-slug="uverennost-i-harizma" data-title="Уверенность и харизма" role="button" tabindex="0"><span class="ph" style="background:linear-gradient(135deg,#F0B06E,#E0663C)">🦁</span><b>Уверенность и харизма</b><span class="st join">Записаться</span></div>
+<div class="dcard join" data-slug="otnosheniya-v-pare" data-title="Отношения в паре" role="button" tabindex="0"><span class="ph" style="background:linear-gradient(135deg,#FF8FB1,#E23E6B)">💞</span><b>Отношения в паре</b><span class="st join">Записаться</span></div>
+<div class="dcard join" data-slug="travma-i-vosstanovlenie" data-title="Травма и восстановление" role="button" tabindex="0"><span class="ph" style="background:linear-gradient(135deg,#5FBF9F,#2E8B77)">🕊️</span><b>Травма и восстановление</b><span class="st join">Записаться</span></div>
+<div class="dcard join" data-slug="delo-zhizni" data-title="Дело жизни" role="button" tabindex="0"><span class="ph" style="background:linear-gradient(135deg,#6E8BF0,#3A56C0)">🧭</span><b>Дело жизни</b><span class="st join">Записаться</span></div>
+<div class="dcard join" data-slug="psihosomatika" data-title="Психосоматика" role="button" tabindex="0"><span class="ph" style="background:linear-gradient(135deg,#B98FE0,#7B4FC0)">🫀</span><b>Психосоматика</b><span class="st join">Записаться</span></div>
+</div>
+</div></section>
+
 <section class="sec" id="programma"><div class="wrap">
 <div class="sh"><h2>Все направления</h2><span>шесть блоков знаний</span></div>
 <div class="tabs">
@@ -681,7 +692,9 @@ document.querySelectorAll('.tab').forEach(function(t){
     ov.classList.add('on');setTimeout(function(){contact.focus();},50);}
   function closeM(){ov.classList.remove('on');}
   document.querySelectorAll('.dcard.join').forEach(function(c){
-    c.addEventListener('click',function(){openM(c.getAttribute('data-slug'),c.getAttribute('data-title'));});
+    function trigger(){openM(c.getAttribute('data-slug'),c.getAttribute('data-title'));}
+    c.addEventListener('click',trigger);
+    c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();trigger();}});
   });
   cancelB.addEventListener('click',closeM);
   ov.addEventListener('click',function(e){if(e.target===ov)closeM();});
