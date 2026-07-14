@@ -2,5 +2,5 @@
 <body><div id="screenContainer"></div>
 <script>window.showKonturScreen=function(){document.getElementById('screenContainer').innerHTML='gh';};</script>
 <script src="spiral.js"></script>
-<script>window.addEventListener('load',function(){setTimeout(window.showSpiralGame,40);});</script>
+<script>try{localStorage.removeItem('spiralStep')}catch(e){};window.addEventListener('load',function(){setTimeout(window.showSpiralGame,40);});</script>
 </body></html>
