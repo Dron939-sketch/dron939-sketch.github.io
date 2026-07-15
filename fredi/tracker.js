@@ -104,8 +104,31 @@
         return false;
     }
 
+    // Внутренние аккаунты (автор/тест) не должны попадать в продуктовую
+    // аналитику: один залогиненный автор с 44-минутной сессией искажает
+    // средние длительности и DAU на выборке в 40 юзеров. Помечается либо
+    // localStorage-флагом (FrediTracker.markInternal() из консоли), либо
+    // известным uid.
+    var _INTERNAL_UIDS={'1778699723437':1};
+    var _internalCache=null;
+    function _isInternal(){
+        if(_internalCache!==null) return _internalCache;
+        var res=false;
+        try{
+            if(localStorage.getItem('fredi_internal')==='1') res=true;
+            else if(_INTERNAL_UIDS[String(UID()||'')]) res=true;
+        }catch(e){}
+        _internalCache=res;
+        return res;
+    }
+
     function track(event,data){
+        if (_isInternal()) return;
         if (_shouldDedupeError(event, data)) return;
+        // Единая точка для внешних слушателей (напр. отложенный onboarding в
+        // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,
+        // ловит и внутренние (feature_opened/message_sent), и внешние события.
+        try { window.dispatchEvent(new CustomEvent('fredi:track', { detail: { event: event } })); } catch (e) {}
         var payload={
             user_id:UID(),
             session_id:SID,
@@ -489,7 +512,11 @@
         track:track,
         openFeature:_openFeature,
         closeFeature:_closeCurrentFeature,
-        activeSec:function(){ _tickActive(); return Math.round(_activeMs/1000); }
+        activeSec:function(){ _tickActive(); return Math.round(_activeMs/1000); },
+        // Пометить это устройство как внутреннее (автор/тест): события
+        // перестанут уходить в продуктовую аналитику. Вызвать 1 раз из консоли.
+        markInternal:function(){ try{ localStorage.setItem('fredi_internal','1'); }catch(e){} _internalCache=true; },
+        isInternal:_isInternal
     };
     console.log('tracker.js v3 loaded');
 })();
