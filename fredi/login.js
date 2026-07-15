@@ -171,10 +171,12 @@
             : '';
 
         var primaryLabel = isRegister ? 'Создать аккаунт' : 'Войти';
-        // На app_start модалка обязательная — без X-крестика, без overlay-
-        // close, без Escape, без «Пропустить». Из settings/иначе X
-        // отображается как обычно.
-        var isMandatory = fromAppStart;
+        // Раньше на app_start модалка была обязательной (без X, без закрытия) —
+        // и это давало bounce: аноним видел стену регистрации на входе и уходил
+        // за 6 секунд (см. аналитику auth_modal_auto_shown → session_end ~6с).
+        // «Ценность → просьба»: модалку показываем, но НЕ запираем — её всегда
+        // можно закрыть и продолжить пользоваться.
+        var isMandatory = false;
         var closeBtnHtml = isMandatory
             ? ''
             : '<button class="fa-close" id="faClose" aria-label="Закрыть">✕</button>';
@@ -505,7 +507,9 @@
         wrap.innerHTML = _buildHtml(mode);
         document.body.appendChild(wrap.firstChild);
 
-        var isMandatory = (_lastSource === 'app_start');
+        // Модалка на app_start больше не обязательная (см. _buildHtml выше):
+        // всегда даём закрыть, чтобы не терять анонимов на входе.
+        var isMandatory = false;
 
         // Кнопка X и Skip существуют только в опциональном режиме.
         var faCloseBtn = document.getElementById('faClose');
@@ -848,6 +852,10 @@
         // Можно пропустить — не блокируем юзера. Цель: снизить friction
         // с 90% bounce (см. аналитику auth_modal_auto_shown vs register_success).
         if (document.getElementById('fredi-name-prompt')) return;
+        // Ставим отметку «показан» сразу при показе (а не только при сохранении):
+        // иначе быстрый reload страницы в той же сессии заново вешает промпт
+        // (в аналитике был двойной name_prompt_shown за 1 сек).
+        try { sessionStorage.setItem('fredi_name_prompt_seen', '1'); } catch (e) {}
         var overlay = document.createElement('div');
         overlay.id = 'fredi-name-prompt';
         overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)';
@@ -900,6 +908,43 @@
         _track('name_prompt_shown', {});
     }
 
+    // «Ценность → просьба»: НЕ показываем имя-промпт на холодном старте
+    // (в аналитике это давало 4-6-секундные bounce-сессии: открыл → стена →
+    // ушёл). Ждём первого реального действия — открыл игру/чат/тест/сообщение —
+    // и только тогда мягко спрашиваем имя. Запасной триггер — заметное
+    // пребывание (dwell), чтобы всё же спросить у тех, кто просто читает.
+    function _armDeferredNamePrompt(userKind) {
+        var armedAt = Date.now();
+        var fired = false;
+        var timer = null;
+
+        // «Действия ценности». Первые 1.5 с после старта игнорируем — чтобы не
+        // сработать на шумных событиях холодной загрузки.
+        var ENGAGE = { feature_opened: 1, message_sent: 1, test_start_clicked: 1,
+                       dashboard_cta_clicked: 1, game_round_start: 1, spiral_open: 1 };
+
+        function onTrack(e) {
+            var ev = e && e.detail && e.detail.event;
+            if (!fired && ev && ENGAGE[ev] && (Date.now() - armedAt) > 1500) fire('act:' + ev);
+        }
+
+        function fire(reason) {
+            if (fired) return;
+            fired = true;
+            try { window.removeEventListener('fredi:track', onTrack); } catch (e) {}
+            if (timer) { try { clearTimeout(timer); } catch (e) {} }
+            try { if (sessionStorage.getItem('fredi_name_prompt_seen') === '1') return; } catch (e) {}
+            if (window.IS_AUTHENTICATED) return;
+            _track('name_prompt_auto_shown', { visit: 1, user_kind: userKind, trigger: reason });
+            _showNamePrompt();
+        }
+
+        window.addEventListener('fredi:track', onTrack);
+        // Запасной путь: спросим имя после 75 с пребывания, даже если человек
+        // ничего явно не открыл (просто читает дашборд).
+        timer = setTimeout(function () { fire('dwell'); }, 75000);
+    }
+
     function _maybeShowOnLoad() {
         if (window.IS_AUTHENTICATED) return;
         try {
@@ -932,8 +977,9 @@
         if (visits <= 1) {
             // Если в этой же сессии уже показывали (например ребут страницы) — не дёргаем повторно.
             try { if (sessionStorage.getItem('fredi_name_prompt_seen') === '1') return; } catch (e) {}
-            _track('name_prompt_auto_shown', { visit: visits, user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh') });
-            _showNamePrompt();
+            // Не блокируем вход: даём увидеть Фреди/дашборд, спросим имя после
+            // первого действия (см. _armDeferredNamePrompt).
+            _armDeferredNamePrompt(hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh'));
             return;
         }
 
