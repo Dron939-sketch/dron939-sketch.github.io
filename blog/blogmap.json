@@ -6649,6 +6649,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-dvigatel-8-obmanut-len",
+   "title": "Обмануть лень: дешёвый вход и системы вместо воли — Лекция 8",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-dvigatel-9-batareya-sela",
+   "title": "Когда батарея села: двигатель против симптома — Лекция 9",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-dvigatel-10-zhizn-s-predvkusheniem",
+   "title": "Жизнь с предвкушением находок: своя система — Лекция 10",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 22
   }
  ]
 }
