@@ -6628,6 +6628,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-dvigatel-5-vnimanie-odin-kanal",
+   "title": "Внимание — один канал: клин клином — Лекция 5",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dvigatel-6-vzglyad-izobretatelya",
+   "title": "Взгляд изобретателя: будущее решение как приманка — Лекция 6",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dvigatel-7-stoyachaya-volna",
+   "title": "Ты — стоячая волна: себя как процесс, а не вещь — Лекция 7",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 22
   }
  ]
 }
