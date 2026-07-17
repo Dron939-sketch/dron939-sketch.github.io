@@ -24,7 +24,8 @@
         { key: 'danetki', fn: 'showDanetkiGame', src: 'danetki.js', emoji: '❓', name: 'Данетки', why: 'задавать сильные вопросы', mins: '5 мин' },
         { key: 'advokat', fn: 'showAdvokatGame', src: 'advokat.js', emoji: '😈', name: 'Адвокат дьявола', why: 'увидеть чужую точку зрения', mins: '5 мин' },
         { key: 'fermi', fn: 'showFermiGame', src: 'fermi.js', emoji: '📏', name: 'Прикидка', why: 'оценивать на глаз без паники', mins: '4 мин' },
-        { key: 'dvapotoka', fn: 'showDvaPotokaGame', src: 'dvapotoka.js', emoji: '🌀', name: 'Два потока', why: 'удерживать два дела сразу', mins: '3 мин' }
+        { key: 'dvapotoka', fn: 'showDvaPotokaGame', src: 'dvapotoka.js', emoji: '🌀', name: 'Два потока', why: 'удерживать два дела сразу', mins: '3 мин' },
+        { key: 'lgenij', fn: 'showLgenijGame', src: 'lgenij.js', emoji: '🧲', name: 'Ленивый гений', why: 'ставить дерзкие цели и искать лёгкий путь', mins: '5 мин' }
     ];
 
     function _load() {
