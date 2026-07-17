@@ -6607,6 +6607,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-dvigatel-2-zachem-mozgu-len",
+   "title": "Зачем мозгу лень: экономия энергии и завод батареек — Лекция 2",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dvigatel-3-ambiciya-vektor",
+   "title": "Амбиция — это вектор, а не «больше» — Лекция 3",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-dvigatel-4-dvigatel-vstrecha",
+   "title": "Двигатель: где встречаются лень и амбиция — Лекция 4",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
