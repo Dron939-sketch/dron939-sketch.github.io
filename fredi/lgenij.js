@@ -53,25 +53,106 @@
 
   // ===== Банк робких целей по сферам жизни (перенос навыка). =====
   // Ответы игрок придумывает сам, их оценивает Фреди — «правильных» нет.
+  // У каждой цели — свой проработанный пример хода (bold/path/future),
+  // чтобы образец был про ТУ ЖЕ цель, что перед глазами (worked example).
   var BANK = [
-    { dom: 'Навык',      timid: 'подтянуть английский' },
-    { dom: 'Тело',       timid: 'иногда делать зарядку' },
-    { dom: 'Деньги',     timid: 'немного отложить на чёрный день' },
-    { dom: 'Карьера',    timid: 'может, попросить прибавку' },
-    { dom: 'Творчество', timid: 'когда-нибудь начать блог' },
-    { dom: 'Отношения',  timid: 'почаще видеться с друзьями' },
-    { dom: 'Навык',      timid: 'научиться готовить пару блюд' },
-    { dom: 'Тело',       timid: 'поменьше сидеть в телефоне вечером' },
-    { dom: 'Карьера',    timid: 'разобраться в новой программе на работе' },
-    { dom: 'Деньги',     timid: 'найти подработку на выходных' },
-    { dom: 'Творчество', timid: 'снять один ролик для себя' },
-    { dom: 'Быт',        timid: 'навести порядок в квартире' },
-    { dom: 'Отношения',  timid: 'познакомиться с новыми людьми' },
-    { dom: 'Навык',      timid: 'почитать что-то по своей теме' }
+    { dom: 'Навык', timid: 'подтянуть английский',
+      bold: 'свободно говорить с иностранцами на любимую тему уже через год',
+      path: 'смотреть любимые сериалы в оригинале с субтитрами и болтать с ИИ по 5 минут в день — интерес тянет сам',
+      future: 'тем, кто думает на двух языках и не боится ни одного собеседника' },
+    { dom: 'Тело', timid: 'иногда делать зарядку',
+      bold: 'к лету стать выносливым — легко пробегать пять километров и не задыхаться на лестнице',
+      path: 'класть форму с вечера у кровати и бегать с другом по утрам — вам неудобно подводить друг друга',
+      future: 'человеком, для которого движение — не подвиг, а часть дня' },
+    { dom: 'Деньги', timid: 'немного отложить на чёрный день',
+      bold: 'за год собрать подушку на полгода спокойной жизни',
+      path: 'настроить автосписание десяти процентов в день зарплаты — деньги копятся сами, до того как я их увижу',
+      future: 'человеком, который спит спокойно, потому что за спиной есть опора' },
+    { dom: 'Карьера', timid: 'может, попросить прибавку',
+      bold: 'за полгода вырасти в доходе в полтора раза — на новой роли или в новом месте',
+      path: 'собрать список своих результатов и разослать резюме на три вакансии мечты — рынок сам покажет мою цену',
+      future: 'специалистом, за которого компании конкурируют' },
+    { dom: 'Творчество', timid: 'когда-нибудь начать блог',
+      bold: 'за три месяца набрать первую тысячу читателей на том, что искренне люблю',
+      path: 'раз в день записывать одну мысль голосом по дороге и постить как есть — без монтажа и перфекционизма',
+      future: 'человеком, у которого есть свой голос и своя аудитория' },
+    { dom: 'Отношения', timid: 'почаще видеться с друзьями',
+      bold: 'собрать вокруг себя живой круг, где встречаются каждую неделю и тянут друг друга вверх',
+      path: 'завести регулярный день — «четверг, у меня, кто может» — один раз договориться, дальше идёт само',
+      future: 'человеком, вокруг которого само собирается тепло' },
+    { dom: 'Навык', timid: 'научиться готовить пару блюд',
+      bold: 'готовить так, что гости просят рецепт, а будни перестают быть про «что бы съесть»',
+      path: 'освоить пять базовых техник по коротким видео и повторять любимое, пока не выйдет на автомате',
+      future: 'человеком, для которого кухня — удовольствие, а не повинность' },
+    { dom: 'Тело', timid: 'поменьше сидеть в телефоне вечером',
+      bold: 'вернуть себе вечера — два часа на живое, а не на ленту',
+      path: 'ставить телефон заряжаться в другой комнате в девять вечера — убрал трение, и рука не тянется',
+      future: 'человеком, который управляет вниманием, а не лентой' },
+    { dom: 'Карьера', timid: 'разобраться в новой программе на работе',
+      bold: 'стать тем, к кому в отделе идут за помощью по этой программе',
+      path: 'разбирать по одной реальной рабочей задаче в ней каждый день — учусь на том, что и так надо сделать',
+      future: 'человеком, которому не страшны новые инструменты' },
+    { dom: 'Деньги', timid: 'найти подработку на выходных',
+      bold: 'собрать второй поток дохода, который за полгода дорастёт до половины зарплаты',
+      path: 'продать то, что уже умею, первым трём знакомым — сарафан запустит остальное',
+      future: 'человеком, чей доход не держится на одной ниточке' },
+    { dom: 'Творчество', timid: 'снять один ролик для себя',
+      bold: 'за месяц выпустить серию роликов, которую не стыдно показать и которая находит своих',
+      path: 'снимать на телефон одним дублем то, что и так делаю, и выкладывать без вылизывания',
+      future: 'человеком, который создаёт, а не только потребляет' },
+    { dom: 'Быт', timid: 'навести порядок в квартире',
+      bold: 'превратить дом в место, куда кайфово возвращаться — где каждый угол работает на меня',
+      path: 'разбирать по одной зоне в день, таймер на пятнадцать минут, лишнее сразу в коробку «отдать»',
+      future: 'человеком, у которого дом — источник сил, а не список задач' },
+    { dom: 'Отношения', timid: 'познакомиться с новыми людьми',
+      bold: 'за сезон завести пять новых знакомств, из которых вырастут настоящие связи',
+      path: 'ходить туда, где люди с моим интересом — там знакомство идёт само, вокруг общего дела',
+      future: 'человеком, которому легко входить в новые круги' },
+    { dom: 'Навык', timid: 'почитать что-то по своей теме',
+      bold: 'за год стать в своей теме человеком, к которому идут за мнением',
+      path: 'слушать аудиокниги и подкасты по теме в дороге — время, которое и так есть, работает на меня',
+      future: 'человеком, чьё мнение в теме весомо' }
   ];
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 
   var ROUNDS = 5; // раунд 5 — своя реальная цель
+
+  // ===== Проработанные примеры + подсказки «как делать» (worked examples).
+  // Показываем на каждом этапе; в первых раундах развёрнуто, дальше — сворачиваем
+  // (принцип «показать образец → убрать помощь»). Примеры берём из ДРУГОЙ сферы,
+  // чтобы подсказать ход, но не выдать ответ текущей цели.
+  var HELP = {
+    planka:   { how: 'Убери слова-глушилки («может», «иногда», «немного», «когда-нибудь»), умножь масштаб примерно в 10 раз и добавь срок. Спроси себя: «а если замахнуться по-настоящему?»' },
+    rychag:   { how: 'Вопрос не «как заставить себя», а «как сделать, чтобы вышло почти само». Пройдись по 4 рычагам сверху и возьми самый дешёвый ход — где любимое или уже готовое тянет тебя за собой.' },
+    primanka: { how: 'Одна строка не про результат, а про то, кем ты станешь. Этот образ и есть приманка — она тянет вперёд, когда мотивации нет.' }
+  };
+  // Запасной пример для раунда со своей целью (готового образца нет —
+  // помечаем явно «на примере другой цели», чтобы не путать).
+  var FALLBACK = {
+    planka: '<b>«иногда бегать»</b> → <span style="color:#6ee7b7">пробежать весной полумарафон и кайфануть на финише</span>',
+    rychag: 'Цель «втянуться в спорт» → <span style="color:#6ee7b7">бегать с другом по утрам — вам неудобно подводить друг друга</span>',
+    primanka: '<span style="color:#6ee7b7">человеком, для которого спорт — не подвиг, а часть дня</span>'
+  };
+  // Пример строится вокруг ТЕКУЩЕЙ цели (или запасной — на своём раунде).
+  function exText(phase) {
+    var cur = ST.cur || {};
+    if (cur.own || !cur.bold) return { label: 'Например, на другой цели', html: FALLBACK[phase] };
+    if (phase === 'planka') return { label: 'Например, эту цель можно поднять так', html: '<b>«' + esc(cur.timid) + '»</b> → <span style="color:#6ee7b7">' + esc(cur.bold) + '</span>' };
+    if (phase === 'rychag') return { label: 'Пример дешёвого пути к этой цели', html: '<span style="color:#6ee7b7">' + esc(cur.path) + '</span>' };
+    return { label: 'Пример образа будущего себя', html: '<span style="color:#6ee7b7">' + esc(cur.future) + '</span>' };
+  }
+  // Блок «Пример и подсказка»: развёрнут в первых 2 раундах, дальше свёрнут.
+  function helpBox(phase) {
+    var e = exText(phase);
+    var open = ST.idx < 2;
+    return '<div class="lg-help" id="lgHelp">' +
+      '<button class="lg-help-h" onclick="LGENIJ.toggleHelp()"><span>💡 Пример и подсказка</span><span id="lgHelpCar">' + (open ? '▴' : '▾') + '</span></button>' +
+      '<div class="lg-help-b" id="lgHelpBody" style="' + (open ? '' : 'display:none') + '">' +
+        '<div class="lg-help-lbl" style="font-size:.78rem;color:#8b93a7;margin-bottom:5px">' + e.label + ':</div>' +
+        '<div class="lg-help-ex">' + e.html + '</div>' +
+        '<div class="lg-help-how">' + esc(HELP[phase].how) + '</div>' +
+      '</div></div>';
+  }
 
   // ===== Состояние =====
   var ST = { stage: 'home', order: [], idx: 0, cur: null, ambitious: '', path: '', future: '', results: [], busy: false, blitzDone: false };
@@ -102,6 +183,15 @@
       '.lg-in{width:100%;box-sizing:border-box;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.18);border-radius:12px;color:#fff;font:15px/1.5 inherit;padding:11px 13px}',
       '.lg-in:focus{outline:none;border-color:#3a86ff}',
       '.lg-hint{color:#8b93a7;font-size:.85rem;margin:6px 2px 0}',
+      '.lg-help{background:rgba(58,134,255,.08);border:1px solid rgba(58,134,255,.24);border-radius:12px;margin:0 0 12px;overflow:hidden}',
+      '.lg-help-h{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:#9cc0ff;font:600 .9rem inherit;cursor:pointer;padding:11px 13px}',
+      '.lg-help-b{padding:0 13px 12px}',
+      '.lg-help-ex{background:rgba(0,0,0,.2);border-radius:9px;padding:9px 11px;font-size:.92rem;line-height:1.5;color:#dbe4f5;margin-bottom:8px}',
+      '.lg-help-how{font-size:.86rem;color:#aab2c4;line-height:1.5}',
+      '[data-theme="light"] .lg-help{background:rgba(58,134,255,.07);border-color:rgba(58,134,255,.28)}',
+      '[data-theme="light"] .lg-help-h{color:#2e6fe0}',
+      '[data-theme="light"] .lg-help-ex{background:#eef3fb;color:#26324a}',
+      '[data-theme="light"] .lg-help-how{color:#5a6472}',
       '.lg-primary{width:100%;margin-top:14px;padding:14px 16px;border:none;border-radius:12px;background:linear-gradient(135deg,#3a86ff,#5b9bff);color:#fff;font:700 1rem inherit;cursor:pointer}',
       '.lg-primary:disabled{opacity:.5;cursor:default}',
       '.lg-secondary{width:100%;margin-top:10px;padding:12px 16px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:transparent;color:#cdd4e2;font:600 .95rem inherit;cursor:pointer}',
@@ -147,7 +237,7 @@
         '<div class="lg-top"><button class="lg-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>🧲 бесплатно</span></div>' +
         '<h1 class="lg-h1">🧲 Ленивый гений</h1>' +
         '<p class="lg-sub">Хотеть в 10 раз больше — делать в 10 раз меньше. Тренажёр двигателя: дерзкая цель + самый дешёвый путь к ней.</p>' +
-        '<div class="lg-card"><div class="lg-ch">Изобретатель ленив</div>Он хочет невозможного — и ищет, как получить это <b>даром</b>. В каждом раунде ты делаешь два хода: <b>поднимаешь планку</b> робкой цели и находишь к ней <b>ленивый рычаг</b> — путь, где результат почти достаётся сам. Фреди оценит обе стороны и покажет твой перекос.</div>' +
+        '<div class="lg-card"><div class="lg-ch">Изобретатель ленив</div>Он хочет невозможного — и ищет, как получить это <b>даром</b>. В каждом раунде ты делаешь два хода: <b>поднимаешь планку</b> робкой цели и находишь к ней <b>ленивый рычаг</b> — путь, где результат почти достаётся сам. Фреди оценит обе стороны и покажет твой перекос.<br><br><span style="color:#6ee7b7">Не переживай за «пустое поле»: на каждом шаге есть готовый пример и подсказка «как делать».</span></div>' +
         '<div class="lg-card"><div class="lg-ch">Два хода — две шкалы</div>' +
           '<div class="lg-li">📈 <b>Амбиция</b> — насколько выше ты поднял цель (робкая планка = слабо).</div>' +
           '<div class="lg-li">🔧 <b>Лень-эффективность</b> — насколько дёшев и умён путь (сила/надрыв = слабо).</div>' +
@@ -196,7 +286,7 @@
       '<div class="lg-wrap">' + roundHead('① Подними планку') + stepsBar(1) +
         body +
         '<div class="lg-ch">Перепиши её дерзко — но по-настоящему твоё</div>' +
-        '<div class="lg-hint" style="margin:0 0 8px">В 5–10 раз крупнее и ярче. Не бред, а «а что, если замахнуться?». Заниженная планка не заводит двигатель.</div>' +
+        helpBox('planka') +
         '<textarea class="lg-ta" id="lgAmb" placeholder="Смелая версия цели…"></textarea>' +
         '<button class="lg-primary" onclick="LGENIJ.submitPlanka()">Поднял планку →</button>' +
       '</div>';
@@ -223,7 +313,8 @@
         '<div class="lg-ch">Как получить это почти даром?</div>' +
         '<div class="lg-hint" style="margin:0 0 10px">Идеальный путь — когда цель достигается сама, из того, что уже под рукой. Пройдись по рычагам:</div>' +
         LEVERS.map(function (q) { return '<div class="lg-lever">' + esc(q) + '</div>'; }).join('') +
-        '<textarea class="lg-ta" id="lgPath" style="margin-top:12px" placeholder="Самый дешёвый путь к цели…"></textarea>' +
+        '<div style="height:12px"></div>' + helpBox('rychag') +
+        '<textarea class="lg-ta" id="lgPath" placeholder="Самый дешёвый путь к цели…"></textarea>' +
         '<button class="lg-primary" onclick="LGENIJ.submitRychag()">Нашёл путь →</button>' +
       '</div>';
     setTimeout(function () { var el = document.getElementById('lgPath'); if (el) el.focus(); }, 60);
@@ -243,6 +334,7 @@
         '<div class="lg-echo">🎯 <b>' + esc(ST.ambitious) + '</b></div>' +
         '<div class="lg-ch">Кем ты станешь, когда это случится?</div>' +
         '<div class="lg-hint" style="margin:0 0 8px">Одна строка. Это приманка, которая тянет вперёд и превращает путь в предвкушение.</div>' +
+        helpBox('primanka') +
         '<input class="lg-in" id="lgFut" placeholder="Я стану тем, кто…" autocomplete="off">' +
         '<button class="lg-primary" onclick="LGENIJ.submitPrimanka()">Готово — оценить →</button>' +
         '<button class="lg-secondary" onclick="LGENIJ.submitPrimanka(true)">Пропустить</button>' +
@@ -393,6 +485,14 @@
     track('game_finish', { game: 'lgenij', avg_tyaga: avgT, avg_ambition: avgA, avg_lazy: avgL, quad: domQuad });
   }
 
+  function toggleHelp() {
+    var b = document.getElementById('lgHelpBody'), car = document.getElementById('lgHelpCar');
+    if (!b) return;
+    var open = b.style.display !== 'none';
+    b.style.display = open ? 'none' : '';
+    if (car) car.textContent = open ? '▾' : '▴';
+  }
+
   function quit() {
     if (ST.results.length && !confirm('Выйти из сессии? Прогресс раунда не сохранится.')) return;
     if (window.showKonturScreen) window.showKonturScreen();
@@ -401,7 +501,7 @@
   window.LGENIJ = {
     home: home, start: start, submitPlanka: submitPlanka, submitRychag: submitRychag,
     submitPrimanka: submitPrimanka, after: after, checkBlitz: checkBlitz, skipBlitz: skipBlitz,
-    quit: quit, getState: function () { return ST; }
+    toggleHelp: toggleHelp, quit: quit, getState: function () { return ST; }
   };
   window.showLgenijGame = home;
 })();
