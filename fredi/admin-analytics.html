@@ -945,6 +945,14 @@ POV: ты на семейном ужине, и мама такая «как у �
                     </div>
                 </div>
 
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;padding:9px 11px;background:rgba(99,102,241,0.10);border:1px solid rgba(99,102,241,0.25);border-radius:8px">
+                    <span style="font-size:12px;font-weight:600;color:var(--text)">🎯 Кампания (что сейчас уходит):</span>
+                    <select id="frCampaignSel" style="padding:6px 11px;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:6px;color:var(--text);font:600 12px inherit">
+                        <!-- заполняется JS -->
+                    </select>
+                    <span id="frCampaignHint" style="font-size:11px;color:var(--text-dim)">выбор переключает и редактируемый набор, и то, что реально шлётся</span>
+                </div>
+
                 <div id="frTemplatesContainer" style="display:flex;flex-direction:column;gap:14px">
                     <!-- Заполняется JS из ответа /api/admin/vk/drip/templates -->
                     <div style="color:var(--text-dim);font-size:12px;padding:8px 0">⏳ Загружаю шаблоны…</div>
@@ -1430,6 +1438,7 @@ POV: ты на семейном ужине, и мама такая «как у �
         // ====== FRIENDS TAB (drip-кампания) ======
         var FR_AUTO_TIMER = null;
         var FR_TEMPLATES_CACHE = null;
+        var FR_CAMPAIGN = 'warmup'; // активная кампания (warmup | lektorij)
         var FR_TEMPLATES_DEFAULTS = null;
 
         async function _frFetch(path, method, body, raw) {
@@ -1515,8 +1524,38 @@ POV: ты на семейном ужине, и мама такая «как у �
             return out;
         }
 
+        // Инициализация селектора кампаний: тянет активную + список, рисует
+        // <option>, ставит FR_CAMPAIGN=active и загружает её шаблоны.
+        async function _frInitCampaign() {
+            var sel = document.getElementById('frCampaignSel');
+            try {
+                var r = await _frFetch('/api/admin/vk/drip/campaign');
+                if (r && r.success && r.campaigns) {
+                    FR_CAMPAIGN = r.active_campaign || 'warmup';
+                    if (sel) {
+                        sel.innerHTML = '';
+                        Object.keys(r.campaigns).forEach(function (k) {
+                            var o = document.createElement('option');
+                            o.value = k; o.textContent = r.campaigns[k];
+                            sel.appendChild(o);
+                        });
+                        sel.value = FR_CAMPAIGN;
+                    }
+                }
+            } catch (e) {}
+            await _frLoadTemplates();
+        }
+
+        // Переключение кампании: делаем её активной на бэке и грузим её шаблоны.
+        async function _frSwitchCampaign(c) {
+            FR_CAMPAIGN = c;
+            try { await _frFetch('/api/admin/vk/drip/campaign', 'POST', { campaign: c }); } catch (e) {}
+            await _frLoadTemplates();
+            _frRefreshStatus();
+        }
+
         async function _frLoadTemplates() {
-            var r = await _frFetch('/api/admin/vk/drip/templates');
+            var r = await _frFetch('/api/admin/vk/drip/templates?campaign=' + encodeURIComponent(FR_CAMPAIGN));
             if (!r || !r.success) {
                 document.getElementById('frTemplatesContainer').innerHTML =
                     '<div style="color:#ef4444;font-size:12px">✗ Не удалось загрузить шаблоны: ' + ((r && (r.error || r.message)) || 'ошибка') + '</div>';
@@ -1531,7 +1570,7 @@ POV: ты на семейном ужине, и мама такая «как у �
             btn.disabled = true; btn.textContent = '⏳ …';
             try {
                 var tpls = _frCollectTemplates();
-                var r = await _frFetch('/api/admin/vk/drip/templates', 'POST', { templates: tpls });
+                var r = await _frFetch('/api/admin/vk/drip/templates', 'POST', { templates: tpls, campaign: FR_CAMPAIGN });
                 if (r && r.success) {
                     btn.textContent = '✓ Сохранено';
                     setTimeout(function () { btn.textContent = '💾 Сохранить'; btn.disabled = false; }, 1500);
@@ -1547,8 +1586,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         }
 
         async function _frResetTemplates() {
-            if (!confirm('Откатить все шаблоны на заводские? Текущие правки пропадут.')) return;
-            await _frFetch('/api/admin/vk/drip/templates/reset', 'POST', {});
+            if (!confirm('Откатить шаблоны этой кампании на заводские? Текущие правки пропадут.')) return;
+            await _frFetch('/api/admin/vk/drip/templates/reset', 'POST', { campaign: FR_CAMPAIGN });
             await _frLoadTemplates();
         }
 
@@ -1624,8 +1663,12 @@ POV: ты на семейном ужине, и мама такая «как у �
                 var s = nextSec % 60;
                 nextLine = '<span style="color:#10b981">⏱ До следующего цикла: ' + (m > 0 ? m + ' мин ' : '') + s + ' сек</span>';
             }
+            var campBadge = (r.campaigns && r.active_campaign)
+                ? '<div style="font-size:11px;margin-bottom:8px"><span style="background:#6366f1;color:#fff;padding:2px 9px;border-radius:6px;font-weight:700">🎯 Кампания: ' + _frEscape(r.campaigns[r.active_campaign] || r.active_campaign) + '</span></div>'
+                : '';
             box.innerHTML =
                 '<div style="font-size:14px;font-weight:600;margin-bottom:8px">' + nextLine + '</div>' +
+                campBadge +
                 '<div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">' + hourBadge + pauseBadge + flood + '</div>' +
                 '<div style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">' +
                   '<span>📋 <b>В очереди:</b> ' + (r.queue_total || 0) + '</span>' +
@@ -1830,6 +1873,8 @@ POV: ты на семейном ужине, и мама такая «как у �
             var bid = function (id, fn) { var el = document.getElementById(id); if (el) el.addEventListener('click', fn); };
             bid('frTemplatesSaveBtn', _frSaveTemplates);
             bid('frTemplatesResetBtn', _frResetTemplates);
+            var csel = document.getElementById('frCampaignSel');
+            if (csel) csel.addEventListener('change', function () { _frSwitchCampaign(csel.value); });
             bid('frParseBtn', _frParse);
             bid('frEnqueueBtn', _frEnqueue);
             bid('frSelectAllBtn', function () { _frSelectAll(true); });
@@ -1863,7 +1908,7 @@ POV: ты на семейном ужине, и мама такая «как у �
 
         function _frActivate() {
             _frWireOnce();
-            _frLoadTemplates();
+            _frInitCampaign();
             _frLoadConfig();
             _frRefreshStatus();
             _frRefreshLog();
