@@ -121,10 +121,15 @@
   // Показываем на каждом этапе; в первых раундах развёрнуто, дальше — сворачиваем
   // (принцип «показать образец → убрать помощь»). Примеры берём из ДРУГОЙ сферы,
   // чтобы подсказать ход, но не выдать ответ текущей цели.
+  var SITE = 'https://meysternlp.ru';
+  var COURSE_URL = SITE + '/blog/lektorij/dvigatel-len-ambicii/';
   var HELP = {
-    planka:   { how: 'Убери слова-глушилки («может», «иногда», «немного», «когда-нибудь»), умножь масштаб примерно в 10 раз и добавь срок. Спроси себя: «а если замахнуться по-настоящему?»' },
-    rychag:   { how: 'Вопрос не «как заставить себя», а «как сделать, чтобы вышло почти само». Пройдись по 4 рычагам сверху и возьми самый дешёвый ход — где любимое или уже готовое тянет тебя за собой.' },
-    primanka: { how: 'Одна строка не про результат, а про то, кем ты станешь. Этот образ и есть приманка — она тянет вперёд, когда мотивации нет.' }
+    planka:   { how: 'Убери слова-глушилки («может», «иногда», «немного», «когда-нибудь»), умножь масштаб примерно в 10 раз и добавь срок. Спроси себя: «а если замахнуться по-настоящему?»',
+                lec: { t: 'Амбиция — это вектор, а не «больше»', u: SITE + '/blog/lekciya-dvigatel-3-ambiciya-vektor.html' } },
+    rychag:   { how: 'Вопрос не «как заставить себя», а «как сделать, чтобы вышло почти само». Пройдись по 4 рычагам сверху и возьми самый дешёвый ход — где любимое или уже готовое тянет тебя за собой.',
+                lec: { t: 'Обмануть лень: дешёвый вход и рычаги', u: SITE + '/blog/lekciya-dvigatel-8-obmanut-len.html' } },
+    primanka: { how: 'Одна строка не про результат, а про то, кем ты станешь. Этот образ и есть приманка — она тянет вперёд, когда мотивации нет.',
+                lec: { t: 'Взгляд изобретателя: будущее как приманка', u: SITE + '/blog/lekciya-dvigatel-6-vzglyad-izobretatelya.html' } }
   };
   // Запасной пример для раунда со своей целью (готового образца нет —
   // помечаем явно «на примере другой цели», чтобы не путать).
@@ -151,6 +156,7 @@
         '<div class="lg-help-lbl" style="font-size:.78rem;color:#8b93a7;margin-bottom:5px">' + e.label + ':</div>' +
         '<div class="lg-help-ex">' + e.html + '</div>' +
         '<div class="lg-help-how">' + esc(HELP[phase].how) + '</div>' +
+        (HELP[phase].lec ? '<a class="lg-help-lec" href="' + HELP[phase].lec.u + '" target="_blank" rel="noopener">📖 Подробнее в лекции: ' + esc(HELP[phase].lec.t) + ' →</a>' : '') +
       '</div></div>';
   }
 
@@ -188,6 +194,15 @@
       '.lg-help-b{padding:0 13px 12px}',
       '.lg-help-ex{background:rgba(0,0,0,.2);border-radius:9px;padding:9px 11px;font-size:.92rem;line-height:1.5;color:#dbe4f5;margin-bottom:8px}',
       '.lg-help-how{font-size:.86rem;color:#aab2c4;line-height:1.5}',
+      '.lg-help-lec{display:inline-block;margin-top:9px;font-size:.85rem;color:#9cc0ff;text-decoration:none;border-bottom:1px solid rgba(156,192,255,.35)}',
+      '.lg-demo{margin:10px 0}',
+      '.lg-demo-l{display:block;font-size:.75rem;color:#8b93a7;margin-bottom:2px}',
+      '.lg-demo-v{font-size:.98rem;color:#fff;line-height:1.4}',
+      '.lg-meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;color:#8b93a7;font-size:.82rem;margin:2px 0 14px}',
+      '.lg-meta b{color:#cdd4e2;font-weight:600}',
+      '[data-theme="light"] .lg-demo-v{color:#0b1220}',
+      '.lg-course{display:block;text-align:center;margin:0 0 12px;padding:11px;font-size:.9rem;color:#9cc0ff;text-decoration:none;background:rgba(58,134,255,.08);border:1px solid rgba(58,134,255,.22);border-radius:12px}',
+      '[data-theme="light"] .lg-help-lec,[data-theme="light"] .lg-course{color:#2e6fe0}',
       '[data-theme="light"] .lg-help{background:rgba(58,134,255,.07);border-color:rgba(58,134,255,.28)}',
       '[data-theme="light"] .lg-help-h{color:#2e6fe0}',
       '[data-theme="light"] .lg-help-ex{background:#eef3fb;color:#26324a}',
@@ -236,15 +251,18 @@
       '<div class="lg-wrap">' +
         '<div class="lg-top"><button class="lg-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>🧲 бесплатно</span></div>' +
         '<h1 class="lg-h1">🧲 Ленивый гений</h1>' +
-        '<p class="lg-sub">Хотеть в 10 раз больше — делать в 10 раз меньше. Тренажёр двигателя: дерзкая цель + самый дешёвый путь к ней.</p>' +
-        '<div class="lg-card"><div class="lg-ch">Изобретатель ленив</div>Он хочет невозможного — и ищет, как получить это <b>даром</b>. В каждом раунде ты делаешь два хода: <b>поднимаешь планку</b> робкой цели и находишь к ней <b>ленивый рычаг</b> — путь, где результат почти достаётся сам. Фреди оценит обе стороны и покажет твой перекос.<br><br><span style="color:#6ee7b7">Не переживай за «пустое поле»: на каждом шаге есть готовый пример и подсказка «как делать».</span></div>' +
-        '<div class="lg-card"><div class="lg-ch">Два хода — две шкалы</div>' +
-          '<div class="lg-li">📈 <b>Амбиция</b> — насколько выше ты поднял цель (робкая планка = слабо).</div>' +
-          '<div class="lg-li">🔧 <b>Лень-эффективность</b> — насколько дёшев и умён путь (сила/надрыв = слабо).</div>' +
-          '<div class="lg-li" style="margin-top:8px;color:#aab2c4">Их произведение — <b style="color:#34d399">тяга двигателя</b>. Цель — жить в квадранте «🚀 Гений».</div>' +
+        '<p class="lg-sub">Как изобретатель: хотеть в 10 раз больше — и находить, как получить это почти <b style="color:#e7eaf0">даром</b>. Берёшь робкую цель и превращаешь её в дерзкую с коротким путём.</p>' +
+        '<div class="lg-card"><div class="lg-ch">Смотри, как это работает</div>' +
+          '<div class="lg-demo"><span class="lg-demo-l">Робкая цель, которую все себе ставят:</span><div class="lg-demo-v">😐 «иногда бегать»</div></div>' +
+          '<div class="lg-demo"><span class="lg-demo-l">① Поднимаешь планку — метишь смелее:</span><div class="lg-demo-v" style="color:#8fd3ff">🚀 «к лету легко пробегать пять километров»</div></div>' +
+          '<div class="lg-demo"><span class="lg-demo-l">② Находишь ленивый путь — где выйдет почти само:</span><div class="lg-demo-v" style="color:#6ee7b7">🔧 «бегать с другом по утрам — вам неудобно подводить друг друга»</div></div>' +
+          '<div class="lg-demo"><span class="lg-demo-l">③ Называешь, кем станешь:</span><div class="lg-demo-v" style="color:#c9b8ff">🧲 «человеком, для кого спорт — часть дня»</div></div>' +
+          '<div style="margin-top:12px;color:#aab2c4;font-size:.9rem;line-height:1.5">Фреди оценит два твоих хода — <b style="color:#8fd3ff">амбицию</b> × <b style="color:#6ee7b7">дешевизну пути</b> — и по-доброму подскажет, куда тебя тянет: метить смелее или искать путь легче. На каждом шаге есть пример и подсказка — «пустого поля» бояться не нужно.</div>' +
         '</div>' +
+        '<div class="lg-meta"><span><b>5</b> целей</span><span>·</span><span>~<b>5</b> минут</span><span>·</span><span>бесплатно</span><span>·</span><span>последний раунд — <b>своя цель</b></span></div>' +
         statLine +
-        '<button class="lg-primary" onclick="LGENIJ.start()">▶ Начать (' + ROUNDS + ' раундов)</button>' +
+        '<button class="lg-primary" onclick="LGENIJ.start()">▶ Играть</button>' +
+        '<a class="lg-course" href="' + COURSE_URL + '" target="_blank" rel="noopener" style="margin-top:12px">🎓 Теория и разбор — в курсе «Двигатель: лень, амбиции и азарт поиска»</a>' +
       '</div>';
     track('game_open', { game: 'lgenij' });
   }
