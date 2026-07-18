@@ -79,7 +79,15 @@
   function saveProg(p) { try { localStorage.setItem('istoria_path', JSON.stringify(p)); } catch (e) {} }
 
   // act: intro→sphere→desired→pattern→resource→scene→rewrite→timeline→finish (+help)
-  var ST = { act: 'intro', sphere: '', sphereT: '', desired: '', pattern: '', resource: '', scene: '', rewrite: '', timeline: '', busy: false };
+  var ST = { act: 'intro', sphere: '', sphereT: '', desired: '', pattern: '', resource: '', scene: '', wish: '', story: '', timeline: '', busy: false };
+
+  // Чего хотелось для маленького себя (Акт 3, шаг 1) — доставка ресурса
+  var WISH_OPTS = [
+    'Чтобы рядом появился тот, кто защитит и заступится',
+    'Чтобы кто-то сказал: с тобой всё в порядке, ты не виноват',
+    'Чтобы взрослый я пришёл, обнял и остался рядом',
+    'Чтобы прозвучали слова, которых я тогда ждал'
+  ];
 
   var ACTS = [
     { k: 'A', t: 'Понять' },
@@ -89,7 +97,7 @@
     { k: 'E', t: 'Закрепить' }
   ];
   function actIndex() {
-    var m = { intro: -1, sphere: 0, desired: 0, pattern: 0, resource: 1, scene: 1, rewrite: 2, timeline: 3, finish: 4, help: -1 };
+    var m = { intro: -1, sphere: 0, desired: 0, pattern: 0, resource: 1, scene: 1, wish: 2, live: 2, timeline: 3, finish: 4, help: -1 };
     return m[ST.act] == null ? -1 : m[ST.act];
   }
 
@@ -194,7 +202,7 @@
       '<div class="is-wrap">' +
         '<div class="is-top"><button class="is-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>📖 бесплатно</span></div>' +
         '<h1 class="is-h1">📖 Другая история</h1>' +
-        '<p class="is-sub">Прошлое как факт не изменить. Но его <b style="color:#e7eaf0">след в тебе</b> — можно. Вместе с Фреди ты найдёшь сцену из прошлого, которая до сих пор управляет настоящим, и проживёшь её иначе — с тем ресурсом, которого тогда не хватило.</p>' +
+        '<p class="is-sub">Прошлое как факт не изменить. Но его <b style="color:#e7eaf0">след в тебе</b> — можно. Вместе с Фреди ты найдёшь сцену из прошлого, которая до сих пор управляет настоящим. А потом Фреди <b style="color:#e7eaf0">прочитает тебе другую версию этой истории</b> — и ты проживёшь её, представляя как можно ярче, будто это происходит с тобой. Так память дополняется новым опытом.</p>' +
         (p.line ? '<div class="is-card"><div class="is-ch">Твоя прошлая история</div><div class="is-quote">' + esc(p.line) + '</div>' + (p.done ? '<div class="is-hint" style="margin-top:8px">Пройдено сессий: ' + p.done + '</div>' : '') + '</div>' : '') +
         '<div class="is-card"><div class="is-ch">Как это работает</div>' +
           '<div class="is-fb" style="font-size:.95rem">Наука о памяти: воспоминание при возврате к нему на несколько часов становится «пластичным» и пересобирается заново — <b>реконсолидация</b>. Если в этот момент прожить новый опыт, память закрепляется уже с ним. Мы не выдумываем, что «так было», — мы вносим <b>смысл и ресурс</b> и меняем то, как прошлое звучит сегодня. Пять шагов: понять → найти → прожить → протянуть → закрепить.</div></div>' +
@@ -348,45 +356,76 @@
     ST.busy = false;
     if (res && res.acute === true) { renderHelp(false); return; }
     if (!res) res = { reflection: 'Спасибо, что доверил это. Маленький ты в той сцене остался с тем, что не смог тогда унести.', younger: 'маленький ты, которому не хватило опоры' };
+    ST._sceneRes = res;
     track('is_scene', {});
-    renderRewriteIntro(res);
+    renderWish(res);
   }
-  function renderRewriteIntro(res) {
-    ST.act = 'rewrite';
+
+  // ===== Акт 3, шаг 1: чего хотелось для маленького себя (доставка ресурса) =====
+  function renderWish(res) {
+    ST.act = 'wish';
+    var c = container(); if (!c) return;
+    ST._wopts = WISH_OPTS;
+    c.innerHTML =
+      '<div class="is-wrap">' + head(true) +
+        '<h1 class="is-h1">Чего ему не хватило?</h1>' +
+        '<div class="is-quote">' + nl2br(res.reflection || '') + (res.younger ? '<br><br>Там — ' + esc(res.younger) + '.' : '') + '</div>' +
+        '<p class="is-sub" style="margin-top:14px">Что должно было там произойти? Чего ты хотел бы для того маленького себя — с ресурсом «' + esc(ST.resource) + '»? Выбери, что откликается, — Фреди сложит из этого новую историю.</p>' +
+        WISH_OPTS.map(function (o, i) { return '<button class="is-choice" onclick="ISTORIA.pickWish(' + i + ')"><span class="cem">💛</span><span class="ct"><b>' + esc(o) + '</b></span></button>'; }).join('') +
+        '<textarea class="is-ta" id="isIn" placeholder="Или свой вариант: что должно было произойти…"></textarea>' +
+        '<button class="is-secondary" onclick="ISTORIA.pickWishOwn()">Взять свой вариант →</button>' +
+      '</div>';
+  }
+  function pickWish(i) { ST.wish = ST._wopts[i]; vibe(12); composeStory(); }
+  function pickWishOwn() {
+    var v = val('isIn');
+    if (v.length < 4) { toast('Впиши свой вариант или выбери из списка', 'error'); return; }
+    ST.wish = v; composeStory();
+  }
+
+  // ===== Акт 3, шаг 2: Фреди СОЧИНЯЕТ новую историю (ИИ) =====
+  async function composeStory() {
+    if (ST.busy) return; ST.busy = true;
+    var c = container();
+    if (c) c.innerHTML = '<div class="is-wrap">' + head(true) + spinner('Фреди пишет для тебя другую историю…') + '</div>';
+    var story = null;
+    try {
+      var r = await aiGenerate(
+        'Ты — тёплый проводник по изменению личной истории. Напиши НОВУЮ версию сцены как текст для внутреннего проживания — его будет читать человек, ярко представляя, будто это происходит с ним.\n' +
+        'Исходная сцена: «' + ST.scene + '».\n' +
+        'Ресурс, которого не хватило: «' + ST.resource + '». Чего человек хотел для маленького себя: «' + ST.wish + '».\n' +
+        'Правила текста: обращение на «ты» (веди человека: «Ты снова там…»); настоящее время; 5-8 коротких предложений; много сенсорики (что видишь, слышишь, чувствуешь в теле); в середине приходит недостающий ресурс (взрослый ты, или защита, или нужные слова); в конце — как маленький ты чувствует себя теперь, что уносит с собой. Тепло, спокойно, без пафоса. НЕ утверждай, что «так было на самом деле».\n' +
+        'Верни СТРОГО JSON: {"story":"текст истории"}. По-русски.',
+        { max_tokens: 420, temperature: 0.7 });
+      var res = parseJson(r && r.content);
+      if (res && res.story) story = String(res.story).slice(0, 1400);
+    } catch (e) {}
+    ST.busy = false;
+    if (!story) {
+      story = 'Ты снова там, в той сцене. Но в этот раз ты не один. Рядом появляется взрослый ты — спокойный, тёплый, надёжный. Он подходит к маленькому тебе, опускается рядом и мягко говорит: «Я здесь. Ты не виноват. С тобой всё в порядке». Ты слышишь эти слова всем телом — плечи опускаются, дыхание становится глубже. Маленький ты поднимает глаза и видит: его наконец заметили, его защищают. Тепло разливается в груди. И ты уносишь это с собой — ощущение, что за тобой есть кто-то, кто на твоей стороне.';
+    }
+    ST.story = story;
+    track('is_story', {});
+    renderLiveStory();
+  }
+
+  // ===== Акт 3, шаг 3: проживание — читаем и представляем =====
+  function renderLiveStory() {
+    ST.act = 'live';
     var c = container(); if (!c) return;
     c.innerHTML =
       '<div class="is-wrap">' + head(true) +
-        '<h1 class="is-h1">Проживи иначе</h1>' +
-        '<div class="is-quote">' + nl2br(res.reflection || '') + (res.younger ? '<br><br>Там — ' + esc(res.younger) + '.' : '') + '</div>' +
-        '<p class="is-sub" style="margin-top:14px">Теперь — самое главное. Войди в ту сцену <b style="color:#e7eaf0">взрослым собой</b> — с ресурсом «' + esc(ST.resource) + '». Что ты делаешь, что говоришь маленькому себе? Кто ещё приходит на помощь? Как теперь заканчивается эта сцена?</p>' +
-        '<textarea class="is-ta" id="isIn" style="min-height:130px" placeholder="Я подхожу к маленькому себе и…"></textarea>' +
-        '<button class="is-primary" onclick="ISTORIA.submitRewrite()">Прожил →</button>' +
+        '<h1 class="is-h1">Проживи это</h1>' +
+        '<div class="is-safe" style="border-color:rgba(251,191,36,.5);background:rgba(245,158,11,.09);color:#fde8c8">📖 <b>Сейчас — самое главное.</b> Ниже — другая версия этой истории. Прочитай её <b>медленно</b>, не глазами по диагонали, а проживая каждую строчку. Представляй как можно ярче — свет, звуки, тело — <b>как будто это происходит с тобой прямо сейчас</b>. Дай себе это прожить.</div>' +
+        '<div class="is-quote" style="font-size:1.06rem;line-height:1.75;padding:18px 18px">' + nl2br(ST.story) + '</div>' +
+        '<button class="is-secondary" onclick="ISTORIA.reliveAgain()">↻ Перечитать ещё раз, медленнее</button>' +
+        '<button class="is-primary" onclick="ISTORIA.reliveDone()">Я прожил это →</button>' +
+        '<div class="is-hint" style="text-align:center;margin-top:8px">Не спеши. Побудь в этом столько, сколько нужно.</div>' +
       '</div>';
-    focusInput('isIn');
+    var w = c.querySelector('.is-wrap'); if (w && w.scrollIntoView) { try { w.scrollIntoView({ block: 'start' }); } catch (e) {} }
   }
-
-  // ===== Акт 3 → углубление (ИИ) =====
-  async function submitRewrite() {
-    var v = val('isIn');
-    if (v.length < 15) { toast('Побудь в сцене подольше — что именно происходит?', 'error'); return; }
-    if (ST.busy) return;
-    ST.rewrite = v; ST.busy = true;
-    var c = container();
-    if (c) c.innerHTML = '<div class="is-wrap">' + head(true) + spinner('Фреди помогает прожить это глубже…') + '</div>';
-    var res = null;
-    try {
-      var r = await aiGenerate(
-        'Ты — тёплый режиссёр внутренней сцены. Человек переписал раннюю сцену, внеся ресурс «' + ST.resource + '»: «' + v + '».\n' +
-        'Усиль новый опыт: тепло подтверди, что он сделал, и задай ОДИН вопрос, который поможет прожить это телом и до конца (что чувствует младший ты теперь? что меняется в теле, во взгляде? что он уносит с собой?).\n' +
-        'Верни СТРОГО JSON: {"warm":"одна тёплая фраза-подтверждение","deepen":"один короткий вопрос"}. По-русски, на «ты».',
-        { max_tokens: 180, temperature: 0.5 });
-      res = parseJson(r && r.content);
-    } catch (e) { res = null; }
-    ST.busy = false;
-    if (!res) res = { warm: 'Ты дал маленькому себе то, чего он ждал годами. Побудь в этом ещё секунду.', deepen: 'Что чувствует маленький ты теперь — в теле, во взгляде?' };
-    track('is_rewrite', {});
-    renderTimeline(res);
-  }
+  function reliveAgain() { vibe(10); renderLiveStory(); }
+  function reliveDone() { vibe(15); track('is_relive', {}); renderTimeline({ warm: 'Ты только что прожил другую историю — и часть её теперь остаётся с тобой.', deepen: 'Что ты уносишь из неё в теле, во взгляде, в дыхании?' }); }
 
   // ===== Акт 4: протянуть к настоящему =====
   function renderTimeline(res) {
@@ -460,7 +499,8 @@
     home: home, startFlow: startFlow,
     pickSphere: pickSphere, pickDesired: pickDesired, pickDesiredOwn: pickDesiredOwn,
     pickPattern: pickPattern, pickPatternOwn: pickPatternOwn,
-    submitScene: submitScene, submitRewrite: submitRewrite, submitTimeline: submitTimeline,
+    submitScene: submitScene, pickWish: pickWish, pickWishOwn: pickWishOwn,
+    reliveAgain: reliveAgain, reliveDone: reliveDone, submitTimeline: submitTimeline,
     hard: hard, quit: quit, getState: function () { return ST; }
   };
   window.showIstoriaGame = home;
