@@ -6754,6 +6754,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-shatalov-3-anatomiya-signala",
+   "title": "Анатомия опорного сигнала: из чего сделан крючок для памяти — Лекция 3",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-4-list-opornyh-signalov",
+   "title": "Лист опорных сигналов: тема на одной странице — Лекция 4",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-5-tehnika-kodirovaniya",
+   "title": "Техника кодирования: как сжимать смысл в знаки — Лекция 5",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
