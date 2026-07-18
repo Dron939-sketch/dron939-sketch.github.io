@@ -6810,6 +6810,20 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-rassel-1-samyj-yasnyj-um",
+   "title": "Самый ясный ум века: зачем нам Бертран Рассел — Лекция 1",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-rassel-2-paradoks",
+   "title": "Парадокс Рассела: письмо, сломавшее математику — Лекция 2",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
