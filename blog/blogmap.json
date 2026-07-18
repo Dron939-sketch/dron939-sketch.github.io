@@ -6901,6 +6901,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-4-reviziya-sklada",
+   "title": "Ревизия склада: обработать то, что задолбили — Лекция 4",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-5-chtenie-ne-glaza",
+   "title": "Чтение — не глаза: как читать, чтобы понимать — Лекция 5",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-6-svoimi-slovami",
+   "title": "Своими словами: главный тест понимания — Лекция 6",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
