@@ -196,10 +196,7 @@
   // ---------- премиум-гейт ----------
   function isPremium() { return !!window.IS_PREMIUM; }
   async function ensurePremium() {
-    if (typeof window.loadPremiumStatus === 'function' && !isPremium()) {
-      try { await window.loadPremiumStatus(); } catch (e) {}
-    }
-    return isPremium();
+    return true; // игры открыты для всех
   }
 
   // ---------- стили ----------

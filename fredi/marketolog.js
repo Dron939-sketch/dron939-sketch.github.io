@@ -120,14 +120,9 @@
   }
 
   // ---------- премиум-гейт ----------
-  // «Маркетолог» — премиум-игра. Используем общий флаг window.IS_PREMIUM
-  // и общий апселл showPremiumLockPopup (app.js), как остальные платные фичи.
+  // Игры открыты для всех — гейт отключён.
   async function ensurePremium() {
-    if (window.IS_PREMIUM === true) return true;
-    if ((window.IS_PREMIUM === null || window.IS_PREMIUM === undefined) && typeof window.loadPremiumStatus === 'function') {
-      try { await window.loadPremiumStatus(); } catch (e) {}
-    }
-    return window.IS_PREMIUM === true;
+    return true;
   }
   function openPremium() {
     if (typeof window.showPremiumLockPopup === 'function') { window.showPremiumLockPopup('Маркетолог'); return; }
@@ -176,7 +171,6 @@
 
   // ---------- раздача карт ----------
   function deal() {
-    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     injectCSS(); stopSpeak();
     ST.loc = pick(LOCS); ST.obj = pick(OBJS); ST.thesis = pick(THESES); ST.busy = false;
     track('feature_opened', { feature: 'marketolog_deal' });
@@ -256,7 +250,6 @@
   }
 
   async function tell() {
-    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     if (ST.busy) return;
     if (ST.recording) micStop();
     var inp = document.getElementById('mrStory'); if (!inp) return;
@@ -302,7 +295,6 @@
   }
 
   async function example() {
-    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     if (ST.busy) return;
     ST.busy = true;
     var out = document.getElementById('mrOut');

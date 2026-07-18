@@ -184,11 +184,7 @@
 
   // ---------- премиум-гейт (как у Progressive/Intensive) ----------
   async function ensurePremium() {
-    if (window.IS_PREMIUM === true) return true;
-    if (window.IS_PREMIUM == null && typeof window.loadPremiumStatus === 'function') {
-      try { await window.loadPremiumStatus(); } catch (e) {}
-    }
-    return window.IS_PREMIUM === true;
+    return true; // игры открыты для всех
   }
   function openPremium() {
     if (typeof window.showPremiumLockPopup === 'function') { window.showPremiumLockPopup('Вариатика Basic'); return; }
@@ -267,7 +263,6 @@
   // ---------- РЕЖИМ «ОПРЕДЕЛИ КАРТУ» — одна история → угадай масть+уровень ----------
   var CST = { mast: null, level: null, story: '', busy: false, mastPick: null, lvlPick: null };
   async function classify() {
-    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     injectCSS();
     var mast = MAST_ORDER[Math.floor(Math.random() * MAST_ORDER.length)];
     var level = LEVEL_ORDER[Math.floor(Math.random() * LEVEL_ORDER.length)];
@@ -332,7 +327,6 @@
 
   // ---------- раунд ----------
   function start(level) {
-    if (window.IS_PREMIUM !== true) { renderLocked(); return; }
     injectCSS();
     var lvl = level && LEVELS[level] ? level : LEVEL_ORDER[Math.floor(Math.random() * LEVEL_ORDER.length)];
     var mast = MAST_ORDER[Math.floor(Math.random() * MAST_ORDER.length)];
