@@ -6775,6 +6775,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-6-vosproizvedenie",
+   "title": "Воспроизведение: момент, когда знание становится твоим — Лекция 6",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-7-povtorenie",
+   "title": "Повторение без зубрёжки: система, а не подвиг — Лекция 7",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-8-obuchenie-bez-straha",
+   "title": "Обучение без страха: педагогика открытых перспектив — Лекция 8",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
