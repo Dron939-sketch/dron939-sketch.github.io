@@ -6670,6 +6670,20 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 22
+  },
+  {
+   "slug": "lekciya-metod-1-gde-konchaetsya-nauka",
+   "title": "Где кончается наука: знание и средство — Лекция 1",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-metod-2-moskovskij-kruzhok",
+   "title": "Кружок, который думал о думании: ММК и Щедровицкий — Лекция 2",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
