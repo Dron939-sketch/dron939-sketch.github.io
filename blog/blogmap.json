@@ -6726,6 +6726,20 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-metod-9-refleksiya",
+   "title": "Рефлексия: двигатель развития — Лекция 9",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-metod-10-odi",
+   "title": "ОДИ: машина коллективного мышления — Лекция 10",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
