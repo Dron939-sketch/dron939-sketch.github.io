@@ -6684,6 +6684,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-metod-3-deyatelnost",
+   "title": "Деятельность: единица больше человека — Лекция 3",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-metod-4-myshlenie-mezhdu-lyudmi",
+   "title": "Мышление живёт между людьми — Лекция 4",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-metod-5-tri-poyasa",
+   "title": "Три пояса мыследеятельности — Лекция 5",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
