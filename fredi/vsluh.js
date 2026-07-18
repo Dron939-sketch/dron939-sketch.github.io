@@ -150,7 +150,19 @@
     { ctx: 'деньги', text: 'Скидка пятьдесят процентов на второй товар — это скидка двадцать пять процентов, если тебе нужен один.',
       sled: { s: 'Стоп, посчитаю сам.', l: 'Своими словами: платишь полторы цены за два — по семьдесят пять сотых за штуку.', e: 'Почему так подают? Большая цифра «50» цепляет сильнее честной «25».', d: 'Уношу: скидку считаю на единицу товара, которая нужна мне, а не на акцию.' } },
     { ctx: 'здоровье', text: 'Кофе вечером мешает не заснуть, а выспаться: сон становится поверхностным.',
-      sled: { s: 'Стоп, тут тонкое различие.', l: 'Своими словами: можно заснуть с кофеином — но сон будет хуже качеством.', e: 'Почему? Кофеин глушит сигнал усталости, и глубокие фазы сна сокращаются.', d: 'Уношу: «я нормально засыпаю после кофе» — не аргумент; смотреть надо на то, как высыпаюсь.' } }
+      sled: { s: 'Стоп, тут тонкое различие.', l: 'Своими словами: можно заснуть с кофеином — но сон будет хуже качеством.', e: 'Почему? Кофеин глушит сигнал усталости, и глубокие фазы сна сокращаются.', d: 'Уношу: «я нормально засыпаю после кофе» — не аргумент; смотреть надо на то, как высыпаюсь.' } },
+    { ctx: 'просто интересно', text: 'Молния видна раньше грома, потому что свет летит почти мгновенно, а звук проходит примерно километр за три секунды.',
+      sled: { s: 'Стоп, тут можно вытащить инструмент.', l: 'Своими словами: вспышка и грохот рождаются вместе, но добегают до меня с разной скоростью.', e: 'Почему? Свету расстояние почти безразлично, а звук ползёт — вот и разрыв во времени.', d: 'Уношу: секунды между вспышкой и громом — дальномер: три секунды — километр до грозы.' } },
+    { ctx: 'рабочая задача', text: 'Коллега просит «глянуть одним глазом» его отчёт перед отправкой директору.',
+      sled: { s: 'Стоп: «одним глазом» — что за просьба на самом деле?', l: 'Своими словами: он хочет разделить ответственность, а не получить проверку.', e: 'Почему? Если директор найдёт ошибку, будет «мы же вместе смотрели».', d: 'Уношу: либо проверяю по-настоящему и говорю, что нашёл, либо честно отказываюсь — «одним глазом» не бывает.' } },
+    { ctx: 'история', text: 'Средневековые врачи пускали кровь почти при любой болезни — и пациентам иногда «становилось легче».',
+      sled: { s: 'Стоп: откуда «легче», если метод вреден?', l: 'Своими словами: облегчение приписывали кровопусканию, хотя тело справлялось само.', e: 'Почему? Большинство болезней проходит само: что сделал перед выздоровлением — то и «помогло».', d: 'Уношу: «после — не значит из-за»; спрашиваю, что было бы и без «лекарства».' } },
+    { ctx: 'личное сообщение', text: '«Если бы ты меня правда ценил, ты бы сам догадался, что мне нужно».',
+      sled: { s: 'Стоп, тут чувство упаковано в упрёк.', l: 'Своими словами: от меня требуют чтения мыслей как доказательства любви.', e: 'Почему это ловушка? Догадки — ненадёжный канал: проверка чувств через телепатию обречена и копит обиды.', d: 'Уношу: перевожу в просьбу — «скажи словами, что нужно, я хочу это сделать».' } },
+    { ctx: 'природа', text: 'Лёд не тонет, потому что при замерзании вода расширяется и становится легче воды.',
+      sled: { s: 'Стоп: «становится легче» — а почему?', l: 'Своими словами: в льде молекулы выстраиваются каркасом с пустотами — вещества в том же объёме меньше.', e: 'Почему каркас? Водородные связи держат молекулы «на расстоянии»: решётка просторнее жидкой толчеи.', d: 'Уношу: под «все знают» часто прячется второй этаж «почему» — проверяю его.' } },
+    { ctx: 'объявление', text: '«Осталось всего 3 места по этой цене».',
+      sled: { s: 'Стоп: классический сигнал срочности.', l: 'Своими словами: меня торопят, чтобы я не успел подумать.', e: 'Почему работает? Страх упустить сильнее оценки нужности; счётчик создаёт гонку на пустом месте.', d: 'Уношу: срочность — повод замедлиться; честное предложение доживёт до завтра.' } }
   ];
   var SLED_STEPS = [
     { k: 's', chip: 'С', name: 'Стоп' },
@@ -165,7 +177,7 @@
     { n: 3, em: '🔁', t: 'Своими словами', d: 'Перескажи мысль своими словами; Фреди оценит и покажет эталон', act: 2 },
     { n: 4, em: '❓', t: 'Вопрос к тексту', d: 'Задай тексту сильный вопрос; Фреди оценит', act: 2 },
     { n: 5, em: '🎯', t: 'Что главное', d: 'Вытащи ядро из абзаца; Фреди оценит', act: 2 },
-    { n: 6, em: '🦜', t: 'Попугай или понял?', d: 'Объясни «известное» — Фреди отличит понимание от попугайства', act: 3 },
+    { n: 6, em: '🦜', t: 'Попугай или понял?', d: 'Объясни «известное» — Фреди отличит понимание от попугайства · открыт сразу', act: 3 },
     { n: 7, em: '🎓', t: 'Экзамен: думай вслух', d: 'Полный цикл на своём тексте — Фреди проверит, оценит и доработает', act: 4 }
   ];
   var ACTS = { 1: 'Акт I · Узнавание', 2: 'Акт II · Исполнение', 3: 'Акт III · Ревизия склада', 4: 'Акт IV · Экзамен' };
@@ -187,8 +199,13 @@
   function bumpMin(score) {
     var m = loadMin(); var today = dayStr();
     if (m.lastDay !== today) {
-      m.streak = (m.lastDay === dayStr(new Date(Date.now() - 864e5))) ? (m.streak || 0) + 1 : 1;
+      // серия щадящая: один пропущенный день прощается — «не пересиливать»
+      var y1 = dayStr(new Date(Date.now() - 864e5)), y2 = dayStr(new Date(Date.now() - 2 * 864e5));
+      m.streak = (m.lastDay === y1 || m.lastDay === y2) ? (m.streak || 0) + 1 : 1;
       m.lastDay = today;
+      m.todayN = 1;
+    } else {
+      m.todayN = (m.todayN || 1) + 1;
     }
     m.count = (m.count || 0) + 1;
     if (score != null) {
@@ -305,7 +322,7 @@
       if (L.act !== lastAct) { nodes += '<div class="vl-act">' + ACTS[L.act] + '</div>'; lastAct = L.act; }
       var done = !!p.done[L.n];
       var isNext = !done && L.n === unlocked;
-      var locked = !done && L.n > unlocked;
+      var locked = !done && L.n > unlocked && L.n !== 6;
       nodes += '<button class="vl-node' + (isNext ? ' next' : '') + (locked ? ' lock' : '') + '" onclick="' + (locked ? '' : 'VSLUH.play(' + L.n + ')') + '">' +
         '<span class="nem">' + L.em + '</span>' +
         '<span><span class="nt">' + L.n + '. ' + esc(L.t) + '</span><br><span class="nd">' + esc(L.d) + '</span></span>' +
@@ -340,7 +357,7 @@
 
   function play(n) {
     var p = loadProg();
-    if (n > maxUnlocked(p)) { toast('Сначала пройди предыдущий уровень', 'info'); return; }
+    if (n > maxUnlocked(p) && n !== 6) { toast('Сначала пройди предыдущий уровень', 'info'); return; }
     ST.lvl = n; ST.ti = 0; ST.score = 0; ST.wins = 0; ST.marks = []; ST.answered = false;
     track('vl_level_start', { level: n });
     if (n === 1) { ST.tasks = shuffle(RECOG); renderRecog(); }
@@ -702,9 +719,9 @@
   function dayWord(n) { n = n % 100; if (n >= 11 && n <= 14) return 'дней'; var d = n % 10; return d === 1 ? 'день' : (d >= 2 && d <= 4 ? 'дня' : 'дней'); }
   function minTact(mn) {
     if (mn.count === 0) return 'zamer';
-    return ['smotri', 'dodelaj', 'sam'][(mn.count - 1) % 3];
+    return ['smotri', 'dodelaj', 'sam', 'sprosi'][(mn.count - 1) % 4];
   }
-  var MIN_TACT_LABEL = { zamer: '📸 замер — фото «до»', smotri: '👀 смотри, как Фреди', dodelaj: '🤝 доделай за Фреди', sam: '💪 сам, вся петля' };
+  var MIN_TACT_LABEL = { zamer: '📸 замер — фото «до»', smotri: '👀 смотри, как Фреди', dodelaj: '🤝 доделай за Фреди', sam: '💪 сам, вся петля', sprosi: '❓ спроси текст' };
   function minHead(tact) {
     return '<div class="vl-top"><span>⏱ Минутка мышления</span><button class="vl-x" onclick="VSLUH.home()">✕ Выйти</button></div>' +
       '<div style="text-align:center"><span class="vl-tact">' + MIN_TACT_LABEL[tact] + '</span></div>';
@@ -718,14 +735,30 @@
     ST.min = { tact: tact, task: t };
     track('vl_min_start', { tact: tact, count: mn.count });
     if (tact === 'smotri') {
+      // микропроверка чтения: что Фреди унёс — против «пролистал по диагонали»
+      var others = shuffle(MIN.filter(function (x) { return x !== t; })).slice(0, 2);
+      var stripD = function (s) { return s.replace(/^Уношу:\s*/, ''); };
+      ST.min._opts = shuffle([{ d: stripD(t.sled.d), ok: 1 }].concat(others.map(function (x) { return { d: stripD(x.sled.d), ok: 0 }; })));
       c.innerHTML =
         '<div class="vl-wrap">' + minHead(tact) +
-          '<p class="vl-sub">Сегодня — самый лёгкий такт: просто посмотри, как Фреди прогоняет петлю СЛЕД. Ничего писать не надо.</p>' +
+          '<p class="vl-sub">Сегодня — самый лёгкий такт: посмотри, как Фреди прогоняет петлю СЛЕД, и одним кликом отметь, что он унёс.</p>' +
           '<div class="vl-card"><div class="vl-ctx">' + esc(t.ctx) + '</div><div class="vl-txt">' + esc(t.text) + '</div>' +
             aloudBlock(t.ctx, [t.sled.s, t.sled.l, t.sled.e, t.sled.d].join('\n')) + '</div>' +
-          '<div class="vl-soc">🏛 Задержись на пять секунд: где сегодня тебе встретится текст, к которому подойдёт этот же ход? Не отвечай мне — просто представь.</div>' +
-          '<button class="vl-primary" onclick="VSLUH.minDone()">Забираю ход себе ✓</button>' +
+          '<div class="vl-hint" style="margin:0 2px 8px">Что Фреди унёс из этого текста?</div>' +
+          ST.min._opts.map(function (o, i) { return '<button class="vl-choice" id="vlM' + i + '" onclick="VSLUH.minPick(' + i + ')">' + esc(o.d) + '</button>'; }).join('') +
+          '<div id="vlMGo"></div>' +
         '</div>';
+      return;
+    }
+    if (tact === 'sprosi') {
+      c.innerHTML =
+        '<div class="vl-wrap">' + minHead(tact) +
+          '<p class="vl-sub">Сегодня тренируем двигатель мысли — <b style="color:#e7eaf0">вопрос</b>. Задай тексту один сильный вопрос: почему? откуда это? что скрыто? а если наоборот?</p>' +
+          '<div class="vl-card"><div class="vl-ctx">' + esc(t.ctx) + '</div><div class="vl-txt">' + esc(t.text) + '</div></div>' +
+          '<textarea class="vl-ta" id="vlIn" style="min-height:64px" placeholder="Твой вопрос к тексту…"></textarea>' +
+          '<button class="vl-primary" onclick="VSLUH.minSubmit()">Спросить 🗣</button>' +
+        '</div>';
+      setTimeout(function () { var el = document.getElementById('vlIn'); if (el) el.focus(); }, 60);
       return;
     }
     if (tact === 'dodelaj') {
@@ -751,7 +784,25 @@
     }
     setTimeout(function () { var el = document.getElementById('vlIn'); if (el) el.focus(); }, 60);
   }
+  function minPick(i) {
+    var opts = ST.min._opts || [];
+    if (ST.min._picked) return; ST.min._picked = true;
+    var hit = opts[i] && opts[i].ok === 1;
+    for (var j = 0; j < opts.length; j++) {
+      var b = document.getElementById('vlM' + j); if (!b) continue;
+      b.disabled = true;
+      b.className = 'vl-choice' + (opts[j].ok ? ' ok' : (j === i ? ' no' : ' dim'));
+    }
+    vibe(hit ? 20 : [40, 60, 40]);
+    track('vl_min_pick', { hit: hit });
+    var g = document.getElementById('vlMGo');
+    if (g) g.innerHTML =
+      '<div class="vl-why">' + (hit ? '✅ Точно — значит, читал, а не листал.' : '❌ Гляди шаг Д у Фреди — вот что он на самом деле унёс.') + '</div>' +
+      '<div class="vl-soc">🏛 Задержись на пять секунд: где сегодня тебе встретится текст, к которому подойдёт этот же ход? Не отвечай мне — просто представь.</div>' +
+      '<button class="vl-primary" onclick="VSLUH.minDone()">Забираю ход себе ✓</button>';
+  }
   function minDone() {
+    ST.min._picked = false;
     var mn = bumpMin(null);
     vibe(20);
     track('vl_min_done', { tact: 'smotri', streak: mn.streak });
@@ -772,6 +823,11 @@
           'Текст (' + t.ctx + '): «' + t.text + '».\nНачало Фреди: «' + t.sled.s + ' ' + t.sled.l + '».\nПродолжение человека: «' + v + '».\n' +
           'Оцени 0-10: есть ли настоящий механизм-«почему» (не пересказ) и живое применение к жизни.\n' +
           'Верни СТРОГО JSON: {"score":ЧИСЛО,"note":"одна тёплая фраза — что удалось/что не так","socratic":"один сократовский вопрос по этой теме, который заставит додумать глубже; без ответа","bridge":"одна фраза: где сегодня в жизни человеку пригодится этот ход"}. По-русски, на «ты».';
+      } else if (tact === 'sprosi') {
+        prompt = 'Ты — тёплый тренер мышления, метод Сократа. Человек учится задавать сильный вопрос к тексту.\n' +
+          'Текст (' + t.ctx + '): «' + t.text + '».\nЕго вопрос: «' + v + '».\n' +
+          'Оцени 0-10: вопрос вскрывает основание, скрытое допущение или связь (поверхностный вопрос или пересказ = низко).\n' +
+          'Верни СТРОГО JSON: {"score":ЧИСЛО,"note":"одна фраза — чем вопрос силён или слаб","socratic":"твой встречный вопрос ещё глубже — как образец; без ответа","bridge":"одна фраза: где сегодня в жизни пригодится привычка так спрашивать"}. По-русски, на «ты».';
       } else {
         prompt = 'Ты — тёплый тренер мышления, метод Сократа. Петля СЛЕД: Стоп → вложи в свои слова → есть почему? → достань и примени. Человек прогнал текст через петлю' + (tact === 'zamer' ? ' (это его первый замер — фото «до», будь особенно бережен)' : '') + '.\n' +
           'Текст (' + t.ctx + '): «' + t.text + '».\nЕго ответ: «' + v + '».\n' +
@@ -795,16 +851,21 @@
     if (res && mn.first && mn.hist && mn.hist.length >= 5 && mn.first.score != null) {
       progLine = '<div class="vl-hint" style="text-align:center;margin-top:8px">📈 Первая минутка: <b style="color:#fff">' + mn.first.score + '/10</b> → сегодня: <b style="color:#fff">' + res.score + '/10</b></div>';
     }
+    var zamer = ST.min.tact === 'zamer';
+    var enough = (mn.todayN || 1) >= 2;
     c.innerHTML =
       '<div class="vl-wrap">' + minHead(ST.min.tact) +
-        '<div style="text-align:center;margin:10px 0 8px"><span class="vl-pill w">✓ Минутка сделана</span>' +
-          '<div class="vl-hint" style="margin-top:6px">🔥 Серия: <b style="color:#fff">' + mn.streak + ' ' + dayWord(mn.streak) + '</b>' + (res ? ' · оценка <b style="color:#fff">' + res.score + '/10</b>' : '') + '</div>' + progLine + '</div>' +
+        '<div style="text-align:center;margin:10px 0 8px"><span class="vl-pill w">' + (zamer ? '📸 Фото «до» сохранено' : '✓ Минутка сделана') + '</span>' +
+          '<div class="vl-hint" style="margin-top:6px">🔥 Серия: <b style="color:#fff">' + mn.streak + ' ' + dayWord(mn.streak) + '</b>' + (res && !zamer ? ' · оценка <b style="color:#fff">' + res.score + '/10</b>' : '') + '</div>' + progLine + '</div>' +
         (v ? '<div class="vl-card"><div class="vl-ctx">твоя мысль</div><div class="vl-fb">' + nl2br(v) + '</div></div>' : '') +
-        (res && res.note ? '<div class="vl-why">💬 ' + esc(res.note) + '</div>' : '') +
-        (res && res.socratic ? '<div class="vl-soc">🏛 Вопрос Сократа: ' + esc(res.socratic) + '<br><span style="font-size:.82rem;opacity:.75">Не отвечай мне — додумай про себя, по дороге.</span></div>' : '') +
+        (res && res.note && !zamer ? '<div class="vl-why">💬 ' + esc(res.note) + '</div>' : '') +
+        (res && res.socratic && !zamer ? '<div class="vl-soc">🏛 Вопрос Сократа: ' + esc(res.socratic) + '<br><span style="font-size:.82rem;opacity:.75">Не отвечай мне — додумай про себя, по дороге.</span></div>' : '') +
         (res && res.bridge ? '<div class="vl-bridge">🌉 Мостик в жизнь: ' + esc(res.bridge) + '</div>' : '') +
-        (ST.min.tact === 'zamer' ? '<div class="vl-card"><div class="vl-fb">Фото «до» сохранено. С завтрашнего дня — по одной минутке: сначала смотришь, как делает Фреди, потом доделываешь за ним, потом делаешь сам. Так петля станет привычкой — незаметно.</div></div>' : '') +
-        '<div class="vl-row"><button class="vl-primary" onclick="VSLUH.home()">Готово ✓</button><button class="vl-secondary" onclick="VSLUH.minutka()">Ещё минутку</button></div>' +
+        (zamer ? '<div class="vl-card"><div class="vl-fb">Это не оценка — просто точка отсчёта: в конце пути сравним и увидим рост. С завтрашнего дня — по одной минутке: сначала смотришь, как делает Фреди, потом доделываешь за ним, потом сам. Так петля станет привычкой — незаметно.' +
+          '<br><br>А пока загляни в <b>«Попугай или понял?»</b>' + (res && res.score >= 8 ? ' — с твоим стартом начни прямо с него' : '') + ': проверь, понимаешь ли ты то, что «знаешь» со школы. Он открыт сразу.</div>' +
+          '<button class="vl-secondary" style="margin-top:12px" onclick="VSLUH.play(6)">🦜 Попугай или понял? →</button></div>' : '') +
+        '<div class="vl-row"><button class="vl-primary" onclick="VSLUH.home()">Готово ✓</button>' + (enough ? '' : '<button class="vl-secondary" onclick="VSLUH.minutka()">Ещё минутку</button>') + '</div>' +
+        (enough ? '<div class="vl-hint" style="text-align:center;margin-top:8px">На сегодня достаточно — лучше по одной, но каждый день. Завтра будет новый такт.</div>' : '') +
       '</div>';
   }
 
@@ -814,7 +875,7 @@
     submitDo: submitDo, nextDo: nextDo,
     submitReviz: submitReviz, nextReviz: nextReviz,
     examStart: examStart, examSubmit: examSubmit,
-    minutka: minutka, minSubmit: minSubmit, minDone: minDone,
+    minutka: minutka, minSubmit: minSubmit, minDone: minDone, minPick: minPick,
     quitLevel: quitLevel, getState: function () { return ST; }
   };
   window.showVsluhGame = home;
