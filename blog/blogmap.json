@@ -6845,6 +6845,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-6-pohvala-prazdnosti",
+   "title": "«Похвала праздности»: зачем уму свободное время — Лекция 6",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-7-zavoevanie-schastya",
+   "title": "«Завоевание счастья»: анатомия несчастья — Лекция 7",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-8-recepty-schastya",
+   "title": "Рецепты счастья: вкус к жизни и внимание наружу — Лекция 8",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
