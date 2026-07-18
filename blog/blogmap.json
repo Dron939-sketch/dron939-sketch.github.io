@@ -6740,6 +6740,20 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-1-uchitel-bez-dvoechnikov",
+   "title": "Учитель, у которого не было двоечников: феномен Шаталова — Лекция 1",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-shatalov-2-pochemu-konspekty-ne-rabotayut",
+   "title": "Почему конспекты не работают: три иллюзии знания — Лекция 2",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
