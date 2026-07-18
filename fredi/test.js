@@ -111,21 +111,24 @@ const Test = {
             { level:2, text:"С деньгами 'как повезёт' — это про удачу или про отсутствие плана?", options:{"1":"Про удачу — верю в случай","2":"Про отсутствие плана — не умею планировать","3":"Про лень — не хочу заморачиваться","4":"Про страх — боюсь ошибиться"} },
             { level:3, text:"Ты зарабатываешь трудом. Что тебя останавливает от увеличения дохода?", options:{"1":"Нет времени","2":"Нет энергии","3":"Не знаю, с чего начать","4":"Боюсь рисковать"} },
             { level:4, text:"Ты хорошо зарабатываешь. Куда уходят деньги?", options:{"1":"На жизнь и базовые нужды","2":"На развлечения и удовольствия","3":"Откладываю, но медленно","4":"Инвестирую в развитие"} },
-            { level:5, text:"Ты создаёшь системы дохода. Что было самым сложным?", options:{"1":"Начать","2":"Найти команду","3":"Доверять другим","4":"Масштабировать"} }
+            { level:5, text:"Ты создаёшь системы дохода. Что было самым сложным?", options:{"1":"Начать","2":"Найти команду","3":"Доверять другим","4":"Масштабировать"} },
+            { level:6, text:"Ты управляешь капиталом. Что для тебя деньги сейчас?", options:{"1":"Инструмент свободы","2":"Ответственность перед другими","3":"Счёт в игре","4":"Ресурс для больших целей"} }
         ],
         "УБ": [
             { level:1, text:"Ты стараешься не думать о сложном. Что происходит, когда всё же думаешь?", options:{"1":"Тревога нарастает","2":"Голова идёт кругом","3":"Ничего не понимаю","4":"Становится ещё хуже"} },
             { level:2, text:"Ты веришь в знаки и судьбу. А бывало, что твои предсказания не сбывались?", options:{"1":"Да, часто","2":"Иногда","3":"Редко","4":"Всегда сбываются"} },
             { level:3, text:"Ты доверяешь экспертам. Что для тебя авторитет?", options:{"1":"Дипломы и регалии","2":"Опыт и практика","3":"Популярность и известность","4":"Своя интуиция"} },
             { level:4, text:"Ты ищешь заговоры. Что даёт тебе это чувство?", options:{"1":"Ощущение контроля","2":"Объяснение хаоса","3":"Оправдание бездействия","4":"Чувство превосходства"} },
-            { level:5, text:"Ты анализируешь факты. Как проверяешь информацию?", options:{"1":"Сравниваю с другими источниками","2":"Проверяю на практике","3":"Спрашиваю у экспертов","4":"Доверяю своей логике"} }
+            { level:5, text:"Ты анализируешь факты. Как проверяешь информацию?", options:{"1":"Сравниваю с другими источниками","2":"Проверяю на практике","3":"Спрашиваю у экспертов","4":"Доверяю своей логике"} },
+            { level:6, text:"Ты видишь системы и циклы. Что делаешь с этим пониманием?", options:{"1":"Прогнозирую и готовлюсь заранее","2":"Объясняю другим, что происходит","3":"Ищу, где система дает сбой","4":"Просто спокойнее живу"} }
         ],
         "ЧВ": [
             { level:1, text:"Ты сильно привязываешься к людям. Что происходит, когда человек уходит?", options:{"1":"Мир рушится","2":"Долго переживаю","3":"Ищу замену сразу","4":"Закрываюсь от всех"} },
             { level:2, text:"Ты подстраиваешься под других. А помнишь, когда в последний раз делал то, что хотел именно ты?", options:{"1":"Недавно","2":"Давно","3":"Очень давно","4":"Не помню такого"} },
             { level:3, text:"Ты хочешь нравиться. Что для тебя важнее: быть собой или быть принятым?", options:{"1":"Быть принятым любой ценой","2":"Искать компромисс","3":"Быть собой, но мягко","4":"Быть собой, несмотря ни на что"} },
             { level:4, text:"Ты умеешь влиять на людей. Как ты это делаешь?", options:{"1":"Убеждением","2":"Примером","3":"Манипуляцией","4":"Поддержкой и помощью"} },
-            { level:5, text:"Ты строишь равные отношения. Что для тебя важно в партнёре?", options:{"1":"Честность","2":"Взаимность","3":"Уважение","4":"Поддержка"} }
+            { level:5, text:"Ты строишь равные отношения. Что для тебя важно в партнёре?", options:{"1":"Честность","2":"Взаимность","3":"Уважение","4":"Поддержка"} },
+            { level:6, text:"Вокруг тебя складывается круг людей. Что их держит рядом?", options:{"1":"Со мной интересно","2":"Я даю им расти","3":"На меня можно опереться","4":"Общее дело и ценности"} }
         ]
     },
 
@@ -155,8 +158,8 @@ const Test = {
         { id:'p2', text:'В компании незнакомых людей ты:', options:[
             { text:'👀 Наблюдаю, изучаю правила', scores:{EXTERNAL:2,INTERNAL:0,SYMBOLIC:0,MATERIAL:0} },
             { text:'🎧 Прислушиваюсь к себе', scores:{EXTERNAL:0,INTERNAL:2,SYMBOLIC:1,MATERIAL:0} },
-            { text:'🎯 Ищу чем заняться', scores:{EXTERNAL:0,INTERNAL:0,SYMBOLIC:0,MATERIAL:1} },
-            { text:'💫 Стараюсь понравиться', scores:{EXTERNAL:1,INTERNAL:0,SYMBOLIC:1,MATERIAL:0} }
+            { text:'🎯 Ищу чем заняться', scores:{EXTERNAL:0,INTERNAL:0,SYMBOLIC:0,MATERIAL:2} },
+            { text:'💫 Стараюсь понравиться', scores:{EXTERNAL:1,INTERNAL:0,SYMBOLIC:0,MATERIAL:0} }
         ]},
         { id:'p3', text:'Что важнее в работе?', options:[
             { text:'🎯 Смысл, предназначение', scores:{EXTERNAL:0,INTERNAL:0,SYMBOLIC:2,MATERIAL:0} },
@@ -167,14 +170,14 @@ const Test = {
         { id:'p4', text:'Когда устал, восстанавливаешься:', options:[
             { text:'👥 Иду к людям за поддержкой', scores:{EXTERNAL:2,INTERNAL:0,SYMBOLIC:0,MATERIAL:0} },
             { text:'🏠 Уединяюсь с собой', scores:{EXTERNAL:0,INTERNAL:2,SYMBOLIC:1,MATERIAL:0} },
-            { text:'📋 Занимаюсь делами, рутиной', scores:{EXTERNAL:0,INTERNAL:0,SYMBOLIC:0,MATERIAL:1} },
+            { text:'📋 Занимаюсь делами, рутиной', scores:{EXTERNAL:0,INTERNAL:0,SYMBOLIC:0,MATERIAL:2} },
             { text:'📚 Ухожу в фильмы/книги', scores:{EXTERNAL:0,INTERNAL:1,SYMBOLIC:1,MATERIAL:0} }
         ]},
         { id:'p5', text:'Реакция на критику:', options:[
             { text:'😔 Обижаюсь, переживаю', scores:{EXTERNAL:1,INTERNAL:0,SYMBOLIC:2,MATERIAL:0} },
             { text:'🔍 Анализирую, исправляю', scores:{EXTERNAL:0,INTERNAL:1,SYMBOLIC:0,MATERIAL:1} },
-            { text:'🛡️ Защищаюсь, объясняю', scores:{EXTERNAL:1,INTERNAL:0,SYMBOLIC:0,MATERIAL:0} },
-            { text:'🤷 Обесцениваю критикующего', scores:{EXTERNAL:0,INTERNAL:1,SYMBOLIC:1,MATERIAL:0} }
+            { text:'🛡️ Защищаюсь, объясняю', scores:{EXTERNAL:2,INTERNAL:0,SYMBOLIC:0,MATERIAL:0} },
+            { text:'🤷 Обесцениваю критикующего', scores:{EXTERNAL:0,INTERNAL:1,SYMBOLIC:0,MATERIAL:0} }
         ]},
         { id:'p6', text:'Что замечаешь в новом помещении?', options:[
             { text:'👥 Людей, кто где находится', scores:{EXTERNAL:2,INTERNAL:0,SYMBOLIC:0,MATERIAL:0} },
@@ -196,6 +199,7 @@ const Test = {
     thinking_questions: {
         external: [
             { text:'Когда в группе возникает конфликт, вы скорее:', options:[
+                {text:'🙈 Не замечаю, пока меня не втянут',level:1,measures:'ЧВ'},
                 {text:'🔍 Замечаю только то, что касается меня',level:2,measures:'ЧВ'},
                 {text:'👥 Вижу кто на чьей стороне',level:3,measures:'ЧВ'},
                 {text:'📋 Понимаю явные причины',level:4,measures:'ЧВ'},
@@ -294,6 +298,17 @@ const Test = {
                 {text:'💫 Вдохновляю',level:7,measures:'ЧВ'},
                 {text:'🎭 Вижу архетипы',level:8,measures:'ЧВ'},
                 {text:'📜 Понимаю законы',level:9,measures:'ЧВ'}
+            ]},
+            { text:'Близкий человек вдруг отдалился. Как понимаешь, что происходит?', options:[
+                {text:'😢 Значит, я ему больше не нужен',level:1,measures:'ЧВ'},
+                {text:'🤷 Настроение у него такое',level:2,measures:'ЧВ'},
+                {text:'💬 Спрошу у общих знакомых',level:3,measures:'ЧВ'},
+                {text:'🔍 Вспоминаю, что между нами было',level:4,measures:'ЧВ'},
+                {text:'💭 Ставлю себя на его место',level:5,measures:'ЧВ'},
+                {text:'🏠 Смотрю, что происходит в его жизни',level:6,measures:'ЧВ'},
+                {text:'🔮 Понимаю, к чему это ведёт',level:7,measures:'ЧВ'},
+                {text:'🔄 Узнаю знакомый цикл сближения-отдаления',level:8,measures:'ЧВ'},
+                {text:'📜 Вижу закономерность, общую для близости',level:9,measures:'ЧВ'}
             ]}
         ]
     },
@@ -535,10 +550,22 @@ const Test = {
     // ============================================
     // РАСЧЁТЫ
     // ============================================
+    // При ничьей по сумме очков решает число «сильных» (2-балльных)
+    // выборов данной шкалы — раньше все ничьи молча падали в
+    // INTERNAL/MATERIAL и завышали «Практико-ориентированный» тип.
+    _strongPicks(scale) {
+        return (this.answers||[]).filter(a=>a.stage==='perception'&&a.scores&&a.scores[scale]===2).length;
+    },
+    _pickSide(a, b, scoreA, scoreB) {
+        if (scoreA !== scoreB) return scoreA > scoreB ? a : b;
+        const sa = this._strongPicks(a), sb = this._strongPicks(b);
+        if (sa !== sb) return sa > sb ? a : b;
+        return a; // полная ничья: EXTERNAL / MATERIAL
+    },
     determinePerceptionType() {
         const {EXTERNAL, INTERNAL, SYMBOLIC, MATERIAL} = this.perceptionScores;
-        const attention = EXTERNAL > INTERNAL ? 'EXTERNAL' : 'INTERNAL';
-        const anxiety   = SYMBOLIC > MATERIAL ? 'SYMBOLIC' : 'MATERIAL';
+        const attention = this._pickSide('EXTERNAL','INTERNAL',EXTERNAL,INTERNAL);
+        const anxiety   = this._pickSide('MATERIAL','SYMBOLIC',MATERIAL,SYMBOLIC);
         if (attention==='EXTERNAL' && anxiety==='SYMBOLIC') return 'СОЦИАЛЬНО-ОРИЕНТИРОВАННЫЙ';
         if (attention==='EXTERNAL' && anxiety==='MATERIAL') return 'СТАТУСНО-ОРИЕНТИРОВАННЫЙ';
         if (attention==='INTERNAL' && anxiety==='SYMBOLIC') return 'СМЫСЛО-ОРИЕНТИРОВАННЫЙ';
@@ -623,13 +650,34 @@ const Test = {
         };
     },
 
+    // Веса паттернов этапа 5 → тип привязанности. Раньше тип определялся
+    // ОДНИМ ретроспективным вопросом про детство; теперь прямой вопрос
+    // остаётся главным (вес 3), а косвенные сигналы из остальных вопросов
+    // (страхи, стиль гнева, реакция на критику и т.д.) добавляют по 1 —
+    // согласованно с теорией привязанности.
+    ATTACH_SIGNALS: {
+        secure:{secure:3}, anxious:{anxious:3}, avoidant:{avoidant:3}, dismissive:{dismissive:3},
+        abandonment:{anxious:1}, control:{avoidant:1},
+        externalize:{anxious:1}, suppress:{avoidant:1}, withdraw:{dismissive:1}, constructive:{secure:1},
+        emotional:{anxious:1}, rational:{dismissive:1}, reliable_closed:{avoidant:1}, soul_company:{secure:1},
+        panic:{anxious:1}, seek_support:{secure:1},
+        shutdown:{anxious:1}, appease:{anxious:1}, analyze:{secure:1},
+        abandonment_fear:{anxious:1}
+    },
     analyzeDeepPatterns() {
         const p = {secure:0,anxious:0,avoidant:0,dismissive:0};
-        (this.deepAnswers||[]).forEach(a => { if (a.pattern && p[a.pattern]!==undefined) p[a.pattern]++; });
-        let max=0, dominant='secure';
-        for (const [k,v] of Object.entries(p)) { if (v>max) {max=v; dominant=k;} }
+        let direct = null; // ответ на прямой вопрос о привязанности — тай-брейк
+        (this.deepAnswers||[]).forEach(a => {
+            if (a.pattern && p[a.pattern]!==undefined && !direct) direct = a.pattern;
+            const w = this.ATTACH_SIGNALS[a.pattern];
+            if (w) for (const [k,v] of Object.entries(w)) p[k]+=v;
+        });
+        let max=-1, dominant=direct||'secure';
+        for (const [k,v] of Object.entries(p)) {
+            if (v>max || (v===max && k===direct)) { max=v; dominant=k; }
+        }
         const map = {secure:'🤗 Надежный',anxious:'😥 Тревожный',avoidant:'🛡️ Избегающий',dismissive:'🏔️ Отстраненный'};
-        return { attachment: map[dominant]||'🤗 Надежный', patterns: p };
+        return { attachment: map[dominant]||'🤗 Надежный', patterns: p, direct: direct };
     },
 
     // ============================================
