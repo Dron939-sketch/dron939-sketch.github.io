@@ -2838,6 +2838,7 @@ document.addEventListener('DOMContentLoaded', function() {
             odi: { fn: 'showOdiScreen', src: 'odi.js', chat: 'kontur' }, // ОДИ — мультиплеер с Фреди-игротехником (?m=odi&join=КОД)
             signal: { fn: 'showSignalGame', src: 'signal.js', chat: 'kontur' }, // «Сигнал» — опорные сигналы Шаталова
             chainik: { fn: 'showChainikGame', src: 'chainik.js', chat: 'kontur' }, // «Чайник Рассела» — интеллектуальная честность
+            istoria: { fn: 'showIstoriaGame', src: 'istoria.js', chat: 'kontur' }, // «Другая история» — изменение личной истории
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
