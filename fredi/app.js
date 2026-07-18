@@ -2837,6 +2837,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lgenij: { fn: 'showLgenijGame', src: 'lgenij.js', chat: 'kontur' }, // «Ленивый гений» — амбициозная цель + ленивый путь
             odi: { fn: 'showOdiScreen', src: 'odi.js', chat: 'kontur' }, // ОДИ — мультиплеер с Фреди-игротехником (?m=odi&join=КОД)
             signal: { fn: 'showSignalGame', src: 'signal.js', chat: 'kontur' }, // «Сигнал» — опорные сигналы Шаталова
+            chainik: { fn: 'showChainikGame', src: 'chainik.js', chat: 'kontur' }, // «Чайник Рассела» — интеллектуальная честность
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
