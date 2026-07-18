@@ -6824,6 +6824,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-3-problemy-filosofii",
+   "title": "«Проблемы философии»: что скрывает обычный стол — Лекция 3",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-4-chajnik-i-chestnost",
+   "title": "Чайник Рассела: бремя доказательства и честность — Лекция 4",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-5-skepticizm-bez-paralicha",
+   "title": "Скептицизм без паралича: сомневаться и действовать — Лекция 5",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
   }
  ]
 }
