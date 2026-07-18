@@ -46,8 +46,11 @@ h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margi
 .btn.solid{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;box-shadow:0 6px 22px rgba(58,134,255,.35)}
 .btn.solid:hover{box-shadow:0 0 22px rgba(58,134,255,.6);transform:translateY(-2px);color:#fff}
 .btn.ghost{border:1px solid var(--accent);color:#fff;background:transparent}.btn.ghost:hover{background:var(--accent)}
-.howto{max-width:60ch;margin:28px auto 0;padding:16px 22px;text-align:left;background:rgba(58,134,255,.05);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;color:var(--body);font-weight:300;font-size:.95rem;line-height:1.65}
-.howto b{color:#fff;font-weight:500}.howto a{color:#bcd4ff;text-decoration:none;border-bottom:1px solid rgba(188,212,255,.35)}.howto a:hover{color:#fff}
+.entry{display:inline-flex;align-items:center;gap:9px;margin:18px auto 0;padding:7px 8px 7px 8px;font-size:.82rem;color:var(--body);text-decoration:none;border:1px solid var(--line);border-radius:30px;background:var(--panel);transition:.25s}
+.entry:hover{border-color:var(--accent);color:#fff}
+.entry .z{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-weight:600;font-size:.8rem;flex-shrink:0}
+.entry b{color:#e7eaf0;font-weight:500}.entry .go{color:var(--accent)}
+.tag.start{color:#dff1ff;border:1px solid var(--accent2);background:linear-gradient(135deg,rgba(0,168,232,.22),rgba(58,134,255,.18))}
 
 /* sections */
 .sec{padding:46px 0}
@@ -504,14 +507,13 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <a class="btn solid" href="/blog/lektorij/kak-dumat/">Начать обучение →</a>
 <a class="btn ghost" href="/blog/lektorij/#programma">Выбрать направление</a>
 </div>
-<div class="howto">
-<b>С чего начать и как проходить курсы.</b> Начните с нулевого курса <a href="/blog/lektorij/kak-dumat/">«Как думать: наладка ума перед учёбой»</a> — кнопка «Начать обучение» ведёт прямо на него. Он не про конкретную тему, а про саму способность понимать прочитанное и услышанное: заводит правильные процессы мышления, чтобы всё остальное усваивалось, а не пролетало мимо. Пройдя его, берите любое направление ниже — по интересу или по порядку. Внутри курса лекции идут сверху вниз, от простого к сложному; читайте или слушайте вслух голосом Фреди, а навык закрепляйте в тренажёрах.
-</div>
+<a class="entry" href="/blog/lektorij/kak-dumat/"><span class="z">0</span>Порог входа — нулевой курс <b>«Как думать»</b> <span class="go">→</span></a>
 </div></header>
 
 <section class="sec"><div class="wrap">
 <div class="sh"><h2>Популярные направления</h2><span>53 курса открыты целиком</span></div>
 <div class="grid">
+<a class="c" href="/blog/lektorij/kak-dumat/"><img class="pic" src="/blog/lektorij/img/kognitivistika.webp" alt="" loading="lazy" width="200" height="200"><b>Как думать: наладка ума</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">нулевой · 12 лекций</span><span class="tag start">С этого начните</span></span></a>
 <a class="c" href="/blog/lektorij/teorii-lichnosti/"><img class="pic" src="/blog/lektorij/img/teorii-lichnosti.webp" alt="" loading="lazy" width="200" height="200"><b>Теории личности</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">13 лекций</span><span class="tag live">Доступно</span></span></a>
 <a class="c" href="/blog/lektorij/vliyanie-i-manipulyacii/"><img class="pic" src="/blog/lektorij/img/vliyanie-i-manipulyacii.webp" alt="" loading="lazy" width="200" height="200"><b>Влияние и манипуляции</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">12 лекций</span><span class="tag live">Доступно</span></span></a>
 <a class="c" href="/blog/lektorij/myshlenie/"><img class="pic" src="/blog/lektorij/img/kognitivnye-iskazheniya.webp" alt="" loading="lazy" width="200" height="200"><b>Когнитивные искажения</b><div class="pb"><i style="width:100%"></i></div><span class="ft"><span class="cnt">10 лекций</span><span class="tag live">Доступно</span></span></a>
@@ -548,7 +550,6 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div>
 
 <div class="panel on" id="b1"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/kak-dumat/"><img class="pic" src="/blog/lektorij/img/kognitivistika.webp" alt="" loading="lazy" width="200" height="200"><b>Как думать: наладка ума</b><span class="st open">Открыто</span></a>
 <a class="dcard" href="/blog/lektorij/pereproshivka/"><img class="pic" src="/blog/lektorij/img/pereproshivka.webp" alt="" loading="lazy" width="200" height="200"><b>Перепрошивка</b><span class="st open">Открыто</span></a>
 <a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><img class="pic" src="/blog/lektorij/img/teorii-lichnosti.webp" alt="" loading="lazy" width="200" height="200"><b>Теории личности</b><span class="st open">Открыто</span></a>
 <a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><img class="pic" src="/blog/lektorij/img/vliyanie-i-manipulyacii.webp" alt="" loading="lazy" width="200" height="200"><b>Влияние и манипуляции</b><span class="st open">Открыто</span></a>
@@ -629,11 +630,11 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div></section>
 
 <section class="sec"><div class="wrap">
-<div class="sh"><h2>Как это работает</h2><span>три простых шага</span></div>
+<div class="sh"><h2>Как проходить курсы</h2><span>три шага</span></div>
 <div class="steps">
-<div class="step"><div class="snum">1</div><b>Выбери направление</b><p>53 направления — от нулевого курса «Как думать» до психологии денег. Начни с того, что болит или интересно. На будущие курсы можно записаться.</p></div>
-<div class="step"><div class="snum">2</div><b>Слушай или читай</b><p>Читай с конспектом и схемами — или включай озвучку: Фреди читает как живой лектор.</p></div>
-<div class="step"><div class="snum">3</div><b>Применяй в жизни</b><p>Практикумы, вопросы для самопроверки и разбор с Фреди — знание, которое работает.</p></div>
+<div class="step"><div class="snum">0</div><b>Сначала — нулевой</b><p>Курс «Как думать» ставит саму способность понимать прочитанное и услышанное. Без него остальное пролетает мимо — это порог входа.</p></div>
+<div class="step"><div class="snum">1</div><b>Потом — направление</b><p>53 курса: по интересу или по порядку. Внутри курса лекции идут сверху вниз, от простого к сложному.</p></div>
+<div class="step"><div class="snum">2</div><b>Читай, слушай, закрепляй</b><p>Читай с конспектом и схемами или слушай голосом Фреди. Навык закрепляй в тренажёрах и разбирай с Фреди.</p></div>
 </div>
 </div></section>
 
@@ -648,8 +649,8 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 
 <section class="sec"><div class="wrap"><div class="band">
 <h2>С чего начнём?</h2>
-<p>487 лекций уже открыто · новые выходят каждую неделю</p>
-<a class="btn solid" href="/blog/lektorij/teorii-lichnosti/">Начать с первого курса →</a>
+<p>539 лекций уже открыто · новые выходят каждую неделю</p>
+<a class="btn solid" href="/blog/lektorij/kak-dumat/">Начать с нулевого курса →</a>
 <div class="finis">
 <span>Захотите примерить услышанное на себя — рядом всегда <a href="/fredi/">Фреди</a>, с ним можно всё обсудить.</span>
 </div>
