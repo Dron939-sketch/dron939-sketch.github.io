@@ -6922,6 +6922,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-7-obraz-i-svyaz",
+   "title": "Образ и связь: как знание цепляется за знание — Лекция 7",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-8-vopros-k-tekstu",
+   "title": "Вопрос к тексту: думать — значит спрашивать — Лекция 8",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-9-monitoring",
+   "title": "Мониторинг: замечать, что ты не понял — Лекция 9",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
