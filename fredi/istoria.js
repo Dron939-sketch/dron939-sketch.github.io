@@ -52,6 +52,15 @@
     { k: 'guilt',      em: '🪶', t: 'Вина и стыд', d: 'виноват, недостаточно хорош' },
     { k: 'own',        em: '✍️', t: 'Своё', d: 'опишу словами' }
   ];
+  // Варианты желаемого состояния под сферу (Акт 1b) — выбор, не заполнение
+  var SPHERE_DESIRED = {
+    confidence: ['Спокойным и уверенным', 'Говорить прямо, не сжиматься', 'Держать своё мнение под давлением', 'Свободно заявлять о себе'],
+    anxiety:    ['Спокойным, в контакте с собой', 'Доверять, что справлюсь', 'Отпускать и не накручивать', 'Чувствовать себя в безопасности'],
+    relations:  ['Открытым и близким', 'Спокойным в конфликте', 'Говорить о своих чувствах', 'Верить, что меня выберут'],
+    work:       ['Смело браться за важное', 'Просить и называть свою цену', 'Ценить свой труд', 'Действовать, не откладывая'],
+    guilt:      ['Спокойным и принимающим себя', 'Разрешать себе хорошее', 'Отделять свою вину от чужой', 'Чувствовать: со мной всё в порядке'],
+    own:        ['Спокойным и уверенным', 'Свободным в этой ситуации', 'Верным себе', 'В контакте со своей силой']
+  };
   var SPHERE_PATTERNS = {
     confidence: ['Замолкаю и соглашаюсь, когда со мной не согласны', 'Не решаюсь заявить о себе — вдруг откажут', 'Заранее уверен, что не справлюсь'],
     anxiety:    ['Жду подвоха даже когда всё хорошо', 'Прокручиваю худшие сценарии по кругу', 'Не могу расслабиться и довериться'],
@@ -215,22 +224,28 @@
     ST.act = 'desired'; renderDesired();
   }
 
-  // ===== Акт 1b: желаемое состояние =====
+  // ===== Акт 1b: желаемое состояние (выбор вариантов) =====
   function renderDesired() {
     injectCSS();
     var c = container(); if (!c) return;
+    var opts = SPHERE_DESIRED[ST.sphere] || SPHERE_DESIRED.own;
+    ST._dopts = opts;
     c.innerHTML =
       '<div class="is-wrap">' + head(true) +
         '<h1 class="is-h1">Каким ты хочешь быть?</h1>' +
-        '<p class="is-sub">В этих ситуациях — <b style="color:#e7eaf0">' + esc(ST.sphereT.toLowerCase()) + '</b> — каким ты хотел бы себя чувствовать и вести? Одна-две фразы, своими словами.</p>' +
-        '<textarea class="is-ta" id="isIn" placeholder="Например: спокойным и уверенным, говорить прямо, не сжиматься…"></textarea>' +
-        '<button class="is-primary" onclick="ISTORIA.submitDesired()">Дальше →</button>' +
+        '<p class="is-sub">В этих ситуациях — <b style="color:#e7eaf0">' + esc(ST.sphereT.toLowerCase()) + '</b> — каким ты хотел бы себя чувствовать и вести? Выбери, что ближе.</p>' +
+        opts.map(function (o, i) { return '<button class="is-choice" onclick="ISTORIA.pickDesired(' + i + ')"><span class="cem">✨</span><span class="ct"><b>' + esc(o) + '</b></span></button>'; }).join('') +
+        '<textarea class="is-ta" id="isIn" placeholder="Или свой вариант: каким ты хочешь быть…"></textarea>' +
+        '<button class="is-secondary" onclick="ISTORIA.pickDesiredOwn()">Взять свой вариант →</button>' +
       '</div>';
-    focusInput('isIn');
   }
-  function submitDesired() {
+  function pickDesired(i) {
+    ST.desired = ST._dopts[i]; vibe(12);
+    ST.act = 'pattern'; renderPatternLoad();
+  }
+  function pickDesiredOwn() {
     var v = val('isIn');
-    if (v.length < 4) { toast('Опиши хотя бы парой слов', 'error'); return; }
+    if (v.length < 4) { toast('Впиши свой вариант или выбери из списка', 'error'); return; }
     ST.desired = v; ST.act = 'pattern'; renderPatternLoad();
   }
 
@@ -443,7 +458,7 @@
 
   window.ISTORIA = {
     home: home, startFlow: startFlow,
-    pickSphere: pickSphere, submitDesired: submitDesired,
+    pickSphere: pickSphere, pickDesired: pickDesired, pickDesiredOwn: pickDesiredOwn,
     pickPattern: pickPattern, pickPatternOwn: pickPatternOwn,
     submitScene: submitScene, submitRewrite: submitRewrite, submitTimeline: submitTimeline,
     hard: hard, quit: quit, getState: function () { return ST; }
