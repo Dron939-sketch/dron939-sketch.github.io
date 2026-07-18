@@ -6880,6 +6880,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-1-privatnoe-i-publichnoe",
+   "title": "Приватное и публичное: почему думать никто не научил — Лекция 1",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 22
+  },
+  {
+   "slug": "lekciya-dumat-2-mysl-vsluh",
+   "title": "Мысль вслух: как сделать невидимое видимым — Лекция 2",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-3-popugaj",
+   "title": "Попугай: чужие мысли вместо своих — Лекция 3",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
