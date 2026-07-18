@@ -2835,6 +2835,7 @@ document.addEventListener('DOMContentLoaded', function() {
             spiral: { fn: 'showSpiralGame', src: 'spiral.js', chat: 'kontur' }, // «Спираль» — симулятор дня (курс «Снова живой»)
             klin: { fn: 'showKlinGame', src: 'klin.js', chat: 'kontur' }, // «Клин клином» — переключение вовлечённости
             lgenij: { fn: 'showLgenijGame', src: 'lgenij.js', chat: 'kontur' }, // «Ленивый гений» — амбициозная цель + ленивый путь
+            odi: { fn: 'showOdiScreen', src: 'odi.js', chat: 'kontur' }, // ОДИ — мультиплеер с Фреди-игротехником (?m=odi&join=КОД)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
