@@ -546,10 +546,14 @@ const Test = {
     },
 
     calculateThinkingLevel() {
-        const total = Object.values(this.thinkingScores).reduce((a,b)=>a+b,0);
-        if (total<=10) return 1; if (total<=20) return 2; if (total<=30) return 3;
-        if (total<=40) return 4; if (total<=50) return 5; if (total<=60) return 6;
-        if (total<=70) return 7; if (total<=80) return 8; return 9;
+        // thinkingScores — гистограмма {уровень: сколько ответов}. Уровень
+        // мышления = средний уровень выбранных ответов (1–9), округлённый.
+        // Среднее (а не сумма) не зависит от размера банка (external 5
+        // вопросов / internal 4), поэтому обе ветки меряются одной линейкой.
+        let sum = 0, count = 0;
+        for (const [lvl, n] of Object.entries(this.thinkingScores)) { sum += Number(lvl) * n; count += n; }
+        if (!count) return 1;
+        return Math.max(1, Math.min(9, Math.round(sum / count)));
     },
 
     getLevelGroup(l) { return l<=3?'1-3':l<=6?'4-6':'7-9'; },
@@ -1802,13 +1806,14 @@ const Test = {
     },
 
     handleAnswer(stageId, q, idx, opt) {
-        this.answers.push({ stage:stageId, questionIndex:this.currentQuestionIndex, question:q.text, answer:opt.text, option:idx, scores:opt.scores, level:opt.level, strategy:opt.strategy, dilts:opt.dilts, pattern:opt.pattern, target:q.target });
+        // measures/target живут на выбранной ОПЦИИ (opt), не на вопросе.
+        this.answers.push({ stage:stageId, questionIndex:this.currentQuestionIndex, question:q.text, answer:opt.text, option:idx, scores:opt.scores, level:opt.level, strategy:opt.strategy, dilts:opt.dilts, pattern:opt.pattern, target:opt.target||opt.measures });
 
         if (stageId==='perception' && opt.scores) { for (const [k,v] of Object.entries(opt.scores)) this.perceptionScores[k]+=v; }
-        if (stageId==='thinking' && opt.level) { this.thinkingScores[opt.level]=(this.thinkingScores[opt.level]||0)+1; if(q.measures&&q.measures!=='thinking') this.strategyLevels[q.measures].push(opt.level); }
+        if (stageId==='thinking' && opt.level) { this.thinkingScores[opt.level]=(this.thinkingScores[opt.level]||0)+1; if(opt.measures&&this.strategyLevels[opt.measures]) this.strategyLevels[opt.measures].push(opt.level); }
         if (stageId==='behavior' && opt.level) { this.stage3Scores.push(opt.level); if(opt.strategy) this.behavioralLevels[opt.strategy].push(opt.level); }
         if (stageId==='growth' && opt.dilts) { this.diltsCounts[opt.dilts]=(this.diltsCounts[opt.dilts]||0)+1; }
-        if (stageId==='deep') { this.deepAnswers.push({questionId:q.id,pattern:opt.pattern,target:q.target}); }
+        if (stageId==='deep') { this.deepAnswers.push({questionIndex:this.currentQuestionIndex,pattern:opt.pattern,target:opt.target}); }
 
         this.saveProgress();
         this.currentQuestionIndex++;
