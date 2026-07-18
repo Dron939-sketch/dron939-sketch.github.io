@@ -62,7 +62,7 @@
   var HOME_DEMO = {
     ctx: 'фраза из статьи',
     text: '«Инфляция обесценивает сбережения, если они лежат без движения».',
-    aloud: 'Так, стоп. Своими словами: деньги, которые просто лежат, со временем покупают меньше. Образ: пачка купюр, которая тает, как лёд. Вопрос: а насколько быстро тает? Значит, держать всё «под подушкой» — незаметно терять. Вот это я и уношу.'
+    aloud: 'С — стоп, не проглатываю. Л — своими словами: деньги, которые просто лежат, со временем покупают меньше. Е — почему? цены растут, а сумма та же. Д — достаю и применяю: держать всё «под подушкой» — незаметно терять; сегодня проверю, где лежат мои.'
   };
 
   // ===== Уровень 1: «Что за операция?» =====
@@ -131,6 +131,34 @@
     { q: 'Откуда берётся ветер?', tag: 'ветер' }
   ];
 
+  // ===== «Минутка»: банк мини-текстов с полной петлёй СЛЕД (для тактов «смотри» и «доделай») =====
+  var MIN = [
+    { ctx: 'наука', text: 'Мышцы растут не на тренировке, а после неё: во время отдыха волокна восстанавливаются с запасом.',
+      sled: { s: 'Стоп, не листаю дальше.', l: 'Своими словами: рост — это ремонт после нагрузки, а не сама нагрузка.', e: 'Почему? Тренировка надрывает волокна, а тело чинит их «с запасом» — на вырост.', d: 'Уношу: без отдыха тренировки впустую. Сегодня лягу раньше.' } },
+    { ctx: 'новость', text: 'Сервис объявил подписку бесплатной, но в соглашении появился пункт о передаче обезличенных данных партнёрам.',
+      sled: { s: 'Стоп: слово «бесплатно» — повод проверить.', l: 'Своими словами: платим не деньгами, а данными.', e: 'Почему? Сервису надо на что-то жить — доход переехал из моего кармана в мои данные.', d: 'Уношу: перед любым «бесплатно» ищу, чем плачу на самом деле.' } },
+    { ctx: 'рабочее письмо', text: 'Коллеги, отчёт переносится: ждём цифры от подрядчика, без них разделы два и три пустые.',
+      sled: { s: 'Стоп: что тут важно лично мне?', l: 'Своими словами: сроки едут не из-за нас — застряли чужие данные.', e: 'Почему важно? Узкое место снаружи, торопить бессмысленно — надо готовить своё.', d: 'Уношу: добью свой раздел сейчас, чтобы не собирать всё в последнюю ночь.' } },
+    { ctx: 'пункт правил', text: 'Гарантия не действует, если устройство вскрывали вне авторизованного сервиса.',
+      sled: { s: 'Стоп, это условие с ловушкой.', l: 'Своими словами: полез внутрь сам — гарантия сгорела.', e: 'Почему так? Производитель не может отвечать за чужие руки внутри устройства.', d: 'Уношу: пока гарантия жива — только официальный сервис, даже если дольше.' } },
+    { ctx: 'житейское', text: 'Подруга обижается, что я подолгу не отвечаю, а я просто не вижу её сообщений в потоке рабочих чатов.',
+      sled: { s: 'Стоп, тут конфликт не про чувства.', l: 'Своими словами: она читает молчание как безразличие, а это просто шум канала.', e: 'Почему? У нас разные картинки: у неё «игнорирует», у меня «не заметил».', d: 'Уношу: закреплю её чат сверху — и скажу ей, как всё устроено на самом деле.' } },
+    { ctx: 'спор в чате', text: 'Это средство натуральное — значит, безопасное.',
+      sled: { s: 'Стоп: «значит» — проверяю связку.', l: 'Своими словами: тут ставят знак равенства между природным и безвредным.', e: 'Почему это не так? Мухомор и змеиный яд тоже натуральные. Происхождение не решает — решает доза и действие.', d: 'Уношу: на слово «натуральный» реагирую вопросом «а проверяли ли действие?».' } },
+    { ctx: 'история', text: 'Печатный станок удешевил книги — и грамотность из привилегии стала нормой.',
+      sled: { s: 'Стоп, здесь целая цепочка.', l: 'Своими словами: когда книга подешевела, читать стало выгодно учиться всем.', e: 'Почему? Дорогая книга — читают избранные; дешёвая — чтение окупается для каждого.', d: 'Уношу: удешевление инструмента меняет общество сильнее указов. Где так сейчас? Нейросети.' } },
+    { ctx: 'деньги', text: 'Скидка пятьдесят процентов на второй товар — это скидка двадцать пять процентов, если тебе нужен один.',
+      sled: { s: 'Стоп, посчитаю сам.', l: 'Своими словами: платишь полторы цены за два — по семьдесят пять сотых за штуку.', e: 'Почему так подают? Большая цифра «50» цепляет сильнее честной «25».', d: 'Уношу: скидку считаю на единицу товара, которая нужна мне, а не на акцию.' } },
+    { ctx: 'здоровье', text: 'Кофе вечером мешает не заснуть, а выспаться: сон становится поверхностным.',
+      sled: { s: 'Стоп, тут тонкое различие.', l: 'Своими словами: можно заснуть с кофеином — но сон будет хуже качеством.', e: 'Почему? Кофеин глушит сигнал усталости, и глубокие фазы сна сокращаются.', d: 'Уношу: «я нормально засыпаю после кофе» — не аргумент; смотреть надо на то, как высыпаюсь.' } }
+  ];
+  var SLED_STEPS = [
+    { k: 's', chip: 'С', name: 'Стоп' },
+    { k: 'l', chip: 'Л', name: 'вЛожи в свои слова' },
+    { k: 'e', chip: 'Е', name: 'Есть почему?' },
+    { k: 'd', chip: 'Д', name: 'Достань и примени' }
+  ];
+
   var LEVELS = [
     { n: 1, em: '👂', t: 'Что за операция?', d: 'Клики: узнай, что Фреди сделал вслух с текстом', act: 1 },
     { n: 2, em: '🔎', t: 'Где сбой?', d: 'Клики: найди ошибку в чужой мысли вслух', act: 1 },
@@ -148,6 +176,28 @@
   }
   function saveProg(p) { try { localStorage.setItem('vsluh_path', JSON.stringify(p)); } catch (e) {} }
   function maxUnlocked(p) { var m = 1; for (var i = 1; i <= 7; i++) { if (p.done[i]) m = i + 1; else break; } return Math.min(m, 7); }
+
+  // Прогресс «Минутки»: серия, счётчик, фото «до» и последняя оценка
+  function loadMin() {
+    try { var m = JSON.parse(localStorage.getItem('vsluh_min') || 'null'); if (m && typeof m === 'object') return m; } catch (e) {}
+    return { streak: 0, lastDay: '', count: 0, first: null, last: null, hist: [] };
+  }
+  function saveMin(m) { try { localStorage.setItem('vsluh_min', JSON.stringify(m)); } catch (e) {} }
+  function dayStr(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function bumpMin(score) {
+    var m = loadMin(); var today = dayStr();
+    if (m.lastDay !== today) {
+      m.streak = (m.lastDay === dayStr(new Date(Date.now() - 864e5))) ? (m.streak || 0) + 1 : 1;
+      m.lastDay = today;
+    }
+    m.count = (m.count || 0) + 1;
+    if (score != null) {
+      m.hist = (m.hist || []).concat([score]).slice(-30);
+      if (!m.first) m.first = { score: score, day: today };
+      m.last = { score: score, day: today };
+    }
+    saveMin(m); return m;
+  }
 
   var ST = { screen: 'home', lvl: 0, ti: 0, tasks: [], score: 0, wins: 0, answered: false, marks: [], busy: false, exam: {} };
 
@@ -209,6 +259,21 @@
       '.vl-verdict.und{background:rgba(52,211,153,.16);color:#6ee7b7}',
       '.vl-verdict.par{background:rgba(251,191,36,.16);color:#fcd34d}',
       '.vl-exlab{font-size:.8rem;color:#a5b4fc;font-weight:700;margin:12px 2px 5px}',
+      '.vl-sledrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:4px 0 8px}',
+      '.vl-schip{background:rgba(99,102,241,.14);border:1px solid rgba(129,140,248,.45);border-radius:999px;padding:5px 11px;font-size:.84rem;color:#dfe2ff;white-space:nowrap}',
+      '.vl-schip b{color:#a5b4fc}',
+      '.vl-sarr{color:#6366f1;font-weight:700}',
+      '.vl-min{display:block;width:100%;box-sizing:border-box;text-align:left;background:linear-gradient(135deg,rgba(79,70,229,.30),rgba(99,102,241,.12));border:1px solid rgba(129,140,248,.55);border-radius:14px;padding:14px 16px;margin:0 0 14px;color:#fff;font:700 1rem inherit;cursor:pointer;transition:.15s}',
+      '.vl-min:hover{border-color:#818cf8}',
+      '.vl-min span{display:block;font-weight:400;color:#aab2c4;font-size:.83rem;margin-top:3px}',
+      '.vl-soc{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.32);border-radius:12px;padding:12px 14px;margin:10px 0 0;font-size:.93rem;color:#fde68a;line-height:1.6}',
+      '.vl-bridge{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.32);border-radius:12px;padding:12px 14px;margin:10px 0 0;font-size:.93rem;color:#a7f3d0;line-height:1.6}',
+      '.vl-tact{display:inline-block;padding:4px 12px;border-radius:999px;font-weight:700;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;background:rgba(129,140,248,.16);color:#a5b4fc;margin-bottom:10px}',
+      '[data-theme="light"] .vl-schip{background:#eef0ff;color:#312e81}',
+      '[data-theme="light"] .vl-min{background:linear-gradient(135deg,#eef0ff,#f5f6ff);color:#312e81;border-color:#c7cbf5}',
+      '[data-theme="light"] .vl-min span{color:#5a6472}',
+      '[data-theme="light"] .vl-soc{background:#fffbeb;color:#92400e}',
+      '[data-theme="light"] .vl-bridge{background:#ecfdf5;color:#065f46}',
       '[data-theme="light"] .vl-wrap{color:#1d1d1f}',
       '[data-theme="light"] .vl-card,[data-theme="light"] .vl-node,[data-theme="light"] .vl-choice{background:#fff;border-color:rgba(0,0,0,.12);color:#1d1d1f}',
       '[data-theme="light"] .vl-card b,[data-theme="light"] .vl-ch,[data-theme="light"] .vl-score,[data-theme="light"] .vl-node .nt{color:#0b1220}',
@@ -253,10 +318,17 @@
         '<h1 class="vl-h1">💭 Мысль вслух</h1>' +
         '<p class="vl-sub">Думать — <b style="color:#e7eaf0">приватное поведение</b>: его видит только сам человек, поэтому его никто не поправил. Здесь мы выносим мышление <b style="color:#e7eaf0">наружу</b>: Фреди думает вслух, ты повторяешь, он оценивает и дорабатывает. Сначала — навык думать, потом — привычка.</p>' +
         '<p class="vl-sub" style="margin-top:-4px">Это <b style="color:#e7eaf0">игра, а не экзамен</b>. Не старайся «думать правильно» — просто решай задачу раунда: пойми текст, ответь на вопрос. Операции ставятся легче без давления — когда прожектор на смысле, а не на себе. Ошибаться тут можно и нужно.</p>' +
+        '<div class="vl-card"><div class="vl-ch">🔁 Петля СЛЕД — весь курс в одном движении</div>' +
+          '<div class="vl-sledrow">' + SLED_STEPS.map(function (st, i) {
+            return (i ? '<span class="vl-sarr">→</span>' : '') + '<span class="vl-schip"><b>' + st.chip + '</b> ' + esc(st.name) + '</span>';
+          }).join('') + '</div>' +
+          '<div class="vl-hint" style="margin:0">Сначала вслух и медленно, потом про себя, потом — само. Одна петля на любой текст, письмо или разговор.</div>' +
+        '</div>' +
+        minButton() +
         '<div class="vl-card"><div class="vl-ch">Смотри, как это делается</div>' +
           '<div class="vl-ctx">' + esc(HOME_DEMO.ctx) + '</div><div class="vl-txt">' + esc(HOME_DEMO.text) + '</div>' +
           aloudBlock(HOME_DEMO.ctx, HOME_DEMO.aloud) +
-          '<div class="vl-hint" style="margin-top:8px">Видишь связку: <b style="color:#c7d2fe">триггер</b> (фраза) → <b style="color:#c7d2fe">процесс</b> (своими словами, образ, вопрос) → <b style="color:#c7d2fe">результат</b> (что уносишь). Этому и учимся — на любом тексте.</div>' +
+          '<div class="vl-hint" style="margin-top:8px">Это петля <b style="color:#c7d2fe">СЛЕД</b> в действии: стоп → свои слова → почему → примени. Этому и учимся — на любом тексте.</div>' +
         '</div>' +
         (p.title ? '<div style="text-align:center;margin:0 0 10px"><span class="vl-pill w">' + esc(p.title) + '</span></div>' : '') +
         (doneCount ? '<div class="vl-hint" style="margin:0 0 8px">Пройдено уровней: ' + doneCount + '/7</div>' : '') +
@@ -597,10 +669,12 @@
     track('game_finish', { game: 'vsluh', total: total });
     var c = container(); if (!c) return;
     var weakLvl = WEAK_LVL[res.weakest] || 3;
+    var mn0 = loadMin();
     c.innerHTML =
       '<div class="vl-wrap">' + lvlHead('') +
         '<div style="text-align:center;margin:14px 0 6px"><div class="vl-score">' + total + '<span style="font-size:1.1rem;color:#8b93a7">/30</span></div>' +
-        '<div class="vl-hint">своими словами ' + res.paraphrase + ' · вопрос ' + res.question + ' · главное ' + res.main + ' · нужно 18</div></div>' +
+        '<div class="vl-hint">своими словами ' + res.paraphrase + ' · вопрос ' + res.question + ' · главное ' + res.main + ' · нужно 18</div>' +
+        (mn0 && mn0.first && mn0.first.score != null ? '<div class="vl-hint" style="margin-top:4px">📸 Твоё фото «до» — первая минутка: <b style="color:#fff">' + mn0.first.score + '/10</b>. Сравни с сегодняшним.</div>' : '') + '</div>' +
         '<div style="text-align:center;margin-bottom:12px">' + (passed ? '<span class="vl-pill w">' + esc(p.title) + '</span>' : '<span class="vl-pill l">Доработаем слабое</span>') + '</div>' +
         (res.praise ? '<div class="vl-card"><div class="vl-ch">Что удалось</div><div class="vl-fb">' + nl2br(res.praise) + '</div></div>' : '') +
         (res.weakest ? '<div class="vl-why">🔧 Слабее всего — <b style="color:#c7d2fe">' + esc(WEAK_NAME[res.weakest] || '') + '</b>. ' + esc(res.tip || '') + '</div>' : '') +
@@ -613,12 +687,134 @@
       '</div>';
   }
 
+  // ===== «Минутка мышления»: одна задача в день, конвейер затухания =====
+  // Такт 0 (первый раз) — «замер»: фото «до». Дальше по кругу:
+  // «смотри» (Фреди делает всю петлю) → «доделай» (Фреди обрывается — продолжи)
+  // → «сам» (вся петля своя). Разобранный пример + затухание по Свеллеру/Ренклю.
+  function minButton() {
+    var mn = loadMin();
+    var doneToday = mn.lastDay === dayStr();
+    var sub = doneToday
+      ? '✓ на сегодня сделана · серия ' + mn.streak + ' ' + dayWord(mn.streak) + ' · можно ещё'
+      : (mn.streak ? '🔥 серия ' + mn.streak + ' ' + dayWord(mn.streak) + ' — продолжи сегодня' : 'одна задача · 60 секунд · начни серию');
+    return '<button class="vl-min" onclick="VSLUH.minutka()">⏱ Минутка мышления<span>' + esc(sub) + '</span></button>';
+  }
+  function dayWord(n) { n = n % 100; if (n >= 11 && n <= 14) return 'дней'; var d = n % 10; return d === 1 ? 'день' : (d >= 2 && d <= 4 ? 'дня' : 'дней'); }
+  function minTact(mn) {
+    if (mn.count === 0) return 'zamer';
+    return ['smotri', 'dodelaj', 'sam'][(mn.count - 1) % 3];
+  }
+  var MIN_TACT_LABEL = { zamer: '📸 замер — фото «до»', smotri: '👀 смотри, как Фреди', dodelaj: '🤝 доделай за Фреди', sam: '💪 сам, вся петля' };
+  function minHead(tact) {
+    return '<div class="vl-top"><span>⏱ Минутка мышления</span><button class="vl-x" onclick="VSLUH.home()">✕ Выйти</button></div>' +
+      '<div style="text-align:center"><span class="vl-tact">' + MIN_TACT_LABEL[tact] + '</span></div>';
+  }
+  function minutka() {
+    injectCSS();
+    var c = container(); if (!c) return;
+    var mn = loadMin();
+    var tact = minTact(mn);
+    var t = MIN[mn.count % MIN.length];
+    ST.min = { tact: tact, task: t };
+    track('vl_min_start', { tact: tact, count: mn.count });
+    if (tact === 'smotri') {
+      c.innerHTML =
+        '<div class="vl-wrap">' + minHead(tact) +
+          '<p class="vl-sub">Сегодня — самый лёгкий такт: просто посмотри, как Фреди прогоняет петлю СЛЕД. Ничего писать не надо.</p>' +
+          '<div class="vl-card"><div class="vl-ctx">' + esc(t.ctx) + '</div><div class="vl-txt">' + esc(t.text) + '</div>' +
+            aloudBlock(t.ctx, [t.sled.s, t.sled.l, t.sled.e, t.sled.d].join('\n')) + '</div>' +
+          '<div class="vl-soc">🏛 Задержись на пять секунд: где сегодня тебе встретится текст, к которому подойдёт этот же ход? Не отвечай мне — просто представь.</div>' +
+          '<button class="vl-primary" onclick="VSLUH.minDone()">Забираю ход себе ✓</button>' +
+        '</div>';
+      return;
+    }
+    if (tact === 'dodelaj') {
+      c.innerHTML =
+        '<div class="vl-wrap">' + minHead(tact) +
+          '<p class="vl-sub">Фреди начал петлю и оборвался на середине. Доделай шаги <b style="color:#e7eaf0">Е</b> (почему это так?) и <b style="color:#e7eaf0">Д</b> (что уносишь, где применишь).</p>' +
+          '<div class="vl-card"><div class="vl-ctx">' + esc(t.ctx) + '</div><div class="vl-txt">' + esc(t.text) + '</div>' +
+            aloudBlock(t.ctx, t.sled.s + '\n' + t.sled.l + '\n…а дальше — продолжи за меня.') + '</div>' +
+          '<textarea class="vl-ta" id="vlIn" placeholder="Е — почему это так?.. Д — что уношу и где применю…"></textarea>' +
+          '<button class="vl-primary" onclick="VSLUH.minSubmit()">Доделать петлю 🗣</button>' +
+        '</div>';
+    } else {
+      var zamer = tact === 'zamer';
+      c.innerHTML =
+        '<div class="vl-wrap">' + minHead(tact) +
+          '<p class="vl-sub">' + (zamer
+            ? 'Это <b style="color:#e7eaf0">фото «до»</b> — не урок и не оценка. Просто прочитай и напиши, что ты понял из текста, — как есть. Через пару недель сравним, как вырос.'
+            : 'Вся петля твоя: <b style="color:#e7eaf0">С</b>топ → в<b style="color:#e7eaf0">Л</b>ожи в свои слова → <b style="color:#e7eaf0">Е</b>сть почему? → <b style="color:#e7eaf0">Д</b>остань и примени.') + '</p>' +
+          '<div class="vl-card"><div class="vl-ctx">' + esc(t.ctx) + '</div><div class="vl-txt">' + esc(t.text) + '</div></div>' +
+          '<textarea class="vl-ta" id="vlIn" style="min-height:96px" placeholder="' + (zamer ? 'Что ты понял из этого текста…' : 'Своими словами… почему это так… что уносишь и где применишь…') + '"></textarea>' +
+          '<button class="vl-primary" onclick="VSLUH.minSubmit()">' + (zamer ? 'Сохранить фото «до» 📸' : 'Прогнать петлю 🗣') + '</button>' +
+        '</div>';
+    }
+    setTimeout(function () { var el = document.getElementById('vlIn'); if (el) el.focus(); }, 60);
+  }
+  function minDone() {
+    var mn = bumpMin(null);
+    vibe(20);
+    track('vl_min_done', { tact: 'smotri', streak: mn.streak });
+    minFinish(null, null, mn);
+  }
+  async function minSubmit() {
+    if (ST.busy) return;
+    var v = ((document.getElementById('vlIn') || {}).value || '').trim();
+    if (v.length < 6) { toast('Напиши хотя бы пару фраз', 'error'); return; }
+    ST.busy = true;
+    var c = container();
+    if (c) c.innerHTML = '<div class="vl-wrap">' + minHead(ST.min.tact) + spin('Фреди читает твою мысль…') + '</div>';
+    var t = ST.min.task, tact = ST.min.tact, res = null;
+    try {
+      var prompt;
+      if (tact === 'dodelaj') {
+        prompt = 'Ты — тёплый тренер мышления, метод Сократа. Петля СЛЕД: Стоп → вложи в свои слова → есть почему? → достань и примени. Фреди начал петлю над текстом и оборвался, человек доделал шаги Е и Д.\n' +
+          'Текст (' + t.ctx + '): «' + t.text + '».\nНачало Фреди: «' + t.sled.s + ' ' + t.sled.l + '».\nПродолжение человека: «' + v + '».\n' +
+          'Оцени 0-10: есть ли настоящий механизм-«почему» (не пересказ) и живое применение к жизни.\n' +
+          'Верни СТРОГО JSON: {"score":ЧИСЛО,"note":"одна тёплая фраза — что удалось/что не так","socratic":"один сократовский вопрос по этой теме, который заставит додумать глубже; без ответа","bridge":"одна фраза: где сегодня в жизни человеку пригодится этот ход"}. По-русски, на «ты».';
+      } else {
+        prompt = 'Ты — тёплый тренер мышления, метод Сократа. Петля СЛЕД: Стоп → вложи в свои слова → есть почему? → достань и примени. Человек прогнал текст через петлю' + (tact === 'zamer' ? ' (это его первый замер — фото «до», будь особенно бережен)' : '') + '.\n' +
+          'Текст (' + t.ctx + '): «' + t.text + '».\nЕго ответ: «' + v + '».\n' +
+          'Оцени 0-10: свои слова (не копия), есть ли «почему»-механизм, есть ли применение к жизни.\n' +
+          'Верни СТРОГО JSON: {"score":ЧИСЛО,"note":"одна тёплая фраза — что удалось/что не так","socratic":"один сократовский вопрос по этой теме, который заставит додумать глубже; без ответа","bridge":"одна фраза: где сегодня в жизни человеку пригодится этот ход"}. По-русски, на «ты».';
+      }
+      var r = await aiGenerate(prompt, { max_tokens: 240, temperature: 0.35 });
+      res = parseJson(r && r.content);
+      if (res) { res.score = Math.max(0, Math.min(10, Math.round(Number(res.score)))); if (isNaN(res.score)) res = null; }
+    } catch (e) { res = null; }
+    ST.busy = false;
+    if (!res) res = { score: 7, note: 'Связь с Фреди подвисла — минутка засчитана.', socratic: '', bridge: '' };
+    var mn = bumpMin(res.score);
+    vibe(25);
+    track('vl_min_done', { tact: tact, score: res.score, streak: mn.streak });
+    minFinish(res, v, mn);
+  }
+  function minFinish(res, v, mn) {
+    var c = container(); if (!c) return;
+    var progLine = '';
+    if (res && mn.first && mn.hist && mn.hist.length >= 5 && mn.first.score != null) {
+      progLine = '<div class="vl-hint" style="text-align:center;margin-top:8px">📈 Первая минутка: <b style="color:#fff">' + mn.first.score + '/10</b> → сегодня: <b style="color:#fff">' + res.score + '/10</b></div>';
+    }
+    c.innerHTML =
+      '<div class="vl-wrap">' + minHead(ST.min.tact) +
+        '<div style="text-align:center;margin:10px 0 8px"><span class="vl-pill w">✓ Минутка сделана</span>' +
+          '<div class="vl-hint" style="margin-top:6px">🔥 Серия: <b style="color:#fff">' + mn.streak + ' ' + dayWord(mn.streak) + '</b>' + (res ? ' · оценка <b style="color:#fff">' + res.score + '/10</b>' : '') + '</div>' + progLine + '</div>' +
+        (v ? '<div class="vl-card"><div class="vl-ctx">твоя мысль</div><div class="vl-fb">' + nl2br(v) + '</div></div>' : '') +
+        (res && res.note ? '<div class="vl-why">💬 ' + esc(res.note) + '</div>' : '') +
+        (res && res.socratic ? '<div class="vl-soc">🏛 Вопрос Сократа: ' + esc(res.socratic) + '<br><span style="font-size:.82rem;opacity:.75">Не отвечай мне — додумай про себя, по дороге.</span></div>' : '') +
+        (res && res.bridge ? '<div class="vl-bridge">🌉 Мостик в жизнь: ' + esc(res.bridge) + '</div>' : '') +
+        (ST.min.tact === 'zamer' ? '<div class="vl-card"><div class="vl-fb">Фото «до» сохранено. С завтрашнего дня — по одной минутке: сначала смотришь, как делает Фреди, потом доделываешь за ним, потом делаешь сам. Так петля станет привычкой — незаметно.</div></div>' : '') +
+        '<div class="vl-row"><button class="vl-primary" onclick="VSLUH.home()">Готово ✓</button><button class="vl-secondary" onclick="VSLUH.minutka()">Ещё минутку</button></div>' +
+      '</div>';
+  }
+
   window.VSLUH = {
     home: home, play: play,
     pickRecog: pickRecog, pickFlaw: pickFlaw, nextTask: nextTask,
     submitDo: submitDo, nextDo: nextDo,
     submitReviz: submitReviz, nextReviz: nextReviz,
     examStart: examStart, examSubmit: examSubmit,
+    minutka: minutka, minSubmit: minSubmit, minDone: minDone,
     quitLevel: quitLevel, getState: function () { return ST; }
   };
   window.showVsluhGame = home;
