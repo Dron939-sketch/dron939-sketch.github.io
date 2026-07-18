@@ -6796,6 +6796,20 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-9-dlya-vzroslyh",
+   "title": "Метод для взрослых: экзамены, языки, профессия — Лекция 9",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-shatalov-10-svoya-sistema",
+   "title": "Своя система опорных сигналов: собираем метод — итоги курса — Лекция 10",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
