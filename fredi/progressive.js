@@ -207,11 +207,7 @@
 
   // ---------- премиум-гейт ----------
   async function ensurePremium() {
-    if (window.IS_PREMIUM === true) return true;
-    if ((window.IS_PREMIUM == null) && typeof window.loadPremiumStatus === 'function') {
-      try { await window.loadPremiumStatus(); } catch (e) {}
-    }
-    return window.IS_PREMIUM === true;
+    return true; // игры открыты для всех
   }
   function openPremium() {
     if (typeof window.showPremiumLockPopup === 'function') { window.showPremiumLockPopup('Вариатика Progressive'); return; }
