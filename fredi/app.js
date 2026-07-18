@@ -2839,6 +2839,7 @@ document.addEventListener('DOMContentLoaded', function() {
             signal: { fn: 'showSignalGame', src: 'signal.js', chat: 'kontur' }, // «Сигнал» — опорные сигналы Шаталова
             chainik: { fn: 'showChainikGame', src: 'chainik.js', chat: 'kontur' }, // «Чайник Рассела» — интеллектуальная честность
             istoria: { fn: 'showIstoriaGame', src: 'istoria.js', chat: 'kontur' }, // «Другая история» — изменение личной истории
+            vsluh: { fn: 'showVsluhGame', src: 'vsluh.js', chat: 'kontur' }, // «Мысль вслух» — наладка приватных процессов мышления
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
