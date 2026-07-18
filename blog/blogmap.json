@@ -6943,6 +6943,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-10-slushat-ne-slyshat",
+   "title": "Слушать, а не слышать: обработка на слух — Лекция 10",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-11-vosproizvedenie",
+   "title": "Воспроизведение: знание, которое можно достать — Лекция 11",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-dumat-12-navyk-i-privychka",
+   "title": "Навык и привычка: ум, который думает сам — Лекция 12",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
