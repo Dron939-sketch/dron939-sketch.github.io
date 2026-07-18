@@ -6866,6 +6866,20 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-9-dekalog",
+   "title": "Декалог Рассела: десять заповедей ясного ума — Лекция 9",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-rassel-10-yasnost-kak-obraz-zhizni",
+   "title": "Ясность как образ жизни: собираем систему — итоги курса — Лекция 10",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
