@@ -6705,6 +6705,27 @@
    "rubric": "lektorij",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "lekciya-metod-6-poziciya",
+   "title": "Позиция: чем она отличается от мнения — Лекция 6",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-metod-7-problematizaciya",
+   "title": "Проблематизация: как вскрывают тупики — Лекция 7",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-metod-8-shematizaciya",
+   "title": "Схематизация: зачем рисовать мышление — Лекция 8",
+   "rubric": "lektorij",
+   "level": "p",
+   "mins": 23
   }
  ]
 }
