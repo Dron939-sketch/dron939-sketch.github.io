@@ -2836,6 +2836,7 @@ document.addEventListener('DOMContentLoaded', function() {
             klin: { fn: 'showKlinGame', src: 'klin.js', chat: 'kontur' }, // «Клин клином» — переключение вовлечённости
             lgenij: { fn: 'showLgenijGame', src: 'lgenij.js', chat: 'kontur' }, // «Ленивый гений» — амбициозная цель + ленивый путь
             odi: { fn: 'showOdiScreen', src: 'odi.js', chat: 'kontur' }, // ОДИ — мультиплеер с Фреди-игротехником (?m=odi&join=КОД)
+            signal: { fn: 'showSignalGame', src: 'signal.js', chat: 'kontur' }, // «Сигнал» — опорные сигналы Шаталова
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         var r = ROUTES[m];
