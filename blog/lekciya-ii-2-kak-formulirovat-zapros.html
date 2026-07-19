@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Анатомия запроса: как формулировать промпт — Лекция 2 | Андрей Мейстер</title>
+<meta name="description" content="Курс «Как работать с ИИ», лекция 2. Размытый запрос даёт размытый ответ. Хороший промпт стоит на четырёх кирпичах: роль, задача, контекст, формат. Учимся превращать «напиши про отпуск» в рабочий запрос и перестаём винить «тупой ИИ» там, где виноват запрос.">
+<meta name="keywords" content="как писать промпт, промпт-инжиниринг, как формулировать запрос к ИИ, роль задача контекст формат, запрос к нейросети, как работать с ИИ">
+<meta property="og:type" content="article"><meta property="og:title" content="Анатомия запроса: как формулировать промпт"><meta property="og:description" content="Курс «Как работать с ИИ», лекция 2. Размытый запрос даёт размытый ответ. Хороший промпт стоит на четырёх кирпичах: роль, задача, контекст, формат. Учимся превращать «напиши про отп"><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-ii-2-kak-formulirovat-zapros.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-07-19"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-ii-2-kak-formulirovat-zapros.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Анатомия запроса: как формулировать промпт — Лекция 2", "description": "Схема четырёх кирпичей промпта: роль (кем должна быть модель), задача (что сделать), контекст (детали и ограничения), формат (как выглядит ответ) складываются в точный результат; тот же запрос без кирпичей даёт водянистую пустышку.", "datePublished": "2026-07-19", "author": {"@type": "Person", "name": "Андрей Мейстер", "jobTitle": "Психолог, НЛП-тренер"}, "publisher": {"@type": "Organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/apple-touch-icon.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-ii-2-kak-formulirovat-zapros.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Анатомия запроса: как формулировать промпт", "item": "https://meysternlp.ru/blog/lekciya-ii-2-kak-formulirovat-zapros.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Что такое промпт простыми словами?", "acceptedAnswer": {"@type": "Answer", "text": "Промпт — это запрос, который вы даёте нейросети: текст задания. От его качества напрямую зависит качество ответа, потому что модель отвечает не на ваш замысел, а на конкретные слова. Хороший промпт складывается из четырёх частей: роль (кем должна выступить модель), задача (что именно сделать), контекст (детали, факты, ограничения) и формат (в каком виде нужен ответ)."}}, {"@type": "Question", "name": "Почему нейросеть даёт водянистые ответы?", "acceptedAnswer": {"@type": "Answer", "text": "Чаще всего потому, что запрос был размытым. На «напиши про отпуск» модель может ответить только общими словами — она не знает, кому текст, зачем, какой длины и тона. Добавьте роль, задачу, контекст и формат — и тот же самый инструмент выдаст точный, полезный ответ. Проблема почти всегда не в «тупости ИИ», а в бедности запроса."}}, {"@type": "Question", "name": "Обязательно ли каждый раз писать длинный промпт?", "acceptedAnswer": {"@type": "Answer", "text": "Нет. Для простого фактического вопроса длинный проработанный промпт избыточен. Четыре кирпича — не ритуал, а инструмент для задач, где важен конкретный результат: письмо, план, разбор, текст в нужном стиле. Чем сложнее и ответственнее задача, тем больше окупается проработка запроса."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 19 июля 2026</span><span>⏱️ 24 мин чтения</span><span>🎓 Лекторий · Как работать с ИИ</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Анатомия запроса: как формулировать промпт</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Вы открываете чат с нейросетью, пишете одно слово — «отпуск» — или чуть щедрее: «напиши про отпуск». И получаете ровно то, что заказали: гладкий, вежливый, абсолютно никакой текст. Три абзаца о том, что отпуск — это важно для восстановления сил, что планировать его нужно заранее, а отдыхать полезно. Вы закрываете вкладку с чувством, что вас обманули: обещали чудо, а выдали воду. И делаете вывод — «ИИ переоценён, он тупой». Сегодня я попробую вас переубедить: почти всегда проблема не в модели, а в запросе. И покажу, из чего собран запрос, который работает.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">О чём лекция</span>
+<p>Главная мысль одной фразой: <b>размытый запрос даёт размытый ответ, а точный — полезный; и точность запроса складывается из четырёх кирпичей — роль, задача, контекст, формат.</b> Разберём: почему общая фраза обрекает вас на воду; что такое промпт и роль модели; каждый из четырёх кирпичей по отдельности; как на глазах превратить «напиши про отпуск» в рабочий запрос; и честный суд — когда длинный проработанный промпт нужен, а когда это лишний ритуал.</p></div>
+
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Почему «напиши про отпуск» обречено на воду</a></li><li><a href="#s-2">Четыре кирпича хорошего запроса</a></li><li><a href="#s-3">Собираем «напиши про отпуск» на глазах</a></li><li><a href="#s-4">Суд: когда длинный промпт лишний, а когда необходим</a></li><li><a href="#s-5">Итоги лекции</a></li><li><a href="#s-6">Вопросы для самопроверки</a></li><li><a href="#s-7">Литература</a></li></ol></nav>
+
+<h2 id="s-1">1. Почему «напиши про отпуск» обречено на воду</h2>
+<p>Вспомните прошлую лекцию: языковая модель не достаёт готовый ответ из хранилища — она достраивает продолжение по тому, что вы ей дали. Она отвечает не на ваш замысел, а на ваши слова. А замысел и слова — разные вещи.</p>
+<p>Когда вы пишете «напиши про отпуск», в вашей голове есть всё: это пост в рабочий блог турагентства, на полторы тысячи знаков, для семей с детьми, с лёгкой иронией, без штампов про «незабываемые впечатления». Но модель ничего этого не видит. Она видит два слова. И достраивает самое вероятное, самое усреднённое продолжение — то есть то, что подходит миллиону разных «отпусков» сразу. Отсюда и вода: усреднённый ответ на неуточнённый вопрос физически не может быть острым.</p>
+<p>Это важно, повторю иначе: модель не читает мысли, она читает текст. Всё, что вы не сказали, она додумает за вас — и додумает по среднему. Значит, качество ответа задаётся не тем, насколько модель умна, а тем, насколько вы сузили ей коридор. Запрос — это и есть инструмент сужения.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🧩</span><span class="concept-number">Понятие</span></div>
+<h3>Промпт</h3>
+<p><b>Промпт</b> — это ваш запрос к модели, весь текст, который вы ей отправляете. Не «вопрос» в узком смысле, а всё задание целиком: и что сделать, и с какими вводными, и в каком виде. Живая аналогия — заказ подрядчику. Если вы говорите строителю «сделай красиво», вы получите его представление о красивом, а не своё. Если говорите «покрась стену в матовый серый, вот образец, к пятнице» — получаете то, что нужно. Промпт — это техзадание, а не намёк. И как с любым техзаданием: чем оно расплывчатее, тем больше свободы у исполнителя ошибиться мимо вас.</p></div>
+
+<h2 id="s-2">2. Четыре кирпича хорошего запроса</h2>
+<p>Хороший промпт не искусство и не магия формулировок — это конструкция из четырёх опор. Их удобно держать в голове как чек-лист: роль, задача, контекст, формат. Пройдёмся по каждому, а потом соберём их вместе.</p>
+<p>Кирпич первый — <b>роль</b>. Вы говорите модели, кем ей быть: «ты редактор», «ты репетитор по математике для восьмого класса», «ты придирчивый юрист». Это не украшение. Роль разом подтягивает нужный пласт языка, тона и приоритетов. Редактор будет резать лишнее, репетитор — объяснять с нуля и проверять понимание, юрист — искать риски. Одно слово роли задаёт модели точку зрения, с которой она смотрит на задачу.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🧩</span><span class="concept-number">Понятие</span></div>
+<h3>Роль модели</h3>
+<p><b>Роль модели</b> — это заданная вами позиция, из которой она отвечает: кто говорит и с какой оптикой. У одного и того же текста «объясни, как работает ипотека» будут два разных ответа, если сначала сказать «ты банковский менеджер, которому надо продать» и «ты въедливый финансовый советник на моей стороне». Первый подсветит выгоды, второй — подводные камни. Роль работает, потому что модель видела в обучении миллионы текстов, написанных с разных позиций, и «редактор» для неё — не ярлык, а целый стиль мышления, который она умеет включать. Наш ИИ-помощник Фреди по устройству — тоже роль: модель, которой сказали быть тёплым, внимательным психологом, а не безличным справочником.</p></div>
+
+<p>Кирпич второй — <b>задача</b>. Здесь нужен глагол действия, и точный. Не «про отпуск», а «напиши», «сократи», «сравни», «составь список», «найди ошибки», «перепиши проще». Существительное задаёт тему, но не действие; модель должна понимать, что именно ей сделать с этой темой. «Отпуск» — тема. «Напиши пост про отпуск» — уже задача. Разница между ними — разница между «еда» и «свари суп».</p>
+<p>Кирпич третий — <b>контекст</b>. Это все детали, ограничения и факты, которые есть у вас в голове, но которых нет у модели: для кого текст, какой тон, что нельзя упоминать, какие факты обязательны, чего вы уже пробовали. Контекст — самый объёмный кирпич и, забегая вперёд, самый недооценённый; про воду в ответе почти всегда виноват именно недосказанный контекст.</p>
+<p>Кирпич четвёртый — <b>формат</b>. Как должен выглядеть ответ: список или связный текст, три пункта или десять, таблица или абзац, длина, наличие заголовков, тон. Модель по умолчанию выберет формат за вас — и часто не тот. Сказать «ответь пятью короткими пунктами без вступления» — значит снять с себя лотерею и получить пригодный к делу результат сразу.</p>
+
+<h2 id="s-3">3. Собираем «напиши про отпуск» на глазах</h2>
+<p>Теперь возьмём тот самый несчастный запрос и достроим его кирпич за кирпичом — чтобы вы увидели, как вода превращается в текст.</p>
+<p>Пустой запрос: «напиши про отпуск». Добавляем роль: «Ты копирайтер турагентства для семейного отдыха». Добавляем задачу и уточняем глагол: «напиши пост для блога». Добавляем контекст: «аудитория — родители с детьми до десяти лет, которые боятся, что отдых с детьми — это не отдых; тон тёплый, с лёгкой иронией, без штампов вроде "незабываемые впечатления"; главная мысль — что с правильной организацией родители тоже отдыхают». Добавляем формат: «объём около полутора тысяч знаков, с цепляющим первым абзацем и одним практическим советом в конце».</p>
+<p>Прочитайте два запроса подряд — «напиши про отпуск» и то, что получилось, — и вы сами почувствуете, что второй уже почти нельзя испортить. Мы не сделали модель умнее. Мы сузили ей коридор так, что усреднённого ответа в нём просто не осталось места. Ровно та же модель, тот же движок — а разница как между лужей и струёй из-под крана.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 340" role="img" aria-label="Схема: четыре кирпича промпта против пустого запроса" style="width:100%;height:auto;display:block;font-family:inherit">
+  <text x="180" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#1D1D1F">Четыре кирпича</text>
+  <rect x="60" y="44" width="240" height="40" rx="10" fill="#fff" stroke="#3A86FF" stroke-width="1.8"/>
+  <text x="180" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3A86FF">РОЛЬ</text>
+  <text x="180" y="78" text-anchor="middle" font-size="10" fill="#6E6E73">«ты копирайтер турагентства»</text>
+  <rect x="60" y="92" width="240" height="40" rx="10" fill="#fff" stroke="#3A86FF" stroke-width="1.8"/>
+  <text x="180" y="111" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3A86FF">ЗАДАЧА</text>
+  <text x="180" y="126" text-anchor="middle" font-size="10" fill="#6E6E73">«напиши пост для блога»</text>
+  <rect x="60" y="140" width="240" height="40" rx="10" fill="#fff" stroke="#3A86FF" stroke-width="1.8"/>
+  <text x="180" y="159" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3A86FF">КОНТЕКСТ</text>
+  <text x="180" y="174" text-anchor="middle" font-size="10" fill="#6E6E73">«родители с детьми, тёплый тон»</text>
+  <rect x="60" y="188" width="240" height="40" rx="10" fill="#fff" stroke="#3A86FF" stroke-width="1.8"/>
+  <text x="180" y="207" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3A86FF">ФОРМАТ</text>
+  <text x="180" y="222" text-anchor="middle" font-size="10" fill="#6E6E73">«1500 знаков, совет в конце»</text>
+  <line x1="300" y1="136" x2="360" y2="136" stroke="#B9C6DD" stroke-width="1.8"/>
+  <polygon points="360,136 350,131 350,141" fill="#B9C6DD"/>
+  <rect x="362" y="112" width="296" height="48" rx="12" fill="#F3F7FF" stroke="#3A86FF" stroke-width="1.8"/>
+  <text x="510" y="133" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3A86FF">точный, пригодный ответ</text>
+  <text x="510" y="150" text-anchor="middle" font-size="10" fill="#6E6E73">коридор сужен — воде негде взяться</text>
+  <line x1="360" y1="260" x2="360" y2="260" stroke="none"/>
+  <rect x="60" y="262" width="240" height="52" rx="10" fill="#FFF6F4" stroke="#F0C7BE"/>
+  <text x="180" y="284" text-anchor="middle" font-size="11.5" font-weight="700" fill="#C0392B">«напиши про отпуск»</text>
+  <text x="180" y="301" text-anchor="middle" font-size="10" fill="#6E6E73">кирпичей нет</text>
+  <line x1="300" y1="288" x2="360" y2="288" stroke="#E0B8B0" stroke-width="1.8"/>
+  <polygon points="360,288 350,283 350,293" fill="#E0B8B0"/>
+  <rect x="362" y="262" width="296" height="52" rx="12" fill="#fff" stroke="#E4E7EC" stroke-width="1.6"/>
+  <text x="510" y="284" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6E6E73">пустышка: усреднённая вода</text>
+  <text x="510" y="301" text-anchor="middle" font-size="10" fill="#6E6E73">коридор открыт — ответ ни о чём</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">
+Схема двух путей одного запроса. Верхний путь: четыре кирпича, поставленные друг на друга — роль «ты копирайтер турагентства», задача «напиши пост для блога», контекст «родители с детьми, тёплый тон» и формат «полторы тысячи знаков, совет в конце», — складываются в точный, пригодный ответ: коридор сужен, и воде просто негде взяться. Нижний путь: тот же запрос без единого кирпича — голое «напиши про отпуск» — упирается в пустышку, усреднённую воду, потому что коридор открыт настежь и модель достраивает ответ ни о чём. Движок один и тот же; разницу делают кирпичи.
+</figcaption></figure>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
+<p>Откройте историю своих запросов к нейросети и найдите один, которым остались недовольны, — тот самый, после которого подумали «ну и бесполезно». Перепишите его по четырём кирпичам: добавьте роль, поставьте точный глагол действия, выложите весь контекст, который был у вас в голове, и укажите желаемый формат ответа. Отправьте оба варианта — старый и новый — и положите ответы рядом. Разницу вы увидите сразу; и почти наверняка окажется, что «тупой ИИ» из первого захода просто честно отвечал на пустой вопрос.</p></div>
+
+<h2 id="s-4">4. Суд: когда длинный промпт лишний, а когда необходим</h2>
+<p>Тут легко впасть в другую крайность — решить, что теперь каждый запрос нужно обкладывать четырьмя кирпичами, как ритуалом. Это неправда, и честнее сказать сразу: проработанный промпт — инструмент под задачу, а не обязательный обряд.</p>
+<p>Когда он избыточен? На простых фактических вопросах. «Сколько граммов в унции», «как пишется слово вперемешку», «переведи эту фразу на английский» — здесь коридор и так узкий, ответ один, добавлять роль и формат незачем. Расписывать «ты опытный преподаватель русского языка, учитывая нормы современной орфографии, ответь в формате…» на вопрос о правописании — значит тратить своё время на театр. У короткого точного вопроса короткий точный ответ; кирпичи ему не нужны.</p>
+<p>Когда он необходим? Когда ответ зависит от того, кто вы, для кого текст и что считать хорошим результатом. Всё творческое, аналитическое, адресное: тексты, планы, разборы, советы, код под ваши условия. Чем больше в задаче ваших личных вводных, которых модель знать не может, тем дороже каждый непоставленный кирпич. Простое правило: если у задачи есть только один разумный ответ — спрашивайте коротко; если разумных ответов много и вам нужен конкретный — стройте запрос.</p>
+<p>И оговорка против фанатизма: промпт не заклинание, где важен каждый символ. Не нужно заучивать «волшебные фразы» и верить, что от слова «пожалуйста» или магической формулировки ответ скачком станет гением. Четыре кирпича — это не ритуал на удачу, а способ передать модели то, что она иначе не узнает. Работает не длина запроса, а его информативность.</p>
+
+<h2 id="s-5">Итоги лекции</h2>
+<div class="key-takeaway"><span class="takeaway-label">Главное</span>
+<ul>
+<li>Модель отвечает не на ваш замысел, а на ваши слова: всё несказанное она додумывает по среднему — отсюда вода.</li>
+<li>Промпт — это техзадание целиком, а не намёк; расплывчатое ТЗ развязывает исполнителю руки ошибиться мимо вас.</li>
+<li>Хороший запрос стоит на четырёх кирпичах: роль, задача, контекст, формат.</li>
+<li>Роль задаёт оптику («ты редактор» режет лишнее, «ты репетитор» объясняет с нуля); задача требует точного глагола действия.</li>
+<li>Контекст — самый объёмный и самый недооценённый кирпич; формат снимает лотерею и даёт пригодный к делу вид ответа.</li>
+<li>«Напиши про отпуск» превращается в рабочий запрос не тем, что модель умнеет, а тем, что вы сужаете ей коридор.</li>
+<li>Длинный промпт — инструмент под задачу, а не обряд: простому факту он лишний, адресному тексту необходим. Работает информативность, а не длина.</li>
+</ul></div>
+
+<h2 id="s-6">Вопросы для самопроверки</h2>
+<ol>
+<li>Объясните своими словами, почему общая фраза вроде «напиши про отпуск» почти всегда даёт водянистый ответ — при чём тут «модель достраивает по среднему».</li>
+<li>Назовите четыре кирпича промпта и приведите свой пример каждого для задачи «помоги составить письмо».</li>
+<li>В чём разница между темой и задачей? Переделайте «про здоровье» в задачу с глаголом действия.</li>
+<li>Придумайте один запрос, где роль радикально меняет ответ, задав модели две противоположные позиции.</li>
+<li>Приведите свой пример вопроса, которому четыре кирпича не нужны, — и объясните, чем он отличается от того, которому нужны.</li>
+</ol>
+
+<h2 id="s-7">Литература</h2>
+<p>Итан Моллик, «Со-интеллект. Жизнь и работа с ИИ» — ясный разбор того, как разговаривать с языковой моделью, чтобы получать пользу, а не воду. Официальные руководства по составлению запросов от разработчиков крупных языковых моделей — короткие практические своды с примерами «до и после». А для мостика вперёд: следующая, третья лекция целиком посвящена самому недооценённому из четырёх кирпичей — контексту: почему именно он чаще всего решает судьбу ответа и как выкладывать его так, чтобы модель поняла вас с первого раза.</p>
+<div class="cta-block">
+<h3>🧠 Тренируйте разговор с ИИ прямо сейчас</h3>
+<p>Фреди — ИИ-собеседник этого сайта. Здесь можно на живом примере попробовать всё из курса: сформулировать запрос, довести ответ в диалоге, попросить сыграть оппонента.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Открыть Фреди →</a>
+<a href="/blog/lektorij/kak-rabotat-s-ii/" class="btn btn-outline">Все лекции курса</a>
+</div>
+</div>
+
+</div>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: бесплатно, круглосуточно и без записи. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Материалы лекции подготовил Мейстер А.Ю., кандидат психологических наук, психолог-методолог, автор образовательной системы «Вариатика». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
+
+<div class="related-articles"><h3>📚 Читайте также:</h3><div class="related-grid">
+<div class="related-item"><a href="/blog/lekciya-ii-1-chto-takoe-llm.html">Что такое нейросеть и почему она врёт</a><span>Лекция 1</span></div>
+<div class="related-item"><a href="/blog/lekciya-dumat-6-svoimi-slovami.html">Своими словами: тест на понимание</a><span>Курс «Как думать»</span></div>
+</div></div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</article></div>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body></html>

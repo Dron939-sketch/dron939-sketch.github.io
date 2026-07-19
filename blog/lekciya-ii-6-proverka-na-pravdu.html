@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Проверка на правду: как ловить галлюцинации ИИ — Лекция 6 | Андрей Мейстер</title>
+<meta name="description" content="Курс «Как работать с ИИ», лекция 6. Нейросеть звучит одинаково уверенно и когда права, и когда врёт: уверенность тона не связана с правдивостью. Разбираем, что проверять всегда — факты, числа, цитаты, ссылки — и как ловить выдуманные источники. Мостик к критическому мышлению и медиаграмотности.">
+<meta name="keywords" content="галлюцинации ИИ, как проверять ответы нейросети, выдуманные источники, фактчек ИИ, доверие к чат-боту, проверка фактов, как работать с ИИ">
+<meta property="og:type" content="article"><meta property="og:title" content="Проверка на правду: как ловить галлюцинации ИИ"><meta property="og:description" content="Курс «Как работать с ИИ», лекция 6. Нейросеть звучит одинаково уверенно и когда права, и когда врёт: уверенность тона не связана с правдивостью. Разбираем, что проверять всегда — ф"><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-ii-6-proverka-na-pravdu.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-07-19"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-ii-6-proverka-na-pravdu.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Проверка на правду: как ловить галлюцинации ИИ — Лекция 6", "description": "Схема-светофор доверия к ответу ИИ: зелёная зона — язык, черновики, идеи, объяснение общеизвестного; жёлтая — структура фактов, которую надо перепроверить; красная — точные цифры, цитаты, ссылки и свежие события, которым нельзя доверять без проверки.", "datePublished": "2026-07-19", "author": {"@type": "Person", "name": "Андрей Мейстер", "jobTitle": "Психолог, НЛП-тренер"}, "publisher": {"@type": "Organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/apple-touch-icon.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-ii-6-proverka-na-pravdu.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Проверка на правду: как ловить галлюцинации ИИ", "item": "https://meysternlp.ru/blog/lekciya-ii-6-proverka-na-pravdu.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Как понять, что нейросеть галлюцинирует?", "acceptedAnswer": {"@type": "Answer", "text": "По тону — никак: модель звучит одинаково уверенно и когда права, и когда выдумывает. Единственный надёжный путь — проверять содержание, а не доверять уверенности. Особенно подозрительны точные детали: конкретные цифры, даты, имена, цитаты и ссылки на источники. Именно их модель охотнее всего достраивает по правдоподобию."}}, {"@type": "Question", "name": "Почему нельзя доверять ссылкам, которые даёт ИИ?", "acceptedAnswer": {"@type": "Answer", "text": "Потому что модель не достаёт ссылку из базы, а генерирует правдоподобно выглядящий текст, включая «источники». Она легко выдаёт несуществующие книги и статьи с убедительными названиями, авторами и годами. Всегда проверяйте, существует ли источник на самом деле, прежде чем на него опираться."}}, {"@type": "Question", "name": "Что можно доверять ИИ без проверки?", "acceptedAnswer": {"@type": "Answer", "text": "То, где важна форма, а не проверяемый факт: черновики, переформулировки, идеи, структура, объяснение общеизвестного своими словами. Здесь проверка не нужна и только тормозит. Опасность возникает там, где ответ важен, проверяем и вы собираетесь на него опереться — вот это сверяйте всегда."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 19 июля 2026</span><span>⏱️ 24 мин чтения</span><span>🎓 Лекторий · Как работать с ИИ</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Проверка на правду: как ловить галлюцинации ИИ</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Представьте: вы готовите доклад и просите нейросеть подкрепить мысль фактом. Она отвечает мгновенно и красиво: «По данным исследования Кембриджского университета 2019 года, 73 процента людей принимают решения именно так — см. статью Джонсона в „Журнале когнитивной психологии“». Точная цифра, солидный университет, конкретный автор, название журнала. Вы вставляете это в работу, произносите в споре, побеждаете. А через неделю кто-то дотошный лезет проверять — и не находит ничего. Ни статьи Джонсона, ни этого исследования, ни таких 73 процентов. Всё выдумано. Причём выдумано так убедительно, что вы ни на секунду не усомнились. Сегодня — о том, как эта ловушка устроена и как из неё не попадаться.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">О чём лекция</span>
+<p>Главная мысль одной фразой: <b>нейросеть звучит одинаково уверенно и когда права, и когда ошибается — уверенность тона не связана с правдивостью, поэтому всё важное и проверяемое нужно проверять самому.</b> Разберём: почему модель врёт тем же голосом, что и говорит правду; что такое галлюцинация на самом деле; что именно надо сверять всегда; светофор доверия к ответу ИИ; и три рабочих приёма проверки, которые занимают минуты.</p></div>
+
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Одинаковый голос для правды и для вымысла</a></li><li><a href="#s-2">Что модель выдумывает охотнее всего</a></li><li><a href="#s-3">Светофор доверия: где можно расслабиться, а где нет</a></li><li><a href="#s-4">Три приёма, которые ловят вымысел</a></li><li><a href="#s-5">Суд: где здесь правда, а где перегиб</a></li><li><a href="#s-6">Итоги лекции</a></li><li><a href="#s-7">Вопросы для самопроверки</a></li><li><a href="#s-8">Литература</a></li></ol></nav>
+
+<h2 id="s-1">1. Одинаковый голос для правды и для вымысла</h2>
+<p>В первой лекции курса мы уже называли главную странность этих систем: нейросеть не знает, что говорит правду. Она собирает правдоподобный текст, а не сверяется с реальностью. Сегодня углубим самое опасное следствие этого факта.</p>
+<p>Вот в чём беда. Когда человек не уверен, это обычно слышно. Он тянет паузу, оговаривается «кажется», «вроде бы», отводит глаза. У нейросети такого предохранителя нет. Она выдаёт выдуманную цифру ровно тем же гладким, уверенным тоном, что и общеизвестный факт. Нет ни дрожи в голосе, ни оговорки, ни сноски «тут я не уверена». Идеально круглая интонация — и над правдой, и над вымыслом.</p>
+<p>Запомните это как главный тезис лекции: уверенность тона ничего не говорит о правдивости. Красивая формулировка, точное число, ссылка на авторитет — это не признаки истины, это признаки хорошо построенного текста. А строить хороший текст модель как раз умеет блестяще. Именно поэтому вымысел от неё опаснее, чем от человека: он приходит без единого сигнала тревоги.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🧩</span><span class="concept-number">Понятие</span></div><h3>Галлюцинация</h3><p>Галлюцинация — это уверенно поданный вымысел, который нейросеть выдаёт за факт. Не сбой, не поломка — обычный режим работы, просто на этот раз в реальности такого нет. Модель достраивает правдоподобное продолжение: если по форме здесь должна стоять фамилия автора и год, она поставит фамилию и год — любые, лишь бы звучало складно. Живой пример: вы просите список книг по теме, и среди настоящих названий появляется одна несуществующая — с правдоподобным заголовком, реальным автором, но такой книги он никогда не писал. Ключевое: галлюцинация неотличима на глаз от правды именно потому, что сделана из того же материала — гладкой, уверенной речи.</p></div>
+
+<h2 id="s-2">2. Что модель выдумывает охотнее всего</h2>
+<p>Галлюцинируют не одинаково по всему полю. Есть места, где вымысел почти неизбежен, и знать их — половина защиты.</p>
+<p>Тяжелее всего модели даётся всё точечное и проверяемое. Числа и проценты — она подставит правдоподобную цифру вместо настоящей. Даты — сдвинет год, перепутает век. Имена — присвоит цитату не тому человеку. Цитаты — соберёт фразу, которую герой никогда не произносил, но мог бы. И отдельная больная тема — ссылки на источники. Нейросеть с поразительной лёгкостью выдумывает несуществующие книги, статьи и исследования: правдоподобное название, настоящий автор, солидный журнал, конкретный год — и ничего этого нет в природе. Она не лжёт в человеческом смысле, она достраивает форму «здесь должна быть ссылка» до убедительного вида.</p>
+<p>А вот там, где нет точечных фактов, галлюцинировать почти не в чем. Пересказать общеизвестную идею, объяснить понятие, причесать ваш черновик, накидать варианты формулировок — здесь модель сильна и надёжна. Разница именно в этом: широкое и общеизвестное — безопасно, точечное и проверяемое — зона риска.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🧩</span><span class="concept-number">Понятие</span></div><h3>Проверяемое утверждение</h3><p>Проверяемое утверждение — это то, что можно взять и сверить с реальностью: есть однозначный ответ вне текста. «Толстой родился в 1828 году», «в этом городе живёт миллион человек», «такая статья существует» — всё это либо так, либо нет, и это можно установить. Ему противоположно непроверяемое или общее: «это интересная мысль», «текст стал яснее», «в целом люди склонны к осторожности». Практический смысл различения простой: чем конкретнее и проверяемее утверждение модели — число, дата, имя, цитата, ссылка, — тем выше шанс, что оно выдумано, и тем важнее его сверить. Общее рассуждение проверять не в чем и незачем.</p></div>
+
+<h2 id="s-3">3. Светофор доверия: где можно расслабиться, а где нет</h2>
+<p>Чтобы не проверять всё подряд и не проверять слишком мало, держите в голове простой светофор. Он делит любой ответ нейросети на три зоны по уровню доверия.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 360" role="img" aria-label="Схема: светофор доверия к ответу нейросети" style="width:100%;height:auto;display:block;font-family:inherit">
+  <text x="360" y="30" text-anchor="middle" font-size="14" font-weight="700" fill="#1D1D1F">Светофор доверия к ответу ИИ</text>
+
+  <rect x="60" y="52" width="600" height="86" rx="14" fill="#fff" stroke="#2E9E5B" stroke-width="2"/>
+  <circle cx="104" cy="95" r="20" fill="#2E9E5B"/>
+  <text x="150" y="82" font-size="13" font-weight="700" fill="#1D1D1F">Зелёный — можно доверять</text>
+  <text x="150" y="104" font-size="11.5" fill="#6E6E73">язык и стиль, черновики, идеи, варианты,</text>
+  <text x="150" y="122" font-size="11.5" fill="#6E6E73">объяснение общеизвестного</text>
+
+  <rect x="60" y="150" width="600" height="86" rx="14" fill="#fff" stroke="#E6A700" stroke-width="2"/>
+  <circle cx="104" cy="193" r="20" fill="#E6A700"/>
+  <text x="150" y="180" font-size="13" font-weight="700" fill="#1D1D1F">Жёлтый — перепроверить</text>
+  <text x="150" y="202" font-size="11.5" fill="#6E6E73">структура из фактов: пересказ теории,</text>
+  <text x="150" y="220" font-size="11.5" fill="#6E6E73">общий ход событий, сводка — сверить узлы</text>
+
+  <rect x="60" y="248" width="600" height="86" rx="14" fill="#fff" stroke="#C0392B" stroke-width="2"/>
+  <circle cx="104" cy="291" r="20" fill="#C0392B"/>
+  <text x="150" y="278" font-size="13" font-weight="700" fill="#1D1D1F">Красный — не доверять без проверки</text>
+  <text x="150" y="300" font-size="11.5" fill="#6E6E73">точные цифры и даты, имена, цитаты,</text>
+  <text x="150" y="318" font-size="11.5" fill="#6E6E73">ссылки на источники, свежие события</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">
+Светофор доверия к ответу нейросети делит его на три зоны. Первая, зелёная, — можно доверять спокойно: язык и стиль, черновики, идеи и варианты, объяснение общеизвестного; тут модель сильна и выдумывать нечего. Вторая, жёлтая, — стоит перепроверить узловые места: пересказ теории, общий ход событий, сводка; форма верна, но отдельные факты внутри могут сползти. Третья, красная, — не доверять без проверки вообще: точные цифры и даты, имена, цитаты, ссылки на источники и свежие события; именно здесь галлюцинации гуще всего. Правило чтения простое: чем конкретнее и проверяемее утверждение, тем краснее зона.
+</figcaption></figure>
+
+<p>Обратите внимание: светофор не говорит «нейросети нельзя верить». Он говорит, где верить безопасно, а где сначала сверить. Большая часть работы с ИИ — зелёная зона, и это хорошая новость. Опасна узкая красная полоса — и вот её надо знать в лицо.</p>
+
+<h2 id="s-4">4. Три приёма, которые ловят вымысел</h2>
+<p>Теория без действия быстро выветривается, поэтому — три конкретных приёма. Они занимают минуты и снимают почти весь риск.</p>
+<p>Приём первый — спросите источник. Прямо в диалоге: «Откуда это? Приведи источник». Модель назовёт книгу, статью, ссылку. Но — и это критически важно — сам факт, что она назвала источник, ещё ничего не доказывает: источник она тоже может выдумать. Поэтому приём второй: проверьте сам источник. Скопируйте название, автора, год — и найдите их в настоящем поиске, в реальной библиотеке, на сайте издания. Существует ли эта статья? Писал ли этот человек эту книгу? Есть ли там эта цифра? Половина выдуманных ссылок отваливается на первом же запросе — их просто нет. Приём третий — перепроверьте сам факт независимо: не «подтвердила ли себя нейросеть», а есть ли это в реальном мире, вне разговора с ней. Один независимый источник со стороны стоит больше, чем сколько угодно уверений модели.</p>
+<p>Свести всё можно к одному правилу: не доверяйте нейросети в том, что одновременно важно и проверяемо. Неважное — не тратьте силы. Непроверяемое — там и проверять нечего. А вот на пересечении «важно и проверяемо» — всегда сверяйте сами. Это тот же навык, что мы разбирали в курсах критического мышления и медиаграмотности: там мы учились не верить красивому заголовку на слово — здесь ровно то же самое, только источник соблазнительнее, потому что отвечает лично вам и очень складно.</p>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
+<p>Проверка за пять минут. Спросите нейросеть что-нибудь фактическое из знакомой вам области — с числами и именами. Получив ответ, задайте вопрос в лоб: «Приведи источники на каждое утверждение — автор, название, год». А теперь самое интересное: возьмите эти источники и проверьте, существуют ли они на самом деле — в поиске, в каталоге библиотеки, на сайте журнала. Отметьте, сколько ссылок оказалось настоящими, а сколько — правдоподобным вымыслом. Один такой опыт запоминается лучше любой лекции: вы своими глазами увидите, как уверенно модель ссылается на то, чего нет.</p></div>
+
+<h2 id="s-5">5. Суд: где здесь правда, а где перегиб</h2>
+<p>Взвесим тему честно, без паники и без благодушия. Правда в том, что галлюцинации реальны, встречаются регулярно и особенно густы там, где цена ошибки высока: точные факты, источники, свежие данные. На важном и проверяемом слепое доверие нейросети — прямой путь опозориться или навредить.</p>
+<p>Но есть и другая сторона, и её нечестно замалчивать. Проверка стоит времени, и проверять всё подряд — невротизм, который убивает всю пользу инструмента. Для черновика, для мозгового штурма, для «переформулируй мне это яснее» проверка не нужна вообще: там нечего проверять. Опасность живёт не везде, а в узкой зоне — где важно и проверяемо одновременно. Туда и направляйте бдительность, остальное отпустите.</p>
+<p>И ещё одно, чтобы снять лишние эмоции. Нейросеть не злонамеренно врёт. У неё вообще нет понятия истины — а значит, нет и намерения обмануть. Она не хитрит и не выкручивается, как человек, который знает правду и прячет её. Она просто достраивает правдоподобный текст, не отличая выдуманную ссылку от настоящей. Обижаться на неё за это так же бессмысленно, как обижаться на калькулятор. Наша задача не разоблачить злодея, а помнить об устройстве инструмента и подставлять проверку там, где он предсказуемо промахивается.</p>
+
+<h2 id="s-6">Итоги лекции</h2>
+<div class="key-takeaway"><span class="takeaway-label">Главное</span>
+<ul>
+<li>Уверенность тона нейросети не связана с правдивостью: вымысел она выдаёт тем же гладким голосом, что и факт, — без единого сигнала тревоги.</li>
+<li>Галлюцинация — это уверенно поданный вымысел; не сбой, а обычный режим работы, просто на этот раз в реальности такого нет.</li>
+<li>Охотнее всего модель выдумывает точечное и проверяемое: числа, даты, имена, цитаты и особенно ссылки на несуществующие книги и статьи.</li>
+<li>Светофор доверия: зелёное — язык, черновики, идеи, общеизвестное; жёлтое — структура фактов, перепроверить узлы; красное — цифры, цитаты, ссылки, свежие события.</li>
+<li>Три приёма: спроси источник, проверь сам этот источник, перепроверь факт независимо в реальном поиске.</li>
+<li>Главное правило: не доверять в том, что одновременно важно и проверяемо; для черновиков и идей проверка не нужна.</li>
+<li>Модель не врёт злонамеренно — у неё просто нет понятия истины; проверка лежит на нас.</li>
+</ul></div>
+
+<h2 id="s-7">Вопросы для самопроверки</h2>
+<ol>
+<li>Объясните своими словами, почему вымысел от нейросети опаснее, чем неуверенность живого человека.</li>
+<li>В чём разница между проверяемым и непроверяемым утверждением? Приведите свой пример каждого.</li>
+<li>Почему недостаточно просто попросить у модели источник — что нужно сделать дальше и зачем?</li>
+<li>К какой зоне светофора вы отнесёте просьбу «перескажи сюжет известного романа», а к какой — «назови точный тираж его первого издания»? Обоснуйте.</li>
+<li>Приведите случай из своей жизни, когда вы поверили красиво поданной информации без проверки. Как здесь помог бы принцип «важно и проверяемо»?</li>
+</ol>
+
+<h2 id="s-8">Литература</h2>
+<p>Даниэль Канеман, «Думай медленно… решай быстро» — о том, как уверенность ощущения обманывает нас и почему беглость мысли мы принимаем за истину. Карл Саган, «Мир, полный демонов» — классический набор инструментов проверки сомнительных утверждений, применимый один в один к ответам ИИ. Наши собственные курсы «Критическое мышление» и «Медиаграмотность» — там мы подробно разбираем, как оценивать качество доказательств и не верить источнику на слово; эта лекция — их прямое продолжение применительно к нейросетям.</p>
+
+<p class="next-lecture">Разобравшись с доверием и научившись ловить вымысел, в следующей лекции перейдём к главному — как применить нейросеть к реальной работе так, чтобы её сила приносила пользу, а слабые места оставались под контролем.</p>
+<div class="cta-block">
+<h3>🧠 Тренируйте разговор с ИИ прямо сейчас</h3>
+<p>Фреди — ИИ-собеседник этого сайта. Здесь можно на живом примере попробовать всё из курса: сформулировать запрос, довести ответ в диалоге, попросить сыграть оппонента.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Открыть Фреди →</a>
+<a href="/blog/lektorij/kak-rabotat-s-ii/" class="btn btn-outline">Все лекции курса</a>
+</div>
+</div>
+
+</div>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: бесплатно, круглосуточно и без записи. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Материалы лекции подготовил Мейстер А.Ю., кандидат психологических наук, психолог-методолог, автор образовательной системы «Вариатика». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
+
+<div class="related-articles"><h3>📚 Читайте также:</h3><div class="related-grid">
+<div class="related-item"><a href="/blog/lekciya-krit-7-proverka-informacii.html">Проверка информации</a><span>Курс «Критическое мышление»</span></div>
+<div class="related-item"><a href="/blog/lekciya-media-5-fejki-i-dezinformaciya.html">Фейки и дезинформация</a><span>Курс «Медиаграмотность»</span></div>
+</div></div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</article></div>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body></html>
