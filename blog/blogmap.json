@@ -78,6 +78,13 @@
  ],
  "articles": [
   {
+   "slug": "vechnyj-dvigatel-igra-razuma",
+   "title": "Вечный двигатель, который мы не так поняли: игра разума",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 15
+  },
+  {
    "slug": "lekciya-lozh-1-mif-o-detektore",
    "title": "Главный миф: детектора лжи в кармане не существует — Лекция 1",
    "rubric": "lektorij",
