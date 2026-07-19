@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-lozh-1-mif-o-detektore",
+   "title": "Главный миф: детектора лжи в кармане не существует — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-2-bazovaya-liniya",
+   "title": "Базовая линия: читать не жест, а отклонение от нормы — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-3-klastery-i-kontekst",
+   "title": "Кластеры и контекст: один жест не значит ничего — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-4-chto-telo-pokazyvaet",
+   "title": "Что язык тела реально показывает: эмоции, а не правду — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-5-mikrovyrazheniya",
+   "title": "Микровыражения: зерно правды и гора преувеличений — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-6-priznaki-lzhi-mify",
+   "title": "Разбор популярных «признаков лжи»: почему они не работают — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-7-verbalnye-priznaki",
+   "title": "Слова надёжнее тела: вербальные признаки обмана — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-8-professionaly",
+   "title": "Как ложь понимают профессионалы: факты, а не жесты — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-9-vasha-neverbalika",
+   "title": "Ваша собственная невербалика: как читают вас — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lozh-10-realistichnyj-nabor",
+   "title": "Реалистичный набор: что работает и как не стать параноиком — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-yazyk-1-mif-o-sposobnostyah",
    "title": "Почему школьный метод не работает и миф о способностях — Лекция 1",
    "rubric": "lektorij",
