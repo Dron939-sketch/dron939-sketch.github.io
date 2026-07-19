@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-stoik-1-filosofiya-dlya-zhizni",
+   "title": "Философия для жизни: зачем стоицизм сегодня — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-2-dihotomiya-kontrolya",
+   "title": "Дихотомия контроля: что в моей власти, а что нет — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-3-suzhdeniya-a-ne-sobytiya",
+   "title": "Не события ранят нас, а наши суждения о них — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-4-negativnaya-vizualizaciya",
+   "title": "Негативная визуализация: репетиция потерь — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-5-vzglyad-sverhu",
+   "title": "Взгляд сверху: масштаб, который лечит — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-6-rabota-s-emociyami",
+   "title": "Гнев, страх, зависть: работа с эмоциями — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-7-amor-fati",
+   "title": "Амор фати: любить свою судьбу — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-8-memento-mori",
+   "title": "Memento mori: смертность как учитель жизни — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-9-dobrodetel",
+   "title": "Добродетель как благо: характер и люди — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-stoik-10-lichnaya-praktika",
+   "title": "Личная стоическая практика: собираем систему — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-ii-1-chto-takoe-llm",
    "title": "Что такое нейросеть и почему она иногда врёт — Лекция 1",
    "rubric": "lektorij",
