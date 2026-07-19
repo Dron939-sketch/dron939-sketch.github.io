@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-yazyk-1-mif-o-sposobnostyah",
+   "title": "Почему школьный метод не работает и миф о способностях — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-2-ponyatnyj-vvod",
+   "title": "Понятный ввод: как язык усваивается сам — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-3-chastotnost",
+   "title": "Частотность: какие слова учить в первую очередь — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-4-intervalnye-povtoreniya",
+   "title": "Как не забывать выученное: интервальные повторения — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-5-audirovanie",
+   "title": "Почему на слух ничего не понятно и как это лечится — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-6-zagovorit",
+   "title": "Заговорить: практика и страх ошибки — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-7-grammatika",
+   "title": "Грамматика без зубрёжки: правило из примеров — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-8-pogruzhenie-doma",
+   "title": "Погружение дома: создать среду, не переезжая — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-9-plato",
+   "title": "Плато и мотивация: как не бросить на середине — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-yazyk-10-ii-i-sistema",
+   "title": "ИИ-репетитор и личная система: собираем всё — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-stoik-1-filosofiya-dlya-zhizni",
    "title": "Философия для жизни: зачем стоицизм сегодня — Лекция 1",
    "rubric": "lektorij",
