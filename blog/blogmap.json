@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-tajm-1-mify-o-vremeni",
+   "title": "Почему мы ничего не успеваем: мифы о времени — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-2-audit-vremeni",
+   "title": "Куда уходит время: аудит и хронометраж — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-3-prioritety",
+   "title": "Важное против срочного: приоритеты — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-4-plan-dnya",
+   "title": "Планирование дня: правило трёх и тайм-блокинг — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-5-oshibka-planirovaniya",
+   "title": "Почему всё занимает дольше: ошибка планирования — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-6-glubokaya-rabota",
+   "title": "Глубокая работа: защитить фокус — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-7-energiya-i-ritmy",
+   "title": "Работать от энергии, а не от часов — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-8-instrumenty",
+   "title": "Инструменты: что реально работает — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-9-skazat-net",
+   "title": "Сказать «нет»: время как границы — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-tajm-10-lichnaya-sistema",
+   "title": "Личная система: собираем всё — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "vechnyj-dvigatel-igra-razuma",
    "title": "Вечный двигатель, который мы не так поняли: игра разума",
    "rubric": "myshlenie",
