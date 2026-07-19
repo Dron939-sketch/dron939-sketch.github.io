@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-resh-1-paralich-vybora",
+   "title": "Почему решать трудно: страх ошибки и паралич выбора — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-2-dve-sistemy",
+   "title": "Как мозг решает: две системы и эвристики — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-3-lovushki",
+   "title": "Ловушки решений: пять искажений, которые дорого стоят — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-4-dumat-stavkami",
+   "title": "Думать ставками: решения в условиях неопределённости — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-5-skolko-informacii",
+   "title": "Сколько информации собирать — и когда хватит — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-6-metody",
+   "title": "Четыре метода для трудных решений — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-7-tip-dveri",
+   "title": "Обратимые и необратимые: скорость по типу двери — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-8-emocii-i-intuiciya",
+   "title": "Эмоции и интуиция: когда им верить — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-9-sovety-i-gruppa",
+   "title": "Чужие советы и решения в группе — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-resh-10-lichnaya-sistema",
+   "title": "Личная система решений: собираем всё — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-tajm-1-mify-o-vremeni",
    "title": "Почему мы ничего не успеваем: мифы о времени — Лекция 1",
    "rubric": "lektorij",
