@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-ii-1-chto-takoe-llm",
+   "title": "Что такое нейросеть и почему она иногда врёт — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-ii-2-kak-formulirovat-zapros",
+   "title": "Анатомия запроса: как формулировать промпт — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-3-kontekst",
+   "title": "Контекст решает всё: как загрузить модель деталями — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-4-format-otveta",
+   "title": "Формат ответа: как получить именно то, что нужно — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-5-dialog-i-iteraciya",
+   "title": "Диалог, а не вопрос: итерация и уточнение — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-6-proverka-na-pravdu",
+   "title": "Проверка на правду: как ловить галлюцинации ИИ — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-7-pomoshchnik-v-rabote",
+   "title": "ИИ-помощник в работе: письма, тексты, обучение — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-8-myslitelnyj-partnyor",
+   "title": "ИИ как мыслительный партнёр — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-9-granicy-i-etika",
+   "title": "Границы и этика ИИ: приватность и ответственность — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-ii-10-lichnaya-sistema",
+   "title": "Личная система работы с ИИ: собираем всё — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-snova-1-pochemu-pogaslo",
    "title": "Почему погасло: жизнь против прозябания",
    "rubric": "lektorij",

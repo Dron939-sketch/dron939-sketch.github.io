@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="/">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Контекст решает всё: как загрузить модель деталями — Лекция 3 | Андрей Мейстер</title>
+<meta name="description" content="Курс «Как работать с ИИ», лекция 3. Модель знает только то, что вы дали ей в этом окне разговора. Она не видит ваш проект, стиль и переписку, пока вы их не покажете. Разбираем контекстное окно и обучение на примерах — почему богатый контекст превращает общий ответ в точный.">
+<meta name="keywords" content="контекст в промпте, контекстное окно, обучение на примерах, few-shot, как дать нейросети контекст, как работать с ИИ">
+<meta property="og:type" content="article"><meta property="og:title" content="Контекст решает всё: как загрузить модель деталями"><meta property="og:description" content="Курс «Как работать с ИИ», лекция 3. Модель знает только то, что вы дали ей в этом окне разговора. Она не видит ваш проект, стиль и переписку, пока вы их не покажете. Разбираем конт"><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-ii-3-kontekst.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-07-19"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-ii-3-kontekst.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Контекст решает всё: как загрузить модель деталями — Лекция 3", "description": "Схема-контраст: голый запрос без деталей даёт общий, усреднённый ответ; тот же запрос с фактами, ограничениями и двумя-тремя примерами желаемого результата даёт точный ответ под вас.", "datePublished": "2026-07-19", "author": {"@type": "Person", "name": "Андрей Мейстер", "jobTitle": "Психолог, НЛП-тренер"}, "publisher": {"@type": "Organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/apple-touch-icon.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-ii-3-kontekst.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Контекст решает всё: как загрузить модель деталями", "item": "https://meysternlp.ru/blog/lekciya-ii-3-kontekst.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Что такое контекстное окно?", "acceptedAnswer": {"@type": "Answer", "text": "Контекстное окно — это всё, что модель удерживает и учитывает в текущем разговоре: ваш запрос, приложенные тексты, предыдущие реплики. За пределами окна для модели ничего не существует — она не видит ни ваш прошлый разговор в другой вкладке, ни ваши файлы, пока вы их не вставите. Поэтому важные детали нужно давать прямо в запросе."}}, {"@type": "Question", "name": "Как заставить нейросеть писать в моём стиле?", "acceptedAnswer": {"@type": "Answer", "text": "Показать стиль на примерах. Просто попросить «напиши в моём стиле» бесполезно — модель вашего стиля не знает. Дайте два-три своих текста как образец и попросите продолжить в том же духе: это называется обучением на примерах. Несколько хороших образцов прямо в запросе задают модели шаблон надёжнее любых описаний словами."}}, {"@type": "Question", "name": "Всегда ли больше контекста — лучше?", "acceptedAnswer": {"@type": "Answer", "text": "Нет. Мусорный, лишний или противоречивый контекст ухудшает ответ: модель тянется за случайными деталями или путается между несовместимыми примерами. Контекст должен быть релевантным и непротиворечивым. И даже хороший контекст модель может частично «забыть» в очень длинном разговоре — важное иногда стоит повторить."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 19 июля 2026</span><span>⏱️ 24 мин чтения</span><span>🎓 Лекторий · Как работать с ИИ</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Контекст решает всё: как загрузить модель деталями</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Вы просите нейросеть: «Напиши пост в моём стиле». И получаете гладкий, бодрый, абсолютно чужой текст — с восклицаниями, которых вы никогда не ставите, и словами, которых вы не говорите. Первая мысль: «Слабый инструмент». А правда в том, что модель понятия не имеет, какой у вас стиль — вы его ей не показали. Ей достался голый запрос, а стоило приложить три ваших поста как образец. Сегодня — про самый недооценённый навык работы с ИИ: как загрузить модель деталями так, чтобы она отвечала не «вообще», а именно вам.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">О чём лекция</span>
+<p>Главная мысль одной фразой: <b>модель знает только то, что вы дали ей в этом окне разговора; чем богаче контекст — факты, ограничения и живые примеры, — тем точнее ответ, и почти все разочарования рождаются из голого запроса без деталей.</b> Разберём: почему модель не видит ваш мир; что такое контекстное окно; обучение на примерах прямо в запросе; правило «дай текст целиком, а не пересказ»; и честный суд — где контекст бессилен и даже вредит.</p></div>
+
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Почему «в моём стиле» не работает</a></li><li><a href="#s-2">Что модель держит в голове: контекстное окно</a></li><li><a href="#s-3">Три вещи, которые превращают пустоту в точность</a></li><li><a href="#s-4">Обучение на примерах: покажите, а не объясняйте</a></li><li><a href="#s-5">Как выглядит разница: от общего к точному</a></li><li><a href="#s-6">Суд: где контекст бессилен и где вредит</a></li><li><a href="#s-7">Итоги лекции</a></li><li><a href="#s-8">Вопросы для самопроверки</a></li><li><a href="#s-9">Литература</a></li></ol></nav>
+
+<h2 id="s-1">1. Почему «в моём стиле» не работает</h2>
+<p>Начнём с болезненного, но освобождающего факта. Языковая модель не помнит вас. Она не видит ваш проект, вашу переписку, вашу манеру письма, вчерашний разговор и то, что вы имели в виду. У неё есть ровно одно: текст, который вы напечатали в этом окне прямо сейчас. Всё остальное для неё не существует.</p>
+<p>Поэтому просьба «напиши в моём стиле» для модели звучит как «напиши в стиле, который я тебе не показал». Что ей остаётся? Усреднить. Собрать самый вероятный, самый общий «пост из интернета» — и выдать его. Отсюда та самая безликая гладкость, которая вас раздражает.</p>
+<p>Запомните это как главный тезис лекции, мы вернёмся к нему ещё дважды: модель отвечает не на то, что вы имели в виду, а на то, что вы написали. Контекст — это мост между вашей головой и её ответом. Нет моста — она додумывает сама, и додумывает усреднённо.</p>
+<p>В прошлой лекции мы говорили о четырёх кирпичах хорошего запроса: роль, задача, контекст, формат. Сегодня — крупным планом третий кирпич, контекст. Он оказался самым тяжёлым: именно на нём чаще всего экономят, и именно из-за него получают пустые ответы.</p>
+
+<h2 id="s-2">2. Что модель держит в голове: контекстное окно</h2>
+<p>Чтобы понять пределы, нужно одно техническое понятие. Оно простое, но всё объясняет.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🧩</span><span class="concept-number">Понятие</span></div><h3>Контекстное окно</h3><p>Контекстное окно — это объём текста, который модель способна удерживать перед глазами за один раз: ваш запрос, приложенные материалы и её собственные ответы в этом диалоге. Представьте рабочий стол ограниченного размера. Всё, что лежит на столе, участвует в ответе. Чего на столе нет — для модели не существует. Пример: вы прислали свою статью и три часа её обсуждаете — пока она на «столе», модель отвечает по ней; но в очень длинном разговоре ранние детали могут «сползти со стола», и модель их будто забудет. Стол большой, но не бесконечный.</p></div>
+
+<p>Отсюда два практических следствия. Первое: то, что вы не положили на стол, модель не знает — не потому что глупая, а потому что этого перед ней просто нет. Второе: сам разговор занимает место. Чем дольше и запутаннее диалог, тем выше риск, что важная деталь из начала потеряется. Держать контекст свежим — тоже часть работы.</p>
+
+<h2 id="s-3">3. Три вещи, которые превращают пустоту в точность</h2>
+<p>Богатый контекст — это не «побольше слов». Это три конкретных вещи, и каждая закрывает свою дыру.</p>
+<p>Первое — факты и ограничения. Кто вы, для кого текст, где он выйдет, чего нельзя. «Пост для родителей подростков, в телеграм-канал семейного психолога, без обесценивания, не длиннее экрана телефона, без слова "должен"». Каждое такое ограничение отсекает тысячи неподходящих вариантов и разворачивает модель в вашу сторону.</p>
+<p>Второе — примеры желаемого результата. Это самый мощный и самый недооценённый приём, ему посвящён следующий раздел целиком.</p>
+<p>Третье — исходник целиком, а не пересказ. Если просите отредактировать письмо — дайте письмо, а не «там я примерно извиняюсь и прошу перенести встречу». Если просите ответить клиенту — вставьте его сообщение дословно. Модель работает с тем текстом, что видит; ваш пересказ — это уже искажённая копия, и она будет отвечать на копию, а не на оригинал.</p>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
+<p>Возьмите задачу, где важен ваш голос: пост, письмо, ответ клиенту. Сначала попросите нейросеть решить её голым запросом — «напиши пост про выгорание в моём стиле». Сохраните результат. Теперь приложите два-три своих реальных текста и допишите: «Вот как я обычно пишу — те же интонации, длина фраз, любимые словечки. Продолжи в этом же духе». Сравните два ответа рядом. Разница между «чужим человеком» и «почти мной» — и есть цена контекста; вы увидите её своими глазами за пять минут.</p></div>
+
+<h2 id="s-4">4. Обучение на примерах: покажите, а не объясняйте</h2>
+<p>Люди договариваются на примерах постоянно. «Сделай как в прошлый раз». «Хочу в таком настроении, как это письмо». Показать образец быстрее и точнее, чем описать его словами. С моделью — ровно так же, и это её встроенная способность.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🧩</span><span class="concept-number">Понятие</span></div><h3>Обучение на примерах</h3><p>Обучение на примерах — это когда вы даёте модели несколько образцов «вот так надо» прямо внутри запроса, и она подхватывает шаблон: тон, длину, структуру, ход мысли. Не «пиши коротко и тепло», а два ваших коротких и тёплых текста рядом — и просьба сделать третий такой же. Пример из жизни: риелтор вставил три своих удачных объявления и попросил описать новую квартиру «в том же ключе» — модель сама переняла его манеру, порядок, даже привычку заканчивать вопросом. Два-три примера задают шаблон надёжнее любого прилагательного.</p></div>
+
+<p>Почему это работает лучше описаний? Потому что «тепло», «профессионально», «живо» каждый понимает по-своему — и модель тоже усредняет эти слова. А пример однозначен: вот конкретное «тепло», вот эта длина, вот такой ритм. Прилагательное описывает цель издалека; пример кладёт её прямо перед моделью.</p>
+<p>Практическое правило: два-три примера лучше одного. Один образец модель может принять за случайность; на трёх она видит закономерность и уверенно её продолжает. И примеры должны быть однородны — если показать три разных стиля, модель не поймёт, какой из них ваш.</p>
+
+<h2 id="s-5">5. Как выглядит разница: от общего к точному</h2>
+<p>Соберём всё вместе на одной картине — что именно меняется в ответе, когда контекст из пустого становится богатым.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 330" role="img" aria-label="Схема: как богатство контекста меняет точность ответа" style="width:100%;height:auto;display:block;font-family:inherit">
+  <text x="185" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#1D1D1F">ПУСТОЙ КОНТЕКСТ</text>
+  <rect x="40" y="46" width="290" height="44" rx="12" fill="#fff" stroke="#E4E7EC" stroke-width="1.6"/>
+  <text x="185" y="73" text-anchor="middle" font-size="11.5" fill="#6E6E73">«напиши пост в моём стиле»</text>
+  <line x1="185" y1="90" x2="185" y2="120" stroke="#B9C6DD" stroke-width="1.8"/>
+  <polygon points="185,128 179,118 191,118" fill="#B9C6DD"/>
+  <rect x="40" y="128" width="290" height="58" rx="12" fill="#FFF6F4" stroke="#F0C7BE"/>
+  <text x="185" y="152" text-anchor="middle" font-size="11.5" font-weight="700" fill="#C0392B">общий, усреднённый ответ</text>
+  <text x="185" y="172" text-anchor="middle" font-size="10.5" fill="#6E6E73">гладко, но чужим голосом — «вообще»</text>
+
+  <text x="535" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#3A86FF">БОГАТЫЙ КОНТЕКСТ</text>
+  <rect x="390" y="42" width="290" height="66" rx="12" fill="#fff" stroke="#3A86FF" stroke-width="1.8"/>
+  <text x="535" y="62" text-anchor="middle" font-size="10.5" fill="#1D1D1F">факты и ограничения +</text>
+  <text x="535" y="79" text-anchor="middle" font-size="10.5" fill="#1D1D1F">2–3 примера вашего стиля +</text>
+  <text x="535" y="96" text-anchor="middle" font-size="10.5" fill="#1D1D1F">исходник целиком</text>
+  <line x1="535" y1="108" x2="535" y2="120" stroke="#3A86FF" stroke-width="1.8"/>
+  <polygon points="535,128 529,118 541,118" fill="#3A86FF"/>
+  <rect x="390" y="128" width="290" height="58" rx="12" fill="#F3F7FF" stroke="#3A86FF" stroke-width="1.6"/>
+  <text x="535" y="152" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3A86FF">точный ответ под вас</text>
+  <text x="535" y="172" text-anchor="middle" font-size="10.5" fill="#6E6E73">ваш ритм, ваши слова, ваша задача</text>
+
+  <rect x="70" y="222" width="580" height="74" rx="12" fill="#F8F9FB" stroke="#E4E7EC" stroke-width="1.6"/>
+  <text x="360" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="#1D1D1F">чем богаче контекст — тем уже воронка вариантов</text>
+  <text x="360" y="270" text-anchor="middle" font-size="10.5" fill="#6E6E73">каждый факт, пример и ограничение отсекает лишнее</text>
+  <text x="360" y="287" text-anchor="middle" font-size="10.5" fill="#6E6E73">и подводит модель к ответу именно для вас</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">
+Схема сравнивает два пути. Первый путь начинается с пустого контекста: голая просьба «напиши пост в моём стиле» — и на выходе общий, усреднённый ответ, гладкий, но чужим голосом, написанный «вообще». Второй путь начинается с богатого контекста: факты и ограничения, два-три примера вашего стиля и исходник целиком — и на выходе точный ответ под вас, с вашим ритмом, вашими словами, вашей задачей. Внизу общий вывод: чем богаче контекст, тем уже воронка вариантов — каждый факт, пример и ограничение отсекает лишнее и подводит модель к ответу именно для вас.
+</figcaption></figure>
+
+<p>Вот почему главная мысль повторяется в третий раз, теперь как рабочее правило: модель усредняет ровно настолько, насколько вы оставили ей свободы. Хотите ответ «вообще» — дайте запрос «вообще». Хотите ответ «для вас» — покажите себя: факты, примеры, оригинал.</p>
+
+<h2 id="s-6">6. Суд: где контекст бессилен и где вредит</h2>
+<p>Было бы нечестно оставить вас с ощущением, что контекст — волшебная кнопка. У него есть чёткие границы, и знать их так же важно, как и сам приём.</p>
+<p>Первое: мусорный контекст ухудшает ответ. Больше слов не значит лучше. Если вы свалили в запрос всё подряд — три несвязанные задачи, лишние файлы, поток сознания, — модель может ухватиться не за то и увести ответ в сторону. Контекст должен быть богатым, но релевантным: относящимся к делу, а не просто объёмным.</p>
+<p>Второе: противоречивый контекст ломает ответ. Если в одном примере вы пишете сухо и строго, а в другом — с шутками и смайликами, и просите «продолжи в моём стиле», модель не выберет за вас. Она усреднит противоречие и выдаст невнятицу. Примеры должны говорить одно и то же.</p>
+<p>Третье: модель всё равно может забыть. Мы говорили про контекстное окно — в длинном, ветвистом разговоре ранние детали сползают со стола. Модель, которая уверенно помнила ваше условие в начале, к сороковому сообщению способна его потерять — и не предупредит об этом. Лекарство простое: важные ограничения повторяйте, а очень длинные диалоги лучше начинать заново, коротко пересобрав главное.</p>
+<p>Итог суда: контекст решает почти всё, но только когда он чистый, непротиворечивый и вовремя обновлённый. Это по-прежнему инструмент в ваших руках, а не автопилот.</p>
+
+<h2 id="s-7">Итоги лекции</h2>
+<div class="key-takeaway"><span class="takeaway-label">Главное</span>
+<ul>
+<li>Модель знает только то, что вы дали ей в этом окне разговора: не видит ваш проект, стиль и переписку, пока вы их не покажете.</li>
+<li>Контекстное окно — это рабочий стол модели: что на нём лежит, участвует в ответе; чего нет — не существует, а в длинном диалоге детали сползают со стола.</li>
+<li>Богатый контекст — это три вещи: факты и ограничения, два-три примера желаемого результата и исходник целиком, а не пересказ.</li>
+<li>Обучение на примерах сильнее описаний: покажите образец «вот так надо», и модель подхватит тон, длину и структуру точнее любого прилагательного.</li>
+<li>Чем богаче и релевантнее контекст, тем уже воронка вариантов и тем точнее ответ; голый запрос даёт усреднённый, «чужой» результат.</li>
+<li>Контекст не всесилен: мусорный или противоречивый вредит, а очень длинный разговор заставляет модель забывать — важное нужно повторять.</li>
+<li>Почти все разочарования в ИИ — это разочарования в собственном голом запросе, а не в модели.</li>
+</ul>
+</div>
+
+<h2 id="s-8">Вопросы для самопроверки</h2>
+<ol>
+<li>Объясните своими словами, почему просьба «напиши в моём стиле» без примеров почти всегда даёт безликий текст.</li>
+<li>Что такое контекстное окно? Приведите свой пример ситуации, где модель «забыла» деталь, потому что та сползла со стола.</li>
+<li>В чём разница между тем, чтобы описать желаемый стиль словами, и тем, чтобы показать два-три примера? Почему второе работает точнее?</li>
+<li>Почему пересказ исходника хуже, чем сам исходник, вставленный целиком? Придумайте случай, где это критично.</li>
+<li>Приведите свой пример, когда больше контекста сделало бы ответ хуже, а не лучше.</li>
+<li>Как связаны контекст из этой лекции и роль-задача-контекст-формат из прошлой?</li>
+</ol>
+
+<h2 id="s-9">Литература</h2>
+<p>Итан Моллик, «Сотворчество с ИИ» (Co-Intelligence) — о работе с языковыми моделями как с партнёром, глава про то, как давать контекст и примеры. Дэниел Канеман, «Думай медленно, решай быстро» — про то, как мы сами достраиваем недосказанное усреднением; помогает понять, почему модель ведёт себя похоже. Официальные руководства разработчиков языковых моделей по составлению запросов — разделы про few-shot, то есть обучение на нескольких примерах прямо в запросе: там этот приём разобран на практике.</p>
+<div class="cta-block">
+<h3>🧠 Тренируйте разговор с ИИ прямо сейчас</h3>
+<p>Фреди — ИИ-собеседник этого сайта. Здесь можно на живом примере попробовать всё из курса: сформулировать запрос, довести ответ в диалоге, попросить сыграть оппонента.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Открыть Фреди →</a>
+<a href="/blog/lektorij/kak-rabotat-s-ii/" class="btn btn-outline">Все лекции курса</a>
+</div>
+</div>
+
+</div>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: бесплатно, круглосуточно и без записи. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Материалы лекции подготовил Мейстер А.Ю., кандидат психологических наук, психолог-методолог, автор образовательной системы «Вариатика». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
+
+<div class="related-articles"><h3>📚 Читайте также:</h3><div class="related-grid">
+<div class="related-item"><a href="/blog/lekciya-ii-2-kak-formulirovat-zapros.html">Анатомия запроса</a><span>Лекция 2</span></div>
+<div class="related-item"><a href="/blog/lekciya-mnem-4-associacii-i-obrazy.html">Ассоциации и образы</a><span>Курс «Мнемоника»</span></div>
+</div></div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</article></div>
+<div id="footer-placeholder"></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body></html>
