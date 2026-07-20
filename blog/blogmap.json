@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-polit-1-chto-takoe",
+   "title": "Политическая психология: почему решает не разум",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-2-svoi-chuzhie",
+   "title": "Свои и чужие: психология групповой идентичности",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-3-motivirovannoe",
+   "title": "Мотивированное рассуждение: почему факты не переубеждают",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-4-avtoritarizm",
+   "title": "Жажда порядка: авторитарная динамика",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-5-vlast",
+   "title": "Психология власти: как власть меняет человека",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-6-tolpa-podchinenie",
+   "title": "Толпа, подчинение и конформизм",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-7-propaganda",
+   "title": "Пропаганда и убеждение: как формируют мнение",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-8-moral-i-politika",
+   "title": "Мораль и политика: почему стороны не слышат друг друга",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-9-strah-i-ugroza",
+   "title": "Страх, угроза и политика",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-polit-10-gigiena-uma",
+   "title": "Гражданская гигиена ума: думать о политике трезво (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-isk-1-zachem",
    "title": "Зачем нам искусство: древнейшая потребность",
    "rubric": "lektorij",
