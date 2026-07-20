@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-depr-1-ne-prosto-grust",
+   "title": "Не просто грусть: что такое депрессия — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-2-kak-ustroena",
+   "title": "Почему гаснет свет: как устроена депрессия — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-3-kognitivnaya-triada",
+   "title": "Депрессия лжёт: когнитивная триада — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-4-apatiya-i-angedoniya",
+   "title": "Апатия и ангедония: когда ничего не хочется — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-5-povedencheskaya-aktivaciya",
+   "title": "Поведенческая активация: маленькие действия против серости — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-6-rabota-s-myslyami",
+   "title": "Разобрать мысль: КПТ при депрессии — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-7-telo-son-svet",
+   "title": "Тело лечит настроение: сон, движение, свет — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-8-ruminaciya",
+   "title": "Мысленная жвачка: руминация — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-9-lechenie",
+   "title": "Что реально лечит: терапия, лекарства и мифы — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-depr-10-vosstanovlenie",
+   "title": "Снова светло: восстановление и профилактика — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-resh-1-paralich-vybora",
    "title": "Почему решать трудно: страх ошибки и паралич выбора — Лекция 1",
    "rubric": "lektorij",
