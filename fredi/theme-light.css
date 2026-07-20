@@ -125,7 +125,8 @@ body, .app, .chats-panel, .chat-panel, .chat-header,
     box-shadow: 0 4px 22px rgba(59, 130, 255, 0.15);
 }
 [data-theme="light"] .voice-record-btn-premium {
-    background: linear-gradient(135deg, rgba(59, 130, 255, 0.16), rgba(59, 130, 255, 0.07));
+    background: linear-gradient(135deg, #4A9EFF, #6FB1FF);
+    color: #fff;
 }
 [data-theme="light"] .module-card {
     background: rgba(0, 0, 0, 0.03);

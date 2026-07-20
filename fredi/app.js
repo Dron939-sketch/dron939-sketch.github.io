@@ -2621,7 +2621,6 @@ async function init() {
                 supervizor: () => { if (typeof showSupervizorScreen==='function') showSupervizorScreen(); else { const s=document.createElement('script');s.src='supervizor.js';s.onload=()=>{if(typeof showSupervizorScreen==='function')showSupervizorScreen();};document.head.appendChild(s); } },
                 esoterica: () => { if (typeof showEsotericaScreen==='function') showEsotericaScreen(); else { const s=document.createElement('script');s.src='esoterica.js';s.onload=()=>{if(typeof showEsotericaScreen==='function')showEsotericaScreen();};document.head.appendChild(s); } },
                 // Категория «Ещё»: перенесены из быстрых действий главной, чтобы разгрузить дашборд.
-                thoughts: () => handleShowThoughts(),
                 doubles: () => handleShowDoubles(),
                 brand: () => { if (typeof showPersonalBrandScreen==='function') showPersonalBrandScreen(); else { showToast('🏆 Загрузка...', 'info'); const s=document.createElement('script'); s.src='brand.js'; s.onload=()=>{ if(typeof showPersonalBrandScreen==='function') showPersonalBrandScreen(); }; document.head.appendChild(s); } },
                 prompter: () => { if (typeof showPrompterScreen==='function') showPrompterScreen(); else { const s=document.createElement('script'); s.src='prompter.js'; s.onload=()=>{ if(typeof showPrompterScreen==='function') showPrompterScreen(); }; document.head.appendChild(s); } },
