@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-isk-1-zachem",
+   "title": "Зачем нам искусство: древнейшая потребность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-2-mozg-i-muzyka",
+   "title": "Мозг под музыкой: почему звук так трогает",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-3-murashki",
+   "title": "Мурашки и дофамин: механика удовольствия от музыки",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-4-grustnaya-muzyka",
+   "title": "Почему грустная музыка приятна",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-5-ritm-i-svyaz",
+   "title": "Ритм, синхрония и чувство «мы вместе»",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-6-chto-delaet-krasivym",
+   "title": "Что делает изображение красивым",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-7-katarsis",
+   "title": "Катарсис: искусство как безопасное проживание эмоций",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-8-potok-i-tvorchestvo",
+   "title": "Поток и творчество: как рождается новое",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-9-vkus",
+   "title": "Почему нам нравится разное: психология вкуса",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-isk-10-svoya-praktika",
+   "title": "Искусство в своей жизни: практика (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-igry-1-chto-takoe",
    "title": "Теория игр: наука о взаимных решениях",
    "rubric": "lektorij",
