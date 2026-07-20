@@ -554,6 +554,7 @@ class VoiceTransport {
         this._wsRetries   = 0;
         this._pingTimer   = null;
         this._audioChunks = [];  // буфер аудио-чанков от WS
+        this._aiTextSoFar = '';  // накопленный текст ответа AI (стрим по чанкам)
         this._wsResponseTimer = null;  // таймаут ожидания ответа по WS
         this._pendingAudioBlob = null; // блоб для повторной отправки через HTTP при разрыве WS
 
@@ -749,10 +750,17 @@ class VoiceTransport {
                     this._clearWsResponseTimer();
                     this._pendingAudioBlob = null;
                     if (!msg.data) break;
-                    if (msg.data.includes('Вы:') && this.onTranscript)
-                        this.onTranscript(msg.data.replace('🎤 Вы: ', '').trim());
-                    else if (this.onAIResponse)
-                        this.onAIResponse(msg.data.replace('🧠 Фреди: ', '').trim());
+                    if (msg.data.includes('Вы:')) {
+                        if (this.onTranscript) this.onTranscript(msg.data.replace('🎤 Вы: ', '').trim());
+                    } else {
+                        // Ответ AI приходит по кусочку (стрим). Копим в один текст
+                        // и рисуем как ОДНО растущее сообщение (onAIPartial), иначе
+                        // каждый фрагмент («сло», «ги») встаёт отдельной строкой и
+                        // растягивает экран столбиком.
+                        this._aiTextSoFar += msg.data.replace('🧠 Фреди: ', '');
+                        if (this.onAIPartial) this.onAIPartial(this._aiTextSoFar);
+                        else if (this.onAIResponse) this.onAIResponse(this._aiTextSoFar.trim());
+                    }
                     break;
 
                 case 'audio':
@@ -786,6 +794,13 @@ class VoiceTransport {
                     break;
 
                 case 'status':
+                    // Текст ответа полностью пришёл ДО озвучки: на 'speaking'
+                    // (и на 'idle') фиксируем накопленный ответ как финальное
+                    // сообщение и сбрасываем аккумулятор до следующего хода.
+                    if ((msg.status === 'speaking' || msg.status === 'idle') && this._aiTextSoFar) {
+                        if (this.onAIResponse) this.onAIResponse(this._aiTextSoFar.trim());
+                        this._aiTextSoFar = '';
+                    }
                     if (this.onStatusChange) this.onStatusChange(msg.status);
                     break;
 
@@ -886,6 +901,8 @@ class VoiceTransport {
 
         // Сброс флага дедупа пейволла на каждую новую отправку.
         this._meterBlockedHandled = false;
+        // Новый ход — сбрасываем накопленный текст ответа AI.
+        this._aiTextSoFar = '';
 
         // Предчек дневного лимита ДО отправки: если минуты исчерпаны —
         // показываем пейволл сразу, не гоняя заведомо блокируемый запрос.
