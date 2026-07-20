@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-eda-1-ne-tolko-golod",
+   "title": "Еда — это не только про голод",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-2-golod-golovy-i-tela",
+   "title": "Голод головы и голод тела",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-3-zaedanie-stressa",
+   "title": "Почему мы заедаем стресс",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-4-emocionalnyj-edok",
+   "title": "Эмоциональный едок: какие чувства мы едим",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-5-diety-ne-rabotayut",
+   "title": "Диеты не работают: почему запрет усиливает тягу",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-6-intuitivnoe-pitanie",
+   "title": "Интуитивное питание: вернуть доверие к телу",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-7-osoznannaya-eda",
+   "title": "Осознанная еда: есть, а не заедать",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-8-obraz-tela",
+   "title": "Еда и образ тела: зеркало и весы",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-9-kogda-bolezn",
+   "title": "Когда еда становится болезнью",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-eda-10-lichnaya-sistema",
+   "title": "Личная система отношений с едой: собираем всё",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-kriz-1-chto-takoe-krizis",
    "title": "Возрастной кризис: не поломка, а перевал",
    "rubric": "lektorij",
