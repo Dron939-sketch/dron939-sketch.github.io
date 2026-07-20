@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-odin-1-chto-takoe",
+   "title": "Что такое одиночество: не то же, что быть одному",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-2-pochemu-bolno",
+   "title": "Почему нам больно быть одинокими",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-3-tri-vida",
+   "title": "Три вида одиночества",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-4-v-tolpe",
+   "title": "Одиночество в толпе: почему рядом с людьми бывает пусто",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-5-porochnyj-krug",
+   "title": "Порочный круг одиночества",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-6-cifra",
+   "title": "Одиночество и цифра: соцсети, которые обещают связь",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-7-vyjti-k-lyudyam",
+   "title": "Как выйти к людям: маленькие шаги против изоляции",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-8-blizost",
+   "title": "Глубокая близость: от знакомства к «своим»",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-9-byt-s-soboj",
+   "title": "Быть с собой: одиночество как ресурс",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-odin-10-lichnaya-karta",
+   "title": "Личная карта связей: собираем всё",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-eda-1-ne-tolko-golod",
    "title": "Еда — это не только про голод",
    "rubric": "lektorij",
