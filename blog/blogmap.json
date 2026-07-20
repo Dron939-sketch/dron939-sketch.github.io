@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-hsp-1-chto-takoe",
+   "title": "Высокая чувствительность: черта, а не поломка",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-2-does",
+   "title": "Четыре признака: как узнать в себе ВЧЛ",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-3-ne-diagnoz",
+   "title": "Не диагноз: чувствительность против тревожности и интроверсии",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-4-mozg",
+   "title": "Мозг ВЧЛ: почему вы обрабатываете глубже",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-5-peregruzka",
+   "title": "Перегрузка: когда мира становится слишком много",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-6-sila",
+   "title": "Сила чувствительности: в чём ваше преимущество",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-7-detstvo",
+   "title": "Орхидеи и одуванчики: чувствительность с детства",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-8-otnosheniya",
+   "title": "ВЧЛ в отношениях: близость без выгорания",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-9-rabota",
+   "title": "ВЧЛ на работе: как устроить среду под себя",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-hsp-10-svoya-sistema",
+   "title": "Своя система: жизнь в согласии с чувствительностью (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-lebed-1-chto-takoe",
    "title": "Чёрный лебедь: события, которые меняют всё",
    "rubric": "lektorij",
