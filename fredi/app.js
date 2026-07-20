@@ -1863,7 +1863,7 @@ function renderDashboard() {
             </div>
 
             <!-- Виджет «Сегодня»: стрик + один рекомендованный шаг (segodnya.js) -->
-            <div id="todayMount"></div>
+            <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div id="todayMount"></div> -->
 
             <!-- CTA-баннер для новых пользователей -->
             <div id="ctaTestBanner" style="display:none;background:linear-gradient(135deg,rgba(168,196,224,0.12),rgba(120,160,210,0.06));border:1px solid rgba(168,196,224,0.3);border-radius:20px;padding:18px 20px;margin-bottom:20px;align-items:center;gap:16px;cursor:pointer" onclick="startTest()">
@@ -1902,7 +1902,7 @@ function renderDashboard() {
                 <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">с подпиской</a>.
             </div>` : ''}
 
-            <button class="sos-strip" id="sosStrip">🆘 <b>Мне плохо прямо сейчас</b><span> — дыхание и первая помощь, 2 минуты</span></button>
+            <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <button class="sos-strip" id="sosStrip">🆘 <b>Мне плохо прямо сейчас</b><span> — дыхание и первая помощь, 2 минуты</span></button> -->
 
             <div class="modules-grid">
                 ${modules.map(m => `
@@ -1922,15 +1922,16 @@ function renderDashboard() {
                     <div class="quick-action featured" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
                     <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Сказки-катарсис</div></div>
                     <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
-                    <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
+                    <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div> -->
                 </div>
                 <div class="qa-group-title">Разобраться в себе</div>
                 <div class="quick-actions-grid">
                     <div class="quick-action" data-action="profile"><div class="action-icon">🧠</div><div class="action-name">Мой портрет</div></div>
-                    <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div>
+                    <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div> -->
                     <div class="quick-action" data-action="interests"><div class="action-icon">🎯</div><div class="action-name">Интересы</div></div>
                     <div class="quick-action" data-action="hormones"><div class="action-icon">🧬</div><div class="action-name">Гормоны</div></div>
                 </div>
+                <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): группа «Инструменты»
                 <div class="qa-group-title">Инструменты</div>
                 <div class="quick-actions-grid">
                     <div class="quick-action" data-action="prompter"><div class="action-icon">🎙️</div><div class="action-name">ИИ Суфлёр</div></div>
@@ -1938,6 +1939,7 @@ function renderDashboard() {
                     <div class="quick-action" data-action="doubles"><div class="action-icon">👥</div><div class="action-name">Двойники</div></div>
                     <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
                 </div>
+                -->
             </div>
             </div>
 
@@ -2618,6 +2620,12 @@ async function init() {
                 dreams: () => { if (typeof showDreamsScreen==='function') showDreamsScreen(); else { const s=document.createElement('script');s.src='dreams.js';s.onload=()=>{if(typeof showDreamsScreen==='function')showDreamsScreen();};document.head.appendChild(s); } },
                 supervizor: () => { if (typeof showSupervizorScreen==='function') showSupervizorScreen(); else { const s=document.createElement('script');s.src='supervizor.js';s.onload=()=>{if(typeof showSupervizorScreen==='function')showSupervizorScreen();};document.head.appendChild(s); } },
                 esoterica: () => { if (typeof showEsotericaScreen==='function') showEsotericaScreen(); else { const s=document.createElement('script');s.src='esoterica.js';s.onload=()=>{if(typeof showEsotericaScreen==='function')showEsotericaScreen();};document.head.appendChild(s); } },
+                // Категория «Ещё»: перенесены из быстрых действий главной, чтобы разгрузить дашборд.
+                thoughts: () => handleShowThoughts(),
+                doubles: () => handleShowDoubles(),
+                brand: () => { if (typeof showPersonalBrandScreen==='function') showPersonalBrandScreen(); else { showToast('🏆 Загрузка...', 'info'); const s=document.createElement('script'); s.src='brand.js'; s.onload=()=>{ if(typeof showPersonalBrandScreen==='function') showPersonalBrandScreen(); }; document.head.appendChild(s); } },
+                prompter: () => { if (typeof showPrompterScreen==='function') showPrompterScreen(); else { const s=document.createElement('script'); s.src='prompter.js'; s.onload=()=>{ if(typeof showPrompterScreen==='function') showPrompterScreen(); }; document.head.appendChild(s); } },
+                weekend: () => { if (typeof showWeekendScreen==='function') showWeekendScreen(); else { const s=document.createElement('script'); s.src='weekend.js'; s.onload=()=>{ if(typeof showWeekendScreen==='function') showWeekendScreen(); }; document.head.appendChild(s); } },
                 statistics: () => showStatistics(),
                 lektorij: () => { window.location.href = '/blog/lektorij/'; },
                 mirrors: () => { if (typeof showMirrorsScreen==='function') showMirrorsScreen(); },
