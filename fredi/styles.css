@@ -803,9 +803,9 @@ img.emoji {
     width: 100%;
     padding: 20px 24px;
     border-radius: 54px;
-    background: linear-gradient(135deg, rgba(59, 130, 255, 0.28), rgba(59, 130, 255, 0.12));
+    background: linear-gradient(135deg, #4A9EFF, #6FB1FF);
     border: none;
-    color: var(--text-primary);
+    color: #fff;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -824,7 +824,8 @@ img.emoji {
 }
 
 .voice-record-btn-premium:hover {
-    background: linear-gradient(135deg, rgba(59, 130, 255, 0.36), rgba(59, 130, 255, 0.16));
+    background: linear-gradient(135deg, #3B8CFF, #5CA4FF);
+    box-shadow: 0 6px 20px rgba(74, 158, 255, 0.35);
 }
 
 .voice-record-btn-premium:active { transform: scale(0.98); }
