@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-konf-1-konflikt-kak-signal",
+   "title": "Что такое конфликт: не зло, а сигнал",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-2-iz-za-chego-ssorimsya",
+   "title": "Из-за чего мы ссоримся на самом деле",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-3-pyat-strategij",
+   "title": "Пять способов вести себя в конфликте",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-4-eskalaciya",
+   "title": "Эскалация: как ссора выходит из берегов",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-5-nenasilstvennoe-obshchenie",
+   "title": "Ненасильственное общение: говорить, не нападая",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-6-slushat",
+   "title": "Слушать так, чтобы конфликт стих",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-7-trudnye-razgovory",
+   "title": "Трудный разговор: как начать и довести",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-8-manipulyatory-i-granicy",
+   "title": "Когда договориться нельзя: манипуляции и трудные люди",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-9-na-rabote",
+   "title": "Конфликты на работе: где нельзя хлопнуть дверью",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-konf-10-lichnaya-sistema",
+   "title": "Личная система в конфликте: собираем всё",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-depr-1-ne-prosto-grust",
    "title": "Не просто грусть: что такое депрессия — Лекция 1",
    "rubric": "lektorij",
