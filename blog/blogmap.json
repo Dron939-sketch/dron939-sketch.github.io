@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-igry-1-chto-takoe",
+   "title": "Теория игр: наука о взаимных решениях",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-2-dilemma",
+   "title": "Дилемма заключённого: почему разумные предают",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-3-povtorenie",
+   "title": "Повторение меняет всё: рождение сотрудничества",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-4-ravnovesie-nesha",
+   "title": "Равновесие Нэша: устойчивая точка игры",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-5-koordinaciya",
+   "title": "Как договориться без слов: фокальные точки",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-6-yastreby-golubi",
+   "title": "Ястребы и голуби: цена эскалации",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-7-ultimatum",
+   "title": "Игра в ультиматум: почему мы наказываем несправедливость",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-8-signaly",
+   "title": "Дорогой сигнал: как доказать, что не блефуешь",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-9-tragediya-obshchin",
+   "title": "Трагедия общин: почему гибнет общее",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-igry-10-igrat-umno",
+   "title": "Играть по-умному: теория игр в жизни (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-povek-1-chto-takoe",
    "title": "Поведенческая экономика: человек не калькулятор",
    "rubric": "lektorij",
