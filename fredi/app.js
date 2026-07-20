@@ -1922,12 +1922,12 @@ function renderDashboard() {
                     <div class="quick-action featured" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
                     <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Сказки-катарсис</div></div>
                     <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
-                    <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div> -->
+                    <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
                 </div>
                 <div class="qa-group-title">Разобраться в себе</div>
                 <div class="quick-actions-grid">
                     <div class="quick-action" data-action="profile"><div class="action-icon">🧠</div><div class="action-name">Мой портрет</div></div>
-                    <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div> -->
+                    <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div>
                     <div class="quick-action" data-action="interests"><div class="action-icon">🎯</div><div class="action-name">Интересы</div></div>
                     <div class="quick-action" data-action="hormones"><div class="action-icon">🧬</div><div class="action-name">Гормоны</div></div>
                 </div>
