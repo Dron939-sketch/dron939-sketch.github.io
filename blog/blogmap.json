@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-povek-1-chto-takoe",
+   "title": "Поведенческая экономика: человек не калькулятор",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-2-dve-sistemy",
+   "title": "Две системы: быстрое и медленное мышление",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-3-evristiki",
+   "title": "Эвристики и искажения: как мозг срезает углы",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-4-nepriyatie-poter",
+   "title": "Неприятие потерь: потерять больнее, чем найти",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-5-effekt-vladeniya",
+   "title": "Эффект владения: почему трудно расстаться",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-6-yakorenie",
+   "title": "Якорение: как случайная цифра решает за вас",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-7-mentalnyj-uchet",
+   "title": "Ментальный учёт: деньги в разных «конвертах»",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-8-diskontirovanie",
+   "title": "Здесь и сейчас: почему будущее не ценится",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-9-arhitektura-vybora",
+   "title": "Архитектура выбора: как нас подталкивают",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-povek-10-svoya-zashchita",
+   "title": "Своя защита: решать с открытыми глазами (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-buddh-1-chto-takoe",
    "title": "Буддийская психология: наука об уме без религии",
    "rubric": "lektorij",
