@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-lebed-1-chto-takoe",
+   "title": "Чёрный лебедь: события, которые меняют всё",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-2-obmanutye-sluchajnostyu",
+   "title": "Обманутые случайностью: удачу принимают за навык",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-3-problema-indyushki",
+   "title": "Проблема индюшки: почему прошлое не гарантирует будущее",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-4-tolstye-hvosty",
+   "title": "Толстые хвосты: где среднее обманывает",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-5-antihrupkost",
+   "title": "Антихрупкость: что крепнет от беспорядка",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-6-shtanga",
+   "title": "Стратегия штанги: безопасность плюс риск",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-7-opcionalnost",
+   "title": "Опциональность: выигрывать пробами, а не планом",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-8-ne-razoris",
+   "title": "Не разорись: выживание важнее выигрыша",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-9-shkura-na-konu",
+   "title": "Шкура на кону: доверяй тому, кто рискует с тобой",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-lebed-10-via-negativa",
+   "title": "Убавление и эффект Линди: два правила напоследок (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-odin-1-chto-takoe",
    "title": "Что такое одиночество: не то же, что быть одному",
    "rubric": "lektorij",
