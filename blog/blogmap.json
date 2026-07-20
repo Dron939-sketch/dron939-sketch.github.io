@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-kriz-1-chto-takoe-krizis",
+   "title": "Возрастной кризис: не поломка, а перевал",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-2-karta-zhizni",
+   "title": "Карта жизни: этапы и переходы",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-3-perehod-k-vzroslosti",
+   "title": "Переход к взрослости: кто я и куда",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-4-krizis-30",
+   "title": "Кризис тридцати: я не там, где думал",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-5-krizis-serediny",
+   "title": "Кризис середины жизни: миф и правда",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-6-smysl",
+   "title": "Кризис смысла: зачем всё это",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-7-telo-i-vremya",
+   "title": "Тело и время: принять возраст",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-8-otnosheniya",
+   "title": "Отношения на переломе: пары, дети, родители",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-9-rabota-i-prizvanie",
+   "title": "Работа и призвание: менять или углубить",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-kriz-10-lichnaya-karta",
+   "title": "Личная карта переходов: собираем всё",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-konf-1-konflikt-kak-signal",
    "title": "Что такое конфликт: не зло, а сигнал",
    "rubric": "lektorij",
