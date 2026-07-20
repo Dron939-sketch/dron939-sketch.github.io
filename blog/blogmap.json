@@ -78,6 +78,76 @@
  ],
  "articles": [
   {
+   "slug": "lekciya-buddh-1-chto-takoe",
+   "title": "Буддийская психология: наука об уме без религии",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-2-duhkha",
+   "title": "Дукха: почему ум редко бывает доволен",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-3-vtoraya-strela",
+   "title": "Вторая стрела: боль неизбежна, страдание — нет",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-4-tri-yada",
+   "title": "Три яда: жадность, злость и неведение",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-5-anichcha",
+   "title": "Аничча: всё меняется, и это опора",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-6-anatta",
+   "title": "Анатта: «я» — это процесс, а не вещь",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-7-sati",
+   "title": "Памятование: внимательность как ядро практики",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-8-metta",
+   "title": "Метта: как тренируют доброжелательность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-9-sredinnyj-put",
+   "title": "Срединный путь и равностность",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
+   "slug": "lekciya-buddh-10-svoya-praktika",
+   "title": "Своя практика: буддийская психология в обычной жизни (итоги)",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 24
+  },
+  {
    "slug": "lekciya-hsp-1-chto-takoe",
    "title": "Высокая чувствительность: черта, а не поломка",
    "rubric": "lektorij",
