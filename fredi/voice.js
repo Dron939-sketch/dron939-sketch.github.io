@@ -555,6 +555,12 @@ class VoiceTransport {
         this._pingTimer   = null;
         this._audioChunks = [];  // буфер аудио-чанков от WS
         this._aiTextSoFar = '';  // накопленный текст ответа AI (стрим по чанкам)
+        // Потоковая озвучка по предложениям (seq:true): каждый чанк — целый MP3,
+        // играем сразу и последовательно, не дожидаясь конца ответа.
+        this._seqQueue = [];
+        this._seqPlaying = false;
+        this._seqEnded = false;
+        this._seqT0 = 0;  // метка времени первого seq-чанка (для лога скорости)
         this._wsResponseTimer = null;  // таймаут ожидания ответа по WS
         this._pendingAudioBlob = null; // блоб для повторной отправки через HTTP при разрыве WS
 
@@ -766,6 +772,21 @@ class VoiceTransport {
                 case 'audio':
                     this._clearWsResponseTimer();
                     this._pendingAudioBlob = null;
+                    // Новый путь: per-sentence стрим. Каждый чанк — целый MP3
+                    // одного предложения; проигрываем по мере прихода.
+                    if (msg.seq) {
+                        if (msg.is_final) {
+                            this._seqEnded = true;
+                            this._drainSeq();
+                            try {
+                                if (window.FrediMeter && typeof window.FrediMeter.recordUsage === 'function')
+                                    window.FrediMeter.recordUsage(15);
+                            } catch (e) {}
+                        } else if (msg.data) {
+                            this._enqueueSeq(msg.data);
+                        }
+                        break;
+                    }
                     if (msg.is_final) {
                         // Конец стрима — собираем все чанки и играем
                         if (this._audioChunks.length > 0 || msg.data) {
@@ -886,6 +907,56 @@ class VoiceTransport {
         }
     }
 
+    // ---- Потоковая озвучка по предложениям (seq) ----
+    // Каждый чанк — целый MP3 одного предложения. Кладём в очередь и
+    // проигрываем последовательно, начиная сразу, не дожидаясь конца ответа.
+    _enqueueSeq(b64) {
+        try {
+            const binary = atob(b64);
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            const url = URL.createObjectURL(new Blob([bytes], { type: 'audio/mpeg' }));
+            // Диагностика скорости: время до первого звука на клиенте.
+            if (!this._seqT0) {
+                this._seqT0 = Date.now();
+                console.log('🎙️ VOICE_LAT client: first seq chunk received, bytes=' + bytes.length);
+            }
+            this._seqQueue.push(url);
+        } catch (e) {
+            console.error('seq enqueue error:', e);
+            return;
+        }
+        this._drainSeq();
+    }
+
+    async _drainSeq() {
+        if (this._seqPlaying) return;
+        this._seqPlaying = true;
+        let _played = 0;
+        try {
+            while (this._seqQueue.length) {
+                const url = this._seqQueue.shift();
+                // «Speaking» держим до последнего предложения (стрим завершён и
+                // очередь пуста), чтобы статус не мигал между фразами.
+                const isLast = this._seqEnded && this._seqQueue.length === 0;
+                const _tp = Date.now();
+                try {
+                    if (this._onPlayAudio) await this._onPlayAudio(url, { keepSpeaking: !isLast });
+                    if (_played === 0)
+                        console.log('🎙️ VOICE_LAT client: first playback started +' + (Date.now() - this._seqT0) + 'ms after first chunk');
+                } catch (e) {
+                    console.error('seq play error:', e);
+                }
+                _played++;
+                try { URL.revokeObjectURL(url); } catch {}
+            }
+        } finally {
+            this._seqPlaying = false;
+        }
+        // Если пока играли последний, подъехал новый чанк — доиграть.
+        if (this._seqQueue.length) this._drainSeq();
+    }
+
     // ---- ОТПРАВКА АУДИО ----
 
     async sendAudio(audioBlob) {
@@ -901,8 +972,11 @@ class VoiceTransport {
 
         // Сброс флага дедупа пейволла на каждую новую отправку.
         this._meterBlockedHandled = false;
-        // Новый ход — сбрасываем накопленный текст ответа AI.
+        // Новый ход — сбрасываем накопленный текст ответа AI и очередь озвучки.
         this._aiTextSoFar = '';
+        this._seqQueue = [];
+        this._seqEnded = false;
+        this._seqT0 = 0;
 
         // Предчек дневного лимита ДО отправки: если минуты исчерпаны —
         // показываем пейволл сразу, не гоняя заведомо блокируемый запрос.
@@ -1325,7 +1399,8 @@ class VoiceManager {
         // Плеер для транспорта (и WS и HTTP используют один)
         // Используем this._player — у него персистентный Audio-элемент
         // который unlocked при user gesture (нажатие кнопки записи)
-        this._transport._onPlayAudio = async url => {
+        this._transport._onPlayAudio = async (url, opts) => {
+            const keepSpeaking = !!(opts && opts.keepSpeaking);
             this.isAISpeaking = true;
             this._status('speaking');
             try {
@@ -1333,8 +1408,12 @@ class VoiceManager {
             } catch (e) {
                 console.error('Audio playback error:', e);
             } finally {
-                this.isAISpeaking = false;
-                this._status('idle');
+                // При посегментном стриме держим статус «speaking» между
+                // сегментами — сбрасываем только на последнем.
+                if (!keepSpeaking) {
+                    this.isAISpeaking = false;
+                    this._status('idle');
+                }
             }
         };
 
