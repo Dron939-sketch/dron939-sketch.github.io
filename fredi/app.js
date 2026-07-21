@@ -1816,23 +1816,9 @@ function renderDashboard() {
         }
     } catch (e) {}
 
-    // Анонс модуля «Ритуал» — показываем один раз, пока пользователь не открыл
-    // этот таб. NEW-бейдж на пункте «Эзотерика» висит до первого открытия.
+    // Баннер-анонс модуля «Ритуал» убран по просьбе: на дашборде больше не
+    // рекламируется. Сам модуль остаётся доступен в разделе «Эзотерика».
     var ritualBannerHtml = '';
-    try {
-        if (!localStorage.getItem('fredi_ritual_announce_seen_v1')) {
-            ritualBannerHtml = ''
-                + '<div class="ritual-banner" id="ritualBanner" style="background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(99,102,241,0.08));border:1px solid rgba(139,92,246,0.35);border-radius:14px;padding:14px 16px;margin:12px 16px 0;display:flex;align-items:center;gap:12px;cursor:pointer">'
-                + '  <div style="font-size:28px;flex-shrink:0">🪬</div>'
-                + '  <div style="flex:1;min-width:0">'
-                + '    <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin-bottom:2px">Новый модуль: AI-ритуал <span style="background:linear-gradient(135deg,#8B5CF6,#6366F1);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;margin-left:4px;letter-spacing:0.5px;vertical-align:middle">NEW</span></div>'
-                + '    <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Собирает поведенческий протокол под твоё конкретное желание. 10 вопросов — AI генерит ритуал на 11 дней с ингредиентами, формулой и датой открытия конверта.</div>'
-                + '  </div>'
-                + '  <button id="ritualBannerOpen" style="background:linear-gradient(135deg,#8B5CF6,#6366F1);color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;flex-shrink:0;cursor:pointer">Попробовать</button>'
-                + '  <button id="ritualBannerDismiss" aria-label="Закрыть" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:18px;padding:4px 6px;line-height:1">✕</button>'
-                + '</div>';
-        }
-    } catch (e) {}
 
     // Имя-обращение вставляем ПЕРЕД финальной .!?… приветствия — иначе
     // выходит «…что для вас важно., Андрей» (точка + запятая). Без имени —
@@ -2185,9 +2171,9 @@ function renderDashboard() {
     // NEW-бейдж на пункте меню «Эзотерика» — пока пользователь не открыл
     // ритуал хотя бы раз.
     try {
-        var seen = !!localStorage.getItem('fredi_ritual_announce_seen_v1');
+        // NEW-бейдж анонса «Ритуал» убран — прячем всегда.
         var navBadge = document.getElementById('navEsotericaBadge');
-        if (navBadge) navBadge.style.display = seen ? 'none' : 'inline-block';
+        if (navBadge) navBadge.style.display = 'none';
     } catch (e) {}
 
     // Обработчик кликов по баннеру и кнопке "Попробовать"
