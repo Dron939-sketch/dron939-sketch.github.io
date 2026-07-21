@@ -2517,7 +2517,7 @@ POV: ты на семейном ужине, и мама такая «как у �
             _kvCard('Ср. длит. сессии', _fmtSec(d.avg_session_sec), 'active time (не wall)') +
             _kvCard('DAU (сегодня)', _todayDau(d.dau), 'Daily Active Users') +
             _kvCard('AI latency (среднее)', (d.ai_avg_latency_ms || 0) + ' мс', 'ai_response_received') +
-            _kvCard('Ошибки за 7 дней', d.api_errors_7d || 0, 'api_error + js error');
+            _kvCard('Ошибки за 7 дней', d.api_errors_7d || 0, 'js/api/network/aborted — см. health');
 
         // Funnel
         var f = d.funnel || {};
