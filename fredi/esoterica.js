@@ -4,6 +4,16 @@
 // Версия 1.0 — Полнофункциональный модуль
 // ============================================
 
+// --- Безопасный доступ к хранилищу ---
+// window.localStorage может быть null или бросать (приватный режим,
+// отключённые куки, некоторые Android-WebView). Раньше прямое обращение
+// на верхнем уровне модуля рушило загрузку всего файла целиком.
+const _ls = {
+    get(k) { try { return window.localStorage ? localStorage.getItem(k) : null; } catch (e) { return null; } },
+    set(k, v) { try { if (window.localStorage) localStorage.setItem(k, v); } catch (e) {} },
+    remove(k) { try { if (window.localStorage) localStorage.removeItem(k); } catch (e) {} }
+};
+
 // --- Состояние модуля ---
 const state = {
     activeTab: 'horoscope',
@@ -785,7 +795,7 @@ function renderTarot() {
 }
 
 function renderHoroscope() {
-    const savedSign = localStorage.getItem('fredi_zodiac_sign');
+    const savedSign = _ls.get('fredi_zodiac_sign');
     
     return `
         <div class="horoscope-signs">
@@ -810,7 +820,7 @@ function renderHoroscope() {
 }
 
 function renderNatal() {
-    const savedBirth = localStorage.getItem('fredi_birth_data');
+    const savedBirth = _ls.get('fredi_birth_data');
     let birthHtml = '';
     
     if (savedBirth) {
@@ -943,7 +953,7 @@ async function showTarotReading(card, isReversed = false, spreadType = 'day') {
 }
 
 // --- Обработчики гороскопа ---
-let currentHoroscopeSign = localStorage.getItem('fredi_zodiac_sign') || 'aries';
+let currentHoroscopeSign = _ls.get('fredi_zodiac_sign') || 'aries';
 let currentHoroscopeCat = 'general';
 
 async function loadHoroscope(signId, category) {
@@ -1066,11 +1076,11 @@ async function buildNatalChart() {
     const birthDate = new Date(dateTime);
     const sunSignId = getZodiacSign(birthDate);
     const signData = ZODIAC_SIGNS.find(s => s.id === sunSignId);
-    localStorage.setItem('fredi_birth_data', JSON.stringify({
+    _ls.set('fredi_birth_data', JSON.stringify({
         date: dateTime, place: locationLabel,
         sign: signData?.name, coords: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`
     }));
-    localStorage.setItem('fredi_zodiac_sign', sunSignId);
+    _ls.set('fredi_zodiac_sign', sunSignId);
 
     // 5. Рендер результата
     const planetRows = (chart.objects || []).map(o => {
@@ -1257,7 +1267,7 @@ function attachHoroscopeHandlers() {
             document.querySelectorAll('.sign-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentHoroscopeSign = btn.dataset.sign;
-            localStorage.setItem('fredi_zodiac_sign', currentHoroscopeSign);
+            _ls.set('fredi_zodiac_sign', currentHoroscopeSign);
             loadHoroscope(currentHoroscopeSign, currentHoroscopeCat);
         });
     });
@@ -1280,7 +1290,7 @@ function attachHoroscopeHandlers() {
 function attachNatalHandlers() {
     document.getElementById('buildNatalChart')?.addEventListener('click', buildNatalChart);
     document.getElementById('clearBirthData')?.addEventListener('click', () => {
-        localStorage.removeItem('fredi_birth_data');
+        _ls.remove('fredi_birth_data');
         _esToast('Данные очищены', 'success');
         render();
     });
@@ -1315,14 +1325,14 @@ let ritualState = {
 
 function _ritLoad() {
     try {
-        const raw = localStorage.getItem(RITUAL_STORAGE_KEY);
+        const raw = _ls.get(RITUAL_STORAGE_KEY);
         if (raw) ritualState = { ...ritualState, ...JSON.parse(raw) };
     } catch (e) { console.warn('ritual: load failed', e); }
 }
 
 function _ritSave() {
     try {
-        localStorage.setItem(RITUAL_STORAGE_KEY, JSON.stringify(ritualState));
+        _ls.set(RITUAL_STORAGE_KEY, JSON.stringify(ritualState));
     } catch (e) { console.warn('ritual: save failed', e); }
 }
 
@@ -2417,7 +2427,7 @@ window.showEsotericaScreen = function(tab) {
     // Если открыли ритуал — снимаем "NEW"-бейдж и помечаем анонс как увиденный
     if (state.activeTab === 'ritual') {
         try {
-            localStorage.setItem('fredi_ritual_announce_seen_v1', '1');
+            _ls.set('fredi_ritual_announce_seen_v1', '1');
             var b = document.getElementById('navEsotericaBadge');
             if (b) b.style.display = 'none';
         } catch (e) {}
