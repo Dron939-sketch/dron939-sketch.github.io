@@ -3480,6 +3480,20 @@
    "mins": 23
   },
   {
+   "slug": "lekciya-biznes-2-rabota-klienta",
+   "title": "Лекция 2. Клиент нанимает продукт на работу",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
+   "slug": "lekciya-biznes-3-cennost-protiv-sebestoimosti",
+   "title": "Лекция 3. Почему платят и сколько: ценность против себестоимости",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 23
+  },
+  {
    "slug": "lekciya-media-2-kuhnya-media",
    "title": "Лекция 2. Кухня медиа: кто и зачем создаёт сообщения",
    "rubric": "lektorij",
