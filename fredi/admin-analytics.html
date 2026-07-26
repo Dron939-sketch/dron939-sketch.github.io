@@ -2432,6 +2432,12 @@ POV: ты на семейном ужине, и мама такая «как у �
     }
     function renderProduct(d){
         if (!d || d.error) { document.getElementById('prodKv').innerHTML = '<div class="err">Ошибка загрузки: ' + ((d && d.error) || '') + '</div>'; return; }
+        // Fail-soft: часть секций могла не загрузиться (тяжёлый запрос/таймаут) —
+        // остальное всё равно рендерим, а причину показываем нефатальным баннером.
+        if (d._section_errors) {
+            var se = Object.keys(d._section_errors).map(function(k){ return k + ' → ' + d._section_errors[k]; }).join(' · ');
+            _err('Часть секций «Продукта» не загрузилась (остальное показано ниже): ' + se);
+        }
         var c = d.cohort || {}, act = c.activation || {};
         var note = document.getElementById('prodCohortNote');
         if (note) note.textContent = '· когорта: ' + (c.size || 0) + ' новичков (' + (c.window || '') + ')';
