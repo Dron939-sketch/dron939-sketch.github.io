@@ -615,6 +615,73 @@ function _hideThinkingBubble() {
 // Глобальный флаг против двойных нажатий
 let _isLoading = false;
 
+// Текстовая отправка с главного экрана — альтернатива голосу.
+// Голос идёт через voiceManager (/api/voice/process_stream), текст — прямо
+// в /api/chat. Ответ падает в тот же #dashChatStream, что и голосовой,
+// так что диалог остаётся одной лентой.
+// message_sent НЕ трекаем вручную: tracker.js перехватывает fetch и сам
+// эмитит его для /api/chat (AI_RE) — иначе было бы задвоение.
+function setupDashComposer() {
+    const form = document.getElementById('dashComposerForm');
+    const input = document.getElementById('dashComposerInput');
+    const sendBtn = document.getElementById('dashComposerSend');
+    if (!form || !input || form._wired) return;
+    form._wired = true;
+
+    let busy = false;
+
+    async function send() {
+        const text = (input.value || '').trim();
+        if (!text || busy) return;
+
+        // Тот же paywall, что у голоса: без этой проверки текст стал бы
+        // дырой в дневном лимите.
+        try {
+            if (window.FrediMeter?.checkCanSend) {
+                const chk = await window.FrediMeter.checkCanSend();
+                if (chk && chk.can_send === false) {
+                    window.FrediMeter.showFatigueModal?.(chk);
+                    return;
+                }
+            }
+        } catch (e) {}
+
+        busy = true;
+        input.value = '';
+        if (sendBtn) sendBtn.disabled = true;
+        addMessage(text, 'user');
+        _showThinkingBubble('Фреди думает…');
+
+        try {
+            const data = await apiCall('/api/chat', {
+                method: 'POST',
+                body: JSON.stringify({
+                    user_id: CONFIG.USER_ID,
+                    message: text,
+                    mode: currentMode || 'basic'
+                })
+            });
+            _hideThinkingBubble();
+            const answer = (data && data.response) || '';
+            if (answer) {
+                addMessage(answer, 'bot');
+                try { window.FrediMeter?.recordUsage?.(15); } catch (e) {}
+            } else {
+                addMessage('Не получилось ответить. Попробуйте ещё раз.', 'system');
+            }
+        } catch (err) {
+            console.error('❌ dash composer send failed:', err);
+            _hideThinkingBubble();
+            addMessage('Связь прервалась. Попробуйте ещё раз.', 'system');
+        } finally {
+            busy = false;
+            if (sendBtn) sendBtn.disabled = false;
+        }
+    }
+
+    form.addEventListener('submit', (e) => { e.preventDefault(); send(); });
+}
+
 function showLoading(message, subtext) {
     const container = document.getElementById('screenContainer');
     if (!container) return;
@@ -1840,7 +1907,7 @@ function renderDashboard() {
                 <div class="hero-greeting">
                     <div class="hero-mode-emoji">${modeConfig.emoji}</div>
                     <h2 class="hero-title">${heroGreetingHtml}</h2>
-                    <p class="hero-sub">Слушает, поддерживает, помогает разобраться — говорите голосом или выберите действие</p>
+                    <p class="hero-sub">Слушает, поддерживает, помогает разобраться — скажите голосом, напишите или выберите действие</p>
                 </div>
                 <div class="profile-badge" id="profileBadge">
                     <div class="profile-code" id="profileCode">${CONFIG.PROFILE_CODE || '···'}</div>
@@ -1873,6 +1940,19 @@ function renderDashboard() {
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
                     </button>
                     <div style="text-align:center;font-size:11px;color:var(--text-secondary);margin-top:8px">🎙️ Нажмите и удерживайте для записи</div>
+                </div>
+                <!-- Альтернатива голосу: написать текстом. Живёт внутри
+                     .voice-section — на мобильном она sticky bottom, значит
+                     поле оказывается в самом низу экрана и всегда под рукой.
+                     Голос остаётся главным действием, текст — запасной путь
+                     для тех, кому неудобно говорить (транспорт, работа, ночь). -->
+                <div class="dash-composer">
+                    <div class="dash-composer-or"><span>или напишите</span></div>
+                    <form class="dash-composer-row" id="dashComposerForm" autocomplete="off">
+                        <input type="text" class="dash-composer-input" id="dashComposerInput"
+                               placeholder="Напишите, что беспокоит…" maxlength="2000" autocomplete="off">
+                        <button type="submit" class="dash-composer-send" id="dashComposerSend" aria-label="Отправить">↑</button>
+                    </form>
                 </div>
             </div>
 
@@ -2140,6 +2220,8 @@ function renderDashboard() {
 
     const voiceBtn = document.getElementById('mainVoiceBtn');
     if (voiceBtn && voiceManager) setupVoiceButton(voiceBtn);
+
+    setupDashComposer();
 
     // MAX-banner handlers
     var maxBan = document.getElementById('maxBanner');
