@@ -1,0 +1,7 @@
+
+# скриншоты Playwright из проверок рендера
+/d[0-9]*.png
+/hub*.png
+/izo*.png
+/cat*.png
+/shot*.png
