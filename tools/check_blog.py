@@ -127,7 +127,12 @@ def check_rubrics():
 
 
 def check_orphans():
-    """Статья-сирота: на неё не ссылается ни одна другая страница сайта."""
+    """Статья-сирота: на неё не ссылается ни одна другая СТАТЬЯ.
+
+    Каталожные страницы (хаб, рубрики, маршруты) перечисляют всё подряд, и
+    если считать их источником, сиротой не окажется никто — проверка станет
+    бессмысленной. Поэтому index.html из подсчёта исключены.
+    """
     incoming = collections.Counter()
     pages = []
     skip = {".git", "node_modules"}
@@ -135,7 +140,8 @@ def check_orphans():
         # сравниваем компоненты пути, а не подстроку: имя репозитория
         # dron939-sketch.github.io само содержит «.git»
         dirnames[:] = [d for d in dirnames if d not in skip]
-        pages += [os.path.join(dirpath, n) for n in names if n.endswith(".html")]
+        pages += [os.path.join(dirpath, n) for n in names
+                  if n.endswith(".html") and n != "index.html"]
     for p in pages:
         src = os.path.basename(p)[:-5]
         for href in set(re.findall(r'href="/blog/([a-z0-9-]+)\.html"', read(p))):
@@ -143,7 +149,7 @@ def check_orphans():
                 incoming[href] += 1
     for fn in article_files():
         if incoming[fn[:-5]] == 0:
-            warn("%s — сирота: ни одной входящей ссылки" % fn)
+            warn("%s — сирота: ни одной входящей ссылки из статей" % fn)
 
 
 def main():
