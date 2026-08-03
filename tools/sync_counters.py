@@ -61,7 +61,8 @@ def sync_rubric(rk, arts):
         return
     s = read(p)
     listed = set(re.findall(r'<li><a href="/blog/([a-z0-9-]+)\.html"', s))
-    added = 0
+    mine = {a["slug"] for a in arts}
+    added = removed = 0
 
     for lvl, ic, color, lbl in LEVELS:
         g = re.search(r'(<h2>%s[^<]*<span[^>]*>· )(\d+)(</span></h2>'
@@ -73,7 +74,15 @@ def sync_rubric(rk, arts):
                '<span class="mn">%d мин</span></a></li>'
                % (a["slug"], card_title(a), a["mins"])
                for a in arts if a["level"] == lvl and a["slug"] not in listed]
-        lis = re.findall(r"<li>.*?</li>", body, re.S) + new
+        # карточка статьи, которую перенесли в другую рубрику, должна уйти
+        keep = []
+        for li in re.findall(r"<li>.*?</li>", body, re.S):
+            sl = re.search(r'href="/blog/([a-z0-9-]+)\.html"', li)
+            if sl and sl.group(1) not in mine:
+                removed += 1
+                continue
+            keep.append(li)
+        lis = keep + new
         key = lambda x: re.search(r'class="t">([^<]+)', x).group(1).lower()
         lis.sort(key=key)
         added += len(new)
@@ -88,8 +97,9 @@ def sync_rubric(rk, arts):
     # числа в <title>, description и og:description
     s = re.sub(r"\b\d+ стат(?:ья|ьи|ей)\b", "%d %s" % (total, plural(total)), s)
 
-    if added:
-        log.append("рубрика %-12s +%d карточек, всего %d" % (rk, added, total))
+    if added or removed:
+        log.append("рубрика %-12s +%d, -%d карточек, всего %d"
+                   % (rk, added, removed, total))
     write(p, s)
 
 
@@ -112,6 +122,10 @@ def sync_hub(by):
     s = re.sub(r"\b\d+ стат(?:ья|ьи|ей)\b", "%d %s" % (total, plural(total)), s0)
     s = re.sub(r'<a class="go" href="/blog/rubrika/([a-z]+)/">Все \d+ стат(?:ья|ьи|ей)',
                per_rubric, s)
+    # счётчик «N материалов» дорисовывает скрипт, а в разметке лежит «0»:
+    # краулер без JS читал «0 материалов». Кладём число прямо в тег.
+    s = re.sub(r'(id="counter" data-target=")\d+("[^>]*>)\d+',
+               lambda m: "%s%d%s%d" % (m.group(1), total, m.group(2), total), s)
     if s != s0:
         log.append("хаб блога: общее число %d и счётчики 15 рубрик" % total)
     write(p, s)
