@@ -399,50 +399,7 @@
     <h2>Оставить заявку</h2>
     <p class="prose" style="text-align:center">Заполни форму — мы свяжемся, расскажем про ближайшую дату, формат и ответим на вопросы. Ни к чему не обязывает.</p>
 
-    <!-- FormSubmit.co: заявки приходят на почту из action. Чтобы сменить адрес — поменяйте его здесь.
-         При ПЕРВОЙ отправке FormSubmit пришлёт на этот ящик письмо для подтверждения — нужно один раз нажать ссылку в нём. -->
-    <form class="apply" action="https://formsubmit.co/dron939@yandex.ru" method="POST">
-      <input type="hidden" name="_subject" value="Заявка на тренинг «Прорыв»">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="true">
-      <!-- honeypot против спам-ботов -->
-      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-      <div class="field">
-        <label for="f-name">Имя</label>
-        <input id="f-name" type="text" name="Имя" placeholder="Как к вам обращаться" required>
-      </div>
-      <div class="field">
-        <label for="f-contact">Телефон или мессенджер</label>
-        <input id="f-contact" type="text" name="Контакт" placeholder="Телефон, Telegram или WhatsApp" required>
-      </div>
-      <div class="field">
-        <label for="f-city">Город</label>
-        <input id="f-city" type="text" name="Город" placeholder="Ваш город">
-      </div>
-      <div class="field">
-        <label for="f-stage">Что интересует</label>
-        <select id="f-stage" name="Интересует">
-          <option value="Полный путь (все три этапа)">Полный путь — все три этапа</option>
-          <option value="Этап 1 — Первая трещина">Этап 1 — Первая трещина</option>
-          <option value="Этап 2 — Стена">Этап 2 — Стена</option>
-          <option value="Этап 3 — Завал">Этап 3 — Завал</option>
-          <option value="Пока не определился, нужна консультация">Пока не определился — нужна консультация</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="f-comment">Комментарий</label>
-        <textarea id="f-comment" name="Комментарий" placeholder="Вопросы, важные ограничения по здоровью, удобное время связи"></textarea>
-      </div>
-
-      <div class="consent">
-        <input id="f-consent" type="checkbox" required>
-        <label for="f-consent">Отправляя форму, я соглашаюсь на обработку моих данных для связи по заявке и подтверждаю, что ознакомился с противопоказаниями выше.</label>
-      </div>
-
-      <button type="submit" class="btn btn-solid">Отправить заявку</button>
-      <p class="note">Или напишите напрямую: <a href="https://t.me/meysternlp" target="_blank" rel="noopener">Telegram</a> · <a href="https://vk.com/meysternlp" target="_blank" rel="noopener">ВКонтакте</a></p>
-    </form>
+    <div class="apply-cta" style="text-align:center;padding:26px 20px;border:1px solid #E2E8F0;border-radius:12px;margin:18px 0"><p style="margin:0 0 16px">Заявки и вопросы — в Telegram. Расскажем про ближайший поток, ответим про этапы и стоимость.</p><a href="https://t.me/meysternlp" class="btn" target="_blank" rel="noopener noreferrer">📨 Написать в Telegram</a><p style="margin:14px 0 0;font-size:.88rem;color:#64748B">Ничего не обязывает. Про самочувствие и ограничения поговорим лично — здесь это писать не нужно.</p></div>
   </div>
 </section>
 

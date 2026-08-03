@@ -200,7 +200,7 @@ def attr(s, pattern):
     return m.group(1).strip() if m else None
 
 
-def check_meta(pages):
+def check_meta(pages, have):
     titles, canons = collections.defaultdict(list), collections.defaultdict(list)
     for p in pages:
         name = rel(p)
@@ -239,7 +239,19 @@ def check_meta(pages):
                         "/" + name[:-len("index.html")] if name.endswith("/index.html")
                         else "/" + name)
                     if canon[len(SITE):].rstrip("/") != want.rstrip("/"):
-                        err("мета", "%s: canonical указывает на %s" % (name, canon))
+                        # canonical на другую свою страницу — намеренное
+                        # склеивание дублей (так /fredi/ отдан странице
+                        # /virtual-psychologist/). Ошибка — только если цели нет.
+                        t = resolve(canon[len(SITE):], p)
+                        if t and t in have:
+                            warn("мета", "%s: canonical отдан странице %s"
+                                 % (name, canon))
+                            # это псевдоним, а не самостоятельная страница —
+                            # в проверке дублей canonical он участвовать не должен
+                            canons[canon].remove(name)
+                        else:
+                            err("мета", "%s: canonical указывает на "
+                                "несуществующую страницу %s" % (name, canon))
             for prop in ("og:title", "og:description", "og:image", "og:url"):
                 if 'property="%s"' % prop not in s:
                     warn("мета", "%s: нет %s" % (name, prop))
@@ -343,7 +355,7 @@ def main():
     pages, have = walk_html(), walk_assets()
     incoming = check_links(pages, have)
     check_markup(pages)
-    check_meta(pages)
+    check_meta(pages, have)
     check_sitemap(pages, have)
     check_feed(have)
     check_reachable(pages, incoming)
