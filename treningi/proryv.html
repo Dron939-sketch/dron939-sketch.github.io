@@ -232,6 +232,7 @@
   ]
 }
 </script>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
 
@@ -500,17 +501,24 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Event",
+  "@type": "Product",
   "name": "Прорыв — живой тренинг против выученной беспомощности",
   "description": "Живой телесный тренинг из трёх этапов (Первая трещина, Стена, Завал), где выученную беспомощность снимают опытом прорыва в безопасных условиях с обученными ведущими.",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "organizer": {
-    "@type": "Person",
-    "name": "Андрей Мейстер",
-    "url": "https://meysternlp.ru/"
+  "brand": {
+    "@type": "Brand",
+    "name": "Андрей Мейстер"
   },
   "image": "https://meysternlp.ru/treningi/proryv-hero.jpg",
-  "url": "https://meysternlp.ru/treningi/proryv.html"
+  "url": "https://meysternlp.ru/treningi/proryv.html",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "RUB",
+    "url": "https://meysternlp.ru/treningi/proryv.html",
+    "availability": "https://schema.org/InStock",
+    "lowPrice": "2900",
+    "highPrice": "14700",
+    "offerCount": 4
+  }
 }
 </script>
 
