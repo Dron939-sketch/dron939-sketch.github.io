@@ -147,8 +147,26 @@ def check_orphans():
         for href in set(re.findall(r'href="/blog/([a-z0-9-]+)\.html"', read(p))):
             if href != src:
                 incoming[href] += 1
+
+    # У лекции навигация идёт через страницу её курса — это не каталог
+    # «всего подряд», а её законное место. Поэтому для лекций проверяем
+    # именно наличие в каком-либо курсе, иначе получаем 83 ложных срабатывания.
+    in_course = set()
+    lect_dir = os.path.join(BLOG, "lektorij")
+    if os.path.isdir(lect_dir):
+        for d in os.listdir(lect_dir):
+            p = os.path.join(lect_dir, d, "index.html")
+            if os.path.exists(p):
+                in_course.update(re.findall(r'href="/blog/(lekciya-[a-z0-9-]+)\.html"', read(p)))
+
     for fn in article_files():
-        if incoming[fn[:-5]] == 0:
+        slug = fn[:-5]
+        if incoming[slug]:
+            continue
+        if slug.startswith("lekciya-"):
+            if slug not in in_course:
+                warn("%s — лекция вне курсов: нет ни на одной странице курса" % fn)
+        else:
             warn("%s — сирота: ни одной входящей ссылки из статей" % fn)
 
 
