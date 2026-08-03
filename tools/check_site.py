@@ -130,7 +130,16 @@ def check_links(pages, have):
                 err("ссылки", "%s → %s (нет файла)" % (name, h))
             elif t.endswith(".html"):
                 incoming[t] += 1
-        for anc in set(re.findall(r'href="#([^"]+)"', s)):
+        # <base href="/"> уводит даже ссылку вида href="#glava-2" на главную:
+        # по спецификации фрагмент резолвится относительно base, а не страницы.
+        # Из-за этого на 969 страницах не работало ни одно оглавление.
+        anchors = set(re.findall(r'href="#([^"]+)"', s))
+        base = re.search(r'<base\s+href="([^"]*)"', s)
+        if base and anchors:
+            err("ссылки", "%s: <base href=\"%s\"> ломает %d внутристраничных "
+                "ссылок — они уводят на %s" % (name, base.group(1), len(anchors),
+                                               base.group(1)))
+        for anc in anchors:
             if anc and anc not in ids:
                 err("ссылки", "%s: битый якорь #%s" % (name, anc))
         # ссылки на свой же домен абсолютным URL — проверяем как внутренние
@@ -155,7 +164,10 @@ def check_markup(pages):
         name = rel(p)
         if name in FRAGMENTS:
             continue
-        s = read(p)
+        full = read(p)
+        # разметку тоже считаем по странице без скриптов: <img> в комментарии
+        # внутри JS — не картинка и alt ему не нужен
+        s = strip_scripts(full)
         for i, block in enumerate(re.findall(
                 r'<script type="application/ld\+json">(.*?)</script>', s, re.S)):
             try:
@@ -165,8 +177,11 @@ def check_markup(pages):
         if not re.search(r'<html[^>]*\blang=', s):
             err("разметка", "%s: нет lang у <html>" % name)
         h1 = len(re.findall(r"<h1[ >]", s))
+        # у неиндексируемых страниц (админка, 404) заголовок ни на что не влияет
+        indexable = name not in NOINDEX_OK and "noindex" not in full
         if h1 == 0:
-            warn("разметка", "%s: нет <h1>" % name)
+            if indexable:
+                warn("разметка", "%s: нет <h1>" % name)
         elif h1 > 1:
             warn("разметка", "%s: <h1> встречается %d раза" % (name, h1))
         noalt = [t for t in re.findall(r"<img\b[^>]*>", s) if 'alt=' not in t]
