@@ -118,20 +118,32 @@ def sync_hub(by):
 
 
 def sync_lektorij(n_courses, n_lectures):
+    """Только сводные числа страницы.
+
+    Тут легко ошибиться: на странице десятки карточек вида «Курс из 10
+    лекций» и «Курс из 12 лекций» — это счётчики конкретных курсов, и
+    глобальная замена «N лекций» превращает их все в общее число.
+    Поэтому каждое сводное место правится по своей формулировке.
+    """
     p = os.path.join(BLOG, "lektorij", "index.html")
     if not os.path.exists(p):
         return
     s0 = read(p)
-    s = re.sub(r"\b\d+ (курс(?:|а|ов)|направлени(?:е|я|й))\b",
-               lambda m: "%d %s" % (n_courses, plural(
-                   n_courses, ("курс", "курса", "курсов")
-                   if m.group(1).startswith("курс")
-                   else ("направление", "направления", "направлений"))), s0)
-    s = re.sub(r"\b\d+ лекци(?:я|и|й)\b",
-               "%d %s" % (n_lectures, plural(
-                   n_lectures, ("лекция", "лекции", "лекций"))), s)
+    kurs = plural(n_courses, ("курс", "курса", "курсов"))
+    napr = plural(n_courses, ("направление", "направления", "направлений"))
+    lekc = plural(n_lectures, ("лекция", "лекции", "лекций"))
+    s = s0
+    for pat, rep in (
+            (r"\b\d+ направлени(?:е|я|й)(?=:)", "%d %s" % (n_courses, napr)),
+            (r"\b\d+ курс(?:|а|ов) открыт(?:|ы|о) целиком",
+             "%d %s открыт%s целиком" % (n_courses, kurs,
+                                         "" if kurs == "курс" else "ы")),
+            (r"\b\d+ курс(?:|а|ов)(?=: по интересу)", "%d %s" % (n_courses, kurs)),
+            (r"\b\d+ лекци(?:я|и|й) уже открыт", "%d %s уже открыт" % (n_lectures, lekc))):
+        s = re.sub(pat, rep, s)
     if s != s0:
-        log.append("Лекторий: %d курсов, %d лекций" % (n_courses, n_lectures))
+        log.append("Лекторий: %d курсов, %d лекций (сводные числа)"
+                   % (n_courses, n_lectures))
     write(p, s)
 
 
