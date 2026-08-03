@@ -122,10 +122,10 @@
 
 ### Книги — серия «Теория манипуляции»
 
-- [Том I — Разговорный гипноз](https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-1-razgovornyy-gipnoz/)
+- [Том I — Разговорный гипноз](https://meysternlp.ru/knigi/)
 - [Том II — Проницательность](https://meysternlp.ru/knigi/)
-- [Том III — Стимульный контроль](https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-3-stimulnyy-kontrol/)
-- [Вариатика — библиотека человеческих паттернов](https://meysternlp.ru/knigi/variatika-biblioteka-chelovecheskih-patternov/)
+- [Том III — Стимульный контроль](https://meysternlp.ru/knigi/)
+- [Вариатика — библиотека человеческих паттернов](https://meysternlp.ru/knigi/)
 
 ### Дидактические игры
 
@@ -176,7 +176,7 @@
 
 ## Privacy
 
-- [Политика конфиденциальности](https://meysternlp.ru/privacy/)
+- [Политика конфиденциальности](https://meysternlp.ru/politika-konfidencialnosti/)
 
 ## Optional
 
