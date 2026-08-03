@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   <meta name="robots" content="index, follow">
   <meta name="format-detection" content="telephone=no">
-  <base href="/">
 
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Прорыв — живой тренинг против выученной беспомощности | Андрей Мейстер</title>
@@ -213,6 +212,27 @@
   <meta name="twitter:description" content="Три этапа — Первая трещина, Стена, Завал. Беспомощность снимают опытом прорыва, а не словами.">
   <meta name="twitter:image" content="https://meysternlp.ru/treningi/proryv-hero.jpg">
   <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://meysternlp.ru/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "ПРОРЫВ",
+      "item": "https://meysternlp.ru/treningi/proryv.html"
+    }
+  ]
+}
+</script>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
 
@@ -379,50 +399,7 @@
     <h2>Оставить заявку</h2>
     <p class="prose" style="text-align:center">Заполни форму — мы свяжемся, расскажем про ближайшую дату, формат и ответим на вопросы. Ни к чему не обязывает.</p>
 
-    <!-- FormSubmit.co: заявки приходят на почту из action. Чтобы сменить адрес — поменяйте его здесь.
-         При ПЕРВОЙ отправке FormSubmit пришлёт на этот ящик письмо для подтверждения — нужно один раз нажать ссылку в нём. -->
-    <form class="apply" action="https://formsubmit.co/dron939@yandex.ru" method="POST">
-      <input type="hidden" name="_subject" value="Заявка на тренинг «Прорыв»">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="true">
-      <!-- honeypot против спам-ботов -->
-      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-      <div class="field">
-        <label for="f-name">Имя</label>
-        <input id="f-name" type="text" name="Имя" placeholder="Как к вам обращаться" required>
-      </div>
-      <div class="field">
-        <label for="f-contact">Телефон или мессенджер</label>
-        <input id="f-contact" type="text" name="Контакт" placeholder="Телефон, Telegram или WhatsApp" required>
-      </div>
-      <div class="field">
-        <label for="f-city">Город</label>
-        <input id="f-city" type="text" name="Город" placeholder="Ваш город">
-      </div>
-      <div class="field">
-        <label for="f-stage">Что интересует</label>
-        <select id="f-stage" name="Интересует">
-          <option value="Полный путь (все три этапа)">Полный путь — все три этапа</option>
-          <option value="Этап 1 — Первая трещина">Этап 1 — Первая трещина</option>
-          <option value="Этап 2 — Стена">Этап 2 — Стена</option>
-          <option value="Этап 3 — Завал">Этап 3 — Завал</option>
-          <option value="Пока не определился, нужна консультация">Пока не определился — нужна консультация</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="f-comment">Комментарий</label>
-        <textarea id="f-comment" name="Комментарий" placeholder="Вопросы, важные ограничения по здоровью, удобное время связи"></textarea>
-      </div>
-
-      <div class="consent">
-        <input id="f-consent" type="checkbox" required>
-        <label for="f-consent">Отправляя форму, я соглашаюсь на обработку моих данных для связи по заявке и подтверждаю, что ознакомился с противопоказаниями выше.</label>
-      </div>
-
-      <button type="submit" class="btn btn-solid">Отправить заявку</button>
-      <p class="note">Или напишите напрямую: <a href="https://t.me/meysternlp" target="_blank" rel="noopener">Telegram</a> · <a href="https://vk.com/meysternlp" target="_blank" rel="noopener">ВКонтакте</a></p>
-    </form>
+    <div class="apply-cta" style="text-align:center;padding:26px 20px;border:1px solid #E2E8F0;border-radius:12px;margin:18px 0"><p style="margin:0 0 16px">Заявки и вопросы — в Telegram. Расскажем про ближайший поток, ответим про этапы и стоимость.</p><a href="https://t.me/meysternlp" class="btn" target="_blank" rel="noopener noreferrer">📨 Написать в Telegram</a><p style="margin:14px 0 0;font-size:.88rem;color:#64748B">Ничего не обязывает. Про самочувствие и ограничения поговорим лично — здесь это писать не нужно.</p></div>
   </div>
 </section>
 
@@ -438,7 +415,7 @@
         <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
       </div>
     </div>
-    <div style="text-align:center;padding-top:18px;margin-top:6px;border-top:1px solid rgba(58,134,255,.12)"><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.8rem;text-decoration:none">В разработке</a></div>
+    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">В разработке</a></nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
@@ -481,13 +458,24 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Event",
+  "@type": "Product",
   "name": "Прорыв — живой тренинг против выученной беспомощности",
   "description": "Живой телесный тренинг из трёх этапов (Первая трещина, Стена, Завал), где выученную беспомощность снимают опытом прорыва в безопасных условиях с обученными ведущими.",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "organizer": { "@type": "Person", "name": "Андрей Мейстер", "url": "https://meysternlp.ru/" },
+  "brand": {
+    "@type": "Brand",
+    "name": "Андрей Мейстер"
+  },
   "image": "https://meysternlp.ru/treningi/proryv-hero.jpg",
-  "url": "https://meysternlp.ru/treningi/proryv.html"
+  "url": "https://meysternlp.ru/treningi/proryv.html",
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "RUB",
+    "url": "https://meysternlp.ru/treningi/proryv.html",
+    "availability": "https://schema.org/InStock",
+    "lowPrice": "2900",
+    "highPrice": "14700",
+    "offerCount": 4
+  }
 }
 </script>
 

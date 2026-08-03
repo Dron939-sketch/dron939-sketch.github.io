@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
   <meta name="robots" content="index, follow">
   <meta name="format-detection" content="telephone=no">
-  <base href="/">
   
   <!-- SEO МЕТА-ТЕГИ -->
   <title>Архив материалов — видео и тексты | Андрей Мейстер</title>
@@ -16,7 +15,7 @@
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Архив материалов — Андрей Мейстер">
   <meta property="og:description" content="Видео и тексты: лекции, инструкции, разборы. То, что можно скачать и использовать.">
-  <meta property="og:image" content="/og-image.jpg">
+  <meta property="og:image" content="https://meysternlp.ru/og-image.jpg">
   <meta property="og:url" content="https://meysternlp.ru/sobytiya/">
   <meta property="og:type" content="website">
   
@@ -745,6 +744,27 @@
   <meta name="twitter:description" content="Архив учебных материалов: видео-лекции, разборы, инструкции, PDF-документы. Всё, что остаётся и работает.">
   <meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
   <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://meysternlp.ru/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "АРХИВ",
+      "item": "https://meysternlp.ru/sobytiya/"
+    }
+  ]
+}
+</script>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
 
@@ -973,13 +993,8 @@
   <!-- Подписка -->
   <div class="email-section">
     <p>Хотите получать новые материалы?</p>
-    <form action="/subscribe/" method="POST">
-      <div class="form-group">
-        <input type="email" name="email" class="email-input" placeholder="Ваш email" required>
-        <button type="submit" class="btn">ПОДПИСАТЬСЯ</button>
-      </div>
-    </form>
-    <div class="form-note">* Новые видео, инструкции и статьи — раз в месяц.</div>
+    <div class="form-group"><a href="https://t.me/meysternlp" class="btn" target="_blank" rel="noopener noreferrer">📨 ПОДПИСАТЬСЯ В TELEGRAM</a></div>
+    <div class="form-note">* Новые видео, инструкции и статьи — раз в месяц, в канале.</div>
   </div>
 
   <!-- Действия -->
@@ -1004,7 +1019,7 @@
         <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
       </div>
     </div>
-    <div style="text-align:center;padding-top:18px;margin-top:6px;border-top:1px solid rgba(58,134,255,.12)"><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.8rem;text-decoration:none">В разработке</a></div>
+    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">В разработке</a></nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
