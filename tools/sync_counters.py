@@ -155,6 +155,29 @@ def sync_lektorij(n_courses, n_lectures):
             (r"\b\d+ курс(?:|а|ов)(?=: по интересу)", "%d %s" % (n_courses, kurs)),
             (r"\b\d+ лекци(?:я|и|й) уже открыт", "%d %s уже открыт" % (n_lectures, lekc))):
         s = re.sub(pat, rep, s)
+    # Плашка с крупными числами в шапке. Стоит отдельно от остального текста:
+    # значение продублировано в data-count (по нему идёт анимация счётчика),
+    # поэтому править надо и атрибут, и содержимое, и подпись под числом.
+    m = re.search(r'<div class="stats">.*?</div>', s, re.S)
+    if m:
+        was = m.group(0)
+        cells = [(n_courses, napr),
+                 (n_lectures, lekc + " открыто"),
+                 (n_courses, kurs + " открыт" + ("" if kurs == "курс" else "о"))]
+        it = iter(cells)
+
+        def cell(mm):
+            num, label = next(it)
+            return ('<span><b data-count="%d">%d</b><i>%s</i></span>'
+                    % (num, num, label))
+
+        now = re.sub(r'<span><b data-count="\d+">\d+</b><i>[^<]*</i></span>',
+                     cell, was)
+        if now != was:
+            s = s.replace(was, now, 1)
+            log.append("Лекторий: плашка в шапке — %d, %d, %d"
+                       % (n_courses, n_lectures, n_courses))
+
     if s != s0:
         log.append("Лекторий: %d курсов, %d лекций (сводные числа)"
                    % (n_courses, n_lectures))
