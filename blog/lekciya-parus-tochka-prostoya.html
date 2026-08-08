@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="manifest" href="/site.webmanifest">
+<title>Лекция 5. Точка простоя: где поток отдают дёшево | Андрей Мейстер</title>
+<meta name="description" content="Пятая лекция курса «Парус»: почему простой — самое дешёвое место потока, три его вида и единицы измерения, формула объёма, четыре причины, по которым простой ещё не занят, и как разговаривать с владельцем потока — с числом, а не с идеей.">
+<meta name="keywords" content="точка простоя, ожидание, незагруженные мощности, Голдратт теория ограничений, Тайити Оно потери, переговоры с владельцем, Лекторий, Андрей Мейстер">
+<meta property="og:type" content="article"><meta property="og:title" content="Лекция 5. Точка простоя: где поток отдают дёшево"><meta property="og:description" content="Час простоя приносит владельцу ровно ноль. Как измерить простой и почему первый вопрос — «почему это до сих пор стоит»."><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-parus-tochka-prostoya.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-08-08T09:00:00+03:00"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-parus-tochka-prostoya.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Лекция 5. Точка простоя: где поток отдают дёшево", "description": "Пятая лекция курса «Парус». Точка простоя как самое дешёвое место потока: у владельца выбор не между хорошей ценой и плохой, а между какой-нибудь и нулём. Три вида простоя — времени, мощности и материала — с единицами измерения и формулой объёма. Простой как потеря в производственной культуре: перечень потерь Оно и правило Голдратта об узком месте. Четыре причины существующего простоя, правила разговора с владельцем и ловушка, при которой простой перестаёт быть простоем.", "datePublished": "2026-08-08T09:00:00+03:00", "author": {"@type": "Person", "@id": "https://meysternlp.ru/#person", "name": "Андрей Мейстер", "jobTitle": "Психолог, методолог", "url": "https://meysternlp.ru/obo-mne/"}, "publisher": {"@type": "Organization", "@id": "https://meysternlp.ru/#organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/logo.png"}}, "image": "https://meysternlp.ru/og-image.jpg", "dateModified": "2026-08-08T09:00:00+03:00", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-parus-tochka-prostoya.html"}, "inLanguage": "ru-RU"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Лекция 5. Точка простоя: где поток отдают дёшево", "item": "https://meysternlp.ru/blog/lekciya-parus-tochka-prostoya.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Почему владелец должен отдавать простой дёшево, а не продавать дорого?", "acceptedAnswer": {"@type": "Answer", "text": "Потому что в момент разговора альтернатива у него — ноль, а не высокая цена. Это меняется, как только вы становитесь постоянным и выгодным партнёром: тогда ресурс перестаёт быть простоем и приобретает рыночную стоимость. Именно поэтому цену стоит обговаривать заранее и на длинный срок."}},{"@type": "Question", "name": "Что делать, если на вопрос «почему это стоит» отвечают «уже пробовали»?", "acceptedAnswer": {"@type": "Answer", "text": "Радоваться и расспрашивать. Это бесплатный отчёт о чужой попытке. Выясните, что именно не сработало: не было спроса, не хватило людей, владелец передумал или человек просто устал и бросил. Три причины из четырёх к вам не относятся, а первая — самая ценная информация, которую можно получить бесплатно."}},{"@type": "Question", "name": "Зачем говорить с исполнителем, а не сразу с владельцем?", "acceptedAnswer": {"@type": "Answer", "text": "Исполнитель знает то, чего владелец не помнит: реальные часы затишья, что чаще всего спрашивают клиенты, какие были попытки и почему заглохли, какие правила действительно соблюдаются. И он охотнее разговаривает, потому что ничем не рискует. К владельцу лучше приходить, уже зная всё это."}},{"@type": "Question", "name": "Как быть, если простой есть, а правила его использовать не дают?", "acceptedAnswer": {"@type": "Answer", "text": "Сначала выяснить точно, что именно запрещено и кем: часто ограничение оказывается уже другим или снимается отдельным разрешением. Если запрет реальный, это не поражение, а сэкономленные месяцы. Такой ответ надо получать в первую неделю, а не после вложений."}},{"@type": "Question", "name": "Насколько велика должна быть цифра, чтобы браться?", "acceptedAnswer": {"@type": "Answer", "text": "Универсального порога нет, но правило есть: считайте потолок и сравнивайте его со своими издержками, а не со своими надеждами. Двадцать человеко-часов в день — это предел точки, и он не поднимется от старания. Если при полном использовании потолка дело едва окупается, браться не стоит: расти будет некуда."}}]}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:40px;margin:50px 0;border-radius:20px;text-align:center}.cta-block h3{margin-bottom:20px;font-size:1.8rem}.cta-block p{color:#6E6E73;margin-bottom:25px;font-size:1.1rem}.cta-buttons{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:16px 40px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1.1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:60px 0;padding:40px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:20px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:40px 0 60px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:25px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:280px}}</style>
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+</head>
+<body>
+<div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 8 августа 2026</span><span>⏱️ 23 мин чтения</span><span>🎓 Лекторий · Парус</span><span>✅ Проверено · июль 2026</span></div>
+<h1>Лекция 5. Точка простоя: где поток отдают дёшево</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Час, когда оборудование стоит, приносит владельцу ровно ноль — и выбор у него не между хорошей ценой и плохой, а между какой-нибудь и нулём. Отсюда вся экономика паруса. Разбираем три вида простоя, как его мерить и почему он до сих пор существует.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">План лекции</span><ol><li>Почему час простоя стоит владельцу ровно ноль</li><li>Три вида простоя: времени, мощности и материала</li><li>Формула объёма и три причины, по которым нужно число</li><li>Четыре причины, по которым простой до сих пор не занят</li><li>Как разговаривать с владельцем: с числом, а не с идеей</li><li>Чего простой не даёт: он не создаёт спроса и он чужой</li></ol></div>
+
+<div class="toc-box"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Почему простой — самое дешёвое место потока</a></li><li><a href="#s-2">Три вида простоя</a></li><li><a href="#s-3">Как измерять</a></li><li><a href="#s-4">Почему этот простой до сих пор существует</a></li><li><a href="#s-5">Как разговаривать с владельцем потока</a></li><li><a href="#s-6">Чего простой не даёт</a></li><li><a href="#itogi">Итоги лекции</a></li><li><a href="#voprosy">Вопросы для самопроверки</a></li><li><a href="#literatura">Литература</a></li></ol></div>
+
+
+<h2 id="s-1">1. Почему простой — самое дешёвое место потока</h2>
+
+<p>В прошлых лекциях мы установили, что поток надо искать не там, где густо, а
+там, где он останавливается. Пора объяснить, почему именно.</p>
+
+<p>Дело в арифметике владельца. Час, когда его оборудование стоит, приносит
+ему ноль. Не мало — <b>ровно ноль</b>. И в этот час у него нет выбора между
+хорошей ценой и плохой: у него выбор между какой-нибудь ценой и нулём.</p>
+
+<p>Отсюда вся экономика паруса. Вы просите не долю в его основном деле, где он
+будет торговаться за каждый процент. Вы просите то, что у него сейчас стоит
+ноль. Договориться на этом поле несравнимо легче.</p>
+
+<p>И вторая причина, психологическая. За простой владельцу немного стыдно. Он
+знает, что кухня простаивает, что машина едет обратно пустой, что клиенты
+скучают, — и относится к этому как к неизбежному злу. Человек, который
+приходит и предлагает это использовать, воспринимается не как проситель, а как
+избавитель.</p>
+
+<h2 id="s-2">2. Три вида простоя</h2>
+
+<p>Простой бывает трёх видов, и путать их не стоит: у каждого свои единицы и
+свой способ разговора.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px"><svg viewBox="0 0 720 272" role="img" aria-label="Схема: три вида простоя и единицы измерения" style="width:100%;height:auto;display:block;font-family:inherit"><rect x="24" y="30" width="212" height="184" rx="14" fill="#fff" stroke="#3A86FF" stroke-width="1.6"/><text x="130" y="60" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3A86FF">Простой времени</text><text x="130" y="88" text-anchor="middle" font-size="12.5" fill="#1D1D1F">человек ждёт</text><text x="130" y="124" text-anchor="middle" font-size="12" fill="#6E6E73">мерить в</text><text x="130" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">человеко-часах</text><text x="130" y="184" text-anchor="middle" font-size="12" fill="#6E6E73">час на мойке, сорок минут в очереди</text><rect x="254" y="30" width="212" height="184" rx="14" fill="#fff" stroke="#3A86FF" stroke-width="1.6"/><text x="360" y="60" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3A86FF">Простой мощности</text><text x="360" y="88" text-anchor="middle" font-size="12.5" fill="#1D1D1F">оборудование стоит</text><text x="360" y="124" text-anchor="middle" font-size="12" fill="#6E6E73">мерить в</text><text x="360" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">машино-часах</text><text x="360" y="184" text-anchor="middle" font-size="12" fill="#6E6E73">кухня ночью, зал до полудня</text><rect x="484" y="30" width="212" height="184" rx="14" fill="#fff" stroke="#3A86FF" stroke-width="1.6"/><text x="590" y="60" text-anchor="middle" font-size="13.5" font-weight="700" fill="#3A86FF">Простой материала</text><text x="590" y="88" text-anchor="middle" font-size="12.5" fill="#1D1D1F">лежит и портится</text><text x="590" y="124" text-anchor="middle" font-size="12" fill="#6E6E73">мерить в</text><text x="590" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">килограммах в месяц</text><text x="590" y="184" text-anchor="middle" font-size="12" fill="#6E6E73">обрезки, остатки, возвраты</text><text x="360" y="248" text-anchor="middle" font-size="13.5" fill="#1D1D1F">Объём простоя = число единиц, умноженное на длительность</text></svg><figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Три вида простоя, у каждого своё содержание, своя единица измерения и примеры. Первый — простой времени: человек ждёт, мерить в человеко-часах, примеры — час на мойке, сорок минут в очереди. Второй — простой мощности: оборудование стоит, мерить в машино-часах, примеры — кухня ночью, зал до полудня. Третий — простой материала: он лежит и портится, мерить в килограммах в месяц, примеры — обрезки, остатки, возвраты. Общая формула внизу: объём простоя равен числу единиц, умноженному на длительность.</figcaption></figure>
+
+<p><b>Простой времени</b> — человек здесь и ничего не делает. Мерится в
+человеко-часах: число людей, умноженное на минуты ожидания. Именно это число, а
+не проходимость, определяет ценность точки.</p>
+
+<p><b>Простой мощности</b> — оборудование или помещение оплачено и часть
+времени стоит. Мерится в машино-часах или в часах аренды. Здесь у владельца
+самая ясная арифметика: он точно знает, сколько стоит его час, и легко считает
+выгоду.</p>
+
+<p><b>Простой материала</b> — то, что уже произведено и лежит без движения:
+обрезки, остатки, возвраты, продукция с истекающим сроком. Мерится в
+килограммах или штуках в месяц. Особенность: у этого простоя часто есть ещё и
+<b>отрицательная стоимость</b> — за вывоз владелец платит.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">⏱️</span><span class="concept-number">Понятие</span></div>
+<h3 style="margin-top:0">Простой как потеря</h3>
+<p>В производственной культуре простой давно считается потерей, а не
+нормой. Тайити Оно, выстраивая производственную систему Тойоты, включил
+ожидание в перечень основных видов потерь — наряду с лишними перемещениями и
+перепроизводством.</p>
+<p>Элияху Голдратт в теории ограничений сформулировал ещё жёстче: час,
+потерянный на узком месте, — это час, потерянный всей системой, и его уже
+ничем не вернуть.</p>
+<p>Для нас важен вывод: <b>владелец потока часто уже знает про свой простой и
+уже считает его убытком</b>. Ваша задача — не открыть ему глаза, а предложить
+способ.</p></div>
+
+<h2 id="s-3">3. Как измерять</h2>
+
+<p>Формула одна и годится для всех трёх видов.</p>
+
+<p><b>Объём простоя = число единиц × длительность простоя.</b> Тридцать
+человек в день по сорок минут — это двадцать человеко-часов в день. Одна
+кухня, стоящая девять часов, — девять машино-часов. Двадцать кубов обрезков в
+неделю — восемьдесят в месяц.</p>
+
+<p>Число нужно по трём причинам, и все три практические.</p>
+
+<p><b>Оно отсеивает.</b> Половина замыслов умирает при первом же счёте, и это
+лучшее, что с ними может случиться: они умирают за час, а не через полгода
+аренды.</p>
+
+<p><b>Оно даёт язык.</b> С владельцем потока разговаривают числами. «У вас
+каждый день двадцать человеко-часов пропадает» — это разговор. «У меня есть
+идея» — это не разговор.</p>
+
+<p><b>Оно показывает потолок.</b> Простой конечен. Двадцать человеко-часов в
+день — это ваш предел на этой точке, и никакие усилия его не поднимут, пока
+поток не вырастет. Знать свой потолок до начала полезнее, чем узнать его через
+год.</p>
+
+<h2 id="s-4">4. Почему этот простой до сих пор существует</h2>
+
+<p>Самый важный вопрос лекции, и его почти никогда не задают. Найдя простой,
+человек радуется и бежит его занимать. А стоит спросить сначала: <b>почему это
+до сих пор стоит?</b> Причин ровно четыре, и они означают разное.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px"><svg viewBox="0 0 720 286" role="img" aria-label="Схема: четыре причины простоя и что с ними делать" style="width:100%;height:auto;display:block;font-family:inherit"><rect x="24" y="26" width="236" height="44" rx="10" fill="#EFF7F1" stroke="#2F9E63"/><text x="142" y="53" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">Никто не заметил</text><text x="278" y="44" font-size="12" fill="#6E6E73">владелец не считает это ресурсом</text><text x="278" y="62" font-size="12.5" font-weight="700" fill="#2F9E63">ваш шанс</text><rect x="24" y="80" width="236" height="44" rx="10" fill="#EFF7F1" stroke="#2F9E63"/><text x="142" y="107" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">Заметили, но не умеют</text><text x="278" y="98" font-size="12" fill="#6E6E73">нет навыка, людей или желания</text><text x="278" y="116" font-size="12.5" font-weight="700" fill="#2F9E63">ваш шанс</text><rect x="24" y="134" width="236" height="44" rx="10" fill="#FDF1F0" stroke="#D0453E"/><text x="142" y="161" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">Мешают правила</text><text x="278" y="152" font-size="12" fill="#6E6E73">допуск, безопасность, договор, режим</text><text x="278" y="170" font-size="12.5" font-weight="700" fill="#D0453E">стоп до выяснения</text><rect x="24" y="188" width="236" height="44" rx="10" fill="#FFF7E8" stroke="#E4A33A"/><text x="142" y="215" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D1D1F">Уже пробовали</text><text x="278" y="206" font-size="12" fill="#6E6E73">было и не пошло</text><text x="278" y="224" font-size="12.5" font-weight="700" fill="#E4A33A">сначала узнайте почему</text><text x="360" y="266" text-anchor="middle" font-size="13.5" fill="#1D1D1F">Первый вопрос владельцу — не «можно ли», а «почему это до сих пор стоит»</text></svg><figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">Четыре причины, по которым простой до сих пор существует, и что каждая означает для вас. Первая — никто не заметил: владелец не считает это ресурсом. Это ваш шанс. Вторая — заметили, но не умеют: нет навыка, людей или желания. Тоже ваш шанс. Третья — мешают правила: допуск, безопасность, договор, режим работы. Здесь стоп до выяснения. Четвёртая — уже пробовали, было и не пошло. Здесь сначала узнайте почему. Общий вывод: первый вопрос владельцу не «можно ли», а «почему это до сих пор стоит».</figcaption></figure>
+
+<p><b>Никто не заметил.</b> Самый частый случай, и он не про глупость
+владельца: люди не видят своего простоя ровно потому, что смотрят на своё
+дело, а не на движение вокруг. Это ваш шанс.</p>
+
+<p><b>Заметили, но не умеют.</b> Тоже частый и даже лучший случай: владелец
+знает про потерю, но у него нет ни навыка, ни людей, ни желания заниматься
+чем-то посторонним. Он будет вам рад.</p>
+
+<p><b>Мешают правила.</b> Допуск, санитарные требования, режим работы,
+условие в договоре аренды, безопасность. Здесь нужно остановиться и выяснить,
+прежде чем считать выгоду. Половина красивых замыслов упирается именно сюда,
+и узнавать об этом лучше в первую неделю.</p>
+
+<p><b>Уже пробовали, и не пошло.</b> Самый недооценённый ответ. Он не значит
+«не получится» — он значит, что у вас есть бесплатный отчёт о чужой попытке.
+Спросите, что именно не сработало: не пошло из-за спроса, из-за людей, из-за
+того, что владелец передумал, или потому, что человек просто устал. Три из
+четырёх причин к вам не относятся.</p>
+
+<h2 id="s-5">5. Как разговаривать с владельцем потока</h2>
+
+<p>Разговор решает больше, чем сама идея, и портят его почти всегда одинаково.</p>
+
+<p><b>Не приходите с идеей — приходите с числом.</b> «Я тут посчитал: у вас в
+среднем тридцать машин в день и час ожидания на каждой. Это тридцать часов
+скучающих людей ежедневно». Владелец слышит, что вы были здесь, смотрели и
+считали. Дальше разговор идёт совсем иначе.</p>
+
+<p><b>Формулируйте выгоду для него первой.</b> Не «дайте мне место», а «у вас
+перестанут уходить те, кому лень ждать». Порядок слов здесь важнее
+содержания.</p>
+
+<p><b>Просите меньше, чем хотите.</b> Три пробных дня, один угол, одна
+партия отходов. Маленькая просьба проходит без совещаний и без юриста, а после
+трёх дней у вас появляются свои числа — и следующий разговор идёт уже о
+фактах, а не о планах.</p>
+
+<p><b>Договаривайтесь о том, что будет, когда получится.</b> Это пропускают
+все, и это дорого стоит.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">⚠️</span><span class="concept-number">Ловушка</span></div>
+<h3 style="margin-top:0">Простой перестаёт быть простоем</h3>
+<p>Пока вы забираете случайные обрезки, они мусор. Как только вы начали
+забирать их каждый вторник и строить на этом дело, они превращаются в товар —
+и владелец назначает цену. То же с обратным рейсом: пока вы грузите изредка,
+это попутно; как только водитель начинает планировать маршрут под вас, это
+услуга, и стоит она как услуга.</p>
+<p>Ошибки тут нет ничьей — так устроено. Ошибка в том, чтобы строить расчёт на
+нулевой цене. <b>Считайте так, чтобы дело оставалось живым и при ненулевой
+цене ресурса</b>, и договаривайтесь о цене заранее, на длинный срок, пока вы
+ещё не выглядите выгодным партнёром.</p></div>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
+<p><b>Одна точка, три числа, один разговор.</b> Выберите место, где вы уже
+заметили простой.</p>
+<p><b>Первое.</b> Посчитайте объём: число единиц на длительность. Ходите
+дважды, в разное время, — одно наблюдение врёт.</p>
+<p><b>Второе.</b> Ответьте себе на вопрос «почему это до сих пор стоит».
+Честно, все четыре варианта по очереди.</p>
+<p><b>Третье.</b> Поговорите с тем, кто внутри: приёмщиком, администратором,
+водителем. Не с владельцем — с исполнителем. Он расскажет и про правила, и про
+прошлые попытки, и сделает это охотнее.</p>
+<p>Один такой заход обычно даёт больше, чем неделя размышлений. И почти всегда
+меняет замысел: то, что казалось главным, оказывается второстепенным.</p></div>
+
+<h2 id="s-6">6. Чего простой не даёт</h2>
+
+<p>Два ограничения, о которых стоит помнить, чтобы не переоценить находку.</p>
+
+<p><b>Простой не создаёт спроса.</b> Час ожидания делает человека доступным, а
+не готовым купить что угодно. Помните третий слой из первой лекции —
+совпадение состояния. Скучающему человеку у мойки можно предложить стрижку,
+кофе и мойку окон в квартире; предложить ему курсы бухгалтерского учёта нельзя,
+хотя он и свободен.</p>
+
+<p><b>Простой конечен и чужой.</b> Он ограничен сверху числом, которое вы
+посчитали, и держится ровно до тех пор, пока держится поток. Мойка закроется —
+закончится и ваш простой. Поэтому с первого дня стоит переводить пришедших
+людей в свои: контакт, запись, повод вернуться отдельно от мойки. Об этом —
+десятая лекция.</p>
+
+<p>В следующей лекции — проверка. Три вопроса, которыми любая находка
+проверяется за десять минут, и честный разбор того, как выглядят ответы
+«нет».</p>
+
+
+<h2 id="faq">❓ Частые вопросы</h2>
+<h3>Почему владелец должен отдавать простой дёшево, а не продавать дорого?</h3><p>Потому что в момент разговора альтернатива у него — ноль, а не высокая цена. Это меняется, как только вы становитесь постоянным и выгодным партнёром: тогда ресурс перестаёт быть простоем и приобретает рыночную стоимость. Именно поэтому цену стоит обговаривать заранее и на длинный срок.</p><h3>Что делать, если на вопрос «почему это стоит» отвечают «уже пробовали»?</h3><p>Радоваться и расспрашивать. Это бесплатный отчёт о чужой попытке. Выясните, что именно не сработало: не было спроса, не хватило людей, владелец передумал или человек просто устал и бросил. Три причины из четырёх к вам не относятся, а первая — самая ценная информация, которую можно получить бесплатно.</p><h3>Зачем говорить с исполнителем, а не сразу с владельцем?</h3><p>Исполнитель знает то, чего владелец не помнит: реальные часы затишья, что чаще всего спрашивают клиенты, какие были попытки и почему заглохли, какие правила действительно соблюдаются. И он охотнее разговаривает, потому что ничем не рискует. К владельцу лучше приходить, уже зная всё это.</p><h3>Как быть, если простой есть, а правила его использовать не дают?</h3><p>Сначала выяснить точно, что именно запрещено и кем: часто ограничение оказывается уже другим или снимается отдельным разрешением. Если запрет реальный, это не поражение, а сэкономленные месяцы. Такой ответ надо получать в первую неделю, а не после вложений.</p><h3>Насколько велика должна быть цифра, чтобы браться?</h3><p>Универсального порога нет, но правило есть: считайте потолок и сравнивайте его со своими издержками, а не со своими надеждами. Двадцать человеко-часов в день — это предел точки, и он не поднимется от старания. Если при полном использовании потолка дело едва окупается, браться не стоит: расти будет некуда.</p>
+
+<div class="fredi-ask-box" style="background:linear-gradient(135deg,#EFF6FF,#F8FAFF);border:1px solid #BFDBFE;border-left:4px solid #3A86FF;border-radius:14px;padding:18px 22px;margin:34px 0;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:28px;line-height:1" aria-hidden="true">💬</div>
+<div>
+<div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу идею или ситуацию?</div>
+<div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог и собеседник: бесплатно, круглосуточно и без записи. Расскажите про свою задумку — он поможет разложить её по полочкам.</div>
+<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+</div>
+</div>
+
+<h2 id="itogi">Итоги лекции</h2>
+<ol><li>Простой дешевле всего потому, что в этот момент ресурс приносит владельцу ровно ноль: выбор у него не между ценами, а между какой-нибудь ценой и нулём.</li><li>За простой владельцу немного стыдно — тот, кто предлагает его использовать, воспринимается как избавитель, а не как проситель.</li><li>Три вида простоя: времени в человеко-часах, мощности в машино-часах, материала в килограммах или штуках.</li><li>У простоя материала часто отрицательная стоимость: за вывоз владелец платит.</li><li>Объём простоя равен числу единиц, умноженному на длительность. Число отсеивает замыслы, даёт язык для разговора и показывает потолок.</li><li>Первый вопрос — не «можно ли», а «почему это до сих пор стоит». Четыре ответа означают разное: два дают шанс, один требует стоп, один требует расспросов.</li><li>С владельцем разговаривают числом, выгоду называют его первой и просят меньше, чем хотят.</li><li>Простой перестаёт быть простоем, когда вы становитесь постоянным партнёром: расчёт должен выдерживать ненулевую цену ресурса.</li></ol>
+
+<div class="warning-block"><span class="warning-label">Минутка на завтра</span><p>На этой неделе сходите в выбранную точку дважды, в разное время, и посчитайте объём простоя по формуле. Один заход обязательно соврёт, два дадут разброс, и это уже данные. А потом задайте исполнителю один вопрос: «а почему у вас тут это до сих пор никто не занял?» Ответ обычно стоит недели размышлений.</p></div>
+
+<h2 id="voprosy">Вопросы для самопроверки</h2>
+<ol><li>Объясните своими словами, почему владельцу выгоднее отдать простой дёшево, чем оставить его нетронутым.</li><li>Посчитайте объём простоя в знакомом месте по формуле. Какое число получилось и что оно означает как потолок?</li><li>Разберите одну свою находку по четырём причинам простоя. Какая из них верна и что из этого следует?</li><li>Сформулируйте первую фразу разговора с владельцем потока — с числом и с его выгодой. Проверьте: нет ли в ней слова «идея»?</li><li>Приведите пример, где простой есть, но состояние человека не совпадает с вашим предложением. Почему это не сработает?</li></ol>
+
+<h2 id="literatura">Литература</h2>
+<ul><li>Голдратт Э. Цель (1984) — теория ограничений и правило, что час, потерянный на узком месте, потерян всей системой.</li><li>Оно Т. Производственная система Тойоты (1978) — перечень основных видов потерь, в котором ожидание стоит наравне с перепроизводством.</li><li>Ботсман Р., Роджерс Р. Что моё — то твоё (2010) — обзор моделей, выросших на простаивающих мощностях.</li><li>Кристенсен К. Закон успешных инноваций (2016) — про задачу, ради которой человек «нанимает» продукт: помогает понять, совпадает ли состояние человека в простое с вашим предложением.</li></ul>
+
+<nav class="lec-nav" style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;margin:40px 0 4px;padding:22px 0 0;border-top:1px solid #E4E7EC;line-height:1.4"><a href="/blog/lekciya-parus-vosem-potokov.html" style="color:#3A86FF;font-weight:600;text-decoration:none">← Лекция 4</a><span style="color:#8A93A3;font-size:.95rem">Следующая лекция — готовится</span></nav><div style="text-align:center;margin:14px 0 4px"><a href="/blog/lektorij/parus/" style="color:#3A86FF;font-weight:600;text-decoration:none">Программа курса «Парус» →</a></div><div class="cta-block">
+<h3>🧭 Посчитать свой простой</h3>
+<p>Труднее всего честно ответить, почему простой до сих пор не занят: голова подсказывает лестный вариант «никто не догадался». Расскажите Фреди про свою точку — он пройдёт с вами все четыре причины и поможет собрать первую фразу разговора.</p>
+<div class="cta-buttons">
+<a href="/blog/" class="btn">Все статьи блога →</a>
+<a href="/fredi/" class="btn btn-outline">Поговорить с Фреди</a>
+</div>
+</div>
+
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе →</a></div></div>
+
+<div class="related-articles">
+<h3 style="margin-bottom:20px">Читать дальше</h3>
+<div class="related-grid"><div class="related-item"><a href="/blog/lekciya-parus-vosem-potokov.html">Лекция 4. Восемь потоков: каталог с примерами</a><span>25 мин · Лекторий</span></div><div class="related-item"><a href="/blog/lektorij/parus/">Программа курса «Парус»</a><span>12 лекций · Лекторий</span></div><div class="related-item"><a href="/blog/lektorij/peregovory/">Курс «Переговоры»</a><span>Лекторий · открыт целиком</span></div><div class="related-item"><a href="/blog/lektorij/trablshuting/">Курс «Траблшутинг»</a><span>Лекторий · открыт целиком</span></div></div>
+</div>
+
+<a href="/blog/" class="back-link">← Все статьи блога</a>
+</div>
+</article></div>
+<div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body>
+</html>
