@@ -151,6 +151,80 @@ def rubrics():
     print("%sстраниц рубрик дополнено ItemList: %d" % ("БЕЗ ЗАПИСИ: " if dry else "", n))
 
 
+def first_sentences(text, limit=170):
+    """Первые целые предложения, пока укладываются в лимит."""
+    out = ""
+    for part in re.findall(r"[^.!?]+[.!?]", text):
+        if len(out) + len(part) > limit:
+            break
+        out += part
+    return (out or text[:limit]).strip()
+
+
+def catalog():
+    """ItemList каталога Лектория — из видимых карточек, а не из старого списка.
+
+    Список складывался вручную и отставал: новые курсы на странице были, а в
+    разметке нет, и для машины каталог показывал меньше курсов, чем есть.
+    Источник истины — сами карточки. Рукописные описания сохраняются.
+    """
+    p = os.path.join(BLOG, "lektorij", "index.html")
+    s0 = read(p)
+
+    seen, cards = set(), []
+    for m in re.finditer(r'<a class="dcard" href="/blog/lektorij/([a-z0-9-]+)/"'
+                         r'[^>]*>.*?<b>([^<]+)</b>', s0, re.S):
+        sl = m.group(1)
+        if sl not in seen:
+            seen.add(sl)
+            cards.append((sl, m.group(2).strip()))
+    if not cards:
+        print("каталог Лектория: карточки не найдены")
+        return
+
+    s = s0
+    for b in blocks(s0):
+        try:
+            d = json.loads(b)
+        except Exception:
+            continue
+        if d.get("@type") != "ItemList":
+            continue
+
+        # что уже описано руками — не трогаем
+        old = {}
+        for it in d.get("itemListElement", []):
+            node = it.get("item") or it
+            if node.get("url"):
+                old[node["url"].rstrip("/")] = node.get("description", "")
+
+        items = []
+        for i, (sl, name) in enumerate(cards):
+            url = "%s/blog/lektorij/%s/" % (SITE, sl)
+            desc = old.get(url.rstrip("/"), "")
+            if not desc:
+                cp = os.path.join(BLOG, "lektorij", sl, "index.html")
+                og = re.search(r'<meta property="og:description" content="([^"]*)"',
+                               read(cp)) if os.path.exists(cp) else None
+                desc = first_sentences(og.group(1)) if og else ""
+            items.append({"@type": "ListItem", "position": i + 1,
+                          "item": {"@type": "Course", "name": name, "url": url,
+                                   "description": desc, "provider": PROVIDER,
+                                   "inLanguage": "ru-RU",
+                                   "isAccessibleForFree": True}})
+        was = len(d.get("itemListElement", []))
+        d["numberOfItems"] = len(items)
+        d["itemListElement"] = items
+        s = s.replace(b, "\n" + json.dumps(d, ensure_ascii=False, indent=2) + "\n", 1)
+        print("%sкаталог Лектория: было %d курсов в ItemList, стало %d"
+              % ("БЕЗ ЗАПИСИ: " if dry else "", was, len(items)))
+        break
+
+    if s != s0:
+        write(p, s)
+
+
 if __name__ == "__main__":
     courses()
     rubrics()
+    catalog()
