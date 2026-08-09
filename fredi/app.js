@@ -3058,6 +3058,7 @@ document.addEventListener('DOMContentLoaded', function() {
             delo: { fn: 'showDeloGame', src: 'delo.js', chat: 'kontur' }, // «Своё дело» (бизнес-симулятор)
             spiral: { fn: 'showSpiralGame', src: 'spiral.js', chat: 'kontur' }, // «Спираль» — симулятор дня (курс «Снова живой»)
             klin: { fn: 'showKlinGame', src: 'klin.js', chat: 'kontur' }, // «Клин клином» — переключение вовлечённости
+            parus: { fn: 'showParusGame', src: 'parus.js', chat: 'kontur' }, // «Парус» — потоки, тигр и торт (тренажёр курса)
             lgenij: { fn: 'showLgenijGame', src: 'lgenij.js', chat: 'kontur' }, // «Ленивый гений» — амбициозная цель + ленивый путь
             odi: { fn: 'showOdiScreen', src: 'odi.js', chat: 'kontur' }, // ОДИ — мультиплеер с Фреди-игротехником (?m=odi&join=КОД)
             signal: { fn: 'showSignalGame', src: 'signal.js', chat: 'kontur' }, // «Сигнал» — опорные сигналы Шаталова
