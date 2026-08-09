@@ -543,9 +543,21 @@ async function renderLogs(c) {
     c.innerHTML = '<div style="text-align:center;padding:32px;color:rgba(255,255,255,0.3);font-size:13px;">⏳ Загружаю логи...</div>';
     const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
     let logs = [];
+    let denied = false;
+    // Ручка требует X-Admin-Token (раньше была открыта всем и отдавала
+    // user_id с содержимым событий). Токен лежит там же, откуда его берёт
+    // панель аналитики, — вводится один раз в ней.
+    let admToken = '';
+    try { admToken = localStorage.getItem('fredi_admin_token') || ''; } catch(e) {}
     try {
-        const res = await fetch(`${API}/api/admin/logs`).then(r=>r.json());
-        if (res.success) logs = res.logs||[];
+        const r = await fetch(`${API}/api/admin/logs`,
+                              admToken ? { headers: { 'X-Admin-Token': admToken } } : undefined);
+        if (r.status === 401 || r.status === 503) {
+            denied = true;
+        } else {
+            const res = await r.json();
+            if (res.success) logs = res.logs||[];
+        }
     } catch(e) {}
 
     const levelColor = {'ERROR':'#e74c3c','WARNING':'#f39c12','INFO':'rgba(255,255,255,0.4)'};
@@ -574,6 +586,14 @@ async function renderLogs(c) {
                 user_id: ${log.user_id}
               </div>` : ''}
             </div>`).join('')
+          : denied
+          ? `<div style="padding:32px;text-align:center;color:rgba(255,255,255,0.3);">
+               <div style="font-size:28px;margin-bottom:8px;">🔒</div>
+               <div style="font-size:13px;">Нужен админ-токен</div>
+               <div style="font-size:11px;margin-top:6px;opacity:0.5;">
+                 Введите его один раз в панели аналитики — логи подхватятся оттуда
+               </div>
+             </div>`
           : `<div style="padding:32px;text-align:center;color:rgba(255,255,255,0.3);">
                <div style="font-size:28px;margin-bottom:8px;">✅</div>
                <div style="font-size:13px;">Ошибок не найдено</div>
