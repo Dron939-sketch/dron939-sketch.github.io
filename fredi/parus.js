@@ -286,36 +286,174 @@
     var s = document.createElement('style');
     s.id = 'parus-css';
     s.textContent = [
-      '.pr-wrap{max-width:640px;margin:0 auto;padding:18px 14px 40px;color:#e7e9ee;font-size:15px;line-height:1.55}',
-      '.pr-h{font-size:1.35rem;font-weight:700;margin:6px 0 2px}',
-      '.pr-sub{color:#9aa3b2;margin-bottom:14px}',
-      '.pr-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;margin:10px 0}',
-      '.pr-sit{background:linear-gradient(135deg,rgba(56,132,255,.12),rgba(120,80,255,.10));border:1px solid rgba(99,140,255,.35)}',
-      '.pr-opt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;margin:8px 0;color:#e7e9ee;font:inherit;cursor:pointer;transition:border-color .15s,background .15s}',
-      '.pr-opt:hover{border-color:rgba(120,180,255,.5)}',
-      '.pr-opt.ok{border-color:#34d399;background:rgba(52,211,153,.12)}',
+      '.pr-wrap{max-width:640px;margin:10px auto 20px;padding:16px 14px 30px;color:#e7e9ee;font-size:15px;line-height:1.55;background:linear-gradient(180deg,#0c1424 0%,#101c33 45%,#0c1424 100%);border:1px solid rgba(110,160,255,.18);border-radius:20px;box-shadow:0 12px 40px rgba(5,15,40,.45)}',
+      // — герой: небо, солнце, волны, парусник —
+      '.pr-hero{position:relative;height:170px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0b1d3a 0%,#14335e 45%,#1b4a7a 75%,#20618f 100%);border:1px solid rgba(120,180,255,.25);margin-bottom:14px}',
+      '.pr-hero .sun{position:absolute;top:18px;right:26px;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#ffe9a8,#ffb84d 70%,transparent 72%);box-shadow:0 0 34px 10px rgba(255,190,80,.35);animation:prGlow 4s ease-in-out infinite}',
+      '@keyframes prGlow{50%{box-shadow:0 0 44px 14px rgba(255,190,80,.5)}}',
+      '.pr-hero .boat{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);animation:prRock 5s ease-in-out infinite;transform-origin:50% 90%}',
+      '@keyframes prRock{0%,100%{transform:translateX(-50%) rotate(-2.5deg)}50%{transform:translateX(-50%) rotate(2.5deg)}}',
+      '.pr-hero .wave{position:absolute;left:-50%;width:200%;height:46px;bottom:-6px;opacity:.85}',
+      '.pr-hero .wave.w2{bottom:-14px;opacity:.55;animation-duration:9s!important}',
+      '.pr-hero .wave.w3{bottom:-22px;opacity:.35;animation-duration:13s!important}',
+      '.pr-hero .wave{animation:prWave 6s linear infinite}',
+      '@keyframes prWave{0%{transform:translateX(0)}100%{transform:translateX(25%)}}',
+      '.pr-hero .cap{position:absolute;left:0;right:0;top:10px;text-align:center;pointer-events:none;z-index:2}',
+      '.pr-hero .cap b{display:block;font-size:1.5rem;letter-spacing:.04em;text-shadow:0 2px 12px rgba(0,0,0,.5)}',
+      '.pr-hero .cap span{color:#bcd3ef;font-size:.82rem;text-shadow:0 1px 6px rgba(0,0,0,.6)}',
+      // — карта плавания —
+      '.pr-map{position:relative;margin:6px 0 4px;padding-left:26px}',
+      '.pr-map:before{content:"";position:absolute;left:11px;top:18px;bottom:18px;width:2px;background:repeating-linear-gradient(180deg,rgba(140,180,255,.5) 0 6px,transparent 6px 12px)}',
+      '.pr-port{position:relative;display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;margin:10px 0;cursor:pointer;transition:transform .15s,border-color .15s}',
+      '.pr-port:hover{transform:translateX(3px);border-color:var(--pc,#60a5fa)}',
+      '.pr-port .dot{position:absolute;left:-22px;width:10px;height:10px;border-radius:50%;background:var(--pc,#60a5fa);box-shadow:0 0 8px var(--pc,#60a5fa)}',
+      '.pr-port .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.35rem;background:linear-gradient(135deg,var(--pc,#60a5fa),transparent 220%);flex-shrink:0}',
+      '.pr-port b{display:block;font-size:.95rem}',
+      '.pr-port small{color:#98a1b3;font-size:.8rem;line-height:1.35;display:block}',
+      '.pr-port .st{margin-left:auto;font-size:.9rem;white-space:nowrap;color:#facc15}',
+      '.pr-port.lock{opacity:.5;cursor:default;filter:saturate(.4)}',
+      '.pr-port.lock:hover{transform:none;border-color:rgba(255,255,255,.12)}',
+      // — карточки, брифинг —
+      '.pr-card{background:linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.028));border:1px solid rgba(255,255,255,.11);border-radius:14px;padding:14px 16px;margin:10px 0}',
+      '.pr-sit{background:linear-gradient(135deg,rgba(56,132,255,.14),rgba(120,80,255,.10));border:1px solid rgba(99,140,255,.4);box-shadow:0 4px 18px rgba(30,80,200,.12)}',
+      '.pr-brief-h{display:flex;align-items:center;gap:10px;margin:14px 0 4px;font-weight:700;font-size:1.12rem}',
+      '.pr-brief-h .bic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:1.15rem;background:linear-gradient(135deg,var(--pc,#60a5fa),transparent 220%)}',
+      '.pr-th{border-left:3px solid var(--pc,#60a5fa)}',
+      '.pr-th b{color:#fff}',
+      '.pr-flows{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:7px;margin:10px 0}',
+      '.pr-flow{background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.3);border-radius:10px;padding:7px 10px;font-size:.82rem;text-align:center}',
+      '.pr-ex{background:rgba(52,211,153,.08);border:1px dashed rgba(52,211,153,.4);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:.9rem;color:#c9efdf}',
+      '.pr-ex b{color:#6ee7b7}',
+      // — варианты ответов —
+      '.pr-opt{display:block;width:100%;text-align:left;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;margin:8px 0;color:#e7e9ee;font:inherit;cursor:pointer;transition:border-color .15s,background .15s,transform .1s}',
+      '.pr-opt:hover{border-color:rgba(120,180,255,.55);transform:translateX(2px)}',
+      '.pr-opt:active{transform:scale(.985)}',
+      '.pr-opt.ok{border-color:#34d399;background:rgba(52,211,153,.13);box-shadow:0 0 14px rgba(52,211,153,.15)}',
       '.pr-opt.bad{border-color:#f87171;background:rgba(248,113,113,.10)}',
-      '.pr-opt.sel{border-color:#60a5fa;background:rgba(96,165,250,.14)}',
-      '.pr-opt:disabled{cursor:default;opacity:.9}',
+      '.pr-opt.sel{border-color:#60a5fa;background:rgba(96,165,250,.16);box-shadow:0 0 12px rgba(96,165,250,.2)}',
+      '.pr-opt:disabled{cursor:default;opacity:.92}',
       '.pr-why{font-size:.86rem;color:#aab3c5;margin-top:6px}',
-      '.pr-primary{display:block;width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#2f80ed,#7b61ff);color:#fff;font:inherit;font-weight:700;cursor:pointer;margin:14px 0 0}',
-      '.pr-primary:disabled{opacity:.45;cursor:default}',
+      '.pr-fb-ok{border-left:3px solid #34d399}',
+      '.pr-fb-no{border-left:3px solid #f87171}',
+      // — кнопки —
+      '.pr-primary{display:block;width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#2f80ed,#7b61ff);color:#fff;font:inherit;font-weight:700;cursor:pointer;margin:14px 0 0;box-shadow:0 6px 20px rgba(60,110,255,.35);transition:transform .12s,box-shadow .12s}',
+      '.pr-primary:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(60,110,255,.45)}',
+      '.pr-primary:active{transform:scale(.985)}',
+      '.pr-primary:disabled{opacity:.45;cursor:default;box-shadow:none}',
       '.pr-ghost{background:none;border:none;color:#8fa0bd;font:inherit;cursor:pointer;padding:6px 0}',
-      '.pr-meta{display:flex;justify-content:space-between;color:#8b93a5;font-size:.85rem;margin-bottom:8px}',
-      '.pr-stage{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 15px;margin:9px 0;cursor:pointer}',
-      '.pr-stage.lock{opacity:.45;cursor:default}',
-      '.pr-stage .ic{font-size:1.5rem}',
-      '.pr-stage b{display:block}',
-      '.pr-stage small{color:#98a1b3}',
-      '.pr-stage .st{margin-left:auto;font-size:.85rem;color:#facc15;white-space:nowrap}',
-      '.pr-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:10px;color:#e7e9ee;font:inherit;padding:10px 12px;margin:4px 0 12px;box-sizing:border-box}',
+      '.pr-ghost:hover{color:#c6d4ea}',
+      // — шапка рейса, прогресс-точки —
+      '.pr-meta{display:flex;justify-content:space-between;align-items:center;color:#8b93a5;font-size:.85rem;margin-bottom:8px}',
+      '.pr-dots{display:flex;gap:5px}',
+      '.pr-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .2s}',
+      '.pr-dot.done{background:var(--pc,#60a5fa);box-shadow:0 0 6px var(--pc,#60a5fa)}',
+      '.pr-dot.now{background:rgba(255,255,255,.5);outline:2px solid rgba(255,255,255,.25);outline-offset:1px}',
+      // — ввод —
+      '.pr-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:10px;color:#e7e9ee;font:inherit;padding:11px 12px;margin:4px 0 12px;box-sizing:border-box;transition:border-color .15s}',
+      '.pr-input:focus{outline:none;border-color:#60a5fa;box-shadow:0 0 10px rgba(96,165,250,.2)}',
       '.pr-lbl{font-size:.85rem;color:#9fb4d8}',
       '.pr-sail{display:block;margin:6px auto 2px}',
       '.pr-verdict{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}',
       '.pr-verdict .pr-opt{flex:1;min-width:150px;text-align:center;margin:0}',
-      '@media(max-width:480px){.pr-wrap{font-size:14.5px}}'
+      // — финал —
+      '.pr-final{position:relative;text-align:center;padding:10px 0 4px}',
+      '.pr-final .spark{position:absolute;font-size:1rem;animation:prSpark 1.8s ease-out forwards;pointer-events:none}',
+      '@keyframes prSpark{0%{opacity:0;transform:translateY(6px) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-46px) scale(1.15)}}',
+      '.pr-score-big{font-size:2rem;font-weight:800;letter-spacing:.02em}',
+      '@media(max-width:480px){.pr-wrap{font-size:14.5px}.pr-hero{height:150px}}'
     ].join('\n');
     document.head.appendChild(s);
+  }
+
+  // Цвет каждого рейса — красит карту, брифинг и прогресс-точки.
+  var STAGE_COLORS = ['#60a5fa', '#2dd4bf', '#fbbf24', '#34d399', '#fb923c', '#a78bfa', '#facc15'];
+  function pc() { return STAGE_COLORS[(ST.stage || 1) - 1]; }
+
+  // Анимированное море с парусником для главного экрана.
+  function heroHTML() {
+    function wave(cls, col) {
+      return '<svg class="wave ' + cls + '" viewBox="0 0 240 24" preserveAspectRatio="none">' +
+        '<path d="M0 12 Q15 4 30 12 T60 12 T90 12 T120 12 T150 12 T180 12 T210 12 T240 12 V24 H0 Z" fill="' + col + '"/></svg>';
+    }
+    return '<div class="pr-hero">' +
+      '<div class="sun"></div>' +
+      '<div class="cap"><b>⛵ ПАРУС</b><span>вставать в то, что уже движется</span></div>' +
+      '<div class="boat"><svg width="70" height="60" viewBox="0 0 86 74">' +
+        '<line x1="42" y1="6" x2="42" y2="56" stroke="#d8c9a3" stroke-width="3"/>' +
+        '<path d="M46 10 Q72 32 46 52 Z" fill="#f4f0e4" opacity="0.95"/>' +
+        '<path d="M38 14 Q20 33 38 50 Z" fill="#e6ddc8" opacity="0.9"/>' +
+        '<path d="M12 56 L74 56 L64 68 L22 68 Z" fill="#7c4a2d"/>' +
+      '</svg></div>' +
+      wave('w3', '#1e5c8c') + wave('w2', '#1b74ad') + wave('', '#2b8ec9') +
+    '</div>';
+  }
+
+  // Теория перед каждым рейсом — самодостаточная: игрок, не слушавший
+  // курс, получает нужный минимум прямо здесь. Написана голосом курса.
+  var BRIEFS = {
+    1: { title: 'Видеть поток',
+      cards: [
+        '<b>Главная идея всей игры.</b> Не строить тягу с нуля, а находить готовую: люди уже куда-то идут, станки уже простаивают, сентябрь уже наступает. Тот, кто видит движение, ставит парус. Тот, кто не видит, — строит мотор и платит за каждый оборот.',
+        'Потоков восемь, и их стоит запомнить — это словарь всей игры:'
+      ],
+      flows: true,
+      ex: '<b>Канонический пример.</b> Люди отдают машину на мойку и час ходят вокруг. Парикмахерская напротив живёт этим часом: поток людей создала не она, час ожидания оплачен не ею — она лишь поставила парус. Ваша задача в этом рейсе — видеть такие потоки в обычных ситуациях. Подсказка: чужой «костыль» — самодельный обход неудобства — почти всегда показывает, где течёт неучтённый поток.' },
+    2: { title: 'Точка простоя',
+      cards: [
+        '<b>Где входят в поток дёшево?</b> Там, где ресурс приносит владельцу ноль: пустой обратный рейс фуры, ночной цех, дневные часы фитнес-зала. За простой владельцу даже немного стыдно — тот, кто предлагает его использовать, выглядит избавителем, а не просителем.',
+        '<b>Простой — это число:</b> единицы × длительность. Три станка × десять ночных часов. Нет числа — нет простоя, есть ощущение.',
+        '<b>Три ловушки.</b> Проходимость — не простой: у метро людей много, а зацепиться не за что. Лайки — не намерение. Чужой актив, который надо купить, — не простой, а дорогой вход.'
+      ] },
+    3: { title: 'Посчитать',
+      cards: [
+        '<b>Оборот врёт.</b> Можно продавать на миллионы и разоряться. Считают на одной единице: сколько остаётся с одной продажи после переменных издержек — это маржа.',
+        '<b>Лесенка из трёх чисел:</b> ценность для клиента выше цены, цена выше издержек. Зазор сверху — выгода клиента (за неё возвращаются), зазор снизу — ваша прибыль. Обрушьте любую ступень — обмен развалится.',
+        '<b>Точка безубыточности</b> = постоянные издержки ÷ маржа. Она переводит мечту в план: столько-то продаж в месяц — или работа в минус. Считают до старта: минус, найденный на бумаге, стоит ноль рублей.'
+      ] },
+    4: { title: 'Три условия',
+      cards: [
+        '<b>Проверка до влюблённости.</b> Когда идея обросла мечтами, человек ищет подтверждения, а не правду. Поэтому три вопроса задают сразу и письменно:',
+        '<b>1.</b> Течёт ли это без меня? Исчезну на месяц — движение останется?<br><b>2.</b> Есть ли простой, и можно ли назвать его числом?<br><b>3.</b> Надстройка дешевле, чем создать такой поток с нуля?',
+        '<b>Вердикты.</b> Три «да» — парус: вставать. «Нет» на первом — мотор: строить самому и платить за каждый оборот (это честное имя, а не приговор). Одно «нет» из прочих — переделать: сменить точку, масштаб или потребителя. Каждое «нет» показывает, что именно менять.'
+      ] },
+    5: { title: 'Тигр и торт',
+      cards: [
+        '<b>Что двигает людей?</b> Пара сил: <b>тигр</b> — то, что подпирает сзади (потеря, срок, живой человек, которого стыдно подвести), и <b>торт</b> — то, что манит спереди и стоит на пути наименьшего сопротивления.',
+        '<b>Поодиночке не работают.</b> Тигр без торта — побег: страх разгоняет, но не туда. Торт без тигра — «когда-нибудь». Двигает только пара, где тигр гонит ровно туда, где стоит торт.',
+        '<b>Секрет мастера:</b> тигра чаще не строят, а находят готового. У автомойки тигр уже есть — «машина грязная». У менеджера автосалона — «после выдачи машины клиенту нечего предложить». Не гасите готового тигра и ставьте торт в тридцати метрах от него.'
+      ],
+      ex: '<b>Ложные ходы,</b> которые притворяются парой: сила воли («с понедельника»), лозунг (заставка на телефон), реквизит (красивая тетрадь), шум (объявить в соцсетях). Ни один не подпирает и не манит.' },
+    6: { title: 'Ставки',
+      cards: [
+        '<b>В деле нет гарантий — есть ставки.</b> Хорошее решение и хороший результат — разные вещи: можно решить разумно и проиграть по невезению. Оценивайте себя по процессу — он ваш; кубик — нет.',
+        '<b>Двери двух типов.</b> Обратимые (можно вернуться, ошибка дёшева) открывают быстро. Необратимые — медленно. Дешёвый тест превращает необратимую дверь в обратимую: спросить десять человек стоит копейки, а знание даёт настоящее.',
+        '<b>Портфель бьёт ставку.</b> Много маленьких проверок дают много знания и не съедают ресурс. Одна большая ставка даёт один результат. Отсутствие провалов — признак не мастерства, а слишком малого числа попыток.'
+      ] },
+    7: { title: 'Свой парус',
+      cards: [
+        '<b>Финал — без подсказок.</b> Вам достанется задача, и вы соберёте парус сами: какой поток уже течёт (с числом), какой торт манит, какой тигр подпирает.',
+        '<b>Фреди разберёт</b> решение по правилам курса и соберёт карточку паруса: с первым дешёвым тестом на этой неделе и стоп-условием — заранее записанным признаком «пора остановиться». Карточку можно скопировать в заметки: это план первого шага, который уносится из игры в жизнь.'
+      ] }
+  };
+
+  function briefing(stage) {
+    injectCSS();
+    var c = container(); if (!c) return;
+    ST.stage = stage;
+    var b = BRIEFS[stage], st = STAGES[stage - 1];
+    var html = '<div class="pr-wrap" style="--pc:' + pc() + '">' +
+      '<button class="pr-ghost" onclick="PARUS.home()">← К карте</button>' +
+      '<div class="pr-brief-h"><span class="bic">' + st.icon + '</span>Рейс ' + stage + '. ' + esc(b.title) + '</div>';
+    b.cards.forEach(function (t) { html += '<div class="pr-card pr-th">' + t + '</div>'; });
+    if (b.flows) {
+      html += '<div class="pr-flows">';
+      Object.keys(FLOWS).forEach(function (k) { html += '<div class="pr-flow">' + esc(FLOWS[k]) + '</div>'; });
+      html += '</div>';
+    }
+    if (b.ex) html += '<div class="pr-ex">' + b.ex + '</div>';
+    html += '<button class="pr-primary" onclick="PARUS.go(' + stage + ')">⚓ Поднять якорь</button></div>';
+    c.innerHTML = html;
+    try { c.scrollTop = 0; } catch (e) {}
   }
 
   // Парус наполняется ветром по мере счёта.
@@ -336,30 +474,39 @@
     var c = container(); if (!c) return;
     track('game_open', { feature: 'parus' });
     var p = loadProg();
-    c.innerHTML =
-      '<div class="pr-wrap">' +
-        '<button class="pr-ghost" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button>' +
-        sailSVG(0.55) +
-        '<div class="pr-h" style="text-align:center">Парус</div>' +
-        '<div class="pr-sub" style="text-align:center">Не строить с нуля — вставать в то, что уже движется</div>' +
-        '<div class="pr-card">Мир полон готовой тяги: люди уже ждут, станки простаивают, сентябрь наступает. А людей двигает пара сил — <b>тигр</b>, который подпирает сзади, и <b>торт</b>, который манит спереди. Семь рейсов бизнес-мышления: увидеть, посчитать, проверить, собрать пару, сделать ставку — и в конце придумать свой парус. Сначала выбираете из готового, дальше всё больше сами.</div>' +
-        STAGES.map(function (s) {
-          var locked = s.key > p.unlocked;
-          var best = p.best[s.key];
-          return '<div class="pr-stage' + (locked ? ' lock' : '') + '"' + (locked ? '' : ' onclick="PARUS.start(' + s.key + ')"') + '>' +
-            '<span class="ic">' + s.icon + '</span>' +
-            '<span><b>Рейс ' + s.key + '. ' + esc(s.name) + '</b><small>' + esc(s.sub) + '</small></span>' +
-            '<span class="st">' + (locked ? '🔒' : best != null ? best + '/10' : '') + '</span>' +
-          '</div>';
-        }).join('') +
-        '<div class="pr-card" style="font-size:.88rem;color:#aab3c5">По курсу «Парус» в Лектории — 12 лекций с озвучкой: <a href="/blog/lektorij/parus/" style="color:#7cb0ff">открыть курс</a>. Игра — тренажёр к нему.</div>' +
-      '</div>';
+    var html = '<div class="pr-wrap">' +
+      '<button class="pr-ghost" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button>' +
+      heroHTML() +
+      '<div class="pr-card">Кругом готовая тяга: люди уже ждут, станки простаивают, сентябрь наступает. Одни строят всё с нуля и платят за каждый оборот — другие видят движение и ставят парус. А самих людей двигает пара сил: <b>тигр</b>, который подпирает сзади, и <b>торт</b>, который манит спереди. Семь рейсов — от выбора из готовых вариантов к собственным решениям. Перед каждым рейсом короткая теория: лекции слушать не обязательно.</div>' +
+      '<div class="pr-map">' +
+      STAGES.map(function (st, i) {
+        var locked = st.key > p.unlocked;
+        var best = p.best[st.key];
+        var col = STAGE_COLORS[i];
+        return '<div class="pr-port' + (locked ? ' lock' : '') + '" style="--pc:' + col + '"' +
+          (locked ? '' : ' onclick="PARUS.start(' + st.key + ')"') + '>' +
+          '<span class="dot"></span>' +
+          '<span class="ic">' + st.icon + '</span>' +
+          '<span style="flex:1;min-width:0"><b>Рейс ' + st.key + '. ' + esc(st.name) + '</b><small>' + esc(st.sub) + '</small></span>' +
+          '<span class="st">' + (locked ? '🌫' : best != null ? '★ ' + best + '/10' : '') + '</span>' +
+        '</div>';
+      }).join('') +
+      '</div>' +
+      '<div class="pr-card" style="font-size:.88rem;color:#aab3c5">Хочется глубже — в Лектории есть курс «Парус»: 12 лекций с озвучкой. <a href="/blog/lektorij/parus/" style="color:#7cb0ff">Открыть курс</a>. Игра самодостаточна: вся нужная теория — в брифингах перед рейсами.</div>' +
+    '</div>';
+    c.innerHTML = html;
   }
 
   // ---------- запуск рейса ----------
+  // start показывает теорию рейса; сами задания начинает go().
   function start(stage) {
     var p = loadProg();
     if (stage > p.unlocked) return;
+    ST = { stage: stage, i: 0, score: 0, total: 0, picked: [], answered: false, r3q: 0, sub: 0, tasks: [], stakes: null };
+    briefing(stage);
+  }
+
+  function go(stage) {
     ST = { stage: stage, i: 0, score: 0, total: 0, picked: [], answered: false, r3q: 0, sub: 0, tasks: [], stakes: null };
     if (stage === 1) ST.tasks = shuffle(R1).slice(0, 4);
     if (stage === 2) ST.tasks = shuffle(R2).slice(0, 3);
@@ -374,7 +521,11 @@
   }
 
   function header(title) {
-    return '<div class="pr-meta"><span>' + esc(title) + '</span><span>задание ' + (ST.i + 1) + ' из ' + ST.tasks.length + ' · верно: ' + ST.score + '</span></div>';
+    var dots = '';
+    for (var i = 0; i < ST.tasks.length; i++) {
+      dots += '<span class="pr-dot' + (i < ST.i ? ' done' : i === ST.i ? ' now' : '') + '"></span>';
+    }
+    return '<div class="pr-meta"><span>' + esc(title) + '</span><span class="pr-dots">' + dots + '</span></div>';
   }
 
   function render() {
@@ -396,7 +547,7 @@
     var q = ST.tasks[ST.i];
     if (!q._opts) q._opts = shuffle(q.opts);
     c.innerHTML =
-      '<div class="pr-wrap">' + header('👁 Видеть поток') +
+      '<div class="pr-wrap" style="--pc:' + pc() + '">' + header('👁 Видеть поток') +
         '<div class="pr-card pr-sit">' + esc(q.sit) + '</div>' +
         '<div style="color:#9fb4d8;font-size:.9rem;margin:4px 0">Какой поток здесь течёт?</div>' +
         q._opts.map(function (k, i) {
@@ -428,7 +579,7 @@
     var q = ST.tasks[ST.i];
     if (!q._opts) q._opts = shuffle(q.opts);
     c.innerHTML =
-      '<div class="pr-wrap">' + header('🕳 Точка простоя') +
+      '<div class="pr-wrap" style="--pc:' + pc() + '">' + header('🕳 Точка простоя') +
         '<div class="pr-card pr-sit">' + esc(q.sit) + '</div>' +
         '<div style="color:#9fb4d8;font-size:.9rem;margin:4px 0">Где здесь простой, который отдадут дёшево?</div>' +
         q._opts.map(function (o, i) {
@@ -459,7 +610,7 @@
   function renderRC(c) {
     var t = ST.tasks[ST.i];
     var st = t.steps[ST.sub];
-    var html = '<div class="pr-wrap">' + header('🔢 Посчитать') +
+    var html = '<div class="pr-wrap" style="--pc:' + pc() + '">' + header('🔢 Посчитать') +
       '<div class="pr-card pr-sit">' + esc(t.sit) + '</div>' +
       '<div style="color:#9fb4d8;font-size:.9rem;margin:4px 0">Шаг ' + (ST.sub + 1) + ' из ' + t.steps.length + '</div>' +
       '<div class="pr-card">' + esc(st.q) + '</div>';
@@ -612,7 +763,7 @@
   function renderR3(c) {
     var t = ST.tasks[ST.i];
     var qi = ST.r3q;
-    var html = '<div class="pr-wrap">' + header('✅ Три условия') +
+    var html = '<div class="pr-wrap" style="--pc:' + pc() + '">' + header('✅ Три условия') +
       '<div class="pr-card pr-sit">' + esc(t.idea) + '</div>';
     if (qi < t.q.length) {
       var q = t.q[qi];
@@ -672,7 +823,7 @@
     if (!t._cards) t._cards = shuffle(t.cards);
     ST.picked = [];
     c.innerHTML =
-      '<div class="pr-wrap">' + header('🐯 Тигр и торт') +
+      '<div class="pr-wrap" style="--pc:' + pc() + '">' + header('🐯 Тигр и торт') +
         '<div class="pr-card pr-sit">' + esc(t.task) + '</div>' +
         '<div style="color:#9fb4d8;font-size:.9rem;margin:4px 0">Выберите ровно две карточки: тигра, который подпирает, и торт, который манит.</div>' +
         t._cards.map(function (o, i) {
@@ -723,7 +874,7 @@
   function renderR5(c) {
     var task = ST.tasks[0];
     c.innerHTML =
-      '<div class="pr-wrap">' + header('⛵ Свой парус') +
+      '<div class="pr-wrap" style="--pc:' + pc() + '">' + header('⛵ Свой парус') +
         '<div class="pr-card pr-sit">' + esc(task) + '</div>' +
         '<div class="pr-card" style="font-size:.88rem;color:#aab3c5">Теперь без вариантов. Опишите свой парус — Фреди разберёт его по правилам курса.</div>' +
         '<div class="pr-lbl">Поток: что здесь уже течёт без вас — и какое у него число?</div>' +
@@ -837,10 +988,18 @@
     var line = passed
       ? (ST.stage === 7 ? 'Вы прошли путь от выбора из вариантов до собственного паруса. Дальше — разведка в жизни: три потока вокруг вас за неделю.' : 'Рейс пройден. Следующий открыт.')
       : 'Ветра не хватило — нужно 7 из 10. Пройдите рейс ещё раз: задания объясняют себя, второй заход почти всегда сильнее.';
+    var sparks = '';
+    if (passed) {
+      for (var k = 0; k < 8; k++) {
+        sparks += '<span class="spark" style="left:' + (10 + k * 11) + '%;animation-delay:' + (k * 0.15) + 's">' +
+          ['✨', '🌊', '⭐', '💨'][k % 4] + '</span>';
+      }
+    }
     c.innerHTML =
-      '<div class="pr-wrap" style="text-align:center">' +
-        sailSVG(score10 / 10) +
-        '<div class="pr-h">' + st.icon + ' Рейс ' + ST.stage + ' — ' + score10 + '/10' + (passed ? ' ✅' : '') + '</div>' +
+      '<div class="pr-wrap" style="--pc:' + pc() + ';text-align:center">' +
+        '<div class="pr-final">' + sparks + sailSVG(score10 / 10) +
+        '<div class="pr-score-big">' + score10 + '<span style="font-size:1rem;color:#8b93a5">/10</span></div></div>' +
+        '<div class="pr-h">' + st.icon + ' Рейс ' + ST.stage + '. ' + esc(st.name) + (passed ? ' ✅' : '') + '</div>' +
         '<div class="pr-card" style="text-align:left">' + esc(line) + '</div>' +
         (passed && ST.stage < 7
           ? '<button class="pr-primary" onclick="PARUS.start(' + (ST.stage + 1) + ')">' + STAGES[ST.stage].icon + ' Рейс ' + (ST.stage + 1) + '. ' + esc(STAGES[ST.stage].name) + '</button>'
@@ -850,7 +1009,7 @@
   }
 
   window.PARUS = {
-    home: home, start: start, next: next,
+    home: home, start: start, go: go, next: next,
     pick1: pick1, pick2: pick2,
     pick3: pick3, next3: next3, verdict3: verdict3,
     pick4: pick4, check4: check4,
