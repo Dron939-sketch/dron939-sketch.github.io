@@ -60,7 +60,16 @@
       d: 'Обязанность: поток, который течёт не потому, что хочется, а потому что положено. Такие потоки не пересыхают — их держит не желание, а норма.' },
     { sit: 'Ролик со сравнением двух пылесосов набрал миллион просмотров, и комментарии полны вопросов «а какой брать?».',
       ans: 'attention', opts: ['attention', 'people', 'data', 'calendar'],
-      d: 'Чужое внимание. Важная оговорка курса: внимание — не намерение. Смотрят многие, платят те, у кого есть незакрытая задача, — здесь она видна прямо в комментариях.' }
+      d: 'Чужое внимание. Важная оговорка курса: внимание — не намерение. Смотрят многие, платят те, у кого есть незакрытая задача, — здесь она видна прямо в комментариях.' },
+    // Задания «по костылям» — из курса «Оптика изобретателя»: костыль,
+    // который строят многие, показывает точное место дыры и доказывает,
+    // что потребность настоящая.
+    { sit: 'Костыль: жильцы дома скинулись на общий чат с «своим» сантехником, потому что до управляющей компании не дозвониться.',
+      ans: 'duty', opts: ['duty', 'people', 'infra', 'data'],
+      d: 'Костыль выдаёт дыру в потоке обязанностей: УК обязана чинить — и не чинит. Чем больше домов строят такой же чат, тем крупнее дыра. Костыль — датчик: потребность уже доказана деньгами жильцов.' },
+    { sit: 'Костыль: продавцы маркетплейса вручную переносят заказы в Excel каждое утро, потому что личный кабинет не показывает нужный отчёт.',
+      ans: 'data', opts: ['data', 'attention', 'idle', 'calendar'],
+      d: 'Костыль поверх потока данных: данные уже текут, отчёта нет. Правило из «Оптики изобретателя»: где многие строят один и тот же костыль — там дыра, и она уже оплачена чужим временем.' }
   ];
 
   // Рейс 2: найти точку простоя. Верный вариант — настоящий простой
@@ -93,8 +102,47 @@
       d: 'Оплаченная кухня без заказов — простой мощности: заготовки для соседних кофеен, выпечка под вечерний поток, готовые ужины навынос. Владелец отдаст мощность дёшево: сейчас она даёт ноль.' }
   ];
 
-  // Рейс 3: три условия паруса (лекция 6). По каждой идее — три вопроса
-  // да/нет и вердикт: парус / мотор / переделать.
+  // Рейс 3: посчитать. Из курса «Бизнес-мышление» (юнит-экономика):
+  // «считать до старта, а не после», «оборот врёт», «нет числа — нет
+  // простоя». Ввод числа руками — то, чего не даёт ни один выбор из
+  // вариантов. Каждая задача — цепочка шагов: число или да/нет.
+  var RC = [
+    { sit: 'Кофейня у офисов: три бариста, после 15:00 поток падает до нуля, но смена — до 18:00, семь дней в неделю.',
+      steps: [
+        { q: 'Сколько человеко-часов простоя набегает за неделю? (единицы × длительность)', type: 'num', ans: 63,
+          why: '3 человека × 3 часа × 7 дней = 63 человеко-часа оплаченного нуля в неделю. Это и есть число простоя — то, с которым уже можно разговаривать: заготовки, выпечка под вечер, сдача смены соседям.' }
+      ],
+      d: 'Пока простой не назван числом, это ощущение. 63 часа в неделю — это уже актив, который можно продать, загрузить или честно списать.' },
+    { sit: 'Кухня кафе простаивает после 15:00. Идея-надстройка: готовые ужины навынос. Себестоимость порции — 120 ₽, цена — 350 ₽. Покупатель после работы экономит час у плиты и оценивает его примерно в 500 ₽.',
+      steps: [
+        { q: 'Маржа с порции, в рублях?', type: 'num', ans: 230,
+          why: '350 − 120 = 230 ₽ остаётся с каждой порции. Именно из маржи живёт вся затея, а не из оборота: оборот врёт.' },
+        { q: 'Лесенка «ценность выше цены, цена выше издержек» — стоит?', type: 'yn', ans: true,
+          why: 'Стоит: 500 > 350 > 120. Зазор сверху — выгода клиента (за это возвращаются), зазор снизу — ваша прибыль. Обрушьте любую ступень — и обмен разваливается.' }
+      ],
+      d: 'Три числа лесенкой — самая быстрая проверка идеи после трёх условий: если лесенка не строится на бумаге, она не построится и в жизни.' },
+    { sit: 'Кофе-угол при автосервисе: аренда и бариста — 45 000 ₽ постоянных в месяц, маржа с чашки — 150 ₽. Сервис принимает 30 машин в день, работает 25 дней в месяц, кофе, по прикидке, возьмёт каждый третий клиент.',
+      steps: [
+        { q: 'Точка безубыточности: сколько чашек в месяц надо продать? (постоянные ÷ маржа)', type: 'num', ans: 300,
+          why: '45 000 ÷ 150 = 300 чашек. Точка безубыточности переводит мечту в план: триста продаж — или работа в минус.' },
+        { q: 'Поток даёт 30 × 25 ÷ 3 = 250 чашек. Хватает?', type: 'yn', ans: false,
+          why: 'Не хватает: 250 меньше 300. И это лучший исход проверки — минус найден на бумаге, а не через полгода аренды.' }
+      ],
+      d: 'Каждое «не сходится» показывает, что менять: поднять маржу выпечкой, договориться об аренде за процент вместо фиксы, добавить второй поток — очередь шиномонтажа в соседнем боксе. Считают до старта, чтобы переделывать было дёшево.' }
+  ];
+
+  // Рейс 6: ставки. Из «Бизнес-мышления» (решения в тумане) и «Оптики
+  // изобретателя» (портфель дешёвых проверок): хорошее решение и хороший
+  // результат — разные вещи; дешёвый тест превращает необратимую дверь в
+  // обратимую; решает число попыток, а не гениальность одной.
+  var RS_IDEAS = [
+    { name: 'Кофе-угол при автосервисе', hint: 'поток очевиден, вход дешёвый' },
+    { name: 'Заготовки из простаивающей кухни для трёх кофеен', hint: 'B2B: клиентов мало, но чек крупный' },
+    { name: 'Приложение-агрегатор свободных окон автосервисов', hint: 'красиво звучит, потока пока не видно' }
+  ];
+
+  // Рейс 4 (было 3): три условия паруса (лекция 6). По каждой идее — три
+  // вопроса да/нет и вердикт: парус / мотор / переделать.
   var R3 = [
     { idea: 'Возле автосервиса пустует комнатка. Идея: кофе и три рабочих места для тех, кто ждёт машину. Сервис делает 30 машин в день, средний ремонт — 2 часа, клиенты сидят на лавке у ворот.',
       q: [
@@ -167,11 +215,13 @@
   ];
 
   var STAGES = [
-    { key: 1, icon: '👁', name: 'Видеть поток', sub: 'Что здесь уже движется?', tasks: 4 },
+    { key: 1, icon: '👁', name: 'Видеть поток', sub: 'Что здесь уже движется? Костыли как датчики', tasks: 4 },
     { key: 2, icon: '🕳', name: 'Точка простоя', sub: 'Где поток отдают дёшево?', tasks: 3 },
-    { key: 3, icon: '✅', name: 'Три условия', sub: 'Парус, мотор или переделать?', tasks: 3 },
-    { key: 4, icon: '🐯', name: 'Тигр и торт', sub: 'Собрать движущую пару', tasks: 3 },
-    { key: 5, icon: '⛵', name: 'Свой парус', sub: 'Придумать под задачу. Разбор от Фреди', tasks: 1 }
+    { key: 3, icon: '🔢', name: 'Посчитать', sub: 'Простой, маржа, точка безубыточности — руками', tasks: 3 },
+    { key: 4, icon: '✅', name: 'Три условия', sub: 'Парус, мотор или переделать?', tasks: 3 },
+    { key: 5, icon: '🐯', name: 'Тигр и торт', sub: 'Собрать движущую пару', tasks: 3 },
+    { key: 6, icon: '🎲', name: 'Ставки', sub: 'Бюджет, проверки, туман — как в жизни', tasks: 1 },
+    { key: 7, icon: '⛵', name: 'Свой парус', sub: 'Придумать под задачу. Карточка от Фреди', tasks: 1 }
   ];
 
   // ---------- состояние ----------
@@ -239,7 +289,7 @@
         sailSVG(0.55) +
         '<div class="pr-h" style="text-align:center">Парус</div>' +
         '<div class="pr-sub" style="text-align:center">Не строить с нуля — вставать в то, что уже движется</div>' +
-        '<div class="pr-card">Мир полон готовой тяги: люди уже ждут, станки уже простаивают, сентябрь уже наступает. А людей двигает пара сил — <b>тигр</b>, который подпирает сзади, и <b>торт</b>, который манит спереди. Пять рейсов: сначала выбираете из готового, в конце придумываете сами.</div>' +
+        '<div class="pr-card">Мир полон готовой тяги: люди уже ждут, станки простаивают, сентябрь наступает. А людей двигает пара сил — <b>тигр</b>, который подпирает сзади, и <b>торт</b>, который манит спереди. Семь рейсов бизнес-мышления: увидеть, посчитать, проверить, собрать пару, сделать ставку — и в конце придумать свой парус. Сначала выбираете из готового, дальше всё больше сами.</div>' +
         STAGES.map(function (s) {
           var locked = s.key > p.unlocked;
           var best = p.best[s.key];
@@ -257,12 +307,14 @@
   function start(stage) {
     var p = loadProg();
     if (stage > p.unlocked) return;
-    ST = { stage: stage, i: 0, score: 0, total: 0, picked: [], answered: false, r3q: 0, tasks: [] };
+    ST = { stage: stage, i: 0, score: 0, total: 0, picked: [], answered: false, r3q: 0, sub: 0, tasks: [], stakes: null };
     if (stage === 1) ST.tasks = shuffle(R1).slice(0, 4);
     if (stage === 2) ST.tasks = shuffle(R2).slice(0, 3);
-    if (stage === 3) ST.tasks = R3.slice();           // порядок важен: парус → мотор → переделать
-    if (stage === 4) ST.tasks = R4.slice();
-    if (stage === 5) ST.tasks = [R5[Math.floor(Math.random() * R5.length)]];
+    if (stage === 3) ST.tasks = RC.slice();           // порядок важен: от простого числа к «не сходится»
+    if (stage === 4) ST.tasks = R3.slice();           // парус → мотор → переделать
+    if (stage === 5) ST.tasks = R4.slice();
+    if (stage === 6) { ST.tasks = [1]; initStakes(); }
+    if (stage === 7) ST.tasks = [R5[Math.floor(Math.random() * R5.length)]];
     vibe(15);
     track('game_round_start', { feature: 'parus', stage: stage });
     render();
@@ -278,8 +330,10 @@
     var s = ST.stage;
     if (s === 1) renderR1(c);
     else if (s === 2) renderR2(c);
-    else if (s === 3) renderR3(c);
-    else if (s === 4) renderR4(c);
+    else if (s === 3) renderRC(c);
+    else if (s === 4) renderR3(c);
+    else if (s === 5) renderR4(c);
+    else if (s === 6) renderStakes(c);
     else renderR5(c);
     try { c.scrollTop = 0; } catch (e) {}
   }
@@ -348,7 +402,160 @@
       '<button class="pr-primary" onclick="PARUS.next()">Дальше</button>';
   }
 
-  // ---------- рейс 3 ----------
+  // ---------- рейс 3: посчитать ----------
+  function renderRC(c) {
+    var t = ST.tasks[ST.i];
+    var st = t.steps[ST.sub];
+    var html = '<div class="pr-wrap">' + header('🔢 Посчитать') +
+      '<div class="pr-card pr-sit">' + esc(t.sit) + '</div>' +
+      '<div style="color:#9fb4d8;font-size:.9rem;margin:4px 0">Шаг ' + (ST.sub + 1) + ' из ' + t.steps.length + '</div>' +
+      '<div class="pr-card">' + esc(st.q) + '</div>';
+    if (st.type === 'num') {
+      html += '<input class="pr-input" id="prNum" type="number" inputmode="numeric" placeholder="число" onkeydown="if(event.key===\'Enter\')PARUS.checkNum()">' +
+        '<button class="pr-primary" id="prGo" onclick="PARUS.checkNum()">Проверить</button>';
+    } else {
+      html += '<div class="pr-verdict">' +
+        '<button class="pr-opt" id="proY" onclick="PARUS.checkYN(true)">Да</button>' +
+        '<button class="pr-opt" id="proN" onclick="PARUS.checkYN(false)">Нет</button>' +
+      '</div>';
+    }
+    c.innerHTML = html + '<div id="prFb"></div></div>';
+    var inp = document.getElementById('prNum');
+    if (inp) try { inp.focus(); } catch (e) {}
+  }
+  function checkNum() {
+    if (ST.answered) return;
+    var inp = document.getElementById('prNum');
+    var v = parseFloat((inp && inp.value || '').replace(',', '.'));
+    if (isNaN(v)) { if (window.showToast) window.showToast('Введите число', 'info'); return; }
+    ST.answered = true;
+    var t = ST.tasks[ST.i], st = t.steps[ST.sub];
+    var ok = Math.abs(v - st.ans) <= Math.max(0.5, st.ans * 0.02);   // допуск 2%
+    if (ok) ST.score++;
+    ST.total++;
+    vibe(ok ? 25 : 60);
+    if (inp) inp.disabled = true;
+    var go = document.getElementById('prGo'); if (go) go.style.display = 'none';
+    var fb = document.getElementById('prFb');
+    if (fb) fb.innerHTML = '<div class="pr-card"><b>' + (ok ? 'Верно: ' : 'Правильный ответ: ') + st.ans + '.</b><div class="pr-why">' + esc(st.why) + '</div></div>' +
+      '<button class="pr-primary" onclick="PARUS.nextC()">Дальше</button>';
+  }
+  function checkYN(v) {
+    if (ST.answered) return;
+    ST.answered = true;
+    var t = ST.tasks[ST.i], st = t.steps[ST.sub];
+    var ok = v === st.ans;
+    if (ok) ST.score++;
+    ST.total++;
+    vibe(ok ? 25 : 60);
+    var y = document.getElementById('proY'), n = document.getElementById('proN');
+    if (y) { y.disabled = true; if (st.ans) y.classList.add('ok'); else if (v) y.classList.add('bad'); }
+    if (n) { n.disabled = true; if (!st.ans) n.classList.add('ok'); else if (!v) n.classList.add('bad'); }
+    var fb = document.getElementById('prFb');
+    if (fb) fb.innerHTML = '<div class="pr-card"><div class="pr-why">' + esc(st.why) + '</div></div>' +
+      '<button class="pr-primary" onclick="PARUS.nextC()">Дальше</button>';
+  }
+  function nextC() {
+    ST.answered = false;
+    var t = ST.tasks[ST.i];
+    ST.sub++;
+    if (ST.sub >= t.steps.length) {
+      ST.sub = 0; ST.i++;
+      // финальный вывод задачи показываем на первом экране следующей — проще: сразу дальше
+    }
+    render();
+  }
+
+  // ---------- рейс 6: ставки ----------
+  // Скрытые вероятности жизнеспособности идей. Дешёвый тест — сигнал с
+  // точностью 75%, средний — 90%. Запуск — необратимая дверь. Оценивается
+  // ПРОЦЕСС отдельно от результата: этому рейс и учит.
+  function initStakes() {
+    var probs = shuffle([0.72, 0.45, 0.15]);
+    ST.stakes = {
+      budget: 100,
+      ideas: RS_IDEAS.map(function (o, i) { return { name: o.name, hint: o.hint, p: probs[i], signals: [], launched: false }; }),
+      log: [], done: false, outcome: null, launchedIdea: null,
+      testedAll: false, launchWithoutSignal: false, cheapFirst: null
+    };
+  }
+  function renderStakes(c) {
+    var S = ST.stakes;
+    var html = '<div class="pr-wrap">' + '<div class="pr-meta"><span>🎲 Ставки</span><span>бюджет: ' + S.budget + ' из 100</span></div>' +
+      '<div class="pr-card pr-sit">У вас 100 условных монет и три идеи-паруса. Гарантий нет — есть проверки и ставки. Дешёвый тест (15) — поспрашивать и посчитать, сигнал верен в трёх случаях из четырёх. Средний тест (35) — мини-версия на неделю, сигнал верен в девяти из десяти. Запуск (50) — дверь необратимая. Цель — запустить живую идею, не сжёгши бюджет.</div>';
+    S.ideas.forEach(function (idea, i) {
+      var sig = idea.signals.length ? idea.signals.map(function (s) { return s ? '🟢' : '🔴'; }).join(' ') : '—';
+      html += '<div class="pr-card"><b>' + esc(idea.name) + '</b><div class="pr-why">' + esc(idea.hint) + ' · сигналы: ' + sig + '</div>' +
+        (S.done ? '' :
+          '<div class="pr-verdict" style="margin-top:8px">' +
+          '<button class="pr-opt"' + (S.budget < 15 ? ' disabled' : '') + ' onclick="PARUS.stTest(' + i + ',0)">Дешёвый · 15</button>' +
+          '<button class="pr-opt"' + (S.budget < 35 ? ' disabled' : '') + ' onclick="PARUS.stTest(' + i + ',1)">Средний · 35</button>' +
+          '<button class="pr-opt"' + (S.budget < 50 ? ' disabled' : '') + ' onclick="PARUS.stLaunch(' + i + ')">🚀 Запуск · 50</button>' +
+          '</div>') +
+      '</div>';
+    });
+    if (!S.done && S.budget < 15) {
+      html += '<div class="pr-card">Бюджет кончился, запуска не было. Тоже исход — и тоже урок.</div>' +
+        '<button class="pr-primary" onclick="PARUS.stFinish()">К разбору</button>';
+    }
+    if (S.log.length) html += '<div class="pr-card" style="font-size:.85rem;color:#aab3c5">' + S.log.map(esc).join('<br>') + '</div>';
+    c.innerHTML = html + '</div>';
+  }
+  function stTest(i, kind) {
+    var S = ST.stakes; if (!S || S.done) return;
+    var cost = kind === 0 ? 15 : 35, acc = kind === 0 ? 0.75 : 0.9;
+    if (S.budget < cost) return;
+    S.budget -= cost;
+    if (S.cheapFirst == null) S.cheapFirst = (kind === 0);
+    var idea = S.ideas[i];
+    var alive = Math.random() < idea.p;
+    var truthful = Math.random() < acc;
+    var signal = truthful ? alive : !alive;
+    idea.signals.push(signal);
+    S.log.unshift((kind === 0 ? 'Дешёвый тест' : 'Средний тест') + ' «' + idea.name + '»: сигнал ' + (signal ? 'живой 🟢' : 'глухой 🔴'));
+    if (S.ideas.every(function (o) { return o.signals.length > 0; })) S.testedAll = true;
+    vibe(15);
+    renderStakes(container());
+  }
+  function stLaunch(i) {
+    var S = ST.stakes; if (!S || S.done) return;
+    if (S.budget < 50) return;
+    S.budget -= 50;
+    var idea = S.ideas[i];
+    if (!idea.signals.some(function (s) { return s; })) S.launchWithoutSignal = true;
+    S.done = true;
+    S.launchedIdea = idea;
+    S.outcome = Math.random() < idea.p;
+    vibe(40);
+    stFinish();
+  }
+  function stFinish() {
+    var S = ST.stakes;
+    S.done = true;
+    // Очки процесса (макс 7): портфель — проверил все три (3), первый ход —
+    // дешёвый тест (2), не запускал без живого сигнала (2). Исход — до 3.
+    var proc = (S.testedAll ? 3 : 0) + (S.cheapFirst ? 2 : 0) + (S.launchedIdea && !S.launchWithoutSignal ? 2 : 0);
+    var res = S.outcome ? 3 : 0;
+    ST.score = Math.min(10, proc + res);
+    ST.total = 10;
+    var c = container(); if (!c) return;
+    var lines = [];
+    lines.push(S.launchedIdea
+      ? 'Запуск: «' + S.launchedIdea.name + '» — ' + (S.outcome ? 'идея выжила 🟢' : 'идея не пошла 🔴') + ' (её реальная жизнеспособность была ' + Math.round(S.launchedIdea.p * 100) + '%).'
+      : 'Запуска не случилось: бюджет ушёл на проверки без решения.');
+    lines.push(S.testedAll ? '✅ Портфель: вы проверили все три идеи — знание купили широко.' : '⚠️ Портфель неполный: непроверенная идея — это не сэкономленные деньги, а слепая зона.');
+    lines.push(S.cheapFirst ? '✅ Первый ход — дешёвый тест: правильный рефлекс.' : '⚠️ Первый ход был дорогим: дешёвый тест дал бы почти то же знание за треть цены.');
+    if (S.launchedIdea) lines.push(S.launchWithoutSignal ? '⚠️ Запуск без живого сигнала — необратимая дверь наугад.' : '✅ Запускались по сигналу, а не по надежде.');
+    lines.push('Главное: качество решений — ' + proc + '/7, удача — ' + res + '/3. Хорошее решение и хороший результат — разные вещи: процесс ваш, кубик — нет. Оценивайте себя по процессу, его вы контролируете.');
+    c.innerHTML =
+      '<div class="pr-wrap">' + '<div class="pr-h" style="text-align:center">🎲 Разбор ставок</div>' +
+        lines.map(function (l) { return '<div class="pr-card"><div class="pr-why" style="color:#c8ccd4">' + esc(l) + '</div></div>'; }).join('') +
+        '<button class="pr-primary" onclick="PARUS.stDone()">К итогу рейса</button>' +
+      '</div>';
+  }
+  function stDone() { ST.i = 1; finish(); }
+
+  // ---------- рейс 4: три условия ----------
   function renderR3(c) {
     var t = ST.tasks[ST.i];
     var qi = ST.r3q;
@@ -498,7 +705,9 @@
       'БАЛЛ: <число от 0 до 10>\n' +
       'СИЛЬНОЕ: <одна фраза, что удалось>\n' +
       'СЛАБОЕ: <одна фраза, где решение проседает>\n' +
-      'ПРАВКА: <одна конкретная правка, которая усилит парус>';
+      'ПРАВКА: <одна конкретная правка, которая усилит парус>\n' +
+      'ТЕСТ: <дешёвая проверка идеи на этой неделе, до 15 слов, обратимая>\n' +
+      'СТОП: <заранее заданное условие остановки, до 15 слов>';
     var out = null;
     try {
       var r = await aiGenerate(prompt, { max_tokens: 700, temperature: 0.4 });
@@ -516,14 +725,38 @@
     function pick(tag) { var mm = out.match(new RegExp(tag + ':\\s*([^\\n]+)')); return mm ? mm[1].trim() : ''; }
     ST.score = score; ST.total = 10;
     if (go) go.style.display = 'none';
+    // Карточка паруса — артефакт, который уносится из игры в жизнь
+    // (лекция 12: карточка потока). Кнопка копирует её текстом.
+    var card = 'КАРТОЧКА ПАРУСА\nЗадача: ' + task +
+      '\nПоток: ' + f1.trim() + '\nТорт: ' + f2.trim() + '\nТигр: ' + f3.trim() +
+      (pick('ТЕСТ') ? '\nПервый тест: ' + pick('ТЕСТ') : '') +
+      (pick('СТОП') ? '\nСтоп-условие: ' + pick('СТОП') : '') +
+      (pick('ПРАВКА') ? '\nПравка от Фреди: ' + pick('ПРАВКА') : '');
+    window._parusCard = card;
     if (fb) fb.innerHTML =
       '<div class="pr-card">' + sailSVG(score / 10) +
         '<div style="text-align:center;font-weight:700;margin-bottom:8px">' + score + ' из 10</div>' +
         (pick('СИЛЬНОЕ') ? '<div class="pr-why">💪 ' + esc(pick('СИЛЬНОЕ')) + '</div>' : '') +
         (pick('СЛАБОЕ') ? '<div class="pr-why">⚠️ ' + esc(pick('СЛАБОЕ')) + '</div>' : '') +
         (pick('ПРАВКА') ? '<div class="pr-why">🔧 ' + esc(pick('ПРАВКА')) + '</div>' : '') +
+        (pick('ТЕСТ') ? '<div class="pr-why">🧪 Первый тест: ' + esc(pick('ТЕСТ')) + '</div>' : '') +
+        (pick('СТОП') ? '<div class="pr-why">🛑 Стоп-условие: ' + esc(pick('СТОП')) + '</div>' : '') +
       '</div>' +
+      '<button class="pr-opt" style="text-align:center" onclick="PARUS.copyCard(this)">📋 Скопировать карточку паруса</button>' +
       '<button class="pr-primary" onclick="PARUS.finish5()">Завершить рейс</button>';
+  }
+  function copyCard(btn) {
+    var t = window._parusCard || '';
+    function done() { if (btn) btn.textContent = '✅ Скопировано — вставьте себе в заметки'; }
+    try { navigator.clipboard.writeText(t).then(done, function () { fallbackCopy(t, done); }); }
+    catch (e) { fallbackCopy(t, done); }
+  }
+  function fallbackCopy(t, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = t; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove(); done();
+    } catch (e) {}
   }
   function finish5() { ST.i = 1; finish(); }
 
@@ -531,8 +764,8 @@
   function next() { ST.answered = false; ST.r3q = 0; ST.i++; render(); }
 
   function stageTotal() {
-    if (ST.stage === 3) return ST.total || 1;          // 3 вопроса + вердикт на идею
-    if (ST.stage === 5) return 10;
+    if (ST.stage === 3 || ST.stage === 4) return ST.total || 1;  // счёт по шагам
+    if (ST.stage >= 6) return 10;                                // ставки и свой парус
     return ST.tasks.length;
   }
 
@@ -544,19 +777,19 @@
     p.plays++;
     if (p.best[ST.stage] == null || score10 > p.best[ST.stage]) p.best[ST.stage] = score10;
     var passed = score10 >= 7;
-    if (passed && ST.stage < 5 && p.unlocked === ST.stage) p.unlocked = ST.stage + 1;
+    if (passed && ST.stage < 7 && p.unlocked === ST.stage) p.unlocked = ST.stage + 1;
     saveProg(p);
     track('game_round_finish', { feature: 'parus', stage: ST.stage, score: ST.score, total: total });
     var st = STAGES[ST.stage - 1];
     var line = passed
-      ? (ST.stage === 5 ? 'Вы прошли путь от выбора из вариантов до собственного паруса. Дальше — разведка в жизни: три потока вокруг вас за неделю.' : 'Рейс пройден. Следующий открыт.')
+      ? (ST.stage === 7 ? 'Вы прошли путь от выбора из вариантов до собственного паруса. Дальше — разведка в жизни: три потока вокруг вас за неделю.' : 'Рейс пройден. Следующий открыт.')
       : 'Ветра не хватило — нужно 7 из 10. Пройдите рейс ещё раз: задания объясняют себя, второй заход почти всегда сильнее.';
     c.innerHTML =
       '<div class="pr-wrap" style="text-align:center">' +
         sailSVG(score10 / 10) +
         '<div class="pr-h">' + st.icon + ' Рейс ' + ST.stage + ' — ' + score10 + '/10' + (passed ? ' ✅' : '') + '</div>' +
         '<div class="pr-card" style="text-align:left">' + esc(line) + '</div>' +
-        (passed && ST.stage < 5
+        (passed && ST.stage < 7
           ? '<button class="pr-primary" onclick="PARUS.start(' + (ST.stage + 1) + ')">' + STAGES[ST.stage].icon + ' Рейс ' + (ST.stage + 1) + '. ' + esc(STAGES[ST.stage].name) + '</button>'
           : '<button class="pr-primary" onclick="PARUS.start(' + ST.stage + ')">🔁 Ещё раз</button>') +
         '<button class="pr-ghost" onclick="PARUS.home()">Ко всем рейсам</button>' +
@@ -568,7 +801,9 @@
     pick1: pick1, pick2: pick2,
     pick3: pick3, next3: next3, verdict3: verdict3,
     pick4: pick4, check4: check4,
-    submit5: submit5, finish5: finish5,
+    checkNum: checkNum, checkYN: checkYN, nextC: nextC,
+    stTest: stTest, stLaunch: stLaunch, stFinish: stFinish, stDone: stDone,
+    submit5: submit5, finish5: finish5, copyCard: copyCard,
     getState: function () { return ST; }
   };
   window.showParusGame = home;
