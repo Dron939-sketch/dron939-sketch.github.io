@@ -313,7 +313,14 @@ async function apiCall(endpoint, options = {}) {
     }
 
     // AI-эндпоинты генерируют ответ до 30-45 сек (DeepSeek/GPT), расширяем таймаут.
-    const isAIEndpoint = /\/api\/(ai\/|ai_|hypno|dreams|emotions|tales|relationships|interests|doubles|weekend|brand|hormones|goals|habits|motivation|strategy|healing|confinement|skill|practices|challenges|psychologist|morning|freshthought|meditation|analysis)/i.test(endpoint);
+    //
+    // `chat` в этом списке появился не сразу, и его отсутствие стоило дорого:
+    // главный диалог получал общие 15 000 мс при средней латентности модели
+    // 17 654 мс. То есть чаще, чем через раз, ответ обрывался клиентом на
+    // полпути и человек видел «Сервер не отвечает» — при живом сервере,
+    // который в этот момент дописывал ответ. В аналитике это лежало как
+    // ai_response_error с latency_ms=15008.
+    const isAIEndpoint = /\/api\/(chat|ai\/|ai_|hypno|dreams|emotions|tales|relationships|interests|doubles|weekend|brand|hormones|goals|habits|motivation|strategy|healing|confinement|skill|practices|challenges|psychologist|morning|freshthought|meditation|analysis)/i.test(endpoint);
     const defaultTimeout = isAIEndpoint ? 60000 : 15000;
     const timeoutMs = options.timeout || defaultTimeout;
 
@@ -612,6 +619,132 @@ function _hideThinkingBubble() {
     }
 }
 
+// Растущий пузырь для потокового ответа: текст дописывается по мере
+// генерации, а не появляется целиком через 17 секунд.
+function _beginBotStream() {
+    const messagesContainer = _getMessagesContainer();
+    if (!messagesContainer) return null;
+    _hideThinkingBubble();
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message bot streaming';
+    const textSpan = document.createElement('div');
+    messageDiv.appendChild(textSpan);
+    messagesContainer.appendChild(messageDiv);
+    _scrollMessagesToBottom(messagesContainer);
+
+    let acc = '';
+    return {
+        push(chunk) {
+            acc += chunk;
+            textSpan.textContent = acc;
+            _scrollMessagesToBottom(messagesContainer);
+        },
+        set(full) {
+            acc = full || acc;
+            textSpan.textContent = acc;
+            _scrollMessagesToBottom(messagesContainer);
+        },
+        text() { return acc; },
+        done() { messageDiv.classList.remove('streaming'); },
+        remove() { try { messageDiv.remove(); } catch (e) {} }
+    };
+}
+
+// Потоковый чат: /api/chat/stream отдаёт построчный JSON, каждая строка —
+// либо кусок ответа, либо служебное событие. Возвращает текст ответа или
+// null, если поток не поехал (тогда вызывающий код падает на обычный
+// /api/chat — человек всё равно получит ответ).
+//
+// Трекинг здесь ручной: tracker.js перехватывает fetch и сам эмитит
+// message_sent, но ai_response_received он снять не может — тело потоковое,
+// и response.clone().json() на нём не разбирается.
+async function _chatStreamRequest(text, getBubble) {
+    const started = Date.now();
+    let firstDeltaMs = null;
+    let bubble = null;
+
+    const res = await fetch(`${CONFIG.API_BASE_URL}/api/chat/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            user_id: CONFIG.USER_ID,
+            message: text,
+            mode: currentMode || 'basic'
+        })
+    });
+    if (!res.ok || !res.body) return null;
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+    let full = '';
+    let failed = null;
+
+    const handleLine = (line) => {
+        line = line.trim();
+        if (!line) return;
+        let ev;
+        try { ev = JSON.parse(line); } catch (e) { return; }
+        if (ev.type === 'delta' && ev.text) {
+            // Пузырь создаём на первой дельте, а не заранее: пустая рамка
+            // на месте будущего ответа выглядит как поломка.
+            if (firstDeltaMs === null) {
+                firstDeltaMs = Date.now() - started;
+                bubble = getBubble && getBubble();
+            }
+            full += ev.text;
+            if (bubble) bubble.push(ev.text);
+        } else if (ev.type === 'done') {
+            if (typeof ev.full_text === 'string' && ev.full_text) {
+                full = ev.full_text;
+                if (bubble) bubble.set(full);
+            }
+        } else if (ev.type === 'error') {
+            failed = ev.message || 'stream error';
+        }
+    };
+
+    for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        let nl;
+        while ((nl = buf.indexOf('\n')) >= 0) {
+            handleLine(buf.slice(0, nl));
+            buf = buf.slice(nl + 1);
+        }
+    }
+    if (buf) handleLine(buf);
+
+    const track = (name, data) => {
+        try { window.FrediTracker && window.FrediTracker.track(name, data); } catch (e) {}
+    };
+    if (failed || !full.trim()) {
+        if (bubble) bubble.remove();
+        track('ai_response_error', {
+            endpoint: '/api/chat/stream',
+            kind: 'stream_empty',
+            error: (failed || 'empty').slice(0, 100),
+            latency_ms: Date.now() - started,
+            via: 'stream'
+        });
+        return null;
+    }
+    track('ai_response_received', {
+        endpoint: '/api/chat/stream',
+        text_length: full.length,
+        latency_ms: Date.now() - started,
+        // ради этого всё и затевалось: сколько человек ждёт ПЕРВЫХ слов,
+        // а не полного ответа
+        first_delta_ms: firstDeltaMs,
+        success: true,
+        via: 'stream'
+    });
+    if (bubble) bubble.done();
+    return full;
+}
+
 // Глобальный флаг против двойных нажатий
 let _isLoading = false;
 
@@ -650,33 +783,49 @@ function setupDashComposer() {
         input.value = '';
         if (sendBtn) sendBtn.disabled = true;
         addMessage(text, 'user');
-        _showThinkingBubble('Фреди думает…');
+        _showThinkingBubble('Фреди печатает…');
 
+        // Сначала пробуем поток: первые слова появляются через секунду-две
+        // вместо пустого ожидания на весь ответ. Если поток не поехал
+        // (старый бэкенд, прокси схлопнул стрим, пустой ответ) — тихо
+        // уходим на обычный /api/chat, человек разницы не заметит.
+        let answer = '';
         try {
-            const data = await apiCall('/api/chat', {
-                method: 'POST',
-                body: JSON.stringify({
-                    user_id: CONFIG.USER_ID,
-                    message: text,
-                    mode: currentMode || 'basic'
-                })
-            });
-            _hideThinkingBubble();
-            const answer = (data && data.response) || '';
-            if (answer) {
-                addMessage(answer, 'bot');
-                try { window.FrediMeter?.recordUsage?.(15); } catch (e) {}
-            } else {
-                addMessage('Не получилось ответить. Попробуйте ещё раз.', 'system');
-            }
+            answer = (await _chatStreamRequest(text, _beginBotStream)) || '';
         } catch (err) {
-            console.error('❌ dash composer send failed:', err);
-            _hideThinkingBubble();
-            addMessage('Связь прервалась. Попробуйте ещё раз.', 'system');
-        } finally {
-            busy = false;
-            if (sendBtn) sendBtn.disabled = false;
+            console.warn('stream chat failed, fallback to /api/chat:', err);
+            answer = '';
         }
+
+        if (!answer) {
+            try {
+                const data = await apiCall('/api/chat', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        user_id: CONFIG.USER_ID,
+                        message: text,
+                        mode: currentMode || 'basic'
+                    })
+                });
+                answer = (data && data.response) || '';
+                _hideThinkingBubble();
+                addMessage(answer || 'Не получилось ответить. Попробуйте ещё раз.',
+                           answer ? 'bot' : 'system');
+            } catch (err) {
+                console.error('❌ dash composer send failed:', err);
+                _hideThinkingBubble();
+                addMessage('Связь прервалась. Попробуйте ещё раз.', 'system');
+            }
+        } else {
+            _hideThinkingBubble();
+        }
+
+        if (answer) {
+            try { window.FrediMeter?.recordUsage?.(15); } catch (e) {}
+        }
+
+        busy = false;
+        if (sendBtn) sendBtn.disabled = false;
     }
 
     form.addEventListener('submit', (e) => { e.preventDefault(); send(); });
