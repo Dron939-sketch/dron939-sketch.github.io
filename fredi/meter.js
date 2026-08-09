@@ -78,26 +78,45 @@
         }
     }
 
-    // Двухступенчатое предупреждение об исчерпании дневного лимита.
-    // Цель — подготовить юзера к paywall ДО самой блокировки, чтобы
-    // он успел задуматься о ценности (по аналитике: paywall показывается
-    // внезапно → conversion = 0).
+    // Двухступенчатое предупреждение перед блокировкой.
     //
     // 5 мин ≤ rem  → пока тишина
     // 2 мин < rem ≤ 5 мин → soft: «осталось N мин» (info-toast)
-    // rem ≤ 2 мин → critical: «осталось 1-2 мин» (warn-toast)
+    // rem ≤ 2 мин → critical: карточка апселла
     //
     // Каждый уровень показывается 1 раз за окно 2 мин (защита от спама).
     // Оба трекаются как `meter_warning` в аналитике с полем `level`.
-    function _trackWarning(level, rem) {
+    //
+    // Почему это долго не работало. Ограничений два — минуты на сегодня и
+    // общий бесплатный запас, — а предупреждение смотрело только на первое.
+    // Пока запас считался в днях, человек упирался в paywall на четвёртый
+    // заход с полными десятью минутами на счётчике: условие `rem <= 5`
+    // не выполнялось никогда. В аналитике это лежало ровно так —
+    // meter_warning 0 при meter_blocked_shown 10.
+    //
+    // Теперь бэкенд отдаёт `remaining_minutes` уже как минимум из двух
+    // остатков, а `block_reason` говорит, какой из них ближе. Предупреждать
+    // надо по ближайшему — и словами про него же: «на сегодня» и «бесплатные
+    // минуты кончаются совсем» требуют разной реакции.
+    function _trackWarning(level, rem, kind) {
         try {
             if (window.FrediTracker && window.FrediTracker.track) {
                 window.FrediTracker.track('meter_warning', {
                     level: level,            // 'soft' | 'critical'
+                    kind: kind,              // 'trial' | 'daily'
                     remaining_minutes: rem,
                 });
             }
         } catch (e) {}
+    }
+
+    // Какое из двух ограничений упрётся первым.
+    function _bindingKind(check) {
+        var trial = check.remaining_trial_minutes;
+        var day = check.remaining_today_minutes;
+        if (trial == null) return 'daily';           // старый бэкенд
+        if (day == null) return 'trial';
+        return trial <= day ? 'trial' : 'daily';
     }
 
     function _showWarningToast(check) {
@@ -105,21 +124,25 @@
         var rem = check.remaining_minutes;
         if (rem == null) return;
 
+        var kind = _bindingKind(check);
+
         // Critical: осталось ≤ 2 мин — показываем полноценную карточку
         // апселла (а не тост), чтобы предложение Premium вообще появилось
         // в достижимой точке ДО блокировки. Раз за 2-мин окно.
         if (rem <= 2 && !_criticalShown) {
             _criticalShown = true;
-            showUpsellCard(check);
-            _trackWarning('critical', rem);
+            showUpsellCard(check, kind);
+            _trackWarning('critical', rem, kind);
             setTimeout(function() { _criticalShown = false; }, 120000);
             return;
         }
         // Soft: 2 < rem ≤ 5 — мягкая подготовка.
         if (rem <= 5 && !_warningShown) {
             _warningShown = true;
-            _toast('⏱ Осталось ' + Math.round(rem) + ' мин на сегодня', 'info');
-            _trackWarning('soft', rem);
+            _toast(kind === 'trial'
+                ? '⏱ Бесплатных минут осталось ' + Math.round(rem)
+                : '⏱ Осталось ' + Math.round(rem) + ' мин на сегодня', 'info');
+            _trackWarning('soft', rem, kind);
             setTimeout(function() { _warningShown = false; }, 120000);
         }
     }
@@ -189,25 +212,35 @@
 
         var minutesUntilReset = data.minutes_until_reset || 0;
         var limit = data.limit_minutes || 10;
-        var trialExhausted = !!data.trial_exhausted;
+        // \u0415\u0434\u0438\u043D\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0435 \u043E\u0441\u043D\u043E\u0432\u0430\u043D\u0438\u0435 \u0434\u043B\u044F paywall \u2014 \u0438\u0437\u0440\u0430\u0441\u0445\u043E\u0434\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439
+        // \u0437\u0430\u043F\u0430\u0441. \u0420\u0430\u043D\u044C\u0448\u0435 \u0441\u044E\u0434\u0430 \u043F\u043E\u043F\u0430\u0434\u0430\u043B\u0438 \u0438 \u043F\u043E \u0441\u0447\u0451\u0442\u0447\u0438\u043A\u0443 \u0434\u043D\u0435\u0439, \u0442\u043E \u0435\u0441\u0442\u044C \u043B\u044E\u0434\u0438,
+        // \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u043F\u043E\u0442\u0440\u0430\u0442\u0438\u0432\u0448\u0438\u0435: 10 \u043F\u043E\u043A\u0430\u0437\u043E\u0432 \u043F\u0440\u0438 8 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u044F\u0445 \u043D\u0430 \u0432\u0441\u044E \u0431\u0430\u0437\u0443
+        // \u0438 \u043D\u043E\u043B\u044C \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u043E\u0432. \u0421\u043C\u043E\u0442\u0440\u0438\u043C \u043D\u0430 block_reason, \u0430 \u0435\u0441\u043B\u0438 \u0431\u044D\u043A\u0435\u043D\u0434 \u0441\u0442\u0430\u0440\u044B\u0439 \u2014
+        // \u043D\u0430 trial_exhausted, \u043A\u0430\u043A \u0440\u0430\u043D\u044C\u0448\u0435.
+        var trialExhausted = data.block_reason
+            ? data.block_reason === 'trial'
+            : !!data.trial_exhausted;
         var daysUsed = data.free_days_used || 0;
+        var trialLimit = data.trial_limit_minutes || 30;
 
         _track('meter_blocked_shown', {
             limit_minutes: limit,
             minutes_until_reset: minutesUntilReset,
             trial_exhausted: trialExhausted,
+            block_reason: data.block_reason || (trialExhausted ? 'trial' : 'daily'),
+            trial_used_minutes: data.trial_used_minutes,
             free_days_used: daysUsed,
         });
 
         var emoji, title, mainText, timerHtml;
 
         if (trialExhausted) {
-            // \u0424\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0439 paywall: 3 free-\u0434\u043D\u044F \u043F\u0440\u043E\u0448\u043B\u0438, \u0434\u0430\u043B\u044C\u0448\u0435 \u0442\u043E\u043B\u044C\u043A\u043E Premium.
+            // \u0424\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0439 paywall: \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439 \u0437\u0430\u043F\u0430\u0441 \u0438\u0437\u0440\u0430\u0441\u0445\u043E\u0434\u043E\u0432\u0430\u043D.
             emoji = '\uD83D\uDD13'; // \uD83D\uDD13
-            title = '3 \u0434\u043D\u044F \u043F\u0440\u043E\u0431\u044B \u043F\u0440\u043E\u0448\u043B\u0438';
+            title = '\u0411\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0435 ' + trialLimit + ' \u043C\u0438\u043D\u0443\u0442 \u0437\u0430\u043A\u043E\u043D\u0447\u0438\u043B\u0438\u0441\u044C';
             mainText =
-                '\u0422\u044B \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043B\u0441\u044F \u0424\u0440\u0435\u0434\u0438 ' + daysUsed + ' \u0434\u043D\u044F \u2014 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439 trial \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D.<br>' +
-                '\u0427\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432 \u2014 \u043E\u0442\u043A\u0440\u043E\u0439 Premium.';
+                '\u0421\u0442\u043E\u043B\u044C\u043A\u043E \u043C\u044B \u0434\u0430\u0451\u043C \u043D\u0430 \u0437\u043D\u0430\u043A\u043E\u043C\u0441\u0442\u0432\u043E \u2014 \u0438 \u0432\u044B \u0438\u0445 \u043F\u043E\u043B\u043D\u043E\u0441\u0442\u044C\u044E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043B\u0438.<br>' +
+                '\u0427\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432, \u043E\u0442\u043A\u0440\u043E\u0439\u0442\u0435 Premium.';
             timerHtml = '';
         } else {
             // \u0414\u043D\u0435\u0432\u043D\u043E\u0439 \u043B\u0438\u043C\u0438\u0442 \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D, \u043D\u043E trial-\u0434\u043D\u0438 \u0435\u0449\u0451 \u0435\u0441\u0442\u044C.
@@ -293,11 +326,22 @@
     // предложение вообще появляется до исчерпания лимита (по аналитике
     // paywall на самом блоке видели ~0 юзеров: сессия короче лимита).
     // Не блокирует ввод — юзер может закрыть и продолжить оставшиеся минуты.
-    function showUpsellCard(check) {
+    function showUpsellCard(check, kind) {
         _injectMeterStyles();
         if (document.getElementById('meterUpsellOverlay')) return;
         var rem = (check && check.remaining_minutes != null) ? Math.max(1, Math.round(check.remaining_minutes)) : 2;
-        _track('meter_upsell_shown', { remaining_minutes: rem });
+        kind = kind || 'daily';
+        _track('meter_upsell_shown', { remaining_minutes: rem, kind: kind });
+
+        // Два разных сообщения. «На сегодня всё» — новость на один вечер,
+        // человек вернётся и без подписки. «Бесплатные минуты кончаются» —
+        // единственный момент, когда предложение Premium вообще по делу.
+        var title = kind === 'trial'
+            ? 'Бесплатных минут осталось ~' + rem
+            : 'Осталось ~' + rem + ' мин на сегодня';
+        var text = kind === 'trial'
+            ? 'Это остаток бесплатного знакомства. С Premium Фреди не устаёт — общайтесь сколько нужно, голосом и текстом.'
+            : 'Дальше — дневной лимит бесплатного режима, он обновится в полночь. С Premium Фреди не устаёт — общайтесь сколько нужно, голосом и текстом.';
 
         var overlay = document.createElement('div');
         overlay.className = 'meter-overlay';
@@ -305,8 +349,8 @@
         overlay.innerHTML =
             '<div class="meter-modal">' +
                 '<div class="meter-emoji">⏱️</div>' +
-                '<div class="meter-title">Осталось ~' + rem + ' мин на сегодня</div>' +
-                '<div class="meter-text">Дальше — дневной лимит бесплатного режима. С Premium Фреди не устаёт — общайтесь сколько нужно, голосом и текстом.</div>' +
+                '<div class="meter-title">' + title + '</div>' +
+                '<div class="meter-text">' + text + '</div>' +
                 PREMIUM_FEATURES +
                 '<button class="meter-btn meter-btn-primary" id="meterUpsellSub">✨ Premium — 690 ₽/мес, без лимитов</button>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
@@ -465,8 +509,8 @@
         var badge = _ensureBadge();
         var rem = check.remaining_minutes;
         var daysUsed = check.free_days_used || 0;
-        var daysLeft = check.free_days_left;
-        // Если trial исчерпан — показываем без таймера, текстом «Trial исчерпан».
+        var trialRem = check.remaining_trial_minutes;
+        // Если запас исчерпан — показываем без таймера, текстом «Купить».
         if (check.trial_exhausted) {
             badge.classList.remove('warn');
             badge.classList.add('danger');
@@ -486,10 +530,15 @@
         var dayEl = document.getElementById('meterBadgeDay');
         if (timeEl) timeEl.textContent = _formatTime(rem);
         if (dayEl) {
-            // «День 2/3»: считаем активный день. Если daysUsed=0 (ещё не
-            // ничего не записывали) — показываем «День 1/3» как стартовое.
-            var active = Math.max(1, Math.min(daysUsed || 1, 3));
-            dayEl.textContent = 'День ' + active + '/3';
+            // Вторая строка баджа — общий бесплатный запас. «День 2/3» тут
+            // стоял, пока лимит считался заходами; при подсчёте по минутам
+            // это число ничего не говорит о том, когда всё кончится.
+            if (trialRem != null) {
+                dayEl.textContent = 'Запас ' + Math.max(0, Math.round(trialRem)) + ' мин';
+            } else {
+                var active = Math.max(1, Math.min(daysUsed || 1, 3));
+                dayEl.textContent = 'День ' + active + '/3';
+            }
         }
     }
 
@@ -550,6 +599,16 @@
         _applyPatches();
     }
 
-    window.FrediMeter = { checkCanSend: checkCanSend, recordUsage: recordUsage, showFatigueModal: showFatigueModal, showUpsellCard: showUpsellCard };
+    window.FrediMeter = {
+        checkCanSend: checkCanSend,
+        recordUsage: recordUsage,
+        showFatigueModal: showFatigueModal,
+        showUpsellCard: showUpsellCard,
+        // Наружу — чтобы предупреждение можно было показать из голосового
+        // пути (он не идёт через apiCall/fetch-патчи) и чтобы его поведение
+        // на границах остатка можно было проверить, а не додумывать.
+        showWarningToast: _showWarningToast,
+        bindingKind: _bindingKind,
+    };
     console.log('meter.js loaded');
 })();
