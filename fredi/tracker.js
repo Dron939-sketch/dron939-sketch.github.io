@@ -331,7 +331,22 @@
                         var response=await _wrapped(url,opt);
                         var latency=Date.now()-started;
 
-                        if(isAi && response.ok && !alreadyTracked){
+                        // Потоковые ответы не трогаем. cloned.json() ждёт
+                        // ВЕСЬ body целиком — и только потом мы отдаём
+                        // response вызывающему коду. На /api/chat/stream это
+                        // ровно то, ради чего стрим и делался: первая дельта
+                        // приходит через секунду, а показать её удалось бы
+                        // только через двадцать, когда допишется последняя.
+                        // Разобрать NDJSON как JSON всё равно не выйдет —
+                        // await заканчивается исключением, то есть ожидание
+                        // было чистой потерей. То же касается
+                        // /api/voice/process_stream — он тоже NDJSON.
+                        // Такие ответы трекает сам вызывающий код.
+                        var _ct = '';
+                        try{ _ct = response.headers.get('content-type') || ''; }catch(e){}
+                        var _isJson = _ct.indexOf('application/json') >= 0;
+
+                        if(isAi && response.ok && !alreadyTracked && _isJson){
                             try{
                                 var cloned=response.clone();
                                 var data=await cloned.json();
