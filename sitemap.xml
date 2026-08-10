@@ -1313,6 +1313,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://meysternlp.ru/blog/lektorij/kamasutra/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://meysternlp.ru/blog/lektorij/psihologiya-peregruzok/</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -4974,6 +4980,42 @@
   </url>
   <url>
     <loc>https://meysternlp.ru/blog/lekciya-ks-vybor-i-svatovstvo.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-ks-kniga-o-soyuze.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-ks-zhena.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-ks-kurtizanka.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-ks-chego-ne-vozmyom.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-ks-kak-isportil-perevod.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://meysternlp.ru/blog/lekciya-ks-chto-rabotaet.html</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
