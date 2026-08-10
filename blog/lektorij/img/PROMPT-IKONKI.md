@@ -59,12 +59,23 @@
 
 ---
 
-## Десять курсов, которым сейчас нужны настоящие иконки
+## Курсы, которым нужны настоящие иконки
 
-Сейчас у них временные иконки — побайтовые копии соседних курсов. Проверить
-список в любой момент: `md5sum *.webp | sort | uniq -d -w32`.
+Пока иконка не нарисована, у курса стоит побайтовая копия соседней. Проверить
+список в любой момент: `md5sum *.webp | sort | uniq -d -w32` — вывод и есть
+перечень временных.
 
-### Лист А
+### Лист В — нужен сейчас
+
+| файл | курс | предмет |
+|---|---|---|
+| `roditelstvo.webp` | Родительство | a child's small leather shoe standing beside a worn adult's shoe, both facing the same way |
+| `status-i-dominirovanie.webp` | Статус и доминирование | a stag's shed antler resting on its side, tips worn smooth |
+| `gnev-i-agressiya.webp` | Гнев и агрессия | a cast-iron kettle on a dark burner, thin jet of steam escaping the spout |
+| `zhizn-v-seti.webp` | Жизнь в сети | a fisherman's knotted net drawn tight around a single smooth river stone |
+| `eriksonovskij-gipnoz.webp` | Эриксоновский гипноз | an old brass door handle on an unseen door, turned halfway down |
+
+### Лист А — сделан
 
 | файл | курс | предмет |
 |---|---|---|
@@ -75,7 +86,7 @@
 | `svoe-delo.webp` | Своё дело с нуля | an old brass hand-crank drill standing upright on a workbench edge |
 | `pochemu-ne-kopitsya.webp` | Почему не получается копить | a cracked ceramic piggy bank, intact but visibly repaired with fine gold seams |
 
-### Лист Б
+### Лист Б — сделан
 
 | файл | курс | предмет |
 |---|---|---|
