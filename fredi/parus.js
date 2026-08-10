@@ -288,17 +288,18 @@
     s.textContent = [
       '.pr-wrap{max-width:640px;margin:10px auto 20px;padding:16px 14px 30px;color:#e7e9ee;font-size:15px;line-height:1.55;background:linear-gradient(180deg,#0c1424 0%,#101c33 45%,#0c1424 100%);border:1px solid rgba(110,160,255,.18);border-radius:20px;box-shadow:0 12px 40px rgba(5,15,40,.45)}',
       // — герой: небо, солнце, волны, парусник —
-      '.pr-hero{position:relative;height:170px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0b1d3a 0%,#14335e 45%,#1b4a7a 75%,#20618f 100%);border:1px solid rgba(120,180,255,.25);margin-bottom:14px}',
+      '.pr-hero{position:relative;height:196px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#0b1d3a 0%,#14335e 45%,#1b4a7a 75%,#20618f 100%);border:1px solid rgba(120,180,255,.25);margin-bottom:14px}',
       '.pr-hero .sun{position:absolute;top:18px;right:26px;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#ffe9a8,#ffb84d 70%,transparent 72%);box-shadow:0 0 34px 10px rgba(255,190,80,.35);animation:prGlow 4s ease-in-out infinite}',
       '@keyframes prGlow{50%{box-shadow:0 0 44px 14px rgba(255,190,80,.5)}}',
-      '.pr-hero .boat{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);animation:prRock 5s ease-in-out infinite;transform-origin:50% 90%}',
+      '.pr-hero .boat{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);animation:prRock 5s ease-in-out infinite;transform-origin:50% 92%;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}',
+      '.pr-hero .boat img{display:block}',
       '@keyframes prRock{0%,100%{transform:translateX(-50%) rotate(-2.5deg)}50%{transform:translateX(-50%) rotate(2.5deg)}}',
       '.pr-hero .wave{position:absolute;left:-50%;width:200%;height:46px;bottom:-6px;opacity:.85}',
       '.pr-hero .wave.w2{bottom:-14px;opacity:.55;animation-duration:9s!important}',
       '.pr-hero .wave.w3{bottom:-22px;opacity:.35;animation-duration:13s!important}',
       '.pr-hero .wave{animation:prWave 6s linear infinite}',
       '@keyframes prWave{0%{transform:translateX(0)}100%{transform:translateX(25%)}}',
-      '.pr-hero .cap{position:absolute;left:0;right:0;top:10px;text-align:center;pointer-events:none;z-index:2}',
+      '.pr-hero .cap{position:absolute;left:0;right:0;top:12px;text-align:center;pointer-events:none;z-index:2}',
       '.pr-hero .cap b{display:block;font-size:1.5rem;letter-spacing:.04em;text-shadow:0 2px 12px rgba(0,0,0,.5)}',
       '.pr-hero .cap span{color:#bcd3ef;font-size:.82rem;text-shadow:0 1px 6px rgba(0,0,0,.6)}',
       // — карта плавания —
@@ -360,7 +361,7 @@
       '.pr-final .spark{position:absolute;font-size:1rem;animation:prSpark 1.8s ease-out forwards;pointer-events:none}',
       '@keyframes prSpark{0%{opacity:0;transform:translateY(6px) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-46px) scale(1.15)}}',
       '.pr-score-big{font-size:2rem;font-weight:800;letter-spacing:.02em}',
-      '@media(max-width:480px){.pr-wrap{font-size:14.5px}.pr-hero{height:150px}}'
+      '@media(max-width:480px){.pr-wrap{font-size:14.5px}.pr-hero{height:182px}}'
     ].join('\n');
     document.head.appendChild(s);
   }
@@ -377,13 +378,10 @@
     }
     return '<div class="pr-hero">' +
       '<div class="sun"></div>' +
-      '<div class="cap"><b>⛵ ПАРУС</b><span>вставать в то, что уже движется</span></div>' +
-      '<div class="boat"><svg width="70" height="60" viewBox="0 0 86 74">' +
-        '<line x1="42" y1="6" x2="42" y2="56" stroke="#d8c9a3" stroke-width="3"/>' +
-        '<path d="M46 10 Q72 32 46 52 Z" fill="#f4f0e4" opacity="0.95"/>' +
-        '<path d="M38 14 Q20 33 38 50 Z" fill="#e6ddc8" opacity="0.9"/>' +
-        '<path d="M12 56 L74 56 L64 68 L22 68 Z" fill="#7c4a2d"/>' +
-      '</svg></div>' +
+      '<div class="cap"><b>ПАРУС</b><span>вставать в то, что уже движется</span></div>' +
+      // Тот же парус, что стоит иконкой курса в Лектории — рисованный,
+      // а не нарисованный кодом: держим один образ во всех местах.
+      '<div class="boat"><img src="/blog/lektorij/img/parus.webp" alt="" width="104" height="104" loading="eager"></div>' +
       wave('w3', '#1e5c8c') + wave('w2', '#1b74ad') + wave('', '#2b8ec9') +
     '</div>';
   }
