@@ -67,13 +67,48 @@
 
 ### Лист В — нужен сейчас
 
-| файл | курс | предмет |
+Готовый запрос: общий промт выше плюс шесть строк ниже дословно. Шестая
+ячейка — запасной вариант для «Родительства»: парные предметы генератору
+даются хуже всего, и в туфлях вероятнее всего вылезут ноги или третий
+ботинок. Варежки решают ту же задачу и рисуются надёжнее; свет у ячеек
+общий, поэтому подмена в каталоге не будет заметна.
+
+```
+Cell 1: a child's small worn leather shoe standing beside an adult's worn
+leather shoe, both facing the same direction, laces untied. Empty shoes only,
+no feet, no legs.
+
+Cell 2: a single shed stag antler lying on its side, tips worn smooth and
+pale, base rough. One antler only, no skull, no animal.
+
+Cell 3: a cast-iron kettle on a dark surface, a thin jet of steam escaping
+the spout. Kettle and steam only, no stove, no kitchen behind it.
+
+Cell 4: a fisherman's knotted rope net drawn tight around one smooth grey
+river stone, knots pulled taut, stone visible through the mesh.
+
+Cell 5: an old brass door handle turned halfway down, mounted on a sliver of
+dark wooden door that fades into blackness. Handle in focus, door barely
+visible.
+
+Cell 6: a small knitted child's mitten and a large adult mitten joined by a
+worn woollen cord, lying flat, wool texture visible.
+```
+
+| ячейка | файл | курс |
 |---|---|---|
-| `roditelstvo.webp` | Родительство | a child's small leather shoe standing beside a worn adult's shoe, both facing the same way |
-| `status-i-dominirovanie.webp` | Статус и доминирование | a stag's shed antler resting on its side, tips worn smooth |
-| `gnev-i-agressiya.webp` | Гнев и агрессия | a cast-iron kettle on a dark burner, thin jet of steam escaping the spout |
-| `zhizn-v-seti.webp` | Жизнь в сети | a fisherman's knotted net drawn tight around a single smooth river stone |
-| `eriksonovskij-gipnoz.webp` | Эриксоновский гипноз | an old brass door handle on an unseen door, turned halfway down |
+| 1 | `roditelstvo.webp` | Родительство |
+| 2 | `status-i-dominirovanie.webp` | Статус и доминирование |
+| 3 | `gnev-i-agressiya.webp` | Гнев и агрессия |
+| 4 | `zhizn-v-seti.webp` | Жизнь в сети |
+| 5 | `eriksonovskij-gipnoz.webp` | Эриксоновский гипноз |
+| 6 | — | запасной вариант для «Родительства» |
+
+Что проверять на готовом листе: буквы (модель дописывает их на металле),
+лишние конечности в первой ячейке, кухню позади чайника в третьей, полную
+дверь вместо намёка на неё в пятой. Если испорчены одна-две ячейки,
+перегенерировать проще весь лист: одиночная картинка не совпадёт по свету с
+остальными.
 
 ### Лист А — сделан
 
