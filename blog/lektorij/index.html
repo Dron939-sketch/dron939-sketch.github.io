@@ -1740,21 +1740,21 @@ a.c:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:t
 .c.soon{opacity:.85}
 
 /* tabs */
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 22px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 22px}@media(max-width:600px){.tabs{flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:2px -18px 16px;padding:2px 18px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto;padding:9px 15px;font-size:.8rem}}
 .tab{padding:9px 18px;border:1px solid var(--line);border-radius:30px;background:var(--panel);color:var(--mut);font-size:.84rem;cursor:pointer;transition:.2s}
 .tab:hover{color:#fff;border-color:var(--accent)}
 .tab.on{background:linear-gradient(135deg,rgba(0,168,232,.22),rgba(58,134,255,.22));border-color:var(--accent);color:#fff}
 .panel{display:none}.panel.on{display:block;animation:fade .4s ease}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.dgrid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(58,134,255,.4) transparent}
-.dgrid::-webkit-scrollbar{height:8px}
-.dgrid::-webkit-scrollbar-thumb{background:rgba(58,134,255,.35);border-radius:8px}
-.dgrid::-webkit-scrollbar-track{background:transparent}
-.dgrid>.dcard{flex:0 0 158px;scroll-snap-align:start}
-@media(max-width:600px){.dgrid>.dcard{flex-basis:44%}}
+.dgrid{display:grid;gap:14px;padding:4px 0 12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}@media(max-width:600px){.dgrid{gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}}.dgrid>.dcard.hid{display:none}.more{display:block;width:100%;margin:2px 0 6px;padding:13px 18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--mut);font:inherit;font-size:.86rem;cursor:pointer;transition:.2s}.more:hover{color:#fff;border-color:var(--accent)}
+
+
+
+
+
 .dcard{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 14px 18px;transition:.2s}
 a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transform:translateY(-2px)}
-.dcard .pic{width:56px;height:56px;margin-bottom:10px}
+.dcard .pic{width:56px;height:56px;margin-bottom:10px}.dcnt{display:block;font-size:.72rem;color:var(--mut);margin:auto 0 8px}
 .dcard b{font-size:.92rem;font-weight:500;line-height:1.28;margin-bottom:10px}
 .dcard.soon{opacity:.85}
 .st{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:20px;margin-top:auto}
@@ -2230,135 +2230,135 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <section class="sec" id="programma"><div class="wrap">
 <div class="sh"><h2>Все направления</h2><span>восемь блоков знаний</span></div>
 <div class="tabs">
-<div class="tab on" data-p="b1">🧠 Познай себя</div>
-<div class="tab" data-p="b2">🎭 Думай лучше</div>
-<div class="tab" data-p="b3">🗣️ Общайся</div>
-<div class="tab" data-p="b7">💼 Дело и работа</div>
-<div class="tab" data-p="b4">🌍 Понимай мир</div>
-<div class="tab" data-p="b6">🌿 Заботься о себе</div>
-<div class="tab" data-p="b8">🩹 Когда тяжело</div>
-<div class="tab" data-p="b5">🎨 Живи осознанно</div>
+<div class="tab on" data-p="b1">Познай себя</div>
+<div class="tab" data-p="b2">Думай лучше</div>
+<div class="tab" data-p="b3">Общайся</div>
+<div class="tab" data-p="b7">Дело и работа</div>
+<div class="tab" data-p="b4">Понимай мир</div>
+<div class="tab" data-p="b6">Заботься о себе</div>
+<div class="tab" data-p="b8">Когда тяжело</div>
+<div class="tab" data-p="b5">Живи осознанно</div>
 </div>
 
 <div class="panel on" id="b1"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/eriksonovskij-gipnoz/"><img class="pic" src="/blog/lektorij/img/eriksonovskij-gipnoz.webp" alt="" loading="lazy" width="200" height="200"><b>Эриксоновский гипноз</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/pereproshivka/"><img class="pic" src="/blog/lektorij/img/pereproshivka.webp" alt="" loading="lazy" width="200" height="200"><b>Перепрошивка</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><img class="pic" src="/blog/lektorij/img/teorii-lichnosti.webp" alt="" loading="lazy" width="200" height="200"><b>Теории личности</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/emocionalnyj-intellekt/"><img class="pic" src="/blog/lektorij/img/emocionalnyj-intellekt.webp" alt="" loading="lazy" width="200" height="200"><b>Эмоциональный интеллект</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/psihodiagnostika/"><img class="pic" src="/blog/lektorij/img/psihodiagnostika.webp" alt="" loading="lazy" width="200" height="200"><b>Психодиагностика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/samoocenka/"><img class="pic" src="/blog/lektorij/img/samoocenka.webp" alt="" loading="lazy" width="200" height="200"><b>Самооценка и уверенность</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/lichnye-granicy/"><img class="pic" src="/blog/lektorij/img/lichnye-granicy.webp" alt="" loading="lazy" width="200" height="200"><b>Личные границы</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/vozrastnye-krizisy/"><img class="pic" src="/blog/lektorij/img/vozrastnye-krizisy.webp" alt="" loading="lazy" width="200" height="200"><b>Возрастные кризисы</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/vysokaya-chuvstvitelnost/"><img class="pic" src="/blog/lektorij/img/vysokaya-chuvstvitelnost.webp" alt="" loading="lazy" width="200" height="200"><b>Высокочувствительные люди</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/osoznannost/"><img class="pic" src="/blog/lektorij/img/osoznannost.webp" alt="" loading="lazy" width="200" height="200"><b>Осознанность</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/samoregulyaciya/"><img class="pic" src="/blog/lektorij/img/samoregulyaciya.webp" alt="" loading="lazy" width="200" height="200"><b>Эмоциональная саморегуляция</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/razvitie-rebenka/"><img class="pic" src="/blog/lektorij/img/razvitie-rebenka.webp" alt="" loading="lazy" width="200" height="200"><b>Развитие ребёнка</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/psihoterapiya/"><img class="pic" src="/blog/lektorij/img/psihoterapiya.webp" alt="" loading="lazy" width="200" height="200"><b>Психотерапия</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/eriksonovskij-gipnoz/"><img class="pic" src="/blog/lektorij/img/eriksonovskij-gipnoz.webp" alt="" loading="lazy" width="200" height="200"><b>Эриксоновский гипноз</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/pereproshivka/"><img class="pic" src="/blog/lektorij/img/pereproshivka.webp" alt="" loading="lazy" width="200" height="200"><b>Перепрошивка</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/teorii-lichnosti/"><img class="pic" src="/blog/lektorij/img/teorii-lichnosti.webp" alt="" loading="lazy" width="200" height="200"><b>Теории личности</b><span class="dcnt">13 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/emocionalnyj-intellekt/"><img class="pic" src="/blog/lektorij/img/emocionalnyj-intellekt.webp" alt="" loading="lazy" width="200" height="200"><b>Эмоциональный интеллект</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/psihodiagnostika/"><img class="pic" src="/blog/lektorij/img/psihodiagnostika.webp" alt="" loading="lazy" width="200" height="200"><b>Психодиагностика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/samoocenka/"><img class="pic" src="/blog/lektorij/img/samoocenka.webp" alt="" loading="lazy" width="200" height="200"><b>Самооценка и уверенность</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/lichnye-granicy/"><img class="pic" src="/blog/lektorij/img/lichnye-granicy.webp" alt="" loading="lazy" width="200" height="200"><b>Личные границы</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/vozrastnye-krizisy/"><img class="pic" src="/blog/lektorij/img/vozrastnye-krizisy.webp" alt="" loading="lazy" width="200" height="200"><b>Возрастные кризисы</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/vysokaya-chuvstvitelnost/"><img class="pic" src="/blog/lektorij/img/vysokaya-chuvstvitelnost.webp" alt="" loading="lazy" width="200" height="200"><b>Высокочувствительные люди</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/osoznannost/"><img class="pic" src="/blog/lektorij/img/osoznannost.webp" alt="" loading="lazy" width="200" height="200"><b>Осознанность</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/samoregulyaciya/"><img class="pic" src="/blog/lektorij/img/samoregulyaciya.webp" alt="" loading="lazy" width="200" height="200"><b>Эмоциональная саморегуляция</b><span class="dcnt">12 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/razvitie-rebenka/"><img class="pic" src="/blog/lektorij/img/razvitie-rebenka.webp" alt="" loading="lazy" width="200" height="200"><b>Развитие ребёнка</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/psihoterapiya/"><img class="pic" src="/blog/lektorij/img/psihoterapiya.webp" alt="" loading="lazy" width="200" height="200"><b>Психотерапия</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b2"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/o-chem-dumat/"><img class="pic" src="/blog/lektorij/img/o-chem-dumat.webp" alt="" loading="lazy" width="200" height="200"><b>О чём думать</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kak-dumat/"><img class="pic" src="/blog/lektorij/img/kak-dumat.webp" alt="" loading="lazy" width="200" height="200"><b>Как думать: наладка ума</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/myshlenie/"><img class="pic" src="/blog/lektorij/img/kognitivnye-iskazheniya.webp" alt="" loading="lazy" width="200" height="200"><b>Когнитивные искажения</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kak-uchitsya/"><img class="pic" src="/blog/lektorij/img/kak-uchitsya.webp" alt="" loading="lazy" width="200" height="200"><b>Как учиться</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kak-uchit-yazyk/"><img class="pic" src="/blog/lektorij/img/kak-uchit-yazyk.webp" alt="" loading="lazy" width="200" height="200"><b>Как учить иностранный язык</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kak-rabotat-s-ii/"><img class="pic" src="/blog/lektorij/img/kak-rabotat-s-ii.webp" alt="" loading="lazy" width="200" height="200"><b>Как работать с ИИ</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/prinyatie-reshenij/"><img class="pic" src="/blog/lektorij/img/prinyatie-reshenij.webp" alt="" loading="lazy" width="200" height="200"><b>Принятие решений</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kognitivistika/"><img class="pic" src="/blog/lektorij/img/kognitivistika.webp" alt="" loading="lazy" width="200" height="200"><b>Когнитивистика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/mozg-i-povedenie/"><img class="pic" src="/blog/lektorij/img/mozg-i-povedenie.webp" alt="" loading="lazy" width="200" height="200"><b>Мозг и поведение</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/logika/"><img class="pic" src="/blog/lektorij/img/logika.webp" alt="" loading="lazy" width="200" height="200"><b>Логика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kriticheskoe-myshlenie/"><img class="pic" src="/blog/lektorij/img/kriticheskoe-myshlenie.webp" alt="" loading="lazy" width="200" height="200"><b>Критическое мышление</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/metodologiya-myshleniya/"><img class="pic" src="/blog/lektorij/img/metodologiya-myshleniya.webp" alt="" loading="lazy" width="200" height="200"><b>Методология мышления</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/mnemonika/"><img class="pic" src="/blog/lektorij/img/mnemonika.webp" alt="" loading="lazy" width="200" height="200"><b>Мнемоника</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/opornye-signaly/"><img class="pic" src="/blog/lektorij/img/opornye-signaly.webp" alt="" loading="lazy" width="200" height="200"><b>Опорные сигналы: метод Шаталова</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/triz/"><img class="pic" src="/blog/lektorij/img/triz.webp" alt="" loading="lazy" width="200" height="200"><b>ТРИЗ</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/trablshuting/"><img class="pic" src="/blog/lektorij/img/trablshuting.webp" alt="" loading="lazy" width="200" height="200"><b>Траблшутинг</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/optika-izobretatelya/"><img class="pic" src="/blog/lektorij/img/optika-izobretatelya.webp" alt="" loading="lazy" width="200" height="200"><b>Оптика изобретателя</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/bertran-rassel/"><img class="pic" src="/blog/lektorij/img/bertran-rassel.webp" alt="" loading="lazy" width="200" height="200"><b>Бертран Рассел: ясность мышления</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/teoriya-igr/"><img class="pic" src="/blog/lektorij/img/teoriya-igr.webp" alt="" loading="lazy" width="200" height="200"><b>Теория игр</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/chernyj-lebed/"><img class="pic" src="/blog/lektorij/img/chernyj-lebed.webp" alt="" loading="lazy" width="200" height="200"><b>Чёрный лебедь</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/o-chem-dumat/"><img class="pic" src="/blog/lektorij/img/o-chem-dumat.webp" alt="" loading="lazy" width="200" height="200"><b>О чём думать</b><span class="dcnt">14 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kak-dumat/"><img class="pic" src="/blog/lektorij/img/kak-dumat.webp" alt="" loading="lazy" width="200" height="200"><b>Как думать: наладка ума</b><span class="dcnt">12 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/myshlenie/"><img class="pic" src="/blog/lektorij/img/kognitivnye-iskazheniya.webp" alt="" loading="lazy" width="200" height="200"><b>Когнитивные искажения</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kak-uchitsya/"><img class="pic" src="/blog/lektorij/img/kak-uchitsya.webp" alt="" loading="lazy" width="200" height="200"><b>Как учиться</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kak-uchit-yazyk/"><img class="pic" src="/blog/lektorij/img/kak-uchit-yazyk.webp" alt="" loading="lazy" width="200" height="200"><b>Как учить иностранный язык</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kak-rabotat-s-ii/"><img class="pic" src="/blog/lektorij/img/kak-rabotat-s-ii.webp" alt="" loading="lazy" width="200" height="200"><b>Как работать с ИИ</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/prinyatie-reshenij/"><img class="pic" src="/blog/lektorij/img/prinyatie-reshenij.webp" alt="" loading="lazy" width="200" height="200"><b>Принятие решений</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kognitivistika/"><img class="pic" src="/blog/lektorij/img/kognitivistika.webp" alt="" loading="lazy" width="200" height="200"><b>Когнитивистика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/mozg-i-povedenie/"><img class="pic" src="/blog/lektorij/img/mozg-i-povedenie.webp" alt="" loading="lazy" width="200" height="200"><b>Мозг и поведение</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/logika/"><img class="pic" src="/blog/lektorij/img/logika.webp" alt="" loading="lazy" width="200" height="200"><b>Логика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kriticheskoe-myshlenie/"><img class="pic" src="/blog/lektorij/img/kriticheskoe-myshlenie.webp" alt="" loading="lazy" width="200" height="200"><b>Критическое мышление</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/metodologiya-myshleniya/"><img class="pic" src="/blog/lektorij/img/metodologiya-myshleniya.webp" alt="" loading="lazy" width="200" height="200"><b>Методология мышления</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/mnemonika/"><img class="pic" src="/blog/lektorij/img/mnemonika.webp" alt="" loading="lazy" width="200" height="200"><b>Мнемоника</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/opornye-signaly/"><img class="pic" src="/blog/lektorij/img/opornye-signaly.webp" alt="" loading="lazy" width="200" height="200"><b>Опорные сигналы: метод Шаталова</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/triz/"><img class="pic" src="/blog/lektorij/img/triz.webp" alt="" loading="lazy" width="200" height="200"><b>ТРИЗ</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/trablshuting/"><img class="pic" src="/blog/lektorij/img/trablshuting.webp" alt="" loading="lazy" width="200" height="200"><b>Траблшутинг</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/optika-izobretatelya/"><img class="pic" src="/blog/lektorij/img/optika-izobretatelya.webp" alt="" loading="lazy" width="200" height="200"><b>Оптика изобретателя</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/bertran-rassel/"><img class="pic" src="/blog/lektorij/img/bertran-rassel.webp" alt="" loading="lazy" width="200" height="200"><b>Бертран Рассел: ясность мышления</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/teoriya-igr/"><img class="pic" src="/blog/lektorij/img/teoriya-igr.webp" alt="" loading="lazy" width="200" height="200"><b>Теория игр</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/chernyj-lebed/"><img class="pic" src="/blog/lektorij/img/chernyj-lebed.webp" alt="" loading="lazy" width="200" height="200"><b>Чёрный лебедь</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b3"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/status-i-dominirovanie/"><img class="pic" src="/blog/lektorij/img/status-i-dominirovanie.webp" alt="" loading="lazy" width="200" height="200"><b>Статус и доминирование</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/roditelstvo/"><img class="pic" src="/blog/lektorij/img/roditelstvo.webp" alt="" loading="lazy" width="200" height="200"><b>Родительство</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/separaciya/"><img class="pic" src="/blog/lektorij/img/separaciya.webp" alt="" loading="lazy" width="200" height="200"><b>Сепарация от родителей</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/druzhba/"><img class="pic" src="/blog/lektorij/img/druzhba.webp" alt="" loading="lazy" width="200" height="200"><b>Дружба во взрослом возрасте</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/oratorskoe-iskusstvo/"><img class="pic" src="/blog/lektorij/img/oratorskoe-iskusstvo.webp" alt="" loading="lazy" width="200" height="200"><b>Ораторское искусство</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/peregovory/"><img class="pic" src="/blog/lektorij/img/peregovory.webp" alt="" loading="lazy" width="200" height="200"><b>Переговоры</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/nlp/"><img class="pic" src="/blog/lektorij/img/nlp.webp" alt="" loading="lazy" width="200" height="200"><b>НЛП</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/novyj-kod-nlp/"><img class="pic" src="/blog/lektorij/img/novyj-kod-nlp.webp" alt="" loading="lazy" width="200" height="200"><b>Новый код НЛП</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/akterskoe-masterstvo/"><img class="pic" src="/blog/lektorij/img/akterskoe-masterstvo.webp" alt="" loading="lazy" width="200" height="200"><b>Актёрское мастерство</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/storitelling/"><img class="pic" src="/blog/lektorij/img/storitelling.webp" alt="" loading="lazy" width="200" height="200"><b>Сторителлинг</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><img class="pic" src="/blog/lektorij/img/vliyanie-i-manipulyacii.webp" alt="" loading="lazy" width="200" height="200"><b>Влияние и манипуляции</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/yazyk-tela-i-lozh/"><img class="pic" src="/blog/lektorij/img/yazyk-tela-i-lozh.webp" alt="" loading="lazy" width="200" height="200"><b>Язык тела и психология лжи</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/konflikty/"><img class="pic" src="/blog/lektorij/img/konflikty.webp" alt="" loading="lazy" width="200" height="200"><b>Конфликты</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/mediagramotnost/"><img class="pic" src="/blog/lektorij/img/mediagramotnost.webp" alt="" loading="lazy" width="200" height="200"><b>Медиаграмотность</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/privyazannost-i-otnosheniya/"><img class="pic" src="/blog/lektorij/img/privyazannost-i-otnosheniya.webp" alt="" loading="lazy" width="200" height="200"><b>Привязанность и отношения</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/status-i-dominirovanie/"><img class="pic" src="/blog/lektorij/img/status-i-dominirovanie.webp" alt="" loading="lazy" width="200" height="200"><b>Статус и доминирование</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/roditelstvo/"><img class="pic" src="/blog/lektorij/img/roditelstvo.webp" alt="" loading="lazy" width="200" height="200"><b>Родительство</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/separaciya/"><img class="pic" src="/blog/lektorij/img/separaciya.webp" alt="" loading="lazy" width="200" height="200"><b>Сепарация от родителей</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/druzhba/"><img class="pic" src="/blog/lektorij/img/druzhba.webp" alt="" loading="lazy" width="200" height="200"><b>Дружба во взрослом возрасте</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/oratorskoe-iskusstvo/"><img class="pic" src="/blog/lektorij/img/oratorskoe-iskusstvo.webp" alt="" loading="lazy" width="200" height="200"><b>Ораторское искусство</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/peregovory/"><img class="pic" src="/blog/lektorij/img/peregovory.webp" alt="" loading="lazy" width="200" height="200"><b>Переговоры</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/nlp/"><img class="pic" src="/blog/lektorij/img/nlp.webp" alt="" loading="lazy" width="200" height="200"><b>НЛП</b><span class="dcnt">14 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/novyj-kod-nlp/"><img class="pic" src="/blog/lektorij/img/novyj-kod-nlp.webp" alt="" loading="lazy" width="200" height="200"><b>Новый код НЛП</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/akterskoe-masterstvo/"><img class="pic" src="/blog/lektorij/img/akterskoe-masterstvo.webp" alt="" loading="lazy" width="200" height="200"><b>Актёрское мастерство</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/storitelling/"><img class="pic" src="/blog/lektorij/img/storitelling.webp" alt="" loading="lazy" width="200" height="200"><b>Сторителлинг</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/vliyanie-i-manipulyacii/"><img class="pic" src="/blog/lektorij/img/vliyanie-i-manipulyacii.webp" alt="" loading="lazy" width="200" height="200"><b>Влияние и манипуляции</b><span class="dcnt">12 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/yazyk-tela-i-lozh/"><img class="pic" src="/blog/lektorij/img/yazyk-tela-i-lozh.webp" alt="" loading="lazy" width="200" height="200"><b>Язык тела и психология лжи</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/konflikty/"><img class="pic" src="/blog/lektorij/img/konflikty.webp" alt="" loading="lazy" width="200" height="200"><b>Конфликты</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/mediagramotnost/"><img class="pic" src="/blog/lektorij/img/mediagramotnost.webp" alt="" loading="lazy" width="200" height="200"><b>Медиаграмотность</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/privyazannost-i-otnosheniya/"><img class="pic" src="/blog/lektorij/img/privyazannost-i-otnosheniya.webp" alt="" loading="lazy" width="200" height="200"><b>Привязанность и отношения</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b7"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/svoe-delo/"><img class="pic" src="/blog/lektorij/img/svoe-delo.webp" alt="" loading="lazy" width="200" height="200"><b>Своё дело с нуля</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/pochemu-ne-kopitsya/"><img class="pic" src="/blog/lektorij/img/pochemu-ne-kopitsya.webp" alt="" loading="lazy" width="200" height="200"><b>Почему не получается копить</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/rabota-i-karera/"><img class="pic" src="/blog/lektorij/img/rabota-i-karera.webp" alt="" loading="lazy" width="200" height="200"><b>Работа и карьера</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/upravlenie-lyudmi/"><img class="pic" src="/blog/lektorij/img/upravlenie-lyudmi.webp" alt="" loading="lazy" width="200" height="200"><b>Управление людьми</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/prodazhi/"><img class="pic" src="/blog/lektorij/img/prodazhi.webp" alt="" loading="lazy" width="200" height="200"><b>Продажи</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/piar/"><img class="pic" src="/blog/lektorij/img/piar.webp" alt="" loading="lazy" width="200" height="200"><b>Пиар</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/biznes-myshlenie/"><img class="pic" src="/blog/lektorij/img/biznes-myshlenie.webp" alt="" loading="lazy" width="200" height="200"><b>Бизнес-мышление</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/tajm-menedzhment/"><img class="pic" src="/blog/lektorij/img/tajm-menedzhment.webp" alt="" loading="lazy" width="200" height="200"><b>Тайм-менеджмент и планирование</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/prokrastinaciya-i-motivaciya/"><img class="pic" src="/blog/lektorij/img/prokrastinaciya.webp" alt="" loading="lazy" width="200" height="200"><b>Прокрастинация и мотивация</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/dengi-i-psihologiya/"><img class="pic" src="/blog/lektorij/img/dengi-i-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Психология денег</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/distanciya/"><img class="pic" src="/blog/lektorij/img/distanciya.webp" alt="" loading="lazy" width="200" height="200"><b>Дистанция</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/ekonomika/"><img class="pic" src="/blog/lektorij/img/ekonomika.webp" alt="" loading="lazy" width="200" height="200"><b>Экономика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/povedencheskaya-ekonomika/"><img class="pic" src="/blog/lektorij/img/povedencheskaya-ekonomika.webp" alt="" loading="lazy" width="200" height="200"><b>Поведенческая экономика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/psihologiya-peregruzok/"><img class="pic" src="/blog/lektorij/img/psihologiya-peregruzok.webp" alt="" loading="lazy" width="200" height="200"><b>Психология перегрузок</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/svoe-delo/"><img class="pic" src="/blog/lektorij/img/svoe-delo.webp" alt="" loading="lazy" width="200" height="200"><b>Своё дело с нуля</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/pochemu-ne-kopitsya/"><img class="pic" src="/blog/lektorij/img/pochemu-ne-kopitsya.webp" alt="" loading="lazy" width="200" height="200"><b>Почему не получается копить</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/rabota-i-karera/"><img class="pic" src="/blog/lektorij/img/rabota-i-karera.webp" alt="" loading="lazy" width="200" height="200"><b>Работа и карьера</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/upravlenie-lyudmi/"><img class="pic" src="/blog/lektorij/img/upravlenie-lyudmi.webp" alt="" loading="lazy" width="200" height="200"><b>Управление людьми</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/prodazhi/"><img class="pic" src="/blog/lektorij/img/prodazhi.webp" alt="" loading="lazy" width="200" height="200"><b>Продажи</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/piar/"><img class="pic" src="/blog/lektorij/img/piar.webp" alt="" loading="lazy" width="200" height="200"><b>Пиар</b><span class="dcnt">12 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/biznes-myshlenie/"><img class="pic" src="/blog/lektorij/img/biznes-myshlenie.webp" alt="" loading="lazy" width="200" height="200"><b>Бизнес-мышление</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/tajm-menedzhment/"><img class="pic" src="/blog/lektorij/img/tajm-menedzhment.webp" alt="" loading="lazy" width="200" height="200"><b>Тайм-менеджмент и планирование</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/prokrastinaciya-i-motivaciya/"><img class="pic" src="/blog/lektorij/img/prokrastinaciya.webp" alt="" loading="lazy" width="200" height="200"><b>Прокрастинация и мотивация</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/dengi-i-psihologiya/"><img class="pic" src="/blog/lektorij/img/dengi-i-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Психология денег</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/distanciya/"><img class="pic" src="/blog/lektorij/img/distanciya.webp" alt="" loading="lazy" width="200" height="200"><b>Дистанция</b><span class="dcnt">15 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/ekonomika/"><img class="pic" src="/blog/lektorij/img/ekonomika.webp" alt="" loading="lazy" width="200" height="200"><b>Экономика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/povedencheskaya-ekonomika/"><img class="pic" src="/blog/lektorij/img/povedencheskaya-ekonomika.webp" alt="" loading="lazy" width="200" height="200"><b>Поведенческая экономика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/psihologiya-peregruzok/"><img class="pic" src="/blog/lektorij/img/psihologiya-peregruzok.webp" alt="" loading="lazy" width="200" height="200"><b>Психология перегрузок</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b4"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/sociologiya/"><img class="pic" src="/blog/lektorij/img/sociologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Социология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/socialnaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/socialnaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Социальная психология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/antropologiya/"><img class="pic" src="/blog/lektorij/img/antropologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Антропология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/evolyucionnaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/evolyucionnaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Эволюционная психология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/politicheskaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/politicheskaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Политическая психология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/istoriya-religij/"><img class="pic" src="/blog/lektorij/img/istoriya-religij.webp" alt="" loading="lazy" width="200" height="200"><b>История религий</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/mifologiya/"><img class="pic" src="/blog/lektorij/img/mifologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Мифология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/buddijskaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/buddijskaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Буддийская психология</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/istoriya-idej/"><img class="pic" src="/blog/lektorij/img/istoriya-idej.webp" alt="" loading="lazy" width="200" height="200"><b>История идей</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/filosofiya/"><img class="pic" src="/blog/lektorij/img/filosofiya.webp" alt="" loading="lazy" width="200" height="200"><b>Философия</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/psihologiya-iskusstva/"><img class="pic" src="/blog/lektorij/img/psihologiya-iskusstva.webp" alt="" loading="lazy" width="200" height="200"><b>Психология искусства и музыки</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/kamasutra/"><img class="pic" src="/blog/lektorij/img/kamasutra.webp" alt="" loading="lazy" width="200" height="200"><b>Камасутра</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/sociologiya/"><img class="pic" src="/blog/lektorij/img/sociologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Социология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/socialnaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/socialnaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Социальная психология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/antropologiya/"><img class="pic" src="/blog/lektorij/img/antropologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Антропология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/evolyucionnaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/evolyucionnaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Эволюционная психология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/politicheskaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/politicheskaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Политическая психология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/istoriya-religij/"><img class="pic" src="/blog/lektorij/img/istoriya-religij.webp" alt="" loading="lazy" width="200" height="200"><b>История религий</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/mifologiya/"><img class="pic" src="/blog/lektorij/img/mifologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Мифология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/buddijskaya-psihologiya/"><img class="pic" src="/blog/lektorij/img/buddijskaya-psihologiya.webp" alt="" loading="lazy" width="200" height="200"><b>Буддийская психология</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/istoriya-idej/"><img class="pic" src="/blog/lektorij/img/istoriya-idej.webp" alt="" loading="lazy" width="200" height="200"><b>История идей</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/filosofiya/"><img class="pic" src="/blog/lektorij/img/filosofiya.webp" alt="" loading="lazy" width="200" height="200"><b>Философия</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/psihologiya-iskusstva/"><img class="pic" src="/blog/lektorij/img/psihologiya-iskusstva.webp" alt="" loading="lazy" width="200" height="200"><b>Психология искусства и музыки</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/kamasutra/"><img class="pic" src="/blog/lektorij/img/kamasutra.webp" alt="" loading="lazy" width="200" height="200"><b>Камасутра</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b6"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/zhizn-v-seti/"><img class="pic" src="/blog/lektorij/img/zhizn-v-seti.webp" alt="" loading="lazy" width="200" height="200"><b>Жизнь в сети</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/gnev-i-agressiya/"><img class="pic" src="/blog/lektorij/img/gnev-i-agressiya.webp" alt="" loading="lazy" width="200" height="200"><b>Гнев и агрессия</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/samogipnoz/"><img class="pic" src="/blog/lektorij/img/samogipnoz.webp" alt="" loading="lazy" width="200" height="200"><b>Самогипноз</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/son/"><img class="pic" src="/blog/lektorij/img/son.webp" alt="" loading="lazy" width="200" height="200"><b>Сон</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/privychki/"><img class="pic" src="/blog/lektorij/img/privychki.webp" alt="" loading="lazy" width="200" height="200"><b>Привычки</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/stress-menedzhment/"><img class="pic" src="/blog/lektorij/img/stress-menedzhment.webp" alt="" loading="lazy" width="200" height="200"><b>Стресс-менеджмент</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/psihologiya-edy/"><img class="pic" src="/blog/lektorij/img/psihologiya-edy.webp" alt="" loading="lazy" width="200" height="200"><b>Психология еды</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/psihologiya-sporta/"><img class="pic" src="/blog/lektorij/img/psihologiya-sporta.webp" alt="" loading="lazy" width="200" height="200"><b>Психология спорта</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/nauka-o-schaste/"><img class="pic" src="/blog/lektorij/img/nauka-o-schaste.webp" alt="" loading="lazy" width="200" height="200"><b>Наука о счастье</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/dvigatel-len-ambicii/"><img class="pic" src="/blog/lektorij/img/dvigatel.webp" alt="" loading="lazy" width="200" height="200"><b>Двигатель: лень, амбиции и азарт поиска</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/zhizn-v-seti/"><img class="pic" src="/blog/lektorij/img/zhizn-v-seti.webp" alt="" loading="lazy" width="200" height="200"><b>Жизнь в сети</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/gnev-i-agressiya/"><img class="pic" src="/blog/lektorij/img/gnev-i-agressiya.webp" alt="" loading="lazy" width="200" height="200"><b>Гнев и агрессия</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/samogipnoz/"><img class="pic" src="/blog/lektorij/img/samogipnoz.webp" alt="" loading="lazy" width="200" height="200"><b>Самогипноз</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/son/"><img class="pic" src="/blog/lektorij/img/son.webp" alt="" loading="lazy" width="200" height="200"><b>Сон</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/privychki/"><img class="pic" src="/blog/lektorij/img/privychki.webp" alt="" loading="lazy" width="200" height="200"><b>Привычки</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/stress-menedzhment/"><img class="pic" src="/blog/lektorij/img/stress-menedzhment.webp" alt="" loading="lazy" width="200" height="200"><b>Стресс-менеджмент</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/psihologiya-edy/"><img class="pic" src="/blog/lektorij/img/psihologiya-edy.webp" alt="" loading="lazy" width="200" height="200"><b>Психология еды</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/psihologiya-sporta/"><img class="pic" src="/blog/lektorij/img/psihologiya-sporta.webp" alt="" loading="lazy" width="200" height="200"><b>Психология спорта</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/nauka-o-schaste/"><img class="pic" src="/blog/lektorij/img/nauka-o-schaste.webp" alt="" loading="lazy" width="200" height="200"><b>Наука о счастье</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/dvigatel-len-ambicii/"><img class="pic" src="/blog/lektorij/img/dvigatel.webp" alt="" loading="lazy" width="200" height="200"><b>Двигатель: лень, амбиции и азарт поиска</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b8"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/gore/"><img class="pic" src="/blog/lektorij/img/gore.webp" alt="" loading="lazy" width="200" height="200"><b>Горе и утрата</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/rasstavanie/"><img class="pic" src="/blog/lektorij/img/rasstavanie.webp" alt="" loading="lazy" width="200" height="200"><b>Расставание</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/depressiya-i-apatiya/"><img class="pic" src="/blog/lektorij/img/depressiya-i-apatiya.webp" alt="" loading="lazy" width="200" height="200"><b>Депрессия и апатия</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/trevoga/"><img class="pic" src="/blog/lektorij/img/trevoga.webp" alt="" loading="lazy" width="200" height="200"><b>Тревога и как с ней жить</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/travma/"><img class="pic" src="/blog/lektorij/img/travma.webp" alt="" loading="lazy" width="200" height="200"><b>Травма</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/zavisimosti/"><img class="pic" src="/blog/lektorij/img/zavisimosti.webp" alt="" loading="lazy" width="200" height="200"><b>Зависимости</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/snova-zhivoj/"><img class="pic" src="/blog/lektorij/img/snova-zhivoj.webp" alt="" loading="lazy" width="200" height="200"><b>Снова живой</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/odinochestvo/"><img class="pic" src="/blog/lektorij/img/odinochestvo.webp" alt="" loading="lazy" width="200" height="200"><b>Одиночество</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/gore/"><img class="pic" src="/blog/lektorij/img/gore.webp" alt="" loading="lazy" width="200" height="200"><b>Горе и утрата</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/rasstavanie/"><img class="pic" src="/blog/lektorij/img/rasstavanie.webp" alt="" loading="lazy" width="200" height="200"><b>Расставание</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/depressiya-i-apatiya/"><img class="pic" src="/blog/lektorij/img/depressiya-i-apatiya.webp" alt="" loading="lazy" width="200" height="200"><b>Депрессия и апатия</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/trevoga/"><img class="pic" src="/blog/lektorij/img/trevoga.webp" alt="" loading="lazy" width="200" height="200"><b>Тревога и как с ней жить</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/travma/"><img class="pic" src="/blog/lektorij/img/travma.webp" alt="" loading="lazy" width="200" height="200"><b>Травма</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/zavisimosti/"><img class="pic" src="/blog/lektorij/img/zavisimosti.webp" alt="" loading="lazy" width="200" height="200"><b>Зависимости</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/snova-zhivoj/"><img class="pic" src="/blog/lektorij/img/snova-zhivoj.webp" alt="" loading="lazy" width="200" height="200"><b>Снова живой</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/odinochestvo/"><img class="pic" src="/blog/lektorij/img/odinochestvo.webp" alt="" loading="lazy" width="200" height="200"><b>Одиночество</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 <div class="panel" id="b5"><div class="dgrid">
-<a class="dcard" href="/blog/lektorij/etika/"><img class="pic" src="/blog/lektorij/img/etika.webp" alt="" loading="lazy" width="200" height="200"><b>Этика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/estetika/"><img class="pic" src="/blog/lektorij/img/estetika.webp" alt="" loading="lazy" width="200" height="200"><b>Эстетика</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/ekzistencialnye-voprosy/"><img class="pic" src="/blog/lektorij/img/ekzistencialnye-voprosy.webp" alt="" loading="lazy" width="200" height="200"><b>Экзистенциальные вопросы</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/stoicizm/"><img class="pic" src="/blog/lektorij/img/stoicizm.webp" alt="" loading="lazy" width="200" height="200"><b>Стоицизм на практике</b><span class="st open">Открыто</span></a>
-<a class="dcard" href="/blog/lektorij/parus/"><img class="pic" src="/blog/lektorij/img/parus.webp" alt="" loading="lazy" width="200" height="200"><b>Парус</b><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/etika/"><img class="pic" src="/blog/lektorij/img/etika.webp" alt="" loading="lazy" width="200" height="200"><b>Этика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/estetika/"><img class="pic" src="/blog/lektorij/img/estetika.webp" alt="" loading="lazy" width="200" height="200"><b>Эстетика</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/ekzistencialnye-voprosy/"><img class="pic" src="/blog/lektorij/img/ekzistencialnye-voprosy.webp" alt="" loading="lazy" width="200" height="200"><b>Экзистенциальные вопросы</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/stoicizm/"><img class="pic" src="/blog/lektorij/img/stoicizm.webp" alt="" loading="lazy" width="200" height="200"><b>Стоицизм на практике</b><span class="dcnt">10 лекций</span><span class="st open">Открыто</span></a>
+<a class="dcard" href="/blog/lektorij/parus/"><img class="pic" src="/blog/lektorij/img/parus.webp" alt="" loading="lazy" width="200" height="200"><b>Парус</b><span class="dcnt">12 лекций</span><span class="st open">Открыто</span></a>
 </div></div>
 
 </div></section>
@@ -2417,6 +2417,36 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script>
+
+(function(){
+  // каталог: показываем первые N карточек, остальные — по кнопке
+  function limit(){
+    var N = window.matchMedia('(max-width:600px)').matches ? 8 : 10;
+    document.querySelectorAll('.panel .dgrid').forEach(function(g){
+      var cards = [].slice.call(g.querySelectorAll('.dcard'));
+      var btn = g.parentNode.querySelector('.more');
+      if (cards.length <= N){ if(btn) btn.remove(); cards.forEach(function(c){c.classList.remove('hid');}); return; }
+      if (!btn){
+        btn = document.createElement('button');
+        btn.className = 'more'; btn.type = 'button';
+        btn.addEventListener('click', function(){
+          var hidden = g.querySelectorAll('.dcard.hid').length;
+          if (hidden){ cards.forEach(function(c){c.classList.remove('hid');}); btn.textContent = 'Свернуть'; }
+          else { cards.forEach(function(c,i){ if(i>=N) c.classList.add('hid'); }); btn.textContent = label(); 
+                 g.scrollIntoView({block:'start',behavior:'smooth'}); }
+        });
+        g.parentNode.insertBefore(btn, g.nextSibling);
+      }
+      function label(){ var k = cards.length - N; return 'Показать ещё ' + k + ' ' + skl(k); }
+      function skl(k){ var a=k%10,b=k%100; if(b>=11&&b<=14) return 'курсов';
+        if(a===1) return 'курс'; if(a>=2&&a<=4) return 'курса'; return 'курсов'; }
+      cards.forEach(function(c,i){ if(i>=N) c.classList.add('hid'); else c.classList.remove('hid'); });
+      btn.textContent = label();
+    });
+  }
+  limit();
+  var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(limit, 200); });
+})();
 document.querySelectorAll('.tab').forEach(function(t){
   t.addEventListener('click',function(){
     document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
