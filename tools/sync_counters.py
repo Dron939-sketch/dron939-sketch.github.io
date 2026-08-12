@@ -158,16 +158,19 @@ def sync_lektorij(n_courses, n_lectures):
     # Плашка с крупными числами в шапке. Стоит отдельно от остального текста:
     # значение продублировано в data-count (по нему идёт анимация счётчика),
     # поэтому править надо и атрибут, и содержимое, и подпись под числом.
+    # Числовых плиток ровно две: направления и лекции. Третья плитка —
+    # «бесплатно», без data-count: регулярка её не видит и не трогает.
     m = re.search(r'<div class="stats">.*?</div>', s, re.S)
     if m:
         was = m.group(0)
-        cells = [(n_courses, napr),
-                 (n_lectures, lekc + " открыто"),
-                 (n_courses, kurs + " открыт" + ("" if kurs == "курс" else "о"))]
+        cells = [(n_courses, napr), (n_lectures, lekc + " открыто")]
         it = iter(cells)
 
         def cell(mm):
-            num, label = next(it)
+            try:
+                num, label = next(it)
+            except StopIteration:
+                return mm.group(0)
             return ('<span><b data-count="%d">%d</b><i>%s</i></span>'
                     % (num, num, label))
 
@@ -175,8 +178,8 @@ def sync_lektorij(n_courses, n_lectures):
                      cell, was)
         if now != was:
             s = s.replace(was, now, 1)
-            log.append("Лекторий: плашка в шапке — %d, %d, %d"
-                       % (n_courses, n_lectures, n_courses))
+            log.append("Лекторий: плашка в шапке — %d, %d"
+                       % (n_courses, n_lectures))
 
     if s != s0:
         log.append("Лекторий: %d курсов, %d лекций (сводные числа)"
