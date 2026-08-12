@@ -1713,7 +1713,7 @@ h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margi
 .tag.start{color:#dff1ff;border:1px solid var(--accent2);background:linear-gradient(135deg,rgba(0,168,232,.22),rgba(58,134,255,.18))}
 
 /* sections */
-.sec{padding:46px 0}
+.sec{padding:46px 0}.sec.compact{padding:26px 0}.sec.compact .sh{margin-bottom:14px}@media(max-width:600px){.sec.compact{padding:18px 0}.sec.compact .sh{margin-bottom:12px;gap:8px}.sec.compact .sh h2{font-size:1.3rem}}
 @media(max-width:600px){.hero{padding:38px 0 30px}.sec{padding:30px 0}.stats{display:flex;width:100%}.stats span{flex:1;padding:12px 6px}.stats b{font-size:1.3rem}.stats i{font-size:.58rem;letter-spacing:.06em}}
 .sh{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
 .sh h2{font-size:1.7rem;font-weight:300;letter-spacing:.04em;margin:0}.sh span{color:var(--mut);font-size:.9rem}
@@ -1780,14 +1780,14 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 .wl-msg{font-size:.85rem;margin-top:10px;min-height:16px}
 
 /* how / why / cta */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.step{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:32px 24px}
-.snum{width:50px;height:50px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:500;color:#fff;background:linear-gradient(135deg,var(--accent2),var(--accent));box-shadow:0 0 20px rgba(58,134,255,.35)}
-.step b{display:block;font-size:1.1rem;font-weight:500;margin-bottom:8px}.step p{color:var(--mut);font-size:.88rem;font-weight:300;margin:0}
-.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.feat{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 18px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.step{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"n t" "n p";align-items:start;column-gap:14px;row-gap:4px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}.step .snum{grid-area:n}.step b{grid-area:t}.step p{grid-area:p}
+.snum{width:34px;height:34px;border-radius:50%;margin:2px 0 0;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:500;color:#fff;background:linear-gradient(135deg,var(--accent2),var(--accent));box-shadow:0 0 14px rgba(58,134,255,.3)}
+.step b{display:block;font-size:1rem;font-weight:500;margin-bottom:5px}.step p{color:var(--mut);font-size:.88rem;font-weight:300;margin:0}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.feat{display:grid;grid-template-columns:auto 1fr;grid-template-areas:"i t" "i p";align-items:start;column-gap:13px;row-gap:3px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}.feat .pic{grid-area:i}.feat b{grid-area:t}.feat p{grid-area:p}
 .feat:hover{border-color:var(--accent)}
-.feat .pic{width:54px;height:54px;margin:0 auto 12px}
+.feat .pic{width:32px;height:32px;margin:1px 0 0}
 .feat b{display:block;font-weight:500;margin-bottom:6px}.feat p{color:var(--mut);font-size:.82rem;font-weight:300;margin:0}
 .band{text-align:center;padding:52px 24px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(0,168,232,.10),rgba(58,134,255,.10))}
 .band h2{font-size:1.8rem;font-weight:300;margin:0 0 10px}.band p{color:var(--body);font-weight:300;margin:0 0 24px}
@@ -2374,7 +2374,7 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div>
 </div></section>
 
-<section class="sec"><div class="wrap">
+<section class="sec compact"><div class="wrap">
 <div class="sh"><h2>Как проходить курсы</h2><span>три шага</span></div>
 <div class="steps">
 <div class="step"><div class="snum">0</div><b>Сначала — нулевой</b><p>Курс «Как думать» ставит саму способность понимать прочитанное и услышанное. Без него остальное пролетает мимо — это порог входа.</p></div>
@@ -2383,7 +2383,7 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 </div>
 </div></section>
 
-<section class="sec"><div class="wrap">
+<section class="sec compact"><div class="wrap">
 <div class="sh"><h2>Почему Лекторий</h2><span>коротко, честно, по делу</span></div>
 <div class="feats">
 <div class="feat"><svg class="pic"><use href="#p-lens"/></svg><b>Научный подход</b><p>Университетские программы и первоисточники, без «успешного успеха».</p></div>
