@@ -3067,7 +3067,14 @@ document.addEventListener('DOMContentLoaded', function() {
             vsluh: { fn: 'showVsluhGame', src: 'vsluh.js', chat: 'kontur' }, // «Мысль вслух» — наладка приватных процессов мышления
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
-        var r = ROUTES[m];
+        // Синонимы: под этими именами игры звали ссылки в блоге, а в таблице
+        // их не было — роутер молча выходил, и человек оставался на дашборде,
+        // не понимая, почему кнопка «Игра „Своё дело“» ничего не открыла.
+        // Ссылки в блоге поправлены, но они уже разошлись по выдаче и
+        // закладкам, поэтому старые имена продолжаем понимать.
+        var ALIASES = { svoedelo: 'delo', dopros: 'mysl', mind: 'mysl',
+                        lovi: 'oshibka', ferm: 'fermi' };
+        var r = ROUTES[m] || ROUTES[ALIASES[m]];
         if (!r) return;
         var open = function () {
             var go = function () {

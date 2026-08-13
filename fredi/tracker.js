@@ -122,9 +122,41 @@
         return res;
     }
 
+    // ---- game_open: один вход в игру — одно событие ----
+    // Игры зовут track('game_open') в конце отрисовки домашнего экрана,
+    // а на него возвращаются после каждого уровня кнопкой «К карте пути».
+    // Поэтому один заход в игру писал по три-четыре «открытия», и в топе
+    // событий game_open означал не входы, а перерисовки.
+    //
+    // Первый вход за сессию остаётся game_open, возвраты на карту идут
+    // как game_returned. Заодно проставляем источник: в игру ведут
+    // прямые ссылки из лекций (/fredi/?m=vsluh), и отличить их от клика
+    // внутри приложения по событию раньше было нельзя.
+    var _gamesSeen={};
+    var _deepLinkGame=(function(){
+        try { return new URLSearchParams(location.search).get('m')||''; }
+        catch(e){ var m=(location.search||'').match(/[?&]m=([^&]+)/);
+                  return m?decodeURIComponent(m[1]):''; }
+    })();
+    function _markGameOpen(event,data){
+        if(event!=='game_open') return event;
+        var d=data||{};
+        var slug=d.game||d.feature||'';
+        if(!slug) return event;
+        if(_gamesSeen[slug]){
+            d.reopen_no=_gamesSeen[slug];
+            _gamesSeen[slug]++;
+            return 'game_returned';
+        }
+        _gamesSeen[slug]=1;
+        d.source=(slug===_deepLinkGame)?'deeplink':'app';
+        return event;
+    }
+
     function track(event,data){
         if (_isInternal()) return;
         if (_shouldDedupeError(event, data)) return;
+        event=_markGameOpen(event,data);
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,
         // ловит и внутренние (feature_opened/message_sent), и внешние события.
@@ -465,6 +497,14 @@
     // На iOS + Safari beforeunload не всегда срабатывает, поэтому дублируем
     // отправку через pagehide и visibilitychange='hidden' (idempotent — флаг).
     var _sessionEnded=false;
+    // Активное время на момент последнего отправленного session_end.
+    // Человек, который уходит со вкладки и возвращается, снимает флаг
+    // _sessionEnded (см. visibilitychange ниже) — и следующий уход шлёт
+    // ещё один session_end. Это осознанно: иначе время, набранное после
+    // возврата, потерялось бы. Но если после возврата он ничего не
+    // делал, второй session_end несёт ровно те же цифры и только
+    // портит статистику. Такой шлём один раз.
+    var _lastEndActiveSec=-1;
     function _emitSessionEnd(){
         if(_sessionEnded) return;
         _sessionEnded=true;
@@ -472,6 +512,8 @@
         _tickActive();
         var wallSec=Math.round((Date.now()-START)/1000);
         var activeSec=Math.min(Math.round(_activeMs/1000), 7200);
+        if(activeSec===_lastEndActiveSec) return;
+        _lastEndActiveSec=activeSec;
         track('session_end',{duration_sec:activeSec, wall_sec:wallSec, last_screen:_screen});
         _flush();
     }
