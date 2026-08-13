@@ -237,6 +237,7 @@
         <div class="kv-grid" id="kvGrid"></div>
 
         <h2>Воронка подписки</h2>
+        <div style="font-size:12px;color:var(--text-dim);margin:-6px 0 10px">Уникальные люди на каждом шаге, а не число показов: одному человеку и предупреждение, и стена показываются по многу раз.</div>
         <div id="funnel"></div>
 
         <h2>Сегменты (по атрибутам юзеров)</h2>
@@ -2544,7 +2545,7 @@ POV: ты на семейном ужине, и мама такая «как у �
         }
         var step0 = f.meter_warning || 0;
         var baseForStart = step0 || step1;
-        html += row('Предупреждение (<5 мин)', step0, baseForStart);
+        html += row('Предупреждение о лимите', step0, baseForStart);
         html += row('Показ модалки meter', step1, baseForStart);
         html += row('Клик «Открыть подписку»', step2, step1 || baseForStart);
         html += row('Подписка активирована', step3, step2 || step1 || baseForStart);
