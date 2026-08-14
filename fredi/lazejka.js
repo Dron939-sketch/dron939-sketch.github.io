@@ -185,6 +185,51 @@
   ];
 
   // ---------------------------------------------------------------
+  // РАЗВЕДКА: правило спрятано. Механика Zendo — вы предлагаете пробы,
+  // в ответ только «можно» или «нельзя», и по отметкам нащупываете
+  // формулировку.
+  //
+  // Так это и устроено в жизни: свод правил семьи, отдела или пары никто
+  // не выдаёт на входе. Его узнают, наступая. Все правила ниже —
+  // настоящего вида: невысказанные, но работающие.
+  //
+  // rule должно быть достаточно чётким, чтобы «можно/нельзя» на любую
+  // пробу получалось одинаковым. Расплывчатое правило ломает механику.
+  // ---------------------------------------------------------------
+  var RAZVEDKA = [
+    { ctx: 'Семья', em: '🏠',
+      setup: 'Вы впервые остались в этом доме надолго. Правил вслух не говорят, но они есть.',
+      rule: 'Можно всё, что не производит звука после 22:00. Днём ограничений нет.' },
+    { ctx: 'Семья', em: '🏠',
+      setup: 'В этой семье что-то можно брать без спроса, а что-то нельзя, и логика не очевидна.',
+      rule: 'Можно брать всё общее и расходуемое (еда, посуда, бытовые мелочи). Нельзя трогать личные вещи любого члена семьи, даже мелочь, даже с самыми добрыми намерениями.' },
+    { ctx: 'Работа', em: '💼',
+      setup: 'Вы новый человек в команде. Формальных регламентов нет, но что-то явно принято, а что-то нет.',
+      rule: 'Можно всё, о чём предупредил заранее. Нельзя ставить перед фактом — даже когда решение само по себе безобидное.' },
+    { ctx: 'Работа', em: '💼',
+      setup: 'В отделе есть негласная граница между «нормально» и «так не делают».',
+      rule: 'Можно ошибаться и признавать ошибки. Нельзя перекладывать ответственность на другого человека, даже мягко и вскользь.' },
+    { ctx: 'Пара', em: '💬',
+      setup: 'Вы вместе недавно. Границы не проговаривались.',
+      rule: 'Можно всё, что вы готовы сами рассказать партнёру. Нельзя то, что вы стали бы скрывать, — даже если оно совершенно невинное.' },
+    { ctx: 'Пара', em: '💬',
+      setup: 'В этой паре ссорятся редко, но по каким-то поводам — мгновенно.',
+      rule: 'Можно спорить о чём угодно и как угодно резко. Нельзя привлекать третьих лиц: сравнивать с другими, ссылаться на чужое мнение, обсуждать партнёра с кем-то ещё.' },
+    { ctx: 'Дети', em: '🎒',
+      setup: 'Подросток живёт по каким-то своим правилам, и они довольно последовательны.',
+      rule: 'Можно всё, что он выбрал сам. Нельзя то же самое, если это ему предложил или посоветовал взрослый.' },
+    { ctx: 'Чат', em: '📱',
+      setup: 'Вас добавили в рабочий чат. Люди пишут по-разному, но что-то тут явно не принято.',
+      rule: 'Можно писать когда угодно и сколько угодно. Нельзя писать так, чтобы ответа ждали немедленно: без вопросов в лоб конкретному человеку и без сообщений, требующих реакции прямо сейчас.' },
+    { ctx: 'Деньги', em: '💰',
+      setup: 'В этой компании друзей есть негласный порядок обращения с деньгами.',
+      rule: 'Можно тратить сколько угодно на общее. Нельзя создавать долг между двумя конкретными людьми — ни в какую сторону и ни на какую сумму.' },
+    { ctx: 'Сам с собой', em: '🪞',
+      setup: 'Вы замечаете, что сами себе что-то разрешаете, а что-то нет, и правило довольно чёткое.',
+      rule: 'Можно всё, что решено заранее. Нельзя то же самое, если решение принято в момент желания.' }
+  ];
+
+  // ---------------------------------------------------------------
   // Категории прохождения — как в спидраннинге. Это не оценка игрока и
   // не шкала добродетели: это ограничение, которое он сам на себя берёт,
   // и в котором соревнуется. У каждой категории свой рекорд.
@@ -202,12 +247,13 @@
   var MAX_ROUNDS = 5;   // потолок гонки
   var MAX_PATCH = 3;    // попыток залатать в «Заплатке»
 
-  var ST = { cat: 'any', dir: '', busy: false, done: true,
+  var ST = { cat: 'any', dir: '', busy: false, done: true, own: false,
              sc: null, goal: '', rule0: '', rule: '', rounds: [],
-             sit: null, rules: [], holes: [] };
+             sit: null, rules: [], holes: [],
+             hid: null, probes: [] };
   var _rec = { on: false, savedT: null, savedC: null };
 
-  function loadStats() { try { var s = JSON.parse(localStorage.getItem('lazejka_stats2') || 'null'); if (s && typeof s === 'object') return s; } catch (e) {} return { races: 0, best: {}, patched: 0, held: 0, grown: 0 }; }
+  function loadStats() { try { var s = JSON.parse(localStorage.getItem('lazejka_stats2') || 'null'); if (s && typeof s === 'object') return s; } catch (e) {} return { races: 0, best: {}, patched: 0, held: 0, grown: 0, scouts: 0, fewest: 0 }; }
   function saveStats(s) { try { localStorage.setItem('lazejka_stats2', JSON.stringify(s)); } catch (e) {} }
   function loadCat() { try { var c = localStorage.getItem('lazejka_cat'); if (CATS[c]) return c; } catch (e) {} return 'any'; }
   function saveCat(c) { try { localStorage.setItem('lazejka_cat', c); } catch (e) {} ST.cat = c; }
@@ -220,6 +266,14 @@
     saveStats(s); return s;
   }
   function recordPatch(held) { var s = loadStats(); s.patched = (s.patched || 0) + 1; if (held) s.held = (s.held || 0) + 1; saveStats(s); return s; }
+  function recordScout(probes, exact) {
+    var s = loadStats();
+    s.scouts = (s.scouts || 0) + 1;
+    // Рекорд — угадать за меньшее число проб. Считаем только точное
+    // попадание: иначе «рекорд 1» можно поставить, сдавшись сразу.
+    if (exact && (!s.fewest || probes < s.fewest)) s.fewest = probes;
+    saveStats(s); return s;
+  }
 
   function injectCSS() {
     if (document.getElementById('lzCSS')) return;
@@ -287,6 +341,22 @@
       '.lz-growth{display:flex;gap:10px;align-items:stretch;margin:0 0 12px}',
       '.lz-growth>div{flex:1;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 15px;font-size:.9rem;line-height:1.5;color:#c8ccd4}',
       '.lz-growth b{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:#9ca3af;margin-bottom:6px;font-weight:700}',
+      // Доска проб «Разведки»: отметки видны все сразу — именно по ним
+      // и нащупывается правило, как по камням в Zendo.
+      '.lz-board{border:1px solid rgba(255,255,255,.1);border-radius:14px;margin:0 0 12px;overflow:hidden}',
+      '.lz-pr{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);font-size:.94rem;line-height:1.45}',
+      '.lz-pr:last-child{border-bottom:none}',
+      '.lz-pr i{flex:0 0 auto;font-style:normal;font-weight:700;font-size:.82rem}',
+      '.lz-pr.y{background:rgba(45,212,191,.07)}.lz-pr.y i{color:#2dd4bf}',
+      '.lz-pr.n{background:rgba(148,163,184,.07)}.lz-pr.n i{color:#94a3b8}',
+      '.lz-hidden{border:1px dashed rgba(148,163,184,.5);border-radius:16px;padding:16px 18px;margin:0 0 12px;text-align:center;color:#9ca3af;font-size:.95rem;line-height:1.5}',
+      '.lz-reveal{border:1px solid rgba(45,212,191,.45);background:linear-gradient(160deg,rgba(45,212,191,.14),rgba(45,212,191,.03));border-radius:16px;padding:18px 20px;margin:0 0 12px}',
+      '.lz-reveal .r{font-size:1.06rem;font-weight:700;line-height:1.45;margin-top:6px}',
+      '.lz-soft{border:1px solid rgba(148,163,184,.4);background:rgba(148,163,184,.08);border-radius:16px;padding:16px 18px;margin:0 0 12px;line-height:1.6;font-size:.96rem}',
+      '.lz-form label{display:block;font-size:.8rem;color:#9ca3af;margin:0 0 6px}',
+      '[data-theme="light"] .lz-pr.y{background:rgba(45,212,191,.12)}',
+      '[data-theme="light"] .lz-pr.n{background:rgba(148,163,184,.14)}',
+      '[data-theme="light"] .lz-hidden,[data-theme="light"] .lz-form label{color:#5b6472}',
       '.lz-course{display:block;text-align:center;font-size:.85rem;color:#5eead4;text-decoration:none;margin-top:14px}',
       '.lz-src{font-size:.78rem;color:#8b93a7;line-height:1.5;margin-top:12px}',
       '[data-theme="light"] .lz-wrap{color:#1f2430}',
@@ -315,12 +385,12 @@
     track('feature_opened', { feature: 'lazejka' });
     var c = container(); if (!c) return;
     var s = loadStats(), head = '';
-    if (s.races || s.patched) {
+    if (s.races || s.patched || s.scouts) {
       var b = s.best || {};
       head = '<div class="lz-stats">' +
-          '<div class="lz-stat"><b>' + (s.races || 0) + '</b><span>' + plural(s.races || 0, ['гонка', 'гонки', 'гонок']) + '</span></div>' +
           '<div class="lz-stat"><b>' + (b[ST.cat] || 0) + '</b><span>рекорд ' + plural(b[ST.cat] || 0, KRUG) + '<br>в этой категории</span></div>' +
           '<div class="lz-stat"><b>' + (s.grown ? '×' + s.grown : '—') + '</b><span>во столько раз<br>раздувалось правило</span></div>' +
+          '<div class="lz-stat"><b>' + (s.fewest || '—') + '</b><span>' + (s.fewest ? plural(s.fewest, ['проба', 'пробы', 'проб']) : 'проб') + '<br>до разгадки</span></div>' +
         '</div>';
     }
     c.innerHTML =
@@ -331,7 +401,11 @@
         head +
         '<div class="lz-dirs">' +
           '<div class="lz-dir" onclick="LAZEJKA.startRace()"><b>🏃 Гонка</b><span>Правило даёт Фреди. Вы находите ход — автор латает формулировку под ваш ход — вы ищете снова. Счёт: сколько кругов продержались.</span></div>' +
+          '<div class="lz-dir" onclick="LAZEJKA.startScout()"><b>🔦 Разведка</b><span>Правило спрятано. Вы пробуете, в ответ только «можно» или «нельзя». Нащупайте формулировку и назовите её.</span></div>' +
+        '</div>' +
+        '<div class="lz-dirs">' +
           '<div class="lz-dir" onclick="LAZEJKA.startPatch()"><b>🧩 Заплатка</b><span>Обратное кресло: правило пишете вы, а обходит Фреди.</span></div>' +
+          '<div class="lz-dir" onclick="LAZEJKA.ownForm()"><b>✍️ Своё правило</b><span>Принесите настоящее — то, под которым живёте, — и свою цель. Дальше та же гонка.</span></div>' +
         '</div>' +
         '<div class="lz-card"><div class="lz-ch">Категория прохождения</div>' +
           '<div class="lz-cats">' + CAT_ORDER.map(function (k) {
@@ -357,7 +431,7 @@
   // ГОНКА
   // ---------------------------------------------------------------
   function startRace() {
-    injectCSS(); ST.dir = 'race'; ST.cat = loadCat();
+    injectCSS(); ST.dir = 'race'; ST.own = false; ST.cat = loadCat();
     ST.sc = pickFresh(OBHOD, 'lazejka_seen_race', Math.max(3, OBHOD.length - 5));
     ST.goal = ST.sc.goals[Math.floor(Math.random() * ST.sc.goals.length)];
     ST.rule0 = ST.sc.rule; ST.rule = ST.sc.rule;
@@ -449,6 +523,7 @@
         'Цель игрока: ' + ST.goal,
         CATS[ST.cat].rule,
         prev,
+        ST.own ? 'Правило и цель принёс сам игрок — это его настоящая жизнь. Если описанное не ограничение, которое можно разбирать как формулировку, а положение, где человеку причиняют вред: насилие, угрозы, принуждение, запрет видеться с ребёнком или близкими, слежка, отъём документов или денег, — не играй. Вместо всего формата ответь одной строкой «НЕ ИГРА: <одна спокойная фраза о том, что вы увидели>» и ничего больше. Обычные житейские строгости — начальство, родители, режим, деньги, быт — это нормальная игра, их разбирай как всегда.' : '',
         'Ход игрока (расшифровка речи возможна с ошибками — к ним не придирайся): «' + mv + '»',
         'Ответь по-русски, на «вы», строго в таком виде и без лишнего текста:',
         'ХОД: прошёл — или — ХОД: не прошёл',
@@ -467,6 +542,9 @@
         '<button class="lz-secondary" onclick="LAZEJKA.renderRace()">← Вернуться к ходу</button>';
       return;
     }
+
+    var notGame = v.match(/НЕ\s*ИГРА:\s*([\s\S]*)/i);
+    if (notGame) { renderNotAGame(notGame[1].trim()); return; }
 
     var p2 = parseRace(v);
     if (p2.ok && !p2.newRule) p2.newRule = '';   // правило устояло: латать нечего
@@ -654,6 +732,235 @@
   }
 
   // ---------------------------------------------------------------
+  // РАЗВЕДКА
+  // ---------------------------------------------------------------
+  function startScout() {
+    injectCSS(); ST.dir = 'scout';
+    ST.hid = pickFresh(RAZVEDKA, 'lazejka_seen_scout', Math.max(3, RAZVEDKA.length - 4));
+    ST.probes = []; ST.done = false; ST.busy = false;
+    track('game_round_start', { feature: 'lazejka', dir: 'scout', ctx: ST.hid.ctx });
+    renderScout();
+  }
+
+  function boardHtml() {
+    if (!ST.probes.length) return '';
+    return '<div class="lz-board">' + ST.probes.map(function (p) {
+      return '<div class="lz-pr ' + (p.ok ? 'y' : 'n') + '"><i>' + (p.ok ? '✓ можно' : '✕ нельзя') + '</i><span>' + esc(p.text) + '</span></div>';
+    }).join('') + '</div>';
+  }
+
+  function renderScout() {
+    var c = container(); if (!c) return;
+    var micOff = !(window.voiceManager && typeof window.voiceManager.startRecording === 'function');
+    var n = ST.probes.length;
+    c.innerHTML =
+      '<div class="lz-wrap">' +
+        '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
+        '<div class="lz-where">' + ST.hid.em + ' ' + esc(ST.hid.ctx) + ' · проб сделано: ' + n + '</div>' +
+        '<div class="lz-rule"><span class="lz-tag">Обстановка</span><div class="r">' + esc(ST.hid.setup) + '</div></div>' +
+        '<div class="lz-hidden">Правило здесь есть, но вам его не назовут.<br>Пробуйте — в ответ будет только «можно» или «нельзя».</div>' +
+        boardHtml() +
+        '<textarea class="lz-ta" id="lzIn" placeholder="Что попробуете? Можно несколько проб сразу — по одной в строке."></textarea>' +
+        '<div class="lz-microw"><button class="lz-mic' + (micOff ? ' off' : '') + '" id="lzMic" onclick="LAZEJKA.mic()" title="Говорить вслух">🎤</button><span class="lz-miclabel" id="lzMicLabel">' + (micOff ? 'печатайте пробу' : 'или наговорите вслух') + '</span></div>' +
+        '<button class="lz-primary" onclick="LAZEJKA.probe()">🔦 Проверить</button>' +
+        (n >= 2 ? '<button class="lz-secondary" onclick="LAZEJKA.guessForm()">💡 Кажется, знаю — назвать правило</button>' : '') +
+        (n === 0 ? '<button class="lz-secondary" onclick="LAZEJKA.startScout()">🎲 Другая обстановка</button>' : '') +
+      '</div>';
+    toTop();
+  }
+
+  async function probe() {
+    if (ST.busy || ST.done) return;
+    stopVoice();
+    var el = document.getElementById('lzIn');
+    var raw = (el ? el.value : '').trim();
+    if (raw.length < 4) { toast('Опишите, что именно вы пробуете', 'info'); return; }
+    // Несколько проб за один вызов: и думается так лучше, и лимит
+    // расходуется вчетверо медленнее, чем по пробе на запрос.
+    var lines = raw.split('\n').map(function (x) { return x.trim(); })
+                   .filter(function (x) { return x.length > 2; }).slice(0, 5);
+    if (!lines.length) { toast('Опишите, что именно вы пробуете', 'info'); return; }
+
+    ST.busy = true;
+    var c = container(); if (!c) return;
+    c.innerHTML = '<div class="lz-wrap">' + boardHtml() +
+      '<div class="lz-typing" id="lzTyping">🔦 Проверяем…</div></div>';
+    toTop();
+
+    var v = '';
+    try {
+      var p = [
+        'Ты ведёшь игру «Разведка»: игрок нащупывает спрятанное правило, пробуя действия.',
+        'Скрытое правило: «' + ST.hid.rule + '»',
+        'Обстановка: ' + ST.hid.setup,
+        'Ниже пронумерованные пробы игрока. Для каждой реши, разрешает ли её скрытое правило.',
+        'Отвечай СТРОГО по одной строке на пробу, в формате «N: можно» или «N: нельзя». Никаких пояснений, никаких подсказок, ничего кроме этих строк — иначе игра теряет смысл.',
+        'Если проба сформулирована слишком расплывчато, чтобы правило дало однозначный ответ, отвечай «N: неясно».',
+        lines.map(function (x, i) { return (i + 1) + '. ' + x; }).join('\n')
+      ].join('\n');
+      var r = await aiGenerate(p, { max_tokens: 120, temperature: 0.1 });
+      v = (r && r.success && r.content) ? String(r.content).trim() : '';
+    } catch (e) { v = ''; }
+    ST.busy = false;
+
+    if (!v) {
+      var t = document.getElementById('lzTyping');
+      if (t) t.outerHTML = '<div class="lz-card">Связь подвисла — пробы не проверились.</div>' +
+        '<button class="lz-secondary" onclick="LAZEJKA.renderScout()">← Назад</button>';
+      return;
+    }
+
+    var unclear = 0;
+    lines.forEach(function (text, i) {
+      var m = v.match(new RegExp('(?:^|\\n)\\s*' + (i + 1) + '\\s*[.:)]\\s*(можно|нельзя|неясно)', 'i'));
+      var ans = m ? m[1].toLowerCase() : '';
+      if (!ans || ans === 'неясно') { unclear++; return; }
+      ST.probes.push({ text: text, ok: ans === 'можно' });
+    });
+    track('lz_probe', { ctx: ST.hid.ctx, added: lines.length - unclear, total: ST.probes.length });
+    if (unclear) toast(unclear === lines.length ? 'Слишком расплывчато — попробуйте конкретнее' : 'Часть проб оказалась расплывчатой', 'info');
+    vibe(20);
+    renderScout();
+  }
+
+  function guessForm() {
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="lz-wrap">' +
+        '<button class="lz-ghost" onclick="LAZEJKA.renderScout()">← к пробам</button>' +
+        '<div class="lz-where">' + ST.hid.em + ' ' + esc(ST.hid.ctx) + ' · проб сделано: ' + ST.probes.length + '</div>' +
+        boardHtml() +
+        '<div class="lz-form"><label>Своими словами: что здесь можно, а что нельзя?</label>' +
+        '<textarea class="lz-ta" id="lzIn" placeholder="Правило звучит примерно так…"></textarea></div>' +
+        '<button class="lz-primary" onclick="LAZEJKA.guess()">💡 Назвать правило</button>' +
+        '<button class="lz-secondary" onclick="LAZEJKA.renderScout()">Ещё пробы</button>' +
+      '</div>';
+    toTop();
+  }
+
+  async function guess() {
+    if (ST.busy || ST.done) return;
+    var el = document.getElementById('lzIn');
+    var g = (el ? el.value : '').trim();
+    if (g.length < 8) { toast('Сформулируйте правило целиком', 'info'); return; }
+    ST.busy = true;
+    var c = container(); if (!c) return;
+    c.innerHTML = '<div class="lz-wrap"><div class="lz-card"><div class="lz-ch">Ваша формулировка</div><div class="lz-mine">' + esc(g) + '</div></div>' +
+      '<div class="lz-typing" id="lzTyping">💡 Сверяем…</div></div>';
+    toTop();
+
+    var v = '';
+    try {
+      var p = [
+        'Игрок нащупывал спрятанное правило и теперь называет его своими словами. Сверьте её с настоящей.',
+        'Настоящее правило: «' + ST.hid.rule + '»',
+        'Формулировка игрока: «' + g + '»',
+        'Совпадение по СМЫСЛУ, а не по словам: если игрок описал тот же критерий другими словами — это точное попадание.',
+        'Ответь по-русски, на «вы», спокойно, без похвал и упрёков:',
+        'ИТОГ: точно — или — ИТОГ: близко — или — ИТОГ: мимо',
+        'РАЗБОР: 2–4 строки. Что игрок ухватил верно и что именно разошлось с настоящим правилом. Если попал точно — скажи, какая проба была решающей.'
+      ].join('\n');
+      var r = await aiGenerate(p, { max_tokens: 320, temperature: 0.5 });
+      v = (r && r.success && r.content) ? String(r.content).trim() : '';
+    } catch (e) { v = ''; }
+    ST.busy = false;
+
+    if (!v) {
+      var t = document.getElementById('lzTyping');
+      if (t) t.outerHTML = '<div class="lz-card">Связь подвисла — сверить не вышло.</div>' +
+        '<button class="lz-secondary" onclick="LAZEJKA.guessForm()">← Назад</button>';
+      return;
+    }
+    var itog = (v.match(/ИТОГ:\s*(точно|близко|мимо)/i) || [])[1] || '';
+    var razbor = (v.match(/РАЗБОР:\s*([\s\S]*)$/i) || [])[1] || v;
+    var exact = /точно/i.test(itog);
+    ST.done = true;
+    var st = recordScout(ST.probes.length, exact);
+    track('lz_scout_end', { ctx: ST.hid.ctx, probes: ST.probes.length, result: itog.toLowerCase() || 'unknown' });
+    renderScoutEnd(g, exact, itog, razbor.trim(), st);
+  }
+
+  function renderScoutEnd(g, exact, itog, razbor, st) {
+    var c = container(); if (!c) return;
+    var label = exact ? '✓ точно' : /близко/i.test(itog) ? '≈ близко' : '✕ мимо';
+    c.innerHTML =
+      '<div class="lz-wrap">' +
+        '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
+        '<div class="lz-mark ' + (exact ? 'ok' : 'no') + '">' + label + ' · ' + ST.probes.length + ' ' + plural(ST.probes.length, ['проба', 'пробы', 'проб']) + '</div>' +
+        '<div class="lz-card"><div class="lz-ch">Вы назвали</div><div class="lz-mine">' + esc(g) + '</div></div>' +
+        '<div class="lz-reveal"><span class="lz-tag">Правило было такое</span><div class="r">«' + esc(ST.hid.rule) + '»</div></div>' +
+        (razbor ? '<div class="lz-verdict">' + nl(razbor) + '</div>' : '') +
+        boardHtml() +
+        (st.fewest ? '<div class="lz-step">Ваш рекорд: разгадка за ' + st.fewest + ' ' + plural(st.fewest, ['пробу', 'пробы', 'проб']) + '</div>' : '') +
+        '<div class="lz-row"><button class="lz-primary" onclick="LAZEJKA.startScout()" style="margin:0">🔦 Ещё разведка</button><button class="lz-secondary" onclick="LAZEJKA.home()">Меню</button></div>' +
+      '</div>';
+    toTop();
+  }
+
+  // ---------------------------------------------------------------
+  // СВОЁ ПРАВИЛО
+  //
+  // Человек приносит настоящее. Значит, он может принести и не правило,
+  // а беду: запрет видеться с ребёнком, контроль, угрозы. Играть в такое
+  // нельзя, поэтому первый же ответ Фреди умеет вернуться маркером
+  // «НЕ ИГРА» — и тогда вместо разбора ходов человек получает спокойный
+  // текст и путь в разговор.
+  // ---------------------------------------------------------------
+  function ownForm() {
+    injectCSS(); stopVoice(); ST.done = true;
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="lz-wrap">' +
+        '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
+        '<div class="lz-h1">✍️ Своё правило</div>' +
+        '<div class="lz-lead">Правило, под которым вы живёте, и то, что вам нужно сделать. Дальше — обычная гонка: вы ищете ход, правило подтягивают, вы ищете снова.</div>' +
+        '<div class="lz-form">' +
+          '<label>Правило — как оно звучит на самом деле</label>' +
+          '<textarea class="lz-ta" id="lzRule" style="min-height:80px" placeholder="Например: на работе не принято уходить раньше начальника."></textarea>' +
+          '<label>Ваша цель — что нужно сделать</label>' +
+          '<textarea class="lz-ta" id="lzGoal" style="min-height:80px" placeholder="Например: успеть забрать ребёнка из сада."></textarea>' +
+        '</div>' +
+        '<button class="lz-primary" onclick="LAZEJKA.startOwn()">▶ В гонку</button>' +
+        '<div class="lz-src">Игра разбирает формулировки, а не жизненные обстоятельства. Если правило, под которым вы живёте, — это давление, угрозы или запрет видеться с близкими, тренажёр тут не поможет: про такое лучше поговорить с Фреди в чате, а при угрозе безопасности — обратиться к специалисту.</div>' +
+      '</div>';
+    toTop();
+  }
+
+  function startOwn() {
+    var r = (document.getElementById('lzRule') || {}).value || '';
+    var g = (document.getElementById('lzGoal') || {}).value || '';
+    r = r.trim(); g = g.trim();
+    if (r.length < 8) { toast('Напишите правило целиком', 'info'); return; }
+    if (g.length < 5) { toast('Напишите, чего вам нужно добиться', 'info'); return; }
+    injectCSS(); ST.dir = 'race'; ST.own = true; ST.cat = loadCat();
+    ST.sc = { ctx: 'Ваше правило', em: '✍️', rule: r, goals: [g] };
+    ST.goal = g; ST.rule0 = r; ST.rule = r;
+    ST.rounds = []; ST.done = false; ST.busy = false;
+    track('game_round_start', { feature: 'lazejka', dir: 'race', cat: ST.cat, ctx: 'own' });
+    renderRace();
+  }
+
+  function renderNotAGame(why) {
+    ST.done = true;
+    var c = container(); if (!c) return;
+    c.innerHTML =
+      '<div class="lz-wrap">' +
+        '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
+        '<div class="lz-soft">' +
+          '<b>Это не задача про формулировку.</b><br>' + nl(why || '') +
+          '<br><br>Тренажёр разбирает тексты правил и лазейки в них. То, что вы описали, так не решается — и разбирать это ходами было бы неуважением к вашей ситуации.' +
+        '</div>' +
+        '<div class="lz-card"><div class="lz-ch">Что можно сделать вместо игры</div>' +
+          '<div class="lz-li">Рассказать это Фреди в чате обычными словами — там разговор, а не разбор ходов.</div>' +
+          '<div class="lz-li">Если речь о безопасности — своей или ребёнка, — это к живому специалисту, и откладывать не стоит.</div>' +
+        '</div>' +
+        '<button class="lz-primary" onclick="LAZEJKA.ownForm()">← Другое правило</button>' +
+        '<button class="lz-secondary" onclick="LAZEJKA.home()">В меню</button>' +
+      '</div>';
+    toTop();
+  }
+
+  // ---------------------------------------------------------------
   // Голос
   // ---------------------------------------------------------------
   function mic() { _rec.on ? stopVoice() : startVoice(); }
@@ -688,6 +995,9 @@
     home: home, setCat: setCat,
     startRace: startRace, move: move, renderRace: renderRace, endRace: endRace,
     startPatch: startPatch, tryRule: tryRule, renderPatch: renderPatch,
+    startScout: startScout, probe: probe, renderScout: renderScout,
+    guessForm: guessForm, guess: guess,
+    ownForm: ownForm, startOwn: startOwn,
     mic: mic, getState: function () { return ST; }
   };
   window.showLazejkaGame = home;
