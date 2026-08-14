@@ -66,6 +66,38 @@
     return arr[idx];
   }
 
+  // ---------------------------------------------------------------
+  // Озвучка.
+  //
+  // Важно про цену: /api/voice/tts попадает в AI-регекс метра
+  // (fredi/meter.js), то есть каждая реплика списывает те же 15 секунд,
+  // что и сообщение, независимо от длины. За слово «нельзя» это дорого,
+  // поэтому по умолчанию озвучка выключена, а включается тумблером и
+  // работает только в трёх местах, где голос действительно меняет опыт:
+  // приговор «Разведки», реплика персонажа в «Заплатке» и разбухшее
+  // правило в «Гонке». Кнопка 🔊 рядом с этими блоками есть всегда —
+  // послушать можно и с выключенным тумблером, это выбор человека.
+  // ---------------------------------------------------------------
+  function ttsReady() { return !!(window.voiceManager && typeof window.voiceManager.textToSpeech === 'function'); }
+  function ttsOn() { try { return localStorage.getItem('lazejka_tts') === '1'; } catch (e) { return false; } }
+  function setTts(v) { try { localStorage.setItem('lazejka_tts', v ? '1' : '0'); } catch (e) {} }
+  function toggleTts() { setTts(!ttsOn()); vibe(20); if (ST.dir === '' || ST.done) home(); }
+  var _lastSaid = '';
+  function speak(text, force) {
+    if (!text || !ttsReady()) return;
+    // Запоминаем всегда, даже когда тумблер выключен: иначе кнопка 🔊
+    // проигрывала последнее, что вообще звучало за сессию, — а это могла
+    // быть реплика из другого режима.
+    _lastSaid = text;
+    if (!force && !ttsOn()) return;
+    try { window.voiceManager.textToSpeech(String(text).slice(0, 600), window.voiceManager.currentMode); } catch (e) {}
+  }
+  function sayAgain() { if (_lastSaid) speak(_lastSaid, true); }
+  // Кнопка «послушать» рядом с озвучиваемым блоком.
+  function earBtn() {
+    return ttsReady() ? '<button class="lz-ear" onclick="LAZEJKA.sayAgain()" title="Послушать">🔊 послушать</button>' : '';
+  }
+
   async function aiGenerate(prompt, opts) {
     opts = opts || {};
     var body = { user_id: uid(), prompt: prompt, max_tokens: opts.max_tokens || 480, temperature: opts.temperature == null ? 0.8 : opts.temperature };
@@ -234,6 +266,29 @@
   // не шкала добродетели: это ограничение, которое он сам на себя берёт,
   // и в котором соревнуется. У каждой категории свой рекорд.
   // ---------------------------------------------------------------
+  // ---------------------------------------------------------------
+  // Кто в «Гонке» латает правило. Характер меняет не строгость, а
+  // способ: юрист дописывает определения, уставший человек — оговорки
+  // про «мы же договаривались». Игроку автор виден заранее, и это не
+  // украшение: по автору можно предсказать, куда он подтянет
+  // формулировку, а это ровно тот навык, ради которого игра.
+  // Лишних вызовов не стоит — одна строка в промпте, который и так идёт.
+  // ---------------------------------------------------------------
+  var AUTHORS = [
+    { em: '📋', name: 'Въедливый юрист',
+      how: 'Латает через определения: вводит термины, уточняет объём понятий, добавляет «в том числе» и «за исключением». Формулировки становятся длинными и точными.' },
+    { em: '🪖', name: 'Начальник старой школы',
+      how: 'Латает через запреты и порядок: добавляет прямые «нельзя», требования согласования и отчётности. Коротко и жёстко.' },
+    { em: '🫖', name: 'Уставшая мать',
+      how: 'Латает через прежние договорённости и ожидания: добавляет «как договаривались», «по-человечески», апеллирует к тому, что и так понятно. Формулировки обрастают условиями, а не терминами.' },
+    { em: '📐', name: 'Инженер по регламентам',
+      how: 'Латает через процедуру: добавляет шаги, проверки, фиксацию и подтверждения. Правило превращается в инструкцию.' },
+    { em: '🤷', name: 'Тот, кто сам не любит правил',
+      how: 'Латает неохотно и широко: закрывает ход общей фразой, оставляя вокруг много свободного места. Формулировка растёт медленно.' },
+    { em: '🔍', name: 'Тот, кого уже обходили',
+      how: 'Латает прицельно и с запасом: закрывает не только этот ход, но и два похожих, которые предвидит. Формулировки короткие и злые на детали.' }
+  ];
+
   var CATS = {
     any: { em: '🏁', name: 'Как получится', short: 'важен результат',
       rule: 'Категория «как получится»: засчитывается результат. Формальные трюки, буквоедство и игра на неточности формулировки разрешены. Ход не прошёл только если он прямо нарушает текст правила.' },
@@ -247,7 +302,7 @@
   var MAX_ROUNDS = 5;   // потолок гонки
   var MAX_PATCH = 3;    // попыток залатать в «Заплатке»
 
-  var ST = { cat: 'any', dir: '', busy: false, done: true, own: false,
+  var ST = { cat: 'any', dir: '', busy: false, done: true, own: false, author: null,
              sc: null, goal: '', rule0: '', rule: '', rounds: [],
              sit: null, rules: [], holes: [],
              hid: null, probes: [] };
@@ -357,6 +412,18 @@
       '[data-theme="light"] .lz-pr.y{background:rgba(45,212,191,.12)}',
       '[data-theme="light"] .lz-pr.n{background:rgba(148,163,184,.14)}',
       '[data-theme="light"] .lz-hidden,[data-theme="light"] .lz-form label{color:#5b6472}',
+      '.lz-ear{display:inline-block;margin-top:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#c8ccd4;border-radius:10px;padding:5px 11px;font-size:.78rem;font-family:inherit;cursor:pointer}',
+      '.lz-ear:hover{border-color:rgba(45,212,191,.5);color:#5eead4}',
+      '.lz-tts{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);border-radius:14px;padding:12px 15px;margin:0 0 12px;cursor:pointer}',
+      '.lz-tts b{font-size:.94rem;font-weight:600;display:block}',
+      '.lz-tts span{font-size:.78rem;color:#9ca3af;line-height:1.45}',
+      '.lz-sw{flex:0 0 46px;height:26px;border-radius:13px;background:rgba(148,163,184,.3);position:relative;transition:background .2s}',
+      '.lz-sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#e5e7eb;transition:left .2s}',
+      '.lz-tts.on .lz-sw{background:rgba(45,212,191,.55)}.lz-tts.on .lz-sw::after{left:23px;background:#04241f}',
+      '.lz-author{display:inline-block;font-size:.78rem;color:#fde68a;background:rgba(250,204,21,.1);border:1px solid rgba(250,204,21,.3);border-radius:10px;padding:4px 10px;margin:0 0 10px}',
+      '[data-theme="light"] .lz-ear{background:#f2f4f7;border-color:rgba(0,0,0,.12);color:#374151}',
+      '[data-theme="light"] .lz-tts span{color:#5b6472}',
+      '[data-theme="light"] .lz-author{color:#92400e;background:rgba(250,204,21,.16)}',
       '.lz-course{display:block;text-align:center;font-size:.85rem;color:#5eead4;text-decoration:none;margin-top:14px}',
       '.lz-src{font-size:.78rem;color:#8b93a7;line-height:1.5;margin-top:12px}',
       '[data-theme="light"] .lz-wrap{color:#1f2430}',
@@ -421,6 +488,9 @@
           '<div class="lz-li">Скиннер различал поведение, выученное на последствиях, и поведение, ведомое словесным правилом. У второго есть известная беда: оно перестаёт замечать, что реальность изменилась. Человек, который годами соблюдает правило, давно потерявшее смысл, не добродетелен — он просто перестал смотреть.</div>' +
           '<div class="lz-li">Прощупать правило — это и значит посмотреть заново. Что делать с увиденным, решаете вы.</div>' +
         '</div>' +
+        (ttsReady() ? '<div class="lz-tts' + (ttsOn() ? ' on' : '') + '" onclick="LAZEJKA.toggleTts()">' +
+          '<div><b>🔊 Фреди говорит вслух</b><span>Приговор «Разведки», реплику персонажа и разбухшее правило. Каждая реплика тратит столько же лимита, сколько сообщение, — поэтому по умолчанию выключено, а послушать можно и кнопкой.</span></div>' +
+          '<div class="lz-sw"></div></div>' : '') +
         '<a class="lz-course" href="/blog/lektorij/triz/" target="_blank" rel="noopener">🎓 Теория — курс «ТРИЗ»: взять своё, не нарушив ограничение</a>' +
       '</div>';
     toTop();
@@ -435,8 +505,9 @@
     ST.sc = pickFresh(OBHOD, 'lazejka_seen_race', Math.max(3, OBHOD.length - 5));
     ST.goal = ST.sc.goals[Math.floor(Math.random() * ST.sc.goals.length)];
     ST.rule0 = ST.sc.rule; ST.rule = ST.sc.rule;
+    ST.author = AUTHORS[Math.floor(Math.random() * AUTHORS.length)];
     ST.rounds = []; ST.done = false; ST.busy = false;
-    track('game_round_start', { feature: 'lazejka', dir: 'race', cat: ST.cat, ctx: ST.sc.ctx });
+    track('game_round_start', { feature: 'lazejka', dir: 'race', cat: ST.cat, ctx: ST.sc.ctx, author: ST.author.name });
     renderRace();
   }
 
@@ -463,6 +534,7 @@
       '<div class="lz-wrap">' +
         '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
         '<div class="lz-where">' + ST.sc.em + ' ' + esc(ST.sc.ctx) + ' · категория ' + CATS[ST.cat].em + ' ' + esc(CATS[ST.cat].name) + ' · круг ' + (n + 1) + ' из ' + MAX_ROUNDS + '</div>' +
+        (ST.author ? '<div class="lz-author">' + ST.author.em + ' правило латает: ' + esc(ST.author.name) + '</div>' : '') +
         raceLog() +
         '<div class="lz-rule"><span class="lz-tag">' + (n ? 'Правило сейчас' : 'Правило') + '</span><div class="r">«' + esc(ST.rule) + '»</div>' +
           (grew ? '<div class="w">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ', стало ' + words(ST.rule) + '</div>' : '') + '</div>' +
@@ -522,6 +594,7 @@
         'Текущее правило: «' + ST.rule + '»',
         'Цель игрока: ' + ST.goal,
         CATS[ST.cat].rule,
+        ST.author ? 'Ты играешь автора правила. Характер: ' + ST.author.name + '. ' + ST.author.how + ' Держись этого способа, когда переписываешь формулировку.' : '',
         prev,
         ST.own ? 'Правило и цель принёс сам игрок — это его настоящая жизнь. Если описанное не ограничение, которое можно разбирать как формулировку, а положение, где человеку причиняют вред: насилие, угрозы, принуждение, запрет видеться с ребёнком или близкими, слежка, отъём документов или денег, — не играй. Вместо всего формата ответь одной строкой «НЕ ИГРА: <одна спокойная фраза о том, что вы увидели>» и ничего больше. Обычные житейские строгости — начальство, родители, режим, деньги, быт — это нормальная игра, их разбирай как всегда.' : '',
         'Ход игрока (расшифровка речи возможна с ошибками — к ним не придирайся): «' + mv + '»',
@@ -561,6 +634,9 @@
   function renderRaceStep(p2) {
     var c = container(); if (!c) return;
     var last = ST.rounds[ST.rounds.length - 1];
+    // Текст глазами пролистывают, речь приходится досидеть — на разбухшей
+    // формулировке это и есть вся мысль.
+    speak(ST.rule);
     c.innerHTML =
       '<div class="lz-wrap">' +
         '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
@@ -568,8 +644,8 @@
         '<div class="lz-card"><div class="lz-ch">Ваш ход</div><div class="lz-mine">' + esc(last.move) + '</div></div>' +
         (last.razbor ? '<div class="lz-verdict">' + nl(last.razbor) + '</div>' : '') +
         (last.posled ? '<div class="lz-next"><b>Что теперь будет.</b> ' + nl(last.posled) + '</div>' : '') +
-        '<div class="lz-patched"><div class="who">автор правила подтянул формулировку</div><div class="nr">«' + esc(ST.rule) + '»</div>' +
-          '<div style="font-size:.78rem;color:#9ca3af;margin-top:8px">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ' — стало ' + words(ST.rule) + '</div></div>' +
+        '<div class="lz-patched"><div class="who">' + (ST.author ? esc(ST.author.name) + ' подтянул формулировку' : 'автор правила подтянул формулировку') + '</div><div class="nr">«' + esc(ST.rule) + '»</div>' +
+          '<div style="font-size:.78rem;color:#9ca3af;margin-top:8px">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ' — стало ' + words(ST.rule) + '</div>' + earBtn() + '</div>' +
         '<button class="lz-primary" onclick="LAZEJKA.renderRace()">▶ Круг ' + (ST.rounds.length + 1) + ': искать снова</button>' +
         '<button class="lz-secondary" onclick="LAZEJKA.endRace()">Хватит — показать итог</button>' +
       '</div>';
@@ -621,20 +697,23 @@
     renderPatch();
   }
 
-  function holeHtml(text) {
+  // fresh — только у последней реплики: кнопка нужна на свежей, а не на
+  // каждой строчке истории.
+  function holeHtml(text, fresh) {
     var body = text, punch = '';
     var m = text.match(/(^|\n)\s*Дыра:\s*([^\n]+)\s*$/i);
     if (m) { punch = m[2].trim(); body = text.slice(0, m.index).trim(); }
     else if (/Дыры не нашёл/i.test(text)) body = text.replace(/Дыры не нашёл\.?/i, '').trim();
     return '<div class="lz-hole"><div class="who">' + esc(ST.sit.persona) + '</div>' + nl(body) +
-           (punch ? '<div class="lz-punch">🕳️ ' + esc(punch) + '</div>' : '') + '</div>';
+           (punch ? '<div class="lz-punch">🕳️ ' + esc(punch) + '</div>' : '') +
+           (fresh ? earBtn() : '') + '</div>';
   }
 
   function patchHistoryHtml() {
     var h = '';
     for (var i = 0; i < ST.rules.length; i++) {
       h += '<div class="lz-card"><div class="lz-ch">Правило ' + (i + 1) + '</div><div class="lz-mine">' + esc(ST.rules[i]) + '</div>' +
-           (ST.holes[i] ? holeHtml(ST.holes[i]) : '') + '</div>';
+           (ST.holes[i] ? holeHtml(ST.holes[i], i === ST.rules.length - 1) : '') + '</div>';
     }
     return h;
   }
@@ -709,6 +788,8 @@
 
     var held = /Дыры не нашёл/i.test(v);
     ST.holes[ST.holes.length - 1] = v;
+    // Персонаж говорит от первого лица — озвученное это уже сценка.
+    speak(v.replace(/\n?\s*Дыра:[^\n]*$/i, '').trim());
     track('lz_move', { dir: 'patch', ctx: ST.sit.ctx, round: ST.rules.length, ok: held });
 
     if (held || last) { ST.done = true; recordPatch(held); renderPatchEnd(held); }
@@ -746,7 +827,7 @@
     if (!ST.probes.length) return '';
     return '<div class="lz-board">' + ST.probes.map(function (p) {
       return '<div class="lz-pr ' + (p.ok ? 'y' : 'n') + '"><i>' + (p.ok ? '✓ можно' : '✕ нельзя') + '</i><span>' + esc(p.text) + '</span></div>';
-    }).join('') + '</div>';
+    }).join('') + '</div>' + (ST.probes.length ? earBtn() : '');
   }
 
   function renderScout() {
@@ -810,13 +891,20 @@
       return;
     }
 
-    var unclear = 0;
+    var unclear = 0, said = ST.probes.length;
     lines.forEach(function (text, i) {
       var m = v.match(new RegExp('(?:^|\\n)\\s*' + (i + 1) + '\\s*[.:)]\\s*(можно|нельзя|неясно)', 'i'));
       var ans = m ? m[1].toLowerCase() : '';
       if (!ans || ans === 'неясно') { unclear++; return; }
       ST.probes.push({ text: text, ok: ans === 'можно' });
     });
+    // Система отвечает односложно и не объясняет — вслух это слышно
+    // иначе, чем строчкой на экране.
+    var fresh = ST.probes.slice(said);
+    if (fresh.length === 1) speak(fresh[0].ok ? 'Можно.' : 'Нельзя.');
+    else if (fresh.length > 1) speak(fresh.map(function (x, i) {
+      return ['Первое', 'Второе', 'Третье', 'Четвёртое', 'Пятое'][i] + ' — ' + (x.ok ? 'можно' : 'нельзя');
+    }).join('. ') + '.');
     track('lz_probe', { ctx: ST.hid.ctx, added: lines.length - unclear, total: ST.probes.length });
     if (unclear) toast(unclear === lines.length ? 'Слишком расплывчато — попробуйте конкретнее' : 'Часть проб оказалась расплывчатой', 'info');
     vibe(20);
@@ -935,6 +1023,7 @@
     injectCSS(); ST.dir = 'race'; ST.own = true; ST.cat = loadCat();
     ST.sc = { ctx: 'Ваше правило', em: '✍️', rule: r, goals: [g] };
     ST.goal = g; ST.rule0 = r; ST.rule = r;
+    ST.author = AUTHORS[Math.floor(Math.random() * AUTHORS.length)];
     ST.rounds = []; ST.done = false; ST.busy = false;
     track('game_round_start', { feature: 'lazejka', dir: 'race', cat: ST.cat, ctx: 'own' });
     renderRace();
@@ -998,6 +1087,7 @@
     startScout: startScout, probe: probe, renderScout: renderScout,
     guessForm: guessForm, guess: guess,
     ownForm: ownForm, startOwn: startOwn,
+    toggleTts: toggleTts, sayAgain: sayAgain,
     mic: mic, getState: function () { return ST; }
   };
   window.showLazejkaGame = home;
