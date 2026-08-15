@@ -818,7 +818,7 @@
         '<div class="lz-card"><div class="lz-ch">Ваш ход</div><div class="lz-mine">' + esc(last.move) + '</div></div>' +
         (last.razbor ? '<div class="lz-verdict">' + nl(last.razbor) + '</div>' : '') +
         (last.posled ? '<div class="lz-next"><b>Что теперь будет.</b> ' + nl(last.posled) + '</div>' : '') +
-        '<div class="lz-patched"><div class="who">' + (ST.author ? esc(ST.author.name) + ' подтянул формулировку' : 'формулировку подтянули') + '</div><div class="nr">«' + esc(ST.rule) + '»</div>' +
+        '<div class="lz-patched"><div class="who">' + (ST.author ? esc(ST.author.name) + ' — формулировка подтянута' : 'формулировку подтянули') + '</div><div class="nr">«' + esc(ST.rule) + '»</div>' +
           '<div style="font-size:.78rem;color:#9ca3af;margin-top:8px">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ' — стало ' + words(ST.rule) + '</div>' + earBtn() + '</div>' +
         '<button class="lz-primary" onclick="LAZEJKA.renderRace()">▶ Круг ' + (ST.rounds.length + 1) + ': искать снова</button>' +
         '<button class="lz-secondary" onclick="LAZEJKA.endRace()">Хватит — показать итог</button>' +
@@ -849,6 +849,7 @@
         (lastFail ? '<div class="lz-card"><div class="lz-mark no">последний ход не прошёл</div>' +
                     '<div class="lz-mine">' + esc(lastFail.move) + '</div>' +
                     (lastFail.razbor ? '<div style="font-size:.93rem;line-height:1.55;color:#c8ccd4">' + nl(lastFail.razbor) + '</div>' : '') + '</div>' : '') +
+        (survived ? '<div class="lz-cathint" style="text-align:left;margin:0 0 12px">Вы ' + survived + ' ' + plural(survived, ['раз увидели', 'раза увидели', 'раз увидели']) + ' в тексте то, чего его автор не предусмотрел. Тем же взглядом читаются договоры, регламенты и семейные уговоры.</div>' : '') +
         '<div class="lz-growth">' +
           '<div><b>Было</b>«' + esc(ST.rule0) + '»<div style="font-size:.75rem;color:#9ca3af;margin-top:6px">' + w0 + ' ' + plural(w0, SLOVO) + '</div></div>' +
           '<div><b>Стало</b>«' + esc(ST.rule) + '»<div style="font-size:.75rem;color:#9ca3af;margin-top:6px">' + w1 + ' ' + plural(w1, SLOVO) + '</div></div>' +
