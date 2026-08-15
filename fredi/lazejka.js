@@ -660,8 +660,8 @@
     c.innerHTML =
       '<div class="lz-wrap">' +
         '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
-        '<div class="lz-where">' + ST.sc.em + ' ' + esc(ST.sc.ctx) + ' · категория ' + CATS[ST.cat].em + ' ' + esc(CATS[ST.cat].name) + ' · круг ' + (n + 1) + ' из ' + MAX_ROUNDS + '</div>' +
-        (ST.author ? '<div class="lz-author">' + ST.author.em + ' правило латает: ' + esc(ST.author.name) + '</div>' : '') +
+        '<div class="lz-where">' + ST.sc.em + ' ' + esc(ST.sc.ctx) + ' · категория ' + CATS[ST.cat].em + ' ' + esc(CATS[ST.cat].name) + ' · круг ' + (ST.rounds.filter(function (r) { return r.ok; }).length + 1) + ' из ' + MAX_ROUNDS + '</div>' +
+        (ST.author && ST.rounds.length ? '<div class="lz-author">' + ST.author.em + ' правило латает: ' + esc(ST.author.name) + '</div>' : '') +
         raceLog() +
         '<div class="lz-rule"><span class="lz-tag">' + (n ? 'Правило сейчас' : 'Правило') + '</span><div class="r">«' + esc(ST.rule) + '»</div>' +
           (grew ? '<div class="w">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ', стало ' + words(ST.rule) + '</div>' : '') + '</div>' +
@@ -725,7 +725,8 @@
         'Текущее правило: «' + ST.rule + '»',
         'Цель игрока: ' + ST.goal,
         CATS[ST.cat].rule,
-        ST.author ? 'Ты играешь автора правила. Характер: ' + ST.author.name + '. ' + ST.author.how + ' Держись этого способа, когда переписываешь формулировку.' : '',
+        ST.author ? 'Ты играешь автора правила. Характер: ' + ST.author.name + '. ' + ST.author.how + ' Держись этого способа, когда переписываешь формулировку.'
+                  : (ST.own ? 'Правило принёс сам игрок — оно из его жизни. Когда переписываешь формулировку, говори от лица того, кто это правило поставил, без выдуманного имени и характера.' : ''),
         prev,
         ST.own ? 'Правило и цель принёс сам игрок — это его настоящая жизнь. Если описанное не ограничение, которое можно разбирать как формулировку, а положение, где человеку причиняют вред: насилие, угрозы, принуждение, запрет видеться с ребёнком или близкими, слежка, отъём документов или денег, — не играй. Вместо всего формата ответь одной строкой «НЕ ИГРА: <одна спокойная фраза о том, что вы увидели>» и ничего больше. Обычные житейские строгости — начальство, родители, режим, деньги, быт — это нормальная игра, их разбирай как всегда.' : '',
         'Ход игрока (расшифровка речи возможна с ошибками — к ним не придирайся): «' + mv + '»',
@@ -758,12 +759,36 @@
     track('lz_move', { dir: 'race', cat: ST.cat, ctx: ST.sc.ctx, round: ST.rounds.length, ok: p2.ok });
 
     if (p2.ok && p2.newRule) ST.rule = p2.newRule;
-    if (!p2.ok || !p2.newRule || ST.rounds.length >= MAX_ROUNDS) { endRace(); return; }
-    if (p2.ok) vibe(30);
+    // Неудачный ход не заканчивает гонку: правило то же, попытка не
+    // сгорает, показываем разбор и даём искать иначе. Раньше первый же
+    // «не прошёл» выбрасывал на итоговый экран — для новичка это
+    // означало «ошибся один раз — игра окончена».
+    if (!p2.ok) { renderFailStep(); return; }
+    if (!p2.newRule || ST.rounds.filter(function (r) { return r.ok; }).length >= MAX_ROUNDS) { endRace(); return; }
+    vibe(30);
     renderRaceStep(p2);
   }
 
   // Промежуточный экран: что вышло и как подтянули правило.
+  function renderFailStep() {
+    var c = container(); if (!c) return;
+    var last = ST.rounds[ST.rounds.length - 1];
+    var okCount = ST.rounds.filter(function (r) { return r.ok; }).length;
+    c.innerHTML =
+      '<div class="lz-wrap">' +
+        '<button class="lz-ghost" onclick="LAZEJKA.home()">← меню</button>' +
+        '<div class="lz-mark no">ход не прошёл</div>' +
+        '<div class="lz-card"><div class="lz-ch">Ваш ход</div><div class="lz-mine">' + esc(last.move) + '</div></div>' +
+        (last.razbor ? '<div class="lz-verdict">' + nl(last.razbor) + '</div>' : '') +
+        '<div class="lz-rule"><span class="lz-tag">Правило то же</span><div class="r">«' + esc(ST.rule) + '»</div></div>' +
+        '<div class="lz-goal"><span class="lz-tag">Цель та же</span><div class="g">' + esc(ST.goal) + '</div></div>' +
+        '<button class="lz-primary" onclick="LAZEJKA.renderRace()">🔁 Попробовать иначе</button>' +
+        (okCount ? '<button class="lz-secondary" onclick="LAZEJKA.endRace()">Хватит — показать итог</button>'
+                 : '<button class="lz-secondary" onclick="LAZEJKA.startRace()">🎲 Другое правило</button>') +
+      '</div>';
+    toTop();
+  }
+
   function retryMove() {
     if (!_pendingMove) { renderRace(); return; }
     renderRace();
@@ -785,7 +810,7 @@
         '<div class="lz-card"><div class="lz-ch">Ваш ход</div><div class="lz-mine">' + esc(last.move) + '</div></div>' +
         (last.razbor ? '<div class="lz-verdict">' + nl(last.razbor) + '</div>' : '') +
         (last.posled ? '<div class="lz-next"><b>Что теперь будет.</b> ' + nl(last.posled) + '</div>' : '') +
-        '<div class="lz-patched"><div class="who">' + (ST.author ? esc(ST.author.name) + ' подтянул формулировку' : 'автор правила подтянул формулировку') + '</div><div class="nr">«' + esc(ST.rule) + '»</div>' +
+        '<div class="lz-patched"><div class="who">' + (ST.author ? esc(ST.author.name) + ' подтянул формулировку' : 'формулировку подтянули') + '</div><div class="nr">«' + esc(ST.rule) + '»</div>' +
           '<div style="font-size:.78rem;color:#9ca3af;margin-top:8px">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ' — стало ' + words(ST.rule) + '</div>' + earBtn() + '</div>' +
         '<button class="lz-primary" onclick="LAZEJKA.renderRace()">▶ Круг ' + (ST.rounds.length + 1) + ': искать снова</button>' +
         '<button class="lz-secondary" onclick="LAZEJKA.endRace()">Хватит — показать итог</button>' +
@@ -1174,7 +1199,10 @@
     injectCSS(); ST.dir = 'race'; ST.own = true; ST.cat = loadCat();
     ST.sc = { ctx: 'Ваше правило', em: '✍️', rule: r, goals: [g] };
     ST.goal = g; ST.rule0 = r; ST.rule = r;
-    ST.author = AUTHORS[Math.floor(Math.random() * AUTHORS.length)];
+    // Персонажа здесь нет: правило принёс сам человек, и латает его тот,
+    // кто это правило поставил в его жизни, а не случайный «въедливый
+    // юрист» — плейтест показал, что чужое имя тут сбивает с толку.
+    ST.author = null;
     ST.rounds = []; ST.done = false; ST.busy = false;
     track('game_round_start', { feature: 'lazejka', dir: 'race', cat: ST.cat, ctx: 'own' });
     renderRace();
@@ -1233,7 +1261,7 @@
 
   window.LAZEJKA = {
     home: home, setCat: setCat,
-    startRace: startRace, move: move, retryMove: retryMove, renderRace: renderRace, endRace: endRace,
+    startRace: startRace, move: move, retryMove: retryMove, renderRace: renderRace, renderFailStep: renderFailStep, endRace: endRace,
     startPatch: startPatch, tryRule: tryRule, renderPatch: renderPatch,
     startScout: startScout, probe: probe, renderScout: renderScout,
     guessForm: guessForm, guess: guess,
