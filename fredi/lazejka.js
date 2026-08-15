@@ -106,6 +106,38 @@
     return await r.json();
   }
 
+  // Один повтор и внятная причина.
+  //
+  // Раньше любой сбой — таймаут модели, 429 от лимитера, пустой ответ —
+  // молча превращался в '' и в экран «Связь подвисла». Ход при этом
+  // терялся, а понять из чего это случилось было нельзя: причина
+  // проглатывалась в catch. Теперь причина видна человеку и уходит в
+  // аналитику, а разовый сбой гасится повтором.
+  var _lastFail = '';
+  // Ход, который не удалось проверить: возвращаем его в поле, чтобы
+  // человеку не пришлось набирать заново.
+  var _pendingMove = '';
+  async function askAi(prompt, opts, where) {
+    _lastFail = '';
+    for (var attempt = 1; attempt <= 2; attempt++) {
+      try {
+        var r = await aiGenerate(prompt, opts);
+        if (r && r.success && r.content) return String(r.content).trim();
+        _lastFail = (r && (r.error || r.message)) ? String(r.error || r.message) : 'пустой ответ';
+      } catch (e) {
+        _lastFail = (e && e.message) ? String(e.message) : 'нет связи';
+      }
+      if (attempt === 1) await new Promise(function (res) { setTimeout(res, 900); });
+    }
+    track('lz_ai_fail', { where: where || '', reason: _lastFail.slice(0, 80) });
+    return '';
+  }
+  function failCard(what) {
+    return '<div class="lz-card"><div class="lz-ch">Не получилось проверить ' + what + '</div>' +
+      '<div class="lz-li">Фреди не ответил: ' + esc(_lastFail || 'нет связи') + '. Пробовали дважды.</div>' +
+      '<div class="lz-li">Ход не потерян — он остался в поле, можно отправить ещё раз.</div></div>';
+  }
+
   // ---------------------------------------------------------------
   // ГОНКА: стартовое правило и цели. Цели никак не размечены — цель
   // это просто цель, а не повод для оценки игрока.
@@ -506,7 +538,7 @@
     ST.goal = ST.sc.goals[Math.floor(Math.random() * ST.sc.goals.length)];
     ST.rule0 = ST.sc.rule; ST.rule = ST.sc.rule;
     ST.author = AUTHORS[Math.floor(Math.random() * AUTHORS.length)];
-    ST.rounds = []; ST.done = false; ST.busy = false;
+    ST.rounds = []; ST.done = false; ST.busy = false; _pendingMove = '';
     track('game_round_start', { feature: 'lazejka', dir: 'race', cat: ST.cat, ctx: ST.sc.ctx, author: ST.author.name });
     renderRace();
   }
@@ -539,7 +571,7 @@
         '<div class="lz-rule"><span class="lz-tag">' + (n ? 'Правило сейчас' : 'Правило') + '</span><div class="r">«' + esc(ST.rule) + '»</div>' +
           (grew ? '<div class="w">было ' + words(ST.rule0) + ' ' + plural(words(ST.rule0), SLOVO) + ', стало ' + words(ST.rule) + '</div>' : '') + '</div>' +
         '<div class="lz-goal"><span class="lz-tag">Ваша цель</span><div class="g">' + esc(ST.goal) + '</div></div>' +
-        '<textarea class="lz-ta" id="lzIn" placeholder="' + (n ? 'Формулировку подтянули. Ищите заново…' : 'Как возьмёте своё, не нарушив формулировку?') + '"></textarea>' +
+        '<textarea class="lz-ta" id="lzIn" placeholder="' + (n ? 'Формулировку подтянули. Ищите заново…' : 'Как возьмёте своё, не нарушив формулировку?') + '">' + esc(_pendingMove) + '</textarea>' +
         '<div class="lz-microw"><button class="lz-mic' + (micOff ? ' off' : '') + '" id="lzMic" onclick="LAZEJKA.mic()" title="Говорить вслух">🎤</button><span class="lz-miclabel" id="lzMicLabel">' + (micOff ? 'печатайте ход' : 'или наговорите вслух') + '</span></div>' +
         '<button class="lz-primary" onclick="LAZEJKA.move()">▶ Сделать ход</button>' +
         (n ? '<button class="lz-secondary" onclick="LAZEJKA.endRace()">Хватит — показать итог</button>'
@@ -550,9 +582,12 @@
 
   // Ответ приходит размеченным, чтобы разбор, следствие и новую
   // формулировку можно было показать разными блоками, а не абзацем.
+  // Разбор не должен опираться на переводы строк: бэкенд перед отдачей
+  // делает re.sub(r'\s+', ' ') (services/ai_service.py), и построчная
+  // разметка приезжает одной строкой. Границей служит само имя метки.
   function parseRace(v) {
     function grab(tag, next) {
-      var re = new RegExp(tag + ':\\s*([\\s\\S]*?)(?=\\n\\s*(?:' + next + '):|$)', 'i');
+      var re = new RegExp(tag + ':\\s*([\\s\\S]*?)\\s*(?=(?:' + next + '):|$)', 'i');
       var m = v.match(re); return m ? m[1].trim() : '';
     }
     var ALL = 'ХОД|РАЗБОР|ПОСЛЕДСТВИЕ|НОВОЕ ПРАВИЛО';
@@ -604,21 +639,23 @@
         'ПОСЛЕДСТВИЕ: 1–2 строки. Что теперь произойдёт: как отреагирует человек или система. Спокойная констатация, без оценок.',
         'НОВОЕ ПРАВИЛО: одна формулировка, закрывающая ровно этот ход и сохраняющая прежние заплатки. Пиши её целиком, как она теперь звучит. Строку давай ТОЛЬКО если ход прошёл.'
       ].filter(Boolean).join('\n');
-      var r = await aiGenerate(p, { max_tokens: 500, temperature: 0.8 });
-      v = (r && r.success && r.content) ? String(r.content).trim() : '';
+      v = await askAi(p, { max_tokens: 500, temperature: 0.8 }, 'race');
     } catch (e) { v = ''; }
     ST.busy = false;
 
     if (!v) {
       var t = document.getElementById('lzTyping');
-      if (t) t.outerHTML = '<div class="lz-card">Связь подвисла — ход не проверился.</div>' +
+      if (t) t.outerHTML = failCard('ход') +
+        '<button class="lz-primary" onclick="LAZEJKA.retryMove()">🔁 Отправить ещё раз</button>' +
         '<button class="lz-secondary" onclick="LAZEJKA.renderRace()">← Вернуться к ходу</button>';
+      _pendingMove = mv;
       return;
     }
 
     var notGame = v.match(/НЕ\s*ИГРА:\s*([\s\S]*)/i);
     if (notGame) { renderNotAGame(notGame[1].trim()); return; }
 
+    _pendingMove = '';
     var p2 = parseRace(v);
     if (p2.ok && !p2.newRule) p2.newRule = '';   // правило устояло: латать нечего
     ST.rounds.push({ move: mv, ok: p2.ok, razbor: p2.razbor || v, posled: p2.posled, newRule: p2.newRule });
@@ -631,6 +668,14 @@
   }
 
   // Промежуточный экран: что вышло и как подтянули правило.
+  function retryMove() {
+    if (!_pendingMove) { renderRace(); return; }
+    renderRace();
+    var el = document.getElementById('lzIn');
+    if (el) el.value = _pendingMove;
+    move();
+  }
+
   function renderRaceStep(p2) {
     var c = container(); if (!c) return;
     var last = ST.rounds[ST.rounds.length - 1];
@@ -701,8 +746,10 @@
   // каждой строчке истории.
   function holeHtml(text, fresh) {
     var body = text, punch = '';
-    var m = text.match(/(^|\n)\s*Дыра:\s*([^\n]+)\s*$/i);
-    if (m) { punch = m[2].trim(); body = text.slice(0, m.index).trim(); }
+    // Метка может стоять и на своей строке, и в середине склеенного
+    // ответа — берём последнее вхождение, всё после него и есть соль.
+    var i = text.toLowerCase().lastIndexOf('дыра:');
+    if (i >= 0) { punch = text.slice(i + 5).trim(); body = text.slice(0, i).trim(); }
     else if (/Дыры не нашёл/i.test(text)) body = text.replace(/Дыры не нашёл\.?/i, '').trim();
     return '<div class="lz-hole"><div class="who">' + esc(ST.sit.persona) + '</div>' + nl(body) +
            (punch ? '<div class="lz-punch">🕳️ ' + esc(punch) + '</div>' : '') +
@@ -773,15 +820,14 @@
         'Если дыры действительно нет — вместо этого напиши строго «Дыры не нашёл» и одной фразой объясни, за счёт чего формулировка держит.',
         last ? 'Это последняя попытка. После разбора добавь 2–3 строки о том, куда упирается сама затея: правило описывает поведение, а обойти его хочет мотив, которого в тексте нет. Никаких советов о том, как правильно жить, — только это наблюдение.' : ''
       ].filter(Boolean).join('\n');
-      var r = await aiGenerate(p, { max_tokens: 480, temperature: 0.85 });
-      v = (r && r.success && r.content) ? String(r.content).trim() : '';
+      v = await askAi(p, { max_tokens: 480, temperature: 0.85 }, 'patch');
     } catch (e) { v = ''; }
     ST.busy = false;
 
     if (!v) {
       ST.rules.pop(); ST.holes.pop();
       var t = document.getElementById('lzTyping');
-      if (t) t.outerHTML = '<div class="lz-card">Связь подвисла — правило не проверилось.</div>' +
+      if (t) t.outerHTML = failCard('правило') +
         '<button class="lz-secondary" onclick="LAZEJKA.renderPatch()">← Вернуться к правилу</button>';
       return;
     }
@@ -789,7 +835,8 @@
     var held = /Дыры не нашёл/i.test(v);
     ST.holes[ST.holes.length - 1] = v;
     // Персонаж говорит от первого лица — озвученное это уже сценка.
-    speak(v.replace(/\n?\s*Дыра:[^\n]*$/i, '').trim());
+    var _cut = v.toLowerCase().lastIndexOf('дыра:');
+    speak((_cut >= 0 ? v.slice(0, _cut) : v).trim());
     track('lz_move', { dir: 'patch', ctx: ST.sit.ctx, round: ST.rules.length, ok: held });
 
     if (held || last) { ST.done = true; recordPatch(held); renderPatchEnd(held); }
@@ -879,22 +926,24 @@
         'Если проба сформулирована слишком расплывчато, чтобы правило дало однозначный ответ, отвечай «N: неясно».',
         lines.map(function (x, i) { return (i + 1) + '. ' + x; }).join('\n')
       ].join('\n');
-      var r = await aiGenerate(p, { max_tokens: 120, temperature: 0.1 });
-      v = (r && r.success && r.content) ? String(r.content).trim() : '';
+      v = await askAi(p, { max_tokens: 120, temperature: 0.1 }, 'scout');
     } catch (e) { v = ''; }
     ST.busy = false;
 
     if (!v) {
       var t = document.getElementById('lzTyping');
-      if (t) t.outerHTML = '<div class="lz-card">Связь подвисла — пробы не проверились.</div>' +
+      if (t) t.outerHTML = failCard('пробы') +
         '<button class="lz-secondary" onclick="LAZEJKA.renderScout()">← Назад</button>';
       return;
     }
 
+    // Ответ приходит одной строкой («1: можно 2: нельзя»), поэтому
+    // собираем все пары «номер — вердикт» разом, а не по строкам.
+    var verdicts = {}, mm, re = /(\d+)\s*[.:)]\s*(можно|нельзя|неясно)/gi;
+    while ((mm = re.exec(v)) !== null) verdicts[parseInt(mm[1], 10)] = mm[2].toLowerCase();
     var unclear = 0, said = ST.probes.length;
     lines.forEach(function (text, i) {
-      var m = v.match(new RegExp('(?:^|\\n)\\s*' + (i + 1) + '\\s*[.:)]\\s*(можно|нельзя|неясно)', 'i'));
-      var ans = m ? m[1].toLowerCase() : '';
+      var ans = verdicts[i + 1] || '';
       if (!ans || ans === 'неясно') { unclear++; return; }
       ST.probes.push({ text: text, ok: ans === 'можно' });
     });
@@ -948,14 +997,13 @@
         'ИТОГ: точно — или — ИТОГ: близко — или — ИТОГ: мимо',
         'РАЗБОР: 2–4 строки. Что игрок ухватил верно и что именно разошлось с настоящим правилом. Если попал точно — скажи, какая проба была решающей.'
       ].join('\n');
-      var r = await aiGenerate(p, { max_tokens: 320, temperature: 0.5 });
-      v = (r && r.success && r.content) ? String(r.content).trim() : '';
+      v = await askAi(p, { max_tokens: 320, temperature: 0.5 }, 'guess');
     } catch (e) { v = ''; }
     ST.busy = false;
 
     if (!v) {
       var t = document.getElementById('lzTyping');
-      if (t) t.outerHTML = '<div class="lz-card">Связь подвисла — сверить не вышло.</div>' +
+      if (t) t.outerHTML = failCard('догадку') +
         '<button class="lz-secondary" onclick="LAZEJKA.guessForm()">← Назад</button>';
       return;
     }
@@ -1082,7 +1130,7 @@
 
   window.LAZEJKA = {
     home: home, setCat: setCat,
-    startRace: startRace, move: move, renderRace: renderRace, endRace: endRace,
+    startRace: startRace, move: move, retryMove: retryMove, renderRace: renderRace, endRace: endRace,
     startPatch: startPatch, tryRule: tryRule, renderPatch: renderPatch,
     startScout: startScout, probe: probe, renderScout: renderScout,
     guessForm: guessForm, guess: guess,
