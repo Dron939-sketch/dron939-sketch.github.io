@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="manifest" href="/site.webmanifest">
+<title>Лекция 4. Когда мера становится целью: закон Гудхарта | Андрей Мейстер</title>
+<meta name="description" content="Четвёртая лекция курса «Лазейка»: закон Гудхарта и закон Кэмпбелла. Почему показатели портятся, когда по ним начинают платить, при чём тут зазор между текстом и намерением и как защищать метрики — рабочие и свои собственные.">
+<meta name="keywords" content="закон Гудхарта, закон Кэмпбелла, KPI, показатели, метрика стала целью, тирания показателей, оптимизация метрики, Лекторий, Андрей Мейстер">
+<meta property="og:type" content="article"><meta property="og:title" content="Лекция 4. Когда мера становится целью: закон Гудхарта"><meta property="og:description" content="Колл-центр сократил время звонка — операторы стали бросать трубки. Показатель выполнен, работа умерла. Разбираем закон Гудхарта на уровне механизма."><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-lazejka-mera-stala-celyu.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-08-16T09:00:00+03:00"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-lazejka-mera-stala-celyu.html">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Лекция 4. Когда мера становится целью: закон Гудхарта", "description": "Четвёртая лекция курса «Лазейка». Три истории оптимизации показателя вместо цели: время звонка в колл-центре, подготовка к экзамену вместо образования, шаги вместо здоровья. Закон Гудхарта и закон Кэмпбелла, их общий механизм: показатель — это правило-текст, настоящая цель — намерение, и оптимизация уходит в зазор между ними. Почему виновата конструкция стимулов, а не испорченность людей. Приёмы защиты метрик: несколько мер, мера плюс суждение, вопрос о том, что показатель перестанет мерить, став целью. Самогудхартизация: как собственные измерители съедают свои цели.", "datePublished": "2026-08-16T09:00:00+03:00", "author": {"@type": "Person", "@id": "https://meysternlp.ru/#person", "name": "Андрей Мейстер", "jobTitle": "Психолог, методолог", "url": "https://meysternlp.ru/obo-mne/"}, "publisher": {"@type": "Organization", "@id": "https://meysternlp.ru/#organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/logo.png"}}, "image": "https://meysternlp.ru/og-image.jpg", "dateModified": "2026-08-16T09:00:00+03:00", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-lazejka-mera-stala-celyu.html"}, "inLanguage": "ru-RU"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Лекция 4. Когда мера становится целью: закон Гудхарта", "item": "https://meysternlp.ru/blog/lekciya-lazejka-mera-stala-celyu.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Закон Гудхарта означает, что измерять вообще бессмысленно?", "acceptedAnswer": {"@type": "Answer", "text": "Нет. Показатель портится не от измерения, а от привязанной к нему награды: пока цифру просто наблюдают, она честна. Вывод не «не измеряй», а «понимай, что произойдёт с мерой, когда сделаешь её целью»: держи несколько разнонаправленных мер, подкрепляй цифру живым суждением и не вешай награду на то, что достаточно просто видеть."}}, {"@type": "Question", "name": "Чем закон Кэмпбелла отличается от закона Гудхарта?", "acceptedAnswer": {"@type": "Answer", "text": "Это один механизм, увиденный с двух сторон. Гудхарт, экономист, смотрел со стороны показателя: мера, ставшая целью, перестаёт мерить. Кэмпбелл, психолог, — со стороны системы: показатель, решающий судьбы, искажает и сами процессы, которые отслеживал, — школа, готовящая к тесту, реально перестаёт учить. Вторая формулировка страшнее: портится не только термометр, но и больной."}}, {"@type": "Question", "name": "Если наказание не лечит, что делать с теми, кто явно обманывает систему?", "acceptedAnswer": {"@type": "Answer", "text": "Разбирать случаи руками и менять конструкцию, а не только людей. Явный подлог — против текста — наказывается как подлог. Но если по одной и той же дыре идёт третий человек подряд, вопрос уже не к людям: конструкция платит за цифру дешевле, чем за цель, и очередь в дыру не кончится. Наказание без починки зазора — это стрижка газона, у которого корни."}}, {"@type": "Question", "name": "Как отличить честное улучшение показателя от его обхода?", "acceptedAnswer": {"@type": "Answer", "text": "По цели, а не по цифре: спросите, стало ли лучше то, ради чего метрику вводили. Оператор, научившийся решать вопрос за три минуты, и оператор, бросающий трубку на третьей минуте, дают одинаковую отчётность — различает их только судьба клиента после звонка. Поэтому цифры отбирают случаи для разбора, а вердикт выносится по содержанию. Снаружи, без взгляда в цель, граница неразличима — это полутень из второй лекции."}}]}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:26px 30px;margin:36px 0;border-radius:20px;text-align:left}.cta-block h3{margin:0 0 12px;font-size:1.35rem}.cta-block p{color:#6E6E73;margin-bottom:18px;font-size:1rem}.cta-buttons{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:13px 26px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:36px 0 20px;padding:24px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:16px 18px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:6px 0 48px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}.course-nav{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 48px}.course-nav a{text-decoration:none;padding:12px 22px;border-radius:30px;font-weight:500;font-size:1rem}.cn-course{color:#3A86FF;border:1px solid #3A86FF}.cn-course:hover{background:#3A86FF;color:#fff}.cn-next{background:#3A86FF;color:#fff;border:1px solid #3A86FF}.cn-next:hover{background:#1D1D1F;border-color:#1D1D1F}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:20px 18px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:300px;text-align:center}.related-articles{padding:18px 14px}.author-box{padding:16px}.course-nav a{flex:1 1 auto;text-align:center}}</style>
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<style>/* лекции не выделяются мышью; на индексацию не влияет — текст остаётся в HTML */
+.article-content,.article-header h1{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}</style>
+</head>
+<body>
+<div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 16 августа 2026</span><span>⏱️ 22 мин чтения</span><span>🎓 Лекторий · Лазейка</span><span>✅ Проверено · август 2026</span></div>
+<h1>Лекция 4. Когда мера становится целью: закон Гудхарта</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">В колл-центре ввели показатель: среднее время звонка не больше четырёх минут. Через месяц показатель выполнялся идеально — операторы просто бросали трубку на третьей минуте сложного разговора. Никто не нарушил ни одной инструкции. Сегодня — о законе, по которому это происходит везде, где есть измерение, и о том, как он работает в вашей жизни.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">План лекции</span><ol><li>Три истории: колл-центр, экзамен, шагомер</li><li>Закон Гудхарта и закон Кэмпбелла: формулировки</li><li>Механизм: показатель — это правило-текст, и у него есть полутень</li><li>Почему «найти и наказать хитрецов» не работает никогда</li><li>Как защищают метрики те, кто понял закон</li><li>Самогудхартизация: ваши собственные показатели</li></ol></div>
+
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">Три истории</a></li><li><a href="#s-2">Два закона</a></li><li><a href="#s-3">Механизм: знакомый зазор</a></li><li><a href="#s-4">Почему наказание хитрецов не лечит</a></li><li><a href="#s-5">Как защищают метрики</a></li><li><a href="#s-6">Самогудхартизация</a></li><li><a href="#itogi">Итоги лекции</a></li><li><a href="#voprosy">Вопросы для самопроверки</a></li><li><a href="#literatura">Литература</a></li></ol></nav>
+
+
+<h2 id="s-1">1. Три истории</h2>
+
+<p>История первая — тот самый колл-центр. Показатель «среднее время
+звонка» вводили, чтобы операторы не растекались и очередь двигалась.
+Итог: трубки бросаются на середине фразы, клиент перезванивает,
+очередь растёт — а показатель прекрасен. Отчёт зелёный, работа мертва.</p>
+
+<p>История вторая — школа. Экзамен придумали как измеритель знаний:
+знаешь — сдашь. Но как только от балла зависят судьба выпускника,
+премия учителя и рейтинг школы, вся система начинает готовить не
+знающих, а сдающих: натаскивание на формат, типовые задания, стратегии
+угадывания. Балл растёт. Измеряет ли он ещё знания — вопрос, на который
+все причастные предпочитают не смотреть.</p>
+
+<p>История третья — ваш шагомер. Десять тысяч шагов задумывались как
+мера подвижности. Через месяц вы наматываете круги по коридору в
+одиннадцать вечера — не потому, что телу надо, а потому, что кольцо
+не закрылось. Шаги есть. Вопрос, осталась ли в них подвижность, о
+которой шла речь, — открыт.</p>
+
+<p>Три разные сферы, один сюжет: измеритель, который начали вознаграждать,
+перестал измерять. Этому сюжету посвящены два знаменитых закона.</p>
+
+<h2 id="s-2">2. Два закона</h2>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">📏</span><h3>Закон Гудхарта</h3></div>
+<p>Экономист Чарльз Гудхарт в 1975 году заметил на материале денежной
+политики: как только показатель делают целью управления, он перестаёт
+быть хорошим показателем. В обобщённой формулировке, которую дала
+антрополог Мэрилин Стразерн: когда мера становится целью, она перестаёт
+быть хорошей мерой.</p>
+<p>Пока время звонка просто измеряли — оно честно говорило о работе.
+Как только за него стали платить — оно стало говорить о том, как
+ловко операторы делают время звонка.</p></div>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">🎓</span><h3>Закон Кэмпбелла</h3></div>
+<p>Психолог Дональд Кэмпбелл в 1976 году сформулировал то же с другой
+стороны: чем больше социальных решений завязано на количественный
+показатель, тем сильнее давление порчи на него — и тем вернее он
+исказит те самые процессы, которые должен был отслеживать.</p>
+<p>Кэмпбелл писал в том числе про экзамены — за десятилетия до нынешних
+споров о них. Предсказание сбылось в каждой стране, где баллы стали
+решать судьбы: закон не про людей какой-то одной культуры, а про
+конструкцию.</p></div>
+
+<p>Запомните обе фамилии, но главное — дальше. Оба закона обычно
+цитируют как мрачный афоризм. Мы разберём механизм — и увидите, что он
+вам уже знаком.</p>
+
+<h2 id="s-3">3. Механизм: знакомый зазор</h2>
+
+<p>Что такое показатель? Это правило, записанное числом. «Хорошая работа
+оператора = разговор до четырёх минут». «Образованный выпускник = столько-то
+баллов». То есть — правило-текст из первой лекции. А настоящая цель —
+довольный клиент, образованный человек, здоровое тело — это
+правило-намерение. Сцена в голове того, кто вводил метрику.</p>
+
+<p>Дальше вы уже всё знаете. Текст и намерение никогда не совпадают
+полностью — между ними зазор. Пока показатель никого не награждает и не
+наказывает, люди живут в намерении, и зазор незаметен. Но как только
+к числу привязали деньги, карьеру или страх — система начала платить
+за текст. Не за цель. За текст.</p>
+
+<p><b>Это важно.</b> Оптимизация всегда стекает в зазор, потому что там
+дешевле. Довести клиента до решения за четыре минуты — трудно. Бросить
+трубку на четвёртой минуте — легко. Оба действия дают одинаковую
+отчётную цифру. Система, платящая за цифру, оплачивает оба — а
+выживает то, что дешевле.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 300" role="img" aria-label="Схема: цикл порчи показателя — цель, метрика, оптимизация метрики, расхождение" style="width:100%;height:auto;display:block;font-family:inherit">
+<rect x="60" y="40" width="200" height="52" rx="10" fill="#1FA971" opacity="0.15" stroke="#1FA971"/>
+<text x="160" y="62" text-anchor="middle" font-size="14" font-weight="600" fill="#1D1D1F">Цель</text>
+<text x="160" y="80" text-anchor="middle" font-size="12" fill="#6E6E73">довольный клиент</text>
+<rect x="460" y="40" width="200" height="52" rx="10" fill="#3A86FF" opacity="0.15" stroke="#3A86FF"/>
+<text x="560" y="62" text-anchor="middle" font-size="14" font-weight="600" fill="#1D1D1F">Метрика</text>
+<text x="560" y="80" text-anchor="middle" font-size="12" fill="#6E6E73">звонок до 4 минут</text>
+<rect x="460" y="180" width="200" height="52" rx="10" fill="#E5484D" opacity="0.12" stroke="#E5484D"/>
+<text x="560" y="202" text-anchor="middle" font-size="14" font-weight="600" fill="#1D1D1F">Награда за метрику</text>
+<text x="560" y="220" text-anchor="middle" font-size="12" fill="#6E6E73">премия за цифру</text>
+<rect x="60" y="180" width="200" height="52" rx="10" fill="#fff" stroke="#E5484D" stroke-dasharray="6 5"/>
+<text x="160" y="202" text-anchor="middle" font-size="14" font-weight="600" fill="#E5484D">Оптимизация текста</text>
+<text x="160" y="220" text-anchor="middle" font-size="12" fill="#6E6E73">бросить трубку</text>
+<path d="M262 66 L 456 66" stroke="#6E6E73" stroke-width="1.5" marker-end="url(#ar4)"/>
+<text x="360" y="58" text-anchor="middle" font-size="12" fill="#6E6E73">измеряем через</text>
+<path d="M560 94 L 560 176" stroke="#6E6E73" stroke-width="1.5" marker-end="url(#ar4)"/>
+<path d="M458 206 L 264 206" stroke="#6E6E73" stroke-width="1.5" marker-end="url(#ar4)"/>
+<path d="M160 178 L 160 96" stroke="#E5484D" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#ar4r)"/>
+<text x="60" y="140" font-size="12" fill="#E5484D">цель уходит из</text>
+<text x="60" y="156" font-size="12" fill="#E5484D">показателя</text>
+<defs>
+<marker id="ar4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6E6E73"/></marker>
+<marker id="ar4r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#E5484D"/></marker>
+</defs>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">
+Круг из четырёх шагов. Цель — довольный клиент — измеряется через метрику
+«звонок до четырёх минут». К метрике привязывают награду. Награда рождает
+оптимизацию текста: бросить трубку дёшево, и цифра та же. И пунктирная
+стрелка вверх замыкает круг: цель уходит из показателя — число ещё
+отчитывается, но уже не о том. Чем сильнее награда, тем быстрее один
+оборот этого круга.
+</figcaption></figure>
+
+<h2 id="s-4">4. Почему наказание хитрецов не лечит</h2>
+
+<p>Первая реакция любого руководителя, увидевшего брошенные трубки, —
+найти и наказать. Иногда даже находят. Показатель чинится на месяц,
+потом всё возвращается. Почему?</p>
+
+<p>Потому что наказали человека, а зазор остался. Показатель по-прежнему
+платит за цифру, цифра по-прежнему дешевле всего делается в обход цели —
+значит, следующий, кто под давлением плана, придёт туда же. Не самый
+бесчестный придёт, заметьте, — самый прижатый. Дыра в показателе, как
+дыра в правиле, — свойство конструкции, а не людей; мы установили это
+ещё в первой лекции, и здесь оно просто дороже стоит.</p>
+
+<p>Есть и вторая причина, тоньше. Граница между «честно улучшил цифру» и
+«обманул систему» — это полутень, и провести её объективно нельзя.
+Готовить к формату экзамена — это порча измерения или добросовестное
+обучение? Сокращать разговор, потому что научился решать быстрее, — или
+потому что режешь углы? Снаружи цифры неотличимы. Карать приходится по
+подозрению в намерении — а это уже произвол со всеми его последствиями
+для доверия.</p>
+
+<h2 id="s-5">5. Как защищают метрики</h2>
+
+<p>Совсем отказаться от измерений — не выход: без них решения принимает
+громкий голос и личная симпатия. Люди, которые всерьёз занимались этой
+проблемой — от медицины до полиции, — пришли к нескольким рабочим
+приёмам.</p>
+
+<p><b>Несколько мер вместо одной.</b> Одну цифру обыграть легко, три
+разнонаправленные — дорого. Время звонка в паре с долей повторных
+обращений сразу делает брошенную трубку невыгодной: второй показатель
+ловит то, что уронил первый.</p>
+
+<p><b>Мера плюс суждение.</b> Цифра — повод посмотреть, а не приговор.
+Показатель отбирает случаи, живой человек разбирает их руками:
+прослушать пять звонков, а не прочитать средние. Дорого — потому и
+работает: суждение не оптимизируется скриптом.</p>
+
+<p><b>Не привязывать к награде то, что можно просто наблюдать.</b>
+Показатель, за которым не стоит премия и кара, портится на порядок
+медленнее — закон Гудхарта запускается наградой. Часть метрик стоит
+держать именно наблюдательными, и пусть об этом все знают.</p>
+
+<p><b>И главный вопрос — до внедрения:</b> что именно этот показатель
+перестанет измерять, когда станет целью? Куда потечёт оптимизация, где
+у него зазор? Вы теперь умеете отвечать на такой вопрос — это ровно
+поиск лазейки из первой лекции, только в правиле, записанном числом.</p>
+
+<h2 id="s-6">6. Самогудхартизация</h2>
+
+<p>Закону всё равно, кто автор показателя. Вы сами вводите себе метрики
+постоянно — и сами же их обыгрываете.</p>
+
+<p>Шаги вместо здоровья — круги по коридору перед сном. Прочитанные
+книги вместо понимания — сорок проглоченных обложек к декабрю, из
+которых через месяц не вспомнить трёх мыслей. Вычеркнутые задачи вместо
+продвижения — день, порезанный на двадцать мелких галочек, чтобы
+избежать одной страшной. Выученные слова в приложении вместо языка —
+идеальная серия из трёхсот дней и немота при встрече с живым
+иностранцем.</p>
+
+<p>Механизм тот же, до буквы: вы платите себе — чувством выполненного
+долга, закрытым кольцом, серией — за текст, а не за намерение. И
+оптимизация послушно стекает в зазор: не «стать здоровым», а «сделать
+шаги»; не «понять», а «дочитать». Обмануть удаётся единственного
+человека, для которого метрика вводилась.</p>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
+<p>Найдите свой показатель, который уже стал целью. Признак: вы делаете
+нечто ради цифры в ситуации, когда без цифры не стали бы, — и
+чувствуете укол, когда цифра срывается, даже если по сути всё в
+порядке. Шаги, серия в приложении, галочки, баллы.</p>
+<p>Не отменяйте его. Просто верните на место: неделю фиксируйте цифру,
+но награждайте себя — хотя бы вниманием — за намерение, которое за ней
+стояло. Заметите, как быстро меняется поведение, когда меняется то,
+за что платят.</p></div>
+
+
+<h2 id="faq">❓ Частые вопросы</h2>
+<h3>Закон Гудхарта означает, что измерять вообще бессмысленно?</h3>
+<p>Нет. Показатель портится не от измерения, а от привязанной к нему награды: пока цифру просто наблюдают, она честна. Вывод не «не измеряй», а «понимай, что произойдёт с мерой, когда сделаешь её целью»: держи несколько разнонаправленных мер, подкрепляй цифру живым суждением и не вешай награду на то, что достаточно просто видеть.</p>
+<h3>Чем закон Кэмпбелла отличается от закона Гудхарта?</h3>
+<p>Это один механизм, увиденный с двух сторон. Гудхарт, экономист, смотрел со стороны показателя: мера, ставшая целью, перестаёт мерить. Кэмпбелл, психолог, — со стороны системы: показатель, решающий судьбы, искажает и сами процессы, которые отслеживал, — школа, готовящая к тесту, реально перестаёт учить. Вторая формулировка страшнее: портится не только термометр, но и больной.</p>
+<h3>Если наказание не лечит, что делать с теми, кто явно обманывает систему?</h3>
+<p>Разбирать случаи руками и менять конструкцию, а не только людей. Явный подлог — против текста — наказывается как подлог. Но если по одной и той же дыре идёт третий человек подряд, вопрос уже не к людям: конструкция платит за цифру дешевле, чем за цель, и очередь в дыру не кончится. Наказание без починки зазора — это стрижка газона, у которого корни.</p>
+<h3>Как отличить честное улучшение показателя от его обхода?</h3>
+<p>По цели, а не по цифре: спросите, стало ли лучше то, ради чего метрику вводили. Оператор, научившийся решать вопрос за три минуты, и оператор, бросающий трубку на третьей минуте, дают одинаковую отчётность — различает их только судьба клиента после звонка. Поэтому цифры отбирают случаи для разбора, а вердикт выносится по содержанию. Снаружи, без взгляда в цель, граница неразличима — это полутень из второй лекции.</p>
+
+<h2 id="itogi">Итоги лекции</h2>
+<ol><li>Показатель — это правило, записанное числом: у него есть текст (цифра) и намерение (цель). Зазор между ними — тот же, что в любом правиле.</li><li>Закон Гудхарта: мера, ставшая целью, перестаёт быть хорошей мерой. Закон Кэмпбелла добавляет: и искажает процессы, которые отслеживала.</li><li>Механизм — награда за текст: оптимизация стекает в зазор, потому что там дешевле, и приходит туда не самый бесчестный, а самый прижатый.</li><li>Наказание хитрецов чинит показатель на месяц: зазор остаётся, и очередь в него не кончается. Лечится конструкция, а не люди.</li><li>Рабочая защита: несколько разнонаправленных мер, цифра как повод для живого разбора, наблюдение без награды — и вопрос «что эта мера перестанет мерить, став целью» до внедрения.</li><li>Самогудхартизация — тот же закон в личных метриках: шаги вместо здоровья, галочки вместо продвижения. Обманутым остаётся автор метрики.</li></ol>
+
+<h2 id="voprosy">Вопросы для самопроверки</h2>
+<ol><li>Сформулируйте закон Гудхарта своими словами через понятия текста и намерения из первой лекции.</li><li>В истории с экзаменом найдите ядро и полутень: какая подготовка к тесту — честное обучение, какая — порча измерения, и где граница перестаёт быть различимой?</li><li>Почему показатель без привязанной награды портится медленнее? Что именно запускает механизм порчи?</li><li>Ваша команда или семья живёт по какой-то цифре — бюджет, оценки, время за экраном. Куда в ней стекает оптимизация? Какой второй показатель поймал бы это?</li><li>Найдите в своей жизни пример самогудхартизации и определите: что было намерением, что стало текстом и когда произошла подмена?</li></ol>
+
+<h2 id="literatura">Литература</h2>
+<ul><li>Мюллер Дж. Тирания показателей (2018) — обстоятельный разбор порчи метрик в медицине, школе, полиции и бизнесе, с честным выводом о мере и суждении.</li><li>Кэмпбелл Д. Оценка воздействия планируемых социальных изменений (1976) — статья, где сформулирован закон Кэмпбелла и предсказана судьба экзаменационных баллов.</li><li>Харт Г. Л. А. Понятие права (1961) — ядро и полутень, без которых не объяснить, почему граница честного и обходного улучшения цифры неразличима снаружи.</li></ul>
+<div class="game-link-box" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#EAF4FF,#F2EEFF);border:1px solid #BFD7FF;border-radius:14px;padding:16px 20px;margin:32px 0 10px;flex-wrap:wrap"><span style="font-size:1.6rem" aria-hidden="true">🕳️</span><div style="flex:1;min-width:220px"><b style="color:#1D1D1F">Потренировать на игре</b><br><span style="color:#6E6E73;font-size:.92rem">Режим «Разведка»: правило скрыто, и вы нащупываете его границы пробами — можно, нельзя, неясно. Ровно так оптимизация нащупывает зазор в показателе: попробуйте побыть ею и почувствовать, как быстро находится дыра.</span></div><a href="/fredi/?m=lazejka" style="background:#3A86FF;color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.92rem">К игре&nbsp;→</a></div>
+
+
+<div class="cta-block">
+<h3>📊 Проверить свою метрику на Гудхарта</h3>
+<p>Есть показатель, по которому вас оценивают, — или который вы завели себе сами? Расскажите Фреди. Он поможет найти, куда стекает оптимизация, и подобрать вторую меру, которая ловит первую.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Поговорить с Фреди&nbsp;→</a>
+</div>
+</div>
+
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:18px 20px;margin:36px 0 10px;flex-wrap:wrap}.author-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе&nbsp;→</a></div></div></div>
+
+<nav class="course-nav" aria-label="Навигация по курсу"><a class="cn-course" href="/blog/lektorij/lazejka/">← Курс «Лазейка»</a><a class="cn-next" href="/blog/lekciya-lazejka-mertvye-pravila.html">Следующая лекция&nbsp;→</a></nav>
+</div>
+</article></div>
+<div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/guard.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body>
+</html>
