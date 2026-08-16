@@ -484,16 +484,29 @@
         badge.innerHTML = '<span class="meter-badge-icon">⏱</span>'
             + '<span class="meter-badge-time" id="meterBadgeTime">--:--</span>'
             + '<span class="meter-badge-day" id="meterBadgeDay"></span>';
-        // Клик по баджу — paywall (показываем модалку, как при блоке).
+        // Клик по баджу. Раньше он ВСЕГДА открывал модалку блокировки:
+        // человек с нетронутым лимитом тыкал в таймер из любопытства и
+        // видел стену «10 минут сегодня исчерпаны». В аналитике это лежало
+        // как meter_blocked_shown с trial_used_minutes=0 и
+        // minutes_until_reset=0 — блок, которого не было. Стена — только
+        // когда блок настоящий; иначе — остатки цифрами.
         badge.addEventListener('click', function () {
-            if (_lastCheck) {
-                showFatigueModal(_lastCheck);
-                try {
-                    if (window.FrediTracker && window.FrediTracker.track) {
-                        window.FrediTracker.track('meter_badge_clicked', {});
-                    }
-                } catch (e) {}
-            }
+            var c = _lastCheck;
+            try {
+                if (window.FrediTracker && window.FrediTracker.track) {
+                    window.FrediTracker.track('meter_badge_clicked',
+                        { blocked: !!(c && c.can_send === false) });
+                }
+            } catch (e) {}
+            if (!c) return;
+            if (c.can_send === false) { showFatigueModal(c); return; }
+            var day = c.remaining_today_minutes;
+            var trial = c.remaining_trial_minutes;
+            if (day == null && trial == null) return;
+            var parts = [];
+            if (day != null) parts.push('сегодня осталось ' + Math.round(day) + ' мин');
+            if (trial != null) parts.push('бесплатный запас — ' + Math.round(trial) + ' мин');
+            _toast('⏱ ' + parts.join(' · '), 'info');
         });
         document.body.appendChild(badge);
         return badge;
