@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow"><meta name="yandex" content="index, follow">
+<link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="manifest" href="/site.webmanifest">
+<title>Лекция 5. Семейство конструкторов: устаревание, мосты, замки | Андрей Мейстер</title>
+<meta name="description" content="Пятая лекция курса «Рычаг»: родня механизма «создай проблему». Картель «Феб» и запланированное устаревание, платный мост, замыкание на несовместимости, посредник-непрозрачность и продавец страха — пять конструкций с примерами и приметами.">
+<meta name="keywords" content="запланированное устаревание, картель Феб лампочки, платный мост, вендор лок-ин, несовместимые разъёмы, посредник непрозрачность, продажа страха, Лекторий, Андрей Мейстер">
+<meta property="og:type" content="article"><meta property="og:title" content="Лекция 5. Семейство конструкторов: устаревание, мосты, замки"><meta property="og:description" content="В 1924 году производители лампочек договорились делать их короче живущими. Разбираем пять конструкций, в которых проблема встроена в сам продукт."><meta property="og:url" content="https://meysternlp.ru/blog/lekciya-rychag-konstruktory-problem.html"><meta property="og:image" content="https://meysternlp.ru/og-image.jpg"><meta property="og:locale" content="ru_RU">
+<meta property="article:published_time" content="2026-08-16T18:00:00+03:00"><meta property="article:author" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://meysternlp.ru/blog/lekciya-rychag-konstruktory-problem.html">
+
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Лекция 5. Семейство конструкторов: устаревание, мосты, замки", "description": "Пятая лекция курса «Рычаг». Пять родственных конструкций, в которых проблема встраивается в устройство рынка или продукта. Запланированное устаревание и документированная история картеля «Феб» 1924 года: производители ламп согласовали сокращение срока службы примерно до тысячи часов со штрафами за долговечность. Платный мост: создать или занять точку обязательного прохода и брать за проход. Замыкание: несовместимые разъёмы, проприетарные форматы и расходники, делающие уход дороже терпения. Посредник, создающий непрозрачность, которую сам же продаёт как услугу. Продавец страха, раздувающий угрозу, от которой страхует. Общий признак семейства: доход растёт от ухудшения положения клиента, а не от улучшения.", "datePublished": "2026-08-16T18:00:00+03:00", "author": {"@type": "Person", "@id": "https://meysternlp.ru/#person", "name": "Андрей Мейстер", "jobTitle": "Психолог, методолог", "url": "https://meysternlp.ru/obo-mne/"}, "publisher": {"@type": "Organization", "@id": "https://meysternlp.ru/#organization", "name": "Андрей Мейстер", "logo": {"@type": "ImageObject", "url": "https://meysternlp.ru/logo.png"}}, "image": "https://meysternlp.ru/og-image.jpg", "dateModified": "2026-08-16T18:00:00+03:00", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://meysternlp.ru/blog/lekciya-rychag-konstruktory-problem.html"}, "inLanguage": "ru-RU"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://meysternlp.ru/"}, {"@type": "ListItem", "position": 2, "name": "Блог", "item": "https://meysternlp.ru/blog/"}, {"@type": "ListItem", "position": 3, "name": "Лекция 5. Семейство конструкторов: устаревание, мосты, замки", "item": "https://meysternlp.ru/blog/lekciya-rychag-konstruktory-problem.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Картель «Феб» — реальная история или городская легенда?", "acceptedAnswer": {"@type": "Answer", "text": "Документированная реальность: картель существовал с 1924 года, объединял крупнейших мировых производителей ламп, и среди его согласованных норм был срок службы около тысячи часов — при том что техника уже позволяла в разы больше. Сохранились документы, включая переписку о штрафах за превышение долговечности; историю многократно разбирали инженерные издания. Отдельные детали в пересказах обрастают легендами, но ядро — согласованное укорачивание жизни продукта — подтверждено первоисточниками."}}, {"@type": "Question", "name": "Не всякая же короткоживущая вещь — заговор производителя?", "acceptedAnswer": {"@type": "Answer", "text": "Верно, и лекция это прямо оговаривает: компромисс цены и ресурса — легальная инженерия, дешёвое честно живёт меньше. Конструкцию выдаёт не срок службы, а отношение к ремонту: корпус, который не открыть без разрушения; деталь за три копейки, продающаяся только узлом за половину цены изделия; закрытая диагностика; обновление, замедляющее старое устройство. Всё это — намеренные решения, у которых нет инженерного оправдания, только коммерческое."}}, {"@type": "Question", "name": "Чем платный мост отличается от честной платной услуги?", "acceptedAnswer": {"@type": "Answer", "text": "Вопросом, что стало с путём. Честный мост сокращает дорогу, которая без него была длиннее: плата — за созданную пользу, и у путника остаётся старый брод для бедных. Конструкция начинается, когда проход был свободным, пока его не перегородили: посредник не ускоряет путь, а замедляет его всем неплатящим; статус «через нас обязательно» добыт регламентом или скупкой альтернатив, а не качеством. Тест: уберите мост мысленно — станет ли всем дольше? Если станет легче, это был не мост, а шлагбаум."}}, {"@type": "Question", "name": "Я строю продукт — как удерживать клиентов без «замка»?", "acceptedAnswer": {"@type": "Answer", "text": "Различайте стены и корни. Стены — искусственная цена ухода: закрытые форматы, невыносимые данные, штрафы за расставание; они удерживают тело клиента и теряют его лояльность. Корни — накопленная польза, которая не переносится по природе, а не по злому умыслу: история, настроенная под клиента система, отношения, качество. Практический ориентир: делайте уход технически лёгким — экспорт в открытые форматы, честная отмена в два клика — и вкладывайтесь в то, из-за чего уходить не захочется. Клиент, который остаётся при открытой двери, — единственный, кого вы действительно удержали."}}]}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;line-height:1.7;overflow-x:hidden}.container{max-width:1000px;margin:0 auto;padding:0 20px}.article-header{margin:60px 0 30px;padding-bottom:30px;border-bottom:1px solid #E0E0E0}.article-meta{display:flex;gap:30px;color:#6E6E73;margin-bottom:20px;font-size:.9rem;flex-wrap:wrap}h1{font-size:3.2rem;font-weight:600;margin-bottom:20px;line-height:1.2;letter-spacing:-.02em}h2{font-size:2.2rem;font-weight:500;margin:60px 0 25px;letter-spacing:-.01em}h3{font-size:1.6rem;font-weight:500;margin:30px 0 15px}p{font-size:1.15rem;font-weight:300;margin-bottom:1.5rem}.article-content ul,.article-content ol{margin:0 0 1.5rem 2rem;font-size:1.1rem;font-weight:300}.article-content li{margin-bottom:.6rem}.key-takeaway{margin:40px 0;padding:30px;background:linear-gradient(135deg,#E8F1FF 0%,#F0F8FF 100%);border-radius:20px;border-left:4px solid #3A86FF}.takeaway-label{display:block;font-weight:600;color:#3A86FF;margin-bottom:15px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.key-takeaway p{margin:0;font-size:1.2rem}.warning-block{margin:40px 0;padding:30px;background:linear-gradient(135deg,#FFF3E0 0%,#FFE5D9 100%);border-radius:20px;border-left:4px solid #FF6B35}.warning-label{display:block;font-weight:600;color:#FF6B35;margin-bottom:12px;text-transform:uppercase;font-size:.9rem;letter-spacing:.1em}.warning-block p{margin:0 0 10px 0;font-size:1.1rem}.warning-block p:last-child{margin:0}.concept-block{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:20px;padding:30px;margin:25px 0}.concept-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}.concept-icon{font-size:2.5rem}.concept-number{font-size:1.1rem;font-weight:600;color:#3A86FF;background:rgba(58,134,255,.1);padding:4px 12px;border-radius:30px}.concept-block h3{margin:0 0 15px 0;font-size:1.4rem}.concept-block p{margin:0 0 10px 0}.technique-box{background:linear-gradient(135deg,#E8F5E9,#FFFFFF);border:1px solid #A5D6A7;border-radius:16px;padding:24px;margin:30px 0}.technique-box h4{margin:0 0 12px;color:#2E7D32;font-weight:600;font-size:1.15rem}.technique-box ol{margin:10px 0 0 1.5rem}.cta-block{background:linear-gradient(135deg,#F5F5F7,#FFF);border:2px solid #3A86FF;padding:26px 30px;margin:36px 0;border-radius:20px;text-align:left}.cta-block h3{margin:0 0 12px;font-size:1.35rem}.cta-block p{color:#6E6E73;margin-bottom:18px;font-size:1rem}.cta-buttons{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap}.cta-block .btn{display:inline-block;padding:13px 26px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:50px;font-weight:600;font-size:1rem}.cta-block .btn-outline{background:transparent;border:2px solid #3A86FF;color:#3A86FF}.cta-block .btn:hover{background:#1D1D1F;color:#fff;transform:scale(1.05)}.related-articles{margin:36px 0 20px;padding:24px;background:#F5F5F7;border-radius:20px}.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.related-item{background:#fff;padding:16px 18px;border-radius:12px}.related-item a{color:#1D1D1F;text-decoration:none;font-weight:500;display:block;margin-bottom:5px}.related-item a:hover{color:#3A86FF}.related-item span{color:#6E6E73;font-size:.85rem}.back-link{display:inline-block;margin:6px 0 48px;color:#3A86FF;padding:12px 30px;border:1px solid #3A86FF;border-radius:30px;text-decoration:none}.back-link:hover{background:#3A86FF;color:#fff}.course-nav{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 48px}.course-nav a{text-decoration:none;padding:12px 22px;border-radius:30px;font-weight:500;font-size:1rem}.cn-course{color:#3A86FF;border:1px solid #3A86FF}.cn-course:hover{background:#3A86FF;color:#fff}.cn-next{background:#3A86FF;color:#fff;border:1px solid #3A86FF}.cn-next:hover{background:#1D1D1F;border-color:#1D1D1F}@media(max-width:768px){h1{font-size:2.3rem}h2{font-size:1.7rem}h3{font-size:1.3rem}.article-meta{flex-direction:column;gap:10px}.related-grid{grid-template-columns:1fr;gap:15px}.cta-block{padding:20px 18px}.cta-buttons{flex-direction:column}.cta-block .btn{width:100%;max-width:300px;text-align:center}.related-articles{padding:18px 14px}.author-box{padding:16px}.course-nav a{flex:1 1 auto;text-align:center}}</style>
+<style>.toc-box{background:#F5F5F7;border:1px solid #E0E0E0;border-radius:16px;padding:22px 26px;margin:35px 0}.toc-box .toc-title{font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6E6E73;margin-bottom:12px}.toc-box ol{margin:0 0 0 1.3rem;padding:0}.toc-box li{margin:6px 0;font-size:1rem;font-weight:300}.toc-box a{color:#1D1D1F;text-decoration:none;border-bottom:1px solid rgba(58,134,255,.3);transition:color .2s}.toc-box a:hover{color:#3A86FF}</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656', 'ym');ym(108138656, 'init', {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});</script>
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<style>/* лекции не выделяются мышью; на индексацию не влияет — текст остаётся в HTML */
+.article-content,.article-header h1{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}</style>
+</head>
+<body>
+<div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<div class="container"><article>
+<div class="article-header"><div class="article-meta"><span>📅 16 августа 2026</span><span>⏱️ 23 мин чтения</span><span>🎓 Лекторий · Рычаг</span><span>✅ Проверено · август 2026</span></div>
+<h1>Лекция 5. Семейство конструкторов: устаревание, мосты, замки</h1>
+<div id="listenBox"></div></div>
+<div class="article-content">
+<p class="subtitle">Прошлая лекция разобрала механизм, где проблему внушают. У него большая родня: конструкции, где проблему встраивают — в товар, в формат, в устройство рынка. Лампочка, которой запрещено гореть долго. Разъём, не подходящий к прошлой зарядке. Мост, который нельзя объехать. Сегодня — пять таких машин с приметами каждой.</p>
+
+<div class="key-takeaway"><span class="takeaway-label">План лекции</span><ol><li>От внушённой проблемы — к встроенной</li><li>Запланированное устаревание: картель «Феб», 1924 год</li><li>Платный мост: точка обязательного прохода</li><li>Замок: несовместимость как бизнес-модель</li><li>Посредник-непрозрачность и продавец страха</li><li>Общий признак семейства и практикум</li></ol></div>
+
+<nav class="toc-box" aria-label="Содержание"><div class="toc-title">Содержание</div><ol><li><a href="#s-1">От внушённой — к встроенной</a></li><li><a href="#s-2">Картель «Феб»</a></li><li><a href="#s-3">Платный мост</a></li><li><a href="#s-4">Замок</a></li><li><a href="#s-5">Посредник и продавец страха</a></li><li><a href="#s-6">Общий признак семейства</a></li><li><a href="#itogi">Итоги лекции</a></li><li><a href="#voprosy">Вопросы для самопроверки</a></li><li><a href="#literatura">Литература</a></li></ol></nav>
+
+
+<h2 id="s-1">1. От внушённой — к встроенной</h2>
+
+<p>Галитоз был проблемой внушённой: страдание изготовили рекламой,
+продукт не менялся. Родня этого механизма работает грубее и надёжнее:
+<b>проблема встраивается в сам товар, формат или устройство рынка</b> —
+и тогда внушать ничего не надо, клиент упирается в неё сам.</p>
+
+<p>Семейный признак у всех конструкций один, держите его в голове до
+конца лекции: <b>доход продавца растёт от ухудшения положения
+клиента.</b> Не от того, что клиенту стало лучше, — от того, что ему
+стало хуже: вещь сломалась раньше, обход стал невозможен, уход стал
+дорог, самостоятельность — недоступна. Там, где деньги делаются на
+ухудшении, честная конкуренция не работает: улучшать продукт
+становится невыгодно по построению.</p>
+
+<h2 id="s-2">2. Картель «Феб»</h2>
+
+<p>Начнём с самой документированной истории семейства. К началу
+двадцатых годов лампы накаливания научились гореть по две с половиной
+тысячи часов и дольше. Для покупателя — прекрасно. Для производителя —
+беда: хорошая лампа убивает повторную покупку.</p>
+
+<p>В 1924 году крупнейшие мировые производители ламп — европейские и
+американские, все громкие имена эпохи — создали картель «Феб».
+Среди прочего картель согласовал <b>стандарт срока службы: около
+тысячи часов</b> — вдвое-втрое меньше достигнутого техникой.
+Лаборатории картеля проверяли лампы участников, а за превышение
+долговечности полагались штрафы: инженеров, десятилетиями учившихся
+делать долговечнее, поставили делать хуже — по регламенту, с
+контролем качества наоборот. Документы картеля сохранились;
+история многократно разобрана инженерными изданиями и стала именем
+нарицательным для целого явления.</p>
+
+<div class="concept-block"><div class="concept-header"><span class="concept-icon">💡</span><h3>Запланированное устаревание</h3></div>
+<p>Встраивание в продукт преждевременного конца: ресурс занижен,
+ремонт затруднён или дороже нового, деталь-предохранитель не
+меняется отдельно, программное обновление делает старое устройство
+медленным. Проблема «вещь умерла» изготовлена на заводе вместе с
+вещью — и решается там же, за новые деньги.</p>
+<p>Оговорка честности: не всякая недолговечность — заговор. Дешёвое
+и правда живёт меньше; компромисс цены и ресурса — легальная
+инженерия. Примета именно конструкции: ремонт затруднён намеренно —
+корпус на клею, деталь продаётся только узлом, диагностика закрыта
+от сторонних мастеров.</p></div>
+
+<h2 id="s-3">3. Платный мост</h2>
+
+<p>Вторая конструкция стара как феодализм: <b>найти или создать точку,
+которую нельзя обойти, — и брать за проход.</b> Средневековый барон
+ставил цепь поперёк реки: река общая, цепь его. Современные мосты
+изящнее: единственный поставщик, «уполномоченная» организация,
+обязательная сертификация, платная площадка, без которой не выйти
+к покупателю.</p>
+
+<p>Мост бывает честным: настоящий мост через настоящую реку сокращает
+путь, и плата за него — плата за пользу. Конструкцией он становится,
+когда <b>проход был свободным, пока его не перегородили,</b> — когда
+посредник не сокращает путь, а удлиняет его для всех, кто не заплатил;
+когда статус «обязательного» добыт не пользой, а регламентом,
+знакомством или скупкой альтернатив. Примета: спросите, что мост
+делает с путём. Честный — короче; платный шлагбаум — просто
+существует поперёк.</p>
+
+<h2 id="s-4">4. Замок</h2>
+
+<p>Третья конструкция — любимица технологических рынков: <b>сделать
+уход дороже терпения.</b> На языке индустрии — замыкание, замок на
+клиенте.</p>
+
+<p>Формы знакомы каждому. Разъём, не подходящий к прошлым зарядкам и
+чужим устройствам. Формат файлов, который открывается только своей
+программой. Принтер за копейки — и картриджи по цене крыла самолёта,
+с чипом против заправки. Экосистема, где каждое следующее устройство
+делает уход из неё дороже. Подписка, которую легко начать и
+муторно отменить: сама трудность отмены — спроектированная деталь.</p>
+
+<p>Механика та же, что у всего семейства: клиента держит не польза,
+а <b>встроенная цена ухода.</b> Честная привязанность выглядит иначе:
+вами дорожат настолько, что уйти легко, — и вы не уходите. Примета
+замка: представьте, что решили уйти сегодня. Посчитайте, что
+потеряете не из пользы, а из-за искусственных стен: неоткрываемых
+форматов, невозвращаемых накоплений, несовместимых разъёмов. Это
+и есть длина цепи.</p>
+
+<h2 id="s-5">5. Посредник и продавец страха</h2>
+
+<p><b>Посредник-непрозрачность.</b> Честный посредник продаёт
+упрощение: берёт на себя сложность, которая существовала до него.
+Конструктор — сначала производит сложность, потом продаёт проводку
+через неё. Примета: тумана со временем становится больше, а не
+меньше; «упрощающие» инструменты посредника работают только через
+него; попытка разобраться самостоятельно наталкивается на
+спроектированные тупики. Спросите: этот проводник ведёт меня через
+болото — или он это болото и подсыпает?</p>
+
+<p><b>Продавец страха.</b> Страхование — великое честное изобретение:
+разделить редкий большой риск на всех. Конструкцией оно становится,
+когда продавец защиты сам раздувает угрозу: сводки становятся страшнее
+перед продлением подписки, «участившиеся случаи» без статистики,
+охранные услуги, презентация которых начинается с нагнетания.
+Предельный случай вы знаете из прошлой лекции — рэкет, где угроза
+и защита совпадают. Примета мягких форм: источник ваших знаний об
+угрозе и получатель ваших денег за защиту — одно лицо.</p>
+
+<figure class="lecfig" style="margin:28px 0;padding:18px 18px 14px;background:#F8F9FB;border:1px solid #E4E7EC;border-radius:16px">
+<svg viewBox="0 0 720 330" role="img" aria-label="Схема: пять конструкторов проблем и их приметы" style="width:100%;height:auto;display:block;font-family:inherit">
+<text x="360" y="26" text-anchor="middle" font-size="14.5" font-weight="600" fill="#1D1D1F">Семейство конструкторов: где встроена проблема</text>
+<g font-size="12" fill="#1D1D1F">
+<rect x="40" y="48" width="200" height="76" rx="10" fill="#E5484D" opacity="0.08" stroke="#E4E7EC"/>
+<text x="140" y="70" text-anchor="middle" font-weight="600">💡 Устаревание</text>
+<text x="140" y="90" text-anchor="middle" font-size="10.5" fill="#6E6E73">проблема в ресурсе вещи</text>
+<text x="140" y="108" text-anchor="middle" font-size="10.5" fill="#E5484D">примета: ремонт затруднён намеренно</text>
+<rect x="260" y="48" width="200" height="76" rx="10" fill="#E5484D" opacity="0.08" stroke="#E4E7EC"/>
+<text x="360" y="70" text-anchor="middle" font-weight="600">🌉 Платный мост</text>
+<text x="360" y="90" text-anchor="middle" font-size="10.5" fill="#6E6E73">проблема в устройстве пути</text>
+<text x="360" y="108" text-anchor="middle" font-size="10.5" fill="#E5484D">примета: путь не короче, шлагбаум поперёк</text>
+<rect x="480" y="48" width="200" height="76" rx="10" fill="#E5484D" opacity="0.08" stroke="#E4E7EC"/>
+<text x="580" y="70" text-anchor="middle" font-weight="600">🔒 Замок</text>
+<text x="580" y="90" text-anchor="middle" font-size="10.5" fill="#6E6E73">проблема в цене ухода</text>
+<text x="580" y="108" text-anchor="middle" font-size="10.5" fill="#E5484D">примета: держит не польза, а стены</text>
+<rect x="150" y="140" width="200" height="76" rx="10" fill="#E5484D" opacity="0.08" stroke="#E4E7EC"/>
+<text x="250" y="162" text-anchor="middle" font-weight="600">🌫️ Посредник</text>
+<text x="250" y="182" text-anchor="middle" font-size="10.5" fill="#6E6E73">проблема в непрозрачности</text>
+<text x="250" y="200" text-anchor="middle" font-size="10.5" fill="#E5484D">примета: тумана всё больше</text>
+<rect x="370" y="140" width="200" height="76" rx="10" fill="#E5484D" opacity="0.08" stroke="#E4E7EC"/>
+<text x="470" y="162" text-anchor="middle" font-weight="600">😨 Продавец страха</text>
+<text x="470" y="182" text-anchor="middle" font-size="10.5" fill="#6E6E73">проблема в размере угрозы</text>
+<text x="470" y="200" text-anchor="middle" font-size="10.5" fill="#E5484D">примета: источник страха = кассир защиты</text>
+</g>
+<rect x="185" y="244" width="350" height="52" rx="12" fill="#E5484D" opacity="0.15" stroke="#E5484D" stroke-width="2"/>
+<text x="360" y="266" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1D1D1F">Общий признак семейства</text>
+<text x="360" y="285" text-anchor="middle" font-size="11.5" fill="#E5484D">доход растёт от ухудшения положения клиента</text>
+</svg>
+<figcaption style="font-size:.85rem;color:#6E6E73;margin-top:12px;line-height:1.55">
+Пять карточек-конструкций. Устаревание — проблема встроена в ресурс
+вещи, примета: ремонт затруднён намеренно. Платный мост — проблема в
+устройстве пути, примета: путь не стал короче, шлагбаум просто стоит
+поперёк. Замок — проблема в цене ухода, примета: держит не польза, а
+стены. Посредник — проблема в непрозрачности, примета: тумана со
+временем всё больше. Продавец страха — проблема в размере угрозы,
+примета: источник страха и кассир защиты — одно лицо. Внизу общий
+признак семейства: доход растёт от ухудшения положения клиента.
+</figcaption></figure>
+
+<h2 id="s-6">6. Общий признак семейства</h2>
+
+<p>Сведём. Пять конструкций различаются местом встройки: ресурс вещи,
+устройство пути, цена ухода, прозрачность, размер угрозы. Объединяет
+их вектор дохода: <b>продавцу платят за ухудшение — за короткую
+жизнь вещи, перегороженный путь, высокую стену, густой туман,
+раздутый страх.</b></p>
+
+<p>Отсюда два вывода. Для покупателя: там, где вектор дохода направлен
+против вас, бессмысленно ждать, что «рынок сам исправит», — рынок
+исправляет то, за что платят, а платят здесь за ухудшение. Работают
+другие силы: независимые измерители, право на ремонт, стандарты
+совместимости, регуляторы — и ваш личный детектор, которому
+посвящена седьмая лекция.</p>
+
+<p>Для строителя рычагов: каждая из пяти конструкций имеет честного
+двойника — долговечная вещь с платным обслуживанием, настоящий мост,
+привязанность без стен, посредник, снимающий настоящую сложность,
+страховка без нагнетания. Двойники зарабатывают меньше в моменте и
+дольше живут — но об этом разговор в лекции о честных рычагах.</p>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
+<p>Инвентаризация замков: выпишите три сервиса или экосистемы, где вы
+держитесь давно. К каждому — вопрос ухода: что вы потеряете, если
+уйдёте сегодня, и сколько в этих потерях пользы, а сколько —
+искусственных стен: форматов, накоплений, несовместимостей.</p>
+<p>Где стены перевесили пользу — не обязательно уходить: цепь, которую
+вы увидели и взвесили, уже не управляет вами вслепую. Но один самый
+дорогой замок стоит начать разбирать: экспорт данных, запасной
+вариант, совместимый формат. Свобода ухода меняет отношение к вам
+быстрее жалоб.</p></div>
+
+
+<h2 id="faq">❓ Частые вопросы</h2>
+<h3>Картель «Феб» — реальная история или городская легенда?</h3>
+<p>Документированная реальность: картель существовал с 1924 года, объединял крупнейших мировых производителей ламп, и среди его согласованных норм был срок службы около тысячи часов — при том что техника уже позволяла в разы больше. Сохранились документы, включая переписку о штрафах за превышение долговечности; историю многократно разбирали инженерные издания. Отдельные детали в пересказах обрастают легендами, но ядро — согласованное укорачивание жизни продукта — подтверждено первоисточниками.</p>
+<h3>Не всякая же короткоживущая вещь — заговор производителя?</h3>
+<p>Верно, и лекция это прямо оговаривает: компромисс цены и ресурса — легальная инженерия, дешёвое честно живёт меньше. Конструкцию выдаёт не срок службы, а отношение к ремонту: корпус, который не открыть без разрушения; деталь за три копейки, продающаяся только узлом за половину цены изделия; закрытая диагностика; обновление, замедляющее старое устройство. Всё это — намеренные решения, у которых нет инженерного оправдания, только коммерческое.</p>
+<h3>Чем платный мост отличается от честной платной услуги?</h3>
+<p>Вопросом, что стало с путём. Честный мост сокращает дорогу, которая без него была длиннее: плата — за созданную пользу, и у путника остаётся старый брод для бедных. Конструкция начинается, когда проход был свободным, пока его не перегородили: посредник не ускоряет путь, а замедляет его всем неплатящим; статус «через нас обязательно» добыт регламентом или скупкой альтернатив, а не качеством. Тест: уберите мост мысленно — станет ли всем дольше? Если станет легче, это был не мост, а шлагбаум.</p>
+<h3>Я строю продукт — как удерживать клиентов без «замка»?</h3>
+<p>Различайте стены и корни. Стены — искусственная цена ухода: закрытые форматы, невыносимые данные, штрафы за расставание; они удерживают тело клиента и теряют его лояльность. Корни — накопленная польза, которая не переносится по природе, а не по злому умыслу: история, настроенная под клиента система, отношения, качество. Практический ориентир: делайте уход технически лёгким — экспорт в открытые форматы, честная отмена в два клика — и вкладывайтесь в то, из-за чего уходить не захочется. Клиент, который остаётся при открытой двери, — единственный, кого вы действительно удержали.</p>
+
+<h2 id="itogi">Итоги лекции</h2>
+<ol><li>У внушённой проблемы есть родня — проблемы встроенные: в ресурс вещи, устройство пути, цену ухода, прозрачность и размер угрозы.</li><li>Картель «Феб» (1924) — документированный образец: согласованный срок службы ламп около тысячи часов и штрафы за долговечность.</li><li>Приметы конструкций: ремонт затруднён намеренно; путь не короче — шлагбаум поперёк; держит не польза, а стены; тумана всё больше; источник страха и кассир защиты совпадают.</li><li>Общий признак семейства: доход растёт от ухудшения положения клиента — поэтому «рынок сам исправит» здесь не работает.</li><li>У каждой конструкции есть честный двойник: долговечность с обслуживанием, настоящий мост, корни вместо стен, посредник против настоящей сложности, страховка без нагнетания.</li><li>Личная защита начинается с инвентаризации замков: взвесить стены против пользы и разобрать самый дорогой — свобода ухода меняет отношение к вам.</li></ol>
+
+<h2 id="voprosy">Вопросы для самопроверки</h2>
+<ol><li>Чем встроенная проблема отличается от внушённой? Приведите по свежему примеру каждой.</li><li>Что именно в истории картеля «Феб» превращает инженерный компромисс в конструкцию? Назовите деталь-улику.</li><li>Проверьте один «обязательный» узел своей жизни тестом моста: если убрать его — станет длиннее или легче?</li><li>Посчитайте длину своей цепи в одной экосистеме: что из потерь при уходе — польза, а что — стены?</li><li>Почему честная конкуренция не исправляет конструкции семейства? Какие силы исправляют?</li></ol>
+
+<h2 id="literatura">Литература</h2>
+<ul><li>Материалы о картеле «Феб» в инженерной прессе — документы картеля, нормы срока службы и штрафы за долговечность.</li><li>Паккард В. Производители отходов (1960) — ранняя книга о запланированном устаревании как стратегии индустрии.</li><li>Чалдини Р. Психология влияния (1984) — механика дефицита и страха, из которых собираются мягкие формы конструкций.</li></ul>
+<div class="game-link-box" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#EAF4FF,#F2EEFF);border:1px solid #BFD7FF;border-radius:14px;padding:16px 20px;margin:32px 0 10px;flex-wrap:wrap"><span style="font-size:1.6rem" aria-hidden="true">🎲</span><div style="flex:1;min-width:220px"><b style="color:#1D1D1F">Потренировать на игре</b><br><span style="color:#6E6E73;font-size:.92rem">Игра «Калибровка»: ставьте уверенность в процентах и узнайте, где вы сверхуверены, а где недооцениваете. Прямая тренировка против продавцов страха: раздутая угроза ловится калиброванной оценкой.</span></div><a href="/fredi/?m=kalibr" style="background:#3A86FF;color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:600;font-size:.92rem">К игре&nbsp;→</a></div>
+
+
+<div class="cta-block">
+<h3>🔓 Взвесить свои замки с Фреди</h3>
+<p>Назовите Фреди сервисы и экосистемы, из которых «дорого уходить». Он поможет разложить цену ухода на пользу и стены — и составить план разбора самого дорогого замка.</p>
+<div class="cta-buttons">
+<a href="/fredi/" class="btn">Поговорить с Фреди&nbsp;→</a>
+</div>
+</div>
+
+<style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:18px 20px;margin:36px 0 10px;flex-wrap:wrap}.author-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
+<div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе&nbsp;→</a></div></div></div>
+
+<nav class="course-nav" aria-label="Навигация по курсу"><a class="cn-course" href="/blog/lektorij/rychag/">← Курс «Рычаг»</a><a class="cn-next" href="/blog/lekciya-rychag-v-otnosheniyah.html">Следующая лекция&nbsp;→</a></nav>
+</div>
+</article></div>
+<div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script src="/blog/selfcheck.js" defer></script>
+<script src="/blog/listen.js" defer></script>
+<script src="/blog/guard.js" defer></script>
+<script src="/blog/progress.js" defer></script>
+</body>
+</html>
