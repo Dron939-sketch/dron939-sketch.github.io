@@ -12,6 +12,21 @@
     if(window._trackerLoaded) return;
     window._trackerLoaded=true;
 
+    // Ботофильтр. Краулеры исполняют JS и пишут события наравне с людьми:
+    // в выгрузке 15.08 — Baiduspider, YandexBot, Google-Safety. Они раздувают
+    // DAU и users, а их session_end засоряет средние длительности.
+    // Публичный API оставляем заглушкой, чтобы вызовы из модулей не падали.
+    // «bot» — только как отдельное слово: телефоны CUBOT — живые люди.
+    var _ua=navigator.userAgent||'';
+    if(!/cubot/i.test(_ua) && /bot\b|spider|crawl|headless|lighthouse|slurp|google-safety|preview|fetch\b/i.test(_ua)){
+        var _noop=function(){};
+        window.FrediTracker={ track:_noop, openFeature:_noop, closeFeature:_noop,
+            activeSec:function(){ return 0; }, markInternal:_noop,
+            isInternal:function(){ return true; } };
+        console.log('tracker.js: бот-UA, трекинг выключен');
+        return;
+    }
+
     var API=function(){return window.API_BASE_URL||window.CONFIG?.API_BASE_URL||'https://ffred-ddd989.amvera.io';};
     var UID=function(){return window.USER_ID||window.CONFIG?.USER_ID;};
     var SID=Date.now()+'_'+Math.random().toString(36).substr(2,6);

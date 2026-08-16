@@ -119,28 +119,41 @@
         }
     }
 
-    async function _syncByDevice() {
-        try {
-            var fingerprint = _buildFingerprint();
-            var body = { device_id: deviceId, fingerprint: fingerprint };
-            var curUid = _parseIntSafe(_safeGet(LS_USER_ID));
-            if (curUid) body.existing_user_id = curUid;
+    function _sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
-            var res = await fetch(API_BASE + '/api/user/by-device', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            });
-            var data = await res.json();
-            if (data && data.success && data.user_id) {
-                _applyUserId(data.user_id);
-                _safeSet(LS_AUTH_SYNCED, '1');
-                console.log('🔐 auth(device): user_id =', data.user_id, '| matched_by =', data.matched_by);
-                return Number(data.user_id);
+    async function _syncByDevice() {
+        // Сбой сети здесь стоит дорого: без серверного user_id страница
+        // остаётся на локальном Date.now()-идентификаторе (его выдают
+        // index.html и app.js, когда хранилище пусто) — и каждый неудачный
+        // визит выглядит в аналитике новым пользователем. Поэтому три
+        // попытки с паузами, а не одна.
+        var fingerprint = _buildFingerprint();
+        for (var attempt = 0; attempt < 3; attempt++) {
+            if (attempt) await _sleep(attempt === 1 ? 1000 : 3000);
+            try {
+                var body = { device_id: deviceId, fingerprint: fingerprint };
+                var curUid = _parseIntSafe(_safeGet(LS_USER_ID));
+                if (curUid) body.existing_user_id = curUid;
+
+                var res = await fetch(API_BASE + '/api/user/by-device', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                var data = await res.json();
+                if (data && data.success && data.user_id) {
+                    _applyUserId(data.user_id);
+                    _safeSet(LS_AUTH_SYNCED, '1');
+                    console.log('🔐 auth(device): user_id =', data.user_id, '| matched_by =', data.matched_by);
+                    return Number(data.user_id);
+                }
+                // Осмысленный ответ без user_id (4xx, success:false) —
+                // повторами не лечится, выходим сразу.
+                if (res.status < 500) break;
+            } catch (e) {
+                console.warn('🔐 auth(device): попытка ' + (attempt + 1) + ' не прошла', e);
             }
-        } catch (e) {
-            console.warn('🔐 auth(device): fetch failed, using local ID', e);
         }
         return _parseIntSafe(_safeGet(LS_USER_ID));
     }

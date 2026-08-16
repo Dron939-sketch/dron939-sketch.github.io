@@ -19,6 +19,7 @@
   function track(ev, d) { try { if (window.FrediTracker) window.FrediTracker.track(ev, d || {}); } catch (e) {} }
   function container() { return document.getElementById('screenContainer'); }
   function vibe(ms) { if (navigator.vibrate) { try { navigator.vibrate(ms); } catch (e) {} } }
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
   // Фреди разделяет абзацы «||» (бэкенд схлопывает \n)
   function fmtText(s) { return esc(s).replace(/\s*\|\|\s*/g, '<br><br>'); }
 
@@ -502,12 +503,42 @@
     ST.busy = true;
     var el = document.getElementById('odHost');
     if (el) el.innerHTML = '<button class="od-secondary" disabled style="margin-top:10px"><span class="od-spin"></span>Фреди делает ход…</button>';
-    try {
-      await call('/api/odi/advance', { method: 'POST', body: JSON.stringify({ code: ST.code, token: ST.token }) });
-      vibe(20);
-      track('odi_advance', { stage: (ST.game && ST.game.stage || 0) + 1 });
-    } catch (e) { toast(e.message || 'Не переключилось', 'error'); }
+    var stageBefore = ST.game ? ST.game.stage : -1;
+    var statusBefore = ST.game ? ST.game.status : '';
+    var err = null;
+    for (var attempt = 0; attempt < 2; attempt++) {
+      try {
+        await call('/api/odi/advance', { method: 'POST', body: JSON.stringify({ code: ST.code, token: ST.token }) });
+        err = null;
+        break;
+      } catch (e) {
+        err = e;
+        // Потерянный ответ не значит, что ход не прошёл. Прежде чем слать
+        // запрос второй раз, сверяемся с сервером: двойной advance
+        // перескочил бы этап.
+        await sleep(900);
+        try {
+          var d = await call('/api/odi/state/' + encodeURIComponent(ST.code) + '?token=' + encodeURIComponent(ST.token) + '&after=' + ST.lastId, { method: 'GET' });
+          if (d && d.game && (d.game.stage !== stageBefore || d.game.status !== statusBefore || d.game.busy)) { err = null; break; }
+        } catch (e2) {}
+      }
+    }
     ST.busy = false;
+    if (err) {
+      // Раньше тут был toast на 3 секунды: хост его не замечал, видел
+      // вернувшуюся кнопку и уходил, думая что игра сломалась.
+      track('odi_advance_fail', { stage: stageBefore, reason: String(err.message || err).slice(0, 120) });
+      if (el && el.isConnected) {
+        el.innerHTML =
+          '<div class="od-invite" style="margin-top:10px">' +
+            '<div style="color:#fca5a5;font-size:.9rem">Этап не переключился: ' + esc(err.message || 'сервер не ответил') + '. Игра цела, ходы не пропали.</div>' +
+            '<button class="od-secondary" onclick="ODI.advance()" style="margin-top:8px">Попробовать ещё раз</button>' +
+          '</div>';
+      }
+      return;
+    }
+    vibe(20);
+    track('odi_advance', { stage: stageBefore + 1 });
     poll(false);
   }
 
