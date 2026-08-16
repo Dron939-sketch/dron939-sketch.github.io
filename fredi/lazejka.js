@@ -625,7 +625,7 @@
         (ttsReady() ? '<div class="lz-tts' + (ttsOn() ? ' on' : '') + '" onclick="LAZEJKA.toggleTts()">' +
           '<div><b>🔊 Фреди говорит вслух</b><span>Реплики озвучиваются сами. Каждая тратит столько же лимита, сколько сообщение.</span></div>' +
           '<div class="lz-sw"></div></div>' : '') +
-        '<a class="lz-course" href="/blog/lektorij/triz/" target="_blank" rel="noopener">🎓 Теория — курс «ТРИЗ»: взять своё, не нарушив ограничение</a>' +
+        '<a class="lz-course" href="/blog/lektorij/lazejka/" target="_blank" rel="noopener">🎓 Теория — курс «Лазейка»: 10 лекций о букве и духе правил, с озвучкой</a>' +
       '</div>';
     toTop();
   }
