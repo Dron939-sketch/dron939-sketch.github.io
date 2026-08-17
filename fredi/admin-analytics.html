@@ -308,7 +308,7 @@
             <input id="userIdJump" type="text" inputmode="numeric" placeholder="user_id → открыть диалог" style="flex:1;min-width:220px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit">
             <button id="userIdJumpBtn" style="padding:8px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:inherit;cursor:pointer">Открыть</button>
         </div>
-        <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin-bottom:8px">Последние 100 вопросов</h3>
+        <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin-bottom:8px">Последние разговоры</h3>
         <div id="messagesList"></div>
     </section>
 
@@ -2695,31 +2695,117 @@ POV: ты на семейном ужине, и мама такая «как у �
         return bits.length ? ' <span style="color:var(--text-dim);font-weight:400;font-size:11px">· ' + bits.join(' · ') + '</span>' : '';
     }
 
+    // Разговор, а не строка на каждую реплику.
+    //
+    // Раньше список показывал по строке на сообщение, и один человек,
+    // задавший десяток вопросов подряд, занимал весь экран — рядом стоящие
+    // строки выглядели как десять разных людей. Теперь реплики одного
+    // человека, идущие с разрывом меньше получаса, сворачиваются в одну
+    // сессию: когда начал, сколько длилась, сколько вопросов, с чего начал.
+    var SESSION_GAP_MS = 30 * 60 * 1000;
+
+    function _groupSessions(events){
+        var byUser = {};
+        events.forEach(function(m){
+            var k = String(m.user_id);
+            (byUser[k] = byUser[k] || []).push(m);
+        });
+        var sessions = [];
+        Object.keys(byUser).forEach(function(uid){
+            var list = byUser[uid].slice().sort(function(a, b){
+                return new Date(a.created_at) - new Date(b.created_at);
+            });
+            var cur = null;
+            list.forEach(function(m){
+                var t = new Date(m.created_at).getTime();
+                if (!cur || (t - cur.lastTs) > SESSION_GAP_MS) {
+                    cur = { user_id: m.user_id, user_name: m.user_name, age: m.age,
+                            gender: m.gender, city: m.city,
+                            startTs: t, lastTs: t, messages: [m] };
+                    sessions.push(cur);
+                } else {
+                    cur.lastTs = t;
+                    cur.messages.push(m);
+                }
+            });
+        });
+        sessions.sort(function(a, b){ return b.lastTs - a.lastTs; });
+        return sessions;
+    }
+
+    function _humanDuration(ms){
+        var sec = Math.round(ms / 1000);
+        if (sec < 60) return sec + ' с';
+        var min = Math.round(sec / 60);
+        if (min < 60) return min + ' мин';
+        var h = Math.floor(min / 60);
+        return h + ' ч ' + (min % 60) + ' мин';
+    }
+
+    // Сколько реплик в сессии — дословные повторы. Ровно так выглядит
+    // двойное нажатие «отправить»: один текст подряд несколько раз.
+    function _repeatCount(msgs){
+        var seen = {}, worst = 0;
+        msgs.forEach(function(m){
+            var k = String(m.content || '').trim().toLowerCase();
+            if (!k) return;
+            seen[k] = (seen[k] || 0) + 1;
+            if (seen[k] > worst) worst = seen[k];
+        });
+        return worst;
+    }
+
     function renderMessagesList(d){
         var events = (d && d.messages) || [];
         if (!events.length) {
             document.getElementById('messagesList').innerHTML = '<div class="empty">Нет вопросов за этот период</div>';
             return;
         }
-        var rows = events.map(function(m){
-            var ts = new Date(m.created_at);
-            var t = ts.toLocaleString('ru-RU');
-            var preview = _esc(String(m.content || '').slice(0, 180));
-            if ((m.content || '').length > 180) preview += '…';
-            var userLabel = _esc(m.user_id || '—');
-            if (m.user_name) userLabel += ' <span style="color:var(--text-dim);font-weight:400">('+_esc(m.user_name)+')</span>';
-            userLabel += _demoSuffix(m);
-            var voiceMark = m.metadata && m.metadata.voice ? ' 🎤' : '';
-            var modeHtml = m.metadata && m.metadata.mode ? _modeBadge(m.metadata.mode) : '';
-            return '<tr style="cursor:pointer" data-uid="'+_esc(m.user_id)+'">' +
-                '<td style="color:var(--text-dim);font-size:11px;white-space:nowrap">'+t+'</td>' +
+        var sessions = _groupSessions(events);
+        var rows = sessions.map(function(s){
+            var first = s.messages[0];
+            var start = new Date(s.startTs);
+            var when = start.toLocaleString('ru-RU');
+            var lasted = s.messages.length > 1
+                ? '<div style="color:var(--text-dim);font-size:10px;margin-top:2px">длилась ' + _humanDuration(s.lastTs - s.startTs) + '</div>'
+                : '';
+
+            var userLabel = _esc(s.user_id || '—');
+            if (s.user_name) userLabel += ' <span style="color:var(--text-dim);font-weight:400">('+_esc(s.user_name)+')</span>';
+            userLabel += _demoSuffix(s);
+
+            var modes = {};
+            var voice = false;
+            s.messages.forEach(function(m){
+                if (m.metadata && m.metadata.mode) modes[m.metadata.mode] = 1;
+                if (m.metadata && m.metadata.voice) voice = true;
+            });
+            var modeHtml = Object.keys(modes).map(_modeBadge).join('');
+            var voiceMark = voice ? ' 🎤' : '';
+
+            var preview = _esc(String(first.content || '').slice(0, 160));
+            if ((first.content || '').length > 160) preview += '…';
+
+            var countBadge = '<span style="display:inline-block;padding:1px 7px;border-radius:8px;background:rgba(59,130,255,0.14);color:#3b82ff;font-size:11px;font-weight:600;margin-right:6px">'
+                + s.messages.length + (s.messages.length === 1 ? ' вопрос' : ' вопр.') + '</span>';
+            var rep = _repeatCount(s.messages);
+            var repBadge = rep > 1
+                ? '<span title="одна и та же фраза подряд — похоже на двойное нажатие" style="display:inline-block;padding:1px 7px;border-radius:8px;background:rgba(239,68,68,0.14);color:#ef4444;font-size:11px;font-weight:600;margin-right:6px">повтор ×'+rep+'</span>'
+                : '';
+            var tail = s.messages.length > 1
+                ? '<div style="color:var(--text-dim);font-size:11px;margin-top:3px">…и ещё ' + (s.messages.length - 1) + ' — открыть разговор</div>'
+                : '';
+
+            return '<tr style="cursor:pointer" data-uid="'+_esc(s.user_id)+'">' +
+                '<td style="color:var(--text-dim);font-size:11px;white-space:nowrap">'+when+lasted+'</td>' +
                 '<td style="font-size:12px;font-family:\'SF Mono\',Menlo,Consolas,monospace">'+userLabel+voiceMark+modeHtml+'</td>' +
-                '<td style="font-size:13px;line-height:1.45">'+preview+'</td>' +
+                '<td style="font-size:13px;line-height:1.45">'+countBadge+repBadge+preview+tail+'</td>' +
                 '</tr>';
         }).join('');
         document.getElementById('messagesList').innerHTML =
-            '<table><thead><tr><th style="width:130px">Время</th><th style="width:180px">User</th><th>Вопрос</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-            '<div style="font-size:11px;color:var(--text-dim);margin-top:8px">Кликни по строке — откроется полный диалог.</div>';
+            '<table><thead><tr><th style="width:140px">Начало</th><th style="width:180px">Кто</th><th>Разговор</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+            '<div style="font-size:11px;color:var(--text-dim);margin-top:8px">' +
+            sessions.length + ' разговоров из ' + events.length + ' вопросов — реплики одного человека с разрывом меньше 30 минут сведены в один. Кликни по строке — откроется полный диалог.</div>';
 
         // row click → open dialog
         document.querySelectorAll('#messagesList tr[data-uid]').forEach(function(tr){
