@@ -96,6 +96,12 @@
         } catch (e) {}
         try { window.USER_ID = num; } catch (e) {}
         try { if (window.voiceManager) window.voiceManager.userId = num; } catch (e) {}
+        // Личность подтверждена сервером: снимаем метку временного id и
+        // будим тех, кто её ждал (трекер копит события, метр — минуты).
+        try { window.USER_ID_PROVISIONAL = false; } catch (e) {}
+        try {
+            window.dispatchEvent(new CustomEvent('fredi:identity', { detail: { user_id: num } }));
+        } catch (e) {}
     }
 
     // Пробуем восстановить серверную сессию (email/password логин).
@@ -182,6 +188,30 @@
         try { window.HAS_MAX = false; } catch (e) {}
         return await _syncByDevice();
     })();
+
+    // Шлюз личности для всех модулей.
+    //
+    // Возвращает промис с подтверждённым сервером user_id — или null, если
+    // за отведённое время подтверждения не пришло (сеть легла). Ждать
+    // бесконечно нельзя: человек не должен упираться в неотправляемое
+    // сообщение из-за аналитики, поэтому у ожидания есть потолок.
+    //
+    // Кто этим пользуется: tracker.js (не отправлять события под временным
+    // id), meter.js (не списывать и не выдавать минуты временному id),
+    // app.js (не заводить диалог на несуществующего пользователя).
+    var IDENTITY_TIMEOUT_MS = 6000;
+    window.identityReady = function (timeoutMs) {
+        if (!window.USER_ID_PROVISIONAL) {
+            return Promise.resolve(_parseIntSafe(_safeGet(LS_USER_ID)));
+        }
+        var limit = timeoutMs || IDENTITY_TIMEOUT_MS;
+        return Promise.race([
+            (window.authReady || Promise.resolve(null)).catch(function () { return null; }),
+            new Promise(function (resolve) { setTimeout(function () { resolve(null); }, limit); })
+        ]).then(function (uid) {
+            return uid || _parseIntSafe(_safeGet(LS_USER_ID));
+        });
+    };
 
     // Публичный API (для диагностики и UI-модулей).
     window.getDeviceId = function () { return _safeGet(LS_DEVICE_ID); };

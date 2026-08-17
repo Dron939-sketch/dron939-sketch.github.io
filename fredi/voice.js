@@ -993,6 +993,11 @@ class VoiceTransport {
             }
         } catch (e) { /* предчек необязателен — упадём на серверную проверку */ }
 
+        // Как и в текстовом чате: пока сервер не подтвердил, кто это,
+        // реплику отправлять нельзя — она уйдёт на временный id.
+        try { if (window.identityReady) await window.identityReady(); } catch (e) {}
+        try { if (window.USER_ID) this.userId = window.USER_ID; } catch (e) {}
+
         console.log(`📤 sendAudio: ${audioBlob.size}b (${audioBlob.type}) via ${this._mode.toUpperCase()}`);
 
         if (this._mode === 'ws' && this._wsReady && this._ws?.readyState === WebSocket.OPEN) {
