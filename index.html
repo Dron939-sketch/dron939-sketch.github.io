@@ -1113,6 +1113,109 @@
         display: none;
       }
 
+      /* ---- Компактная мобильная главная ---------------------------------
+         Страница занимала 8069 пикселей — девять с половиной экранов
+         телефона, и половина из них уходила на воздух между блоками да на
+         один дословный повтор. По аналитике медиана мобильной сессии —
+         16 секунд: столько прокрутки никто не проходит.
+
+         Правило правки: ни одна мысль со страницы не убрана. Заголовки,
+         вопросы, ответы, цитаты и ссылки на месте, шрифты не тронуты.
+         Сжат только воздух, рассчитанный на широкий экран, где блоки
+         стоят рядом, а в одну колонку складываются друг под друга. */
+
+      /* 1. Повтор трёх проектов внутри «Как это работает»: их развёрнутая
+            версия стоит экраном выше, в «Моих проектах», с теми же
+            ссылками. На широком экране это перекличка, в одной колонке —
+            просто второй проход по тому же. */
+      .system-tools,
+      .system-tools-caption {
+        display: none;
+      }
+
+      /* 2. Воздух между блоками и внутри карточек. */
+      .section {
+        padding: 38px 0;
+      }
+
+      h2 {
+        margin-bottom: 1.2rem;
+      }
+
+      .help-grid,
+      .projects-grid {
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .cycle-grid {
+        gap: 14px;
+        margin: 26px 0;
+      }
+
+      .blog-preview-grid {
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .help-card,
+      .cycle-item {
+        padding: 20px;
+      }
+
+      .project-card {
+        padding: 22px 20px;
+      }
+
+      .blog-preview-card {
+        padding: 18px;
+      }
+
+      .choice-block {
+        margin: 18px 0 26px;
+      }
+
+      .statement-block {
+        margin: 30px auto 20px;
+      }
+
+      /* 3. Декор карточек. Иконка и отступы между строками — единственное,
+            что здесь можно ужать, не трогая ни одного слова. Кегль текста
+            и крупные типографские жесты («ЗАЧЕМ?», «БОГ УМЕР») остаются
+            как есть: это и есть узнаваемость страницы. */
+      .project-icon {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
+
+      .help-question {
+        margin-bottom: 6px;
+      }
+
+      .help-question-small {
+        margin-bottom: 10px;
+      }
+
+      .project-question {
+        margin-bottom: 8px;
+      }
+
+      .project-title {
+        margin-bottom: 10px;
+      }
+
+      /* 4. Анонсы статей: видно первые строки, дальше человек идёт в саму
+            статью. Полный текст остаётся в разметке — это обрезка по
+            высоте, а не удаление. */
+      .card-excerpt {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 14px;
+      }
+
       .choice-inner {
         padding: 15px 20px;
       }
@@ -1130,6 +1233,14 @@
     }
 
     @media (max-width: 480px) {
+      /* На телефоне (а не на планшете) даже три анонса — это полтора
+         экрана перед подвалом. Оставляем два: кнопка «все статьи блога»
+         оказывается в пределах одного движения пальцем. Остальные
+         карточки, как и прежде, остаются в разметке. */
+      .blog-preview-grid .blog-preview-card:nth-child(n+3) {
+        display: none;
+      }
+
       .logo {
         letter-spacing: 0.2em;
       }
@@ -1411,8 +1522,13 @@
       <div class="statement-text">Я стремлюсь к тому, чтобы мои продукты работали без меня.</div>
     </div>
     
-    <!-- ТРИ КВАДРАТА С РАЗДЕЛИТЕЛЬНОЙ ЛИНИЕЙ -->
-    <div class="projects-grid" style="margin-top: 20px; margin-bottom: 10px;">
+    <!-- ТРИ КВАДРАТА С РАЗДЕЛИТЕЛЬНОЙ ЛИНИЕЙ.
+         На широком экране это перекличка с «Моими проектами»: там
+         развёрнуто, здесь одним словом. На телефоне переклички не выходит —
+         блоки идут в одну колонку, и человек второй раз подряд пролистывает
+         те же КНИГИ, ИГРЫ и ПРАКТИКУМЫ. Поэтому на узком экране повтор
+         убран (класс system-tools), те же ссылки остаются выше. -->
+    <div class="projects-grid system-tools" style="margin-top: 20px; margin-bottom: 10px;">
       
       <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
         <div class="project-icon" style="font-size: 2.4rem; margin-bottom: 15px; display: block;">📘</div>
@@ -1437,8 +1553,8 @@
       
     </div>
     
-    <!-- МИНИМАЛИСТИЧНОЕ ПОЯСНЕНИЕ -->
-    <div style="text-align: center; margin: 10px 0 50px;">
+    <!-- МИНИМАЛИСТИЧНОЕ ПОЯСНЕНИЕ (подпись к тем самым трём квадратам) -->
+    <div class="system-tools-caption" style="text-align: center; margin: 10px 0 50px;">
       <span style="color: #666; font-size: clamp(0.8rem, 3vw, 0.9rem); letter-spacing: 0.2em; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 5px;">ВЫБЕРИ СВОЙ ИНСТРУМЕНТ</span>
     </div>
     
@@ -1520,7 +1636,7 @@
     </div>
 
     <div class="blog-preview-footer">
-      <a href="/blog/" class="btn btn-outline">Все 1252 статьи блога →</a>
+      <a href="/blog/" class="btn btn-outline">Все 1516 статей блога →</a>
     </div>
   </div>
 </section>
