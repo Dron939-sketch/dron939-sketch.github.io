@@ -29,14 +29,63 @@
 
     var API=function(){return window.API_BASE_URL||window.CONFIG?.API_BASE_URL||'https://ffred-ddd989.amvera.io';};
     var UID=function(){return window.USER_ID||window.CONFIG?.USER_ID;};
-    var SID=Date.now()+'_'+Math.random().toString(36).substr(2,6);
+
+    // Сессия переживает переход между страницами сайта.
+    //
+    // Раньше session_id рождался на каждую загрузку, а из блога в приложение
+    // человек приходит по обычной ссылке — и один заход писался двумя
+    // сессиями, первая длиной в секунду. В выгрузке это видно прямо:
+    // 78 session_start против 51 session_end, а средняя длительность
+    // занижена секундными огрызками. Теперь id сессии лежит в хранилище
+    // и продолжается, пока разрыв между страницами меньше SESSION_GAP_MS.
+    var SESSION_GAP_MS=30*60*1000;
+    var _sidNew=true;
+    var SID=(function(){
+        var now=Date.now();
+        try{
+            var prev=sessionStorage.getItem('fredi_sid')||localStorage.getItem('fredi_sid');
+            var seen=parseInt(localStorage.getItem('fredi_sid_seen')||'0',10);
+            if(prev && seen && (now-seen)<SESSION_GAP_MS){ _sidNew=false; return prev; }
+        }catch(e){}
+        return now+'_'+Math.random().toString(36).substr(2,6);
+    })();
+    function _touchSession(){
+        try{
+            sessionStorage.setItem('fredi_sid',SID);
+            localStorage.setItem('fredi_sid',SID);
+            localStorage.setItem('fredi_sid_seen',String(Date.now()));
+        }catch(e){}
+    }
+    _touchSession();
+    if(_sidNew){ try{ localStorage.removeItem('fredi_sid_active_ms'); }catch(e){} }
+
+    // Пока личность не подтверждена сервером, события копятся в очереди:
+    // отправленные под временным Date.now()-идентификатором, они плодят
+    // несуществующих «уникальных пользователей». Ждём не дольше потолка —
+    // аналитика не повод терять события совсем.
+    var _idReady=!window.USER_ID_PROVISIONAL;
+    var _idDeadline=Date.now()+8000;
+    if(!_idReady){
+        var _release=function(){ _idReady=true; _flush(); };
+        window.addEventListener('fredi:identity',_release,{once:true});
+        if(window.identityReady) window.identityReady().then(_release, _release);
+        else setTimeout(_release,3000);
+    }
+
     var START=Date.now();
     var _screen='';
     var _queue=[];
     var _sending=false;
 
     // --- active-time accounting (visibility API) ---
-    var _activeMs=0;
+    // Активное время продолжается вместе с сессией: человек, ушедший из
+    // блога в приложение, приносит с собой уже накопленные минуты. Иначе
+    // session_end каждой страницы нёс бы только её кусок, и средняя
+    // длительность сессии выходила бы короче реальной.
+    var _activeMs=(function(){
+        if(_sidNew) return 0;
+        try{ return parseInt(localStorage.getItem('fredi_sid_active_ms')||'0',10)||0; }catch(e){ return 0; }
+    })();
     var _lastActiveAt=Date.now();
     var _isVisible=!document.hidden;
 
@@ -45,6 +94,7 @@
             var now=Date.now();
             _activeMs += now - _lastActiveAt;
             _lastActiveAt = now;
+            try{ localStorage.setItem('fredi_sid_active_ms',String(_activeMs)); }catch(e){}
         }
     }
 
@@ -186,6 +236,10 @@
             ts:new Date().toISOString()
         };
         _queue.push(payload);
+        // Сессия жива, пока в неё пишут: сдвигаем отметку, иначе получасовое
+        // окно отсчитывалось бы от загрузки страницы, а не от последнего
+        // действия, и длинный разговор рвался бы на две сессии.
+        _touchSession();
         _flush();
     }
 
@@ -195,8 +249,19 @@
 
     function _flush(){
         if(_sending||!_queue.length) return;
+        // Личность ещё не подтверждена — придерживаем очередь, но не дольше
+        // потолка: иначе при мёртвой сети события пропали бы совсем.
+        if(!_idReady){
+            if(Date.now()<_idDeadline){ setTimeout(_flush,400); return; }
+            _idReady=true;
+        }
         _sending=true;
         var batch=_queue.splice(0,10);
+        // user_id проставляем в момент отправки, а не постановки в очередь:
+        // к этой секунде сервер уже сказал, кто это на самом деле, и события
+        // начала визита не уезжают под временным идентификатором.
+        var uidNow=UID();
+        for(var i=0;i<batch.length;i++){ batch[i].user_id=uidNow; }
         // sendBeacon шлёт куки (credentials = include), а у бэка нет
         // Access-Control-Allow-Credentials → preflight падает на CORS.
         // Уходим на fetch с credentials:'omit' и keepalive:true (даёт то же
@@ -505,8 +570,14 @@
         track('promise_unhandled',{message:msg.slice(0,200)});
     });
 
-    // session_start
-    track('session_start',{referrer:document.referrer||'',screen_w:screen.width,screen_h:screen.height,theme:document.documentElement.getAttribute('data-theme')||'dark',ua:navigator.userAgent.substr(0,100)});
+    // session_start — только для действительно новой сессии. Перезагрузка
+    // страницы и переход из блога в приложение продолжают начатую: раньше
+    // каждая такая навигация писала лишний старт и секундную сессию.
+    if(_sidNew){
+        track('session_start',{referrer:document.referrer||'',screen_w:screen.width,screen_h:screen.height,theme:document.documentElement.getAttribute('data-theme')||'dark',ua:navigator.userAgent.substr(0,100)});
+    }else{
+        track('page_view',{referrer:document.referrer||'',path:(location.pathname||'')});
+    }
 
     // session_end с active-time (а не wall time). Cap 2 часа — sanity.
     // На iOS + Safari beforeunload не всегда срабатывает, поэтому дублируем

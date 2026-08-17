@@ -9,6 +9,22 @@
 
     function _api() { return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
     function _uid() { return window.CONFIG?.USER_ID; }
+
+    // Лимит привязан к пользователю, поэтому под временным
+    // Date.now()-идентификатором его трогать нельзя: сервер завёл бы ещё
+    // одного «нового» человека с полным бесплатным запасом, а настоящий
+    // расход остался бы неучтённым. Отсюда и брались обнулённые лимиты
+    // после перезагрузки, и лишние пользователи в аналитике.
+    //
+    // Пока личность не подтверждена, ждём её (потолок ожидания — в auth.js).
+    // Не дождались — работаем как раньше, но это осознанный fail-open:
+    // лучше пустить человека говорить, чем запереть из-за легшей сети.
+    async function _uidConfirmed() {
+        if (window.USER_ID_PROVISIONAL && window.identityReady) {
+            try { await window.identityReady(); } catch (e) {}
+        }
+        return _uid();
+    }
     function _toast(msg, type) { if (window.showToast) window.showToast(msg, type || 'info'); }
 
     function _injectBadgeStyles() {
@@ -63,7 +79,7 @@
     var CHECK_CACHE_MS = 5000;
 
     async function checkCanSend() {
-        var uid = _uid();
+        var uid = await _uidConfirmed();
         if (!uid) return { can_send: true };
         var now = Date.now();
         if (_lastCheck && (now - _lastCheckTime) < CHECK_CACHE_MS) return _lastCheck;
@@ -148,7 +164,7 @@
     }
 
     async function recordUsage(seconds) {
-        var uid = _uid();
+        var uid = await _uidConfirmed();
         if (!uid) return;
         try {
             await fetch(_api() + '/api/meter/record-usage', {

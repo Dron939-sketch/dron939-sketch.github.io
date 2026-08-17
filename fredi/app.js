@@ -586,6 +586,9 @@ function addMessage(text, sender = 'bot', audioUrl = null) {
     }
     messagesContainer.appendChild(messageDiv);
     _scrollMessagesToBottom(messagesContainer);
+    // Возвращаем пузырь: композеру он нужен, чтобы убрать реплику с экрана,
+    // если проверка лимита ответила отказом уже после её показа.
+    return messageDiv;
 }
 
 // «Фреди печатает…» индикатор, пока ждём ответ AI.
@@ -767,23 +770,47 @@ function setupDashComposer() {
         const text = (input.value || '').trim();
         if (!text || busy) return;
 
+        // Защёлка и вся видимая реакция — СИНХРОННО, до первого await.
+        // Раньше busy и disabled ставились после проверки лимита, а она
+        // ходит в сеть: пока запрос летел, кнопка оставалась живой, текст
+        // лежал в поле, и каждый следующий тап проходил проверку заново.
+        // Человек видел мёртвый экран (пузыри рисовались тоже позже),
+        // тыкал ещё — и один вопрос уходил пятью отдельными генерациями.
+        // В истории это выглядело как «Я боюсь что разочарую других»
+        // пятнадцать раз подряд с пятнадцатью разными ответами.
+        busy = true;
+        input.value = '';
+        if (sendBtn) sendBtn.disabled = true;
+        const userBubble = addMessage(text, 'user');
+        _showThinkingBubble('Фреди печатает…');
+
+        const unwind = () => {
+            busy = false;
+            if (sendBtn) sendBtn.disabled = false;
+        };
+
         // Тот же paywall, что у голоса: без этой проверки текст стал бы
-        // дырой в дневном лимите.
+        // дырой в дневном лимите. Упёрлись в лимит — откатываем ввод
+        // обратно, чтобы человек не потерял набранное.
         try {
             if (window.FrediMeter?.checkCanSend) {
                 const chk = await window.FrediMeter.checkCanSend();
                 if (chk && chk.can_send === false) {
+                    if (userBubble) userBubble.remove();
+                    _hideThinkingBubble();
+                    input.value = text;
+                    unwind();
                     window.FrediMeter.showFatigueModal?.(chk);
                     return;
                 }
             }
         } catch (e) {}
 
-        busy = true;
-        input.value = '';
-        if (sendBtn) sendBtn.disabled = true;
-        addMessage(text, 'user');
-        _showThinkingBubble('Фреди печатает…');
+        // Личность должна быть подтверждена сервером до первой реплики:
+        // диалог, записанный на временный Date.now()-идентификатор, теряет
+        // и историю (её не найдёт следующий заход), и лимит (он считается
+        // другому пользователю). Ожидание с потолком — см. auth.js.
+        try { if (window.identityReady) await window.identityReady(); } catch (e) {}
 
         // Сначала пробуем поток: первые слова появляются через секунду-две
         // вместо пустого ожидания на весь ответ. Если поток не поехал
@@ -824,8 +851,7 @@ function setupDashComposer() {
             try { window.FrediMeter?.recordUsage?.(15); } catch (e) {}
         }
 
-        busy = false;
-        if (sendBtn) sendBtn.disabled = false;
+        unwind();
     }
 
     form.addEventListener('submit', (e) => { e.preventDefault(); send(); });
