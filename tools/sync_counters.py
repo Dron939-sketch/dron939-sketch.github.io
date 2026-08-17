@@ -150,6 +150,17 @@ def sync_home(total):
         log.append("главная сайта: «Все %d %s блога»" % (total, plural(total)))
     write(p, s)
 
+    # Манифест: в карточке автора то же число, но фразой «в блоге их N».
+    # Стояло «больше четырёхсот» — прописью и мимо реальности вчетверо.
+    p = os.path.join(ROOT, "obo-mne", "index.html")
+    if not os.path.exists(p):
+        return
+    s0 = read(p)
+    s = re.sub(r"в блоге их \d+", "в блоге их %d" % total, s0)
+    if s != s0:
+        log.append("манифест: «в блоге их %d»" % total)
+    write(p, s)
+
 
 def sync_lektorij(n_courses, n_lectures):
     """Только сводные числа страницы.

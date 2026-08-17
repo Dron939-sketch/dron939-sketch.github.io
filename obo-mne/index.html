@@ -43,6 +43,18 @@
       scroll-behavior: smooth;
     }
 
+    /* Паузы манифеста.
+       Отступы в 30–50 пикселей здесь не оформление, а ритм: короткая
+       строка, пауза, следующая мысль. Держим их одной шкалой, чтобы на
+       телефоне можно было укоротить паузу, не трогая ни единого слова:
+       сорок пикселей пустоты на экране в 390 пикселей весят совсем не
+       так, как на десктопе. */
+    :root {
+      --pause: 40px;
+      --pause-sm: 30px;
+      --pause-xs: 20px;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: #0C0C0C;
@@ -243,7 +255,7 @@
       font-size: clamp(1.2rem, 4.5vw, 1.5rem);
       font-weight: 400;
       color: #FFFFFF;
-      margin: 40px 0;
+      margin: var(--pause) 0;
       padding-left: 25px;
       border-left: 2px solid #3A86FF;
       line-height: 1.6;
@@ -251,7 +263,7 @@
 
     .manifest-list {
       list-style: none;
-      margin: 30px 0 40px;
+      margin: var(--pause-sm) 0 var(--pause);
     }
 
     .manifest-list li {
@@ -275,7 +287,7 @@
       display: flex;
       justify-content: center;
       gap: clamp(30px, 8vw, 60px);
-      margin: 40px 0;
+      margin: var(--pause) 0;
       flex-wrap: wrap;
     }
 
@@ -455,7 +467,7 @@
       display: flex;
       justify-content: center;
       gap: clamp(20px, 5vw, 30px);
-      margin: 50px 0 40px;
+      margin: var(--pause) 0 var(--pause-sm);
       flex-wrap: wrap;
     }
 
@@ -522,7 +534,7 @@
 
     .three-actions {
       text-align: center;
-      margin: 30px 0;
+      margin: var(--pause-sm) 0;
       color: #3A86FF;
       font-size: clamp(0.9rem, 3.5vw, 1.2rem);
       font-weight: 300;
@@ -592,7 +604,54 @@
       .container {
         padding: 0 16px;
       }
-      
+
+      /* ---- Компактный манифест на телефоне -------------------------------
+         Страница занимала 7096 пикселей — восемь с половиной экранов. При
+         этом сам текст манифеста набирает 2160 пикселей, а отступы между
+         абзацами — 1828: воздуха почти столько же, сколько слов.
+
+         Манифест на воздухе и держится: короткая строка, пауза, следующая
+         мысль. Поэтому здесь не «убрать отступы», а уменьшить их в общей
+         пропорции — паузы остаются, дыхание страницы то же. Ни одного
+         слова, заголовка и кегля правка не касается. */
+      .manifest-section {
+        padding: 26px 0;
+      }
+
+      .manifest-hero {
+        padding: 36px 0 22px;
+      }
+
+      .manifest-invite,
+      .manifest-credentials {
+        padding: 30px 0;
+      }
+
+      h2 {
+        margin-bottom: 1rem;
+      }
+
+      p {
+        margin-bottom: 0.85rem;
+      }
+
+      /* Карточка с портретом: на телефоне она встаёт в столбик, и снимок
+         во всю ширину отодвигает текст на пол-экрана вниз. */
+      .cred-card img {
+        width: 96px;
+      }
+
+      /* Одна ручка на все паузы разом — и в разметке, и в классах. */
+      :root {
+        --pause: 22px;
+        --pause-sm: 16px;
+        --pause-xs: 12px;
+      }
+
+      .manifest-list li {
+        margin-bottom: 8px;
+      }
+
       .manifest-quote {
         padding-left: 15px;
       }
@@ -722,8 +781,8 @@
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Что такое нарратив</h2>
-    <p style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #FFFFFF; margin-bottom: 30px;">Нарратив — это история, в которую ты веришь.</p>
-    <p style="margin-bottom: 20px;">Он определяет:</p>
+    <p style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #FFFFFF; margin-bottom: var(--pause-sm);">Нарратив — это история, в которую ты веришь.</p>
+    <p style="margin-bottom: var(--pause-xs);">Он определяет:</p>
     <ul class="manifest-list">
       <li>Что для тебя важно, а что — пустое</li>
       <li>Куда ты идёшь, а куда — даже не смотришь</li>
@@ -739,7 +798,7 @@
     <h2>Твой нарратив</h2>
     <p style="font-size: clamp(1.1rem, 4.5vw, 1.3rem); color: #FFFFFF;">Ты не выбирал свой нарратив.</p>
     <p>Его выбрали за тебя. Семья. Школа. Культура. Время.</p>
-    <p style="margin: 30px 0 20px; color: #FFFFFF;">А потом — момент.</p>
+    <p style="margin: var(--pause-sm) 0 var(--pause-xs); color: #FFFFFF;">А потом — момент.</p>
     <ul class="manifest-list">
       <li>«Зачем я это делаю?»</li>
       <li>«Почему мне так неуютно?»</li>
@@ -758,7 +817,7 @@
     <h2>Сила нарративов</h2>
     <p><strong style="color: #FFFFFF;">Иисус</strong> создал нарратив. После его смерти этот нарратив <span class="manifest-highlight">разрушил Рим.</span></p>
     <p><strong style="color: #FFFFFF;">Маркс</strong> создал нарратив. Этот нарратив <span class="manifest-highlight">построил империю.</span></p>
-    <p style="margin-top: 30px; color: #666; font-style: italic;">Нарратив сильнее любого человека. Он живёт после тебя.</p>
+    <p style="margin-top: var(--pause-sm); color: #666; font-style: italic;">Нарратив сильнее любого человека. Он живёт после тебя.</p>
   </div>
 </section>
 
@@ -771,7 +830,7 @@
       <p class="or">либо</p>
       <p><strong style="color: #FFFFFF;">Либо транслируешь чужой.</strong></p>
       <p class="no-third">Третьего не дано.</p>
-      <p style="color: #666; font-size: clamp(0.8rem, 3vw, 0.9rem); margin-top: 20px;">Можно не выбирать. Тогда выберут за тебя.</p>
+      <p style="color: #666; font-size: clamp(0.8rem, 3vw, 0.9rem); margin-top: var(--pause-xs);">Можно не выбирать. Тогда выберут за тебя.</p>
     </div>
   </div>
 </section>
@@ -781,9 +840,9 @@
   <div class="container manifest-block">
     <h2>Пересечения</h2>
     <p>Семья говорит одно. Работа — другое. Среда — третье.</p>
-    <p style="margin: 30px 0; color: #FFFFFF;">Внутри тебя — голоса, которые спорят.</p>
+    <p style="margin: var(--pause-sm) 0; color: #FFFFFF;">Внутри тебя — голоса, которые спорят.</p>
     <p>Это <span class="manifest-highlight">боль</span>. Это же — <span class="manifest-highlight">место выбора</span>.</p>
-    <p style="margin-top: 30px; color: #666; font-style: italic;">Ты либо соберёшь их в один хор. Либо будешь слушать какофонию вечно.</p>
+    <p style="margin-top: var(--pause-sm); color: #666; font-style: italic;">Ты либо соберёшь их в один хор. Либо будешь слушать какофонию вечно.</p>
   </div>
 </section>
 
@@ -793,7 +852,7 @@
     <h2>Мои камни</h2>
     
     <!-- Фалес отдельно и крупно -->
-    <div style="text-align: center; margin: 40px 0 30px;">
+    <div style="text-align: center; margin: var(--pause) 0 var(--pause-sm);">
       <div style="font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 200; color: #FFFFFF; margin-bottom: 10px;">Фалес</div>
       <div style="font-size: clamp(0.8rem, 3vw, 1rem); color: #3A86FF; letter-spacing: 0.1em; text-transform: uppercase;">основал философскую школу</div>
     </div>
@@ -814,7 +873,7 @@
       <span>Ясность видеть.</span> <span>Систему строить.</span> <span>Школу создавать.</span>
     </div>
     
-    <p style="text-align: center; color: #666; font-style: italic; margin-top: 30px;">Их камни всё ещё летят. Я подхватил и бросаю дальше.</p>
+    <p style="text-align: center; color: #666; font-style: italic; margin-top: var(--pause-sm);">Их камни всё ещё летят. Я подхватил и бросаю дальше.</p>
   </div>
 </section>
 
@@ -825,10 +884,10 @@
     <p><strong style="color: #FFFFFF;">Старые нарративы рассыпались.</strong></p>
     <p class="gray-text">Религия — больше не держит.</p>
     <p class="gray-text">Идеология — больше не вдохновляет.</p>
-    <p style="margin: 40px 0; color: #3A86FF; font-size: clamp(1.8rem, 6vw, 2.5rem); text-align: center; font-weight: 200;">Но.</p>
+    <p style="margin: var(--pause) 0; color: #3A86FF; font-size: clamp(1.8rem, 6vw, 2.5rem); text-align: center; font-weight: 200;">Но.</p>
     <p>Человек — единственное существо, которое живёт нарративами. Без истории, в которую он верит, он не живёт — он просто существует.</p>
-    <p style="margin: 30px 0; color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); text-align: center;">Значит, я создам свою.</p>
-    <p style="font-size: clamp(1.5rem, 6vw, 2rem); color: #FFFFFF; margin: 40px 0; text-align: center; font-weight: 200;">Я выбираю жить.</p>
+    <p style="margin: var(--pause-sm) 0; color: #FFFFFF; font-size: clamp(1.2rem, 5vw, 1.5rem); text-align: center;">Значит, я создам свою.</p>
+    <p style="font-size: clamp(1.5rem, 6vw, 2rem); color: #FFFFFF; margin: var(--pause) 0; text-align: center; font-weight: 200;">Я выбираю жить.</p>
     <p>Я бросаю камень. Я хочу, чтобы мой камень летел долго. Чтобы через сто лет кто-то сказал: «Андрей Мейстер? Да, его нарратив всё ещё работает».</p>
   </div>
 </section>
@@ -837,17 +896,17 @@
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Что я делаю</h2>
-    <p style="margin-bottom: 20px;">Я учу видеть нарративы:</p>
+    <p style="margin-bottom: var(--pause-xs);">Я учу видеть нарративы:</p>
     <ul class="manifest-list">
       <li>Из чего они сделаны</li>
       <li>Какие работают, а какие рассыпались</li>
       <li>Где пересекаются и трутся</li>
     </ul>
-    <p style="margin-top: 30px;"><span class="manifest-highlight">Зачем?</span></p>
+    <p style="margin-top: var(--pause-sm);"><span class="manifest-highlight">Зачем?</span></p>
     <p>Чтобы перестать жить чужим сценарием.</p>
     <p>Чтобы понять, почему ты делаешь то, что делаешь.</p>
     <p>Чтобы создать свой. И бросить свой камень.</p>
-    <p style="margin-top: 30px;">Сухие факты — биография, образование, книги и методология «Вариатика» — <a href="/about/">на отдельной странице</a>.</p>
+    <p style="margin-top: var(--pause-sm);">Сухие факты — биография, образование, книги и методология «Вариатика» — <a href="/about/">на отдельной странице</a>.</p>
   </div>
 </section>
 
@@ -855,7 +914,7 @@
 <section class="manifest-section">
   <div class="container manifest-block">
     <h2>Мой камень</h2>
-    <p style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #FFFFFF; margin-bottom: 30px; text-align: center;">Мой камень — это инструменты.</p>
+    <p style="font-size: clamp(1.2rem, 5vw, 1.5rem); color: #FFFFFF; margin-bottom: var(--pause-sm); text-align: center;">Мой камень — это инструменты.</p>
     
     <div class="tools-grid">
       <div class="tool-item">
@@ -872,7 +931,7 @@
       </div>
     </div>
     
-    <p style="text-align: center; margin: 40px 0 20px;">Я просто даю вам камень. А дальше — вы сами.</p>
+    <p style="text-align: center; margin: var(--pause) 0 var(--pause-xs);">Я просто даю вам камень. А дальше — вы сами.</p>
     <p style="text-align: center; color: #666; font-style: italic;">Потому что настоящий нарратив не нуждается в авторе. Он живёт сам. Или не живёт.</p>
   </div>
 </section>
@@ -883,9 +942,9 @@
     <h2>А вы?</h2>
     <p>Бог умер. А вы?</p>
     <p>В каком нарративе живёте вы? Где в вашей жизни несостыковки?</p>
-    <p style="margin-bottom: 30px;">Хотите бросить свой камень?</p>
+    <p style="margin-bottom: var(--pause-sm);">Хотите бросить свой камень?</p>
     <div class="invite-strong">Я покажу, как.</div>
-    <a href="/" class="btn" style="margin-top: 40px;">ИССЛЕДОВАТЬ</a>
+    <a href="/" class="btn" style="margin-top: var(--pause);">ИССЛЕДОВАТЬ</a>
   </div>
 </section>
 
@@ -896,7 +955,7 @@
       <img src="/obo-mne/andrey-meyster-portret.jpg" alt="Андрей Мейстер — психолог, кандидат психологических наук" loading="lazy" width="480" height="480">
       <div>
         <div class="cred-name">Андрей Мейстер</div>
-        <p>Психолог, когнитивный тренер, кандидат наук. Автор бестселлера «Теория манипуляции», разработчик технологии системного мышления «Вариатика», создатель виртуального психолога Фреди. Статьи пишу с 2008 года — в блоге их больше четырёхсот.</p>
+        <p>Психолог, когнитивный тренер, кандидат наук. Автор бестселлера «Теория манипуляции», разработчик технологии системного мышления «Вариатика», создатель виртуального психолога Фреди. Статьи пишу с 2008 года — в блоге их 1516.</p>
         <div class="cred-links">
           <a href="/blog/">Читать блог</a>
           <a href="/fredi/">Поговорить с Фреди</a>
