@@ -262,7 +262,7 @@
                 <div class="sub-desc">Полный доступ ко всем возможностям</div>
                 <div class="sub-info-row"><span class="sub-info-label">Следующее списание</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">690 &#8381;/мес</span></div>
+                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">990 &#8381;/мес</span></div>
             </div>`;
     }
 
@@ -286,7 +286,7 @@
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
                 <div class="sub-title">Фреди Premium</div>
                 <div class="sub-desc">Разблокируйте полный доступ к виртуальному психологу</div>
-                <div class="sub-price">690 &#8381;</div>
+                <div class="sub-price">990 &#8381;</div>
                 <div class="sub-price-period">в месяц, автопродление</div>
                 <ul class="sub-features">
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Безлимитные сессии с Фреди</li>
@@ -302,7 +302,7 @@
                         style="width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);font-size:14px;font-family:inherit;box-sizing:border-box;outline:none"
                         onfocus="this.style.borderColor='rgba(59,130,255,0.5)'" onblur="this.style.borderColor='rgba(224,224,224,0.18)'" />
                 </div>
-                <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 690 &#8381;</button>
+                <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 990 &#8381;</button>
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
                 <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-secondary)">Оформляя подписку, вы принимаете <a href="/oferta/" target="_blank" rel="noopener" style="color:#3b82ff">Оферту</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener" style="color:#3b82ff">Политику конфиденциальности</a>.</div>
             </div>`;
