@@ -131,6 +131,26 @@ def sync_hub(by):
     write(p, s)
 
 
+def sync_home(total):
+    """Кнопка «Все N статей блога →» на корневой главной.
+
+    Единственное живое число на этой странице — и единственное, которое
+    инструмент до сих пор не трогал: он ходил по рубрикам, хабу и
+    Лекторию, а корень оставался в стороне. За это время счётчик отстал
+    на 264 статьи (1252 против 1516) — ровно тот случай, ради которого
+    числа и запрещено вписывать руками.
+    """
+    p = os.path.join(ROOT, "index.html")
+    if not os.path.exists(p):
+        return
+    s0 = read(p)
+    s = re.sub(r"Все \d+ стат(?:ья|ьи|ей) блога",
+               "Все %d %s блога" % (total, plural(total)), s0)
+    if s != s0:
+        log.append("главная сайта: «Все %d %s блога»" % (total, plural(total)))
+    write(p, s)
+
+
 def sync_lektorij(n_courses, n_lectures):
     """Только сводные числа страницы.
 
@@ -200,6 +220,7 @@ def main():
                      if os.path.isdir(os.path.join(lect, d))
                      and os.path.exists(os.path.join(lect, d, "index.html"))])
     sync_hub(by)
+    sync_home(sum(len(v) for v in by.values()))
     sync_lektorij(n_courses, len(by.get("lektorij", [])))
 
     print("%s%d правок" % ("БЕЗ ЗАПИСИ: " if dry else "", len(log)))
