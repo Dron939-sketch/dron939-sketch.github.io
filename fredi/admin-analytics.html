@@ -253,7 +253,10 @@
         <div id="byScreenTable"></div>
 
         <h2>Активность по дням (DAU)</h2>
-        <div id="productTab" style="display:none">
+        <div id="dauTable"></div>
+    </section>
+
+    <section id="productTab" style="display:none">
       <div class="section">
         <h2>🎯 Удержание новичков <span style="font-weight:400;font-size:12px;color:var(--text-dim)" id="prodCohortNote"></span></h2>
         <div class="kv-grid" id="prodKv"></div>
@@ -288,9 +291,6 @@
         <h2>Здоровье клиента (7 дней)</h2>
         <div id="prodHealth"></div>
       </div>
-    </div>
-
-    <div id="dauTable"></div>
     </section>
 
     <section id="recentTab" style="display:none">
@@ -2135,10 +2135,17 @@ POV: ты на семейном ужине, и мама такая «как у �
         var greeting = hour < 5 ? 'Доброй ночи' : (hour < 12 ? 'Доброе утро' : (hour < 18 ? 'Добрый день' : 'Добрый вечер'));
         document.getElementById('heroHello').textContent = greeting + ', Андрей ' + emoji;
 
+        // Точка следом перерисовывает heroSub целиком — вместе с этим самым
+        // огоньком. Раньше новый span рождался без id, поэтому на втором
+        // вызове getElementById возвращал null, строка ниже падала, а
+        // исключение уходило наверх из renderSummary — и «Сводка» не
+        // доходила до строки, которая её показывает. Выглядело так: первый
+        // заход нормальный, любой повторный — пустая вкладка. Поэтому id
+        // проставляем заново, а обращение прикрываем проверкой.
         var pulse = document.getElementById('heroPulse');
-        pulse.className = 'hero-pulse' + (mood==='err'?' err':(mood==='warn'?' warn':''));
+        if (pulse) pulse.className = 'hero-pulse' + (mood==='err'?' err':(mood==='warn'?' warn':''));
         document.getElementById('heroSub').innerHTML =
-            '<span class="hero-pulse' + (mood==='err'?' err':(mood==='warn'?' warn':'')) + '"></span>' +
+            '<span class="hero-pulse' + (mood==='err'?' err':(mood==='warn'?' warn':'')) + '" id="heroPulse"></span>' +
             'Сегодня у Фреди: <b>' + dauToday + '</b> человек • <b>' + totalWeek + '</b> событий за 7 дней • среднее DAU <b>' + avgDau + '</b>';
     }
 
