@@ -61,6 +61,16 @@
     {"@type":"Question","name":"Разве не цинично считать, что всё вокруг кем-то придумано ради денег?","acceptedAnswer":{"@type":"Answer","text":"Цинично и неверно. В статье речь не о том, что все вокруг злодеи, а о том, что там, где вы не понимаете устройства, ваше понимание заменяют платным. Большинство продавцов не злодеи — они просто пользуются готовыми приёмами, часто не задумываясь. Знание механизма нужно не для подозрительности, а для того, чтобы отличать честный обмен от рычага, приставленного к вам."}}
 ]}
 </script>
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -235,7 +245,7 @@
 
 <p>Картина мира — слишком общее слово, чтобы с ним что-то делать. Разложим на четыре области, в которых непонимание стоит дороже всего. Это не полный список тем на свете — это несущие конструкции обычной жизни.</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
   <thead><tr><th>Область</th><th>Что происходит без понимания</th><th>Что даёт понимание</th></tr></thead>
   <tbody>
     <tr><td><strong>Деньги</strong></td><td>Кредит появляется по звонку, подписки живут годами, «выгодно» определяется размером платежа</td><td>Считать стоимость владения, видеть настоящую ставку, отличать цену от ценности</td></tr>
@@ -243,7 +253,7 @@
     <tr><td><strong>Отношения</strong></td><td>Один и тот же конфликт третий год; «кто прав» вместо «что происходит»</td><td>Видеть повторяющийся круг и уметь с него сойти, различать просьбу и упрёк</td></tr>
     <tr><td><strong>Собственная голова</strong></td><td>Настроение объясняется событиями, решения принимаются на эмоции и защищаются задним числом</td><td>Замечать состояние до поступка, знать свои типовые ошибки, откладывать решение осознанно</td></tr>
   </tbody>
-</table>
+</table></div>
 
 <p>Обратите внимание на четвёртую строку. Три первые области — про мир, четвёртая — про вас, и она главная. Человек, который не понимает собственных состояний, беззащитен и в трёх первых: на нём срабатывает любой приём, рассчитанный на усталость, вину или спешку.</p>
 

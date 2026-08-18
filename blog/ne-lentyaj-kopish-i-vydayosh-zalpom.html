@@ -94,6 +94,16 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -153,14 +163,14 @@
 
 <p>Старые ярлыки описывают вас через нехватку: <em>не</em>дисциплинированный, <em>без</em>вольный, <em>про</em>крастинатор. Все они меряют вас линейкой равномерного человека и фиксируют недостачу. Но если перестать мерить чужой линейкой, тот же набор черт описывается иначе:</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Старый ярлык (через нехватку)</th><th>Точное имя (через устройство)</th></tr>
 <tr><td>«Ленивый, тянет до последнего»</td><td>Фаза накопления видна, фаза залпа ещё впереди</td></tr>
 <tr><td>«Несобранный, работает рывками»</td><td>Пульсирующий ритм: всплеск — спад — всплеск</td></tr>
 <tr><td>«Бездельничает перед дедлайном»</td><td>Инкубирует решение в фоне</td></tr>
 <tr><td>«Не может стабильно»</td><td>Может мощно — в своей фазе</td></tr>
 <tr><td>«Прокрастинатор»</td><td>Откладывает важное, потому что не всё равно</td></tr>
-</table>
+</table></div>
 
 <p>Это не игра в слова и не самооправдание. Это смена линейки. Спортсмен-спринтер не «бракованный марафонец» — у него другой тип. Назвать себя «человеком, который копит и выдаёт залпом» — значит перестать жить с диагнозом и начать жить с конструкцией, у которой есть инструкция по эксплуатации.</p>
 
@@ -168,13 +178,13 @@
 
 <p>Чтобы это была правда, а не лесть, нужна честность. Пульсирующий ритм — не индульгенция, и не любое откладывание полезно. Различать важно вот что:</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Здоровое накопление</th><th>Вредное избегание под видом «коплю»</th></tr>
 <tr><td>В паузе вы думаете о задаче (хоть и фоном), и залп приходит</td><td>Вы вообще не возвращаетесь к задаче, только тревожитесь</td></tr>
 <tr><td>Залп реально случается и даёт результат</td><td>Залпа нет; дедлайн сорван или сделано на тревоге кое-как</td></tr>
 <tr><td>После — удовлетворение, не выжатость в ноль</td><td>Каждый раз — аврал, стыд, обещание «больше никогда так»</td></tr>
 <tr><td>Страдают в основном ваши задачи</td><td>Из-за вашего ритма страдают другие, кто на вас рассчитывал</td></tr>
-</table>
+</table></div>
 
 <p>Если у вас правая колонка — это уже не ритм, а избегание, и его энергия — та самая эмоция из исследования Сируа и Пайчила. С ней работают (об этом ниже), а не прикрываются «у меня такой ритм». Зрелость пульсирующего человека — в том, чтобы пользоваться своим ритмом, не подставляя других.</p>
 

@@ -377,6 +377,9 @@
     .games-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      /* Ряды считались независимо, и второй выходил на 24 px выше первого:
+         кнопки «Подробнее» стояли на разной высоте через всю страницу. */
+      grid-auto-rows: 1fr;
       gap: 30px;
       margin: 50px 0;
     }
@@ -487,58 +490,20 @@
       text-transform: uppercase;
     }
 
-    .fredi-tile {
-      position: relative;
-      width: 100%;
+    /* Тот же масштаб и та же тень, что у снимков коробок, — иначе шестая
+       карточка снова начнёт выбиваться из ряда. */
+    .fredi-phone {
+      width: auto;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      max-width: 100%;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+      transition: all 0.3s ease;
     }
 
-    .fredi-appicon {
-      width: clamp(110px, 18vw, 150px);
-      aspect-ratio: 1;
-      border-radius: 26%;
-      background: linear-gradient(135deg, #00A8E8, #3A86FF);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      box-shadow: 0 12px 32px rgba(58, 134, 255, 0.4);
-      transition: transform 0.3s ease;
+    .game-card--fredi:hover .fredi-phone {
+      transform: scale(1.05);
+      filter: drop-shadow(0 15px 25px rgba(58, 134, 255, 0.3));
     }
-
-    .fredi-appicon span {
-      font-size: clamp(3rem, 8vw, 4.2rem);
-      line-height: 1;
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
-    }
-
-    .fredi-appicon b {
-      color: #FFFFFF;
-      font-size: clamp(0.7rem, 2vw, 0.85rem);
-      font-weight: 600;
-      letter-spacing: 0.3em;
-      margin-left: 0.3em;
-    }
-
-    .game-card--fredi:hover .fredi-appicon { transform: scale(1.05); }
-
-    .fredi-chip {
-      position: absolute;
-      font-size: clamp(1.2rem, 3vw, 1.6rem);
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-      transition: transform 0.3s ease;
-    }
-
-    .fredi-chip.c1 { top: 10%; left: 16%; }
-    .fredi-chip.c2 { top: 18%; right: 14%; }
-    .fredi-chip.c3 { bottom: 12%; left: 20%; }
-    .fredi-chip.c4 { bottom: 18%; right: 18%; }
-
-    .game-card--fredi:hover .fredi-chip { transform: translateY(-4px); }
 
     /* ===== ПРИЗЫВ ===== */
     .cta-block {
@@ -680,7 +645,16 @@
       .game-card {
         padding: 25px;
       }
-      
+
+      /* На телефоне шесть карточек идут одна под другой: снимок в 180 px
+         превращал каталог в пять с лишним тысяч пикселей прокрутки.
+         Коробка узнаётся и в 150 — это единственное, чем тут можно
+         пожертвовать без потери смысла. */
+      .game-image {
+        height: 150px;
+        margin-bottom: 16px;
+      }
+
       .game-actions .btn {
         width: 100%;
         max-width: 250px;
@@ -731,9 +705,10 @@
       }
       
       .game-image {
-        height: 160px;
+        height: 140px;
+        margin-bottom: 14px;
       }
-      
+
       .game-title {
         font-size: 1.3rem;
       }
@@ -827,6 +802,17 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Эмодзи новее Unicode 8.0 (🧠, 🧩, 🧭, 🪞) отсутствуют в Segoe UI Emoji
+   ранних сборок Windows: браузер рисует пустой квадрат — в том числе в главной
+   кнопке шапки. Лицо объявлено под именем Inter и сужено по unicode-range,
+   поэтому подхватывается без правки единой строки font-family и скачивается
+   только на страницах, где такой символ действительно есть. */
+@font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}
+/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 
@@ -947,13 +933,63 @@
     <div class="game-card game-card--fredi">
       <span class="fredi-free">Бесплатно</span>
       <div class="game-image">
-        <div class="fredi-tile" role="img" aria-label="Фреди — виртуальный психолог с играми-тренажёрами онлайн">
-          <div class="fredi-appicon" aria-hidden="true"><span>🧠</span><b>ФРЕДИ</b></div>
-          <span class="fredi-chip c1" aria-hidden="true">🎯</span>
-          <span class="fredi-chip c2" aria-hidden="true">🧩</span>
-          <span class="fredi-chip c3" aria-hidden="true">💬</span>
-          <span class="fredi-chip c4" aria-hidden="true">🔢</span>
-        </div>
+        <!-- Остальные пять карточек показывают снятую коробку. Шестая — онлайн,
+             коробки у неё нет, но выпадать из ряда ей нельзя: до этого здесь
+             стояла плоская эмодзи-плитка, и на фоне продуктовых снимков она
+             читалась как вставленный баннер. Теперь это тоже «снимок товара»:
+             телефон с открытым списком игр, та же подсветка и та же тень. -->
+        <svg class="fredi-phone" viewBox="72 0 196 230" role="img"
+             aria-label="Приложение «Фреди»: телефон с открытым списком игр-тренажёров">
+          <defs>
+            <linearGradient id="fpScreen" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#141A24"/><stop offset="1" stop-color="#0B0F16"/>
+            </linearGradient>
+            <linearGradient id="fpIcon" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#00A8E8"/><stop offset="1" stop-color="#3A86FF"/>
+            </linearGradient>
+            <linearGradient id="fpGlare" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity=".10"/>
+              <stop offset=".55" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="fpShadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="7"/>
+            </filter>
+          </defs>
+          <ellipse cx="170" cy="212" rx="74" ry="9" fill="#000" opacity=".65" filter="url(#fpShadow)"/>
+          <g transform="rotate(-5 170 112)">
+            <rect x="112" y="12" width="116" height="196" rx="20" fill="#0E1219" stroke="#2C3546" stroke-width="1.5"/>
+            <rect x="119" y="19" width="102" height="182" rx="14" fill="url(#fpScreen)"/>
+            <rect x="157" y="23" width="26" height="4" rx="2" fill="#2C3546"/>
+            <!-- иконка приложения -->
+            <rect x="152" y="36" width="36" height="36" rx="10" fill="url(#fpIcon)"/>
+            <!-- звезда — та же, что стоит аватаром Фреди в самом приложении -->
+            <path d="M170 43 l3.4 7.6 8.1 .9 -6.1 5.6 1.7 8.1 -7.1 -4.1 -7.1 4.1 1.7 -8.1 -6.1 -5.6 8.1 -.9 z"
+                  fill="#fff" opacity=".95"/>
+            <text x="170" y="86" text-anchor="middle" font-size="9" font-weight="700"
+                  letter-spacing="2.2" fill="#E8EDF5" font-family="Inter,sans-serif">ФРЕДИ</text>
+            <!-- сетка игр: шесть плиток -->
+            <g>
+              <rect x="127" y="98" width="26" height="26" rx="8" fill="#1B2230" stroke="#2C3546"/>
+              <rect x="157" y="98" width="26" height="26" rx="8" fill="#1B2230" stroke="#2C3546"/>
+              <rect x="187" y="98" width="26" height="26" rx="8" fill="#1B2230" stroke="#2C3546"/>
+              <rect x="127" y="128" width="26" height="26" rx="8" fill="#1B2230" stroke="#2C3546"/>
+              <rect x="157" y="128" width="26" height="26" rx="8" fill="#1B2230" stroke="#2C3546"/>
+              <rect x="187" y="128" width="26" height="26" rx="8" fill="#1B2230" stroke="#2C3546"/>
+              <circle cx="140" cy="111" r="6" fill="none" stroke="#3A86FF" stroke-width="2"/>
+              <path d="M164 117 l4 -10 4 10" stroke="#F5A524" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <rect x="194" y="105" width="12" height="12" rx="3" fill="none" stroke="#34D399" stroke-width="2"/>
+              <path d="M134 141 h12 M140 135 v12" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
+              <path d="M164 141 q6 -9 12 0" stroke="#3A86FF" stroke-width="2" fill="none"/>
+              <circle cx="200" cy="141" r="6" fill="none" stroke="#F87171" stroke-width="2" stroke-dasharray="10 6"/>
+            </g>
+            <!-- строка ввода -->
+            <rect x="127" y="166" width="64" height="14" rx="7" fill="#171D28" stroke="#2C3546"/>
+            <circle cx="203" cy="173" r="8" fill="url(#fpIcon)"/>
+            <path d="M203 177 v-8 M199.5 172 l3.5 -3.5 3.5 3.5" stroke="#fff" stroke-width="1.6"
+                  fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="119" y="19" width="102" height="182" rx="14" fill="url(#fpGlare)"/>
+          </g>
+        </svg>
       </div>
       <div class="game-title">Игры во Фреди</div>
       <div class="game-subtitle"><i class="fas fa-brain"></i> Онлайн · без установки</div>

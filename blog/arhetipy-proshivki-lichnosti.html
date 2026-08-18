@@ -102,6 +102,16 @@
   .spine-note{font-size:0.88em;color:#64748B;padding:10px 18px;background:#FBFCFE;border-top:1px solid #EEF2F6;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -148,7 +158,7 @@
 <!-- АРХЕТИП 1 -->
 <div class="arch">
 <div class="arch-head"><h3>1. Созидатель</h3><div class="axis">Ось: «оставить после себя живое»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я хочу оставить после себя что-то живое»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Мир отзывается на то, что в него вкладываешь»</td></tr>
 <tr><td>7 · Ценность</td><td>«Создавать важнее, чем потреблять»</td></tr>
@@ -158,14 +168,14 @@
 <tr><td>3 · Паттерн</td><td>«Я каждый день что-то создаю, пусть малое»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я доведу одну вещь до готовой»</td></tr>
 <tr><td>1 · Состояние</td><td>«Я сегодня в тонусе, хочется делать»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, кто много начинает и бросает; кто чувствует, что «жизнь проходит, а следа нет».</div>
 </div>
 
 <!-- АРХЕТИП 2 -->
 <div class="arch">
 <div class="arch-head"><h3>2. Опора</h3><div class="axis">Ось: «быть тем, на ком держится»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я хочу, чтобы рядом со мной люди чувствовали себя в безопасности»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Мир держится на тех, кто берёт ответственность, а не ждёт»</td></tr>
 <tr><td>7 · Ценность</td><td>«Надёжность для меня важнее блеска»</td></tr>
@@ -175,14 +185,14 @@
 <tr><td>3 · Паттерн</td><td>«Я довожу до конца то, за что взялся»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я сделаю то, что обещал»</td></tr>
 <tr><td>1 · Состояние</td><td>«Я собран и спокоен»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, кто хочет быть стержнем семьи/команды. Рабочий апгрейд «мужика, который всё тащит молча» — но без саморазрушения.</div>
 </div>
 
 <!-- АРХЕТИП 3 -->
 <div class="arch">
 <div class="arch-head"><h3>3. Наставник</h3><div class="axis">Ось: «выращивать людей»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Моё дело — помогать другим становиться сильнее»</td></tr>
 <tr><td>8 · Убеждение</td><td>«В каждом человеке есть зерно, которому можно дать вырасти»</td></tr>
 <tr><td>7 · Ценность</td><td>«Рост другого важнее, чем быть самым умным в комнате»</td></tr>
@@ -192,14 +202,14 @@
 <tr><td>3 · Паттерн</td><td>«Я регулярно отмечаю в людях их сильное — вслух»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я поддержу кого-то конкретного в его деле»</td></tr>
 <tr><td>1 · Состояние</td><td>«Мне сегодня интересны люди вокруг»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: руководителей, родителей, учителей, всех, чья сила — в других людях.</div>
 </div>
 
 <!-- АРХЕТИП 4 -->
 <div class="arch">
 <div class="arch-head"><h3>4. Стоик</h3><div class="axis">Ось: «держать путь, что бы ни было»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я хочу прожить жизнь, на которую не страшно оглянуться»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Не всё в моей власти, но моя реакция — всегда моя»</td></tr>
 <tr><td>7 · Ценность</td><td>«Я выбираю мир внутри себя, а не победу любой ценой»</td></tr>
@@ -209,14 +219,14 @@
 <tr><td>3 · Паттерн</td><td>«В трудный момент я беру паузу и возвращаюсь к делу»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я отвечу на сложное спокойно, а не на эмоции»</td></tr>
 <tr><td>1 · Состояние</td><td>«Я спокоен и собран»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, кого захлёстывает; кто хочет спокойной внутренней силы. Архетип в духе героев Цоя и старого кино.</div>
 </div>
 
 <!-- АРХЕТИП 5 -->
 <div class="arch">
 <div class="arch-head"><h3>5. Исследователь</h3><div class="axis">Ось: «расти и узнавать новое»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я здесь, чтобы расти, а не стоять на месте»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Любой опыт чему-то учит»</td></tr>
 <tr><td>7 · Ценность</td><td>«Я предпочитаю учиться, а не казаться знающим»</td></tr>
@@ -226,14 +236,14 @@
 <tr><td>3 · Паттерн</td><td>«Я регулярно пробую то, чего пока не умею»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я узнаю или попробую что-то новое»</td></tr>
 <tr><td>1 · Состояние</td><td>«Мне сегодня любопытно»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, кто застрял и боится нового; противоядие от «уже поздно» и фиксированного мышления.</div>
 </div>
 
 <!-- АРХЕТИП 6 -->
 <div class="arch">
 <div class="arch-head"><h3>6. Соединяющий</h3><div class="axis">Ось: «строить мосты между людьми»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я хочу, чтобы между людьми было больше связи»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Большинство конфликтов решаемы через разговор»</td></tr>
 <tr><td>7 · Ценность</td><td>«Длинные близкие связи важнее широкого круга»</td></tr>
@@ -243,14 +253,14 @@
 <tr><td>3 · Паттерн</td><td>«Я знакомлю людей, которым полезно встретиться»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я свяжусь с тем, кого давно не слышал»</td></tr>
 <tr><td>1 · Состояние</td><td>«Мне сегодня тепло к людям»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, чья сила в отношениях; переговорщиков, организаторов, «связных» сообществ.</div>
 </div>
 
 <!-- АРХЕТИП 7 -->
 <div class="arch">
 <div class="arch-head"><h3>7. Свободный</h3><div class="axis">Ось: «быть собой, а не нравиться»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я хочу прожить свою жизнь, а не чужую»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Жизнь даёт ровно столько, сколько вкладываешь сам»</td></tr>
 <tr><td>7 · Ценность</td><td>«Мне важнее быть собой, чем нравиться»</td></tr>
@@ -260,14 +270,14 @@
 <tr><td>3 · Паттерн</td><td>«Я сверяю решения со своим, а не с чужим ожиданием»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я скажу честное "нет" там, где раньше угодил бы»</td></tr>
 <tr><td>1 · Состояние</td><td>«Я в ладу с собой»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, кто живёт в угоду другим и теряет себя; противоядие от созависимости и «удобности».</div>
 </div>
 
 <!-- АРХЕТИП 8 -->
 <div class="arch">
 <div class="arch-head"><h3>8. Тёплый (Заботливый)</h3><div class="axis">Ось: «чтобы рядом со мной людям становилось теплее»</div></div>
-<table>
+<div class="tbl-scroll"><table>
 <tr><td>9 · Миссия</td><td>«Я хочу, чтобы рядом со мной людям становилось теплее»</td></tr>
 <tr><td>8 · Убеждение</td><td>«Хорошего в людях больше, чем плохого»</td></tr>
 <tr><td>7 · Ценность</td><td>«Близкие связи — мой главный капитал»</td></tr>
@@ -277,7 +287,7 @@
 <tr><td>3 · Паттерн</td><td>«Я регулярно говорю близким, что ценю их»</td></tr>
 <tr><td>2 · Обещание</td><td>«Сегодня я порадую кого-то близкого»</td></tr>
 <tr><td>1 · Состояние</td><td>«У меня тёплое настроение»</td></tr>
-</table>
+</table></div>
 <div class="spine-note">Для кого: тех, кто закрылся, ожесточился, отдалился от близких; кто хочет вернуть тепло, не теряя себя.</div>
 </div>
 

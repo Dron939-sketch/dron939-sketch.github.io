@@ -123,6 +123,22 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Эмодзи новее Unicode 8.0 (🧠, 🧩, 🧭, 🪞) отсутствуют в Segoe UI Emoji
+   ранних сборок Windows: браузер рисует пустой квадрат — в том числе в главной
+   кнопке шапки. Лицо объявлено под именем Inter и сужено по unicode-range,
+   поэтому подхватывается без правки единой строки font-family и скачивается
+   только на страницах, где такой символ действительно есть. */
+@font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}
+/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -181,7 +197,7 @@
 <h2 id="zdorovyj-vs-zashchitnyj">Здоровый выбор vs защитный паттерн</h2>
 <p>Это ключевое различение. От него зависит, нужна работа или нет.</p>
 <div class="compare-table">
-<table>
+<div class="tbl-scroll"><table>
 <tr><th>Признак</th><th>Здоровый выбор</th><th>Защитный паттерн</th></tr>
 <tr><td>Внутреннее ощущение</td><td>«Мне хорошо. Если придёт правильный человек — буду рада. Не придёт — тоже нормально»</td><td>«Мне внешне хорошо, но внутри пусто/больно»</td></tr>
 <tr><td>Отношения с близостью</td><td>Способна к глубокой близости, но не выбирает неподходящих ради «иметь хоть кого-то»</td><td>Боится близости, бежит от потенциально близких отношений</td></tr>
@@ -190,7 +206,7 @@
 <tr><td>Внутренний диалог про отношения</td><td>Открытость, любопытство, спокойствие</td><td>Цинизм, страх, оборона, обида</td></tr>
 <tr><td>Реакция на знакомства</td><td>Открыта попыткам, но не отчаянна</td><td>«Все мужики...» / избегание любых попыток</td></tr>
 <tr><td>Депрессия/тревога</td><td>Нет связи с темой одиночества</td><td>Часто связана с темой одиночества</td></tr>
-</table>
+</table></div>
 </div>
 <h2 id="3-tipa">3 типа одиноких успешных женщин</h2>
 <h3>Тип 1. Single by choice (свободный выбор)</h3>

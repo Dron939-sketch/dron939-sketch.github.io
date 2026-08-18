@@ -102,6 +102,16 @@
   @media(max-width:640px){.roles{grid-template-columns:1fr;}}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -153,7 +163,7 @@
 
 <p>А <strong>девять уровней</strong> (от Дилтса) задают глубину: чем выше уровень произнесённой декларации, тем дольше она держится и больше меняет.</p>
 
-<table class="lvl-table">
+<div class="tbl-scroll"><table class="lvl-table">
 <tr><th>#</th><th>Уровень</th><th>Что декларируется</th></tr>
 <tr><td>1</td><td>Состояние</td><td>как я сейчас («я в ресурсе»)</td></tr>
 <tr><td>2</td><td>Обещание</td><td>одно действие в близком будущем</td></tr>
@@ -164,7 +174,7 @@
 <tr><td>7</td><td>Ценность</td><td>что для меня важнее</td></tr>
 <tr><td>8</td><td>Убеждение</td><td>как устроен мир</td></tr>
 <tr><td>9</td><td>Миссия</td><td>ради чего и ради кого</td></tr>
-</table>
+</table></div>
 
 <div class="key-takeaway">
   <strong>Генеративная, а не диагностическая.</strong> Старые «вытаскивающие» игры доставали на свет то, что в человеке тлеет (усталость, неуверенность). МЕЙСТЕР-КОД вытаскивает то, что есть как <em>зерно ресурса</em>, но не названо. Все карточки работают в плюс. Поэтому игра безопаснее — и сильнее.
@@ -253,13 +263,13 @@
 
 <h2 id="s-8">Прогресс: как растёт мастер</h2>
 <p>МЕЙСТЕР-КОД — игра не на очки друг против друга, а на <strong>открытие этажей</strong>. Мастер растёт по разрядам в зависимости от того, на какой глубине он умеет вытаскивать декларации:</p>
-<table class="lvl-table">
+<div class="tbl-scroll"><table class="lvl-table">
 <tr><th>Разряд</th><th>Доступные уровни</th><th>Условие</th></tr>
 <tr><td>Новичок</td><td>1–2</td><td>первые встречи, знакомитесь</td></tr>
 <tr><td>Практик</td><td>1–5</td><td>прошли поверхность, перегрузки нет</td></tr>
 <tr><td>Мастер</td><td>1–8</td><td>есть доверие, время и опыт разбора</td></tr>
 <tr><td>Ведущий</td><td>1–9</td><td>есть психолог-ведущий, оба дали явное согласие</td></tr>
-</table>
+</table></div>
 <p>«Резонанс» (главная единица игры) засчитывается мастеру, только когда декларация прозвучала <em>естественно</em>, а не была вымучена. Вымученная фраза не считается — и не работает: тело декларатора ей не верит.</p>
 
 <div class="warn-takeaway">

@@ -94,6 +94,16 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -162,7 +172,7 @@
 
 <h2 id="s-3">Как это выглядит во взрослом — узнайте себя</h2>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Что вы делаете</th><th>Что под этим</th></tr>
 <tr><td>Отмахиваетесь от комплимента («да ладно, ерунда»)</td><td>Не умеете принять вербальное признание — его не на что «положить» внутри</td></tr>
 <tr><td>После победы — пусто, сразу следующая планка</td><td>Нет внутреннего «ты справился»; успех не присваивается</td></tr>
@@ -170,7 +180,7 @@
 <tr><td>Грызёте себя за мелкие ошибки</td><td>Включён интериоризованный критик</td></tr>
 <tr><td>Не можете похвалить — ни себя, ни других; неловко</td><td>В вашем «словаре» нет этой операции — её не установили</td></tr>
 <tr><td>Хвалите своих детей с усилием, «через себя»</td><td>Передаёте дальше то, чего сами недополучили — но уже осознанно сопротивляясь</td></tr>
-</table>
+</table></div>
 
 <p>Если узнали хотя бы три строки — у вас, скорее всего, не «слабый характер» и не «низкая самооценка от природы». У вас <em>недоустановленный механизм присвоения успеха</em>. Хорошая новость: механизм можно достроить во взрослом возрасте. Поздно — но можно.</p>
 
@@ -199,13 +209,13 @@
 
 <h2 id="s-5">«Не захвали» — переписываем</h2>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Унаследованное</th><th>Точное</th></tr>
 <tr><td>«Не хвали — зазнается»</td><td>«Хвали за конкретное усилие — это не балует, а помогает присвоить успех»</td></tr>
 <tr><td>«Перехвалишь — испортишь»</td><td>«Портит пустая похвала за врождённое. Точная похвала за дело — укрепляет»</td></tr>
 <tr><td>«Это твоя обязанность, не за что хвалить»</td><td>«Сделанное даже из обязанности можно заметить: "вижу, ты довёл"»</td></tr>
 <tr><td>«Меня не хвалили — и ничего»</td><td>«Меня не хвалили — и я знаю изнутри, чего это стоило. Поэтому я сделаю иначе»</td></tr>
-</table>
+</table></div>
 
 <h2 id="s-6">В сухом остатке</h2>
 

@@ -172,6 +172,22 @@
     .hint-line{margin-top:10px;padding:9px 12px;border-left:3px solid #3A86FF;background:rgba(58,134,255,.08);border-radius:6px;font-size:12px;color:var(--text-dim);line-height:1.5}
     </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Эмодзи новее Unicode 8.0 (🧠, 🧩, 🧭, 🪞) отсутствуют в Segoe UI Emoji
+   ранних сборок Windows: браузер рисует пустой квадрат — в том числе в главной
+   кнопке шапки. Лицо объявлено под именем Inter и сужено по unicode-range,
+   поэтому подхватывается без правки единой строки font-family и скачивается
+   только на страницах, где такой символ действительно есть. */
+@font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}
+/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div class="container">
@@ -487,7 +503,7 @@
             <div id="lekStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-bottom:8px"></div>
 
             <div style="overflow-x:auto">
-                <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;font-size:13px">
                     <thead>
                         <tr style="text-align:left;color:var(--text-dim);border-bottom:1px solid var(--border)">
                             <th style="padding:8px 6px;width:34px">#</th>
@@ -499,7 +515,7 @@
                         </tr>
                     </thead>
                     <tbody id="lekBody"></tbody>
-                </table>
+                </table></div>
             </div>
         </div>
     </section>
@@ -523,7 +539,7 @@
 
             <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin:14px 0 6px">🏆 Рейтинг курсов по спросу</div>
             <div style="overflow-x:auto">
-                <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;font-size:13px">
                     <thead>
                         <tr style="text-align:left;color:var(--text-dim);border-bottom:1px solid var(--border)">
                             <th style="padding:8px 6px;width:34px">#</th>
@@ -534,12 +550,12 @@
                         </tr>
                     </thead>
                     <tbody id="zapisRank"></tbody>
-                </table>
+                </table></div>
             </div>
 
             <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin:20px 0 6px">✉️ Последние заявки</div>
             <div style="overflow-x:auto">
-                <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;font-size:13px">
                     <thead>
                         <tr style="text-align:left;color:var(--text-dim);border-bottom:1px solid var(--border)">
                             <th style="padding:8px 6px;width:130px">Когда</th>
@@ -549,7 +565,7 @@
                         </tr>
                     </thead>
                     <tbody id="zapisRecent"></tbody>
-                </table>
+                </table></div>
             </div>
         </div>
     </section>
@@ -642,7 +658,7 @@
                     </button>
                 </div>
                 <div style="max-height:400px;overflow:auto;border:1px solid var(--border);border-radius:8px">
-                    <table style="width:100%;border-collapse:collapse;font-size:12px">
+                    <div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;font-size:12px">
                         <thead style="position:sticky;top:0;background:var(--surface);z-index:1">
                             <tr style="border-bottom:1px solid var(--border)">
                                 <th style="padding:8px;text-align:left;width:32px"><input id="parseSelectAll" type="checkbox" style="width:16px;height:16px"></th>
@@ -654,7 +670,7 @@
                             </tr>
                         </thead>
                         <tbody id="parseResultsBody"></tbody>
-                    </table>
+                    </table></div>
                 </div>
             </div>
         </div>
@@ -685,7 +701,7 @@
             </div>
 
             <div style="max-height:500px;overflow:auto;border:1px solid var(--border);border-radius:8px">
-                <table style="width:100%;border-collapse:collapse;font-size:12px">
+                <div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;font-size:12px">
                     <thead style="position:sticky;top:0;background:var(--surface);z-index:1">
                         <tr style="border-bottom:1px solid var(--border)">
                             <th style="padding:8px;text-align:left">Имя</th>
@@ -697,7 +713,7 @@
                         </tr>
                     </thead>
                     <tbody id="queueBody"></tbody>
-                </table>
+                </table></div>
             </div>
 
             <div id="queueStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-top:10px"></div>
@@ -786,7 +802,7 @@
 
             <!-- Таблица последних -->
             <div style="max-height:600px;overflow:auto;border:1px solid var(--border);border-radius:8px">
-                <table style="width:100%;border-collapse:collapse;font-size:12px">
+                <div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;font-size:12px">
                     <thead style="position:sticky;top:0;background:var(--surface);z-index:1">
                         <tr style="border-bottom:1px solid var(--border)">
                             <th style="padding:8px;text-align:left">Имя</th>
@@ -797,7 +813,7 @@
                         </tr>
                     </thead>
                     <tbody id="msgBody"></tbody>
-                </table>
+                </table></div>
             </div>
 
             <div id="msgStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-top:10px"></div>
@@ -2194,7 +2210,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '</tr>';
             }).join('');
             bp.innerHTML =
-                '<table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
+                '<div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
                     '<thead><tr style="background:rgba(0,0,0,0.04);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim)">' +
                         '<th style="padding:10px;text-align:left">Provider</th>' +
                         '<th style="padding:10px;text-align:left">Model</th>' +
@@ -2204,7 +2220,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                         '<th style="padding:10px;text-align:right">Cost</th>' +
                     '</tr></thead>' +
                     '<tbody>' + rows + '</tbody>' +
-                '</table>';
+                '</table></div>';
         }
 
         var byFeat = d && d.by_feature || [];
@@ -2221,7 +2237,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '</tr>';
             }).join('');
             bf.innerHTML =
-                '<table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
+                '<div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
                     '<thead><tr style="background:rgba(0,0,0,0.04);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim)">' +
                         '<th style="padding:10px;text-align:left">Feature</th>' +
                         '<th style="padding:10px;text-align:left">Provider</th>' +
@@ -2229,7 +2245,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                         '<th style="padding:10px;text-align:right">Cost</th>' +
                     '</tr></thead>' +
                     '<tbody>' + frows + '</tbody>' +
-                '</table>';
+                '</table></div>';
         }
 
         var daily = d && d.daily || [];
@@ -2264,10 +2280,10 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '</tr>';
             }).join('');
             dl.innerHTML =
-                '<table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
+                '<div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
                     '<thead><tr style="background:rgba(0,0,0,0.04);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim)">' + headerCells + '</tr></thead>' +
                     '<tbody>' + bodyRows + '</tbody>' +
-                '</table>';
+                '</table></div>';
         }
     }
 
@@ -2353,7 +2369,7 @@ POV: ты на семейном ужине, и мама такая «как у �
         var funnel = document.getElementById('mirrorsFunnel');
         if (totalCreated > 0) {
             funnel.innerHTML =
-                '<table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
+                '<div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
                     '<tbody>' +
                         '<tr><td style="padding:10px 14px;font-size:13px">🪞 Создано</td>' +
                         '<td style="padding:10px 14px;text-align:right;font-weight:700">' + totalCreated + '</td></tr>' +
@@ -2362,7 +2378,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                         '<tr><td style="padding:10px 14px;font-size:13px;border-top:1px solid var(--border)">📈 Конверсия</td>' +
                         '<td style="padding:10px 14px;text-align:right;font-weight:700;color:' + (conv >= 50 ? '#22c55e' : conv >= 25 ? '#f59e0b' : '#ef4444') + ';border-top:1px solid var(--border)">' + conv + '%</td></tr>' +
                     '</tbody>' +
-                '</table>';
+                '</table></div>';
         } else {
             funnel.innerHTML = '<div style="color:var(--text-dim);padding:14px">Зеркал ещё не создавали.</div>';
         }
@@ -2372,7 +2388,7 @@ POV: ты на семейном ужине, и мама такая «как у �
         var mb = document.getElementById('mirrorsModes');
         if (modes.length){
             mb.innerHTML =
-                '<table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
+                '<div class="tbl-scroll"><table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
                     '<tbody>' +
                         modes.map(function(mr){
                             return '<tr style="border-top:1px solid var(--border)">' +
@@ -2381,7 +2397,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                             '</tr>';
                         }).join('') +
                     '</tbody>' +
-                '</table>';
+                '</table></div>';
         } else {
             mb.innerHTML = '<div style="color:var(--text-dim);padding:14px;font-size:12px">Нет данных по режимам.</div>';
         }
@@ -2395,7 +2411,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 // overflow:auto, минимальная ширина гарантирует, что
                 // содержимое не схлопнется и не порвёт ячейки.
                 '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px">' +
-                '<table style="width:100%;min-width:640px;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
+                '<div class="tbl-scroll"><table style="width:100%;min-width:640px;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">' +
                     '<thead><tr style="background:rgba(127,127,127,0.06);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim)">' +
                         '<th style="padding:10px 12px;text-align:left">Юзер</th>' +
                         '<th style="padding:10px 12px;text-align:left">User ID</th>' +
@@ -2427,7 +2443,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                             '</tr>';
                         }).join('') +
                     '</tbody>' +
-                '</table></div>';
+                '</table></div></div>';
         } else {
             ub.innerHTML = '<div style="color:var(--text-dim);padding:14px;font-size:12px">Нет данных. Эндпоинт /api/admin/recent-users пуст или недоступен.</div>';
         }
@@ -2476,12 +2492,12 @@ POV: ты на семейном ужине, и мама такая «как у �
         var lel = document.getElementById('prodLift');
         if (lel) {
             if (!lift.length) lel.innerHTML = '<div style="color:var(--text-dim);font-size:12px">Мало данных (нужно ≥3 новичков на фичу).</div>';
-            else lel.innerHTML = '<table><thead><tr><th>Фича (в первые 24 ч)</th><th>Новичков</th><th>Вернулись за 7 дн</th><th>vs база ' + (base == null ? '—' : base + '%') + '</th></tr></thead><tbody>' +
+            else lel.innerHTML = '<div class="tbl-scroll"><table><thead><tr><th>Фича (в первые 24 ч)</th><th>Новичков</th><th>Вернулись за 7 дн</th><th>vs база ' + (base == null ? '—' : base + '%') + '</th></tr></thead><tbody>' +
                 lift.map(function(f){
                     var diff = (base == null || f.returned_pct == null) ? null : Math.round((f.returned_pct - base) * 10) / 10;
                     var badge = diff == null ? '—' : (diff >= 0 ? '<span style="color:#34d399">+' + diff + ' пп</span>' : '<span style="color:#f87171">' + diff + ' пп</span>');
                     return '<tr><td>' + f.feature + '</td><td>' + f.users + '</td><td>' + f.returned_pct + ' %</td><td>' + badge + '</td></tr>';
-                }).join('') + '</tbody></table>';
+                }).join('') + '</tbody></table></div>';
         }
         // глубина
         var dep = d.depth || {}, sp = dep.sessions_per_user || {};
@@ -2501,11 +2517,11 @@ POV: ты на семейном ужине, и мама такая «как у �
         var g = d.games || [];
         var gel = document.getElementById('prodGames');
         if (gel) gel.innerHTML = !g.length ? '<div style="color:var(--text-dim);font-size:12px">Нет раундов за 30 дней.</div>' :
-            '<table><thead><tr><th>Игра</th><th>Стартов</th><th>Финишей</th><th>Доигрывают</th><th>Ср. балл</th></tr></thead><tbody>' +
+            '<div class="tbl-scroll"><table><thead><tr><th>Игра</th><th>Стартов</th><th>Финишей</th><th>Доигрывают</th><th>Ср. балл</th></tr></thead><tbody>' +
             g.map(function(x){
                 var col = x.completion_pct >= 60 ? '#34d399' : (x.completion_pct >= 35 ? '#fbbf24' : '#f87171');
                 return '<tr><td>' + x.game + '</td><td>' + x.starts + '</td><td>' + x.finishes + '</td><td style="color:' + col + '">' + x.completion_pct + ' %</td><td>' + (x.avg_score == null ? '—' : x.avg_score) + '</td></tr>';
-            }).join('') + '</tbody></table>';
+            }).join('') + '</tbody></table></div>';
         // paywall
         var p = d.paywall || {};
         var pel = document.getElementById('prodPaywall');
@@ -2518,8 +2534,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         var hel = document.getElementById('prodHealth');
         var hh = d.health_7d || [];
         if (hel) hel.innerHTML = !hh.length ? '<div style="color:#34d399;font-size:12px">Ошибок за 7 дней не зафиксировано 🎉</div>' :
-            '<table><thead><tr><th>Событие</th><th>Событий за 7 дн</th></tr></thead><tbody>' +
-            hh.map(function(x){ return '<tr><td>' + x.event + '</td><td>' + x.count + '</td></tr>'; }).join('') + '</tbody></table>';
+            '<div class="tbl-scroll"><table><thead><tr><th>Событие</th><th>Событий за 7 дн</th></tr></thead><tbody>' +
+            hh.map(function(x){ return '<tr><td>' + x.event + '</td><td>' + x.count + '</td></tr>'; }).join('') + '</tbody></table></div>';
     }
 
     function renderSummary(d){
@@ -2574,8 +2590,8 @@ POV: ты на семейном ужине, и мама такая «как у �
             }).join('');
             return '<div style="margin-bottom:18px">' +
                 '<div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.3px">'+title+'</div>' +
-                '<table><thead><tr><th>Сегмент</th><th></th><th style="text-align:right">Юзеры</th><th style="text-align:right">События</th><th style="text-align:right">Ср. сессия</th></tr></thead>' +
-                '<tbody>'+rows+'</tbody></table></div>';
+                '<div class="tbl-scroll"><table><thead><tr><th>Сегмент</th><th></th><th style="text-align:right">Юзеры</th><th style="text-align:right">События</th><th style="text-align:right">Ср. сессия</th></tr></thead>' +
+                '<tbody>'+rows+'</tbody></table></div></div>';
         }
         var segHtml = renderSegmentTable('По устройству', seg.device)
                     + renderSegmentTable('По плану (premium/free)', seg.plan)
@@ -2596,8 +2612,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                        '<td style="text-align:right;font-variant-numeric:tabular-nums">'+x.opens+'</td></tr>';
             }).join('');
             document.getElementById('featuresTable').innerHTML =
-                '<table><thead><tr><th>Фича</th><th></th><th style="text-align:right">Ср. время</th><th style="text-align:right">Открытий</th></tr></thead>' +
-                '<tbody>'+rfs+'</tbody></table>';
+                '<div class="tbl-scroll"><table><thead><tr><th>Фича</th><th></th><th style="text-align:right">Ср. время</th><th style="text-align:right">Открытий</th></tr></thead>' +
+                '<tbody>'+rfs+'</tbody></table></div>';
         }
 
         // By event
@@ -2612,8 +2628,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                        '<td style="text-align:right;font-variant-numeric:tabular-nums">'+x.count+'</td></tr>';
             }).join('');
             document.getElementById('byEventTable').innerHTML =
-                '<table><thead><tr><th>Событие</th><th></th><th style="text-align:right">Кол-во</th></tr></thead>'+
-                '<tbody>'+rows+'</tbody></table>';
+                '<div class="tbl-scroll"><table><thead><tr><th>Событие</th><th></th><th style="text-align:right">Кол-во</th></tr></thead>'+
+                '<tbody>'+rows+'</tbody></table></div>';
         }
 
         // By screen
@@ -2628,8 +2644,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                        '<td style="text-align:right;font-variant-numeric:tabular-nums">'+x.count+'</td></tr>';
             }).join('');
             document.getElementById('byScreenTable').innerHTML =
-                '<table><thead><tr><th>Экран</th><th></th><th style="text-align:right">Открытий</th></tr></thead>'+
-                '<tbody>'+rs+'</tbody></table>';
+                '<div class="tbl-scroll"><table><thead><tr><th>Экран</th><th></th><th style="text-align:right">Открытий</th></tr></thead>'+
+                '<tbody>'+rs+'</tbody></table></div>';
         }
 
         // DAU
@@ -2642,8 +2658,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                        '<td style="text-align:right;font-variant-numeric:tabular-nums">'+x.events+'</td></tr>';
             }).join('');
             document.getElementById('dauTable').innerHTML =
-                '<table><thead><tr><th>День</th><th style="text-align:right">Юзеров</th><th style="text-align:right">Событий</th></tr></thead>'+
-                '<tbody>'+rd+'</tbody></table>';
+                '<div class="tbl-scroll"><table><thead><tr><th>День</th><th style="text-align:right">Юзеров</th><th style="text-align:right">Событий</th></tr></thead>'+
+                '<tbody>'+rd+'</tbody></table></div>';
         }
     }
 
@@ -2668,8 +2684,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '<td>'+dataStr+'</td></tr>';
         }).join('');
         document.getElementById('recentTable').innerHTML =
-            '<table><thead><tr><th style="width:140px">Время</th><th>Событие</th><th style="width:140px">User</th><th style="width:100px">Экран</th><th>Данные</th></tr></thead>' +
-            '<tbody>'+rows+'</tbody></table>';
+            '<div class="tbl-scroll"><table><thead><tr><th style="width:140px">Время</th><th>Событие</th><th style="width:140px">User</th><th style="width:100px">Экран</th><th>Данные</th></tr></thead>' +
+            '<tbody>'+rows+'</tbody></table></div>';
     }
 
     // =============== Диалоги ===============
@@ -2810,7 +2826,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '</tr>';
         }).join('');
         document.getElementById('messagesList').innerHTML =
-            '<table><thead><tr><th style="width:140px">Начало</th><th style="width:180px">Кто</th><th>Разговор</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+            '<div class="tbl-scroll"><table><thead><tr><th style="width:140px">Начало</th><th style="width:180px">Кто</th><th>Разговор</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
             '<div style="font-size:11px;color:var(--text-dim);margin-top:8px">' +
             sessions.length + ' разговоров из ' + events.length + ' вопросов — реплики одного человека с разрывом меньше 30 минут сведены в один. Кликни по строке — откроется полный диалог.</div>';
 
@@ -3163,7 +3179,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                 return;
             }
 
-            var html = '<table style="width:100%;border-collapse:collapse">'
+            var html = '<div class="tbl-scroll"><table style="width:100%;border-collapse:collapse">'
                 + '<thead><tr style="background:rgba(0,0,0,0.04)">'
                 + '<th style="padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;color:var(--text-dim)">user_id</th>'
                 + '<th style="padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase;color:var(--text-dim)">Имя / Email</th>'
@@ -3181,7 +3197,7 @@ POV: ты на семейном ужине, и мама такая «как у �
                     + '<td style="padding:10px 12px;text-align:center;font-size:14px">' + (c.has_max ? '✅' : '—') + '</td>'
                     + '</tr>';
             });
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             list.innerHTML = html;
             _setReengStatus('Загружено: ' + cands.count + ' кандидатов', 'ok');
         } catch (e) {

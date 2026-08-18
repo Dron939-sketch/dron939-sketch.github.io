@@ -1,4 +1,4 @@
-// openers.js — три готовых первых вопроса над полем ввода.
+// openers.js — три готовых первых вопроса под знаком вопроса у поля ввода.
 //
 // Зачем. За неделю 29 человек открыли Фреди и отправили 20 сообщений на
 // всех: две трети не написали ни одного. Их встречает пустое поле
@@ -9,6 +9,10 @@
 // вполне конкретный текст. По рефереру узнаём курс и предлагаем три
 // вопроса ровно по нему — из блоков «Частые вопросы» его же лекций.
 // Первое сообщение стоит одного касания.
+//
+// Сами вопросы свёрнуты под знак вопроса у поля ввода: открытым списком они
+// добавляли на первый экран ещё три ярких прямоугольника поверх голосовой
+// кнопки, режимов, модулей и быстрых действий. Опора осталась, шум ушёл.
 //
 // Данные: openers.json, собирается tools/build_chat_openers.py.
 // Ничего не показываем, если разговор уже начат: подсказка нужна тому,
@@ -74,6 +78,18 @@
         // читается и на тёмной, и на светлой.
         st.textContent =
             '.op-wrap{margin:0 0 10px}' +
+            // Строка со знаком вопроса. Прижата вправо и занимает 26 px:
+            // человек, который знает, что писать, её просто не замечает.
+            '.op-bar{display:flex;justify-content:flex-end;align-items:center;gap:8px}' +
+            '.op-ask{width:26px;height:26px;flex:0 0 auto;border-radius:50%;cursor:pointer;' +
+            'font-family:inherit;font-size:14px;font-weight:600;line-height:1;color:var(--text-secondary);' +
+            'background:transparent;border:1px solid var(--border-color,rgba(128,128,128,.35));' +
+            'display:flex;align-items:center;justify-content:center;' +
+            'transition:background .18s,border-color .18s,color .18s}' +
+            '.op-ask:hover{background:rgba(59,130,255,.12);border-color:rgba(59,130,255,.5);color:var(--text-primary)}' +
+            '.op-ask[aria-expanded="true"]{background:rgba(59,130,255,.16);border-color:rgba(59,130,255,.55);color:var(--text-primary)}' +
+            '.op-hint{font-size:11px;color:var(--text-secondary);opacity:.75}' +
+            '.op-panel{margin-top:8px}' +
             '.op-head{font-size:11px;color:var(--text-secondary);opacity:.8;margin-bottom:7px}' +
             '.op-list{display:flex;flex-direction:column;gap:6px}' +
             '.op-chip{display:block;width:100%;text-align:left;cursor:pointer;' +
@@ -82,22 +98,62 @@
             'border-radius:14px;padding:10px 13px;transition:background .18s,border-color .18s}' +
             '.op-chip:hover{background:rgba(59,130,255,.18);border-color:rgba(59,130,255,.5)}' +
             '.op-chip:active{transform:scale(.99)}' +
-            '@media(max-width:600px){.op-chip{font-size:12.5px;padding:9px 12px}}';
+            // Подпись остаётся и на телефоне: одинокий знак вопроса в углу
+            // ничего не обещает, и его просто не нажимают. Одиннадцать
+            // пикселей серого текста — не тот шум, ради которого всё затевалось.
+            '@media(max-width:600px){.op-chip{font-size:12.5px;padding:9px 12px}.op-hint{font-size:10.5px}}';
         document.head.appendChild(st);
     }
 
+    // Раньше три вопроса лежали открытым списком прямо над полем ввода.
+    // Вместе с голосовой кнопкой, выбором режима, четырьмя модулями и восемью
+    // быстрыми действиями это давало на первом экране полтора десятка ярких
+    // мишеней — глазу не за что зацепиться. Теперь подсказки сложены под знак
+    // вопроса: кто знает, о чём писать, их не видит, кому нужна опора —
+    // раскрывает одним касанием.
     function _render(host, course) {
         _style();
         var wrap = document.createElement('div');
         wrap.className = 'op-wrap';
         wrap.id = 'openersWrap';
 
+        var panel = document.createElement('div');
+        panel.className = 'op-panel';
+        panel.id = 'openersPanel';
+        panel.hidden = true;
+
+        var bar = document.createElement('div');
+        bar.className = 'op-bar';
+
+        var hint = document.createElement('span');
+        hint.className = 'op-hint';
+        hint.textContent = 'не знаете, с чего начать?';
+        bar.appendChild(hint);
+
+        var ask = document.createElement('button');
+        ask.type = 'button';
+        ask.className = 'op-ask';
+        ask.id = 'openersAsk';
+        ask.textContent = '?';
+        ask.setAttribute('aria-expanded', 'false');
+        ask.setAttribute('aria-controls', 'openersPanel');
+        ask.setAttribute('aria-label', 'О чём можно спросить');
+        ask.title = 'О чём можно спросить';
+        ask.addEventListener('click', function () {
+            var open = panel.hidden;
+            panel.hidden = !open;
+            ask.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) _track('opener_shown', { course: course.slug || '', n: course.q.length });
+        });
+        bar.appendChild(ask);
+        wrap.appendChild(bar);
+
         var head = document.createElement('div');
         head.className = 'op-head';
         head.textContent = course.t
             ? 'Вы читали «' + course.t + '». Можно спросить:'
             : 'Можно спросить:';
-        wrap.appendChild(head);
+        panel.appendChild(head);
 
         var list = document.createElement('div');
         list.className = 'op-list';
@@ -114,10 +170,16 @@
             });
             list.appendChild(b);
         });
-        wrap.appendChild(list);
+        panel.appendChild(list);
+        wrap.appendChild(panel);
+
         host.insertBefore(wrap, host.firstChild);
         _shown = true;
-        _track('opener_shown', { course: course.slug || '', n: course.q.length });
+        // Раньше это событие означало «человек увидел вопросы». Теперь показ и
+        // раскрытие — разные вещи, иначе воронка «увидел → нажал» превратится
+        // в неправду: opener_available считает доступность, opener_shown —
+        // тех, кто действительно раскрыл список.
+        _track('opener_available', { course: course.slug || '', n: course.q.length });
     }
 
     function _hide() {

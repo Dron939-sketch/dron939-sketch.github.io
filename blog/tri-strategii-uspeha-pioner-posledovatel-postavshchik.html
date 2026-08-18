@@ -133,6 +133,16 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -187,7 +197,7 @@
 <h2 id="three-strategies">Три стратегии: общая карта</h2>
 <p>Эта же картина повторяется в каждом крупном технологическом или экономическом сдвиге. Назовите эпоху — и вы найдёте три типа выигравших.</p>
 <div class="compare-table">
-<table>
+<div class="tbl-scroll"><table>
 <tr>
 <th>Эпоха</th>
 <th>Пионер-создатель</th>
@@ -236,7 +246,7 @@
 <td>Meta AI, Google, Mistral</td>
 <td>NVIDIA, Hugging Face, Vercel</td>
 </tr>
-</table>
+</table></div>
 </div>
 <p>Закономерность стабильна. В каждой эпохе побеждают разные психологические типы — и каждая стратегия имеет свою цену.</p>
 <h2 id="pioneer">Стратегия 1: Пионер-создатель</h2>
@@ -346,7 +356,7 @@
 <p>Эти три стратегии — не просто бизнес-выбор. Это разные конфигурации психики. Современная психология личности позволяет описать их через Big Five (пятифакторную модель личности) и другие хорошо изученные конструкты.</p>
 <h3>Big Five-профили (упрощённо)</h3>
 <div class="compare-table">
-<table>
+<div class="tbl-scroll"><table>
 <tr>
 <th>Черта</th>
 <th>Пионер</th>
@@ -361,7 +371,7 @@
 <tr><td>Risk tolerance</td><td>Очень высокая</td><td>Умеренная</td><td>Низкая</td></tr>
 <tr><td>Need for public recognition</td><td>Высокая</td><td>Средняя</td><td>Низкая</td></tr>
 <tr><td>Time horizon</td><td>5-10 лет на одну идею</td><td>2-5 лет на цикл</td><td>10-30 лет на компанию</td></tr>
-</table>
+</table></div>
 </div>
 <p>Это не «лучше или хуже». Это разные конфигурации, каждая со своими сильными и слабыми сторонами. Метаанализ Zhao &amp; Seibert (2006) показал, что предприниматели в целом отличаются от менеджеров по этим осям, но <em>разные типы предпринимателей</em> отличаются друг от друга не меньше.</p>
 <h3>Другие важные различия</h3>
@@ -470,7 +480,7 @@
 </div>
 <h2 id="compare">Сравнительная таблица</h2>
 <div class="compare-table">
-<table>
+<div class="tbl-scroll"><table>
 <tr>
 <th>Параметр</th>
 <th style="color:var(--pioneer)">Пионер</th>
@@ -486,7 +496,7 @@
 <tr><td>Требуется капитал</td><td>Большой (на образование рынка)</td><td>Средний</td><td>Большой (на инфраструктуру)</td></tr>
 <tr><td>Психологический тип</td><td>Innovator (Rogers 2.5%)</td><td>Early adopter / majority</td><td>Builder/Steward</td></tr>
 <tr><td>Главная книга</td><td>«Zero to One» Peter Thiel</td><td>«Fast Second» Markides &amp; Geroski</td><td>«Built to Last» Jim Collins</td></tr>
-</table>
+</table></div>
 </div>
 <h2 id="mistake">Главная ошибка: чужая стратегия</h2>
 <p>За 20 лет работы с клиентами по карьерным и бизнес-вопросам самая частая ошибка, которую я наблюдаю, — это <strong>попытка играть стратегию, не соответствующую психотипу</strong>.</p>

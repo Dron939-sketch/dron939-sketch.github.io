@@ -80,6 +80,16 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -154,7 +164,7 @@
 
   <p>Прежде чем описывать роли, нужно зафиксировать, что мы понимаем под «русским успехом». Это не то же самое, что американский.</p>
 
-  <table class="compare-table">
+  <div class="tbl-scroll"><table class="compare-table">
     <tr><th>Параметр</th><th>Западный успех</th><th>Русский успех</th></tr>
     <tr><td>Главная валюта</td><td>Деньги + статус</td><td>Доверие группы + устойчивость + ресурсы</td></tr>
     <tr><td>Главная стратегия</td><td>Специализация</td><td>Универсальность + адаптивность</td></tr>
@@ -164,7 +174,7 @@
     <tr><td>Видимость</td><td>Чем больше, тем лучше</td><td>Избирательная видимость</td></tr>
     <tr><td>Конкуренция</td><td>Прямая</td><td>Стратегическая, через альянсы</td></tr>
     <tr><td>Этика</td><td>Контрактная (правила)</td><td>Личная (обещание лицом к лицу)</td></tr>
-  </table>
+  </table></div>
 
   <p>Из этой таблицы видно: русский успех — это другой набор требований. Не «достичь» — а «удержать». Не «выделиться» — а «выстроить». Не «продать» — а «договориться». Не «личный бренд» — а «личное лицо».</p>
 

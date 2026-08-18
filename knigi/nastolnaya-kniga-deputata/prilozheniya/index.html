@@ -82,6 +82,16 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head><body><div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 
@@ -134,9 +144,9 @@
 <h2>Шаблон «Карта стейкхолдеров»</h2>
 <p>Рабочий шаблон к <a href="/knigi/nastolnaya-kniga-deputata/glava-14-karta-stejkholderov/">Главе 14</a>. Заполняется <em>именами</em>, не должностями.</p>
 <div class="card"><h4>Матрица власть × интерес (для каждой темы)</h4>
-<table class="cal"><tr><th></th><th>Высокий интерес</th><th>Низкий интерес</th></tr>
+<div class="tbl-scroll"><table class="cal"><tr><th></th><th>Высокий интерес</th><th>Низкий интерес</th></tr>
 <tr><td>Высокое влияние</td><td>Управлять плотно (имена: ___)</td><td>Держать удовлетворёнными (имена: ___)</td></tr>
-<tr><td>Низкое влияние</td><td>Информировать (имена: ___)</td><td>Мониторить (имена: ___)</td></tr></table></div>
+<tr><td>Низкое влияние</td><td>Информировать (имена: ___)</td><td>Мониторить (имена: ___)</td></tr></table></div></div>
 <div class="card"><h4>Шесть категорий (имена по каждой)</h4>
 <p>1. Формальные ответственные: ___<br>2. <strong>Реальные исполнители</strong> (кто готовит решения): ___<br>3. Локальные авторитеты: ___<br>4. Бизнес-сообщество: ___<br>5. Оппонентская сеть: ___<br>6. Медиа (конкретные журналисты/блогеры): ___</p></div>
 <p style="font-size:0.9em;color:#64748B">Цель — 20–50 конкретных имён реального влияния. Обновлять раз в квартал. Этическая граница (Гл. 14): карта — чтобы делать дело, а не для серых схем.</p>
@@ -147,7 +157,7 @@
 <span class="app-letter">Приложение D</span>
 <h2>Календарь упражнений на 12 месяцев</h2>
 <p>Принцип эпилога (<a href="/knigi/nastolnaya-kniga-deputata/glava-39-epilog/">Глава 39</a>): один навык на отрезок, доведённый до автоматизма, сильнее десяти «попробованных». Один порядок прохождения — фундамент сначала.</p>
-<table class="cal">
+<div class="tbl-scroll"><table class="cal">
 <tr><th>Месяц</th><th>Фокус</th><th>Глава</th></tr>
 <tr><td>1</td><td>Голос и темп под давлением</td><td>1</td></tr>
 <tr><td>2</td><td>7 типов вопросов</td><td>2</td></tr>
@@ -161,7 +171,7 @@
 <tr><td>10</td><td>Семья как опора + профилактика выгорания</td><td>24, 25, 33</td></tr>
 <tr><td>11</td><td>Команда: делегирование, найм, мотивация</td><td>26, 28, 29</td></tr>
 <tr><td>12</td><td>Идентичность, миссия, преемственность</td><td>36, 37, 38</td></tr>
-</table>
+</table></div>
 <p style="font-size:0.9em;color:#64748B">Не догма, а один из рабочих порядков. Начинать стоит с того навыка, где у вас самый острый разрыв «как надо / как сейчас».</p>
 </div>
 

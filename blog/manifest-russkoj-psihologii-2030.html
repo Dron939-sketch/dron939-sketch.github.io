@@ -80,6 +80,16 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -324,7 +334,7 @@
 <h2 id="callto">К чему я призываю</h2>
 <p>Я обращаюсь к разным группам — потому что без каждой из них этот манифест останется бумагой:</p>
 
-<table>
+<div class="tbl-scroll"><table>
 <tr><th>Группа</th><th>Призыв</th></tr>
 <tr><td><strong>Граждане</strong></td><td>Начните с себя. Откройте Фреди, прочитайте манифесты, найдите своего терапевта. Сделайте психологию частью жизни.</td></tr>
 <tr><td><strong>Психологи</strong></td><td>Объединяйтесь. Создавайте профессиональные сообщества. Боритесь за принятие закона. Учите следующих.</td></tr>
@@ -332,7 +342,7 @@
 <tr><td><strong>Образование</strong></td><td>Готовьте качественные кадры. Внедряйте курсы психологии в школу. Создавайте программы переподготовки.</td></tr>
 <tr><td><strong>Государство</strong></td><td>Принимайте закон. Расширяйте ОМС. Поддерживайте профессиональное сообщество. Это вопрос национальной безопасности — здоровая нация важнее всего.</td></tr>
 <tr><td><strong>Журналисты</strong></td><td>Пишите о психологии серьёзно, без сенсаций. Показывайте героев, открыто работающих со своей психикой. Развенчивайте мифы.</td></tr>
-</table>
+</table></div>
 
 <blockquote class="aphorism">«У нас есть пять лет. Этого достаточно, чтобы изменить страну. Этого мало, чтобы откладывать».</blockquote>
 

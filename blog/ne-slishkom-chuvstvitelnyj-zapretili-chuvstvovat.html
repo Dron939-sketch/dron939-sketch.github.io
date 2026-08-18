@@ -94,6 +94,16 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
+<style>/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -155,14 +165,14 @@
 
 <p>Само слово «слишком» требует точки отсчёта: слишком — по сравнению с чем? Чаще всего — по сравнению с человеком, которому ваши чувства были неудобны: занятым, уставшим, самим обесцененным в своём детстве, или просто менее чувствительным от природы. Ваша реакция была «слишком» не объективно, а <em>для него</em>. А вы приняли его порог за абсолютную норму и стали мерить себя чужой меркой, по которой всегда выходит перебор.</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Что вам говорили</th><th>Что было на самом деле</th></tr>
 <tr><td>«Ты слишком остро реагируешь»</td><td>Вы реагируете нормально для своей чувствительности; им было неудобно</td></tr>
 <tr><td>«Не выдумывай, тебе показалось»</td><td>Вы точно что-то уловили — чувствительные считывают нюансы</td></tr>
 <tr><td>«Из-за ерунды расстроился»</td><td>Для вас это не ерунда; ваша шкала значимости — не дефектная, а просто тоньше</td></tr>
 <tr><td>«Ты всё драматизируешь»</td><td>Вы глубоко проживаете — это не драма, это глубина</td></tr>
 <tr><td>«Будь проще»</td><td>«Будь удобнее для меня» — это про их комфорт, не про вашу норму</td></tr>
-</table>
+</table></div>
 
 <h2 id="s-4">Как вернуть доверие к своим чувствам</h2>
 

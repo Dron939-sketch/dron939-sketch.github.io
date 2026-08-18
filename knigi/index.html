@@ -752,6 +752,17 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Эмодзи новее Unicode 8.0 (🧠, 🧩, 🧭, 🪞) отсутствуют в Segoe UI Emoji
+   ранних сборок Windows: браузер рисует пустой квадрат — в том числе в главной
+   кнопке шапки. Лицо объявлено под именем Inter и сужено по unicode-range,
+   поэтому подхватывается без правки единой строки font-family и скачивается
+   только на страницах, где такой символ действительно есть. */
+@font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}
+/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
 </head>
 <body>
 
