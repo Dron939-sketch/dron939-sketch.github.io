@@ -165,6 +165,11 @@
    поэтому подхватывается без правки единой строки font-family и скачивается
    только на страницах, где такой символ действительно есть. */
 @font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}</style>
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -317,7 +322,7 @@
 
       <p><strong>Пример матрицы для здорового взрослого:</strong></p>
 
-      <table class="matrix-table">
+      <div class="tbl-scroll"><table class="matrix-table">
         <thead>
           <tr><th>Человек</th><th>Деньги/быт</th><th>Эмоции</th><th>Тело/секс</th><th>Прошлое</th></tr>
         </thead>
@@ -330,7 +335,7 @@
           <tr><td><strong>Психотерапевт</strong></td><td class="door-col">3</td><td class="door-col">4</td><td class="door-col">4</td><td class="door-col">4</td></tr>
           <tr><td><strong>Сосед</strong></td><td class="door-col">1</td><td class="door-col">0</td><td class="door-col">0</td><td class="door-col">0</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <p>Обрати внимание: даже у самых близких людей <strong>не везде уровень 4</strong>. Это нормально. Мама может не иметь доступа к интимной жизни — это не значит «нет отношений», это значит «здоровые границы». Партнёр может не иметь доступа к самым глубоким травмам — может быть, ты их обсуждаешь только с терапевтом.</p>
 

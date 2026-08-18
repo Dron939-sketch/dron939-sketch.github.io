@@ -94,6 +94,11 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -149,7 +154,7 @@
 
 <h2 id="s-3">Как наследованный сканер выглядит во взрослом</h2>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Что вы делаете</th><th>Что это на самом деле</th></tr>
 <tr><td>Прокручиваете худшие сценарии «чтобы подготовиться»</td><td>Унаследованный фильтр «неоднозначное = угроза»</td></tr>
 <tr><td>Не можете расслабиться, пока не проверите всех</td><td>Детский режим гипербдительности</td></tr>
@@ -157,7 +162,7 @@
 <tr><td>Тишина/задержка ответа = «случилось плохое»</td><td>Искажение интерпретации в сторону угрозы</td></tr>
 <tr><td>Гиперопекаете своих детей / партнёра</td><td>Передаёте сканер дальше — как передали вам</td></tr>
 <tr><td>Физически на взводе без явной причины</td><td>Тело держит постоянную готовность</td></tr>
-</table>
+</table></div>
 
 <p>Если узнали себя в нескольких строках — это и есть момент, ради которого написана статья. Потому что узнавание делает чужое чужим. Пока вы думали «я тревожный», бороться было не с чем — это же «я». А «во мне работает мамин сканер» — это уже <em>отделимое</em>. С этого начинается свобода.</p>
 

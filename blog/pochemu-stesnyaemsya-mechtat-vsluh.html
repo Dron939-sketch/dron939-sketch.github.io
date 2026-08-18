@@ -94,6 +94,11 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -139,13 +144,13 @@
 
 <p><em>(Честно: эти данные оспаривались — в части исследований публичное заявление, наоборот, повышало приверженность цели. Истина зависит от того, что и кому вы говорите.)</em> И отсюда — точный вывод: вредно не «озвучивать мечту», а озвучивать её <strong>как готовый статус ради аплодисментов</strong>. А полезно — озвучивать как <strong>намерение и обязательство нужным людям</strong>. Разницу видно в таблице ниже.</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Озвучивание, которое крадёт (ловушка)</th><th>Озвучивание, которое двигает</th></tr>
 <tr><td>«Я будущий великий X» — ради восхищения</td><td>«Я делаю X, к [сроку] сделаю [шаг]» — конкретно</td></tr>
 <tr><td>Случайной публике для лайков</td><td>Тем, кто поддержит и спросит с тебя</td></tr>
 <tr><td>Заявить статус и получить аплодисменты</td><td>Заявить план и взять обязательство</td></tr>
 <tr><td>«Я худею» (идентичность)</td><td>«В среду в 8 утра я на пробежке» (действие)</td></tr>
-</table>
+</table></div>
 
 <p>То есть народная осторожность поймала <em>половину</em> правды (хвастаться готовым статусом действительно вредно) — и сделала из неё неверный вывод (молчать обо всём). Правильный вывод другой: мечту нужно произносить — но как обязательство и план, а не как повод собрать восхищение.</p>
 

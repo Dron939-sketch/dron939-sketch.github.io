@@ -95,6 +95,11 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -162,14 +167,14 @@
 
 <p>Теперь у нас есть инструмент, чтобы развести два «терпения», которые язык предательски называет одним словом. Граница проходит по одному вопросу: <strong>есть ли у меня контроль и веду ли я к цели — или я просто перестал пытаться?</strong></p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Терпение-сила</th><th>Терпение-капитуляция (беспомощность)</th></tr>
 <tr><td>Я <strong>выбираю</strong> ждать ради конкретной цели, которая наступит.</td><td>Я терплю, потому что «всё равно ничего не изменится».</td></tr>
 <tr><td>Я продолжаю <strong>действовать</strong> в зоне, где могу влиять.</td><td>Я перестал действовать даже там, где влиять можно.</td></tr>
 <tr><td>Терплю <em>неконтролируемое</em> (погоду, чужой характер, сроки), действую в <em>контролируемом</em>.</td><td>Терплю <em>контролируемое</em> — то, что мог бы изменить, но не верю в это.</td></tr>
 <tr><td>«Это пройдёт, и вот что я делаю пока».</td><td>«Так всегда, везде и из-за меня».</td></tr>
 <tr><td>Энергия копится.</td><td>Энергия гаснет, тянет в апатию.</td></tr>
-</table>
+</table></div>
 
 <p>Простой тест на себе. Спросите про любую ситуацию, которую «терпите»: <em>«Если бы я точно знал, что могу это изменить, — я бы действовал?»</em> Если да, а вы всё равно не действуете — это, скорее всего, не терпение, а беспомощность, которая маскируется под добродетель. Добродетелью её назначили те, кому удобно, чтобы вы терпели.</p>
 

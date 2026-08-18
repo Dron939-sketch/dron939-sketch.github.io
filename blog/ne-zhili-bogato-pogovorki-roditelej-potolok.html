@@ -96,6 +96,11 @@
   blockquote.proverbs{background:#F8FAFC;border-left:4px solid #94A3B8;padding:14px 20px;margin:22px 0;font-style:italic;color:#475569;border-radius:4px;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -176,7 +181,7 @@
 
 <p>Заголовок статьи говорит про деньги — потому что денежные поговорки самые заметные. Но потолок устроен шире. У него обычно три типичных направления:</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Поговорка</th><th>Что она запрещает</th><th>Что вы про себя слышите взрослым</th></tr>
 <tr><td>«Не жили богато — нечего начинать»</td><td>Расти финансово, рисковать ради большего</td><td>«У меня всегда будет не хватать, нечего и пробовать»</td></tr>
 <tr><td>«Не высовывайся», «сиди ровно»</td><td>Заявлять о себе, претендовать на роль</td><td>«Я не та, кто берёт слово; начнут смотреть — будет плохо»</td></tr>
@@ -184,7 +189,7 @@
 <tr><td>«Бабе нужен муж, а не карьера»</td><td>Самостоятельная женская траектория</td><td>«Если без мужа — я ничто; карьера это для несчастных»</td></tr>
 <tr><td>«Мужик должен молчать и тащить»</td><td>Мужская эмоциональная жизнь</td><td>«Жаловаться нельзя; чувствовать нельзя; терпи»</td></tr>
 <tr><td>«Деньги счастья не приносят»</td><td>Хотеть денег без чувства вины</td><td>«Если хочу денег — значит, плохой, бездуховный»</td></tr>
-</table>
+</table></div>
 
 <p>Заметьте: ни одна из этих фраз не была сказана прямо как запрет. Все они звучали как мудрость, как очевидность, как «ну ты же сам понимаешь». В этом и сила: запрет, поданный как мудрость, проходит мимо критики ребёнка и встраивается напрямую.</p>
 
@@ -211,13 +216,13 @@
 <h3>2. Произнести вслух свою версию</h3>
 <p>Вместо борьбы с пословицей — заменить её своей формулировкой. Не аффирмация в духе «я успешна» (мы <a href="/blog/pochemu-pozitivnoe-myshlenie-ne-rabotaet.html">разбирали, почему это часто бьёт в минус</a>), а конкретная замена в формате «было — стало»:</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Унаследованное</th><th>Своя версия</th></tr>
 <tr><td>«Не жили богато — нечего начинать»</td><td>«Не жили богато — тем более повод научиться по-другому»</td></tr>
 <tr><td>«Не высовывайся»</td><td>«Высовываться больно. И иногда это единственный способ что-то сдвинуть»</td></tr>
 <tr><td>«Деньги счастья не приносят»</td><td>«Деньги расширяют выбор. Счастье — отдельная работа»</td></tr>
 <tr><td>«Куда тебе»</td><td>«Не знаю, получится ли — но пробую и смотрю, что вышло»</td></tr>
-</table>
+</table></div>
 
 <p>Произнесённая вслух своя версия — это и есть то самое <a href="/blog/verbalnyj-potencial-skrytaya-deklaraciya.html">«перепрошивание словом»</a>, которое мы обсуждаем во всём блоге. Она не сработает в одну реплику. Но за несколько недель регулярного произношения новая фраза начинает звучать в голове чаще старой — и поведение подтягивается.</p>
 

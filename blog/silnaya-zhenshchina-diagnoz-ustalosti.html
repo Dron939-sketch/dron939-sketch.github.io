@@ -94,6 +94,11 @@
   .compare th{background:#F8FAFC;}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -155,14 +160,14 @@
 
 <p>Комплимент даёт. Этот «комплимент» — забирает. Смотрите, как он работает:</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Что говорят</th><th>Что это делает на самом деле</th></tr>
 <tr><td>«Ты сильная, ты справишься»</td><td>Снимает с говорящего обязанность помочь</td></tr>
 <tr><td>«На тебе всё держится»</td><td>Закрепляет, что и дальше всё будет на тебе</td></tr>
 <tr><td>«Ты же не такая, как эти расклеившиеся»</td><td>Запрещает тебе расклеиться под страхом потерять статус</td></tr>
 <tr><td>«Молодец, что не ноешь»</td><td>Награждает за самоподавление</td></tr>
 <tr><td>«Ты у нас железная»</td><td>Отнимает право быть живой и уставшей</td></tr>
-</table>
+</table></div>
 
 <p>Получается замкнутый круг: чем лучше вы справляетесь, тем больше на вас грузят и тем меньше предлагают помощь — ведь «ей же не нужно, она сильная». А попросить нельзя: попросив, вы как будто предаёте свою идентичность и теряете единственную награду, которую за всё это получаете, — звание сильной. Поэтому вы тянете до края. И часто за краем.</p>
 
@@ -170,14 +175,14 @@
 
 <p>Здесь важно не перепутать. Разворот «сильной женщины» — это <strong>не</strong> призыв стать слабой, беспомощной или переложить всё на других. Это переопределение того, что вообще считать силой.</p>
 
-<table class="compare">
+<div class="tbl-scroll"><table class="compare">
 <tr><th>Ложная «сила» (схема)</th><th>Настоящая сила</th></tr>
 <tr><td>Никогда не просить помощи</td><td>Уметь попросить и принять помощь</td></tr>
 <tr><td>Не показывать чувств</td><td>Называть чувства и обходиться с ними</td></tr>
 <tr><td>Тащить всё в одиночку</td><td>Распределять и доверять</td></tr>
 <tr><td>Сначала все, потом (никогда) я</td><td>Класть себя в список, а не в конец списка</td></tr>
 <tr><td>Держаться, пока не сломаешься</td><td>Останавливаться до того, как сломаешься</td></tr>
-</table>
+</table></div>
 
 <p>Несущая стена, которая не может опереться ни на что, — это не сила, это аварийное состояние. Сила, которая умеет отдыхать, просить и опираться, — устойчивее той, что держится на пределе. Парадокс: чтобы стать по-настоящему сильной, «сильной женщине» нужно разрешить себе перестать ею быть в старом смысле.</p>
 

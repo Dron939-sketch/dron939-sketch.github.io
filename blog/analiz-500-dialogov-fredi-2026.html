@@ -133,6 +133,11 @@
    поэтому подхватывается без правки единой строки font-family и скачивается
    только на страницах, где такой символ действительно есть. */
 @font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}</style>
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -169,7 +174,7 @@
 
     <h2 id="s-2">🎯 Топ-10 запросов</h2>
 
-    <table class="compare-table">
+    <div class="tbl-scroll"><table class="compare-table">
       <thead>
         <tr><th>Запрос</th><th>% диалогов</th><th>Эффективность AI (по самоотчёту)</th></tr>
       </thead>
@@ -185,7 +190,7 @@
         <tr><td>Бессонница</td><td>5%</td><td>★★★★ хорошо</td></tr>
         <tr><td>Сложные эмоции к ребёнку</td><td>4%</td><td>★★ слабо</td></tr>
       </tbody>
-    </table>
+    </table></div>
 
     <p>Прочие 2% — редкие запросы (творческий блок, экзистенциальные вопросы, профессиональные дилеммы).</p>
 

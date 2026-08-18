@@ -134,6 +134,11 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -207,7 +212,7 @@
 <h3>Предел 3: Глубинная длительная терапия</h3>
 <p>Перестройка ранних детских паттернов, работа с травмой, изменение базовых стратегий привязанности — это работа на годы с одним и тем же специалистом, в живых отношениях. ИИ не может удержать терапевтический альянс такой глубины. Он отличный помощник <em>между</em> сессиями живой терапии, но не <em>вместо</em>.</p>
 <h2 id="chatgpt-vs">Специализированный ИИ-психолог vs ChatGPT: 5 ключевых различий</h2>
-<table class="compare-table">
+<div class="tbl-scroll"><table class="compare-table">
 <tr><th>Параметр</th><th>ChatGPT (общий)</th><th>Специализированный ИИ-психолог</th></tr>
 <tr><td>Обучающие данные</td><td>Общий интернет</td><td>Психотерапевтические протоколы</td></tr>
 <tr><td>Этические ограничения</td><td><span class="partial">Базовые</span></td><td><span class="checkmark">Профильные</span></td></tr>
@@ -215,7 +220,7 @@
 <tr><td>Escalation к живому</td><td><span class="crossmark">Нет</span></td><td><span class="checkmark">Встроена</span></td></tr>
 <tr><td>Удержание контекста терапии</td><td><span class="partial">Сессия</span></td><td><span class="checkmark">Длительно</span></td></tr>
 <tr><td>Качество CBT-протоколов</td><td><span class="partial">Усреднённое</span></td><td><span class="checkmark">Прицельное</span></td></tr>
-</table>
+</table></div>
 <p>Главный вывод: для случайных психологических вопросов ChatGPT — нормально. Для системной работы со своим состоянием — специализированный ИИ-психолог даёт в 3-5 раз больше пользы.</p>
 <h2 id="kak-ispolzovat">Как использовать ИИ-психолога правильно: 7 принципов</h2>
 <ol>

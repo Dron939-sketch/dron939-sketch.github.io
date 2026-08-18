@@ -137,6 +137,11 @@
 }
 </script>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<style>/* Таблица шире экрана растягивала вбок всю страницу: на телефоне
+   документ уезжал до 898 px при экране 390, и вместе с таблицей ползли
+   заголовки, текст и подвал. Теперь прокручивается сама таблица. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:18px 0}
+.tbl-scroll>table{margin:0}</style>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
@@ -192,13 +197,13 @@
 </div>
 <h2 id="otlichia">Чем оно отличается от обычного, линейного и критического</h2>
 <p>Чтобы тренировать что-то, нужно сначала отличать это от похожих, но других вещей. Системное мышление часто путают с тремя соседями.</p>
-<table class="system-table">
+<div class="tbl-scroll"><table class="system-table">
 <tr><th>Тип мышления</th><th>Главный вопрос</th><th>Слабость</th></tr>
 <tr><td>Линейное</td><td>«Что случилось → что делать?»</td><td>Пропускает циклы и задержки</td></tr>
 <tr><td>Критическое</td><td>«Это правда? Аргумент валиден?»</td><td>Анализирует утверждения, не системы</td></tr>
 <tr><td>Творческое</td><td>«Какие есть новые варианты?»</td><td>Генерирует идеи, не проверяет их встроенность в систему</td></tr>
 <tr><td><strong>Системное</strong></td><td><strong>«Как элементы связаны и что произойдёт во времени?»</strong></td><td>Требует тренировки, не возникает спонтанно</td></tr>
-</table>
+</table></div>
 <p>В идеале у мыслителя 2026 года развиты все четыре. Они дополняют друг друга. Системное мышление — это не замена остальным, это <strong>надстройка</strong>, которая интегрирует их в единую способность понимать сложность.</p>
 <h2 id="praktika-1">Практика 1: «5 почему» (Toyota Method)</h2>
 <p><strong>Время: 5-10 минут в день. Когда: вечером, разбирая событие дня.</strong></p>
