@@ -25,6 +25,7 @@
   var LINK = 'https://lichnosty.ru/type/eksperty/';
   var DATA = [];
   var LAST = null;
+  var AI_MODE = false;
 
   function tok() { try { return localStorage.getItem(LS) || ''; } catch (e) { return ''; } }
   function esc(s) {
@@ -52,20 +53,27 @@
     master: {
       title: 'Мастеру и частной практике',
       text: function (name) {
-        return name + ', привет. Мысль про твою работу — скажи, если мимо.\n\n' +
-          'К тебе приходят по рекомендации: подруга сказала «сходи к ней». И дальше человек почти всегда делает одно и то же — вбивает имя в поиск. Не потому что не доверяет подруге. Просто одного мнения мало: чтобы решиться, нужно, чтобы то же самое подтвердилось откуда-то ещё.\n\n' +
-          'Вот здесь и обрыв. Он находит профиль в соцсети — но это ты о себе, тот же источник, что и подруга. Или находит однофамильцев. Второго подтверждения нет, и решение откладывается на потом.\n\n' +
-          'Есть справочник, где можно завести страницу в разделе «Эксперты»: ' + LINK + ' — кто ты, чем занимаешься, с какого года, что заканчивала. Площадка сторонняя, поэтому и работает как второй источник: человеку сказали — он проверил — сошлось.\n\n' +
-          'Чего она не сделает: не заставит о тебе говорить. Разговоры — твоя работа, и ты её делаешь. Но упираются они ровно в том месте, где человек идёт проверять.\n\n' +
+        return name + ', привет.\n\n' +
+          'Человек считает правдой то, что узнал из двух не связанных между собой источников.\n\n' +
+          'Вспомни, как сама кого-нибудь выбирала — стоматолога, например. Подруга посоветовала, ты согласилась, а потом всё равно полезла смотреть, что за человек. Не потому что не доверяешь подруге. Просто одного источника мало: пока сказанное не подтвердилось откуда-то ещё, это остаётся чужим мнением, а решать тебе.\n\n' +
+          'А теперь то же самое происходит с тобой. Тебя порекомендовали — и человек идёт проверять.\n\n' +
+          'Вот здесь обрыв. Он находит твой профиль в соцсети — но это ты о себе, тот же источник, что и подруга. Или находит однофамильцев. Второго подтверждения нет, и запись откладывается на потом.\n\n' +
+          'Есть справочник, где можно завести страницу в разделе «Эксперты»:\n' + LINK + '\n' +
+          'Кто ты, чем занимаешься, с какого года, что заканчивала. Площадка сторонняя — поэтому и работает как второй источник.\n\n' +
+          'Чего она не сделает: не приведёт клиентов и не заставит о тебе говорить. Разговоры — твоя работа, и ты её делаешь. Страница закрывает только шаг проверки — тот самый, на котором сейчас останавливаются.\n\n' +
           'Посмотри, если откликнется. Не в тему — так и скажи, я не обижусь.';
       },
     },
     expert: {
       title: 'Практикующему специалисту',
       text: function (name) {
-        return name + ', привет. Не по делу, но, кажется, тебе пригодится.\n\n' +
-          'Тебя рекомендуют — и человек перед обращением идёт проверять имя в поиске. Одна рекомендация решения не даёт: нужно, чтобы она подтвердилась источником, который с ней не связан. Соцсети таким источником не работают — там ты говоришь о себе сам, а это то же самое мнение, только из первых рук.\n\n' +
-          'Справочник как раз про это: страница в разделе «Эксперты» — ' + LINK + '. Образование, чем занимаешься, с какого года, ссылки на подтверждения. Сторонняя площадка, отдельная выдача, и её удобно давать ссылкой вместо «ну найдите меня в интернете».\n\n' +
+        return name + ', привет.\n\n' +
+          'Человек считает правдой то, что узнал из двух не связанных между собой источников.\n\n' +
+          'Ты это за собой наверняка замечал. Когда тебе кого-то советуют — врача, юриста, подрядчика, — ты киваешь, а потом всё равно идёшь смотреть сам. Рекомендация даёт кандидата, но не даёт решения: решение появляется, когда сказанное подтверждается откуда-то ещё.\n\n' +
+          'С тобой делают ровно то же. Тебя рекомендуют — и человек перед обращением проверяет имя в поиске.\n\n' +
+          'И упирается. Соцсети вторым источником не работают: там ты говоришь о себе сам, а это то же самое мнение, только из первых рук. Проверка не засчитывается.\n\n' +
+          'Справочник как раз про это — страница в разделе «Эксперты»:\n' + LINK + '\n' +
+          'Образование, чем занимаешься, с какого года, ссылки на подтверждения. Сторонняя площадка, отдельная выдача, и её удобно давать ссылкой вместо «найдите меня в интернете».\n\n' +
           'Честно про предел: страница не приводит клиентов и не делает известным. Она закрывает шаг проверки — тот, на котором человек сейчас останавливается.\n\n' +
           'Если интересно — посмотри.';
       },
@@ -73,9 +81,12 @@
     short: {
       title: 'Коротко, для дальних знакомых',
       text: function (name) {
-        return name + ', привет. Тебя же рекомендуют — и человек потом идёт гуглить имя, чтобы убедиться. Находит соцсети, а это ты о себе, то есть тот же источник. Нужен второй, независимый.\n\n' +
-          'Есть справочник с разделом «Эксперты»: ' + LINK + '. Страница о человеке: чем занимается, с какого года, подтверждения. Индексируется отдельно, её удобно давать ссылкой.\n\n' +
-          'Подумал про тебя. Если не в тему — просто пропусти.';
+        return name + ', привет.\n\n' +
+          'Человек считает правдой то, что узнал из двух не связанных между собой источников.\n\n' +
+          'Ты и сам так делаешь: посоветовали мастера — всё равно пошёл смотреть. С тобой то же самое, только теперь проверяют тебя. И находят соцсети, а это ты о себе — тот же источник, что и рекомендация.\n\n' +
+          'Есть справочник с разделом «Эксперты»:\n' + LINK + '\n' +
+          'Страница о человеке: чем занимается, с какого года, подтверждения. Индексируется отдельно, её удобно давать ссылкой.\n\n' +
+          'Клиентов она не приведёт — закрывает только шаг проверки. Подумал про тебя. Если не в тему — просто скажи.';
       },
     },
   };
@@ -106,12 +117,16 @@
         '<div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">' +
           esc([c.profession, c.occupation, c.city].filter(Boolean).join(' · ')) + '</div>' +
         '<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
+          (c.message ? '<button data-swap="ai" style="padding:5px 10px;border-radius:7px;font-size:11.5px;cursor:pointer;font:inherit;' +
+            'border:1px solid var(--accent);background:rgba(167,139,250,.14);color:var(--text)">Письмо от ИИ</button>' : '') +
           Object.keys(TEMPLATES).map(function (k) {
             return '<button data-swap="' + k + '" style="padding:5px 10px;border-radius:7px;font-size:11.5px;cursor:pointer;font:inherit;' +
-              'border:1px solid ' + (k === tplKey ? 'var(--accent)' : 'var(--border)') + ';' +
-              'background:' + (k === tplKey ? 'rgba(167,139,250,.14)' : 'transparent') + ';color:var(--text)">' +
+              'border:1px solid ' + (!c.message && k === tplKey ? 'var(--accent)' : 'var(--border)') + ';' +
+              'background:' + (!c.message && k === tplKey ? 'rgba(167,139,250,.14)' : 'transparent') + ';color:var(--text)">' +
               esc(TEMPLATES[k].title) + '</button>';
           }).join('') +
+          '<button id="expRegen" style="padding:5px 10px;border-radius:7px;font-size:11.5px;cursor:pointer;font:inherit;' +
+            'border:1px solid var(--border);background:transparent;color:var(--text-dim)">Написать заново</button>' +
         '</div>' +
         '<textarea id="expText" spellcheck="true" style="width:100%;min-height:280px;padding:12px 14px;border-radius:10px;' +
           'border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text);font:inherit;' +
@@ -130,11 +145,16 @@
     document.body.appendChild(back);
 
     var ta = back.querySelector('#expText');
-    function fill(key) { ta.value = TEMPLATES[key].text(firstName(c.name)); count(); }
+    function fill(key) {
+      // Письмо от модели написано под конкретного человека и с его зацепкой —
+      // оно всегда лучше общей заготовки, поэтому показывается первым.
+      ta.value = (key === 'ai' && c.message) ? c.message : TEMPLATES[key].text(firstName(c.name));
+      count();
+    }
     function count() {
       back.querySelector('#expCount').textContent = ta.value.length + ' знаков';
     }
-    fill(tplKey);
+    fill(c.message ? 'ai' : tplKey);
     ta.addEventListener('input', count);
     // Курсор в начало: первое, что нужно сделать, — дописать свою строку.
     ta.focus(); ta.setSelectionRange(0, 0);
@@ -158,6 +178,18 @@
     back.addEventListener('click', function (e) { if (e.target === back) close(); });
     document.addEventListener('keydown', function esc2(e) {
       if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc2); }
+    });
+    back.querySelector('#expRegen').addEventListener('click', async function () {
+      var rb = back.querySelector('#expRegen');
+      rb.disabled = true; rb.textContent = 'пишу…';
+      try {
+        var r = await api('/api/admin/vk/experts/ai-message', {
+          vk_id: c.vk_id, name: c.name, occupation: c.occupation || c.profession || '',
+          city: c.city || '', hook: c.hook || '', refresh: true,
+        });
+        c.message = r.text; ta.value = r.text; count();
+      } catch (e) { back.querySelector('#expErr').textContent = e.message; }
+      finally { rb.disabled = false; rb.textContent = 'Написать заново'; }
     });
     back.querySelector('#expCopy').addEventListener('click', function () {
       if (navigator.clipboard) navigator.clipboard.writeText(ta.value);
@@ -213,7 +245,8 @@
           '<option value="3">3 — ищут по имени всегда</option><option value="2" selected>2 — ищут часто</option><option value="0">0 — все подряд</option></select></label>' +
         '<label style="font-size:12px;color:var(--text-dim)">захочет ≥ ' +
           '<input id="expHochet" type="number" value="1" min="0" max="9" style="width:64px;margin-left:4px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit"></label>' +
-        '<button id="expFind" style="padding:9px 18px;border-radius:8px;border:none;background:var(--accent-grad);color:#fff;font:inherit;font-weight:700;cursor:pointer">Разобрать друзей</button>' +
+        '<button id="expAi" style="padding:9px 18px;border-radius:8px;border:none;background:var(--accent-grad);color:#fff;font:inherit;font-weight:700;cursor:pointer">Разобрать с ИИ</button>' +
+        '<button id="expFind" style="padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;cursor:pointer" title="Только правила, без модели — быстро и бесплатно">Без ИИ</button>' +
         '<span id="expStatus" style="font-size:12px;color:var(--text-dim)"></span>' +
       '</div>' +
       '<div id="expSummary" style="margin-bottom:12px"></div>' +
@@ -232,24 +265,31 @@
       document.querySelectorAll('main > section').forEach(function (s) { s.style.display = 'none'; });
       sec.style.display = '';
     });
-    document.getElementById('expFind').addEventListener('click', find);
+    document.getElementById('expFind').addEventListener('click', function () { find(false); });
+    document.getElementById('expAi').addEventListener('click', function () { find(true); });
   }
 
-  async function find() {
-    var btn = document.getElementById('expFind');
+  async function find(useAi) {
+    var btn = document.getElementById(useAi ? 'expAi' : 'expFind');
     var status = document.getElementById('expStatus');
-    btn.disabled = true; status.textContent = 'читаю друзей и профили…';
+    btn.disabled = true;
+    status.textContent = useAi
+      ? 'читаю профили, разбираю моделью и пишу письма — это займёт минуту-другую…'
+      : 'читаю друзей и профили…';
     try {
-      var r = await api('/api/admin/vk/experts/preview', {
+      var r = await api(useAi ? '/api/admin/vk/experts/ai' : '/api/admin/vk/experts/preview', {
         min_nado: parseInt(document.getElementById('expNado').value, 10),
         min_hochet: parseInt(document.getElementById('expHochet').value, 10) || 0,
         limit: 300,
       });
+      AI_MODE = !!useAi;
       DATA = r.candidates || [];
       LAST = r;
       if (typeof r.left_today === 'number') LEFT_TODAY = r.left_today;
       render(r);
-      status.textContent = '';
+      status.textContent = r.ai
+        ? ('модель разобрала ' + r.ai.ranked + ', написала писем ' + r.ai.written)
+        : '';
     } catch (e) {
       status.textContent = 'не вышло: ' + e.message;
     } finally { btn.disabled = false; }
@@ -269,7 +309,9 @@
       .map(function (k) { return k + ' — ' + r.skipped[k]; }).join(', ');
     sum.innerHTML =
       '<div style="font-size:13px;color:var(--text)">Подходят: <b>' + r.total + '</b>' +
-      ' · из них горячие (надо ≥ 3 и захочет ≥ 3): <b style="color:var(--success)">' + r.hot + '</b></div>' +
+      ' · горячие (' + (r.ai ? 'оценка ИИ ≥ 8' : 'надо ≥ 3 и захочет ≥ 3') + '): ' +
+      '<b style="color:var(--success)">' + r.hot + '</b>' +
+      (r.ai ? ' · писем готово: <b>' + r.ai.written + '</b>' : '') + '</div>' +
       (r.daily_cap ? '<div style="font-size:12px;margin-top:4px;color:' +
         (r.left_today <= 3 ? '#f5a524' : 'var(--text-dim)') + '">отправлено сегодня: <b>' +
         r.sent_today + '</b> из ' + r.daily_cap + ' · осталось ' + r.left_today + '</div>' : '') +
@@ -287,13 +329,17 @@
         '<div style="flex:1;min-width:0">' +
           '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' +
             '<a href="' + esc(c.url) + '" target="_blank" rel="noopener" style="font-weight:600;color:var(--text);text-decoration:none">' + esc(c.name) + '</a>' +
+            (typeof c.fit === 'number' && AI_MODE ? badge(c.fit, 'ИИ', 8) : '') +
             badge(c.nado, 'надо', 3) + badge(c.hochet, 'хочет', 3) +
             (c.contacted ? '<span style="font-size:11px;color:var(--success)">уже писали</span>' : '') +
           '</div>' +
           '<div style="font-size:12px;color:var(--text-dim);margin-top:3px">' +
             esc([c.profession, c.occupation, c.city].filter(Boolean).join(' · ')) + '</div>' +
           (c.status ? '<div style="font-size:11.5px;color:var(--text-dim);margin-top:2px;font-style:italic">«' + esc(c.status) + '»</div>' : '') +
-          '<div style="font-size:11px;color:var(--text-dim);margin-top:4px">' + esc(c.why) + '</div>' +
+          (c.hook ? '<div style="font-size:11.5px;color:var(--accent);margin-top:4px">зацепка: ' + esc(c.hook) + '</div>' : '') +
+          '<div style="font-size:11px;color:var(--text-dim);margin-top:4px">' +
+            esc([c.ai_why, c.why].filter(Boolean).join(' · ')) +
+            (c.message ? ' · <span style="color:var(--success)">письмо готово</span>' : '') + '</div>' +
           '<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">' +
             Object.keys(TEMPLATES).map(function (k) {
               return '<button data-open="' + i + '" data-tpl="' + k + '" style="padding:5px 11px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:11.5px;cursor:pointer">' +
