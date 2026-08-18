@@ -400,7 +400,29 @@ td{color:#1D1D1F!important;border-bottom:1px solid #E0E0E0!important;padding:12p
   margin:0 0 22px!important;
   font-size:1rem!important;
 }
-.final-cta a,.cta-box a,.cta-block a,.cta-btn,.cta-block .btn{
+/* Ссылка внутри призыва по умолчанию остаётся ссылкой. Раньше «таблетку»
+   получала любая: фраза «Это пятая статья. Также: теория ритуала, кейс
+   банкирши, кейс строителя» превращалась в связку огромных белых кнопок
+   посреди предложения — на 43 страницах. Кнопкой ссылка становится там, где
+   она и задумана кнопкой: в ряду .cta-links, в блоке .cta-buttons, с классом
+   .btn, прямым ребёнком призыва или единственной в своём абзаце.
+
+   Класс продублирован намеренно. Выше в этом файле стоит main.container a со
+   своим !important и специфичностью (0,1,2); одиночный .cta-box a — (0,1,1),
+   и он проигрывал, из-за чего ссылки в призыве оставались синими на синем. */
+.final-cta.final-cta a,.cta-box.cta-box a,.cta-block.cta-block a{
+  color:#FFFFFF!important;
+  font-weight:600!important;
+  text-decoration:underline!important;
+  text-underline-offset:3px;
+}
+.final-cta.final-cta .cta-links a,.cta-box.cta-box .cta-links a,.cta-block.cta-block .cta-links a,
+.final-cta.final-cta .cta-buttons a,.cta-box.cta-box .cta-buttons a,.cta-block.cta-block .cta-buttons a,
+.final-cta.final-cta>a,.cta-box.cta-box>a,.cta-block.cta-block>a,
+.final-cta.final-cta p:has(>a:only-child)>a,
+.cta-box.cta-box p:has(>a:only-child)>a,
+.cta-block.cta-block p:has(>a:only-child)>a,
+.cta-btn,.cta-block .btn{
   display:inline-block!important;
   background:#FFFFFF!important;
   color:#3A86FF!important;
@@ -410,7 +432,23 @@ td{color:#1D1D1F!important;border-bottom:1px solid #E0E0E0!important;padding:12p
   text-decoration:none!important;
   transition:all 0.2s!important;
 }
-.final-cta a:hover,.cta-box a:hover,.cta-btn:hover{background:#1D1D1F!important;color:#FFFFFF!important}
+.final-cta.final-cta .cta-links a:hover,.cta-box.cta-box .cta-links a:hover,.cta-block.cta-block .cta-links a:hover,
+.final-cta.final-cta .cta-buttons a:hover,.cta-box.cta-box .cta-buttons a:hover,.cta-block.cta-block .cta-buttons a:hover,
+.final-cta.final-cta>a:hover,.cta-box.cta-box>a:hover,.cta-block.cta-block>a:hover,
+.final-cta.final-cta p:has(>a:only-child)>a:hover,
+.cta-box.cta-box p:has(>a:only-child)>a:hover,
+.cta-block.cta-block p:has(>a:only-child)>a:hover,
+.cta-btn:hover{background:#1D1D1F!important;color:#FFFFFF!important}
+
+/* Ряд ссылок в призыве. Ссылки здесь превращаются в белые «таблетки»,
+   и точки-разделители между ними читались как мусор: на второй строке
+   одна из них повисала в воздухе, а сами таблетки вставали вразнобой.
+   Разделители убраны из разметки, расстановкой занимается flex. */
+.cta-box .cta-links,.cta-block .cta-links,.final-cta .cta-links{
+  display:flex!important;flex-wrap:wrap;justify-content:center;
+  gap:12px;margin:0!important
+}
+
 
 /* === Author block === */
 .author-block{
