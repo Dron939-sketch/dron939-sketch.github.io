@@ -183,6 +183,20 @@
       .social-links { justify-content: center; }
       .btn { width: 100%; max-width: 320px; }
     }
+    @media (max-width: 1050px) {
+    /* Полное меню с кнопкой «Виртуальный психолог» требует 1016 px и
+       не помещалось нигде между 769 и 1050: на планшете и на ноутбуке
+       с масштабом кнопка уезжала за правый край экрана вместе со всей
+       страницей. Бургер включается на 1050, а не на 768. */
+      .burger {display: block;}
+      .nav-links {position: fixed; top: 70px; left: -100%; width: 85%; max-width: 320px; height: calc(100vh - 70px); background-color: #0C0C0C; flex-direction: column; justify-content: flex-start; align-items: stretch; gap: 5px; transition: left 0.3s ease; z-index: 999; padding: 20px; border-right: 1px solid rgba(58, 134, 255, 0.2); overflow-y: auto;}
+      .nav-links.active {left: 0;}
+      .nav-links a {font-size: 1.1rem; padding: 12px 0; display: block; text-align: center; border-bottom: 1px solid rgba(58, 134, 255, 0.1);}
+      .nav-links a::after {display: none;}
+      .nav-links a:hover {background-color: rgba(58, 134, 255, 0.1); border-radius: 8px;}
+      .psychologist-btn {margin-top: 15px; text-align: center;}
+    }
+
     @media (max-width: 480px) {
       .logo { letter-spacing: 0.2em; }
       .burger { width: 25px; height: 18px; }
