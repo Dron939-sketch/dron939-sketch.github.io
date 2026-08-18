@@ -3091,8 +3091,8 @@ document.addEventListener('DOMContentLoaded', function() {
             chainik: { fn: 'showChainikGame', src: 'chainik.js', chat: 'kontur' }, // «Чайник Рассела» — интеллектуальная честность
             istoria: { fn: 'showIstoriaGame', src: 'istoria.js', chat: 'kontur' }, // «Другая история» — изменение личной истории
             vsluh: { fn: 'showVsluhGame', src: 'vsluh.js', chat: 'kontur' }, // «Мысль вслух» — наладка приватных процессов мышления
-            lazejka: { fn: 'showLazejkaGame', src: 'lazejka.js', chat: 'kontur' },
-            perehod: { fn: 'showPerehodGame', src: 'perehod.js', chat: 'kontur' }, // «Переход» — чьё решение вы выполнили // «Лазейка» — буква правила против его духа
+            lazejka: { fn: 'showLazejkaGame', src: 'lazejka.js', chat: 'kontur' }, // «Лазейка» — буква правила против его духа
+            perehod: { fn: 'showPerehodGame', src: 'perehod.js', chat: 'kontur' }, // «Переход» — месяц из десяти решений: чьё решение вы выполнили
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
         };
         // Синонимы: под этими именами игры звали ссылки в блоге, а в таблице
