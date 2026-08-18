@@ -143,6 +143,12 @@
       background: transparent;
       border: none;
     }
+/* Полоски бургера занимают 30×20 px, а пальцу нужно 44. Невидимая
+   накладка расширяет область нажатия, не трогая сам рисунок и не
+   раздвигая шапку. */
+.burger{position:relative}
+.burger::after{content:'';position:absolute;inset:-12px}
+
 
     .burger span {
       display: block;
@@ -560,6 +566,10 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
       transition: all 0.3s ease;
+      /* Ссылка высотой 20 px мимо пальца: 44 px — минимум, в который
+         человек попадает не глядя. Отступы поднимают область нажатия,
+         начертание не меняется. */
+      padding: 9px 4px 6px;
     }
 
     .social-links a:hover {
@@ -569,7 +579,7 @@
     .copyright {
       text-align: center;
       margin-top: 40px;
-      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      font-size: clamp(0.75rem, 2.5vw, 0.8rem);
       opacity: 0.5;
       color: #666;
     }
@@ -668,6 +678,41 @@
         justify-content: center;
       }
     }
+    @media (max-width: 1050px) {
+    /* Полное меню с кнопкой «Виртуальный психолог» требует 1016 px и
+       не помещалось нигде между 769 и 1050: на планшете и на ноутбуке
+       с масштабом кнопка уезжала за правый край экрана вместе со всей
+       страницей. Бургер включается на 1050, а не на 768. */
+      .burger {display: block;}
+      .nav-links {position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;}
+      .nav-links.active {left: 0;}
+      .nav-links a {font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);}
+      .nav-links a::after {display: none;}
+      .nav-links a:hover {background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;}
+      .psychologist-btn {margin-top: 15px;
+        text-align: center;}
+    }
+
 
     @media (max-width: 480px) {
       .logo {
@@ -1030,7 +1075,7 @@ body{overflow-wrap:break-word}</style>
         <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
       </div>
     </div>
-    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">В разработке</a></nav>
+    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:0 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">В разработке</a></nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
