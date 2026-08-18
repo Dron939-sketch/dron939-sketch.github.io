@@ -24,6 +24,7 @@
   var LS = 'fredi_admin_token';
   var LINK = 'https://lichnosty.ru/type/eksperty/';
   var DATA = [];
+  var LAST = null;
 
   function tok() { try { return localStorage.getItem(LS) || ''; } catch (e) { return ''; } }
   function esc(s) {
@@ -81,12 +82,109 @@
 
   function firstName(full) { return String(full || '').trim().split(/\s+/)[0] || 'Привет'; }
 
-  function copyFor(row, key) {
-    var t = TEMPLATES[key].text(firstName(row.name));
-    // Первая строка всё равно дописывается руками — об этом сказано в подсказке
-    // под таблицей, потому что одинаковые начала ВК и режет.
-    if (navigator.clipboard) navigator.clipboard.writeText(t);
-    return t;
+  // ---- окно отправки ---------------------------------------------------
+  // Текст показывается целиком и правится перед отправкой. Это не
+  // формальность: одинаковые сообщения — ровно то, на что срабатывает
+  // антиспам ВК, а дописанная своими словами первая строка ещё и читается
+  // как письмо человеку, а не как рассылка.
+  var LEFT_TODAY = null;
+
+  function openCompose(idx, tplKey) {
+    var c = DATA[idx];
+    var back = document.createElement('div');
+    back.id = 'expModal';
+    back.style.cssText = 'position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.62);' +
+      'display:flex;align-items:center;justify-content:center;padding:20px';
+    back.innerHTML =
+      '<div style="background:var(--surface);border:1px solid var(--border-hi,var(--border));border-radius:16px;' +
+        'width:min(680px,100%);max-height:88vh;overflow:auto;padding:20px 22px;box-shadow:0 24px 60px rgba(0,0,0,.5)">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">' +
+          '<b style="font-size:15px">' + esc(c.name) + '</b>' +
+          '<a href="' + esc(c.url) + '" target="_blank" rel="noopener" style="font-size:12px;color:var(--accent)">профиль ↗</a>' +
+          '<span style="margin-left:auto;font-size:11.5px;color:var(--text-dim)" id="expLeft"></span>' +
+        '</div>' +
+        '<div style="font-size:12px;color:var(--text-dim);margin-bottom:10px">' +
+          esc([c.profession, c.occupation, c.city].filter(Boolean).join(' · ')) + '</div>' +
+        '<div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">' +
+          Object.keys(TEMPLATES).map(function (k) {
+            return '<button data-swap="' + k + '" style="padding:5px 10px;border-radius:7px;font-size:11.5px;cursor:pointer;font:inherit;' +
+              'border:1px solid ' + (k === tplKey ? 'var(--accent)' : 'var(--border)') + ';' +
+              'background:' + (k === tplKey ? 'rgba(167,139,250,.14)' : 'transparent') + ';color:var(--text)">' +
+              esc(TEMPLATES[k].title) + '</button>';
+          }).join('') +
+        '</div>' +
+        '<textarea id="expText" spellcheck="true" style="width:100%;min-height:280px;padding:12px 14px;border-radius:10px;' +
+          'border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--text);font:inherit;' +
+          'font-size:13px;line-height:1.55;resize:vertical"></textarea>' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">' +
+          '<span id="expCount" style="font-size:11.5px;color:var(--text-dim)"></span>' +
+          '<span style="font-size:11.5px;color:var(--warn,#f5a524)">Допишите первую строку своими словами — одинаковые начала ВК режет.</span>' +
+        '</div>' +
+        '<div id="expErr" style="font-size:12px;color:#f87171;margin-top:8px;min-height:14px"></div>' +
+        '<div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end;flex-wrap:wrap">' +
+          '<button id="expCancel" style="padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;cursor:pointer">Отмена</button>' +
+          '<button id="expCopy" style="padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;cursor:pointer">Скопировать</button>' +
+          '<button id="expSend" style="padding:9px 20px;border-radius:8px;border:none;background:var(--accent-grad);color:#fff;font:inherit;font-weight:700;cursor:pointer">Отправить</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(back);
+
+    var ta = back.querySelector('#expText');
+    function fill(key) { ta.value = TEMPLATES[key].text(firstName(c.name)); count(); }
+    function count() {
+      back.querySelector('#expCount').textContent = ta.value.length + ' знаков';
+    }
+    fill(tplKey);
+    ta.addEventListener('input', count);
+    // Курсор в начало: первое, что нужно сделать, — дописать свою строку.
+    ta.focus(); ta.setSelectionRange(0, 0);
+    if (LEFT_TODAY !== null) {
+      back.querySelector('#expLeft').textContent = 'сегодня осталось ' + LEFT_TODAY;
+    }
+
+    back.querySelectorAll('[data-swap]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        fill(b.dataset.swap);
+        back.querySelectorAll('[data-swap]').forEach(function (x) {
+          var on = x === b;
+          x.style.borderColor = on ? 'var(--accent)' : 'var(--border)';
+          x.style.background = on ? 'rgba(167,139,250,.14)' : 'transparent';
+        });
+      });
+    });
+
+    function close() { back.remove(); }
+    back.querySelector('#expCancel').addEventListener('click', close);
+    back.addEventListener('click', function (e) { if (e.target === back) close(); });
+    document.addEventListener('keydown', function esc2(e) {
+      if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc2); }
+    });
+    back.querySelector('#expCopy').addEventListener('click', function () {
+      if (navigator.clipboard) navigator.clipboard.writeText(ta.value);
+      var b = back.querySelector('#expCopy'); b.textContent = 'скопировано';
+      setTimeout(function () { b.textContent = 'Скопировать'; }, 1200);
+    });
+
+    back.querySelector('#expSend').addEventListener('click', async function () {
+      var btn = back.querySelector('#expSend');
+      var err = back.querySelector('#expErr');
+      btn.disabled = true; btn.textContent = 'отправляю…'; err.textContent = '';
+      try {
+        var r = await api('/api/admin/vk/experts/send', { vk_id: c.vk_id, text: ta.value });
+        LEFT_TODAY = r.left_today;
+        c.contacted = true; c.contacted_status = 'sent';
+        close();
+        if (LAST) {
+          LAST.sent_today = r.sent_today;
+          LAST.daily_cap = r.daily_cap;
+          LAST.left_today = r.left_today;
+          render(LAST);
+        }
+      } catch (e) {
+        err.textContent = e.message;
+        btn.disabled = false; btn.textContent = 'Отправить';
+      }
+    });
   }
 
   // ---- интерфейс -------------------------------------------------------
@@ -121,8 +219,9 @@
       '<div id="expSummary" style="margin-bottom:12px"></div>' +
       '<div id="expList"></div>' +
       '<p style="color:var(--text-dim);font-size:12px;line-height:1.6;max-width:760px;margin:16px 0 0">' +
-        'Кнопка кладёт текст в буфер — отправлять руками. Допишите каждому свою первую строку: ' +
-        'одинаковые начала ВК распознаёт как рассылку. Десять-пятнадцать сообщений в день, не больше.</p>';
+        'Кнопка открывает письмо: текст видно целиком и его можно править перед отправкой. ' +
+        'Допишите каждому свою первую строку — одинаковые начала ВК распознаёт как рассылку. ' +
+        'Дневной потолок стоит на пятнадцати: аккаунт теряется целиком, а не по одному адресату.</p>';
 
     var host = document.querySelector('main') || document.body;
     host.appendChild(sec);
@@ -147,6 +246,8 @@
         limit: 300,
       });
       DATA = r.candidates || [];
+      LAST = r;
+      if (typeof r.left_today === 'number') LEFT_TODAY = r.left_today;
       render(r);
       status.textContent = '';
     } catch (e) {
@@ -169,6 +270,9 @@
     sum.innerHTML =
       '<div style="font-size:13px;color:var(--text)">Подходят: <b>' + r.total + '</b>' +
       ' · из них горячие (надо ≥ 3 и захочет ≥ 3): <b style="color:var(--success)">' + r.hot + '</b></div>' +
+      (r.daily_cap ? '<div style="font-size:12px;margin-top:4px;color:' +
+        (r.left_today <= 3 ? '#f5a524' : 'var(--text-dim)') + '">отправлено сегодня: <b>' +
+        r.sent_today + '</b> из ' + r.daily_cap + ' · осталось ' + r.left_today + '</div>' : '') +
       (skipped ? '<div style="font-size:11.5px;color:var(--text-dim);margin-top:4px">не разбирались: ' + esc(skipped) + '</div>' : '');
 
     var list = document.getElementById('expList');
@@ -192,7 +296,7 @@
           '<div style="font-size:11px;color:var(--text-dim);margin-top:4px">' + esc(c.why) + '</div>' +
           '<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">' +
             Object.keys(TEMPLATES).map(function (k) {
-              return '<button data-copy="' + i + '" data-tpl="' + k + '" style="padding:5px 11px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:11.5px;cursor:pointer">' +
+              return '<button data-open="' + i + '" data-tpl="' + k + '" style="padding:5px 11px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:11.5px;cursor:pointer">' +
                 esc(TEMPLATES[k].title) + '</button>';
             }).join('') +
             '<button data-mark="' + i + '" style="padding:5px 11px;border-radius:7px;border:1px solid rgba(52,211,153,0.4);background:transparent;color:var(--success);font:inherit;font-size:11.5px;cursor:pointer">Отметить «написал»</button>' +
@@ -200,12 +304,8 @@
         '</div></div>';
     }).join('');
 
-    list.querySelectorAll('[data-copy]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        copyFor(DATA[+b.dataset.copy], b.dataset.tpl);
-        var t = b.textContent; b.textContent = 'скопировано';
-        setTimeout(function () { b.textContent = t; }, 1200);
-      });
+    list.querySelectorAll('[data-open]').forEach(function (b) {
+      b.addEventListener('click', function () { openCompose(+b.dataset.open, b.dataset.tpl); });
     });
     list.querySelectorAll('[data-mark]').forEach(function (b) {
       b.addEventListener('click', async function () {
