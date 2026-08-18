@@ -713,6 +713,12 @@
 
   <meta property="og:image" content="https://meysternlp.ru/blog/og/dengi.png">
   <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<style>/* Эмодзи новее Unicode 8.0 (🧠, 🧩, 🧭, 🪞) отсутствуют в Segoe UI Emoji
+   ранних сборок Windows: браузер рисует пустой квадрат — в том числе в главной
+   кнопке шапки. Лицо объявлено под именем Inter и сужено по unicode-range,
+   поэтому подхватывается без правки единой строки font-family и скачивается
+   только на страницах, где такой символ действительно есть. */
+@font-face{font-family:'Inter';src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+1F900-1FAFF;font-display:swap}</style>
 </head>
 <body>
 

@@ -1,0 +1,9 @@
+Noto Color Emoji
+Copyright 2013-2017 Google Inc., Arjen Nienhuis <a.g.nienhuis@gmail.com>
+Источник: https://github.com/googlefonts/noto-emoji
+
+Файл fonts/noto-emoji-subset.woff2 — подмножество этого шрифта:
+из него оставлены только 100 символов диапазона U+1F900–U+1FAFF,
+которые встречаются в разметке сайта.
+
+
