@@ -146,6 +146,12 @@
       background: transparent;
       border: none;
     }
+/* Полоски бургера занимают 30×20 px, а пальцу нужно 44. Невидимая
+   накладка расширяет область нажатия, не трогая сам рисунок и не
+   раздвигая шапку. */
+.burger{position:relative}
+.burger::after{content:'';position:absolute;inset:-12px}
+
 
     .burger span {
       display: block;
@@ -565,6 +571,10 @@
       letter-spacing: 0.1em;
       padding: 5px 0;
       transition: all 0.3s ease;
+      /* Ссылка высотой 20 px мимо пальца: 44 px — минимум, в который
+         человек попадает не глядя. Отступы поднимают область нажатия,
+         начертание не меняется. */
+      padding: 9px 4px 6px;
     }
 
     .social-links a:hover {
@@ -574,7 +584,7 @@
     .copyright {
       text-align: center;
       margin-top: 35px;
-      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      font-size: clamp(0.75rem, 2.5vw, 0.8rem);
       opacity: 0.5;
       color: #666;
     }
@@ -954,7 +964,7 @@ body{overflow-wrap:break-word}</style>
         <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
       </div>
     </div>
-    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none">В разработке</a></nav>
+    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:0 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">В разработке</a></nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>

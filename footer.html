@@ -117,9 +117,13 @@
 
 .footer-legal a {
   color: #9aa4b2;
-  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  font-size: clamp(0.8rem, 2.5vw, 0.85rem);
   text-decoration: none;
   transition: color 0.3s ease;
+  /* Ссылка высотой 22 px — половина того, во что попадает палец.
+     Отступы поднимают область нажатия до 40, не раздвигая подвал:
+     на телефоне на столько же уменьшен зазор между строками. */
+  padding: 9px 4px;
 }
 
 .footer-legal a:hover {
@@ -128,7 +132,7 @@
 
 .copyright {
   text-align: center;
-  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+  font-size: clamp(0.75rem, 2.5vw, 0.8rem);
   color: #666;
   letter-spacing: 0.1em;
   margin-top: clamp(20px, 4vw, 28px);
@@ -161,13 +165,13 @@
   
   .social-links a {
     font-size: 0.9rem;
-    padding-bottom: 3px;
+    padding: 8px 4px 5px;
   }
 
   .footer-legal {
     flex-direction: column;
     align-items: center;
-    gap: 13px;
+    gap: 0;
     padding-top: 22px;
   }
 
@@ -196,7 +200,7 @@
   }
   
   .copyright {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
   }
 }
 

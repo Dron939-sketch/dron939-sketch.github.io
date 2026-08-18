@@ -94,6 +94,12 @@
   z-index: 1001;
   transition: all 0.3s ease;
 }
+/* Полоски бургера занимают 30×20 px, а пальцу нужно 44. Невидимая
+   накладка расширяет область нажатия, не трогая сам рисунок и не
+   раздвигая шапку. */
+.burger{position:relative}
+.burger::after{content:'';position:absolute;inset:-12px}
+
 
 .burger span {
   width: 100%;
