@@ -6,13 +6,17 @@
 // программе трудно, даже когда есть о чём спросить.
 //
 // Почти все приходят с лекции Лектория, то есть минуту назад читали
-// вполне конкретный текст. По рефереру узнаём курс и предлагаем три
+// вполне конкретный текст. По рефереру узнаём курс и показываем три
 // вопроса ровно по нему — из блоков «Частые вопросы» его же лекций.
-// Первое сообщение стоит одного касания.
 //
-// Сами вопросы свёрнуты под знак вопроса у поля ввода: открытым списком они
+// Вопросы свёрнуты под знак вопроса у поля ввода: открытым списком они
 // добавляли на первый экран ещё три ярких прямоугольника поверх голосовой
 // кнопки, режимов, модулей и быстрых действий. Опора осталась, шум ушёл.
+//
+// И это примеры, а не кнопки. Кнопка обещает действие и совершает его сама:
+// человек нажимает, не дочитав, и уходит в разговор не о том, с чем пришёл.
+// Задача проще — показать, какого рода вопросы здесь уместны. Формулировать
+// свой он будет сам, и это уже его вопрос, а не наш.
 //
 // Данные: openers.json, собирается tools/build_chat_openers.py.
 // Ничего не показываем, если разговор уже начат: подсказка нужна тому,
@@ -91,17 +95,18 @@
             '.op-hint{font-size:11px;color:var(--text-secondary);opacity:.75}' +
             '.op-panel{margin-top:8px}' +
             '.op-head{font-size:11px;color:var(--text-secondary);opacity:.8;margin-bottom:7px}' +
-            '.op-list{display:flex;flex-direction:column;gap:6px}' +
-            '.op-chip{display:block;width:100%;text-align:left;cursor:pointer;' +
-            'font-family:inherit;font-size:13px;line-height:1.35;color:var(--text-primary);' +
-            'background:rgba(59,130,255,.10);border:1px solid rgba(59,130,255,.30);' +
-            'border-radius:14px;padding:10px 13px;transition:background .18s,border-color .18s}' +
-            '.op-chip:hover{background:rgba(59,130,255,.18);border-color:rgba(59,130,255,.5)}' +
-            '.op-chip:active{transform:scale(.99)}' +
+            // Список примеров, а не ряд кнопок: ничего не подсвечивается, не
+            // наводится и не нажимается — читается и закрывается.
+            '.op-list{list-style:none;margin:0;padding:0 0 0 2px;' +
+            'display:flex;flex-direction:column;gap:5px}' +
+            '.op-list li{position:relative;padding-left:14px;' +
+            'font-size:13px;line-height:1.4;color:var(--text-secondary)}' +
+            '.op-list li::before{content:"—";position:absolute;left:0;' +
+            'color:rgba(59,130,255,.6)}' +
             // Подпись остаётся и на телефоне: одинокий знак вопроса в углу
             // ничего не обещает, и его просто не нажимают. Одиннадцать
             // пикселей серого текста — не тот шум, ради которого всё затевалось.
-            '@media(max-width:600px){.op-chip{font-size:12.5px;padding:9px 12px}.op-hint{font-size:10.5px}}';
+            '@media(max-width:600px){.op-list li{font-size:12.5px}.op-hint{font-size:10.5px}}';
         document.head.appendChild(st);
     }
 
@@ -155,20 +160,18 @@
             : 'Можно спросить:';
         panel.appendChild(head);
 
-        var list = document.createElement('div');
+        // Примеры, а не кнопки. Кнопка обещает действие и сама его совершает —
+        // человек нажимает, не дочитав, и уходит в разговор не о том. Здесь
+        // задача другая: показать, какого рода вопросы тут уместны, и вернуть
+        // человека к своему собственному. Формулировать он будет сам.
+        var list = document.createElement('ul');
         list.className = 'op-list';
-        course.q.forEach(function (q, i) {
-            var b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'op-chip';
+        course.q.forEach(function (q) {
+            var li = document.createElement('li');
             // textContent, а не innerHTML: вопросы приходят из JSON, и
             // подставлять их как разметку незачем.
-            b.textContent = q;
-            b.addEventListener('click', function () {
-                _track('opener_clicked', { course: course.slug || '', n: i + 1 });
-                _send(q);
-            });
-            list.appendChild(b);
+            li.textContent = q;
+            list.appendChild(li);
         });
         panel.appendChild(list);
         wrap.appendChild(panel);
@@ -185,19 +188,6 @@
     function _hide() {
         var w = document.getElementById('openersWrap');
         if (w && w.parentNode) w.parentNode.removeChild(w);
-    }
-
-    // Кладём текст в поле и жмём «отправить» — тем же путём, что и руками
-    // набранное сообщение. Свой запрос слать нельзя: в submit висит
-    // проверка лимита и вся обработка ответа.
-    function _send(text) {
-        var input = document.getElementById('dashComposerInput');
-        var form = document.getElementById('dashComposerForm');
-        if (!input || !form) return;
-        input.value = text;
-        _hide();
-        if (typeof form.requestSubmit === 'function') form.requestSubmit();
-        else form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
 
     // ---- запуск ---------------------------------------------------------
