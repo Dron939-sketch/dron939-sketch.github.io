@@ -34,12 +34,21 @@
   }
 
   async function api(path, body) {
-    var r = await fetch(API + path, {
+    var r;
+    try {
+      r = await fetch(API + path, {
       method: 'POST',
       headers: { 'X-Admin-Token': tok(), 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(body || {}),
-    });
+      });
+    } catch (e) {
+      // Браузер отдаёт «Failed to fetch» и на не выкатившийся сервер (404 без
+      // CORS-заголовков блокируется как сетевая ошибка), и на оборванный по
+      // таймауту долгий запрос. Различить их из JS нельзя — называем обе.
+      throw new Error('Сервер не ответил. Либо бэкенд ещё не выкатился, либо запрос шёл слишком долго и оборвался — попробуйте ещё раз через минуту.');
+    }
     if (r.status === 401) throw new Error('Неверный ADMIN_TOKEN');
+    if (r.status === 404) throw new Error('Этой ручки на сервере ещё нет — бэкенд не выкатился. Подождите деплой.');
     var j = null; try { j = await r.json(); } catch (e) {}
     if (!r.ok) throw new Error((j && (j.detail && (j.detail.message || j.detail.error) || j.error)) || ('HTTP ' + r.status));
     return j;
@@ -288,7 +297,8 @@
       if (typeof r.left_today === 'number') LEFT_TODAY = r.left_today;
       render(r);
       status.textContent = r.ai
-        ? ('модель разобрала ' + r.ai.ranked + ', написала писем ' + r.ai.written)
+        ? ('модель разобрала ' + r.ai.ranked + ', написала писем ' + r.ai.written +
+           (r.ai.queue_left ? ' · ещё не разобрано ' + r.ai.queue_left + ', нажмите повторно' : ''))
         : '';
     } catch (e) {
       status.textContent = 'не вышло: ' + e.message;
