@@ -298,7 +298,9 @@
       render(r);
       status.textContent = r.ai
         ? ('модель разобрала ' + r.ai.ranked + ', написала писем ' + r.ai.written +
-           (r.ai.queue_left ? ' · ещё не разобрано ' + r.ai.queue_left + ', нажмите повторно' : ''))
+           (r.ai.queue_left ? ' · ещё не разобрано ' + r.ai.queue_left + ', нажмите повторно' : '') +
+           // Без этого «разобрала 0» приходится расследовать по логам сервера.
+           ((r.ai.errors && r.ai.errors.length) ? ' · модель отвечает ошибкой: ' + r.ai.errors[0] : ''))
         : '';
     } catch (e) {
       status.textContent = 'не вышло: ' + e.message;
