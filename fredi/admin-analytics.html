@@ -483,7 +483,7 @@ body{overflow-wrap:break-word}</style>
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px">
             <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">🎓 Озвучка лекций Лектория</div>
             <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">
-                Какие лекции уже записаны в MP3 (голос Фреди), а какие ещё нет. Файлы лежат на постоянном диске и переживают редеплой. Озвучивать можно по одной — кнопкой «🔊 Сгенерировать» в строке лекции, — либо разом всё недостающее. Уже готовые пропускаются, деньги на Fish не тратятся повторно; «↻» у готовой лекции переозвучивает её заново.
+                Какие лекции уже записаны в MP3 (голос Фреди), а какие ещё нет. Файлы лежат на постоянном диске и переживают редеплой. Озвучивать можно по одной — кнопкой «🔊 Сгенерировать» в строке лекции, — либо разом всё недостающее. Уже готовые пропускаются, деньги на Fish не тратятся повторно; «↻» у готовой лекции переозвучивает её заново. Одиночная озвучка работает и во время пакетной — ждать окончания пакета не нужно, а сам пакет можно остановить кнопкой «Остановить озвучку» (уже записанное сохранится, повторный запуск продолжит с того же места).
                 <br><b>Скачивание ничего не генерирует</b> — «💾 Скачать» просто забирает готовый файл. Чтобы взять курс целиком, наберите в фильтре его слаг (например <code>perehod</code>) и нажмите «Скачать всё готовое»: файлы пойдут по одному, с паузами, чтобы не упереться в лимит сервера.
             </div>
 
@@ -497,6 +497,9 @@ body{overflow-wrap:break-word}</style>
                 <button id="lekPregen"
                     style="padding:10px 16px;border-radius:10px;border:none;background:var(--accent);color:#fff;font:inherit;font-weight:700;cursor:pointer">
                     ⚡ Озвучить недостающее
+                </button>
+                <button id="lekPregenStop" style="display:none;padding:10px 16px;border-radius:10px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-weight:600;cursor:pointer">
+                    ✖ Остановить озвучку
                 </button>
                 <span id="lekPregenStatus" style="font-size:12px;color:var(--text-dim)"></span>
             </div>
@@ -4140,6 +4143,8 @@ POV: ты на семейном ужине, и мама такая «как у �
             try {
                 var p = await _fetch('/api/tts/blog/pregenerate');
                 var ps = document.getElementById('lekPregenStatus');
+                var sb = document.getElementById('lekPregenStop');
+                if (sb) sb.style.display = p.running ? '' : 'none';
                 if (p.running) {
                     if (ps) { ps.style.color = 'var(--text-dim)';
                         ps.textContent = '⚡ озвучиваю: ' + (p.done || 0) + ' / ' + (p.total || 0) +
@@ -4147,9 +4152,10 @@ POV: ты на семейном ужине, и мама такая «как у �
                         (p.errors && p.errors.length ? ', ошибок ' + p.errors.length : '') + ')'; }
                 } else {
                     clearInterval(_lekPoll); _lekPoll = null;
-                    if (ps) { ps.style.color = '#10b981';
-                        ps.textContent = '✅ готово: записано ' + (p.generated || 0) +
-                        ', пропущено ' + (p.skipped || 0) +
+                    if (ps) { ps.style.color = p.cancelled ? '#f59e0b' : '#10b981';
+                        ps.textContent = (p.cancelled ? '⏹ остановлено на ' + (p.done || 0) +
+                            ' из ' + (p.total || 0) + ': записано ' : '✅ готово: записано ') +
+                        (p.generated || 0) + ', пропущено ' + (p.skipped || 0) +
                         (p.errors && p.errors.length ? ', ошибок ' + p.errors.length : ''); }
                     _lekLoad();
                 }
@@ -4157,31 +4163,76 @@ POV: ты на семейном ужине, и мама такая «как у �
         }, 4000);
     }
 
+    /* Озвучить одну лекцию.
+       Раньше эта кнопка била в pregenerate — ту же ручку, что и «Озвучить
+       недостающее», — и получала 409, пока идёт пакет. Пакет на сотни лекций
+       идёт сутками, так что одиночная озвучка была недоступна всё это время.
+       Теперь у неё своя ручка: у каждой лекции на сервере свой замок, пакету
+       она не мешает. Готовность ждём поллингом статуса самой лекции. */
     async function _lekGenOne(btn) {
         var slug = btn.dataset.slug, force = btn.dataset.force === '1';
         var old = btn.textContent;
         btn.disabled = true; btn.textContent = '⏳…';
         try {
-            var res = await fetch(API + '/api/tts/blog/pregenerate', {
+            var res = await fetch(API + '/api/tts/blog/' + encodeURIComponent(slug) + '/generate', {
                 method: 'POST',
                 headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ slugs: [slug], force: force }),
+                body: JSON.stringify({ force: force }),
             });
             var j = await res.json().catch(function () { return {}; });
             if (res.status === 403) throw new Error('Неверный ADMIN_TOKEN');
             if (res.status === 503) throw new Error(j.message || 'Озвучка отключена на сервере');
-            if (res.status === 409) {
-                _lekSetStatus('Идёт озвучка — дождитесь окончания', 'err');
-                btn.disabled = false; btn.textContent = old;
-                return;
-            }
-            if (!res.ok) throw new Error(j.error || ('HTTP ' + res.status));
-            _lekSetStatus('🔊 озвучиваю лекцию: ' + slug + ' — это займёт пару минут…');
-            _lekPollStart();
-            // кнопку не восстанавливаем: строка перерисуется после _lekLoad
+            if (res.status === 404) throw new Error('Сервер ещё не обновлён — обновите страницу через пару минут');
+            if (!res.ok && res.status !== 202) throw new Error(j.error || ('HTTP ' + res.status));
+            if (j.status === 'ready') { await _lekLoad(); _lekSetStatus('Уже озвучено', 'ok'); return; }
+            _lekSetStatus('🔊 озвучиваю: ' + slug + ' — рерайт и синтез занимают пару минут…');
+            _lekWatchOne(slug, btn);
         } catch (e) {
             _lekSetStatus(e.message || 'Ошибка', 'err');
             btn.disabled = false; btn.textContent = old;
+        }
+    }
+
+    /* Ждём готовности одной лекции. Статус отдаёт generating/ready/error —
+       по нему и понятно, чем кончилось, без гадания по таблице. */
+    async function _lekWatchOne(slug, btn) {
+        var t0 = Date.now();
+        while (Date.now() - t0 < 20 * 60 * 1000) {
+            await _lekSleep(5000);
+            var st;
+            try {
+                st = await _fetch('/api/tts/blog/' + encodeURIComponent(slug) + '/status');
+            } catch (e) { continue; }
+            if (st.ready) {
+                // сперва перерисовка списка — она гасит строку статуса,
+                // и только потом сообщение, иначе его никто не увидит
+                await _lekLoad();
+                _lekSetStatus('✅ озвучено: ' + slug, 'ok');
+                return;
+            }
+            if (st.error) {
+                _lekSetStatus('⚠ не озвучилось (' + slug + '): ' + st.error, 'err');
+                if (btn) { btn.disabled = false; btn.textContent = '🔊 Сгенерировать'; }
+                return;
+            }
+            _lekSetStatus('🔊 озвучиваю: ' + slug + ' — идёт ' +
+                Math.round((Date.now() - t0) / 1000) + ' сек…');
+        }
+        _lekSetStatus('Озвучка идёт дольше двадцати минут — обновите список позже', 'err');
+        if (btn) { btn.disabled = false; btn.textContent = '🔊 Сгенерировать'; }
+    }
+
+    async function _lekPregenStop() {
+        var ps = document.getElementById('lekPregenStatus');
+        try {
+            var res = await fetch(API + '/api/tts/blog/pregenerate/stop', {
+                method: 'POST', headers: { 'X-Admin-Token': token },
+            });
+            if (res.status === 404) throw new Error('сервер ещё не обновлён');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            if (ps) ps.textContent = 'останавливаю после текущей лекции…';
+        } catch (e) {
+            if (ps) { ps.textContent = '⚠ ' + (e.message || 'ошибка'); ps.style.color = '#e11d48'; }
         }
     }
 
@@ -4225,6 +4276,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (da) da.addEventListener('click', _lekDownloadAll);
         var ds = document.getElementById('lekDlStop');
         if (ds) ds.addEventListener('click', function () { _lekStop = true; });
+        var pst = document.getElementById('lekPregenStop');
+        if (pst) pst.addEventListener('click', _lekPregenStop);
         var body = document.getElementById('lekBody');
         if (body) body.addEventListener('click', function (e) {
             var t = e.target;
