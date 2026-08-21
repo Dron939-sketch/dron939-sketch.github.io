@@ -484,6 +484,7 @@ body{overflow-wrap:break-word}</style>
             <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px">🎓 Озвучка лекций Лектория</div>
             <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px">
                 Какие лекции уже записаны в MP3 (голос Фреди), а какие ещё нет. Файлы лежат на постоянном диске и переживают редеплой. Озвучивать можно по одной — кнопкой «🔊 Сгенерировать» в строке лекции, — либо разом всё недостающее. Уже готовые пропускаются, деньги на Fish не тратятся повторно; «↻» у готовой лекции переозвучивает её заново.
+                <br><b>Скачивание ничего не генерирует</b> — «💾 Скачать» просто забирает готовый файл. Чтобы взять курс целиком, наберите в фильтре его слаг (например <code>perehod</code>) и нажмите «Скачать всё готовое»: файлы пойдут по одному, с паузами, чтобы не упереться в лимит сервера.
             </div>
 
             <div id="lekStats" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
@@ -498,6 +499,19 @@ body{overflow-wrap:break-word}</style>
                     ⚡ Озвучить недостающее
                 </button>
                 <span id="lekPregenStatus" style="font-size:12px;color:var(--text-dim)"></span>
+            </div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
+                <input id="lekFilter" type="text" placeholder="фильтр: часть названия или слага, например perehod"
+                    style="flex:1 1 260px;min-width:0;padding:10px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:10px;color:var(--text);font:inherit">
+                <button id="lekDlAll"
+                    style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer">
+                    💾 Скачать всё готовое
+                </button>
+                <button id="lekDlStop" style="display:none;padding:10px 16px;border-radius:10px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-weight:600;cursor:pointer">
+                    ✖ Остановить
+                </button>
+                <span id="lekDlStatus" style="font-size:12px;color:var(--text-dim)"></span>
             </div>
 
             <div id="lekStatus" style="font-size:12px;color:var(--text-dim);min-height:16px;margin-bottom:8px"></div>
@@ -3857,6 +3871,8 @@ POV: ты на семейном ужине, и мама такая «как у �
     // ============================================================
     var _lekTitles = null;      // кэш slug -> заголовок из blogmap
     var _lekPoll = null;        // таймер опроса прогресса пре-генерации
+    var _lekData = null;        // последний ответ /api/tts/blog/list — для фильтра
+    var _lekStop = false;       // флаг «остановить пакетное скачивание»
 
     function _lekSetStatus(msg, kind) {
         var s = document.getElementById('lekStatus');
@@ -3903,7 +3919,30 @@ POV: ты на семейном ужине, и мама такая «как у �
         return _lekTitles;
     }
 
+    // Что показывать при заданном фильтре. Фильтр ищет и по слагу, и по
+    // заголовку: курс удобнее звать «Переход», а слаг у лекций — perehod.
+    function _lekFiltered() {
+        var all = (_lekData && _lekData.items) || [];
+        var q = ((document.getElementById('lekFilter') || {}).value || '').trim().toLowerCase();
+        if (!q) return all;
+        return all.filter(function (it) {
+            var t = ((_lekTitles || {})[it.slug] || '').toLowerCase();
+            return it.slug.toLowerCase().indexOf(q) >= 0 || t.indexOf(q) >= 0;
+        });
+    }
+
+    function _lekDlAllLabel() {
+        var b = document.getElementById('lekDlAll');
+        if (!b || b.disabled) return;
+        var n = _lekFiltered().filter(function (it) { return it.ready; }).length;
+        b.textContent = '💾 Скачать всё готовое' + (n ? ' (' + n + ')' : '');
+    }
+
     function _lekRender(data, titles) {
+        if (data) _lekData = data;
+        if (titles) _lekTitles = titles;
+        data = _lekData || {};
+        titles = _lekTitles || {};
         var stats = document.getElementById('lekStats');
         var body = document.getElementById('lekBody');
         if (!stats || !body) return;
@@ -3922,11 +3961,15 @@ POV: ты на семейном ужине, и мама такая «как у �
               (data.persistent ? '💾 постоянный диск' : '⚠️ временный каталог') +
               ' · <code>' + _lekEsc(data.dir || '') + '</code></div>';
 
-        var items = data.items || [];
+        var items = _lekFiltered();
         if (!items.length) {
-            body.innerHTML = '<tr><td colspan="6" style="padding:16px;color:var(--text-dim)">Лекции не найдены в sitemap.</td></tr>';
+            body.innerHTML = '<tr><td colspan="6" style="padding:16px;color:var(--text-dim)">' +
+                ((data.items || []).length ? 'По фильтру ничего не нашлось.' : 'Лекции не найдены в sitemap.') +
+                '</td></tr>';
+            _lekDlAllLabel();
             return;
         }
+        _lekDlAllLabel();
         body.innerHTML = items.map(function (it, i) {
             var title = (titles && titles[it.slug]) || _lekPretty(it.slug);
             var genBtn = function (label, force, tip) {
@@ -3978,24 +4021,116 @@ POV: ты на семейном ужине, и мама такая «как у �
         }
     }
 
+    function _lekSleep(ms) {
+        return new Promise(function (r) { setTimeout(r, ms); });
+    }
+
+    function _lekSave(blob, slug) {
+        var href = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = href; a.download = slug + '.mp3';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(href); }, 4000);
+    }
+
+    /* Качает один mp3 и отдаёт Blob.
+       Две вещи, из-за которых это выглядело зависанием.
+       Первая: отдача mp3 ограничена двадцатью запросами в минуту, и на
+       середине курса приходил 429 — прежний код молча уходил в catch и
+       пытался открыть вкладку, которую блокировал браузер. Теперь ждём и
+       повторяем.
+       Вторая: файл на 13 МБ качается заметное время, а кнопка всё это время
+       показывала «⏳…» без единого признака жизни. Читаем поток кусками и
+       показываем мегабайты. */
+    async function _lekBlob(url, onProgress) {
+        for (var attempt = 0; attempt < 4; attempt++) {
+            var res = await fetch(API + url, { cache: 'no-store' });
+            if (res.status === 429) {
+                var wait = parseInt(res.headers.get('Retry-After') || '', 10);
+                if (!(wait > 0)) wait = 20;
+                for (var s = wait; s > 0 && !_lekStop; s--) {
+                    if (onProgress) onProgress('лимит запросов, жду ' + s + ' сек');
+                    await _lekSleep(1000);
+                }
+                if (_lekStop) throw new Error('остановлено');
+                continue;
+            }
+            if (res.status === 202) throw new Error('ещё не озвучено');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+
+            if (!res.body || !res.body.getReader) return await res.blob();
+            var total = parseInt(res.headers.get('Content-Length') || '', 10);
+            var reader = res.body.getReader(), chunks = [], got = 0;
+            while (true) {
+                var step = await reader.read();
+                if (step.done) break;
+                chunks.push(step.value); got += step.value.length;
+                if (onProgress) {
+                    onProgress(_lekBytes(got) + (total ? ' из ' + _lekBytes(total) : ''));
+                }
+            }
+            return new Blob(chunks, { type: 'audio/mpeg' });
+        }
+        throw new Error('лимит запросов не отпустил');
+    }
+
     async function _lekDownload(btn) {
         var url = btn.dataset.url, slug = btn.dataset.slug;
         var old = btn.textContent;
         btn.disabled = true; btn.textContent = '⏳…';
         try {
-            var res = await fetch(API + url);
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            var blob = await res.blob();
-            var href = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = href; a.download = slug + '.mp3';
-            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-            setTimeout(function () { URL.revokeObjectURL(href); }, 4000);
+            var blob = await _lekBlob(url, function (msg) { btn.textContent = msg; });
+            _lekSave(blob, slug);
+            _lekSetStatus('');
         } catch (e) {
-            // кросс-доменный blob не удался — откроем в новой вкладке
-            window.open(API + url, '_blank');
+            _lekSetStatus('Не скачалось (' + slug + '): ' + (e.message || 'ошибка'), 'err');
         } finally {
             btn.disabled = false; btn.textContent = old;
+        }
+    }
+
+    /* Пакетное скачивание. Последовательно и с паузой: двадцать запросов в
+       минуту — это потолок сервера, а не рекомендация. Курс из десяти лекций
+       проходит целиком, ни один файл не теряется. */
+    async function _lekDownloadAll() {
+        var items = _lekFiltered().filter(function (it) { return it.ready; });
+        var st = document.getElementById('lekDlStatus');
+        var btn = document.getElementById('lekDlAll');
+        var stop = document.getElementById('lekDlStop');
+        var say = function (msg, color) {
+            if (st) { st.textContent = msg || ''; st.style.color = color || 'var(--text-dim)'; }
+        };
+        if (!items.length) { say('Готовых файлов по этому фильтру нет.', '#f59e0b'); return; }
+        if (items.length > 3 && !confirm('Скачать ' + items.length + ' файлов? Браузер спросит про разрешение на несколько загрузок — согласитесь.')) return;
+
+        _lekStop = false;
+        btn.disabled = true; stop.style.display = '';
+        var done = 0, failed = [];
+        try {
+            for (var i = 0; i < items.length; i++) {
+                if (_lekStop) break;
+                var it = items[i];
+                var head = '[' + (i + 1) + ' из ' + items.length + '] ' + it.slug + ' — ';
+                try {
+                    var blob = await _lekBlob(it.url, function (m) { say(head + m); });
+                    _lekSave(blob, it.slug);
+                    done++;
+                } catch (e) {
+                    failed.push(it.slug + ': ' + (e.message || 'ошибка'));
+                }
+                if (i < items.length - 1 && !_lekStop) {
+                    // 3.5 сек между файлами — держимся ниже потолка в 20/минуту
+                    say(head + 'пауза…');
+                    await _lekSleep(3500);
+                }
+            }
+        } finally {
+            btn.disabled = false; stop.style.display = 'none';
+            _lekDlAllLabel();
+            say('Скачано: ' + done + ' из ' + items.length +
+                (failed.length ? ' · не вышло: ' + failed.join('; ') : '') +
+                (_lekStop ? ' · остановлено' : ''),
+                failed.length ? '#f59e0b' : '#10b981');
         }
     }
 
@@ -4084,6 +4219,12 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (rb) rb.addEventListener('click', _lekLoad);
         var pb = document.getElementById('lekPregen');
         if (pb) pb.addEventListener('click', _lekPregen);
+        var fl = document.getElementById('lekFilter');
+        if (fl) fl.addEventListener('input', function () { _lekRender(); });
+        var da = document.getElementById('lekDlAll');
+        if (da) da.addEventListener('click', _lekDownloadAll);
+        var ds = document.getElementById('lekDlStop');
+        if (ds) ds.addEventListener('click', function () { _lekStop = true; });
         var body = document.getElementById('lekBody');
         if (body) body.addEventListener('click', function (e) {
             var t = e.target;
