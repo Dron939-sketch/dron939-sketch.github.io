@@ -23,12 +23,14 @@
   <link rel="canonical" href="https://meysternlp.ru/igry/">
   
   <!-- Подключаем Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+<style>/* Inter локально: с fonts.googleapis.com шрифт грузился блокирующе и на мобильной сети держал белый экран */
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic-ext.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+</style>
   
   <!-- Font Awesome для иконок -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
   <style>
     /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
@@ -915,7 +917,7 @@ body{overflow-wrap:break-word}</style>
         <img src="/Маркетолог.png" alt="Маркетолог - игра для развития креативного мышления" loading="lazy">
       </div>
       <div class="game-title">Маркетолог</div>
-      <div class="game-subtitle"><i class="fas fa-bullhorn"></i> Креативное мышление</div>
+      <div class="game-subtitle"><i aria-hidden="true"><svg viewBox='0 0 24 24' width='1em' height='1em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-.125em' aria-hidden='true'><path d='M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z'/><path d='M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14'/><path d='M8 6v8'/></svg></i> Креативное мышление</div>
       <div class="game-description">Развитие креативного мышления и навыков речевого воздействия. Учитесь создавать эффективные рекламные сообщения через игру. 2-3 игрока.</div>
       <div class="game-actions">
         <a href="/igry/marketolog.html" class="btn" aria-label="Подробнее о игре Маркетолог">ПОДРОБНЕЕ</a>
@@ -928,7 +930,7 @@ body{overflow-wrap:break-word}</style>
         <img src="/Басик.webp" alt="Вариатика Basic - анализ поведения" loading="lazy">
       </div>
       <div class="game-title">Вариатика</div>
-      <div class="game-subtitle"><i class="fas fa-search"></i> Basic</div>
+      <div class="game-subtitle"><i aria-hidden="true"><svg viewBox='0 0 24 24' width='1em' height='1em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-.125em' aria-hidden='true'><path d='m21 21-4.34-4.34'/><circle cx='11' cy='11' r='8'/></svg></i> Basic</div>
       <div class="game-description">Анализ и прогнозирование поведения людей. Понимание характера, истинных желаний, способностей и ограничений.</div>
       <div class="game-actions">
         <a href="/igry/variatika-basic.html" class="btn" aria-label="Подробнее о игре Вариатика Basic">ПОДРОБНЕЕ</a>
@@ -941,7 +943,7 @@ body{overflow-wrap:break-word}</style>
         <img src="/интенсив.webp" alt="Вариатика Intensive - системное мышление" loading="lazy">
       </div>
       <div class="game-title">Вариатика</div>
-      <div class="game-subtitle"><i class="fas fa-brain"></i> Intensive</div>
+      <div class="game-subtitle"><i aria-hidden="true"><svg viewBox='0 0 24 24' width='1em' height='1em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-.125em' aria-hidden='true'><path d='M12 18V5'/><path d='M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4'/><path d='M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5'/><path d='M17.997 5.125a4 4 0 0 1 2.526 5.77'/><path d='M18 18a4 4 0 0 0 2-7.464'/><path d='M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517'/><path d='M6 18a4 4 0 0 1-2-7.464'/><path d='M6.003 5.125a4 4 0 0 0-2.526 5.77'/></svg></i> Intensive</div>
       <div class="game-description">Системное, критическое и латеральное мышление. Анализ сложных систем и принятие эффективных решений.</div>
       <div class="game-actions">
         <a href="/igry/variatika-intensive.html" class="btn" aria-label="Подробнее о игре Вариатика Intensive">ПОДРОБНЕЕ</a>
@@ -954,7 +956,7 @@ body{overflow-wrap:break-word}</style>
         <img src="/progresive.webp" alt="Вариатика Progressive - искусство везения" loading="lazy">
       </div>
       <div class="game-title">Вариатика</div>
-      <div class="game-subtitle"><i class="fas fa-star"></i> Progressive</div>
+      <div class="game-subtitle"><i aria-hidden="true"><svg viewBox='0 0 24 24' width='1em' height='1em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-.125em' aria-hidden='true'><path d='M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z'/></svg></i> Progressive</div>
       <div class="game-description">Искусство везения — превращение маловероятных позитивных исходов в реальность. Создание «счастливых случайностей».</div>
       <div class="game-actions">
         <a href="/igry/variatika-progressive.html" class="btn" aria-label="Подробнее о игре Вариатика Progressive">ПОДРОБНЕЕ</a>
@@ -967,7 +969,7 @@ body{overflow-wrap:break-word}</style>
         <img src="/mejster-kod-igra.png?v=2" alt="МЕЙСТЕР-КОД — трансформационная игра, конструктор личности на 9 уровней" loading="lazy">
       </div>
       <div class="game-title">МЕЙСТЕР-КОД</div>
-      <div class="game-subtitle"><i class="fas fa-layer-group"></i> Трансформационная · 2 игрока</div>
+      <div class="game-subtitle"><i aria-hidden="true"><svg viewBox='0 0 24 24' width='1em' height='1em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-.125em' aria-hidden='true'><path d='M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z'/><path d='M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12'/><path d='M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17'/></svg></i> Трансформационная · 2 игрока</div>
       <div class="game-description">Конструктор личности на 9 уровней. Один вытаскивает сильные слова, другой меняется, произнося их вслух. Полный набор (36 карт) — бесплатно в PDF.</div>
       <div class="game-actions">
         <a href="/blog/mejster-kod-transformacionnaya-igra.html" class="btn" aria-label="Подробнее об игре МЕЙСТЕР-КОД">ПОДРОБНЕЕ</a>
@@ -1037,7 +1039,7 @@ body{overflow-wrap:break-word}</style>
         </svg>
       </div>
       <div class="game-title">Игры во Фреди</div>
-      <div class="game-subtitle"><i class="fas fa-brain"></i> Онлайн · без установки</div>
+      <div class="game-subtitle"><i aria-hidden="true"><svg viewBox='0 0 24 24' width='1em' height='1em' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' style='vertical-align:-.125em' aria-hidden='true'><path d='M12 18V5'/><path d='M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4'/><path d='M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5'/><path d='M17.997 5.125a4 4 0 0 1 2.526 5.77'/><path d='M18 18a4 4 0 0 0 2-7.464'/><path d='M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517'/><path d='M6 18a4 4 0 0 1-2-7.464'/><path d='M6.003 5.125a4 4 0 0 0-2.526 5.77'/></svg></i> Онлайн · без установки</div>
       <div class="game-description">Больше 20 игр-тренажёров в приложении «Фреди»: внимание и память, устный счёт, эмоции, границы, критическое мышление. Открывается прямо в браузере, раунд занимает 3–7 минут.</div>
       <div class="game-actions">
         <a href="/fredi/?m=games" class="btn" aria-label="Открыть онлайн-игры во Фреди">ИГРАТЬ ОНЛАЙН</a>
