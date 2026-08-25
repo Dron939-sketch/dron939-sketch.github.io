@@ -460,34 +460,13 @@ body{overflow-wrap:break-word}</style>
     <script src="dreams.js"></script>
     <script src="esoterica.js"></script>
 
-    <!-- ========== TWEMOJI: консистентные эмодзи на всех ОС ========== -->
-    <!-- Старые Windows рисуют часть эмодзи «квадратиками» (□). Twemoji
-         подменяет их SVG-картинками. Грузим лениво; если CDN недоступен или
-         SVG не нашёлся — тихо остаёмся на системных эмодзи (onerror ниже). -->
-    <script defer src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
-    <script>
-    (function () {
-        var BASE = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/';
-        function parse(root) {
-            if (!window.twemoji) return;
-            try { window.twemoji.parse(root || document.body, { folder: 'svg', ext: '.svg', base: BASE }); } catch (e) {}
-        }
-        // SVG эмодзи не загрузился (CDN/версия) → возвращаем родной символ
-        // вместо «битой картинки». Ошибка <img> не всплывает — слушаем в capture.
-        document.addEventListener('error', function (e) {
-            var n = e.target;
-            if (n && n.tagName === 'IMG' && n.className === 'emoji' && n.parentNode) {
-                n.parentNode.replaceChild(document.createTextNode(n.alt || ''), n);
-            }
-        }, true);
-        // SPA перерисовывает дашборд/экраны — перепарсиваем новые узлы (с дебаунсом).
-        var t;
-        function schedule() { clearTimeout(t); t = setTimeout(function () { parse(document.body); }, 60); }
-        window.addEventListener('load', function () {
-            parse(document.body);
-            try { new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true }); } catch (e) {}
-        });
-    })();
-    </script>
+    <!-- Эмодзи. Старые Windows и Android рисуют часть новых эмодзи пустыми
+         квадратами: глифов для них в системном шрифте просто нет. Раньше это
+         лечил Twemoji — он подменял каждый значок картинкой с зарубежного CDN.
+         Теперь то же самое делает свой шрифт: /fonts/noto-emoji-subset.woff2
+         подключён выше как ещё одно начертание Inter с unicode-range на
+         диапазон новых эмодзи, и браузер сам берёт глифы оттуда. Ни одного
+         запроса наружу, ни одной картинки на каждый значок, ни наблюдателя
+         за деревом документа. -->
 </body>
 </html>
