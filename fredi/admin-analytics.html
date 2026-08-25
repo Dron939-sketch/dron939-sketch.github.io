@@ -4011,6 +4011,11 @@ POV: ты на семейном ужине, и мама такая «как у �
                 action = genBtn('🔊 Сгенерировать', false, 'Озвучить эту лекцию');
             }
             var voice = it.voice === 'fish' ? '🎙️ Фреди' : it.voice === 'yandex' ? 'Яндекс' : '—';
+            // Причина деградации из меты: наведите на «Яндекс» — видно, почему
+            // не Фреди (no_balance / timeout / http_5xx), без походов в логи.
+            if (it.degraded && it.fish_error) {
+                voice = '<span title="Fish не смог: ' + _lekEsc(it.fish_error) + '" style="cursor:help;border-bottom:1px dotted #f59e0b">' + voice + '</span>';
+            }
             return '<tr style="border-bottom:1px solid var(--border)">' +
                 '<td style="padding:8px 6px;color:var(--text-dim)">' + (i + 1) + '</td>' +
                 '<td style="padding:8px 6px"><div style="font-weight:600">' + _lekEsc(title) + '</div>' +
