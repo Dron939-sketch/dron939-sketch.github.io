@@ -505,11 +505,15 @@ body{overflow-wrap:break-word}</style>
             </div>
 
             <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
-                <input id="lekFilter" type="text" placeholder="фильтр: часть названия или слага, например perehod"
+                <input id="lekFilter" type="text" placeholder="фильтр: курс, название или слаг — например «Переход»"
                     style="flex:1 1 260px;min-width:0;padding:10px 12px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:10px;color:var(--text);font:inherit">
                 <button id="lekDlAll"
                     style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer">
                     💾 Скачать всё готовое
+                </button>
+                <button id="lekReGen"
+                    style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer">
+                    ↻ Переозвучить отфильтрованное
                 </button>
                 <button id="lekDlStop" style="display:none;padding:10px 16px;border-radius:10px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-weight:600;cursor:pointer">
                     ✖ Остановить
@@ -525,6 +529,7 @@ body{overflow-wrap:break-word}</style>
                         <tr style="text-align:left;color:var(--text-dim);border-bottom:1px solid var(--border)">
                             <th style="padding:8px 6px;width:34px">#</th>
                             <th style="padding:8px 6px">Лекция</th>
+                            <th style="padding:8px 6px;width:150px">Курс</th>
                             <th style="padding:8px 6px;width:120px">Статус</th>
                             <th style="padding:8px 6px;width:80px">Голос</th>
                             <th style="padding:8px 6px;width:80px;text-align:right">Размер</th>
@@ -3873,6 +3878,7 @@ POV: ты на семейном ужине, и мама такая «как у �
     // 🎓 ЛЕКТОРИЙ — озвучка лекций (список mp3 + скачивание + пре-генерация)
     // ============================================================
     var _lekTitles = null;      // кэш slug -> заголовок из blogmap
+    var _lekCourses = {};       // кэш slug -> курс Лектория
     var _lekPoll = null;        // таймер опроса прогресса пре-генерации
     var _lekData = null;        // последний ответ /api/tts/blog/list — для фильтра
     var _lekStop = false;       // флаг «остановить пакетное скачивание»
@@ -3919,6 +3925,14 @@ POV: ты на семейном ужине, и мама такая «как у �
                 });
             }
         } catch (e) { /* локально/оффлайн — обойдёмся слагами */ }
+        // Курс лекции. В списке озвучки его не было, и найти «все лекции
+        // Перехода» можно было, только помня, что их слаги начинаются на
+        // lekciya-perehod-. Карта собирается tools/gen_lektorij_courses.py
+        // из страниц курсов.
+        try {
+            var rc = await fetch('/blog/lektorij/courses.json', { cache: 'no-cache' });
+            if (rc.ok) _lekCourses = await rc.json();
+        } catch (e) { _lekCourses = {}; }
         return _lekTitles;
     }
 
@@ -3930,7 +3944,9 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (!q) return all;
         return all.filter(function (it) {
             var t = ((_lekTitles || {})[it.slug] || '').toLowerCase();
-            return it.slug.toLowerCase().indexOf(q) >= 0 || t.indexOf(q) >= 0;
+            var c = ((_lekCourses || {})[it.slug] || '').toLowerCase();
+            return it.slug.toLowerCase().indexOf(q) >= 0 || t.indexOf(q) >= 0
+                || c.indexOf(q) >= 0;
         });
     }
 
@@ -3966,7 +3982,7 @@ POV: ты на семейном ужине, и мама такая «как у �
 
         var items = _lekFiltered();
         if (!items.length) {
-            body.innerHTML = '<tr><td colspan="6" style="padding:16px;color:var(--text-dim)">' +
+            body.innerHTML = '<tr><td colspan="7" style="padding:16px;color:var(--text-dim)">' +
                 ((data.items || []).length ? 'По фильтру ничего не нашлось.' : 'Лекции не найдены в sitemap.') +
                 '</td></tr>';
             _lekDlAllLabel();
@@ -4000,6 +4016,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                 '<td style="padding:8px 6px"><div style="font-weight:600">' + _lekEsc(title) + '</div>' +
                   '<div style="font-size:11px;color:var(--text-dim)"><code>' + _lekEsc(it.slug) + '</code>' +
                   (it.orphan ? ' <span style="color:#f59e0b">· нет в sitemap</span>' : '') + '</div></td>' +
+                '<td style="padding:8px 6px;font-size:12px;color:var(--text-dim)">' +
+                  _lekEsc((_lekCourses || {})[it.slug] || '—') + '</td>' +
                 '<td style="padding:8px 6px">' + badge + '</td>' +
                 '<td style="padding:8px 6px;font-size:12px">' + voice + '</td>' +
                 '<td style="padding:8px 6px;text-align:right;color:var(--text-dim)">' + _lekBytes(it.bytes) +
@@ -4222,6 +4240,63 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (btn) { btn.disabled = false; btn.textContent = '🔊 Сгенерировать'; }
     }
 
+    /* Переозвучить всё, что сейчас в фильтре.
+       Курс — это десять лекций, и жать «↻» десять раз, каждый раз выискивая
+       нужную строку, — работа, которой быть не должно. Одиночная озвучка
+       пакету не мешает, поэтому запускаем последовательно и ждём готовности
+       каждой: так видно прогресс и не улетает весь курс в очередь разом. */
+    async function _lekReGenAll() {
+        var items = _lekFiltered();
+        var btn = document.getElementById('lekReGen');
+        var st = document.getElementById('lekDlStatus');
+        var say = function (m, c) { if (st) { st.textContent = m || ''; st.style.color = c || 'var(--text-dim)'; } };
+        if (!items.length) { say('По этому фильтру ничего нет.', '#f59e0b'); return; }
+        var q = ((document.getElementById('lekFilter') || {}).value || '').trim();
+        if (!q) { say('Сначала сузьте фильтр: без него это переозвучка всего Лектория.', '#e11d48'); return; }
+        if (!confirm('Переозвучить ' + items.length + ' лекц. заново?\n\nЭто платный синтез: уже готовые файлы будут перезаписаны.')) return;
+
+        _lekStop = false;
+        btn.disabled = true;
+        document.getElementById('lekDlStop').style.display = '';
+        var done = 0, failed = [];
+        try {
+            for (var i = 0; i < items.length; i++) {
+                if (_lekStop) break;
+                var slug = items[i].slug;
+                var head = '[' + (i + 1) + ' из ' + items.length + '] ' + slug + ' — ';
+                say(head + 'запускаю…');
+                try {
+                    var res = await fetch(API + '/api/tts/blog/' + encodeURIComponent(slug) + '/generate', {
+                        method: 'POST',
+                        headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ force: true }),
+                    });
+                    if (res.status === 404) throw new Error('сервер ещё не обновлён');
+                    if (!res.ok && res.status !== 202) throw new Error('HTTP ' + res.status);
+                    var t0 = Date.now();
+                    while (Date.now() - t0 < 20 * 60 * 1000 && !_lekStop) {
+                        await _lekSleep(5000);
+                        var stt = await _fetch('/api/tts/blog/' + encodeURIComponent(slug) + '/status');
+                        if (stt.error) throw new Error(stt.error);
+                        if (stt.ready && !stt.generating) break;
+                        say(head + 'озвучиваю, ' + Math.round((Date.now() - t0) / 1000) + ' сек…');
+                    }
+                    done++;
+                } catch (e) {
+                    failed.push(slug + ': ' + (e.message || 'ошибка'));
+                }
+            }
+        } finally {
+            btn.disabled = false;
+            document.getElementById('lekDlStop').style.display = 'none';
+            await _lekLoad();
+            say('Переозвучено: ' + done + ' из ' + items.length +
+                (failed.length ? ' · не вышло: ' + failed.join('; ') : '') +
+                (_lekStop ? ' · остановлено' : ''),
+                failed.length ? '#f59e0b' : '#10b981');
+        }
+    }
+
     async function _lekPregenStop() {
         var ps = document.getElementById('lekPregenStatus');
         try {
@@ -4278,6 +4353,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (ds) ds.addEventListener('click', function () { _lekStop = true; });
         var pst = document.getElementById('lekPregenStop');
         if (pst) pst.addEventListener('click', _lekPregenStop);
+        var rg = document.getElementById('lekReGen');
+        if (rg) rg.addEventListener('click', _lekReGenAll);
         var body = document.getElementById('lekBody');
         if (body) body.addEventListener('click', function (e) {
             var t = e.target;
