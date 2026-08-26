@@ -30,6 +30,19 @@ LEKTORIJ = os.path.join(ROOT, "blog", "lektorij")
 # Знаков в секунду. Измерено на готовых mp3 голосом Фреди (Fish Audio).
 # Меняется голос или скорость — меняется и это число.
 CHARS_PER_SECOND = 13.6
+# Режиссёрский рерайт перед озвучкой удлиняет речь: связки, обращения,
+# интонационные повторы. Замерено на десяти mp3 курса «Переход»:
+# реальная речь ≈ голый текст × 1,03.
+REWRITE_FACTOR = 1.03
+# Авторские паузы тишины ([ПАУЗА N] через span.pause) вклеиваются в mp3
+# буквально — без них хронометраж лекций с заданиями врёт на минуту-две.
+_PAUSE_SPAN_RE = re.compile(
+    r'<span\b[^>]*\bclass="[^"]*\bpause\b[^"]*"[^>]*>', re.I)
+_PAUSE_SEC_RE = re.compile(r'data-sec="(\d+)"')
+# Сверх авторского режиссёр озвучки сам ставит паузы после вопросов
+# самопроверки и добавляет связки. По десяти замерам это ещё ~45 секунд
+# на лекцию; с поправкой оценка попадает в реальный mp3 с точностью до минуты.
+DIRECTOR_ALLOWANCE_SEC = 45
 
 _SKIP_CLASSES = ("selfcheck", "fredi-ask-box", "game-link-box", "related-articles",
                  "author-block", "author-box", "cta-block", "toc-box")
@@ -80,7 +93,13 @@ def lecture_minutes(path: str) -> float:
     for tm in re.finditer(r"<(h2|h3|p|li)(?=[\s>])[^>]*>(.*?)</\1>", body, re.S):
         t = re.sub(r"<[^>]+>", " ", tm.group(2))
         chars += len(re.sub(r"\s+", " ", t).strip())
-    return chars / CHARS_PER_SECOND / 60.0
+    pause_sec = 0
+    for pm in _PAUSE_SPAN_RE.finditer(body):
+        tag_end = body.find(">", pm.start())
+        sm = _PAUSE_SEC_RE.search(body[pm.start():tag_end + 1])
+        pause_sec += int(sm.group(1)) if sm else 5
+    return (chars / CHARS_PER_SECOND * REWRITE_FACTOR
+            + pause_sec + DIRECTOR_ALLOWANCE_SEC) / 60.0
 
 
 def hours_phrase(minutes: float) -> str:
@@ -136,6 +155,13 @@ def process(course_dir: str, dry: bool):
     # общий хронометраж курса в шапке
     out, n = re.subn(r"~[\d,\.]+\s*(?:часа|часов|час|минут)\s*аудио",
                      "~" + hours_phrase(total), out)
+    # courseWorkload в JSON-LD: рукописные значения расходились с фактом
+    # почти вдвое (у «Перехода» стояло PT3H45M при реальных двух часах) —
+    # а разметка, расходящаяся со страницей, хуже отсутствующей.
+    h, m = int(total) // 60, int(round(total)) % 60
+    iso = ("PT%dH%dM" % (h, m)) if h else ("PT%dM" % m)
+    out = re.sub(r'"courseWorkload":\s*"PT[0-9HM]+"',
+                 '"courseWorkload": "%s"' % iso, out)
     if out != src and not dry:
         io.open(hub, "w", encoding="utf-8").write(out)
     return changed, total, n
