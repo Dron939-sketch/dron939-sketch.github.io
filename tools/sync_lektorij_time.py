@@ -85,6 +85,11 @@ def lecture_minutes(path: str) -> float:
     body = re.sub(r"<script.*?</script>", " ", body, flags=re.S)
     body = re.sub(r"<style.*?</style>", " ", body, flags=re.S)
     body = _drop_skip_blocks(body)
+    # «План лекции/статьи» конвейер озвучки вырезает — из хронометража тоже
+    body = re.sub(
+        r'<div class="key-takeaway">\s*<span class="takeaway-label">План\s+'
+        r'(?:лекции|статьи)</span>.*?</div>',
+        " ", body, flags=re.S)
     # литература вслух не читается — из хронометража тоже вон
     bm = _BIBLIO_RE.search(body)
     if bm:
