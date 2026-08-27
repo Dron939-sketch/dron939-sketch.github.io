@@ -2272,9 +2272,21 @@ body{overflow-wrap:break-word}</style>
 </div></header>
 
 <section class="sec goals" id="celi"><div class="wrap">
-<div class="sh"><h2>С чем вы пришли</h2><span>выберите — соберётся маршрут</span></div>
 <style>
 .goals .sh span{color:var(--mut)}
+/* Блок свёрнут: двенадцать запросов с маршрутом занимали экран до каталога.
+   details, а не скрипт, — открывается и без JS, ссылки маршрутов остаются
+   в разметке для поиска. */
+.gbox{border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden}
+.gbox>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 20px}
+.gbox>summary::-webkit-details-marker{display:none}
+.gbox>summary:hover{background:rgba(127,127,127,.06)}
+.gsum{flex:1;min-width:0}
+.gsum h2{display:block;font-size:1.15rem;font-weight:600;line-height:1.25;margin:0}
+.gsum i{display:block;font-style:normal;font-size:.9rem;color:var(--mut);margin-top:3px}
+.gcar{flex-shrink:0;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.8rem;transition:transform .2s}
+.gbox[open] .gcar{transform:rotate(180deg)}
+.gbody{padding:2px 20px 22px}
 .gchips{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 18px}
 .gsel{display:none;width:100%;box-sizing:border-box;padding:13px 15px;margin:0 0 16px;border-radius:13px;border:1px solid var(--line);background:var(--panel);color:inherit;font:inherit;font-size:1rem}
 .gchip{font:inherit;font-size:.92rem;line-height:1.25;text-align:left;padding:11px 15px;border-radius:13px;border:1px solid var(--line);background:var(--panel);color:inherit;cursor:pointer;transition:border-color .15s,transform .1s}
@@ -2302,8 +2314,12 @@ body{overflow-wrap:break-word}</style>
 /* На телефоне двенадцать плашек — это экран с лишним до первого курса.
    Отдаём выбор родному списку: одна строка вместо двенадцати. */
 @media(max-width:600px){.gchips{display:none}.gsel{display:block}}
-@media(prefers-reduced-motion:reduce){.gchip,.gstep{transition:none}}
+@media(max-width:600px){.gbox>summary{padding:15px 16px}.gbody{padding:2px 16px 18px}.gsum h2{font-size:1.05rem}}
+@media(prefers-reduced-motion:reduce){.gchip,.gstep,.gcar{transition:none}}
 </style>
+<details class="gbox" id="goalbox">
+<summary><span class="gsum"><h2>С чем вы пришли</h2><i>Двенадцать запросов — под каждым маршрут из трёх курсов по шагам</i></span><span class="gcar" aria-hidden="true">▾</span></summary>
+<div class="gbody">
 <select class="gsel" aria-label="С чем вы пришли">
 <option value="g1">Со мной обращаются как с ресурсом</option>
 <option value="g2">Откладываю то, что важнее всего</option>
@@ -2366,8 +2382,20 @@ body{overflow-wrap:break-word}</style>
   if(sel)sel.addEventListener('change',function(){
     show(sel.value,sel.options[sel.selectedIndex].text);
   });
+  // Открыли — запоминаем: читателю, который уже смотрел маршруты,
+  // не приходится раскрывать блок заново на каждом заходе.
+  var box=document.getElementById('goalbox');
+  if(box){
+    try{if(localStorage.getItem('lektorij-goals')==='1')box.open=true;}catch(e){}
+    box.addEventListener('toggle',function(){
+      try{localStorage.setItem('lektorij-goals',box.open?'1':'0');}catch(e){}
+      if(box.open){try{if(typeof ym==='function')ym(108138656,'reachGoal','lektorij_goals_open');}catch(e){}}
+    });
+  }
 })();
 </script>
+</div>
+</details>
 </div></section>
 
 <section class="sec"><div class="wrap">
