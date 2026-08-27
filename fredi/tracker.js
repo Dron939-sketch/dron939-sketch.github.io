@@ -59,6 +59,24 @@
     _touchSession();
     if(_sidNew){ try{ localStorage.removeItem('fredi_sid_active_ms'); }catch(e){} }
 
+    // Начало сессии, а не начало загрузки страницы.
+    // Активное время (_activeMs) копится через все страницы одной сессии, а
+    // wall_sec считался от START текущей загрузки — и в аналитике выходило
+    // session_end с wall_sec=72 при duration_sec=2250: два разных секундомера
+    // под одной крышей. Теперь оба считают одну и ту же сессию, и wall
+    // никогда не меньше активного.
+    var SESSION_START=(function(){
+        try{
+            if(!_sidNew){
+                var t=parseInt(localStorage.getItem('fredi_sid_started')||'0',10);
+                if(t) return t;
+            }
+        }catch(e){}
+        var now=Date.now();
+        try{ localStorage.setItem('fredi_sid_started',String(now)); }catch(e){}
+        return now;
+    })();
+
     // Пока личность не подтверждена сервером, события копятся в очереди:
     // отправленные под временным Date.now()-идентификатором, они плодят
     // несуществующих «уникальных пользователей». Ждём не дольше потолка —
@@ -72,7 +90,6 @@
         else setTimeout(_release,3000);
     }
 
-    var START=Date.now();
     var _screen='';
     var _queue=[];
     var _sending=false;
@@ -561,8 +578,28 @@
     }
 
     // JS runtime errors
+    //
+    // Раньше отсюда уходило только имя файла без пути — и в аналитике
+    // нельзя было отличить нашу поломку от скрипта, который влило в
+    // страницу расширение браузера. Такие чужие ошибки приходят с пустым
+    // filename и строкой 1:1, попадали в тот же счётчик js_error и
+    // раздували его. Теперь чужое пишется отдельным событием, а к своему
+    // прикладывается стек — иначе «SyntaxError в строке 1» не чинится.
+    function _errOrigin(fn) {
+        if (!fn) return '';
+        try { return new URL(fn, location.href).origin; } catch (e) { return ''; }
+    }
     window.addEventListener('error',function(e){
-        track('js_error',{message:(e.message||'').slice(0,200),filename:(e.filename||'').split('/').pop(),line:e.lineno,col:e.colno});
+        var fn = e.filename || '';
+        var own = !!fn && _errOrigin(fn) === location.origin;
+        var stack = '';
+        try { stack = (e.error && e.error.stack || '').split('\n').slice(0,3).join(' | '); } catch (x) {}
+        track(own ? 'js_error' : 'js_error_external', {
+            message: (e.message || '').slice(0, 300),
+            file: fn ? fn.replace(location.origin, '') : '(нет файла)',
+            line: e.lineno, col: e.colno,
+            stack: stack.slice(0, 300)
+        });
     });
     window.addEventListener('unhandledrejection',function(e){
         var msg='';
@@ -596,8 +633,12 @@
         _sessionEnded=true;
         _closeCurrentFeature('unload');
         _tickActive();
-        var wallSec=Math.round((Date.now()-START)/1000);
+        // Обе цифры — про сессию целиком: wall от её начала, active — сумма
+        // времени с открытой вкладкой. Потолок один и тот же, иначе
+        // подрезанное активное могло превысить неподрезанное wall.
+        var wallSec=Math.min(Math.round((Date.now()-SESSION_START)/1000), 7200);
         var activeSec=Math.min(Math.round(_activeMs/1000), 7200);
+        if(activeSec>wallSec) activeSec=wallSec;
         if(activeSec===_lastEndActiveSec) return;
         _lastEndActiveSec=activeSec;
         track('session_end',{duration_sec:activeSec, wall_sec:wallSec, last_screen:_screen});

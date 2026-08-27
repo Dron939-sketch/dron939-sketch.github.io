@@ -86,7 +86,11 @@
         // на 24 часа (не докучаем при каждом новом визите). По аналитике
         // юзер с visits=14 получал auth_modal_auto_shown 12 раз подряд —
         // это убивает retention и взвинчивает auth_modal_opened без конверсии.
-        if (_lastSource === 'app_start' && !window.IS_AUTHENTICATED) {
+        // 'after_value' — тот же автопоказ, только отложенный до первого
+        // осмысленного действия; снуз ему нужен ровно так же, иначе
+        // закрытая модалка возвращалась бы каждый визит.
+        if ((_lastSource === 'app_start' || _lastSource === 'after_value')
+                && !window.IS_AUTHENTICATED) {
             try { sessionStorage.setItem('fredi_auth_skipped', '1'); } catch (e) {}
             try { localStorage.setItem('fredi_auth_dismissed_at', String(Date.now())); } catch (e) {}
         }
@@ -1015,12 +1019,55 @@
             return;
         }
 
-        _track('auth_modal_auto_shown', {
-            source: 'app_start',
-            user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh'),
-            visits: visits
-        });
-        _open('register', { source: 'app_start' });
+        // Не на старте. Раньше модалка открывалась сразу после session_start —
+        // до того, как человек хоть что-то увидел: в аналитике это выглядело
+        // как session_start, auth_modal_auto_shown и закрытие крестиком, а за
+        // неделю из 29 посетителей не зарегистрировался ни один. Просьба об
+        // аккаунте имеет смысл после первой ценности, а не до неё, поэтому
+        // ждём того же «действия ценности», что и мягкий вопрос об имени.
+        _armDeferredAuthPrompt(
+            hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh'),
+            visits);
+    }
+
+    // Тот же приём, что и _armDeferredNamePrompt: ждём первого осмысленного
+    // действия, а если человек просто читает дашборд — спрашиваем через
+    // полторы минуты. Раньше здесь стоял немедленный показ.
+    function _armDeferredAuthPrompt(userKind, visits) {
+        var armedAt = Date.now();
+        var fired = false;
+        var timer = null;
+        var ENGAGE = { feature_opened: 1, message_sent: 1, ai_response_received: 1,
+                       test_start_clicked: 1, dashboard_cta_clicked: 1,
+                       game_round_start: 1, spiral_open: 1 };
+
+        function onTrack(e) {
+            var ev = e && e.detail && e.detail.event;
+            if (!fired && ev && ENGAGE[ev] && (Date.now() - armedAt) > 1500) fire('act:' + ev);
+        }
+
+        function fire(reason) {
+            if (fired) return;
+            fired = true;
+            try { window.removeEventListener('fredi:track', onTrack); } catch (e) {}
+            if (timer) { try { clearTimeout(timer); } catch (e) {} }
+            if (window.IS_AUTHENTICATED) return;
+            // Пока ждали, человек мог сам открыть вход или упереться в стену
+            // оплаты — второй модалкой поверх не лезем.
+            if (document.getElementById('faAuthModal')) return;
+            if (document.getElementById('meterOverlay')) return;
+            try { if (sessionStorage.getItem('fredi_auth_skipped') === '1') return; } catch (e) {}
+            _track('auth_modal_auto_shown', {
+                source: 'after_value',
+                trigger: reason,
+                user_kind: userKind,
+                visits: visits
+            });
+            _open('register', { source: 'after_value' });
+        }
+
+        window.addEventListener('fredi:track', onTrack);
+        timer = setTimeout(function () { fire('dwell'); }, 90000);
     }
 
     if (window.authReady && typeof window.authReady.then === 'function') {

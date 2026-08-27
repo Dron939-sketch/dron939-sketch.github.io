@@ -83,10 +83,12 @@
         const emailInput = document.getElementById('subEmailInput');
         const email = emailInput ? emailInput.value.trim() : '';
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            _payStep('email_invalid', { empty: !email });
             _toast('Введите корректный email для чека', 'error');
             if (emailInput) emailInput.focus();
             return;
         }
+        _payStep('pay_clicked');
 
         const payBtn = document.getElementById('subPayBtn');
         const prevBtnText = payBtn ? payBtn.innerHTML : '';
@@ -114,6 +116,7 @@
             });
             const data = await r.json();
             if (data.success && data.confirmation_url) {
+                _payStep('payment_created');
                 try {
                     localStorage.setItem(_pendingKey(uid), JSON.stringify({
                         payment_id: data.payment_id,
@@ -122,12 +125,15 @@
                 } catch (e) {}
                 // Уходим на ЮKassa — флаг сознательно НЕ сбрасываем,
                 // чтобы быстрый back-button + повторный клик не создал второй платёж.
+                _payStep('redirect_to_kassa');
                 window.location.href = data.confirmation_url;
                 return;
             } else {
+                _payStep('payment_failed', { reason: (data.error || 'unknown') });
                 _toast(data.error || 'Не удалось создать платёж', 'error');
             }
         } catch (e) {
+            _payStep('network_error');
             _toast('Ошибка сети', 'error');
         }
 
@@ -308,6 +314,19 @@
             </div>`;
     }
 
+    // Шаги оплаты. До этого между meter_subscribe_clicked и активацией
+    // подписки не было ни одного события: клик виден, активация видна, а где
+    // между ними отваливаются люди — нет. Теперь виден каждый шаг.
+    function _payStep(step, extra) {
+        try {
+            if (window.FrediTracker && window.FrediTracker.track) {
+                var d = { step: step };
+                if (extra) for (var k in extra) if (extra.hasOwnProperty(k)) d[k] = extra[k];
+                window.FrediTracker.track('checkout_step', d);
+            }
+        } catch (e) {}
+    }
+
     async function renderSubscriptionSection(container) {
         _injectSubscriptionStyles();
         container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Загрузка...</div></div>';
@@ -383,14 +402,19 @@
             overlay.appendChild(sheet);
             document.body.appendChild(overlay);
 
+            var _closeReason = 'close_btn';
+            function _onActivated() { _closeReason = 'activated'; _close(); }
             function _close() {
+                _payStep('checkout_closed', { reason: _closeReason });
                 overlay.remove();
-                window.removeEventListener('fredi:subscription-updated', _close);
+                window.removeEventListener('fredi:subscription-updated', _onActivated);
             }
             closeBtn.onclick = _close;
-            overlay.addEventListener('click', function (e) { if (e.target === overlay) _close(); });
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) { _closeReason = 'click_outside'; _close(); }
+            });
             // Успешная активация подписки закроет модалку.
-            window.addEventListener('fredi:subscription-updated', _close);
+            window.addEventListener('fredi:subscription-updated', _onActivated);
 
             try {
                 if (window.FrediTracker && window.FrediTracker.track) {
