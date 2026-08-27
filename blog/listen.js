@@ -21,7 +21,7 @@
             .then(function (d) {
                 if (!d || !d.enabled) return false;
                 cssServer();
-                renderServer(d.ready, d.v || 0);
+                renderServer(d.ready, d.v || 0, d.url || '');
                 return true;
             })
             .catch(function () { return false; });
@@ -61,7 +61,26 @@
         try { if (typeof ym === 'function') ym(108138656, 'reachGoal', name, { slug: slug }); } catch (e) {}
     }
 
-    function renderServer(ready, v) {
+    // Адрес mp3 больше не собирается на клиенте: сервер выдаёт его подписанным
+    // и на несколько часов. Угадать нельзя, вставить на чужой сайт — тоже.
+    function audioUrl(signed, vv) {
+        // подписи нет — бэкенд старой версии: играем по прежнему адресу
+        var base = signed || ('/api/tts/blog/' + slug + '.mp3');
+        return API + base + (base.indexOf('?') < 0 ? '?' : '&') + 'v=' + vv;
+    }
+
+    // Убираем из плеера всё, что предлагает сохранить файл: пункт «Скачать»
+    // в меню Chrome и контекстное меню на самом элементе.
+    function lockAudio(a) {
+        // скорость воспроизведения оставляем: лекцию слушают и на 1,25×
+        a.setAttribute('controlsList', 'nodownload');
+        a.setAttribute('disablePictureInPicture', '');
+        a.setAttribute('oncontextmenu', 'return false');
+        a.addEventListener('contextmenu', function (ev) { ev.preventDefault(); });
+        return a;
+    }
+
+    function renderServer(ready, v, signedUrl) {
         var isLecture = slug.indexOf('lekciya-') === 0;
         box.innerHTML =
             '<div class="lsn2-row">' +
@@ -83,9 +102,9 @@
         // загрузку файла. Для неготовых — ничего не грузим (пойдёт генерация).
         var preAudio = null;
         if (ready) {
-            preAudio = document.createElement('audio');
+            preAudio = lockAudio(document.createElement('audio'));
             preAudio.preload = 'auto';
-            preAudio.src = API + '/api/tts/blog/' + slug + '.mp3?v=' + v;
+            preAudio.src = audioUrl(signedUrl, v);
         }
         document.getElementById('lsn2Go').addEventListener('click', function () {
             var btn = this;
@@ -94,13 +113,13 @@
             btn.textContent = '';
             goal('listen_tts_start');
 
-            function play(vv) {
-                var audio = preAudio || document.createElement('audio');
+            function play(vv, url) {
+                var audio = preAudio || lockAudio(document.createElement('audio'));
                 if (!preAudio) {
                     audio.preload = 'auto';
                     // v меняется при переозвучке — иначе браузер вечно играет
                     // старый закэшированный голос (mp3 отдаётся с immutable)
-                    audio.src = API + '/api/tts/blog/' + slug + '.mp3?v=' + vv;
+                    audio.src = audioUrl(url || signedUrl, vv);
                 }
                 preAudio = null;
                 audio.controls = true;
@@ -128,7 +147,7 @@
             // Генерация идёт на сервере минуты (рерайт + синтез голосом
             // Фреди): пинаем её и поллим статус, а не держим соединение.
             setStatus(isLecture ? 'Фреди готовит лекцию… это займёт пару минут' : 'Готовлю озвучку… ~1–2 мин');
-            fetch(API + '/api/tts/blog/' + slug + '.mp3?v=' + v).then(function (r) {
+            fetch(audioUrl(signedUrl, v)).then(function (r) {
                 if (r.status === 200) { play(v); return; }
                 var tries = 0;
                 var t = setInterval(function () {
@@ -137,7 +156,8 @@
                         .then(function (rr) { return rr.json(); })
                         .then(function (d) {
                             if (d && d.error) { clearInterval(t); box.innerHTML = ''; initBrowserTTS(); return; }
-                            if (d && d.ready) { clearInterval(t); play(d.v || v); }
+                            // подпись берём свежую: пока шла генерация, окно могло смениться
+                            if (d && d.ready) { clearInterval(t); play(d.v || v, d.url); }
                         })
                         .catch(function () {});
                 }, 8000);
