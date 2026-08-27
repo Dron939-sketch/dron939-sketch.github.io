@@ -1729,7 +1729,7 @@
       }
     }
   ],
-  "numberOfItems": 97
+  "numberOfItems": 101
 }
 </script>
 <style>/* Inter локально: с fonts.googleapis.com шрифт грузился блокирующе и на мобильной сети держал белый экран */
@@ -1827,10 +1827,10 @@ a.dcard:hover{border-color:var(--accent);background:rgba(58,134,255,.05);transfo
 .st{font-size:.78rem;text-transform:none;letter-spacing:0;padding:3px 10px;border-radius:20px;margin-top:auto}
 .st.open{color:#7fd8ff;border:1px solid var(--accent);background:rgba(58,134,255,.12)}
 .st.soon{color:#cdb36b;border:1px solid rgba(220,190,110,.4);background:rgba(220,190,110,.08)}
-.st.join{color:#8ff0b6;border:1px solid rgba(52,199,120,.75);background:rgba(52,199,120,.20)}
+.st.join{color:#cdb36b;border:1px solid rgba(220,190,110,.45);background:rgba(220,190,110,.10)}
 .dcard.join{cursor:pointer;opacity:1}
 .dcard.join:hover{border-color:rgba(52,199,120,.75);background:rgba(52,199,120,.08);transform:translateY(-2px)}
-.dcard.join:hover .st.join{background:rgba(52,199,120,.34)}
+.dcard.join:hover .st.join{background:rgba(220,190,110,.16)}
 .dcard .ph{width:56px;height:56px;margin-bottom:10px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:27px;box-shadow:0 6px 12px rgba(0,0,0,.35)}
 @media(max-width:600px){.dcard .ph{width:44px;height:44px;font-size:21px}}
 .wl-ov{position:fixed;inset:0;background:rgba(6,10,20,.74);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
@@ -2257,7 +2257,7 @@ body{overflow-wrap:break-word}</style>
 <span class="kicker">🎓 лекции о том, как мы устроены</span>
 <h1>ЛЕКТОРИЙ</h1>
 <div class="subhead">Про мысли, чувства и людей — без воды и пафоса.</div>
-<p class="lead">Курсы лекций по психологии, мышлению и общению — коротко, с примерами и схемами. <b>Каждую читает вслух Фреди</b> — можно слушать как подкаст.</p>
+<p class="lead">Курсы лекций по психологии, мышлению и общению — коротко, с примерами и схемами. <b>Каждую можно послушать голосом Фреди</b> — можно слушать как подкаст.</p>
 <div class="stats">
 <span><b data-count="101">101</b><i>направление</i></span>
 <span><b data-count="1036">1036</b><i>лекций открыто</i></span>
@@ -2449,11 +2449,9 @@ body{overflow-wrap:break-word}</style>
 <section class="sec"><div class="wrap">
 <div class="sh"><h2>Новый набор — запись по заявке</h2><span>эти курсы готовятся · оставьте заявку и попадёте в первый поток</span></div>
 <div class="grid">
-<div class="dcard join" data-slug="uverennost-i-harizma" data-title="Уверенность и харизма" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/uverennost-i-harizma.webp" alt="" loading="lazy" width="200" height="200"><b>Уверенность и харизма</b><span class="st join">Записаться</span></div>
-<div class="dcard join" data-slug="otnosheniya-v-pare" data-title="Отношения в паре" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/otnosheniya-v-pare.webp" alt="" loading="lazy" width="200" height="200"><b>Отношения в паре</b><span class="st join">Записаться</span></div>
-<div class="dcard join" data-slug="travma-i-vosstanovlenie" data-title="Травма и восстановление" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/travma-i-vosstanovlenie.webp" alt="" loading="lazy" width="200" height="200"><b>Травма и восстановление</b><span class="st join">Записаться</span></div>
-<div class="dcard join" data-slug="delo-zhizni" data-title="Дело жизни" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/delo-zhizni.webp" alt="" loading="lazy" width="200" height="200"><b>Дело жизни</b><span class="st join">Записаться</span></div>
-<div class="dcard join" data-slug="psihosomatika" data-title="Психосоматика" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/psihosomatika.webp" alt="" loading="lazy" width="200" height="200"><b>Психосоматика</b><span class="st join">Записаться</span></div>
+<div class="dcard join" data-slug="otnosheniya-v-pare" data-title="Отношения в паре" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/otnosheniya-v-pare.webp" alt="" loading="lazy" width="200" height="200"><b>Отношения в паре</b><span class="st join">Скоро · записаться</span></div>
+<div class="dcard join" data-slug="delo-zhizni" data-title="Дело жизни" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/delo-zhizni.webp" alt="" loading="lazy" width="200" height="200"><b>Дело жизни</b><span class="st join">Скоро · записаться</span></div>
+<div class="dcard join" data-slug="psihosomatika" data-title="Психосоматика" role="button" tabindex="0"><img class="pic" src="/blog/lektorij/img/psihosomatika.webp" alt="" loading="lazy" width="200" height="200"><b>Психосоматика</b><span class="st join">Скоро · записаться</span></div>
 </div>
 </div></section>
 
@@ -2490,11 +2488,13 @@ body{overflow-wrap:break-word}</style>
     <p id="wlSub">Курс ещё готовится. Оставьте контакт — сообщим первым, когда откроем. А ваш голос поможет решить, какой курс выпустить раньше.</p>
     <input id="wlContact" type="text" placeholder="Email или Telegram (@ник)" maxlength="200" autocomplete="off">
     <input id="wlName" type="text" placeholder="Имя (необязательно)" maxlength="120" autocomplete="off">
+    <label class="wl-agree"><input type="checkbox" id="wlAgree"> Согласен на обработку контакта, чтобы получить одно письмо об открытии курса. <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener">Политика конфиденциальности</a></label>
     <div class="row">
       <button class="wl-btn" id="wlSend">Записаться</button>
       <button class="wl-btn sec" id="wlCancel">Отмена</button>
     </div>
     <div class="wl-msg" id="wlMsg"></div>
+<style>.wl-agree{display:block;margin:10px 0 4px;font-size:.85rem;line-height:1.4;color:var(--mut)}.wl-agree input{margin-right:7px;vertical-align:-1px}.wl-agree a{color:var(--accent)}</style>
   </div>
 </div>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
@@ -2572,7 +2572,7 @@ document.querySelectorAll('.tab').forEach(function(t){
   var cur={slug:'',title:''};
   function openM(slug,title){cur={slug:slug,title:title};
     titleEl.textContent='Записаться: «'+title+'»';
-    msg.textContent='';msg.style.color='';contact.value='';nameI.value='';
+    msg.textContent='';msg.style.color='';contact.value='';nameI.value='';var a=document.getElementById('wlAgree');if(a)a.checked=false;
     sendB.disabled=false;sendB.textContent='Записаться';
     ov.classList.add('on');setTimeout(function(){contact.focus();},50);}
   function closeM(){ov.classList.remove('on');}
@@ -2588,6 +2588,8 @@ document.querySelectorAll('.tab').forEach(function(t){
   sendB.addEventListener('click',function(){
     var c=(contact.value||'').trim();
     if(c.length<3){msg.style.color='#ff8a8a';msg.textContent='Укажите email или Telegram, чтобы мы могли сообщить.';return;}
+    var agree=document.getElementById('wlAgree');
+    if(agree&&!agree.checked){msg.style.color='#ff8a8a';msg.textContent='Отметьте согласие на обработку контакта — без него отправить нельзя.';return;}
     sendB.disabled=true;sendB.textContent='Отправляю…';msg.style.color='';msg.textContent='';
     fetch('/api/lektorij/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({course:cur.slug,title:cur.title,contact:c,name:(nameI.value||'').trim()})})
