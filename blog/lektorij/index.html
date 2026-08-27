@@ -1782,7 +1782,7 @@ h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:200;letter-spacing:.14em;margi
 
 /* sections */
 .sec{padding:46px 0}.sec.compact{padding:26px 0}.sec.compact .sh{margin-bottom:14px}@media(max-width:600px){.sec.compact{padding:18px 0}.sec.compact .sh{margin-bottom:12px;gap:8px}.sec.compact .sh h2{font-size:1.3rem}}
-@media(max-width:600px){.hero{padding:38px 0 30px}.sec{padding:30px 0}.stats{display:flex;width:100%}.stats span{flex:1;padding:12px 6px}.stats b{font-size:1.3rem;line-height:27px}.stats b.word{font-size:1rem}.stats i{font-size:.72rem;letter-spacing:.06em}}
+@media(max-width:600px){.hero{padding:38px 0 30px}.sec{padding:30px 0}.stats{display:grid;grid-template-columns:1fr 1fr;width:100%}.stats span{padding:12px 6px;border-right:1px solid rgba(58,134,255,.14);border-bottom:1px solid rgba(58,134,255,.14)}.stats span:nth-child(2n){border-right:none}.stats span:nth-last-child(-n+2){border-bottom:none}.stats b{font-size:1.3rem;line-height:27px}.stats b.word{font-size:1rem}.stats i{font-size:.72rem;letter-spacing:.06em}}
 .sh{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
 .sh h2{font-size:1.7rem;font-weight:300;letter-spacing:.04em;margin:0}.sh span{color:var(--mut);font-size:.9rem}
 
@@ -2718,7 +2718,11 @@ document.querySelectorAll('.tab').forEach(function(t){
     var agree=document.getElementById('wlAgree');
     if(agree&&!agree.checked){msg.style.color='#ff8a8a';msg.textContent='Отметьте согласие на обработку контакта — без него отправить нельзя.';return;}
     sendB.disabled=true;sendB.textContent='Отправляю…';msg.style.color='';msg.textContent='';
-    fetch('/api/lektorij/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
+    // Адрес был относительный — запрос уходил на meysternlp.ru, где бэкенда
+    // нет вовсе (GitHub Pages), и возвращался 502. Каждая заявка на будущие
+    // курсы молча терялась, а человек видел «Не получилось отправить».
+    // Эндпойнт живёт у Фреди, туда и обращаемся — как listen.js за озвучкой.
+    fetch('https://ffred-ddd989.amvera.io/api/lektorij/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({course:cur.slug,title:cur.title,contact:c,name:(nameI.value||'').trim()})})
       .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
       .then(function(res){
@@ -2747,7 +2751,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     'son': 'не сплю бессонница засыпать просыпаюсь недосып',
     'samoocenka': 'неуверенность стесняюсь сравниваю себя недостаточно хорош',
     'lichnye-granicy': 'не могу отказать используют навязываются сказать нет',
-    'psihologiya-peregruzok': 'выгорела выгорел устал ничего не хочу перегрузка опустошение',
+    'psihologiya-peregruzok': 'выгорание выгорела выгорел устал ничего не хочу перегрузка опустошение',
     'gore': 'умер умерла потеря утрата смерть близкого',
     'rasstavanie': 'расстались развод бросил бросила разрыв',
     'prokrastinaciya-i-motivaciya': 'откладываю прокрастинация не могу начать лень',
@@ -2764,8 +2768,34 @@ document.querySelectorAll('.tab').forEach(function(t){
     'privychki': 'привычки бросить начать режим',
     'vozrastnye-krizisy': 'кризис среднего возраста сорок тридцать',
     'psihologiya-edy': 'еда переедание вес диета',
-    'vysokaya-chuvstvitelnost': 'чувствительность ранимость слишком остро'
+    'vysokaya-chuvstvitelnost': 'чувствительность ранимость слишком остро',
+    'dengi-i-psihologiya': 'деньги финансы траты зарплата долги жадность',
+    'pochemu-ne-kopitsya': 'деньги копить накопления сбережения не остаётся',
+    'snova-zhivoj': 'выгорание восстановиться вернуть интерес пусто',
+    'tajm-menedzhment': 'время планирование не успеваю расписание опаздываю',
+    'samoregulyaciya': 'успокоиться сорвался держать себя эмоции',
+    'kak-uchitsya': 'учёба учиться экзамен запоминание студент',
+    'mnemonika': 'запоминать память заучить',
+    'prinyatie-reshenij': 'выбор решение сомнения не могу выбрать',
+    'vliyanie-i-manipulyacii': 'манипуляции давление убеждение впаривают',
+    'oratorskoe-iskusstvo': 'выступление публика страх сцены голос',
+    'peregovory': 'договориться торговаться условия сделка',
+    'svoe-delo': 'бизнес предприниматель своё дело',
+    'druzhba': 'друзья дружба общение',
+    'zhizn-v-seti': 'соцсети телефон залипаю интернет лента',
+    'kriticheskoe-myshlenie': 'фейки логика аргументы не вестись проверять',
+    'mediagramotnost': 'фейки новости пропаганда источники',
+    'ekzistencialnye-voprosy': 'смысл жизни смерть зачем жить пустота',
+    'nauka-o-schaste': 'счастье радость довольство',
+    'myshlenie': 'искажения ошибки мышления предвзятость',
+    'psihoterapiya': 'терапия психолог помощь лечение',
+    'razvitie-rebenka': 'ребёнок развитие возраст детский'
   };
+  // Служебные слова запроса: по ним совпадать нельзя, иначе «как бросить
+  // курить» находит всё, где встречается «как».
+  var STOP = {'как':1,'что':1,'чем':1,'где':1,'для':1,'мне':1,'меня':1,'моя':1,'мой':1,
+              'это':1,'если':1,'или':1,'при':1,'над':1,'под':1,'без':1,'про':1,'так':1,
+              'все':1,'всё':1,'быть':1,'есть':1,'делать':1,'сделать':1,'можно':1,'нужно':1};
   var inp = document.getElementById('cfind-i'), note = document.getElementById('cfind-n');
   if (inp) {
     var cards = [].slice.call(document.querySelectorAll('.dgrid .dcard'));
@@ -2786,13 +2816,47 @@ document.querySelectorAll('.tab').forEach(function(t){
       note.textContent = '';
       if (window.lekRelimit) window.lekRelimit();
     };
+    // Запрос разбирается на слова, а не ищется целиком.
+    //
+    // Раньше строка искалась одним куском: «деньги» не находили курс
+    // «Психология денег» (в тексте «денег», не «деньги»), а «как говорить
+    // нет» не находило ничего вовсе. Теперь служебные слова отбрасываются,
+    // а каждое значимое ищется само по себе — и вдобавок по корню, без
+    // двух последних букв, чем и ловятся падежи: «выгорание» → «выгоран».
+    // Падежи с беглой гласной («деньги» — «денег») корнем не берутся,
+    // они закрыты списком синонимов выше.
+    // Короткое слово ищем только с начала слова: иначе «нет» находится
+    // внутри «интернет», и запрос «как говорить нет» выдаёт «Жизнь в сети».
+    var _has = function (hayStr, w) {
+      if (w.length >= 5) return hayStr.indexOf(w) !== -1;
+      var i = hayStr.indexOf(w);
+      while (i !== -1) {
+        if (i === 0 || !/[а-яa-z0-9]/.test(hayStr.charAt(i - 1))) return true;
+        i = hayStr.indexOf(w, i + 1);
+      }
+      return false;
+    };
+    var _stems = function (q) {
+      var out = [];
+      q.split(/[^а-яa-z0-9]+/).forEach(function (w) {
+        if (w.length < 3 || STOP[w]) return;
+        out.push(w.length >= 6 ? w.slice(0, w.length - 2) : w);
+      });
+      return out;
+    };
     inp.addEventListener('input', function () {
       var q = norm(inp.value.trim());
       if (q.length < 2) { reset(); return; }
       if (!wasOn) wasOn = document.querySelector('.panel.on');
+      var words = _stems(q);
       var hits = 0;
       cards.forEach(function (c, i) {
         var ok = hay[i].indexOf(q) !== -1;
+        if (!ok && words.length) {
+          for (var w = 0; w < words.length; w++) {
+            if (_has(hay[i], words[w])) { ok = true; break; }
+          }
+        }
         c.style.display = ok ? '' : 'none';
         if (ok) { c.classList.remove('hid'); hits++; }
       });
