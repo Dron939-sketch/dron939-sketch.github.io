@@ -50,6 +50,27 @@ _SKIP_OPEN_RE = re.compile(
     r'<(div|nav|section|aside)\b[^>]*\bclass="[^"]*\b(?:%s)\b[^"]*"[^>]*>'
     % "|".join(_SKIP_CLASSES), re.I)
 _BIBLIO_RE = re.compile(r"<h2[^>]*>\s*(?:Литератур\w*|Что почитать|Источник\w*)", re.I)
+# Два хвостовых раздела режутся по-разному, и путать это дорого. «Литература»
+# отсекается до конца текста, а «Частые вопросы» — только блоком: всё, что
+# стоит после них (итоги, вопросы для самопроверки), озвучивается. Ровно так
+# устроен конвейер в Frederick, backend/blog_tts_routes.py.
+_FAQ_RE = re.compile(r"<h2[^>]*>(.*?)</h2>", re.S)
+_FAQ_TITLE_RE = re.compile(r"Частые вопросы|Часто задаваемые", re.I)
+# Подпись под схемой звучит голосом целиком — значит, входит в хронометраж.
+# Пока её здесь не было, счётчик не видел двадцати минут озвучки на курс:
+# в двадцати одном курсе подписи разрослись до тысячи с лишним знаков, а
+# страница курса продолжала показывать прежние числа.
+_COUNT_TAGS_RE = re.compile(r"<(h2|h3|p|li|figcaption)(?=[\s>])[^>]*>(.*?)</\1>", re.S)
+
+
+def _drop_faq(body: str) -> str:
+    """Вырезает блок «Частые вопросы», возвращая на место хвост после него."""
+    heads = list(_FAQ_RE.finditer(body))
+    for i, m in enumerate(heads):
+        if _FAQ_TITLE_RE.search(re.sub(r"<[^>]+>", "", m.group(1))):
+            end = heads[i + 1].start() if i + 1 < len(heads) else len(body)
+            return body[:m.start()] + body[end:]
+    return body
 
 
 def _drop_skip_blocks(body: str) -> str:
@@ -99,8 +120,10 @@ def lecture_minutes(path: str) -> float:
     bm = _BIBLIO_RE.search(body)
     if bm:
         body = body[:bm.start()]
+    # FAQ вслух не читается, а хвост за ним читается — режем блоком
+    body = _drop_faq(body)
     chars = 0
-    for tm in re.finditer(r"<(h2|h3|p|li)(?=[\s>])[^>]*>(.*?)</\1>", body, re.S):
+    for tm in _COUNT_TAGS_RE.finditer(body):
         t = re.sub(r"<[^>]+>", " ", tm.group(2))
         chars += len(re.sub(r"\s+", " ", t).strip())
     pause_sec = 0
