@@ -184,6 +184,15 @@ def check_markup(pages):
                 warn("разметка", "%s: нет <h1>" % name)
         elif h1 > 1:
             warn("разметка", "%s: <h1> встречается %d раза" % (name, h1))
+        # два одинаковых id — это не косметика: браузер уводит на первый, и
+        # оглавление начинает работать случайно. Так в десять лекций «Травмы»
+        # приехал чужой хвост с якорями itogi/voprosy/literatura, и ни одна
+        # проверка этого не заметила: в хронометраж «Итоги» не входят.
+        ids = re.findall(r'\sid="([^"]+)"', s)
+        for anc, cnt in sorted(collections.Counter(ids).items()):
+            if cnt > 1:
+                err("разметка", "%s: id=\"%s\" встречается %d раза" % (
+                    name, anc, cnt))
         noalt = [t for t in re.findall(r"<img\b[^>]*>", s) if 'alt=' not in t]
         if noalt:
             warn("разметка", "%s: %d <img> без alt" % (name, len(noalt)))
