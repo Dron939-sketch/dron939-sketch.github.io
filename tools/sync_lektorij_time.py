@@ -79,7 +79,12 @@ def _drop_skip_blocks(body: str) -> str:
 
 def lecture_minutes(path: str) -> float:
     html = io.open(path, encoding="utf-8").read()
-    m = re.search(r'<div class="article-content">(.*)</div>\s*\n*<div class="cta-block">',
+    # Закрывающего </div> перед блоком-призывом в лекциях чаще всего нет —
+    # там стоит </p>, и жёсткий шаблон молча не срабатывал на 979 страницах
+    # из 1026, подставляя вместо тела всю страницу. На числах это не
+    # сказывалось: служебные блоки и хвост после литературы всё равно
+    # вырезаются ниже. Но полагаться на такое совпадение не стоит.
+    m = re.search(r'<div class="article-content">(.*?)(?:</div>\s*)?\n*<div class="cta-block">',
                   html, re.S)
     body = m.group(1) if m else html
     body = re.sub(r"<script.*?</script>", " ", body, flags=re.S)
