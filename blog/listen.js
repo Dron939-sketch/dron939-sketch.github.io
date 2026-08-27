@@ -12,6 +12,12 @@
     var API = 'https://ffred-ddd989.amvera.io';
     var slug = location.pathname.split('/').pop().replace('.html', '');
 
+    // Скорости чтения, общие для серверного плеера и браузерного голоса.
+    // 1,1 — самая ходовая: чуть бодрее обычной, а голос ещё не «частит».
+    // 1,5 убрана: на ней лекция перестаёт слушаться и начинает проматываться.
+    var RATES = [1, 1.1, 1.25, 1.75];
+    function rateLabel(r) { return String(r).replace('.', ',') + '×'; }
+
     // ===== Режим 1: серверная озвучка (Yandex SpeechKit, mp3 с кэшем) =====
     // Генерируется один раз, дальше отдаётся файл. Если бэкенд недоступен
     // или ключ не настроен — тихо падаем в режим 2 (голос браузера).
@@ -52,6 +58,8 @@
             '.lsn2-eq i:nth-child(1){animation-delay:-.4s}.lsn2-eq i:nth-child(2){animation-delay:-.9s}.lsn2-eq i:nth-child(3){animation-delay:-.2s}.lsn2-eq i:nth-child(4){animation-delay:-.6s}.lsn2-eq i:nth-child(5){animation-delay:0s}' +
             '@keyframes lsnEq{0%,100%{height:6px}50%{height:26px}}' +
             '#listenBox audio{width:100%;margin-top:14px;display:block;position:relative;z-index:1}' +
+            '.lsn2-rate{position:relative;z-index:1;margin-top:8px;border:1px solid #CFE0FB;background:#fff;border-radius:10px;padding:6px 12px;font-size:.82rem;font-weight:600;color:#2E6FE0;cursor:pointer;font-family:inherit}' +
+            '.lsn2-rate:hover{background:#F3F8FF}' +
             '@media(max-width:600px){#listenBox{padding:16px}.lsn2-eq{display:none}.lsn2-t{font-size:1rem}.lsn2-play{width:52px;height:52px}}' +
             '@media(prefers-reduced-motion:reduce){.lsn2-play::after,.lsn2-eq i{animation:none}}';
         document.head.appendChild(s);
@@ -123,6 +131,27 @@
                 }
                 preAudio = null;
                 audio.controls = true;
+
+                // Своя кнопка скорости. У родных контролов список свой,
+                // браузерный: там нет 1,1 и есть 1,5 — а на полутора лекция
+                // перестаёт слушаться и начинает проматываться.
+                var speed = document.createElement('button');
+                speed.className = 'lsn2-rate';
+                speed.type = 'button';
+                var ri = 0;
+                speed.textContent = rateLabel(RATES[ri]);
+                speed.setAttribute('aria-label', 'Скорость чтения');
+                speed.addEventListener('click', function () {
+                    ri = (ri + 1) % RATES.length;
+                    audio.playbackRate = RATES[ri];
+                    speed.textContent = rateLabel(RATES[ri]);
+                });
+                // load() при восстановлении сбрасывает скорость на обычную —
+                // возвращаем выбранную, иначе лекция незаметно замедляется.
+                audio.addEventListener('loadeddata', function () {
+                    if (audio.playbackRate !== RATES[ri]) audio.playbackRate = RATES[ri];
+                });
+
                 function onReady() {
                     btn.parentElement.style.display = 'none';
                     audio.play().catch(function () {});
@@ -177,6 +206,7 @@
                         });
                 });
                 box.appendChild(audio);
+                box.appendChild(speed);
                 if (audio.readyState >= 3) onReady();  // уже прогрелось — играем сразу
             }
 
@@ -288,8 +318,7 @@
     }
 
     function cycleRate() {
-        var rates = [1, 1.25, 1.5, 1.75];
-        rate = rates[(rates.indexOf(rate) + 1) % rates.length];
+        rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length];
         if (playing) { speechSynthesis.cancel(); render(); speakNext(); } else render();
     }
 
