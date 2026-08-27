@@ -35,11 +35,13 @@ body{overflow-wrap:break-word}</style>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
 <script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <div class="container"><article>
-<div class="article-header"><div class="article-meta"><span>📅 16 августа 2026</span><span>⏱️ 12 мин чтения</span><span>🎓 Лекторий · Рычаг</span><span>✅ Проверено · август 2026</span></div>
+<div class="article-header"><div class="article-meta"><span>📅 16 августа 2026</span><span>⏱️ 14 мин чтения</span><span>🎓 Лекторий · Рычаг</span><span>✅ Проверено · август 2026</span></div>
 <h1>Лекция 5. Семейство конструкторов: устаревание, мосты, замки</h1>
 <div id="listenBox"></div></div>
 <div class="article-content">
 <p class="subtitle">Прошлая лекция разобрала механизм, где проблему внушают. У него большая родня: конструкции, где проблему встраивают — в товар, в формат, в устройство рынка. Лампочка, которой запрещено гореть долго. Разъём, не подходящий к прошлой зарядке. Мост, который нельзя объехать. Сегодня — пять таких машин с приметами каждой.</p>
+
+<div class="warning-block"><span class="warning-label">Сверимся с прошлой лекцией</span><p>Неделю назад вы разбирали свои траты из страха. Нашлось что-то, что началось вместе с продавцом?</p><span class="pause" data-sec="15"></span><p>Сегодня о родне этого механизма — проблемах, встроенных в сам товар.</p></div>
 
 <div class="key-takeaway"><span class="takeaway-label">План лекции</span><ol><li>От внушённой проблемы — к встроенной</li><li>Запланированное устаревание: картель «Феб», 1924 год</li><li>Платный мост: точка обязательного прохода</li><li>Замок: несовместимость как бизнес-модель</li><li>Посредник-непрозрачность и продавец страха</li><li>Общий признак семейства и практикум</li></ol></div>
 
@@ -60,6 +62,8 @@ body{overflow-wrap:break-word}</style>
 дорог, самостоятельность — недоступна. Там, где деньги делаются на
 ухудшении, честная конкуренция не работает: улучшать продукт
 становится невыгодно по построению.</p>
+
+<div class="warning-block"><span class="warning-label">Попробуйте на себе</span><p>Почему производителю невыгодна лампочка, которая горит вечно?</p><span class="pause" data-sec="25"></span><p>Сверимся. Ответ очевиден, а история задокументирована: к началу двадцатых лампы научились гореть по две с половиной тысячи часов, и в двадцать четвёртом крупнейшие производители согласовали стандарт около тысячи — вдвое-втрое меньше достигнутого. Лаборатории проверяли лампы участников, за превышение долговечности полагались штрафы: инженеров, десятилетиями учившихся делать лучше, поставили делать хуже, с контролем качества наоборот. И честная оговорка: не всякая недолговечность — заговор, дешёвое правда живёт меньше. Примета именно конструкции другая — ремонт затруднён намеренно: корпус на клею, деталь только узлом, диагностика закрыта от сторонних мастеров.</p></div>
 
 <h2 id="s-2">2. Картель «Феб»</h2>
 
@@ -212,15 +216,7 @@ body{overflow-wrap:break-word}</style>
 дольше живут — но об этом разговор в лекции о честных рычагах.</p>
 
 <div class="warning-block"><span class="warning-label">Попробуйте на себе</span>
-<p>Инвентаризация замков: выпишите три сервиса или экосистемы, где вы
-держитесь давно. К каждому — вопрос ухода: что вы потеряете, если
-уйдёте сегодня, и сколько в этих потерях пользы, а сколько —
-искусственных стен: форматов, накоплений, несовместимостей.</p>
-<p>Где стены перевесили пользу — не обязательно уходить: цепь, которую
-вы увидели и взвесили, уже не управляет вами вслепую. Но один самый
-дорогой замок стоит начать разбирать: экспорт данных, запасной
-вариант, совместимый формат. Свобода ухода меняет отношение к вам
-быстрее жалоб.</p></div>
+<p>Инвентаризация замков: выпишите три сервиса или экосистемы, где вы держитесь давно. К каждому вопрос ухода: что вы потеряете, если уйдёте сегодня, и сколько в этих потерях пользы, а сколько — искусственных стен?</p><span class="pause" data-sec="30"></span><p>Сверимся. Неоткрываемые форматы, невозвращаемые накопления, несовместимые разъёмы — это и есть длина цепи. Где стены перевесили пользу, уходить не обязательно: цепь, которую вы увидели и взвесили, уже не управляет вами вслепую. Но один самый дорогой замок стоит начать разбирать — экспорт данных, запасной вариант, совместимый формат. И сравните с честной привязанностью: она выглядит наоборот — вами дорожат настолько, что уйти легко, и вы не уходите.</p></div>
 
 
 <h2 id="faq">❓ Частые вопросы</h2>
