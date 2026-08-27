@@ -51,8 +51,11 @@ RULES = [
      r"лженаук|псевдонаук|фейк|fejk|дезинформац|критическ\w*[- ]мышлен|"
      r"kriticheskoe", "kriticheskoe-myshlenie"),
     (r"самогипноз|samogipnoz|\bтранс\b|trans-v-|самовнушен", "samogipnoz"),
-    (r"кпт|kpt|когнитивно-повед|kognitivno-poved|аарон бек|bek-kpt|бернс|"
-     r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
+    # КПТ — главный поисковый запрос сайта, и под него есть свой курс;
+    # общая «Психотерапия» забирает остальные школы
+    (r"\bкпт\b|\bkpt\b|когнитивно-повед|kognitivno-poved|аарон бек|bek-kpt|"
+     r"бернс|дневник автомысл|автоматическ\w* мысл", "kpt-samostoyatelno"),
+    (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),
     (r"когнитивн\w* искажен|kognitivnyh-iskazhenij|iskazheni|эвристик|"
