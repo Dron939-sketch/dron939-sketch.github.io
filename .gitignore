@@ -5,3 +5,7 @@
 /izo*.png
 /cat*.png
 /shot*.png
+
+# байткод инструментов: попадал в индекс при прогоне tools/lektorij
+__pycache__/
+*.pyc
