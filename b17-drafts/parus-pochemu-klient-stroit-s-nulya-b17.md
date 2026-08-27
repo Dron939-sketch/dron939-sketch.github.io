@@ -124,3 +124,59 @@
 
 *Курс «Парус» — двенадцать лекций с озвучкой и тренажёром, бесплатно и без регистрации:*
 **https://meysternlp.ru/blog/lektorij/parus/**
+
+---
+
+## Промт для обложки
+
+Стиль — тот же, что у иконок Лектория (`blog/lektorij/img/PROMPT-IKONKI.md`):
+предметная съёмка, глубокий матовый чёрный фон, студийный свет, приглушённая
+палитра, ни текста, ни людей. Обложке от иконки досталось одно послабление —
+предметов в кадре два, потому что весь тезис статьи именно в их паре.
+
+**Что в кадре и почему.** Вёсла, стёртые до блеска в местах хвата, — годы
+попыток создавать тягу самому. Рядом парус, так и не вынутый из чехла, с
+неразвязанным узлом. Ровно тот список, который клиент приносит в тупике: всё
+про грести, ничего про то, что уже дует.
+
+### Основной промт (16:9, 1200×675)
+
+> A photorealistic still-life product shot on a deep matte black seamless
+> background. Two objects side by side on a black glossy surface with a faint
+> reflection underneath. Left: a pair of old wooden rowing oars lying flat,
+> shafts worn smooth and pale at the grip, blades chipped and scratched from
+> years of use, leather collars cracked. Right: a sail still rolled tight in a
+> canvas bag, brand new, crisp folds, a rope tie knotted and never undone, a
+> dull brass grommet catching the light. Studio lighting: one soft key light
+> from upper left, subtle rim light along the right edge of both objects,
+> gentle falloff into black. Shallow depth of field, crisp focus on the worn
+> grips of the oars, the rolled sail slightly softer behind. Muted palette —
+> aged oak, bleached canvas, weathered leather, one restrained warm brass
+> accent. No neon, no gradients, no glow. Objects occupy about 70% of frame
+> height, shot slightly above eye level. Photorealistic, high detail, physical
+> materials. No text, no letters, no numbers, no logos, no watermarks, no
+> people, no hands, no faces, no water, no boat, no sea. Aspect ratio 16:9.
+
+### Квадрат (1:1, 1080×1080)
+
+Тот же промт, заменить последнюю строку на `Aspect ratio 1:1` и добавить перед
+ней: `Objects arranged diagonally, oars lower left, rolled sail upper right,
+tighter crop.`
+
+### Что не выбрасывается
+
+- **worn smooth and pale at the grip** против **brand new, never undone** —
+  вся мысль статьи держится на этом контрасте; если вёсла новые, кадр
+  рассыпается в натюрморт про лодочный спорт;
+- **no water, no boat, no sea** — генератор при слове sail почти всегда
+  дорисовывает море, и предметная съёмка превращается в марину со стоков;
+- **deep matte black seamless** и **faint reflection** — иначе предмет висит в
+  пустоте и выпадает из ряда остальных материалов сайта;
+- **no text, no letters** — самая частая порча: модель пишет буквы на
+  парусине или на чехле.
+
+### Запасной вариант, если пара не собирается
+
+Один предмет вместо двух: **вёсла, прислонённые к стене, стёртые до белизны
+в местах хвата, и на них — толстый слой пыли**. Тот же свет, тот же фон.
+Читается тише, но честно: человек грёб так долго, что перестал.
