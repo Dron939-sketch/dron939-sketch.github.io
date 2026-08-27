@@ -129,10 +129,52 @@
                     goal('listen_tts_play');
                 }
                 audio.addEventListener('canplay', onReady);
+
+                // Сколько успели проиграть. Ошибка в середине лекции — не повод
+                // начинать сначала: возвращаемся ровно на эту секунду.
+                var heard = 0, started = false, retries = 0;
+                audio.addEventListener('playing', function () { started = true; });
+                audio.addEventListener('timeupdate', function () {
+                    if (audio.currentTime > 0) heard = audio.currentTime;
+                });
+
                 audio.addEventListener('error', function () {
-                    // сервер не смог — откатываемся на браузерный голос
-                    box.innerHTML = '';
-                    initBrowserTTS();
+                    // До первого звука ошибка означает «сервер не смог» —
+                    // тогда браузерный голос честнее молчания.
+                    if (!started) {
+                        box.innerHTML = '';
+                        initBrowserTTS();
+                        return;
+                    }
+                    // А вот после — нет. Слушатель ставил лекцию на паузу над
+                    // заданием, браузер за это время отпустил соединение, и на
+                    // возобновлении ушёл новый запрос диапазона. Если он не
+                    // прошёл, старый обработчик сносил плеер и включал чтение
+                    // статьи браузерным голосом с самого начала: голос менялся,
+                    // место терялось. Берём свежую подпись и возвращаемся на ту
+                    // же секунду.
+                    if (retries >= 2) {
+                        setStatus('Не удалось продолжить — обновите страницу');
+                        return;
+                    }
+                    retries++;
+                    var at = heard;
+                    goal('listen_tts_resume');
+                    fetch(API + '/api/tts/blog/' + slug + '/status')
+                        .then(function (r) { return r.json(); })
+                        .then(function (d) {
+                            if (!d || !d.ready) throw new Error('not ready');
+                            audio.src = audioUrl(d.url || signedUrl, d.v || vv);
+                            audio.load();
+                            audio.addEventListener('loadedmetadata', function once() {
+                                audio.removeEventListener('loadedmetadata', once);
+                                try { audio.currentTime = at; } catch (e) {}
+                                audio.play().catch(function () {});
+                            });
+                        })
+                        .catch(function () {
+                            setStatus('Не удалось продолжить — обновите страницу');
+                        });
                 });
                 box.appendChild(audio);
                 if (audio.readyState >= 3) onReady();  // уже прогрелось — играем сразу
