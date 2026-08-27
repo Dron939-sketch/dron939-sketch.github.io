@@ -51,3 +51,58 @@
 Двенадцать лекций с озвучкой и тренажёром — про то, как искать оба ответа. Бесплатно, без регистрации:
 
 https://meysternlp.ru/blog/lektorij/parus/
+
+---
+
+## Промт для картинки
+
+Пост открывается двором, через который читатель ходит каждое утро, — и
+картинка должна попадать в этот же крючок, а не в общий смысл курса.
+Поэтому здесь не студийный натюрморт, как на обложке для Б17, а самая
+буквальная вещь на свете: **протоптанная тропа**.
+
+Тропа — это след потока, который уже есть. Её никто не проектировал, по
+ней ходят годами, и она видна каждому, кто хоть раз выходил из дома. Людей
+в кадре нет, а их двести — ровно как в тексте.
+
+### Основной промт (1:1, 1080×1080)
+
+> A photorealistic documentary photograph of an ordinary residential
+> courtyard in early morning. A paved concrete walkway meets another at a
+> right angle; beside it, a bare earth desire path cuts diagonally across
+> the lawn, worn down to soil by years of footsteps, grass flattened and
+> thinning at its edges. Completely empty — no people, no animals. Low
+> raking morning light from the left, long soft shadows, slight haze. Muted
+> natural palette: grey concrete, dull green grass, brown packed earth; one
+> restrained warm accent from the low sun. Overcast-soft contrast, no
+> drama, no golden-hour postcard glow. Shot at eye level from the start of
+> the path, shallow depth of field, focus on the worn earth in the
+> foreground, buildings soft and unremarkable in the background.
+> Photorealistic, high detail, documentary style, 35mm. No people, no text,
+> no letters, no signs, no logos, no watermarks, no cars in focus, no
+> litter, no autumn foliage, no sunset colours. Square 1:1.
+
+### Широкий вариант (16:9, 1200×675)
+
+Тот же промт, заменить последнюю строку на `Aspect ratio 16:9` и добавить
+перед ней: `The desire path runs from lower left to upper right, the paved
+walkway parallel to the frame edge.`
+
+### Что не выбрасывается
+
+- **completely empty, no people** — с человеком в кадре всё внимание уходит
+  на него, и тропа перестаёт читаться; в посте людей тоже нет, а их двести;
+- **desire path worn down to soil** — это единственный предмет съёмки; если
+  генератор нарисует аккуратную парковую дорожку, картинка теряет смысл;
+- **ordinary residential courtyard**, **buildings soft and unremarkable** —
+  нужен типовой двор, а не парк и не сквер: узнавание держится на том, что
+  читатель видел это своими глазами сегодня утром;
+- **no golden-hour postcard glow**, **no sunset colours** — на закатной
+  картинке пост читается как реклама тура, а не как разговор;
+- **no text, no signs** — модель любит дописывать таблички и указатели.
+
+### Если тропа не собирается
+
+Взять квадратный вариант обложки для Б17 — стёртые вёсла и нераспакованный
+парус на чёрном. Он держит единый ряд с иконками Лектория, но бьёт в смысл
+курса, а не в крючок этого поста, поэтому первым вариантом идёт тропа.
