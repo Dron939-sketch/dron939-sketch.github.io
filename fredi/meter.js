@@ -221,7 +221,40 @@
         return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
     }
 
+    // Сколько молчать после того, как человек закрыл стену.
+    // Модалку зовут из шести мест (пре-чек apiCall, пре-чек fetch, ответ
+    // 402 от обоих, синхронизация после recordUsage, клик по баджу), и
+    // памяти о закрытии не было ни у одной: человек жал «Понятно, до
+    // завтра» — и через пару секунд получал ту же стену снова. В логах
+    // это выглядело как blocked → closed → blocked → closed восемь раз
+    // за полторы минуты, после чего сессия заканчивалась.
+    var PAYWALL_QUIET_SEC = 180;
+
+    function _dismissedAgo() {
+        try {
+            var t = parseInt(sessionStorage.getItem('meterPaywallClosedAt') || '0', 10);
+            return t ? (Date.now() - t) / 1000 : Infinity;
+        } catch (e) { return _paywallClosedAt ? (Date.now() - _paywallClosedAt) / 1000 : Infinity; }
+    }
+
+    var _paywallClosedAt = 0;
+    function _rememberDismiss() {
+        _paywallClosedAt = Date.now();
+        try { sessionStorage.setItem('meterPaywallClosedAt', String(_paywallClosedAt)); } catch (e) {}
+    }
+
     function showFatigueModal(data) {
+        // Только что закрыли — не показываем стену заново. Человек уже
+        // прочитал её; вместо повтора напоминаем строкой, чтобы попытка
+        // отправить сообщение не осталась без ответа.
+        if (_dismissedAgo() < PAYWALL_QUIET_SEC) {
+            _track('meter_blocked_suppressed', {
+                block_reason: (data && data.block_reason) || '',
+                since_dismiss_sec: Math.round(_dismissedAgo()),
+            });
+            try { _toast('⏱ Лимит исчерпан — Premium снимает ограничение', 'info'); } catch (e) {}
+            return;
+        }
         _injectMeterStyles();
         var existing = document.getElementById('meterOverlay');
         if (existing) existing.remove();
@@ -290,16 +323,20 @@
 
         document.getElementById('meterCloseBtn').onclick = function() {
             _track('meter_closed', { reason: 'continue_tomorrow' });
+            _rememberDismiss();
             overlay.remove();
         };
         overlay.onclick = function(e) {
             if (e.target === overlay) {
                 _track('meter_dismissed_outside', {});
+                _rememberDismiss();
                 overlay.remove();
             }
         };
         document.getElementById('meterSubscribeBtn').onclick = function() {
             _track('meter_subscribe_clicked', {});
+            // Иначе фоновая проверка накрывает стеной открывшийся чекаут.
+            _rememberDismiss();
             overlay.remove();
             // Прямой чекаут из paywall (email + ЮKassa в один шаг),
             // без ухода в настройки, где оплата терялась.
