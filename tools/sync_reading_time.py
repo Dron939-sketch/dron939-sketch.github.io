@@ -32,7 +32,7 @@ from sync_lektorij_time import lecture_minutes  # noqa: E402
 
 BLOG = os.path.join(ROOT, "blog")
 _TIME_RE = re.compile(r"(⏱️?\s*)(\d+)(\s*мин чтения)")
-_TAG_RE = re.compile(r"<(h2|h3|p|li)(?=[\s>])[^>]*>(.*?)</\1>", re.S)
+_TAG_RE = re.compile(r"<(h2|h3|p|li|figcaption)(?=[\s>])[^>]*>(.*?)</\1>", re.S)
 # Ниже этой доли считаем, что текст страницы лежит не в тех тегах, которые
 # умеет считать формула, и молча ставить ей минуты нельзя: у справочника
 # на сто искажений так вышло бы «3 минуты» вместо тридцати с лишним.
