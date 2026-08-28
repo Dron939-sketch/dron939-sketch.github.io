@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Переозвучка лекций Лектория волнами: сначала первые лекции всех курсов.
+"""Переозвучка озвучки блога: лекции волнами, затем прочие статьи.
 
     python3 tools/revoice_lectures.py --dry-run            # что и в каком порядке
     python3 tools/revoice_lectures.py --wave 1             # только первые лекции
     python3 tools/revoice_lectures.py --wave 1-3           # первые три волны
-    python3 tools/revoice_lectures.py                      # все волны подряд
+    python3 tools/revoice_lectures.py                      # все лекции волнами
+    python3 tools/revoice_lectures.py --all                # весь архив: лекции + статьи
+    python3 tools/revoice_lectures.py --articles           # только статьи блога
     python3 tools/revoice_lectures.py --check              # проверка на одной лекции
     python3 tools/revoice_lectures.py --status             # прогресс текущего пакета
     python3 tools/revoice_lectures.py --stop               # остановить после текущей
 
-Зачем волнами, а не подряд по курсам. Озвучка восьмисот лекций — это часы
-работы, и всё это время сайт живёт наполовину в старом голосе, наполовину
-в новом. Если идти курсами, то восемь курсов будут целиком новыми, а семьдесят
-— целиком старыми. Если идти волнами, то у каждого курса сразу новая первая
-лекция, а именно её слушают те, кто пришёл в курс впервые. Разнобой остаётся,
-но он уезжает вглубь курсов, куда доходят немногие.
+Зачем волнами, а не подряд по курсам. Полная переозвучка архива — это
+1056 лекций и 494 прочие статьи, то есть двое-трое суток непрерывной работы,
+и всё это время сайт живёт наполовину в старом голосе, наполовину в новом.
+Если идти курсами, восемь курсов станут целиком новыми, а девяносто четыре
+останутся целиком старыми. Если идти волнами — сначала все первые лекции,
+потом все вторые, — у каждого курса сразу новая первая лекция, а её и слушают
+те, кто пришёл в курс впервые. Разнобой уезжает вглубь курсов, куда доходят
+немногие.
+
+Обычные статьи блога идут последними: у них нет ни курса, ни порядка обучения,
+и слушают их поодиночке, а не подряд.
 
 Порядок внутри волны — по имени папки курса, чтобы прогон был воспроизводим:
 запустили заново после сбоя — очередь та же.
@@ -26,6 +33,11 @@
 Переменные окружения:
     FREDERICK_URL   адрес бэкенда, по умолчанию https://ffred-ddd989.amvera.io
     ADMIN_TOKEN     тот же, что в env бэкенда; без него сервер ответит 403
+
+Отдельно сносить кэш не нужно и вредно. При force бэкенд сам удаляет mp3
+и мету каждого материала прямо перед его синтезом (blog_tts_routes,
+_pregenerate_run). То есть архив пересоздаётся поштучно, и молчит только
+та статья, до которой дошла очередь, а не весь сайт на двое суток.
 
 Осторожно: --force переозвучивает и то, что уже озвучено правильно. Это
 единственный режим, в котором меняется голос у готовых лекций, — и именно
@@ -43,7 +55,13 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEKTORIJ = os.path.join(ROOT, "blog", "lektorij")
+SITEMAP = os.path.join(ROOT, "sitemap.xml")
 DEFAULT_URL = "https://ffred-ddd989.amvera.io"
+
+# Озвучка кэшируется для любой статьи блога, не только для лекции. Полная
+# переозвучка архива обязана захватывать и их, иначе половина сайта останется
+# в старом голосе. Источник списка тот же, что у бэкенда, — sitemap.
+LOC_RE = re.compile(r"<loc>([^<]+)</loc>")
 
 HREF_RE = re.compile(r'href="([^"#?]*/lekciya-[^"#?]+)\.html"')
 # Номер лекции в слаге: lekciya-<курс>-<N>-<тема>. Буква после числа —
@@ -94,6 +112,26 @@ def build_waves():
     return waves, with_lectures
 
 
+def blog_articles():
+    """Слаги статей блога, которые не лекции, по алфавиту.
+
+    Порядок алфавитный, а не по важности: у обычных статей нет естественной
+    очерёдности вроде «первая лекция курса», зато алфавит воспроизводим —
+    прогон, оборванный на середине, продолжится с того же места.
+    """
+    with open(SITEMAP, encoding="utf-8") as f:
+        text = f.read()
+    out = []
+    for url in LOC_RE.findall(text):
+        if "/blog/" not in url or not url.endswith(".html"):
+            continue
+        slug = url.rsplit("/", 1)[-1][:-5]
+        if slug.startswith("lekciya-"):
+            continue
+        out.append(slug)
+    return sorted(set(out))
+
+
 def parse_waves(spec, available):
     """'1', '1-3', '2,5' → отсортированный список номеров волн."""
     if not spec:
@@ -142,8 +180,25 @@ def check_one(slug):
     после того, как переозвучено всё.
     """
     if not slug:
+        # Без аргумента ищем лекцию, которую не жалко: уже деградировавшую
+        # в Яндекс или ещё не озвученную. Проверять на хорошей записи Фреди
+        # нельзя — если проверка провалится, мы своими руками её испортим.
         waves, _ = build_waves()
-        slug = waves[min(waves)][0]
+        first = waves[min(waves)]
+        print("ищу лекцию, которую не жалко (деградировавшую или неозвученную)…")
+        for cand in first[:40]:
+            try:
+                st = call(f"/api/tts/blog/{cand}/status", method="GET")
+            except SystemExit:
+                continue
+            if st.get("degraded") or not st.get("ready"):
+                slug = cand
+                break
+            time.sleep(1.1)
+        if not slug:
+            slug = first[0]
+            print(f"все проверенные озвучены правильно; беру {slug} — "
+                  f"учтите, что при неудаче её придётся переозвучить ещё раз")
     print(f"переозвучиваю одну лекцию: {slug}\n")
 
     before = call(f"/api/tts/blog/{slug}/status", method="GET")
@@ -180,6 +235,10 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--wave", help="номера волн: 1, 1-3, 2,5. По умолчанию все")
+    ap.add_argument("--articles", action="store_true",
+                    help="только статьи блога, которые не лекции")
+    ap.add_argument("--all", action="store_true",
+                    help="весь архив: сначала лекции волнами, потом статьи блога")
     ap.add_argument("--dry-run", action="store_true", help="показать очередь, ничего не запускать")
     ap.add_argument("--no-force", action="store_true",
                     help="не переозвучивать уже готовое (тогда прогон почти наверняка пустой)")
@@ -187,7 +246,7 @@ def main():
     ap.add_argument("--stop", action="store_true", help="остановить после текущей лекции")
     ap.add_argument("--check", nargs="?", const="", metavar="СЛАГ",
                     help="переозвучить ОДНУ лекцию и показать, чем она вышла. "
-                         "Без слага берётся первая лекция первой волны")
+                         "Без слага сам найдёт ту, которую не жалко")
     args = ap.parse_args()
 
     if args.check is not None:
@@ -202,20 +261,37 @@ def main():
                          ensure_ascii=False, indent=2))
         return
 
+    if args.articles and (args.wave or args.all):
+        sys.exit("--articles не сочетается с --wave и --all")
+
     waves, courses = build_waves()
     if not waves:
         sys.exit(f"не нашёл ни одной лекции в {LEKTORIJ}")
-    numbers = parse_waves(args.wave, sorted(waves))
+    articles = blog_articles()
 
-    queue = []
-    for n in numbers:
-        queue.extend(waves[n])
+    queue, numbers = [], []
+    if args.articles:
+        queue = articles
+        print(f"статей блога (не лекций): {len(articles)}")
+    else:
+        numbers = parse_waves(args.wave, sorted(waves))
+        for n in numbers:
+            queue.extend(waves[n])
+        print(f"курсов: {courses}, волн: {len(waves)}, "
+              f"лекций всего: {sum(len(v) for v in waves.values())}, "
+              f"прочих статей блога: {len(articles)}")
+        for n in numbers:
+            print(f"  волна {n:>2}: {len(waves[n])} лекций")
+        if args.all:
+            queue.extend(articles)
+            print(f"  статьи блога: {len(articles)}")
 
-    print(f"курсов: {courses}, волн: {len(waves)}, "
-          f"лекций всего: {sum(len(v) for v in waves.values())}")
-    for n in numbers:
-        print(f"  волна {n:>2}: {len(waves[n])} лекций")
     print(f"в очереди на этот запуск: {len(queue)}")
+    # Синтез идёт последовательно и занимает минуты на материал: у полного
+    # архива это не часы, а сутки. Лучше сказать это до запуска, чем чтобы
+    # человек ждал у экрана.
+    hours = len(queue) * 3 / 60
+    print(f"грубая оценка времени: около {hours:.0f} ч при трёх минутах на материал")
 
     if args.dry_run:
         print("\nпорядок (первые 15):")
