@@ -6,6 +6,7 @@
     python3 tools/revoice_lectures.py --wave 1             # только первые лекции
     python3 tools/revoice_lectures.py --wave 1-3           # первые три волны
     python3 tools/revoice_lectures.py                      # все волны подряд
+    python3 tools/revoice_lectures.py --check              # проверка на одной лекции
     python3 tools/revoice_lectures.py --status             # прогресс текущего пакета
     python3 tools/revoice_lectures.py --stop               # остановить после текущей
 
@@ -36,6 +37,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -130,6 +132,50 @@ def call(path, method="POST", body=None):
         sys.exit(f"{method} {path}: сеть недоступна — {e.reason}")
 
 
+def check_one(slug):
+    """Переозвучить одну лекцию и сказать, чем она вышла.
+
+    Ради этой проверки инструмент и написан с двумя режимами. Фолбэк на Яндекс
+    молчаливый: если Fish отвечает 402 или модель в env написана с опечаткой,
+    пакет отработает «успешно», статусы покажут «готово», а голос по всему
+    архиву окажется чужим. На одной лекции это видно за минуту, на тысяче —
+    после того, как переозвучено всё.
+    """
+    if not slug:
+        waves, _ = build_waves()
+        slug = waves[min(waves)][0]
+    print(f"переозвучиваю одну лекцию: {slug}\n")
+
+    before = call(f"/api/tts/blog/{slug}/status", method="GET")
+    print(f"было:  voice={before.get('voice')} model={before.get('fish_model')} "
+          f"degraded={before.get('degraded')}")
+    if not before.get("fish"):
+        sys.exit("на сервере не настроен Fish (нет ключа или голоса) — "
+                 "переозвучка уйдёт в Яндекс, запускать нельзя")
+
+    call(f"/api/tts/blog/{slug}/generate", body={"force": True})
+    print("жду синтеза", end="", flush=True)
+    now = before
+    for _ in range(60):          # синтез лекции идёт минуты, не секунды
+        time.sleep(10)
+        print(".", end="", flush=True)
+        now = call(f"/api/tts/blog/{slug}/status", method="GET")
+        if not now.get("generating") and now.get("v") != before.get("v"):
+            break
+    print()
+
+    voice, model = now.get("voice"), now.get("fish_model")
+    print(f"стало: voice={voice} model={model} degraded={now.get('degraded')} "
+          f"fish_error={now.get('fish_error')}")
+    if now.get("generating"):
+        sys.exit("\nне дождался: синтез всё ещё идёт. Повторите --check позже")
+    if voice != "fish":
+        sys.exit(f"\nПЛОХО: голос вышел «{voice}», а не Fish "
+                 f"(причина: {now.get('fish_error')}). Пакет не запускать.")
+    print(f"\nхорошо: голос Fish, модель «{model}». "
+          f"Послушайте и, если это Джарвис, запускайте волну.")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -139,7 +185,13 @@ def main():
                     help="не переозвучивать уже готовое (тогда прогон почти наверняка пустой)")
     ap.add_argument("--status", action="store_true", help="прогресс текущего пакета")
     ap.add_argument("--stop", action="store_true", help="остановить после текущей лекции")
+    ap.add_argument("--check", nargs="?", const="", metavar="СЛАГ",
+                    help="переозвучить ОДНУ лекцию и показать, чем она вышла. "
+                         "Без слага берётся первая лекция первой волны")
     args = ap.parse_args()
+
+    if args.check is not None:
+        return check_one(args.check)
 
     if args.status:
         print(json.dumps(call("/api/tts/blog/pregenerate", method="GET"),
