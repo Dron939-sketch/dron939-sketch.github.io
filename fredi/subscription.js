@@ -338,6 +338,14 @@
             const pendingPid = _readPendingPaymentId();
             const pendingBanner = pendingPid ? _renderPendingBanner() : '';
             container.innerHTML = pendingBanner + _renderNoSubscription(sub);
+            // За неделю: один meter_subscribe_clicked и ноль checkout_step.
+            // Между «кликнул Premium» и «нажал Оформить» события не было —
+            // не отличить «форма не открылась» от «открылась, человек ушёл».
+            // Теперь факт показа формы виден.
+            _payStep('form_rendered', {
+                pending: !!pendingPid,
+                status_loaded: sub != null,
+            });
             const payBtn = document.getElementById('subPayBtn');
             if (payBtn) { payBtn.addEventListener('click', _createPayment); }
             const refreshBtn = document.getElementById('subRefreshPendingBtn');
