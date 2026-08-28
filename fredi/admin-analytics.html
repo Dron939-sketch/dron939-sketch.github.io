@@ -515,6 +515,10 @@ body{overflow-wrap:break-word}</style>
                     style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-weight:600;cursor:pointer">
                     ↻ Переозвучить отфильтрованное
                 </button>
+                <button id="lekReGenFree"
+                    style="padding:10px 16px;border-radius:10px;border:1px solid #10b981;background:transparent;color:#10b981;font:inherit;font-weight:600;cursor:pointer">
+                    🎁 Переозвучить ВСЁ бесплатной моделью
+                </button>
                 <button id="lekDlStop" style="display:none;padding:10px 16px;border-radius:10px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-weight:600;cursor:pointer">
                     ✖ Остановить
                 </button>
@@ -4160,6 +4164,62 @@ POV: ты на семейном ужине, и мама такая «как у �
         }
     }
 
+    /* Переозвучить весь Лекторий бесплатной моделью Fish s2.1-pro-free.
+       Зачем отдельная кнопка. На аккаунте Fish пуст API-баланс: платные
+       модели отвечают 402 и озвучка молча уходит в Яндекс. Работает только
+       бесплатная s2.1-pro-free — и её имя надо передать серверу на этот
+       пакет, не трогая env (глобальную модель диалогов на бесплатную
+       переводить нельзя: её условия разрешают дообучение на запросах).
+       Модель уходит в тело pregenerate и действует только на этот прогон. */
+    var LEK_FREE_MODEL = 's2.1-pro-free';
+    async function _lekReGenFree() {
+        var btn = document.getElementById('lekReGenFree');
+        var ps = document.getElementById('lekPregenStatus');
+        var total = (_lekData && _lekData.items && _lekData.items.length) || 'все';
+        if (!confirm('Переозвучить ВЕСЬ Лекторий (' + total + ' лекций) моделью ' +
+                     LEK_FREE_MODEL + '?\n\n' +
+                     '• force: уже готовые mp3 будут перезаписаны;\n' +
+                     '• это займёт часы — остановить можно в любой момент,\n' +
+                     '  записанное сохранится;\n' +
+                     '• сначала послушайте одну лекцию, переозвученную этой\n' +
+                     '  моделью (кнопка ↻ в строке лекции пока использует\n' +
+                     '  модель из env — контрольную проверку голоса новой\n' +
+                     '  модели даст первая же лекция пакета).')) return;
+        btn.disabled = true;
+        if (ps) { ps.style.color = 'var(--text-dim)'; ps.textContent = 'запускаю пакет на бесплатной модели…'; }
+        try {
+            var res = await fetch(API + '/api/tts/blog/pregenerate', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ force: true, model: LEK_FREE_MODEL }),
+            });
+            var j = await res.json().catch(function () { return {}; });
+            if (res.status === 403) throw new Error('Неверный ADMIN_TOKEN');
+            if (res.status === 503) throw new Error(j.message || 'Озвучка отключена на сервере');
+            if (res.status === 400 && j.error === 'bad model') throw new Error('Сервер не принял имя модели');
+            if (res.status === 409) {
+                if (ps) ps.textContent = 'уже идёт другой пакет — сначала остановите его';
+            } else if (!res.ok) {
+                // Старый бэкенд без поддержки model просто проигнорировал бы
+                // поле и переозвучил env-моделью; но ответ started без "model"
+                // это выдаст — проверяем явно.
+                throw new Error(j.error || ('HTTP ' + res.status));
+            } else if (!j.model) {
+                if (ps) { ps.style.color = '#e11d48';
+                    ps.textContent = '⚠ Бэкенд не подтвердил модель — он ещё не обновлён. Пакет НЕ запущен бесплатной моделью: остановите его кнопкой «Остановить».'; }
+                _lekPollStart();
+                return;
+            } else if (ps) {
+                ps.textContent = '🎁 запущено: ' + (j.total || 0) + ' лекций, модель ' + j.model;
+            }
+            _lekPollStart();
+        } catch (e) {
+            if (ps) { ps.textContent = '⚠ ' + (e.message || 'ошибка'); ps.style.color = '#e11d48'; }
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
     function _lekPollStart() {
         if (_lekPoll) return;
         _lekPoll = setInterval(async function () {
@@ -4172,7 +4232,8 @@ POV: ты на семейном ужине, и мама такая «как у �
                     if (ps) { ps.style.color = 'var(--text-dim)';
                         ps.textContent = '⚡ озвучиваю: ' + (p.done || 0) + ' / ' + (p.total || 0) +
                         ' (готово ' + (p.generated || 0) + ', пропущено ' + (p.skipped || 0) +
-                        (p.errors && p.errors.length ? ', ошибок ' + p.errors.length : '') + ')'; }
+                        (p.errors && p.errors.length ? ', ошибок ' + p.errors.length : '') + ')' +
+                        (p.model ? ' · модель ' + p.model : ''); }
                 } else {
                     clearInterval(_lekPoll); _lekPoll = null;
                     if (ps) { ps.style.color = p.cancelled ? '#f59e0b' : '#10b981';
@@ -4360,6 +4421,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (pst) pst.addEventListener('click', _lekPregenStop);
         var rg = document.getElementById('lekReGen');
         if (rg) rg.addEventListener('click', _lekReGenAll);
+        var rf = document.getElementById('lekReGenFree');
+        if (rf) rf.addEventListener('click', _lekReGenFree);
         var body = document.getElementById('lekBody');
         if (body) body.addEventListener('click', function (e) {
             var t = e.target;
