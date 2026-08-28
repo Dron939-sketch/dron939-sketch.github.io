@@ -152,7 +152,10 @@
                     if (audio.playbackRate !== RATES[ri]) audio.playbackRate = RATES[ri];
                 });
 
+                var readyShown = false;
                 function onReady() {
+                    if (readyShown) return;  // после восстановления canplay приходит снова
+                    readyShown = true;
                     btn.parentElement.style.display = 'none';
                     audio.play().catch(function () {});
                     goal('listen_tts_play');
@@ -161,31 +164,32 @@
 
                 // Сколько успели проиграть. Ошибка в середине лекции — не повод
                 // начинать сначала: возвращаемся ровно на эту секунду.
-                var heard = 0, started = false, retries = 0;
+                var heard = 0, started = false, retries = 0, recovering = false;
                 audio.addEventListener('playing', function () { started = true; });
                 audio.addEventListener('timeupdate', function () {
-                    if (audio.currentTime > 0) heard = audio.currentTime;
+                    if (audio.currentTime > 0) {
+                        // звук реально идёт — прошлые восстановления прощаем,
+                        // иначе две долгие паузы съедают весь лимит и третья
+                        // получает «обновите страницу» на ровном месте
+                        if (audio.currentTime > heard + 1) retries = 0;
+                        heard = audio.currentTime;
+                        recovering = false;
+                    }
                 });
 
-                audio.addEventListener('error', function () {
-                    // До первого звука ошибка означает «сервер не смог» —
-                    // тогда браузерный голос честнее молчания.
-                    if (!started) {
-                        box.innerHTML = '';
-                        initBrowserTTS();
-                        return;
-                    }
-                    // А вот после — нет. Слушатель ставил лекцию на паузу над
-                    // заданием, браузер за это время отпустил соединение, и на
-                    // возобновлении ушёл новый запрос диапазона. Если он не
-                    // прошёл, старый обработчик сносил плеер и включал чтение
-                    // статьи браузерным голосом с самого начала: голос менялся,
-                    // место терялось. Берём свежую подпись и возвращаемся на ту
-                    // же секунду.
+                // Слушатель ставил лекцию на паузу над заданием, браузер за это
+                // время отпустил соединение, и на возобновлении ушёл новый
+                // запрос диапазона. Если он не прошёл, старый обработчик сносил
+                // плеер и включал чтение статьи браузерным голосом с самого
+                // начала: голос менялся, место терялось. Берём свежую подпись
+                // и возвращаемся на ту же секунду.
+                function recover() {
+                    if (recovering) return;
                     if (retries >= 2) {
                         setStatus('Не удалось продолжить — обновите страницу');
                         return;
                     }
+                    recovering = true;
                     retries++;
                     var at = heard;
                     goal('listen_tts_resume');
@@ -202,9 +206,44 @@
                             });
                         })
                         .catch(function () {
+                            recovering = false;
                             setStatus('Не удалось продолжить — обновите страницу');
                         });
+                }
+
+                audio.addEventListener('error', function () {
+                    // До первого звука ошибка означает «сервер не смог» —
+                    // тогда браузерный голос честнее молчания.
+                    if (!started) {
+                        box.innerHTML = '';
+                        initBrowserTTS();
+                        return;
+                    }
+                    recover();
                 });
+
+                // Не всякий обрыв доходит до события error: часть браузеров
+                // (мобильный Safari прежде всего) после долгой паузы молча
+                // не отдаёт звук — currentTime стоит, ошибки нет. Ловим это
+                // сторожем: сняли с паузы — ждём три секунды движения; не
+                // пошло — восстанавливаемся тем же путём, что и при ошибке.
+                audio.addEventListener('play', function () {
+                    if (!started) return;
+                    var wasAt = audio.currentTime;
+                    setTimeout(function () {
+                        if (!audio.paused && !audio.ended && !recovering &&
+                            audio.currentTime === wasAt) recover();
+                    }, 3000);
+                });
+                // Прогрев мог упасть ещё до клика — сеть моргнула на загрузке
+                // страницы. Событие error тогда отгремело без слушателя, и клик
+                // оставлял вечный спиннер. Даём файлу второй заход: слушатель
+                // ошибки уже на месте, повторный провал честно уведёт
+                // в браузерный голос.
+                if (audio.error) {
+                    audio.src = audioUrl(url || signedUrl, vv);
+                    audio.load();
+                }
                 box.appendChild(audio);
                 box.appendChild(speed);
                 if (audio.readyState >= 3) onReady();  // уже прогрелось — играем сразу
