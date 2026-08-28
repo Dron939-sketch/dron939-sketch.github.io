@@ -135,6 +135,22 @@
         return trial <= day ? 'trial' : 'daily';
     }
 
+    // Карточка апселла — один раз за сессию. Окно в 2 минуты от спама
+    // не спасало: critical-проверка срабатывает на каждом сообщении, и
+    // человек, продолжающий разговор, получал карточку каждые 3–4 минуты.
+    // По аналитике — три показа за 7 минут одному и тому же юзеру, три
+    // «позже» подряд: каждый следующий показ не продавал, а дрессировал
+    // закрывать. Повторные critical в той же сессии — только тост.
+    function _upsellShownThisSession() {
+        try { return sessionStorage.getItem('meterUpsellShownAt') != null; }
+        catch (e) { return _upsellShownLocal; }
+    }
+    var _upsellShownLocal = false;
+    function _rememberUpsellShown() {
+        _upsellShownLocal = true;
+        try { sessionStorage.setItem('meterUpsellShownAt', String(Date.now())); } catch (e) {}
+    }
+
     function _showWarningToast(check) {
         if (!check || check.is_premium) return;
         var rem = check.remaining_minutes;
@@ -142,14 +158,24 @@
 
         var kind = _bindingKind(check);
 
-        // Critical: осталось ≤ 2 мин — показываем полноценную карточку
-        // апселла (а не тост), чтобы предложение Premium вообще появилось
-        // в достижимой точке ДО блокировки. Раз за 2-мин окно.
+        // Critical: осталось ≤ 2 мин. Карточку апселла показываем один раз
+        // за сессию (и не поверх только что закрытой стены) — дальше на
+        // critical напоминаем тостом, раз за 2-мин окно. meter_warning
+        // пишем в обоих случаях: это замер, а не UI.
         if (rem <= 2 && !_criticalShown) {
             _criticalShown = true;
-            showUpsellCard(check, kind);
             _trackWarning('critical', rem, kind);
             setTimeout(function() { _criticalShown = false; }, 120000);
+            if (!_upsellShownThisSession() && _dismissedAgo() >= PAYWALL_QUIET_SEC) {
+                showUpsellCard(check, kind);
+            } else {
+                _track('meter_upsell_suppressed', {
+                    remaining_minutes: rem,
+                    kind: kind,
+                    reason: _upsellShownThisSession() ? 'already_shown' : 'paywall_quiet',
+                });
+                _toast('⏱ Осталось ~' + Math.max(1, Math.round(rem)) + ' мин — Premium снимает лимит', 'info');
+            }
             return;
         }
         // Soft: 2 < rem ≤ 5 — мягкая подготовка.
@@ -373,7 +399,7 @@
         }
     }
 
-    // Мягкий апселл ДО блокировки. Показывается один раз за 2-мин окно
+    // Мягкий апселл ДО блокировки. Показывается один раз ЗА СЕССИЮ
     // на critical-уровне (≤2 мин остатка). В отличие от soft-тоста —
     // это полноценная карточка с достижимой кнопкой Premium, поэтому
     // предложение вообще появляется до исчерпания лимита (по аналитике
@@ -384,6 +410,7 @@
         if (document.getElementById('meterUpsellOverlay')) return;
         var rem = (check && check.remaining_minutes != null) ? Math.max(1, Math.round(check.remaining_minutes)) : 2;
         kind = kind || 'daily';
+        _rememberUpsellShown();
         _track('meter_upsell_shown', { remaining_minutes: rem, kind: kind });
 
         // Два разных сообщения. «На сегодня всё» — новость на один вечер,

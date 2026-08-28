@@ -1764,7 +1764,10 @@ const Test = {
             button.textContent = btn.text;
             button.addEventListener('click', () => {
                 if (button.disabled) return;
-                button.disabled=true; button.style.opacity='0.4';
+                // keepEnabled — для кнопок, открывающих закрываемые модалки
+                // («Сохранить профиль»): закрыл модалку — кнопка жива и
+                // даёт вторую попытку. Остальные одноразовые, как раньше.
+                if (!btn.keepEnabled) { button.disabled=true; button.style.opacity='0.4'; }
                 btn.callback();
             });
             buttonsDiv.appendChild(button);
@@ -2340,16 +2343,44 @@ ${this.getStage3Interpretation()}
 
         this.addBotMessage(text, true);
 
-        // CTA «зарегистрироваться» здесь намеренно НЕ показываем —
-        // регистрация теперь предлагается единым окном при входе в
-        // приложение (см. login.js: bootstrap auth-модалки). Размазывать
-        // её по разным экранам = терять ясность. Здесь только то, что
-        // про сам результат: PDF-отчёт, мысли психолога, на главную.
-        this.addMessageWithButtons('👇 **ЧТО ДАЛЬШЕ?**', [
+        // Персональные рекомендации: AI по профилю выбирает курс Лектория,
+        // игру-тренажёр и третий шаг. Запрашиваем асинхронно — сообщение
+        // появится в чате, когда сервер ответит (кэшируется в профиле).
+        this.fetchTestRecommendations();
+
+        // Финал теста — единственная точка, где у анонима есть своя причина
+        // назваться: он только что вложил полчаса и получил профиль, который
+        // живёт лишь в localStorage этого браузера. Авто-модалка на входе
+        // (login.js) регистраций не дала — по аналитике 40 из 40 юзеров
+        // анонимы при 35 стартах стадий теста, — потому что просила аккаунт
+        // ДО ценности. Здесь просим ПОСЛЕ, кнопкой, без принуждения.
+        const nextButtons = [];
+        if (!isAuthed && window.FrediAuth && typeof window.FrediAuth.openRegister === 'function') {
+            nextButtons.push({
+                text: '💾 СОХРАНИТЬ ПРОФИЛЬ',
+                keepEnabled: true,
+                callback: () => {
+                    try {
+                        if (window.FrediTracker?.track) {
+                            window.FrediTracker.track('test_save_profile_clicked', {});
+                        }
+                    } catch {}
+                    window.FrediAuth.openRegister({
+                        source: 'test_complete',
+                        prefillName: (this.context && this.context.name) || ''
+                    });
+                }
+            });
+        }
+        nextButtons.push(
             { text: '📄 ПОЛНЫЙ ОТЧЁТ В MAX', callback: () => this.sendPortraitToMax() },
             { text: '🧠 МЫСЛИ ПСИХОЛОГА',    callback: () => this.showPsychologistThought() },
             { text: '🏠 НА ГЛАВНУЮ',         callback: () => this.goToDashboard() }
-        ]);
+        );
+        const whatNext = isAuthed
+            ? '👇 **ЧТО ДАЛЬШЕ?**'
+            : '👇 **ЧТО ДАЛЬШЕ?**\n\nСейчас профиль сохранён только в этом браузере. Аккаунт (email + пин-код) привяжет его к вам — он переживёт чистку истории и откроется с любого устройства.';
+        this.addMessageWithButtons(whatNext, nextButtons);
 
         if (this.userId) {
             try {
@@ -2358,6 +2389,57 @@ ${this.getStage3Interpretation()}
                     thinkingLevel:this.thinkingLevel, context:this.context, aiProfile:this.aiGeneratedProfile
                 }));
             } catch(e) { console.warn('Failed to save test results to localStorage:', e); }
+        }
+    },
+
+    async fetchTestRecommendations() {
+        if (this._recsRequested || !this.userId) return;
+        this._recsRequested = true;
+        try {
+            const r = await fetch(TEST_API_BASE_URL + '/api/test/recommendations/' + this.userId);
+            const data = await r.json();
+            if (data.success && Array.isArray(data.items) && data.items.length) {
+                this.renderTestRecommendations(data.items);
+            }
+        } catch (e) { console.warn('recommendations failed:', e); }
+    },
+
+    renderTestRecommendations(items) {
+        const esc = t => String(t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        const icons = { course: '🎓', game: '🎮', trening: '🧑\u200d🏫' };
+        // Курс и тренинг — отдельные страницы, открываем в новой вкладке,
+        // чтобы не потерять экран результатов. Игра живёт в этом же
+        // приложении (?m=...) — туда переходим в текущей вкладке.
+        let html = '🧭 **С ЧЕГО НАЧАТЬ ИМЕННО ТЕБЕ**\n\nПо твоему профилю я выбрал три шага:\n';
+        items.forEach(it => {
+            const blank = it.type === 'game' ? '' : ' target="_blank" rel="noopener"';
+            html += '\n' + (icons[it.type] || '👉')
+                + ' <a href="' + esc(it.url) + '"' + blank
+                + ' data-rec="' + esc(it.id) + '" data-rectype="' + esc(it.type) + '"'
+                + ' style="color:#3b82ff;font-weight:600">' + esc(it.title) + '</a><br>'
+                + esc(it.reason) + '\n';
+        });
+        const msg = this.addBotMessage(html, true);
+        try {
+            if (window.FrediTracker?.track) {
+                window.FrediTracker.track('test_recommendations_shown', {
+                    count: items.length,
+                    ids: items.map(it => it.id).join(',')
+                });
+            }
+        } catch {}
+        if (msg) {
+            msg.querySelectorAll('a[data-rec]').forEach(a => {
+                a.addEventListener('click', () => {
+                    try {
+                        if (window.FrediTracker?.track) {
+                            window.FrediTracker.track('test_recommendation_clicked', {
+                                id: a.dataset.rec, type: a.dataset.rectype
+                            });
+                        }
+                    } catch {}
+                });
+            });
         }
     },
 
