@@ -48,6 +48,13 @@ User-agent: Yandex
 Disallow: /admin/
 Disallow: /private/
 Crawl-delay: 2
+# Приложение переключает режим параметром: /fredi/?m=odi, ?m=vsluh,
+# ?m=chainik, ?m=skazhinet, ?m=delo, ?m=kalibr. Страница у всех одна —
+# оболочка, текст рисует JS, — но Яндекс завёл каждый вариант отдельным
+# адресом с одинаковым заголовком. Часть уже вылетала как NOT_CANONICAL,
+# и заводилась снова. Clean-param склеивает их в один адрес и перестаёт
+# тратить на них обход.
+Clean-param: m /fredi/
 
 User-agent: Googlebot
 Disallow: /admin/
