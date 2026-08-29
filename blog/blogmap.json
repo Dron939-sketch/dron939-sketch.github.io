@@ -358,6 +358,13 @@
    "mins": 10
   },
   {
+   "slug": "bezotvetnaya-lyubov-chto-delat",
+   "title": "Безответная любовь: почему не отпускает и что делать",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 11
+  },
+  {
    "slug": "body-memory-gde-zhivyot-vasha-reakciya-na-strah",
    "title": "Body memory: где живёт ваша реакция на страх и как обнаружить её в теле",
    "rubric": "strahi",
@@ -953,11 +960,32 @@
    "mins": 11
   },
   {
+   "slug": "kak-perezhit-izmenu",
+   "title": "Как пережить измену: что делать в первые дни и что решать потом",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 13
+  },
+  {
+   "slug": "kak-perezhit-predatelstvo",
+   "title": "Как пережить предательство — друга, партнёра, своих",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 11
+  },
+  {
    "slug": "kak-perezhit-rasstavanie",
    "title": "Как пережить расставание: 5 фаз, реальные сроки и протокол выхода, если застрял",
    "rubric": "otnosheniya",
    "level": "m",
    "mins": 14
+  },
+  {
+   "slug": "kak-perezhit-smert-pitomca",
+   "title": "Как пережить смерть питомца, когда все говорят «это же просто кошка»",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 11
   },
   {
    "slug": "kak-perezhit-utratu-blizkogo-etapy-gorya",
