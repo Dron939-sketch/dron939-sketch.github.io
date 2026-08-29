@@ -519,6 +519,10 @@ body{overflow-wrap:break-word}</style>
                     style="padding:10px 16px;border-radius:10px;border:1px solid #10b981;background:transparent;color:#10b981;font:inherit;font-weight:600;cursor:pointer">
                     🎁 Переозвучить ВСЁ бесплатной моделью
                 </button>
+                <button id="lekReGenWave1"
+                    style="padding:10px 16px;border-radius:10px;border:1px solid #10b981;background:rgba(16,185,129,0.12);color:#10b981;font:inherit;font-weight:600;cursor:pointer">
+                    🌊 Первые лекции всех курсов
+                </button>
                 <button id="lekDlStop" style="display:none;padding:10px 16px;border-radius:10px;border:1px solid #e11d48;background:transparent;color:#e11d48;font:inherit;font-weight:600;cursor:pointer">
                     ✖ Остановить
                 </button>
@@ -3883,6 +3887,7 @@ POV: ты на семейном ужине, и мама такая «как у �
     // ============================================================
     var _lekTitles = null;      // кэш slug -> заголовок из blogmap
     var _lekCourses = {};       // кэш slug -> курс Лектория
+    var _lekWaves = {};         // кэш slug -> номер лекции в курсе (волна)
     var _lekPoll = null;        // таймер опроса прогресса пре-генерации
     var _lekData = null;        // последний ответ /api/tts/blog/list — для фильтра
     var _lekStop = false;       // флаг «остановить пакетное скачивание»
@@ -3937,6 +3942,15 @@ POV: ты на семейном ужине, и мама такая «как у �
             var rc = await fetch('/blog/lektorij/courses.json', { cache: 'no-cache' });
             if (rc.ok) _lekCourses = await rc.json();
         } catch (e) { _lekCourses = {}; }
+        // Номер лекции внутри курса. Нужен кнопке «первые лекции всех
+        // курсов»: по слагу это не вычислить — у половины курсов номер
+        // стоит после имени курса, у части его нет вовсе, а «Перегрузки»
+        // держат два параллельных трека (1 и 1b). Карта собирается тем же
+        // кодом, что считает волны в tools/revoice_lectures.py.
+        try {
+            var rw = await fetch('/blog/lektorij/waves.json', { cache: 'no-cache' });
+            if (rw.ok) _lekWaves = await rw.json();
+        } catch (e) { _lekWaves = {}; }
         return _lekTitles;
     }
 
@@ -4172,26 +4186,20 @@ POV: ты на семейном ужине, и мама такая «как у �
        переводить нельзя: её условия разрешают дообучение на запросах).
        Модель уходит в тело pregenerate и действует только на этот прогон. */
     var LEK_FREE_MODEL = 's2.1-pro-free';
-    async function _lekReGenFree() {
-        var btn = document.getElementById('lekReGenFree');
+
+    /* Общий запуск пакета бесплатной моделью. slugs=null — весь Лекторий
+       (сервер соберёт список сам), иначе — только переданные лекции. */
+    async function _lekFreePost(slugs, label, btn) {
         var ps = document.getElementById('lekPregenStatus');
-        var total = (_lekData && _lekData.items && _lekData.items.length) || 'все';
-        if (!confirm('Переозвучить ВЕСЬ Лекторий (' + total + ' лекций) моделью ' +
-                     LEK_FREE_MODEL + '?\n\n' +
-                     '• force: уже готовые mp3 будут перезаписаны;\n' +
-                     '• это займёт часы — остановить можно в любой момент,\n' +
-                     '  записанное сохранится;\n' +
-                     '• сначала послушайте одну лекцию, переозвученную этой\n' +
-                     '  моделью (кнопка ↻ в строке лекции пока использует\n' +
-                     '  модель из env — контрольную проверку голоса новой\n' +
-                     '  модели даст первая же лекция пакета).')) return;
         btn.disabled = true;
-        if (ps) { ps.style.color = 'var(--text-dim)'; ps.textContent = 'запускаю пакет на бесплатной модели…'; }
+        if (ps) { ps.style.color = 'var(--text-dim)'; ps.textContent = 'запускаю ' + label + '…'; }
         try {
+            var body = { force: true, model: LEK_FREE_MODEL };
+            if (slugs) body.slugs = slugs;
             var res = await fetch(API + '/api/tts/blog/pregenerate', {
                 method: 'POST',
                 headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ force: true, model: LEK_FREE_MODEL }),
+                body: JSON.stringify(body),
             });
             var j = await res.json().catch(function () { return {}; });
             if (res.status === 403) throw new Error('Неверный ADMIN_TOKEN');
@@ -4200,13 +4208,12 @@ POV: ты на семейном ужине, и мама такая «как у �
             if (res.status === 409) {
                 if (ps) ps.textContent = 'уже идёт другой пакет — сначала остановите его';
             } else if (!res.ok) {
-                // Старый бэкенд без поддержки model просто проигнорировал бы
-                // поле и переозвучил env-моделью; но ответ started без "model"
-                // это выдаст — проверяем явно.
                 throw new Error(j.error || ('HTTP ' + res.status));
             } else if (!j.model) {
+                // Старый бэкенд поле model игнорирует: пакет пошёл бы
+                // env-моделью, то есть в Яндекс — молча и чужим голосом.
                 if (ps) { ps.style.color = '#e11d48';
-                    ps.textContent = '⚠ Бэкенд не подтвердил модель — он ещё не обновлён. Пакет НЕ запущен бесплатной моделью: остановите его кнопкой «Остановить».'; }
+                    ps.textContent = '⚠ Бэкенд не подтвердил модель — он ещё не обновлён. Остановите пакет кнопкой «Остановить».'; }
                 _lekPollStart();
                 return;
             } else if (ps) {
@@ -4218,6 +4225,45 @@ POV: ты на семейном ужине, и мама такая «как у �
         } finally {
             btn.disabled = false;
         }
+    }
+
+    /* Первые лекции всех курсов — волна 1.
+       Зачем волнами. Переозвучка архива идёт сутками, и всё это время сайт
+       живёт наполовину в старом голосе. Курсами подряд — часть курсов
+       целиком новая, остальные целиком старые. Волнами — у каждого курса
+       сразу новая ПЕРВАЯ лекция, а её и слушают те, кто пришёл в курс
+       впервые; разнобой уезжает вглубь курсов, куда доходят немногие. */
+    async function _lekReGenWave1() {
+        var btn = document.getElementById('lekReGenWave1');
+        var ps = document.getElementById('lekPregenStatus');
+        await _lekTitlesLoad();
+        var slugs = Object.keys(_lekWaves || {}).filter(function (s) {
+            return _lekWaves[s] === 1;
+        }).sort();
+        if (!slugs.length) {
+            if (ps) { ps.style.color = '#e11d48';
+                ps.textContent = '⚠ Карта волн не загрузилась (/blog/lektorij/waves.json) — обновите страницу'; }
+            return;
+        }
+        if (!confirm('Переозвучить ПЕРВЫЕ лекции всех курсов — ' + slugs.length +
+                     ' лекций — моделью ' + LEK_FREE_MODEL + '?\n\n' +
+                     '• force: уже готовые mp3 будут перезаписаны;\n' +
+                     '• это примерно 10 часов; остановить можно в любой\n' +
+                     '  момент, записанное сохранится.')) return;
+        await _lekFreePost(slugs, 'первые лекции (' + slugs.length + ')', btn);
+    }
+
+    async function _lekReGenFree() {
+        var btn = document.getElementById('lekReGenFree');
+        var total = (_lekData && _lekData.items && _lekData.items.length) || 'все';
+        if (!confirm('Переозвучить ВЕСЬ Лекторий (' + total + ' лекций) моделью ' +
+                     LEK_FREE_MODEL + '?\n\n' +
+                     '• force: уже готовые mp3 будут перезаписаны;\n' +
+                     '• это несколько СУТОК — бесплатное окно Fish может\n' +
+                     '  закончиться раньше, и хвост уйдёт в Яндекс;\n' +
+                     '• если время поджимает, начните с «🌊 Первые лекции\n' +
+                     '  всех курсов» — они успеют гарантированно.')) return;
+        await _lekFreePost(null, 'весь Лекторий', btn);
     }
 
     function _lekPollStart() {
@@ -4423,6 +4469,8 @@ POV: ты на семейном ужине, и мама такая «как у �
         if (rg) rg.addEventListener('click', _lekReGenAll);
         var rf = document.getElementById('lekReGenFree');
         if (rf) rf.addEventListener('click', _lekReGenFree);
+        var rw1 = document.getElementById('lekReGenWave1');
+        if (rw1) rw1.addEventListener('click', _lekReGenWave1);
         var body = document.getElementById('lekBody');
         if (body) body.addEventListener('click', function (e) {
             var t = e.target;
