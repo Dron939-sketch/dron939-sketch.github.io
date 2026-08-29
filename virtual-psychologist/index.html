@@ -362,6 +362,26 @@
     .cta-section { text-align: center; padding: clamp(40px, 8vw, 60px) 20px; background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), transparent); border-radius: 16px; margin: 50px 0; }
     .cta-section p { font-size: clamp(1.05rem, 4vw, 1.25rem); margin-bottom: 26px; color: #F0F0F0; }
 
+    /* Блок «Что почитать». Страница до него была тупиком: 1766 страниц
+       сайта ссылались сюда, а отсюда в блог уходило пять ссылок, из них
+       по теме одна. Читателю после FAQ некуда идти, а поиск не видит,
+       что за посадочной стоит разбор темы на четырнадцать материалов. */
+    .reading-section { margin: clamp(40px, 8vw, 70px) 0; padding: clamp(25px, 5vw, 40px); background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(58, 134, 255, 0.2); border-radius: 16px; }
+    .reading-section h2 { text-align: center; margin-bottom: 10px; }
+    .reading-lead { text-align: center; opacity: .75; max-width: 640px; margin: 0 auto 30px; }
+    .reading-group { margin-bottom: 24px; }
+    .reading-group h3 { font-size: 1.05rem; margin: 0 0 10px; color: #3A86FF; }
+    .reading-group ul { list-style: none; padding: 0; margin: 0; }
+    .reading-group li { padding: 7px 0; border-bottom: 1px solid rgba(58, 134, 255, 0.08); }
+    .reading-group li:last-child { border-bottom: none; }
+    .reading-group a { text-decoration: none; border-bottom: 1px solid rgba(58, 134, 255, 0.4); }
+    .reading-group a:hover { border-bottom-color: #3A86FF; }
+    /* Пояснение — служебная подпись, а не часть ссылки: на неё не жмут,
+       она только помогает выбрать, куда жать. */
+    .reading-group span { display: block; font-size: .85rem; opacity: .6; margin-top: 2px; }
+    .reading-more { text-align: center; margin: 26px 0 0; }
+    @media (max-width: 600px) { .reading-group span { font-size: .8rem; } }
+
     .bot-info { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(58, 134, 255, 0.2); padding: clamp(25px, 5vw, 40px); border-radius: 16px; margin: 50px 0; }
     .bot-info h2 { margin-bottom: 30px; text-align: center; }
     .bot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; margin: 30px 0; }
@@ -793,6 +813,58 @@ body{overflow-wrap:break-word}</style>
   </section>
 
   <!-- ФИНАЛЬНЫЙ CTA -->
+  <!-- Разборы по теме -->
+  <section class="reading-section">
+    <h2>Что почитать про ИИ-психологов</h2>
+    <p class="reading-lead">Четырнадцать разборов: как это устроено, где предел, как выбрать и как разговаривать, чтобы был толк. Ни один не обещает, что чат заменит врача.</p>
+
+    <div class="reading-group">
+      <h3>Понять, что это такое</h3>
+      <ul>
+        <li><a href="/blog/chto-takoe-virtualnyj-psiholog-chestno.html">Что такое виртуальный психолог и может ли он помочь</a> <span>честный разбор, 10 мин</span></li>
+        <li><a href="/blog/ii-psiholog-2026-vozmozhnosti-i-predely.html">ИИ-психолог 2026: что умеют и где предел</a> <span>самый подробный текст, 30 мин</span></li>
+        <li><a href="/blog/cifrovye-dvojniki-soznaniya.html">Цифровые двойники сознания</a> <span>как языковой модели задают личность, 15 мин</span></li>
+      </ul>
+    </div>
+
+    <div class="reading-group">
+      <h3>Выбрать сервис</h3>
+      <ul>
+        <li><a href="/blog/kakoj-ii-psiholog-vybrat-2026-sravnenie.html">Какой ИИ-психолог выбрать: сравнение шести сервисов</a> <span>с объявленным конфликтом интересов, 16 мин</span></li>
+        <li><a href="/blog/chatgpt-vs-specializirovannyj-psiho-ii.html">ChatGPT против специализированного психо-ИИ</a> <span>что выбрать для самопомощи, 20 мин</span></li>
+        <li><a href="/blog/ai-psihologi-2026-prakticheskij-gid.html">Какой сервис под какую задачу</a> <span>практический гид, 10 мин</span></li>
+      </ul>
+    </div>
+
+    <div class="reading-group">
+      <h3>Пользоваться толково</h3>
+      <ul>
+        <li><a href="/blog/kak-razgovarivat-s-ii-psihologom-7-pravil.html">Как разговаривать с ИИ-психологом: 7 правил</a> <span>чаще всего дело в формулировке запроса, 30 мин</span></li>
+        <li><a href="/blog/kak-poluchit-maksimum-ot-virtualnogo-psihologa.html">Как получить максимум от виртуального психолога</a> <span>10 мин</span></li>
+      </ul>
+    </div>
+
+    <div class="reading-group">
+      <h3>Где проходит граница</h3>
+      <ul>
+        <li><a href="/blog/ai-psiholog-2026-mozhno-li-zamenit-terapevta.html">Можно ли заменить терапевта</a> <span>короткий ответ — нет, длинный внутри, 16 мин</span></li>
+        <li><a href="/blog/cifrovaya-vs-zhivaya-terapiya-18-mesyacev.html">Цифровая против живой терапии</a> <span>18 месяцев параллельной практики, 22 мин</span></li>
+        <li><a href="/blog/budushchee-psihologii-12-trendov-2035.html">Будущее психологии: 12 трендов к 2035 году</a> <span>22 мин</span></li>
+      </ul>
+    </div>
+
+    <div class="reading-group">
+      <h3>Кто это сделал и на каких данных</h3>
+      <ul>
+        <li><a href="/blog/andrej-mejster-20-let-i-pochemu-fredi.html">Двадцать лет практики и почему появился Фреди</a> <span>13 мин</span></li>
+        <li><a href="/blog/analiz-500-dialogov-fredi-2026.html">Анализ 500 диалогов с Фреди</a> <span>что в ИИ-терапии работает, а что нет, 18 мин</span></li>
+        <li><a href="/blog/cifrovoj-sled-chto-google-rasskazhet-cherez-20-let.html">Цифровой след: что о вас останется</a> <span>к вопросу, кому вы всё это рассказываете, 19 мин</span></li>
+      </ul>
+    </div>
+
+    <p class="reading-more"><a href="/blog/rubrika/ai/">Вся рубрика «AI-психология и Фреди» →</a></p>
+  </section>
+
   <section class="cta-section">
     <h2>Готовы попробовать?</h2>
     <p>15 минут — и вы получите точный психологический портрет</p>
