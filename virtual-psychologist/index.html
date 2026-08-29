@@ -382,6 +382,27 @@
     .reading-more { text-align: center; margin: 26px 0 0; }
     @media (max-width: 600px) { .reading-group span { font-size: .8rem; } }
 
+    /* Блок «Как проходит разговор». Собран из того, что записано в коде
+       режима Фреди (Frederick, modes/prompts/basic_presets.py): границы
+       компетенции, поведение в кризисе, правила работы с памятью. Не
+       рекламное описание, а то, что сервис действительно делает, — на
+       посадочной этого не было вовсе, а это единственное, что отличает
+       нас от соседей по выдаче с их «94 % помогло». */
+    .talk-section { margin: clamp(40px, 8vw, 70px) 0; }
+    .talk-section h2 { text-align: center; margin-bottom: 10px; }
+    .talk-lead { text-align: center; opacity: .75; max-width: 660px; margin: 0 auto 34px; }
+    .talk-step { display: flex; gap: 16px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid rgba(58,134,255,.12); }
+    .talk-step:last-of-type { border-bottom: none; }
+    .talk-num { flex: 0 0 34px; height: 34px; border-radius: 50%; background: rgba(58,134,255,.15); border: 1px solid rgba(58,134,255,.35); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #3A86FF; }
+    .talk-step h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .talk-step p { margin: 0; opacity: .8; }
+    .talk-quote { display: block; margin-top: 8px; padding-left: 12px; border-left: 2px solid rgba(58,134,255,.4); font-style: italic; opacity: .7; }
+    .talk-limits { margin-top: 30px; padding: 20px 22px; background: rgba(58,134,255,.05); border: 1px solid rgba(58,134,255,.18); border-radius: 14px; }
+    .talk-limits h3 { margin: 0 0 10px; font-size: 1.05rem; }
+    .talk-limits ul { margin: 0; padding-left: 20px; }
+    .talk-limits li { margin: 7px 0; opacity: .82; }
+    @media (max-width: 600px) { .talk-step { gap: 12px; } .talk-num { flex-basis: 30px; height: 30px; } }
+
     .bot-info { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(58, 134, 255, 0.2); padding: clamp(25px, 5vw, 40px); border-radius: 16px; margin: 50px 0; }
     .bot-info h2 { margin-bottom: 30px; text-align: center; }
     .bot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; margin: 30px 0; }
@@ -709,6 +730,56 @@ body{overflow-wrap:break-word}</style>
   </section>
 
   <!-- КОГДА ПОДХОДИТ -->
+  <!-- Как проходит разговор -->
+  <section class="talk-section">
+    <h2>Как проходит разговор</h2>
+    <p class="talk-lead">Без анкеты, без «расскажите о вашем детстве» и без обещаний вылечить за семь дней. Ниже — то, как Фреди устроен на самом деле, включая места, где он останавливается.</p>
+
+    <div class="talk-step">
+      <div class="talk-num">1</div>
+      <div>
+        <h3>Начало — одна фраза, а не форма регистрации</h3>
+        <p>Ни почты, ни анкеты, ни теста на входе. Фреди здоровается и спрашивает, с чем вы пришли — на «ты», потому что на «вы» разговор про своё выходит деревянным.
+        <span class="talk-quote">«Расскажи, с чем пришёл» — и дальше вашими словами, текстом или голосом.</span></p>
+      </div>
+    </div>
+
+    <div class="talk-step">
+      <div class="talk-num">2</div>
+      <div>
+        <h3>Он делает выводы сам, а не вытягивает наводящими</h3>
+        <p>Классический приём «а как вы сами думаете, почему?» здесь не используется. Если из сказанного следует вывод, Фреди его называет — и говорит, на чём он основан. Ошибётся — поправите.</p>
+      </div>
+    </div>
+
+    <div class="talk-step">
+      <div class="talk-num">3</div>
+      <div>
+        <h3>Краткость вместо утешения</h3>
+        <p>Не «важно принять свои чувства» и не сочувственные абзацы. Одна точная гипотеза и один конкретный шаг, который можно сделать сегодня вечером. Ирония вместо жалости — если вам сейчас нужна именно жалость, это честнее знать заранее.</p>
+      </div>
+    </div>
+
+    <div class="talk-step">
+      <div class="talk-num">4</div>
+      <div>
+        <h3>Память, которой можно возразить</h3>
+        <p>Фреди помнит прошлые разговоры, но текущим вашим словам верит больше, чем своим записям. Если он приписал вам чужое — скажите, и он к этому не вернётся. Устройством пользуются разные люди, и путать их он не должен.</p>
+      </div>
+    </div>
+
+    <div class="talk-limits">
+      <h3>Где он останавливается — и что делает вместо</h3>
+      <ul>
+        <li><strong>Лекарства и диагнозы.</strong> Не назначает и не отменяет. Вместо этого помогает собраться к приёму: сформулировать симптомы, составить вопросы врачу, понять, что отслеживать.</li>
+        <li><strong>Договоры, суды, налоги.</strong> Не консультирует как юрист — помогает собрать вопросы и проверить логику до встречи с ним.</li>
+        <li><strong>Деньги и вложения.</strong> Не советует, куда вложить. Раскладывает логику решения: риски, альтернативы, что проверить до шага.</li>
+        <li><strong>Кризис.</strong> Не делает вид, что справится один. Остаётся рядом и говорит, что есть линии помощи и близкие — коротко, без философских дискуссий.</li>
+      </ul>
+      <p style="margin:14px 0 0;opacity:.78">Главное правило здесь — не отбиваться словами «обратитесь к специалисту». Сначала показать, что услышал; потом назвать границу одной фразой; потом всё равно дать то, что применимо в её пределах. Из разговора нужно уходить с чем-то в руках.</p>
+    </div>
+  </section>
+
   <section class="when-section">
     <h2 style="text-align:center; margin-bottom: 6px;">Когда ИИ-психолог подходит, а когда — нет</h2>
     <p style="text-align:center; color: #999; margin-bottom: 14px;">Честная позиция вместо маркетинговых обещаний</p>
