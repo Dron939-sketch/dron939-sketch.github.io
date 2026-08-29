@@ -3093,7 +3093,8 @@ document.addEventListener('DOMContentLoaded', function() {
             vsluh: { fn: 'showVsluhGame', src: 'vsluh.js', chat: 'kontur' }, // «Мысль вслух» — наладка приватных процессов мышления
             lazejka: { fn: 'showLazejkaGame', src: 'lazejka.js', chat: 'kontur' }, // «Лазейка» — буква правила против его духа
             perehod: { fn: 'showPerehodGame', src: 'perehod.js', chat: 'kontur' }, // «Переход» — месяц из десяти решений: чьё решение вы выполнили
-            sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' } // «Мне плохо сейчас» — протокол стабилизации
+            sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' }, // «Мне плохо сейчас» — протокол стабилизации
+            alfavit: { fn: 'showAlfavitGame', src: 'alfavit.js', chat: 'kontur' } // «Алфавит» нового кода НЛП (Гриндер)
         };
         // Синонимы: под этими именами игры звали ссылки в блоге, а в таблице
         // их не было — роутер молча выходил, и человек оставался на дашборде,
