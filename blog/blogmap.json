@@ -9416,6 +9416,13 @@
    "mins": 11
   },
   {
+   "slug": "podrostok-buntuet-i-grubit-chto-delat",
+   "title": "Что делать, если подросток бунтует и грубит",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "pohoronnaya-terapiya-konfrontaciya-so-smertyu",
    "title": "Лечь в гроб, чтобы жить: похоронная терапия — психология, физика, риски",
    "rubric": "strahi",
@@ -10501,6 +10508,13 @@
    "mins": 11
   },
   {
+   "slug": "test-na-vygoranie-chestnyj-razbor",
+   "title": "Тест на выгорание: какие шкалы настоящие и как проверить себя честно",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 10
+  },
+  {
    "slug": "test-stil-privyazannosti-boulbi",
    "title": "Тест: какой у тебя стиль привязанности? Боулби, 12 вопросов",
    "rubric": "otnosheniya",
@@ -10695,6 +10709,13 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 18
+  },
+  {
+   "slug": "ustalost-i-apatiya-bez-prichiny",
+   "title": "Усталость и апатия «без причины»: где искать причину на самом деле",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 12
   },
   {
    "slug": "ustanovka-na-rost-poka",
