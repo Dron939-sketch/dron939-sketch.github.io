@@ -605,10 +605,35 @@
             stack: stack.slice(0, 300)
         });
     });
+    // Упавший промис. Здесь уходило одно сообщение — и «Cannot set
+    // properties of null» без файла и строки не чинится ничем, кроме
+    // догадок: модулей в приложении полсотни, и найти в них место по
+    // тексту браузерной ошибки нельзя. У js_error стек прикладывается
+    // с прошлой правки, у промисов его забыли, хотя чинить их так же
+    // нечем. Теперь прикладывается: стек, первый наш кадр (файл и
+    // строка) и адрес страницы.
     window.addEventListener('unhandledrejection',function(e){
-        var msg='';
+        var msg='', stack='';
         try{ msg = (e.reason && (e.reason.message || String(e.reason))) || ''; }catch(x){}
-        track('promise_unhandled',{message:msg.slice(0,200)});
+        try{ stack = (e.reason && e.reason.stack || '').split('\n').slice(0,4).join(' | '); }catch(x){}
+        // Первый кадр с нашего origin: кадры расширений и чужих скриптов
+        // до него ничего не говорят о том, где сломались мы.
+        var frame = '';
+        try {
+            var frames = stack.match(/https?:\/\/[^\s)|]+/g) || [];
+            for (var i = 0; i < frames.length; i++) {
+                if (frames[i].indexOf(location.origin) === 0) {
+                    frame = frames[i].replace(location.origin, '');
+                    break;
+                }
+            }
+        } catch (x) {}
+        track('promise_unhandled', {
+            message: msg.slice(0, 200),
+            stack: stack.slice(0, 300),
+            file: frame ? frame.slice(0, 200) : '(нет кадра)',
+            path: (location.pathname || '') + (location.hash || '')
+        });
     });
 
     // session_start — только для действительно новой сессии. Перезагрузка
