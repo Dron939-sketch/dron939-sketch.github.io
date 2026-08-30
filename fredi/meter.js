@@ -252,6 +252,31 @@
     // в середине живого разговора читается как «уберём помеху», а на
     // втором сообщении — как «плати за вход».
     function _engagedNow() { return _exchanges >= 3; }
+    // Ступенька между анонимом и подпиской. У человека без аккаунта дневной
+    // лимит меньше — бэкенд отдаёт в статусе оба числа, свои руками сюда не
+    // вписываем. Аккаунт по смыслу не «заплати», а «останься»: разговор не
+    // потеряется, и минут в день станет больше. Без этой ступеньки
+    // единственным ответом на стену была цена в первый же вечер — 101
+    // закрытая стена, один клик, ноль оплат.
+    function _accountGain(data) {
+        // Два независимых признака аккаунта: сессия на фронте и почта в
+        // базе. Хватает любого — иначе человеку с протухшей кукой предложат
+        // завести то, что у него уже есть.
+        if (_authed()) return null;
+        if (data && data.is_registered === true) return null;
+        var big = data && data.registered_limit_minutes;
+        var small = data && data.anon_limit_minutes;
+        if (!big || !small || big <= small) return null;
+        return { big: big, small: small, plus: Math.round((big - small) * 10) / 10 };
+    }
+    function _openRegister(source) {
+        _track('meter_register_clicked', { source: source });
+        if (window.FrediAuth && typeof window.FrediAuth.openRegister === 'function') {
+            window.FrediAuth.openRegister({ source: source });
+        } else if (typeof showSettingsScreen === 'function') {
+            showSettingsScreen();
+        }
+    }
     var FEATURE_PHRASE = {
         kontur: 'разбирались, о чём умеете думать',
         mirrors: 'разбирали отношения в «Зеркале»',
@@ -378,6 +403,7 @@
     }
 
     function showFatigueModal(data) {
+        data = data || {};
         // Только что закрыли — не показываем стену заново. Человек уже
         // прочитал её; вместо повтора напоминаем строкой, чтобы попытка
         // отправить сообщение не осталась без ответа.
@@ -398,9 +424,16 @@
         // отсюда 101 закрытая стена при одном клике. Ему говорим только
         // то, что правда: на сегодня всё, завтра снова открыто.
         if (_newcomer()) {
+            // Дневная стена новичку — лучший момент для аккаунта: разговор
+            // уже состоялся, и предложение читается как продолжение, а не
+            // как турникет. Когда кончился общий запас, аккаунт минут не
+            // добавит — там только Premium, и обещать было бы обманом.
+            var softGain = (!data || data.block_reason !== 'trial')
+                ? _accountGain(data) : null;
             _track('meter_blocked_soft', {
                 block_reason: (data && data.block_reason) || '',
                 visits: _visits(), exchanges: _exchanges,
+                account_offer: !!softGain,
             });
             var soft = document.createElement('div');
             soft.className = 'meter-overlay';
@@ -411,10 +444,28 @@
                     '<div class="meter-title">На сегодня всё</div>' +
                     '<div class="meter-text">' + _personalLead('daily') +
                         '<br>Завтра Фреди снова свободен — приходите, ' +
-                        'разговор продолжится с этого места.</div>' +
+                        'разговор продолжится с этого места.' +
+                        (softGain
+                            ? '<br><br>С аккаунтом времени больше: ' + softGain.big +
+                              ' минут в день вместо ' + softGain.small + '. ' +
+                              'И разговор не потеряется, если смените устройство. ' +
+                              'Нужна только почта.'
+                            : '') +
+                    '</div>' +
+                    (softGain
+                        ? '<button class="meter-btn meter-btn-primary" id="meterSoftReg">📩 Завести аккаунт — ' +
+                          softGain.big + ' минут в день</button>'
+                        : '') +
                     '<button class="meter-btn meter-btn-secondary" id="meterSoftClose">Понятно</button>' +
                 '</div>';
             document.body.appendChild(soft);
+            if (softGain) {
+                document.getElementById('meterSoftReg').onclick = function () {
+                    _rememberDismiss();
+                    soft.remove();
+                    _openRegister('meter_soft_wall');
+                };
+            }
             document.getElementById('meterSoftClose').onclick = function () {
                 _track('meter_closed', { reason: 'soft_ok' });
                 _rememberDismiss();
@@ -438,6 +489,11 @@
             : !!data.trial_exhausted;
         var daysUsed = data.free_days_used || 0;
         var trialLimit = data.trial_limit_minutes || 30;
+        // Человеку без аккаунта дневная стена предлагает сначала аккаунт, и
+        // только потом цену: между «ничего» и 990 ₽ должна быть ступенька,
+        // которая ничего не стоит и что-то даёт. На стене общего запаса
+        // ступеньки нет — минуты там уже не про аккаунт.
+        var gain = trialExhausted ? null : _accountGain(data);
 
         _track('meter_blocked_shown', {
             limit_minutes: limit,
@@ -446,6 +502,7 @@
             block_reason: data.block_reason || (trialExhausted ? 'trial' : 'daily'),
             trial_used_minutes: data.trial_used_minutes,
             free_days_used: daysUsed,
+            account_offer: !!gain,
         });
 
         var emoji, title, mainText, timerHtml;
@@ -463,7 +520,13 @@
             title = 'На сегодня время вышло';
             mainText = _personalLead('daily') +
                 '<br>Завтра снова будут ' + limit + ' бесплатных минут — ' +
-                'или можно продолжить прямо сейчас.';
+                'или можно продолжить прямо сейчас.' +
+                (gain
+                    ? '<br><br>С аккаунтом дневное время больше: ' + gain.big +
+                      ' минут вместо ' + gain.small + '. Нужна только почта — ' +
+                      'и разговор перестанет зависеть от того, с какого ' +
+                      'устройства вы зашли.'
+                    : '');
             timerHtml = minutesUntilReset > 0
                 ? '<div class="meter-timer" id="meterTimer">Новый день через ' + _formatResetCountdown(minutesUntilReset) + '</div>'
                 : '';
@@ -481,13 +544,25 @@
                 '<div class="meter-features-title">Что даёт Premium:</div>' +
                 PREMIUM_FEATURES +
                 AUTHOR_NOTE +
-                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">\u2728 Premium \u2014 990 \u20BD/\u043C\u0435\u0441, \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432</button>' +
+                (gain
+                    ? '<button class="meter-btn meter-btn-primary" id="meterRegBtn">\uD83D\uDCE9 \u0417\u0430\u0432\u0435\u0441\u0442\u0438 \u0430\u043A\u043A\u0430\u0443\u043D\u0442 \u2014 ' +
+                      gain.big + ' \u043C\u0438\u043D\u0443\u0442 \u0432 \u0434\u0435\u043D\u044C</button>'
+                    : '') +
+                '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
+                    '" id="meterSubscribeBtn">\u2728 Premium \u2014 990 \u20BD/\u043C\u0435\u0441, \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432</button>' +
                 (trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
             '</div>';
         document.body.appendChild(overlay);
 
+        if (gain) {
+            document.getElementById('meterRegBtn').onclick = function () {
+                _rememberDismiss();
+                overlay.remove();
+                _openRegister('meter_wall');
+            };
+        }
         document.getElementById('meterCloseBtn').onclick = function() {
             _track('meter_closed', { reason: 'continue_tomorrow' });
             _rememberDismiss();
@@ -551,8 +626,15 @@
         if (document.getElementById('meterUpsellOverlay')) return;
         var rem = (check && check.remaining_minutes != null) ? Math.max(1, Math.round(check.remaining_minutes)) : 2;
         kind = kind || 'daily';
+        // До подписки у человека без аккаунта есть более дешёвый шаг, и
+        // предлагать сразу цену — значит пропускать его. На «кончается
+        // сегодняшнее время» аккаунт добавляет минут прямо сейчас; на
+        // «кончается весь бесплатный запас» — уже нет, там только Premium.
+        var upGain = kind === 'trial' ? null : _accountGain(check);
         _rememberUpsellShown();
-        _track('meter_upsell_shown', { remaining_minutes: rem, kind: kind });
+        _track('meter_upsell_shown', {
+            remaining_minutes: rem, kind: kind, account_offer: !!upGain,
+        });
 
         // Два разных сообщения. «На сегодня всё» — новость на один вечер,
         // человек вернётся и без подписки. «Бесплатные минуты кончаются» —
@@ -566,7 +648,11 @@
             + (did ? 'вы ' + did + ' — и до конца ' : 'до конца ')
             + (kind === 'trial' ? 'бесплатного знакомства' : 'сегодняшнего времени')
             + ' осталось около ' + rem + ' мин. '
-            + 'С Premium счётчик исчезает: разговор без лимита, весь Лекторий с озвучкой и все инструменты.';
+            + (upGain
+                ? 'С аккаунтом на сегодня будет ' + upGain.big + ' минут вместо ' +
+                  upGain.small + ' — почта, и разговор продолжается. ' +
+                  'С Premium счётчика нет вовсе.'
+                : 'С Premium счётчик исчезает: разговор без лимита, весь Лекторий с озвучкой и все инструменты.');
         text = text.charAt(0).toUpperCase() + text.slice(1);
 
         var overlay = document.createElement('div');
@@ -579,11 +665,22 @@
                 '<div class="meter-text">' + text + '</div>' +
                 PREMIUM_FEATURES +
                 AUTHOR_NOTE +
-                '<button class="meter-btn meter-btn-primary" id="meterUpsellSub">✨ Premium — 990 ₽/мес, без лимитов</button>' +
+                (upGain
+                    ? '<button class="meter-btn meter-btn-primary" id="meterUpsellReg">📩 Завести аккаунт — ' +
+                      upGain.big + ' минут в день</button>'
+                    : '') +
+                '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
+                    '" id="meterUpsellSub">✨ Premium — 990 ₽/мес, без лимитов</button>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
 
+        if (upGain) {
+            document.getElementById('meterUpsellReg').onclick = function () {
+                overlay.remove();
+                _openRegister('upsell_critical');
+            };
+        }
         document.getElementById('meterUpsellClose').onclick = function() {
             _track('meter_upsell_dismissed', { reason: 'later' });
             overlay.remove();
