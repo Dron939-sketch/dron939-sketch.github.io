@@ -18,6 +18,7 @@
         { key: 'mysl', fn: 'showMyslGame', src: 'mysl.js', emoji: '🔍', name: 'Мысль под допросом', why: 'поймать искажение в своих мыслях', mins: '5 мин' },
         { key: 'oshibka', fn: 'showOshibkaGame', src: 'oshibka.js', emoji: '🕵️', name: 'Лови ошибку', why: 'включить критическое мышление', mins: '4 мин' },
         { key: 'skazhinet', fn: 'showSkazhiNetGame', src: 'skazhinet.js', emoji: '🛡️', name: 'Скажи «нет»', why: 'потренировать границы без чувства вины', mins: '5–7 мин' },
+        { key: 'opora', fn: 'showOporaGame', src: 'opora.js', emoji: '🧱', name: 'Опора', why: 'отрепетировать ответ внутреннему критику', mins: '5–7 мин' },
         { key: 'schet', fn: 'showSchetGame', src: 'schet.js', emoji: '🔢', name: 'Устный счёт', why: 'разогнать голову с утра', mins: '3 мин' },
         { key: 'kalibr', fn: 'showKalibrGame', src: 'kalibr.js', emoji: '⚖️', name: 'Калибровка', why: 'проверить, насколько вы уверены зря', mins: '4 мин' },
         { key: 'mnemo', fn: 'showMnemoGame', src: 'mnemo.js', emoji: '🧠', name: 'Мнемо', why: 'потренировать память', mins: '4 мин' },
