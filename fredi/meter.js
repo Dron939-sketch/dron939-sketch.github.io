@@ -216,21 +216,96 @@
         } catch (e) {}
     }
 
+    // Чем человек был занят перед стеной. Раньше стена показывала витрину
+    // из двенадцати функций — список не покупают, покупают продолжение
+    // начатого. За неделю: 101 показ стены, один клик, ноль оплат.
+    var _lastAct = { kind: '', name: '', ts: 0 };
+    var FEATURE_PHRASE = {
+        kontur: 'разбирались, о чём умеете думать',
+        mirrors: 'разбирали отношения в «Зеркале»',
+        berne: 'разбирали роли по Берну',
+        dreams: 'разбирали сон',
+        doubles: 'искали свои двойные послания',
+        tales: 'работали со сказкой',
+        brand: 'собирали свой образ',
+        esoterica: 'разбирали эзотерику на трезвую голову',
+        perehod: 'проходили «Переход»',
+        parus: 'разбирали перегрузку в «Парусе»',
+        spiral: 'собирали день в «Спирали»',
+        mysl: 'допрашивали тревожную мысль',
+        skazhinet: 'тренировали отказ',
+        messages: 'разбирали переписку',
+        diary: 'вели дневник',
+        hypnosis: 'слушали гипнотическую сессию'
+    };
+    try {
+        window.addEventListener('fredi:track', function (e) {
+            var ev = e && e.detail && e.detail.event;
+            var d = (e && e.detail && e.detail.data) || {};
+            if (ev === 'feature_opened' && d.feature) {
+                _lastAct = { kind: 'feature', name: String(d.feature), ts: Date.now() };
+            } else if (ev === 'message_sent') {
+                _lastAct = { kind: 'chat', name: '', ts: Date.now() };
+            }
+        });
+    } catch (e) {}
+
+    function _name() {
+        var n = (window.CONFIG && window.CONFIG.USER_NAME) || '';
+        n = String(n).trim();
+        return (n && n !== 'друг' && n !== 'undefined') ? n : '';
+    }
+
+    // «Вы только что…» — одной строкой, и только если это было недавно.
+    // Полчаса: дольше — человек уже занят другим, и напоминание соврёт.
+    function _whatYouDid() {
+        if (!_lastAct.kind || (Date.now() - _lastAct.ts) > 30 * 60 * 1000) return '';
+        if (_lastAct.kind === 'chat') return 'разговаривали с Фреди';
+        return FEATURE_PHRASE[_lastAct.name] || '';
+    }
+
+    function _esc(t) {
+        return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+    }
+
+    // Три пункта вместо двенадцати: безлимит, весь Лекторий голосом,
+    // инструменты. Больше человек за секунду всё равно не прочтёт.
+    //
+    // Без чисел. «102 курса» и «1250 статей» разъезжаются с каталогом в тот
+    // же день, а пересчитывает их tools/sync_counters.py — и только в HTML
+    // страниц, до JS приложения он не дотягивается. Здесь число осталось бы
+    // навсегда тем, каким я его вписал.
     var PREMIUM_FEATURES =
         '<ul class="meter-features">' +
-        '<li><span>\u2728</span> \u0411\u0435\u0437\u043B\u0438\u043C\u0438\u0442\u043D\u043E\u0435 \u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u0441 \u0424\u0440\u0435\u0434\u0438 24/7</li>' +
-        '<li><span>\uD83C\uDFAF</span> \u041F\u043E\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u0446\u0435\u043B\u0435\u0439 \u0438 \u0440\u0430\u0441\u0447\u0451\u0442 \u0448\u0430\u0433\u043E\u0432</li>' +
-        '<li><span>\uD83D\uDCC8</span> \u041F\u043E\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435 \u043B\u0438\u0447\u043D\u044B\u0445 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0439</li>' +
-        '<li><span>\uD83E\uDDE0</span> \u0415\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u044B\u0435 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0438 \u043D\u0430\u0432\u044B\u043A\u043E\u0432</li>' +
-        '<li><span>\uD83D\uDCCA</span> \u041E\u0442\u0441\u043B\u0435\u0436\u0438\u0432\u0430\u043D\u0438\u0435 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441\u0430 \u0438 \u043F\u0440\u0438\u0432\u044B\u0447\u0435\u043A</li>' +
-        '<li><span>\uD83C\uDFA4</span> \u0413\u043E\u043B\u043E\u0441\u043E\u0432\u044B\u0435 \u0441\u0435\u0430\u043D\u0441\u044B \u0441 AI-\u043F\u0441\u0438\u0445\u043E\u043B\u043E\u0433\u043E\u043C</li>' +
-        '<li><span>\uD83E\uDE9E</span> \u0417\u0435\u0440\u043A\u0430\u043B\u043E \u2014 \u0433\u043B\u0443\u0431\u043E\u043A\u0438\u0439 \u0430\u043D\u0430\u043B\u0438\u0437 \u043E\u0442\u043D\u043E\u0448\u0435\u043D\u0438\u0439</li>' +
-        '<li><span>\uD83C\uDFAD</span> \u0422\u0440\u0430\u043D\u0437\u0430\u043A\u0442\u043D\u044B\u0439 \u0430\u043D\u0430\u043B\u0438\u0437 \u043F\u043E \u0411\u0435\u0440\u043D\u0443</li>' +
-        '<li><span>\uD83C\uDF19</span> \u0413\u0438\u043F\u043D\u043E\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0441\u0435\u0441\u0441\u0438\u0438</li>' +
-        '<li><span>\uD83D\uDCD3</span> AI-\u0434\u043D\u0435\u0432\u043D\u0438\u043A \u0441 \u0440\u0435\u0444\u043B\u0435\u043A\u0441\u0438\u0435\u0439</li>' +
-        '<li><span>\uD83E\uDDD8</span> \u0423\u0442\u0440\u0435\u043D\u043D\u0438\u0435 \u0438 \u0432\u0435\u0447\u0435\u0440\u043D\u0438\u0435 \u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0438</li>' +
-        '<li><span>\uD83C\uDF05</span> \u041C\u043E\u0442\u0438\u0432\u0430\u0446\u0438\u043E\u043D\u043D\u044B\u0435 \u043F\u043E\u0441\u043B\u0430\u043D\u0438\u044F \u0438 \u0438\u0434\u0435\u0438 \u043D\u0430 \u0432\u044B\u0445\u043E\u0434\u043D\u044B\u0435</li>' +
+        '<li><span>\u2728</span> Разговор с Фреди без лимита — голосом и текстом</li>' +
+        '<li><span>\uD83C\uDF93</span> Весь Лекторий: курсы целиком, лекции с озвучкой</li>' +
+        '<li><span>\uD83E\uDDE0</span> Зеркало, дневник, гипноз, разбор по Берну</li>' +
         '</ul>';
+
+    // Кому платят. На стене про автора не было ни слова — а это первый
+    // молчаливый вопрос человека, который видит цену.
+    var AUTHOR_NOTE =
+        '<div class="meter-text" style="font-size:12px;opacity:0.75;margin-bottom:14px">' +
+        'Фреди сделал психолог <a href="/obo-mne/" target="_blank" rel="noopener" ' +
+        'style="color:#3b82ff">Андрей Мейстер</a> — двадцать лет практики, ' +
+        'Лекторий и блог о том же самом.</div>';
+
+    // Первая строка стены: имя, что человек только что делал, и почему
+    // разговор прервался именно сейчас.
+    function _personalLead(kind) {
+        var who = _name();
+        var did = _whatYouDid();
+        var lead = who ? _esc(who) + ', ' : '';
+        if (did) {
+            lead += 'вы только что ' + did + '. ';
+        }
+        lead += (kind === 'trial')
+            ? 'Бесплатное знакомство на этом заканчивается.'
+            : 'На сегодня бесплатное время вышло.';
+        return lead.charAt(0).toUpperCase() + lead.slice(1);
+    }
 
     function _track(event, data) {
         try {
@@ -310,22 +385,21 @@
         var emoji, title, mainText, timerHtml;
 
         if (trialExhausted) {
-            // \u0424\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0439 paywall: \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439 \u0437\u0430\u043F\u0430\u0441 \u0438\u0437\u0440\u0430\u0441\u0445\u043E\u0434\u043E\u0432\u0430\u043D.
-            emoji = '\uD83D\uDD13'; // \uD83D\uDD13
-            title = '\u0411\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0435 ' + trialLimit + ' \u043C\u0438\u043D\u0443\u0442 \u0437\u0430\u043A\u043E\u043D\u0447\u0438\u043B\u0438\u0441\u044C';
-            mainText =
-                '\u0421\u0442\u043E\u043B\u044C\u043A\u043E \u043C\u044B \u0434\u0430\u0451\u043C \u043D\u0430 \u0437\u043D\u0430\u043A\u043E\u043C\u0441\u0442\u0432\u043E \u2014 \u0438 \u0432\u044B \u0438\u0445 \u043F\u043E\u043B\u043D\u043E\u0441\u0442\u044C\u044E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043B\u0438.<br>' +
-                '\u0427\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432, \u043E\u0442\u043A\u0440\u043E\u0439\u0442\u0435 Premium.';
+            // Финальная стена: бесплатный запас израсходован.
+            emoji = '\uD83D\uDD13';
+            title = 'Бесплатные ' + trialLimit + ' минут закончились';
+            mainText = _personalLead('trial') +
+                '<br>С Premium разговор продолжается без счётчика.';
             timerHtml = '';
         } else {
-            // \u0414\u043D\u0435\u0432\u043D\u043E\u0439 \u043B\u0438\u043C\u0438\u0442 \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D, \u043D\u043E trial-\u0434\u043D\u0438 \u0435\u0449\u0451 \u0435\u0441\u0442\u044C.
-            emoji = '\u23F1\uFE0F'; // \u23F1
-            title = '10 \u043C\u0438\u043D\u0443\u0442 \u0441\u0435\u0433\u043E\u0434\u043D\u044F \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D\u044B';
-            mainText =
-                '\u0414\u043D\u0435\u0432\u043D\u043E\u0439 \u043B\u0438\u043C\u0438\u0442 \u0432 ' + limit + ' \u043C\u0438\u043D\u0443\u0442 \u2014 \u043F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0441\u044F \u0432 00:00 UTC.<br>' +
-                '\u041C\u043E\u0436\u043D\u043E \u0436\u0434\u0430\u0442\u044C \u0438\u043B\u0438 \u043E\u0442\u043A\u0440\u044B\u0442\u044C Premium \u2014 \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432.';
+            // Дневной лимит исчерпан, общий запас ещё есть.
+            emoji = '\u23F1\uFE0F';
+            title = 'На сегодня время вышло';
+            mainText = _personalLead('daily') +
+                '<br>Завтра снова будут ' + limit + ' бесплатных минут — ' +
+                'или можно продолжить прямо сейчас.';
             timerHtml = minutesUntilReset > 0
-                ? '<div class="meter-timer" id="meterTimer">\u041D\u043E\u0432\u044B\u0439 \u0434\u0435\u043D\u044C \u0447\u0435\u0440\u0435\u0437 ' + _formatResetCountdown(minutesUntilReset) + '</div>'
+                ? '<div class="meter-timer" id="meterTimer">Новый день через ' + _formatResetCountdown(minutesUntilReset) + '</div>'
                 : '';
         }
 
@@ -338,8 +412,9 @@
                 '<div class="meter-title">' + title + '</div>' +
                 timerHtml +
                 '<div class="meter-text">' + mainText + '</div>' +
-                '<div class="meter-features-title">\u0421 Premium \u0424\u0440\u0435\u0434\u0438 \u043D\u0435 \u0443\u0441\u0442\u0430\u0451\u0442:</div>' +
+                '<div class="meter-features-title">Что даёт Premium:</div>' +
                 PREMIUM_FEATURES +
+                AUTHOR_NOTE +
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">\u2728 Premium \u2014 990 \u20BD/\u043C\u0435\u0441, \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432</button>' +
                 (trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
@@ -419,9 +494,14 @@
         var title = kind === 'trial'
             ? 'Бесплатных минут осталось ~' + rem
             : 'Осталось ~' + rem + ' мин на сегодня';
-        var text = kind === 'trial'
-            ? 'Это остаток бесплатного знакомства. С Premium Фреди не устаёт — общайтесь сколько нужно, голосом и текстом.'
-            : 'Дальше — дневной лимит бесплатного режима, он обновится в полночь. С Premium Фреди не устаёт — общайтесь сколько нужно, голосом и текстом.';
+        var did = _whatYouDid();
+        var who = _name();
+        var text = (who ? _esc(who) + ', ' : '')
+            + (did ? 'вы ' + did + ' — и до конца ' : 'до конца ')
+            + (kind === 'trial' ? 'бесплатного знакомства' : 'сегодняшнего времени')
+            + ' осталось около ' + rem + ' мин. '
+            + 'С Premium счётчик исчезает: разговор без лимита, весь Лекторий с озвучкой и все инструменты.';
+        text = text.charAt(0).toUpperCase() + text.slice(1);
 
         var overlay = document.createElement('div');
         overlay.className = 'meter-overlay';
@@ -432,6 +512,7 @@
                 '<div class="meter-title">' + title + '</div>' +
                 '<div class="meter-text">' + text + '</div>' +
                 PREMIUM_FEATURES +
+                AUTHOR_NOTE +
                 '<button class="meter-btn meter-btn-primary" id="meterUpsellSub">✨ Premium — 990 ₽/мес, без лимитов</button>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';

@@ -242,7 +242,11 @@
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,
         // ловит и внутренние (feature_opened/message_sent), и внешние события.
-        try { window.dispatchEvent(new CustomEvent('fredi:track', { detail: { event: event } })); } catch (e) {}
+        // data тоже наружу: стена оплаты по ней узнаёт, чем человек был
+        // занят перед тем, как упереться в лимит, и говорит про это, а не
+        // показывает витрину из двенадцати функций. Старые слушатели
+        // читают только detail.event — им прибавка не мешает.
+        try { window.dispatchEvent(new CustomEvent('fredi:track', { detail: { event: event, data: data || {} } })); } catch (e) {}
         var payload={
             user_id:UID(),
             session_id:SID,
