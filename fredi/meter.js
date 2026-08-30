@@ -166,8 +166,20 @@
             _criticalShown = true;
             _trackWarning('critical', rem, kind);
             setTimeout(function() { _criticalShown = false; }, 120000);
-            if (!_upsellShownThisSession() && _dismissedAgo() >= PAYWALL_QUIET_SEC) {
+            // Момент предложения. Новичку — никогда: он ещё не вернулся ни
+            // разу. Вернувшемуся — только если разговор идёт (три сообщения
+            // и больше): тогда Premium снимает помеху, а не берёт плату
+            // за вход. В остальных случаях — тихий тост.
+            var moment_ok = !_newcomer() && _engagedNow();
+            if (moment_ok && !_upsellShownThisSession() && _dismissedAgo() >= PAYWALL_QUIET_SEC) {
                 showUpsellCard(check, kind);
+            } else if (!moment_ok) {
+                _track('meter_upsell_suppressed', {
+                    remaining_minutes: rem, kind: kind,
+                    reason: _newcomer() ? 'newcomer' : 'no_conversation',
+                    visits: _visits(), exchanges: _exchanges,
+                });
+                _toast('\u23F1 Осталось ~' + Math.max(1, Math.round(rem)) + ' мин', 'info');
             } else {
                 _track('meter_upsell_suppressed', {
                     remaining_minutes: rem,
@@ -220,6 +232,26 @@
     // из двенадцати функций — список не покупают, покупают продолжение
     // начатого. За неделю: 101 показ стены, один клик, ноль оплат.
     var _lastAct = { kind: '', name: '', ts: 0 };
+    var _exchanges = 0;          // сколько сообщений человек написал за сессию
+
+    // Кому вообще уместно показывать цену.
+    //
+    // Сейчас стена приходит ко всем одинаково: и к тому, кто зашёл на девять
+    // секунд, и к тому, кто ходит двадцать седьмой раз. За неделю это дало
+    // 101 показ, один клик и ноль оплат. Возврат — единственный честный
+    // сигнал намерения, который у нас есть: человек, пришедший второй раз,
+    // сказал «мне это нужно» действием, а не кликом. Новичку в первую
+    // сессию цену не показываем вообще — только «на сегодня всё».
+    function _visits() {
+        try { return parseInt(localStorage.getItem('fredi_visits_count') || '1', 10) || 1; }
+        catch (e) { return 1; }
+    }
+    function _authed() { return !!window.IS_AUTHENTICATED; }
+    function _newcomer() { return !_authed() && _visits() <= 1; }
+    // Разговор состоялся — три и больше сообщений за сессию. Предложение
+    // в середине живого разговора читается как «уберём помеху», а на
+    // втором сообщении — как «плати за вход».
+    function _engagedNow() { return _exchanges >= 3; }
     var FEATURE_PHRASE = {
         kontur: 'разбирались, о чём умеете думать',
         mirrors: 'разбирали отношения в «Зеркале»',
@@ -246,6 +278,7 @@
                 _lastAct = { kind: 'feature', name: String(d.feature), ts: Date.now() };
             } else if (ev === 'message_sent') {
                 _lastAct = { kind: 'chat', name: '', ts: Date.now() };
+                _exchanges++;
             }
         });
     } catch (e) {}
@@ -359,6 +392,39 @@
         _injectMeterStyles();
         var existing = document.getElementById('meterOverlay');
         if (existing) existing.remove();
+
+        // Новичок в первой сессии цены не видит. Он ещё ничего не получил,
+        // и счёт за десять минут знакомства читается как наказание —
+        // отсюда 101 закрытая стена при одном клике. Ему говорим только
+        // то, что правда: на сегодня всё, завтра снова открыто.
+        if (_newcomer()) {
+            _track('meter_blocked_soft', {
+                block_reason: (data && data.block_reason) || '',
+                visits: _visits(), exchanges: _exchanges,
+            });
+            var soft = document.createElement('div');
+            soft.className = 'meter-overlay';
+            soft.id = 'meterOverlay';
+            soft.innerHTML =
+                '<div class="meter-modal">' +
+                    '<div class="meter-emoji">\u23F1\uFE0F</div>' +
+                    '<div class="meter-title">На сегодня всё</div>' +
+                    '<div class="meter-text">' + _personalLead('daily') +
+                        '<br>Завтра Фреди снова свободен — приходите, ' +
+                        'разговор продолжится с этого места.</div>' +
+                    '<button class="meter-btn meter-btn-secondary" id="meterSoftClose">Понятно</button>' +
+                '</div>';
+            document.body.appendChild(soft);
+            document.getElementById('meterSoftClose').onclick = function () {
+                _track('meter_closed', { reason: 'soft_ok' });
+                _rememberDismiss();
+                soft.remove();
+            };
+            soft.onclick = function (e) {
+                if (e.target === soft) { _rememberDismiss(); soft.remove(); }
+            };
+            return;
+        }
 
         var minutesUntilReset = data.minutes_until_reset || 0;
         var limit = data.limit_minutes || 10;
