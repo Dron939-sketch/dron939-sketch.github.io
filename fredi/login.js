@@ -580,6 +580,11 @@
             else if (pass) pass.focus();
         }, 50);
 
+        // Отметка «просили аккаунт» — по факту показа. От неё считается
+        // трёхдневная пауза для тех, кто прошёл тест (см. _maybeShowOnLoad).
+        if (_lastSource === 'after_value' || _lastSource === 'app_start') {
+            try { localStorage.setItem('fredi_auth_asked_at', String(Date.now())); } catch (e) {}
+        }
         _track('auth_modal_opened', {
             mode: mode,
             source: _lastSource,
@@ -984,6 +989,37 @@
             // Не блокируем вход: даём увидеть Фреди/дашборд, спросим имя после
             // первого действия (см. _armDeferredNamePrompt).
             _armDeferredNamePrompt(hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh'));
+            return;
+        }
+
+        // Человек, прошедший тест и оставшийся анонимом, — самый очевидный
+        // кандидат на аккаунт: он вложил в тест около получаса и получил
+        // профиль, который живёт только в этом браузере. Экспоненциальная
+        // каденция ниже про него забывала: в аналитике аноним с ПРОЙДЕННЫМ
+        // ТЕСТОМ пришёл в двадцать седьмой раз и снова получил
+        // auth_modal_auto_skipped=off_cadence, потому что рубежи стоят на
+        // 20 и 40. Для таких каденции нет — есть только «не чаще раза в три
+        // дня», и отсчёт идёт от показа, а не от закрытия: иначе тот, кто
+        // молча ушёл, видел бы просьбу каждый визит.
+        var hasTest = false;
+        try {
+            var _k = Object.keys(localStorage);
+            for (var _i = 0; _i < _k.length; _i++) {
+                if (_k[_i].indexOf('test_results_') === 0) { hasTest = true; break; }
+            }
+        } catch (e) {}
+        if (hasTest) {
+            var askedAt = 0;
+            try { askedAt = parseInt(localStorage.getItem('fredi_auth_asked_at') || '0', 10); } catch (e) {}
+            if (askedAt && (Date.now() - askedAt) < 3 * 24 * 60 * 60 * 1000) {
+                _track('auth_modal_auto_skipped', {
+                    reason: 'asked_recently', visits: visits,
+                    hours_since: Math.round((Date.now() - askedAt) / 3600000),
+                    user_kind: 'test_done_anon'
+                });
+                return;
+            }
+            _armDeferredAuthPrompt('test_done_anon', visits);
             return;
         }
 
