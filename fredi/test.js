@@ -1371,6 +1371,11 @@ const Test = {
         this.deepAnswers=[]; this.deepPatterns=null; this.profileData=null;
         this.discrepancies=[]; this.clarifyingAnswers=[]; this.clarifyingQuestions=[]; this.clarifyingCurrent=0;
         this.aiGeneratedProfile=null; this.psychologistThought=null;
+        // Новый заход — новое прохождение: событие снова можно писать,
+        // рекомендации — снова запрашивать. Без сброса второго флага
+        // человек, прошедший тест дважды за сессию, во второй раз
+        // оставался без рекомендаций и без последней ступени воронки.
+        this._testCompletedTracked=false; this._recsRequested=false;
         this.context={city:null,gender:null,age:null,weather:null,isComplete:false,name:null};
     },
 
@@ -2329,9 +2334,18 @@ ${this.getStage3Interpretation()}
 
         // Инструментирование: финальная точка воронки. Различаем anon и authed —
         // именно здесь должна срабатывать первая регистрация для anon-юзеров.
+        //
+        // Ровно один раз на прохождение. Экран профиля рисуется не только
+        // по окончании теста: сюда приходят кнопка «🧠 К ПРОФИЛЮ», возврат
+        // после AI-профиля, который догрузился позже, и запасные ветки на
+        // ошибку сети — и каждый такой заход писал ещё один test_completed.
+        // Последняя ступень воронки от этого выглядела полнее, чем есть, и
+        // конверсия в подписку считалась от завышенного числа. Флаг снимает
+        // reset() — повторное прохождение теста событие пишет заново.
         const isAuthed = !!(window.FrediAuth && typeof window.FrediAuth.isAuthed === 'function' && window.FrediAuth.isAuthed());
         try {
-            if (window.FrediTracker?.track) {
+            if (window.FrediTracker?.track && !this._testCompletedTracked) {
+                this._testCompletedTracked = true;
                 window.FrediTracker.track('test_completed', {
                     is_authed: isAuthed,
                     has_ai_profile: !!this.aiGeneratedProfile,
