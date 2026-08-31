@@ -8086,6 +8086,62 @@
    "mins": 24
   },
   {
+   "slug": "lekciya-strah-1-signalizaciya",
+   "title": "Лекция 1. Страх, тревога, фобия: три сигнала одной системы",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-2-izbeganie",
+   "title": "Лекция 2. Почему страх не гаснет сам: избегание и его маски",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-3-telo",
+   "title": "Лекция 3. Тело страха: буря в исправном организме",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-4-mysli",
+   "title": "Лекция 4. Мысли страха: как прогноз выдаёт себя за факт",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-5-ekspoziciya",
+   "title": "Лекция 5. Экспозиция: лестница, по которой выходят из страха",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-6-socialnye",
+   "title": "Лекция 6. Социальные страхи: когда пугает не ситуация, а зрители",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-7-telo-katastrofy",
+   "title": "Лекция 7. Страхи тела и катастроф: паника, полёты, болезни",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-strah-8-svoya-sistema",
+   "title": "Лекция 8. Своя система: замер на выходе и что делать, когда страх вернётся",
+   "rubric": "lektorij",
+   "level": "m",
+   "mins": 16
+  },
+  {
    "slug": "lekciya-stress-1-chto-takoe-stress",
    "title": "Лекция 1. Что такое стресс: не враг, а сигнал тела",
    "rubric": "lektorij",
