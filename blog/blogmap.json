@@ -960,6 +960,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-perestat-nakruchivat-sebya",
+   "title": "Как перестать накручивать себя: механика накрутки и стоп-краны",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 11
+  },
+  {
    "slug": "kak-perezhit-izmenu",
    "title": "Как пережить измену: что делать в первые дни и что решать потом",
    "rubric": "otnosheniya",
@@ -9248,6 +9255,13 @@
    "mins": 28
   },
   {
+   "slug": "otnosheniya-na-rasstoyanii",
+   "title": "Отношения на расстоянии: что их убивает на самом деле и как их вести",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 11
+  },
+  {
    "slug": "panicheskaya-ataka-ili-serdechnyj-pristup",
    "title": "Паническая атака или сердечный приступ: как отличить и что делать",
    "rubric": "strahi",
@@ -9484,6 +9498,13 @@
    "rubric": "obshchestvo",
    "level": "m",
    "mins": 20
+  },
+  {
+   "slug": "poslerodovaya-depressiya-priznaki",
+   "title": "Послеродовая депрессия: как отличить от усталости и что делать",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 12
   },
   {
    "slug": "postzapadnyi-chelovek-krizis-pokoleniya-2026",
@@ -10284,6 +10305,13 @@
    "mins": 12
   },
   {
+   "slug": "sociofobiya-ili-zastenchivost",
+   "title": "Чем социофобия отличается от застенчивости",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 11
+  },
+  {
    "slug": "socseti-i-psihika-50-issledovanij",
    "title": "Соцсети и психика: 50 исследований 2020-2026 — что мы узнали — Андрей Мейстер",
    "rubric": "obshchestvo",
@@ -10387,6 +10415,13 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 14
+  },
+  {
+   "slug": "strah-letat-aerofobiya",
+   "title": "Страх летать: как устроена аэрофобия и как всё-таки летать",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 11
   },
   {
    "slug": "strah-smerti-kak-s-nim-zhit",
@@ -10697,6 +10732,13 @@
    "mins": 22
   },
   {
+   "slug": "trudogolizm-priznaki-i-chto-delat",
+   "title": "Трудоголизм: почему это зависимость, а не трудолюбие, и что делать",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 11
+  },
+  {
    "slug": "trudolyubie-vs-proizvoditelnost",
    "title": "Трудолюбие vs производительность: что измеряют люди, объявляющие трудолюбие «обманом»",
    "rubric": "otnosheniya",
@@ -10876,6 +10918,13 @@
    "title": "Выход на пенсию: почему свобода ощущается как потеря — и что с этим делать",
    "rubric": "emocii",
    "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "vzroslye-deti-alkogolikov-vda",
+   "title": "Взрослые дети алкоголиков: как детство рядом с бутылкой пишет взрослую жизнь",
+   "rubric": "roditeli",
+   "level": "m",
    "mins": 12
   },
   {
