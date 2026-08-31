@@ -1016,13 +1016,14 @@ class VoiceTransport {
         this._clearWsResponseTimer();
         if (this.onThinking) this.onThinking(false);
         const d = data || {};
-        const payload = {
-            limit_minutes: d.limit_minutes,
-            used_minutes_today: d.used_minutes_today,
-            minutes_until_reset: d.minutes_until_reset,
-            free_days_used: d.free_days_used,
+        // Отдаём стене ВСЁ, что прислал сервер. Раньше payload собирался
+        // из шести полей руками и терял block_reason с trial-полями —
+        // человеку с пустым общим запасом стена говорила «завтра снова
+        // будут минуты», которых не будет (см. аналитику 31.08: блок
+        // daily и блок trial одному юзеру с разницей в 12 секунд).
+        const payload = Object.assign({}, d, {
             trial_exhausted: !!(d.trial_exhausted || d.reason === 'trial_exhausted'),
-        };
+        });
         try {
             if (window.FrediMeter && typeof window.FrediMeter.showFatigueModal === 'function') {
                 window.FrediMeter.showFatigueModal(payload);
