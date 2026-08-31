@@ -90,7 +90,7 @@
         // осмысленного действия; снуз ему нужен ровно так же, иначе
         // закрытая модалка возвращалась бы каждый визит.
         if ((_lastSource === 'app_start' || _lastSource === 'after_value')
-                && !window.IS_AUTHENTICATED) {
+                && !_lastMandatory && !window.IS_AUTHENTICATED) {
             try { sessionStorage.setItem('fredi_auth_skipped', '1'); } catch (e) {}
             try { localStorage.setItem('fredi_auth_dismissed_at', String(Date.now())); } catch (e) {}
         }
@@ -144,22 +144,23 @@
         })();
 
         var title = isRegister
-            ? (hasAnonData ? 'Сохраните прогресс' : 'Добро пожаловать')
+            ? (hasAnonData ? 'Сохраните прогресс' : 'Знакомимся')
             : 'Вход';
-        // Сабтайтл подстраиваем под контекст: при автопоказе на старте
-        // и наличии данных — акцент на «не потерять». Просто новичкам —
-        // объяснение «зачем». В обычных вызовах из settings — короче.
+        // Сабтайтл подстраиваем под контекст. Фреди работает по подписке,
+        // и это говорится прямо на пороге: человек должен знать условия до того,
+        // как вложится в разговор, — а не узнать о них от стены на десятой
+        // минуте.
         var subtitle;
         if (isRegister) {
             if (fromAppStart && hasAnonData) {
-                subtitle = 'У вас уже есть данные на этом устройстве — давайте привяжем их к аккаунту, чтобы они не терялись и были доступны с любого устройства. Email + 4-значный пин-код.';
+                subtitle = 'Фреди теперь работает с аккаунтами: имя, почта и пин-код из 4 цифр. Данные с этого устройства привяжутся к аккаунту и будут доступны отовсюду. После регистрации — 10 минут разговора бесплатно, дальше подписка 990 ₽ в месяц.';
             } else if (fromAppStart) {
-                subtitle = 'Чтобы прогресс, тесты и переписка с Фреди не терялись и были доступны с любого устройства. Email + 4-значный пин-код — больше ничего не нужно.';
+                subtitle = 'Фреди знакомится по имени: имя, почта и пин-код из 4 цифр — это всё. После регистрации — 10 минут разговора бесплатно, чтобы понять, ваше ли это. Дальше подписка 990 ₽ в месяц.';
             } else {
-                subtitle = 'Email станет вашим логином. Придумайте пин-код из 4 цифр.';
+                subtitle = 'Email станет вашим логином. Придумайте пин-код из 4 цифр. После регистрации — 10 минут разговора бесплатно, дальше 990 ₽ в месяц.';
             }
         } else {
-            subtitle = 'Войдите, чтобы работать с Фреди с любого устройства.';
+            subtitle = 'Войдите, чтобы продолжить разговор с Фреди.';
         }
 
         var nameField = isRegister
@@ -175,12 +176,13 @@
             : '';
 
         var primaryLabel = isRegister ? 'Создать аккаунт' : 'Войти';
-        // Раньше на app_start модалка была обязательной (без X, без закрытия) —
-        // и это давало bounce: аноним видел стену регистрации на входе и уходил
-        // за 6 секунд (см. аналитику auth_modal_auto_shown → session_end ~6с).
-        // «Ценность → просьба»: модалку показываем, но НЕ запираем — её всегда
-        // можно закрыть и продолжить пользоваться.
-        var isMandatory = false;
+        // Решение владельца от 31.08.2026: Фреди платный, инкогнито нет —
+        // модалка на входе обязательная (без X, overlay и Escape не
+        // закрывают). Прошлый заход в обязательность давал 6-секундные
+        // bounce-сессии, поэтому сабтайтл выше честно называет условия
+        // сразу: 10 минут бесплатно, дальше 990 ₽/мес — человек решает
+        // на пороге, а не разгадывает, зачем от него хотят почту.
+        var isMandatory = _lastMandatory;
         var closeBtnHtml = isMandatory
             ? ''
             : '<button class="fa-close" id="faClose" aria-label="Закрыть">✕</button>';
@@ -501,19 +503,22 @@
     // вороночные события, чтобы видеть, откуда пришёл юзер
     // (test_complete / settings / dashboard / иначе).
     var _lastSource = null;
+    // Обязательный режим: модалку нельзя закрыть, пока человек не
+    // зарегистрируется или не войдёт. Ставится через opts.mandatory
+    // и переживает переключение вкладок Вход/Регистрация.
+    var _lastMandatory = false;
 
     function _open(mode, opts) {
         opts = opts || {};
         if (opts.source) _lastSource = opts.source;
+        if (opts.mandatory !== undefined) _lastMandatory = !!opts.mandatory;
         _injectStyles();
         _closeModal();
         var wrap = document.createElement('div');
         wrap.innerHTML = _buildHtml(mode);
         document.body.appendChild(wrap.firstChild);
 
-        // Модалка на app_start больше не обязательная (см. _buildHtml выше):
-        // всегда даём закрыть, чтобы не терять анонимов на входе.
-        var isMandatory = false;
+        var isMandatory = _lastMandatory;
 
         // Кнопка X и Skip существуют только в опциональном режиме.
         var faCloseBtn = document.getElementById('faClose');
@@ -856,254 +861,25 @@
         } catch (e) { return 1; }
     }
 
-    function _showNamePrompt() {
-        // Минимальная onboarding-модалка для 1-го визита: одно поле «Имя».
-        // Можно пропустить — не блокируем юзера. Цель: снизить friction
-        // с 90% bounce (см. аналитику auth_modal_auto_shown vs register_success).
-        if (document.getElementById('fredi-name-prompt')) return;
-        // Ставим отметку «показан» сразу при показе (а не только при сохранении):
-        // иначе быстрый reload страницы в той же сессии заново вешает промпт
-        // (в аналитике был двойной name_prompt_shown за 1 сек).
-        try { sessionStorage.setItem('fredi_name_prompt_seen', '1'); } catch (e) {}
-        var overlay = document.createElement('div');
-        overlay.id = 'fredi-name-prompt';
-        overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)';
-        overlay.innerHTML = ''
-            + '<div style="background:var(--surface,#1a1a1a);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:28px;max-width:380px;width:100%;text-align:center;font-family:inherit">'
-            + '  <div style="font-size:36px;margin-bottom:6px">⭐</div>'
-            + '  <div style="font-size:18px;font-weight:700;color:var(--text-primary,#fff);margin-bottom:8px">Привет, я Фреди.</div>'
-            + '  <div style="font-size:13px;color:var(--text-secondary,rgba(255,255,255,0.6));line-height:1.5;margin-bottom:20px">Виртуальный психолог. Без обид и без памяти.<br>Как тебя называть?</div>'
-            + '  <input id="fredi-name-input" type="text" maxlength="40" autocomplete="given-name" placeholder="Твоё имя" style="width:100%;padding:13px 15px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:12px;color:var(--text-primary,#fff);font:15px inherit;box-sizing:border-box;outline:none;text-align:center;margin-bottom:14px">'
-            + '  <button id="fredi-name-continue" style="display:block;width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#3b82ff,#6366f1);color:#fff;font:700 14px inherit;cursor:pointer;margin-bottom:8px">Продолжить →</button>'
-            + '  <button id="fredi-name-skip" style="display:block;width:100%;padding:9px;border:none;border-radius:8px;background:transparent;color:var(--text-secondary,rgba(255,255,255,0.4));font:13px inherit;cursor:pointer">Пропустить</button>'
-            + '</div>';
-        document.body.appendChild(overlay);
-        var input = document.getElementById('fredi-name-input');
-        try { input.focus(); } catch (e) {}
-
-        async function _saveAndClose(name) {
-            var uid = (window.CONFIG && window.CONFIG.USER_ID) || window.USER_ID;
-            var trimmed = (name || '').trim();
-            if (trimmed && uid) {
-                try {
-                    var apiBase = (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
-                    await fetch(apiBase + '/api/save-context', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ user_id: uid, context: { name: trimmed } })
-                    });
-                    try { window.CONFIG.USER_NAME = trimmed; window.CURRENT_USER_NAME = trimmed; } catch (e) {}
-                } catch (e) { console.warn('save name failed', e); }
-            }
-            try { sessionStorage.setItem('fredi_name_prompt_seen', '1'); } catch (e) {}
-            _track('name_prompt_completed', { skipped: !trimmed });
-            overlay.remove();
-            // Перерисуем дашборд, если он уже на экране — чтобы подставилось имя в hero.
-            if (typeof window.renderDashboard === 'function') {
-                try { window.renderDashboard(); } catch (e) {}
-            }
-        }
-
-        document.getElementById('fredi-name-continue').addEventListener('click', function () {
-            _saveAndClose(input.value);
-        });
-        document.getElementById('fredi-name-skip').addEventListener('click', function () {
-            _saveAndClose('');
-        });
-        input.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter') { e.preventDefault(); _saveAndClose(input.value); }
-        });
-
-        _track('name_prompt_shown', {});
-    }
-
-    // «Ценность → просьба»: НЕ показываем имя-промпт на холодном старте
-    // (в аналитике это давало 4-6-секундные bounce-сессии: открыл → стена →
-    // ушёл). Ждём первого реального действия — открыл игру/чат/тест/сообщение —
-    // и только тогда мягко спрашиваем имя. Запасной триггер — заметное
-    // пребывание (dwell), чтобы всё же спросить у тех, кто просто читает.
-    function _armDeferredNamePrompt(userKind) {
-        var armedAt = Date.now();
-        var fired = false;
-        var timer = null;
-
-        // «Действия ценности». Первые 1.5 с после старта игнорируем — чтобы не
-        // сработать на шумных событиях холодной загрузки.
-        var ENGAGE = { feature_opened: 1, message_sent: 1, test_start_clicked: 1,
-                       dashboard_cta_clicked: 1, game_round_start: 1, spiral_open: 1 };
-
-        function onTrack(e) {
-            var ev = e && e.detail && e.detail.event;
-            if (!fired && ev && ENGAGE[ev] && (Date.now() - armedAt) > 1500) fire('act:' + ev);
-        }
-
-        function fire(reason) {
-            if (fired) return;
-            fired = true;
-            try { window.removeEventListener('fredi:track', onTrack); } catch (e) {}
-            if (timer) { try { clearTimeout(timer); } catch (e) {} }
-            try { if (sessionStorage.getItem('fredi_name_prompt_seen') === '1') return; } catch (e) {}
-            if (window.IS_AUTHENTICATED) return;
-            _track('name_prompt_auto_shown', { visit: 1, user_kind: userKind, trigger: reason });
-            _showNamePrompt();
-        }
-
-        window.addEventListener('fredi:track', onTrack);
-        // Запасной путь: спросим имя после 75 с пребывания, даже если человек
-        // ничего явно не открыл (просто читает дашборд).
-        timer = setTimeout(function () { fire('dwell'); }, 75000);
-    }
-
+    // Гейт на входе (решение владельца от 31.08.2026): Фреди работает
+    // только с аккаунтами. Всё, что здесь стояло раньше — мягкий вопрос
+    // об имени, каденция показов 2/5/10/20, «ценность → просьба», —
+    // имело смысл, пока анониму было что показывать. Теперь без аккаунта
+    // сервер не отвечает (block_reason='auth'), и оставлять человека
+    // гулять по мёртвому интерфейсу хуже, чем сказать условия сразу.
     function _maybeShowOnLoad() {
         if (window.IS_AUTHENTICATED) return;
         try {
-            if (sessionStorage.getItem('fredi_auth_skipped') === '1') return;
-        } catch (e) {}
-        try {
             var p = new URLSearchParams(window.location.search);
-            if (p.get('reset_token')) return;
+            if (p.get('reset_pin') || p.get('reset_token')) return;
         } catch (e) {}
-
-        var hasUid = false;
-        var hasData = false;
-        try {
-            hasUid = !!localStorage.getItem('fredi_user_id');
-            var keys = Object.keys(localStorage);
-            for (var i = 0; i < keys.length; i++) {
-                var k = keys[i];
-                if (k.indexOf('test_results_') === 0
-                    || k.indexOf('trainer_skill_') === 0
-                    || k.indexOf('dt_reflections_') === 0
-                    || k.indexOf('sc_plan_') === 0) { hasData = true; break; }
-            }
-        } catch (e) {}
-
-        var visits = _incrementVisit();
-
-        // 1-й визит — мягкий onboarding: спрашиваем только имя (или пропускаем).
-        // Полноценную auth-модалку показываем только начиная со 2-го визита,
-        // когда юзер уже немного знаком с Фреди и есть смысл сохранить прогресс.
-        if (visits <= 1) {
-            // Если в этой же сессии уже показывали (например ребут страницы) — не дёргаем повторно.
-            try { if (sessionStorage.getItem('fredi_name_prompt_seen') === '1') return; } catch (e) {}
-            // Не блокируем вход: даём увидеть Фреди/дашборд, спросим имя после
-            // первого действия (см. _armDeferredNamePrompt).
-            _armDeferredNamePrompt(hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh'));
-            return;
-        }
-
-        // Человек, прошедший тест и оставшийся анонимом, — самый очевидный
-        // кандидат на аккаунт: он вложил в тест около получаса и получил
-        // профиль, который живёт только в этом браузере. Экспоненциальная
-        // каденция ниже про него забывала: в аналитике аноним с ПРОЙДЕННЫМ
-        // ТЕСТОМ пришёл в двадцать седьмой раз и снова получил
-        // auth_modal_auto_skipped=off_cadence, потому что рубежи стоят на
-        // 20 и 40. Для таких каденции нет — есть только «не чаще раза в три
-        // дня», и отсчёт идёт от показа, а не от закрытия: иначе тот, кто
-        // молча ушёл, видел бы просьбу каждый визит.
-        var hasTest = false;
-        try {
-            var _k = Object.keys(localStorage);
-            for (var _i = 0; _i < _k.length; _i++) {
-                if (_k[_i].indexOf('test_results_') === 0) { hasTest = true; break; }
-            }
-        } catch (e) {}
-        if (hasTest) {
-            var askedAt = 0;
-            try { askedAt = parseInt(localStorage.getItem('fredi_auth_asked_at') || '0', 10); } catch (e) {}
-            if (askedAt && (Date.now() - askedAt) < 3 * 24 * 60 * 60 * 1000) {
-                _track('auth_modal_auto_skipped', {
-                    reason: 'asked_recently', visits: visits,
-                    hours_since: Math.round((Date.now() - askedAt) / 3600000),
-                    user_kind: 'test_done_anon'
-                });
-                return;
-            }
-            _armDeferredAuthPrompt('test_done_anon', visits);
-            return;
-        }
-
-        // 24-часовой snooze после dismiss. Если юзер недавно закрыл модал —
-        // не показываем его снова при каждом следующем визите.
-        try {
-            var dismissedAt = parseInt(localStorage.getItem('fredi_auth_dismissed_at') || '0', 10);
-            if (dismissedAt && (Date.now() - dismissedAt) < 24 * 60 * 60 * 1000) {
-                _track('auth_modal_auto_skipped', {
-                    reason: 'recent_dismiss',
-                    hours_since: Math.round((Date.now() - dismissedAt) / 3600000),
-                    visits: visits,
-                    user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh')
-                });
-                return;
-            }
-        } catch (e) {}
-
-        // Экспоненциальная каденция: показываем модал на визитах 2, 5, 10, 20, 40, 80…
-        // Вместо «каждый визит начиная со 2-го». У того же анона мы можем
-        // встретиться с просьбой о регистрации не 12 раз, а 3-4 за месяц.
-        // Анонам без какой-либо активности (hasData=false) — каденцию ещё реже:
-        // им продукт ещё не доказал ценность, мы не имеем права требовать аккаунт.
-        var cadenceFull   = [2, 5, 10, 20, 40, 80, 160];
-        var cadenceSilent = [5, 20, 80];
-        var cadence = hasData ? cadenceFull : cadenceSilent;
-        if (cadence.indexOf(visits) === -1) {
-            _track('auth_modal_auto_skipped', {
-                reason: 'off_cadence',
-                visits: visits,
-                user_kind: hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh')
-            });
-            return;
-        }
-
-        // Не на старте. Раньше модалка открывалась сразу после session_start —
-        // до того, как человек хоть что-то увидел: в аналитике это выглядело
-        // как session_start, auth_modal_auto_shown и закрытие крестиком, а за
-        // неделю из 29 посетителей не зарегистрировался ни один. Просьба об
-        // аккаунте имеет смысл после первой ценности, а не до неё, поэтому
-        // ждём того же «действия ценности», что и мягкий вопрос об имени.
-        _armDeferredAuthPrompt(
-            hasData ? 'returning_anon' : (hasUid ? 'returning_no_data' : 'fresh'),
-            visits);
-    }
-
-    // Тот же приём, что и _armDeferredNamePrompt: ждём первого осмысленного
-    // действия, а если человек просто читает дашборд — спрашиваем через
-    // полторы минуты. Раньше здесь стоял немедленный показ.
-    function _armDeferredAuthPrompt(userKind, visits) {
-        var armedAt = Date.now();
-        var fired = false;
-        var timer = null;
-        var ENGAGE = { feature_opened: 1, message_sent: 1, ai_response_received: 1,
-                       test_start_clicked: 1, dashboard_cta_clicked: 1,
-                       game_round_start: 1, spiral_open: 1 };
-
-        function onTrack(e) {
-            var ev = e && e.detail && e.detail.event;
-            if (!fired && ev && ENGAGE[ev] && (Date.now() - armedAt) > 1500) fire('act:' + ev);
-        }
-
-        function fire(reason) {
-            if (fired) return;
-            fired = true;
-            try { window.removeEventListener('fredi:track', onTrack); } catch (e) {}
-            if (timer) { try { clearTimeout(timer); } catch (e) {} }
-            if (window.IS_AUTHENTICATED) return;
-            // Пока ждали, человек мог сам открыть вход или упереться в стену
-            // оплаты — второй модалкой поверх не лезем.
-            if (document.getElementById('faAuthModal')) return;
-            if (document.getElementById('meterOverlay')) return;
-            try { if (sessionStorage.getItem('fredi_auth_skipped') === '1') return; } catch (e) {}
-            _track('auth_modal_auto_shown', {
-                source: 'after_value',
-                trigger: reason,
-                user_kind: userKind,
-                visits: visits
-            });
-            _open('register', { source: 'after_value' });
-        }
-
-        window.addEventListener('fredi:track', onTrack);
-        timer = setTimeout(function () { fire('dwell'); }, 90000);
+        _incrementVisit();
+        // Возвращаем человека на ту вкладку, где он уже был: если в этом
+        // браузере сохранён email — он скорее всего регистрировался,
+        // и «Вход» экономит ему шаг.
+        var mode = _safeGet(LS_LAST_EMAIL) ? 'login' : 'register';
+        _track('auth_gate_shown', { mode: mode });
+        _open(mode, { source: 'app_start', mandatory: true });
     }
 
     if (window.authReady && typeof window.authReady.then === 'function') {

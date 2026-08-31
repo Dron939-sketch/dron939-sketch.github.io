@@ -336,7 +336,14 @@ async function apiCall(endpoint, options = {}) {
             });
             clearTimeout(timeout);
             const data = await response.json();
-            if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
+            if (!response.ok) {
+                // 402 от метра — не сбой, а ответ: стену уже показал
+                // fetch-патч (meter.js), а throw отсюда добавлял поверх
+                // неё generic «ошибку сервера». Возвращаем тело, как и
+                // ждёт _patchApiCall: вызвавший экран видит success:false.
+                if (response.status === 402 && data && data.error === 'METER_BLOCKED') return data;
+                throw new Error(data.error || `HTTP ${response.status}`);
+            }
             return data;
         } catch (error) {
             clearTimeout(timeout);
