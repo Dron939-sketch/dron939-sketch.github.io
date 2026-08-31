@@ -6,7 +6,7 @@
     <description>Авторские статьи и манифесты Андрея Мейстера: системное мышление, разговорный гипноз, теория манипуляции, Фреди (ИИ-психолог).</description>
     <language>ru</language>
     <copyright>© Андрей Мейстер, 2026</copyright>
-    <lastBuildDate>Sat, 29 Aug 2026 10:00:00 +0300</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 10:00:00 +0300</lastBuildDate>
     <managingEditor>dron939@yandex.ru (Андрей Мейстер)</managingEditor>
     <webMaster>dron939@yandex.ru (Андрей Мейстер)</webMaster>
     <generator>meysternlp.ru</generator>
@@ -16,6 +16,62 @@
       <title>Блог Андрея Мейстера</title>
       <link>https://meysternlp.ru/blog/</link>
     </image>
+    <item>
+      <title>Взрослые дети алкоголиков: как детство рядом с бутылкой пишет взрослую жизнь</title>
+      <link>https://meysternlp.ru/blog/vzroslye-deti-alkogolikov-vda.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/vzroslye-deti-alkogolikov-vda.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>Вы давно выросли и уехали, а привычки остались: читать настроение по шагам в коридоре, не просить помощи, ждать беды в спокойные дни. Черты взрослых детей алкоголиков, откуда они берутся, при чём тут ваши нынешние отношения — и что с этим делать.</description>
+    </item>
+    <item>
+      <title>Трудоголизм: почему это зависимость, а не трудолюбие, и что делать</title>
+      <link>https://meysternlp.ru/blog/trudogolizm-priznaki-i-chto-delat.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/trudogolizm-priznaki-i-chto-delat.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>Отпуск с ноутбуком, вина в выходные, «ещё часок» каждый вечер — и гордость за всё это. Чем трудоголизм отличается от любви к работе, от чего он на самом деле спасает, четыре признака зависимости и с чего начинать выход.</description>
+    </item>
+    <item>
+      <title>Страх летать: как устроена аэрофобия и как всё-таки летать</title>
+      <link>https://meysternlp.ru/blog/strah-letat-aerofobiya.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/strah-letat-aerofobiya.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>За неделю до вылета не спится, в турбулентность вцепляетесь в подлокотник и ловите лица бортпроводников. Как устроена аэрофобия, почему «посмотри статистику» не помогает, что делать до и во время полёта — и когда нужен курс, а не советы.</description>
+    </item>
+    <item>
+      <title>Чем социофобия отличается от застенчивости</title>
+      <link>https://meysternlp.ru/blog/sociofobiya-ili-zastenchivost.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/sociofobiya-ili-zastenchivost.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>Застенчивый человек краснеет и идёт; человек с социофобией неделю не может позвонить и строит жизнь так, чтобы его не видели. Четыре различия с таблицей, как социальная тревога кормит сама себя и почему избегание — её главное топливо.</description>
+    </item>
+    <item>
+      <title>Послеродовая депрессия: как отличить от усталости и что делать</title>
+      <link>https://meysternlp.ru/blog/poslerodovaya-depressiya-priznaki.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/poslerodovaya-depressiya-priznaki.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>Все говорят «это счастье», а вы плачете в ванной и не чувствуете к ребёнку ничего. Чем послеродовая депрессия отличается от бэби-блюза и обычного недосыпа, почему это не «плохая мать», а состояние, которое лечится, и куда идти за помощью.</description>
+    </item>
+    <item>
+      <title>Отношения на расстоянии: что их убивает на самом деле и как их вести</title>
+      <link>https://meysternlp.ru/blog/otnosheniya-na-rasstoyanii.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/otnosheniya-na-rasstoyanii.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>Выживают ли отношения на расстоянии — вопрос не километров, а конструкции: срока, правил связи и общего будущего. Что убивает такие пары на самом деле, как ссориться по переписке, что делать с ревностью — и когда расстояние просто честнее закончить.</description>
+    </item>
+    <item>
+      <title>Как перестать накручивать себя: механика накрутки и стоп-краны</title>
+      <link>https://meysternlp.ru/blog/kak-perestat-nakruchivat-sebya.html</link>
+      <guid isPermaLink="true">https://meysternlp.ru/blog/kak-perestat-nakruchivat-sebya.html</guid>
+      <pubDate>Mon, 31 Aug 2026 10:00:00 +0300</pubDate>
+      <dc:creator>Андрей Мейстер</dc:creator>
+      <description>Не ответил на сообщение — «я что-то сделала не так» — «он меня бросит» — и вот уже трясёт. Как устроена накрутка: три такта разгона, почему «не думай об этом» не работает и пять стоп-кранов, которые работают. С готовыми фразами для себя.</description>
+    </item>
     <item>
       <title>Усталость и апатия «без причины»: где искать причину на самом деле</title>
       <link>https://meysternlp.ru/blog/ustalost-i-apatiya-bez-prichiny.html</link>
@@ -1559,62 +1615,6 @@
       <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
       <dc:creator>Андрей Мейстер</dc:creator>
       <description>Первая лекция курса «Новый код НЛП»: зачем понадобилась вторая версия метода. Три претензии Гриндера — метод стал сборником рецептов, потеряна связь с моделированием, ведущий навязывает своё содержание, — и четыре ответа нового кода: процесс без содержания, работа с состоянием, выбор за человеком и встроенная проверка последствий.</description>
-    </item>
-    <item>
-      <title>Лекция 4. Внимание: почему двойная задача меняет состояние</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-vnimanie.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-vnimanie.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Четвёртая лекция курса «Новый код НЛП»: внимание. Провал под давлением и опыты Баумайстера, внутренний и внешний фокус по работам Вульф, самонаблюдение как то, что держит социальную тревогу, готовые замены для вопроса «как я выгляжу» и три условия втягивающего занятия, по которым собраны игры нового кода.</description>
-    </item>
-    <item>
-      <title>Лекция 5. Три позиции восприятия и взгляд на себя со стороны</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-tri-pozicii.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-tri-pozicii.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Пятая лекция курса «Новый код НЛП»: позиции восприятия. Что видно из своих глаз, из чужих и со стороны; почему обращение к себе по имени снижает тревогу; почему воображать себя на месте другого не повышает точность, а спрашивать повышает; как делать упражнение физически и три ловушки, в которые в нём попадают.</description>
-    </item>
-    <item>
-      <title>Лекция 10. Как собрать свою практику на месяц</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-svoya-praktika.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-svoya-praktika.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Десятая, итоговая лекция курса «Новый код НЛП»: практика на месяц. План по неделям, что считать и почему не самочувствие, как выглядит бумажка с признаком и ходом, как повторять курс через опорные сигналы и три варианта продолжения.</description>
-    </item>
-    <item>
-      <title>Лекция 2. Состояние вместо содержания: главная идея</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-sostoyanie-vmesto-soderzhaniya.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-sostoyanie-vmesto-soderzhaniya.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Вторая лекция курса «Новый код НЛП»: почему состояние важнее содержания. Как напряжение сужает набор видимых ходов, что показали исследования расширяющего действия эмоций, как устроена работа без содержания, чем она хороша и чего стоит, и главное бесплатное правило — не решать из сжатого состояния.</description>
-    </item>
-    <item>
-      <title>Лекция 9. Что из этого брать в работу</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-rabochij-nabor.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-rabochij-nabor.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Девятая лекция курса «Новый код НЛП»: рабочий набор. Три бесплатных приёма, два пятиминутных и два длинных, естественная очередь применения — состояние, внимание, решение, — что не берём и три границы метода.</description>
-    </item>
-    <item>
-      <title>Лекция 7. Моделирование по Гриндеру: два этапа вместо одного</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-modelirovanie.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-modelirovanie.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Седьмая лекция курса «Новый код НЛП»: двухэтапное моделирование. Почему описание, сделанное до умения, описывает не то; опыты по неявному научению; как устроен первый этап и что на нём запрещено; четыре признака готовности перейти ко второму; что копируется вместе с умением и чего этим способом не возьмёшь.</description>
-    </item>
-    <item>
-      <title>Лекция 3. Игры нового кода: как устроен «алфавит» и зачем он</title>
-      <link>https://meysternlp.ru/blog/lekciya-nk-igry.html</link>
-      <guid isPermaLink="true">https://meysternlp.ru/blog/lekciya-nk-igry.html</guid>
-      <pubDate>Mon, 10 Aug 2026 10:00:00 +0300</pubDate>
-      <dc:creator>Андрей Мейстер</dc:creator>
-      <description>Третья лекция курса «Новый код НЛП»: игры. Как устроен «алфавит» и другие упражнения, четыре условия рабочей игры, механизм загрузки рабочей памяти и опыты Холмс с тетрисом, честная оценка — у игр есть объяснение и нет собственных данных, как собрать свою игру и чего ими делать нельзя.</description>
     </item>
   </channel>
 </rss>
