@@ -73,6 +73,18 @@
     // Защита от двойных/тройных списаний:
     // запоминаем, что прямо сейчас уже создаём платёж и блокируем повторные клики.
     let _isCreatingPayment = false;
+    // Возврат со страницы ЮKassa кнопкой «назад» восстанавливает страницу
+    // из bfcache вместе с выставленным флагом — и «Оформить» умирает
+    // навсегда (01.09: «он не даёт второй раз попробовать»). На pageshow
+    // из кэша флаг сбрасывается; защита от даблклика в живой странице
+    // при этом сохраняется.
+    window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+            _isCreatingPayment = false;
+            const b = document.getElementById('subPayBtn');
+            if (b) { b.disabled = false; b.style.opacity = ''; b.style.cursor = ''; }
+        }
+    });
 
     async function _createPayment() {
         if (_isCreatingPayment) return;
@@ -303,9 +315,10 @@
             <div class="sub-card" style="border:1px solid rgba(255,183,59,0.45);background:linear-gradient(135deg,rgba(255,183,59,0.12),rgba(255,107,59,0.06))">
                 <div class="sub-badge" style="background:rgba(255,183,59,0.18);color:rgba(255,183,59,0.95);border:1px solid rgba(255,183,59,0.35)">&#x23F3; Платёж в обработке</div>
                 <div class="sub-title">Подтверждаем оплату…</div>
-                <div class="sub-desc">Ваш платёж только что прошёл через ЮKassa и обрабатывается. Обычно занимает 1–5 минут. Подписка активируется автоматически, ничего делать не нужно.</div>
+                <div class="sub-desc">Есть незавершённый платёж. Если вы оплатили и подтвердили в банке — подписка включится автоматически за 1–5 минут. Если оплата не была завершена (закрыли окно, не пришло подтверждение банка) — начните заново, деньги по незавершённому платежу не списываются.</div>
                 <div class="sub-btn-group">
                     <button class="sub-btn sub-btn-secondary" id="subRefreshPendingBtn">Обновить статус</button>
+                    <button class="sub-btn sub-btn-secondary" id="subRestartPaymentBtn">Начать оплату заново</button>
                 </div>
             </div>`;
     }
@@ -374,6 +387,15 @@
             });
             const payBtn = document.getElementById('subPayBtn');
             if (payBtn) { payBtn.addEventListener('click', _createPayment); }
+            const restartBtn = document.getElementById('subRestartPaymentBtn');
+            if (restartBtn) {
+                restartBtn.addEventListener('click', async () => {
+                    _payStep('payment_restarted');
+                    _clearPendingPayment();
+                    _isCreatingPayment = false;
+                    await renderSubscriptionSection(container);
+                });
+            }
             const refreshBtn = document.getElementById('subRefreshPendingBtn');
             if (refreshBtn) {
                 refreshBtn.addEventListener('click', async () => {
