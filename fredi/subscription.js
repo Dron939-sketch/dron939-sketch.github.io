@@ -262,6 +262,10 @@
             lastResult = await _verifyPayment(paymentId);
             if (lastResult && lastResult.success && lastResult.activated) {
                 _clearPendingPayment();
+                // Единственное место, где точно известно, что деньги
+                // дошли и доступ включился. Отсюда цель уезжает в
+                // Метрику — по ней Директ и считает покупки.
+                _payStep('subscription_activated');
                 _toast('Подписка активирована ✨', 'info');
                 return true;
             }
