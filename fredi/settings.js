@@ -261,6 +261,7 @@
             _accordion('notifications', '🔔', 'Уведомления') +
             _accordion('appearance', '🎨', 'Оформление') +
             _accordion('profile', '👤', 'Профиль') +
+            _accordion('feedback', '🛟', 'Связаться с разработчиком') +
             '</div>';
 
         document.getElementById('stBack').onclick = function() { if (typeof renderDashboard === 'function') renderDashboard(); };
@@ -485,6 +486,53 @@
             el.querySelectorAll('.st-theme-card').forEach(function(card) {
                 card.addEventListener('click', function() { _setTheme(card.dataset.theme); });
             });
+        }
+
+        if (id === 'feedback') {
+            el.innerHTML =
+                '<div class="st-hint" style="margin-bottom:10px">Нашли ошибку, что-то не работает или есть идея — напишите. Сообщение уходит разработчику Фреди напрямую; если оставите контакт, он сможет ответить.</div>' +
+                '<textarea id="fbMessage" maxlength="3000" rows="5" placeholder="Что случилось или что предложить?" style="width:100%;box-sizing:border-box;padding:12px;background:rgba(224,224,224,0.05);border:1px solid rgba(224,224,224,0.14);border-radius:12px;color:var(--text-primary);font:14px inherit;resize:vertical;outline:none"></textarea>' +
+                '<input id="fbContact" maxlength="200" placeholder="Как с вами связаться — почта или телеграм (необязательно)" style="width:100%;box-sizing:border-box;margin-top:10px;padding:11px 12px;background:rgba(224,224,224,0.05);border:1px solid rgba(224,224,224,0.14);border-radius:12px;color:var(--text-primary);font:13px inherit;outline:none">' +
+                '<input id="fbWebsite" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">' +
+                '<button id="fbSend" style="margin-top:12px;width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#3b82ff,#6366f1);color:#fff;font:600 14px inherit;cursor:pointer">Отправить</button>' +
+                '<div class="st-hint" id="fbStatus" style="margin-top:8px;min-height:16px"></div>';
+            var sendBtn = document.getElementById('fbSend');
+            sendBtn.onclick = function () {
+                var msg = (document.getElementById('fbMessage').value || '').trim();
+                var status = document.getElementById('fbStatus');
+                if (msg.length < 5) { status.textContent = 'Напишите хотя бы пару слов.'; return; }
+                sendBtn.disabled = true;
+                sendBtn.textContent = 'Отправляю…';
+                fetch(_api() + '/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: _uid(),
+                        message: msg,
+                        contact: (document.getElementById('fbContact').value || '').trim(),
+                        website: (document.getElementById('fbWebsite').value || ''),
+                        page: location.pathname + location.search,
+                        ua: navigator.userAgent.slice(0, 300)
+                    })
+                }).then(function (r) { return r.json(); }).then(function (d) {
+                    if (d && d.success) {
+                        document.getElementById('fbMessage').value = '';
+                        status.textContent = 'Отправлено. Спасибо — сообщение уже у разработчика.';
+                        sendBtn.textContent = 'Отправить ещё';
+                        sendBtn.disabled = false;
+                        try { if (window.FrediTracker) window.FrediTracker.track('feedback_sent', { has_contact: !!(document.getElementById('fbContact').value || '').trim() }); } catch (e) {}
+                    } else {
+                        status.textContent = (d && d.error === 'message too short') ? 'Сообщение слишком короткое.' : 'Не получилось отправить. Попробуйте ещё раз через минуту.';
+                        sendBtn.textContent = 'Отправить';
+                        sendBtn.disabled = false;
+                    }
+                }).catch(function () {
+                    status.textContent = 'Нет связи с сервером. Попробуйте позже.';
+                    sendBtn.textContent = 'Отправить';
+                    sendBtn.disabled = false;
+                });
+            };
+            return;
         }
 
         if (id === 'profile') {
