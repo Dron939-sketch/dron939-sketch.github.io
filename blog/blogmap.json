@@ -11171,6 +11171,27 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "muzh-stal-holodnym",
+   "title": "Муж стал холодным: шесть причин, и страшная из них — одна",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zhena-postoyanno-nedovolna",
+   "title": "Жена постоянно недовольна: что она говорит на самом деле",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "vygoranie-v-dekrete",
+   "title": "Выгорание в декрете: когда «я плохая мать» — это диагноз усталости",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
