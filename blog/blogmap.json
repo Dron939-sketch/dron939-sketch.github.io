@@ -11150,6 +11150,27 @@
    "rubric": "myshlenie",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "emocionalnoe-nasilie-kak-raspoznat",
+   "title": "Эмоциональное насилие: как распознать то, что не оставляет синяков",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-zabyt-byvshego",
+   "title": "Как забыть бывшего: что работает, а что продлевает боль",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "lyublyu-zhenatogo-chto-delat",
+   "title": "Люблю женатого: честный разбор без осуждения и без сказок",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
