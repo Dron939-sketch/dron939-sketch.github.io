@@ -575,6 +575,13 @@
    "mins": 19
   },
   {
+   "slug": "dedukciya-i-indukciya-prostymi-slovami",
+   "title": "Дедукция и индукция простыми словами: чем отличаются и почему Холмс — не про дедукцию",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 8
+  },
+  {
    "slug": "delegirovanie-bez-peredelki",
    "title": "Делегирование без переделки: что не отдают (и зря), что отдают (и зря) — Андрей Мейстер",
    "rubric": "dengi",
@@ -10310,6 +10317,13 @@
    "rubric": "zavisimosti",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "sillogizm-prostymi-slovami",
+   "title": "Силлогизм простыми словами: что это, как устроен и где его ломают в споре",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 8
   },
   {
    "slug": "silnaya-zhenshchina-diagnoz-ustalosti",
