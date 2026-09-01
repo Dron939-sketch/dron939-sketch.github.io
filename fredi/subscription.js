@@ -315,7 +315,7 @@
             <div class="sub-card" style="border:1px solid rgba(255,183,59,0.45);background:linear-gradient(135deg,rgba(255,183,59,0.12),rgba(255,107,59,0.06))">
                 <div class="sub-badge" style="background:rgba(255,183,59,0.18);color:rgba(255,183,59,0.95);border:1px solid rgba(255,183,59,0.35)">&#x23F3; Платёж в обработке</div>
                 <div class="sub-title">Подтверждаем оплату…</div>
-                <div class="sub-desc">Есть незавершённый платёж. Если вы оплатили и подтвердили в банке — подписка включится автоматически за 1–5 минут. Если оплата не была завершена (закрыли окно, не пришло подтверждение банка) — начните заново, деньги по незавершённому платежу не списываются.</div>
+                <div class="sub-desc">Есть незавершённый платёж. Если вы оплатили и подтвердили в банке — подписка включится автоматически за 1–5 минут. Если оплата не была завершена (закрыли окно, не пришло подтверждение банка) — начните заново, деньги по незавершённому платежу не списываются. Важно: при включённом VPN страница подтверждения банка не открывается — отключите его на время оплаты.</div>
                 <div class="sub-btn-group">
                     <button class="sub-btn sub-btn-secondary" id="subRefreshPendingBtn">Обновить статус</button>
                     <button class="sub-btn sub-btn-secondary" id="subRestartPaymentBtn">Начать оплату заново</button>
@@ -349,6 +349,7 @@
                 </div>
                 <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 990 &#8381;</button>
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
+                <div style="text-align:center;margin-top:6px;font-size:11px;color:rgba(255,183,59,0.9)">Если у вас включён VPN — отключите его на время оплаты: иначе страница подтверждения банка не откроется.</div>
                 <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-secondary)">Оформляя подписку, вы принимаете <a href="/oferta/" target="_blank" rel="noopener" style="color:#3b82ff">Оферту</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener" style="color:#3b82ff">Политику конфиденциальности</a>.</div>
             </div>`;
     }
