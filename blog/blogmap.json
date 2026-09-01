@@ -11192,6 +11192,27 @@
    "rubric": "roditeli",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "bulling-v-shkole-chto-delat",
+   "title": "Ребёнка травят в школе: что делать родителю по шагам",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "ne-mogu-perestat-dumat-o-cheloveke",
+   "title": "Не могу перестать думать о человеке: почему это происходит и что делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "sindrom-otlichnicy",
+   "title": "Синдром отличницы: почему пятёрка не приносит радости и что с этим делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
