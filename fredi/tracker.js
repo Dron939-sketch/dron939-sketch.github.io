@@ -235,6 +235,44 @@
         return event;
     }
 
+    // Ключевые шаги воронки дублируются в Метрику как цели. Своя аналитика
+    // на бэкенде подробнее, но её не видят ни отчёты Метрики, ни Директ:
+    // до этого в счётчиках не было ни одной цели, и кампания не могла
+    // оптимизироваться под покупку — ей не на что было смотреть.
+    // Имена целей совпадают с идентификаторами, заведёнными в Метрике.
+    var METRIKA_GOALS = {
+        auth_gate_shown: 'fredi_gate_shown',
+        auth_register_started: 'fredi_register_started',
+        register_success: 'fredi_registered',
+        login_success: 'fredi_login',
+        meter_blocked_shown: 'fredi_paywall_shown',
+        meter_subscribe_clicked: 'fredi_subscribe_clicked',
+        checkout_opened: 'fredi_checkout_opened'
+    };
+    // Счётчики: приложения и общий сайтовый. Кампании Директа привязаны к
+    // обоим, поэтому цель должна дойти до каждого.
+    var METRIKA_COUNTERS = [108965607, 108138656];
+
+    function _reachGoal(goal) {
+        if (!goal || typeof window.ym !== 'function') return;
+        for (var i = 0; i < METRIKA_COUNTERS.length; i++) {
+            try { window.ym(METRIKA_COUNTERS[i], 'reachGoal', goal); } catch (e) {}
+        }
+    }
+
+    function _mirrorToMetrika(event, data) {
+        try {
+            var goal = METRIKA_GOALS[event];
+            if (goal) { _reachGoal(goal); return; }
+            // Оплата приходит шагами внутри одного события — из них в
+            // Метрику нужны два: платёж создан и подписка включилась.
+            if (event === 'checkout_step' && data) {
+                if (data.step === 'payment_created') _reachGoal('fredi_payment_created');
+                if (data.step === 'subscription_activated') _reachGoal('fredi_subscription_paid');
+            }
+        } catch (e) {}
+    }
+
     function track(event,data){
         if (_isInternal()) return;
         if (_shouldDedupeError(event, data)) return;
@@ -257,6 +295,7 @@
             ts:new Date().toISOString()
         };
         _queue.push(payload);
+        _mirrorToMetrika(event, data);
         // Сессия жива, пока в неё пишут: сдвигаем отметку, иначе получасовое
         // окно отсчитывалось бы от загрузки страницы, а не от последнего
         // действия, и длинный разговор рвался бы на две сессии.
