@@ -126,6 +126,14 @@
                     email: email,
                 })
             });
+            if (r.status === 429) {
+                // Стандартный ответ slowapi — «Rate limit exceeded: 3 per 1
+                // minute». Человек, у которого не прошла карта и который
+                // пробует снова, читал это по-английски и уходил.
+                _payStep('rate_limited');
+                _toast('Слишком много попыток подряд. Подождите минуту и попробуйте снова', 'error');
+                throw new Error('RATE_LIMITED');
+            }
             const data = await r.json();
             if (data.success && data.confirmation_url) {
                 _payStep('payment_created');
@@ -145,8 +153,10 @@
                 _toast(data.error || 'Не удалось создать платёж', 'error');
             }
         } catch (e) {
-            _payStep('network_error');
-            _toast('Ошибка сети', 'error');
+            if (!e || e.message !== 'RATE_LIMITED') {
+                _payStep('network_error');
+                _toast('Не получилось связаться с сервером. Проверьте связь и попробуйте ещё раз', 'error');
+            }
         }
 
         // Сюда попадаем только если редирект не произошёл — возвращаем кнопку.
@@ -288,6 +298,16 @@
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
+    // Почта аккаунта. Спрашивать её второй раз перед самой кнопкой оплаты —
+    // лишнее поле в момент наибольшей хрупкости; на телефоне это один из
+    // главных шагов отвала. Человек уже вводил её при регистрации.
+    function _knownEmail() {
+        try {
+            var e = window.CURRENT_USER_EMAIL || localStorage.getItem('fredi_last_email') || '';
+            return String(e).replace(/"/g, '&quot;');
+        } catch (e) { return ''; }
+    }
+
     function _cardTypeIcon(type) {
         const t = (type || '').toLowerCase();
         if (t.includes('visa')) return '&#x1F4B3;';
@@ -306,7 +326,16 @@
                 <div class="sub-desc">Полный доступ ко всем возможностям</div>
                 <div class="sub-info-row"><span class="sub-info-label">Следующее списание</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">990 &#8381;/мес</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">990 &#8381;/мес</span></div>
+                <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew === false ? 'Отключено' : 'Включено'}</span></div>
+                <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:12px 0 14px">
+                    ${sub.auto_renew === false
+                        ? 'Списаний больше не будет. Доступ работает до ' + _formatDate(sub.expires_at) + '.'
+                        : 'Отключить можно прямо сейчас — доступ останется до конца оплаченного месяца.'}
+                </div>
+                <button class="sub-btn ${sub.auto_renew === false ? 'sub-btn-secondary' : 'sub-btn-danger'}" id="subRenewToggleBtn">
+                    ${sub.auto_renew === false ? 'Включить автопродление' : 'Отключить автопродление'}
+                </button>
             </div>`;
     }
 
@@ -332,7 +361,7 @@
                 <div class="sub-title">Фреди Premium</div>
                 <div class="sub-desc">Разблокируйте полный доступ к виртуальному психологу</div>
                 <div class="sub-price">990 &#8381;</div>
-                <div class="sub-price-period">в месяц, автопродление</div>
+                <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>
                 <ul class="sub-features">
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Безлимитные сессии с Фреди</li>
                     <li><span class="sub-feature-icon">&#x1F3AF;</span> Персональный план развития</li>
@@ -343,7 +372,7 @@
                 </ul>
                 <div style="margin-bottom:14px">
                     <label style="font-size:12px;color:var(--text-secondary);display:block;margin-bottom:6px">Email для чека</label>
-                    <input type="email" id="subEmailInput" placeholder="your@email.com"
+                    <input type="email" id="subEmailInput" placeholder="your@email.com" value="${_knownEmail()}"
                         style="width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);font-size:14px;font-family:inherit;box-sizing:border-box;outline:none"
                         onfocus="this.style.borderColor='rgba(59,130,255,0.5)'" onblur="this.style.borderColor='rgba(224,224,224,0.18)'" />
                 </div>
@@ -370,10 +399,47 @@
     async function renderSubscriptionSection(container) {
         _injectSubscriptionStyles();
         container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Загрузка...</div></div>';
-        await _autoVerifyOnReturn(container);
+        // Проверку незавершённого платежа гоним фоном. Раньше здесь стояло
+        // await: человек с брошенным платежом в localStorage жал «Premium»
+        // и до тридцати секунд смотрел на «Проверяю оплату…» вместо формы.
+        // Бьёт по самому намеренному сегменту — по тем, кто до кассы уже
+        // доходил. Если платёж всё-таки подтвердится, карточка сама
+        // перерисуется из _autoVerifyOnReturn.
+        _autoVerifyOnReturn(container);
         const sub = await _loadSubscriptionStatus();
         if (sub && sub.has_subscription) {
             container.innerHTML = _renderActiveSubscription(sub);
+            // Кнопка отмены. До этого её не было вовсе: посадочная обещала
+            // «отключается в один клик», а в настройках стояли три строки
+            // без единой кнопки. Люди ищут отмену ДО оплаты — не найдя,
+            // часть не платит, а найдя обещание и не найдя кнопку после,
+            // идут в банк за возвратом.
+            const renewBtn = document.getElementById('subRenewToggleBtn');
+            if (renewBtn) {
+                renewBtn.addEventListener('click', async () => {
+                    const turningOff = sub.auto_renew !== false;
+                    renewBtn.disabled = true;
+                    renewBtn.textContent = 'Сохраняю…';
+                    try {
+                        const r = await fetch(`${_api()}/api/subscription/toggle-auto-renew`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ user_id: _uid(), enabled: !turningOff })
+                        });
+                        const d = await r.json();
+                        if (d && d.success !== false) {
+                            _toast(turningOff
+                                ? 'Автопродление отключено. Доступ до конца оплаченного месяца'
+                                : 'Автопродление включено', 'info');
+                        } else {
+                            _toast((d && d.error) || 'Не получилось изменить автопродление', 'error');
+                        }
+                    } catch (e) {
+                        _toast('Не получилось связаться с сервером', 'error');
+                    }
+                    await renderSubscriptionSection(container);
+                });
+            }
         } else {
             const pendingPid = _readPendingPaymentId();
             const pendingBanner = pendingPid ? _renderPendingBanner() : '';
