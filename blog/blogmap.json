@@ -11115,6 +11115,41 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "rebenok-ne-hochet-v-shkolu",
+   "title": "Ребёнок не хочет в школу: что делать в первые недели сентября",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "trevoga-roditelya-pervoklassnika",
+   "title": "Тревога родителя первоклассника: как не заразить ребёнка своим страхом",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "avtomaticheskie-mysli-kak-lovit",
+   "title": "Автоматические мысли: как ловить то, что портит настроение за полсекунды",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "abc-model-kpt-razbor",
+   "title": "АВС-модель: как одно событие даёт десять разных чувств",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "kognitivnaya-restrukturizaciya-instrukciya",
+   "title": "Когнитивная реструктуризация: как проверить мысль, которая отравляет жизнь",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
