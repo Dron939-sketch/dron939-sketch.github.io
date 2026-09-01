@@ -435,6 +435,13 @@
    "mins": 20
   },
   {
+   "slug": "chem-fakt-otlichaetsya-ot-mneniya",
+   "title": "Чем факт отличается от мнения: проверка за десять секунд и три гибрида, которые всех путают",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 8
+  },
+  {
    "slug": "cherez-5-let-polovina-psihologov-nenuzhna",
    "title": "Через 5 лет половина психологов станет ненужной. Объясняю, что останется и почему",
    "rubric": "emocii",
@@ -818,6 +825,13 @@
    "rubric": "gipnoz",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "gedonisticheskaya-adaptaciya-prostymi-slovami",
+   "title": "Гедонистическая адаптация: почему радость от покупок выветривается и что с этим делать",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 8
   },
   {
    "slug": "geshtalt-terapiya-2026-sostoyanie-i-praktika",
