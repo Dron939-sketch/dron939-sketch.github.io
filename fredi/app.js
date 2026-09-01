@@ -245,10 +245,17 @@ async function loadPremiumStatus() {
 }
 
 // Возвращает режим, которым реально должен идти диалог с Фреди.
-// Без премиума — всегда 'basic', независимо от выбора кнопок на дашборде.
+// Пока идёт бесплатная проба, роли работают полностью: человек должен
+// познакомиться с тем Фреди, которого ему продают, а не с его тенью.
+// Решает всё равно бэкенд (_enforce_premium_mode) — здесь только то,
+// что отправляем; после исчерпания пробы он сам понизит до 'basic'.
 function getDialogMode() {
-    if (IS_PREMIUM === false) return 'basic';
-    return currentMode || 'basic';
+    if (IS_PREMIUM === true) return currentMode || 'basic';
+    var trialLeft = null;
+    try { trialLeft = window.FrediMeter && window.FrediMeter.lastCheck
+        ? window.FrediMeter.lastCheck.remaining_trial_minutes : null; } catch (e) {}
+    if (trialLeft === null || trialLeft > 0) return currentMode || 'basic';
+    return 'basic';
 }
 
 window.getDialogMode = getDialogMode;
@@ -848,15 +855,23 @@ function setupDashComposer() {
             } catch (err) {
                 console.error('❌ dash composer send failed:', err);
                 _hideThinkingBubble();
-                addMessage('Связь прервалась. Попробуйте ещё раз.', 'system');
+                // METER_BLOCKED бросает патч meter.js, когда бесплатные
+                // минуты кончились ровно между пред-проверкой и отправкой.
+                // Стена в этот момент уже открыта, и дописывать в чат
+                // «связь прервалась» — врать про сбой сети там, где надо
+                // продавать: человек шёл перезагружать страницу и уходил.
+                if (!err || err.message !== 'METER_BLOCKED') {
+                    addMessage('Связь прервалась. Попробуйте ещё раз.', 'system');
+                }
             }
         } else {
             _hideThinkingBubble();
         }
 
-        if (answer) {
-            try { window.FrediMeter?.recordUsage?.(15); } catch (e) {}
-        }
+        // Расход НЕ пишем здесь. Его пишет единственный слой — патч fetch
+        // в meter.js: /api/chat/stream попадает под его регулярку, и вызов
+        // отсюда списывал те же 15 секунд второй раз. Проба в 10 минут
+        // расходовалась за 20 сообщений вместо обещанных на посадочной 40.
 
         unwind();
     }
@@ -2146,7 +2161,7 @@ function renderDashboard() {
             <div class="mode-desc" id="modeDesc">${MODE_DESCS[currentMode] || ''}</div>
             ${IS_PREMIUM !== true ? `
             <div class="mode-hint" style="text-align:center;font-size:11px;color:var(--text-secondary);margin:-6px 0 16px;line-height:1.5;opacity:0.85">
-                Сейчас работает базовый режим. Выбор роли —
+                Роли работают, пока идут бесплатные минуты. Дальше —
                 <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">с подпиской</a>.
             </div>` : ''}
 
@@ -2894,16 +2909,15 @@ async function init() {
         });
     });
 
-    // Запрашиваем разрешение на микрофон без блокировки UI
-    setTimeout(async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            stream.getTracks().forEach(t => t.stop());
-            console.log('✅ Микрофон доступен');
-        } catch {
-            console.log('ℹ️ Разрешение на микрофон не выдано');
-        }
-    }, 2000);
+    // Микрофон здесь НЕ запрашиваем. Раньше через две секунды после
+    // загрузки браузер спрашивал доступ поверх обязательной модалки
+    // регистрации: человек ещё ничего не сказал и не выбирал голос, а
+    // у него уже просят слушать — второй турникет за пять секунд.
+    // Хуже другое: отказ в этот момент ставит браузерный «запрещено»
+    // навсегда, и голос — главная платная возможность — потом не
+    // включается без залезания в настройки сайта. Разрешение теперь
+    // спрашивается при первом нажатии на кнопку голоса, где жест
+    // пользователя уже есть и его дают куда охотнее.
 
     // Фикс: на мобильных input скроллится в видимую область при фокусе
     document.addEventListener('focusin', (e) => {
