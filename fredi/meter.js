@@ -825,7 +825,11 @@
         badge = document.createElement('div');
         badge.id = 'meterBadge';
         badge.className = 'meter-badge';
-        badge.title = 'Дневной лимит free-trial';
+        // Подпись всплывает по наведению и на десктопе читается раньше клика.
+        // «Дневной лимит» тут стоял от прошлой модели с обновлением каждые
+        // сутки; сейчас проба выдаётся один раз на аккаунт, и обещать
+        // ежедневное пополнение — врать человеку, который на это рассчитает.
+        badge.title = 'Бесплатная проба: 10 минут на аккаунт, дальше 990 ₽/мес';
         badge.innerHTML = '<span class="meter-badge-icon">⏱</span>'
             + '<span class="meter-badge-time" id="meterBadgeTime">--:--</span>'
             + '<span class="meter-badge-day" id="meterBadgeDay"></span>';
@@ -866,7 +870,6 @@
         }
         var badge = _ensureBadge();
         var rem = check.remaining_minutes;
-        var daysUsed = check.free_days_used || 0;
         var trialRem = check.remaining_trial_minutes;
         // Если запас исчерпан — показываем без таймера, текстом «Купить».
         if (check.trial_exhausted) {
@@ -894,8 +897,9 @@
             if (trialRem != null) {
                 dayEl.textContent = 'Запас ' + Math.max(0, Math.round(trialRem)) + ' мин';
             } else {
-                var active = Math.max(1, Math.min(daysUsed || 1, 3));
-                dayEl.textContent = 'День ' + active + '/3';
+                // Раньше здесь стояло «День N/3» от модели с ежедневным
+                // пополнением. Её нет, а надпись обещала завтрашний заход.
+                dayEl.textContent = 'Проба';
             }
         }
     }
