@@ -400,6 +400,13 @@
    "mins": 22
   },
   {
+   "slug": "boyus-zvonit-po-telefonu",
+   "title": "Боюсь звонить по телефону: почему звонок страшнее ста сообщений и как это расшатать",
+   "rubric": "strahi",
+   "level": "m",
+   "mins": 9
+  },
+  {
    "slug": "budushchee-psihologii-12-trendov-2035",
    "title": "Будущее психологии: 12 трендов, которые перевернут всё к 2035 году",
    "rubric": "ai",
@@ -9561,6 +9568,13 @@
    "rubric": "obshchestvo",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "pervaya-lyubov-podrostka-chto-delat-roditelyu",
+   "title": "Первая любовь подростка: что делать родителю и каких фраз он вам не простит",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 11
   },
   {
    "slug": "pishchevye-rasstrojstva-6-tipov",
