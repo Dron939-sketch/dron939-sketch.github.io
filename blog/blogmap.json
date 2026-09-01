@@ -183,6 +183,13 @@
    "mins": 12
   },
   {
+   "slug": "abc-model-kpt-razbor",
+   "title": "АВС-модель: как одно событие даёт десять разных чувств",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 10
+  },
+  {
    "slug": "act-terapiya-6-processov-geksaflex",
    "title": "ACT-терапия: 6 процессов психологической гибкости — Андрей Мейстер",
    "rubric": "emocii",
@@ -302,6 +309,13 @@
    "mins": 22
   },
   {
+   "slug": "avtomaticheskie-mysli-kak-lovit",
+   "title": "Автоматические мысли: как ловить то, что портит настроение за полсекунды",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "bajesovskoe-myshlenie-kak-obnovlyat-ubezhdeniya",
    "title": "Байесовское мышление: как правильно обновлять убеждения",
    "rubric": "myshlenie",
@@ -391,6 +405,13 @@
    "rubric": "ai",
    "level": "p",
    "mins": 22
+  },
+  {
+   "slug": "bulling-v-shkole-chto-delat",
+   "title": "Ребёнка травят в школе: что делать родителю по шагам",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "celepolaganie-naoborot-5-celey-iz-straha",
@@ -680,6 +701,13 @@
    "mins": 13
   },
   {
+   "slug": "emocionalnoe-nasilie-kak-raspoznat",
+   "title": "Эмоциональное насилие: как распознать то, что не оставляет синяков",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "emocionalnyj-incest-7-tipov-posledstviya",
    "title": "Эмоциональный инцест: 7 типов и последствия на 30 лет — Андрей Мейстер",
    "rubric": "emocii",
@@ -967,6 +995,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-perestat-sravnivat-sebya-s-drugimi",
+   "title": "Как перестать сравнивать себя с другими: почему это не выключается усилием",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 10
+  },
+  {
    "slug": "kak-perezhit-izmenu",
    "title": "Как пережить измену: что делать в первые дни и что решать потом",
    "rubric": "otnosheniya",
@@ -1051,6 +1086,13 @@
    "mins": 10
   },
   {
+   "slug": "kak-prinyat-sebya",
+   "title": "Как принять себя: что это значит на практике и с чего начинать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "kak-prinyat-trudnoe-reshenie",
    "title": "Как принять трудное решение, когда не можешь выбрать",
    "rubric": "myshlenie",
@@ -1063,6 +1105,13 @@
    "rubric": "roditeli",
    "level": "m",
    "mins": 13
+  },
+  {
+   "slug": "kak-prostit-izmenu",
+   "title": "Как простить измену: что для этого нужно и когда прощать не стоит",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "kak-prostit-neprostitelnoe-4-urovnya",
@@ -1149,11 +1198,25 @@
    "mins": 19
   },
   {
+   "slug": "kak-zabyt-byvshego",
+   "title": "Как забыть бывшего: что работает, а что продлевает боль",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "kak-zasnut-esli-prosnulsya-nochyu",
    "title": "Как заснуть, если проснулся ночью и не спится",
    "rubric": "telo",
    "level": "n",
    "mins": 10
+  },
+  {
+   "slug": "kak-zavodit-druzej-vzroslomu",
+   "title": "Как заводить друзей взрослому: почему это стало трудно и что делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "kakoj-ii-psiholog-vybrat-2026-sravnenie",
@@ -1238,6 +1301,13 @@
    "rubric": "dengi",
    "level": "n",
    "mins": 9
+  },
+  {
+   "slug": "kognitivnaya-restrukturizaciya-instrukciya",
+   "title": "Когнитивная реструктуризация: как проверить мысль, которая отравляет жизнь",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "kognitivnye-iskazheniya-12-lovushek",
@@ -1413,6 +1483,13 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 19
+  },
+  {
+   "slug": "koshmary-pochemu-snyatsya",
+   "title": "Кошмары: почему снятся и что делать, чтобы они прекратились",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "kpt-za-30-dnej-prakticheskij-gid",
@@ -8982,6 +9059,13 @@
    "mins": 23
   },
   {
+   "slug": "lyublyu-zhenatogo-chto-delat",
+   "title": "Люблю женатого: честный разбор без осуждения и без сказок",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "lyubov-eto-kontrakt-7-skrytyh-punktov",
    "title": "Любовь — это контракт, которого никто не читал. 7 скрытых пунктов вашего соглашения",
    "rubric": "otnosheniya",
@@ -9101,6 +9185,13 @@
    "mins": 20
   },
   {
+   "slug": "muzh-stal-holodnym",
+   "title": "Муж стал холодным: шесть причин, и страшная из них — одна",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "muzhchina-kotoryj-vsyo-tashchit-molcha",
    "title": "Мужчина, который всё тащит молча: почему это убивает раньше срока",
    "rubric": "otnosheniya",
@@ -9183,6 +9274,13 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "ne-mogu-perestat-dumat-o-cheloveke",
+   "title": "Не могу перестать думать о человеке: почему это происходит и что делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "ne-mogu-usnut-pryamo-sejchas",
@@ -9626,6 +9724,13 @@
    "mins": 2
   },
   {
+   "slug": "prokrastinaciya-sna",
+   "title": "Прокрастинация сна: почему вы не ложитесь, хотя хотите спать",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 10
+  },
+  {
    "slug": "prokrastinaciya-soprotivlenie-chuzhoj-celi",
    "title": "Прокрастинация — это сопротивление чужой цели. Если откладываешь — значит цель не твоя",
    "rubric": "motivaciya",
@@ -9927,6 +10032,13 @@
    "mins": 11
   },
   {
+   "slug": "rebenok-ne-hochet-v-shkolu",
+   "title": "Ребёнок не хочет в школу: что делать в первые недели сентября",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "rebenok-uchitsya-svoemu-treneru",
    "title": "Ребёнок не учится плаванию. Он учится своему тренеру",
    "rubric": "roditeli",
@@ -10156,6 +10268,13 @@
    "rubric": "obshchestvo",
    "level": "p",
    "mins": 26
+  },
+  {
+   "slug": "sindrom-otlichnicy",
+   "title": "Синдром отличницы: почему пятёрка не приносит радости и что с этим делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "sindrom-partnerskoy-semyi-5-lovushek",
@@ -10732,6 +10851,13 @@
    "mins": 11
   },
   {
+   "slug": "trevoga-iz-za-deneg",
+   "title": "Тревога из-за денег: почему она не уходит с ростом дохода",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "trevoga-o-zdorove-ipohondriya",
    "title": "Тревога о здоровье: когда это ипохондрия и как выйти из круга симптомов",
    "rubric": "strahi",
@@ -10744,6 +10870,13 @@
    "rubric": "strahi",
    "level": "p",
    "mins": 22
+  },
+  {
+   "slug": "trevoga-roditelya-pervoklassnika",
+   "title": "Тревога родителя первоклассника: как не заразить ребёнка своим страхом",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 10
   },
   {
    "slug": "trevozhnaya-spiral-kak-ostanovit",
@@ -10963,6 +11096,13 @@
    "mins": 12
   },
   {
+   "slug": "vygoranie-v-dekrete",
+   "title": "Выгорание в декрете: когда «я плохая мать» — это диагноз усталости",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "vyhod-iz-vyuchennoj-bespomoshchnosti-marshrut",
    "title": "Выход из выученной беспомощности: пошаговый маршрут",
    "rubric": "motivaciya",
@@ -11068,6 +11208,13 @@
    "mins": 18
   },
   {
+   "slug": "zhena-postoyanno-nedovolna",
+   "title": "Жена постоянно недовольна: что она говорит на самом деле",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 10
+  },
+  {
    "slug": "zhenskoj-psihologii-net-eto-marketing",
    "title": "«Женской психологии» не существует. Это маркетинг — Андрей Мейстер",
    "rubric": "emocii",
@@ -11114,146 +11261,6 @@
    "title": "Зона комфорта — это не про уют, а про клетку",
    "rubric": "strahi",
    "level": "m",
-   "mins": 10
-  },
-  {
-   "slug": "rebenok-ne-hochet-v-shkolu",
-   "title": "Ребёнок не хочет в школу: что делать в первые недели сентября",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "trevoga-roditelya-pervoklassnika",
-   "title": "Тревога родителя первоклассника: как не заразить ребёнка своим страхом",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 10
-  },
-  {
-   "slug": "avtomaticheskie-mysli-kak-lovit",
-   "title": "Автоматические мысли: как ловить то, что портит настроение за полсекунды",
-   "rubric": "myshlenie",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "abc-model-kpt-razbor",
-   "title": "АВС-модель: как одно событие даёт десять разных чувств",
-   "rubric": "myshlenie",
-   "level": "n",
-   "mins": 10
-  },
-  {
-   "slug": "kognitivnaya-restrukturizaciya-instrukciya",
-   "title": "Когнитивная реструктуризация: как проверить мысль, которая отравляет жизнь",
-   "rubric": "myshlenie",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "emocionalnoe-nasilie-kak-raspoznat",
-   "title": "Эмоциональное насилие: как распознать то, что не оставляет синяков",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-zabyt-byvshego",
-   "title": "Как забыть бывшего: что работает, а что продлевает боль",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "lyublyu-zhenatogo-chto-delat",
-   "title": "Люблю женатого: честный разбор без осуждения и без сказок",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "muzh-stal-holodnym",
-   "title": "Муж стал холодным: шесть причин, и страшная из них — одна",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "zhena-postoyanno-nedovolna",
-   "title": "Жена постоянно недовольна: что она говорит на самом деле",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 10
-  },
-  {
-   "slug": "vygoranie-v-dekrete",
-   "title": "Выгорание в декрете: когда «я плохая мать» — это диагноз усталости",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "bulling-v-shkole-chto-delat",
-   "title": "Ребёнка травят в школе: что делать родителю по шагам",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "ne-mogu-perestat-dumat-o-cheloveke",
-   "title": "Не могу перестать думать о человеке: почему это происходит и что делать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "sindrom-otlichnicy",
-   "title": "Синдром отличницы: почему пятёрка не приносит радости и что с этим делать",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "kak-prostit-izmenu",
-   "title": "Как простить измену: что для этого нужно и когда прощать не стоит",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-prinyat-sebya",
-   "title": "Как принять себя: что это значит на практике и с чего начинать",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "koshmary-pochemu-snyatsya",
-   "title": "Кошмары: почему снятся и что делать, чтобы они прекратились",
-   "rubric": "telo",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "kak-zavodit-druzej-vzroslomu",
-   "title": "Как заводить друзей взрослому: почему это стало трудно и что делать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "trevoga-iz-za-deneg",
-   "title": "Тревога из-за денег: почему она не уходит с ростом дохода",
-   "rubric": "dengi",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "prokrastinaciya-sna",
-   "title": "Прокрастинация сна: почему вы не ложитесь, хотя хотите спать",
-   "rubric": "telo",
-   "level": "n",
    "mins": 10
   }
  ]
