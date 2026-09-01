@@ -148,20 +148,33 @@
         if (emailInput) emailInput.disabled = false;
     }
 
+    // Один запрос за раз. 01.09.2026 возврат с ЮKassa запускал ДВА
+    // параллельных цикла опроса (bootstrap + render), по паре запросов
+    // каждые полторы-три секунды: лимит 20/мин выгорал за 45 секунд, и
+    // дальше проверка получала одни 429 — даже завершённый платёж не
+    // смог бы подтвердиться, пока лимит не отпустит.
+    let _verifyInFlight = null;
     async function _verifyPayment(paymentId) {
         const uid = _uid();
         if (!uid || !paymentId) return null;
-        try {
-            const r = await fetch(`${_api()}/api/subscription/verify-payment`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: uid, payment_id: paymentId })
-            });
-            return await r.json();
-        } catch (e) {
-            console.error('verify payment error:', e);
-            return null;
-        }
+        if (_verifyInFlight) return _verifyInFlight;
+        _verifyInFlight = (async () => {
+            try {
+                const r = await fetch(`${_api()}/api/subscription/verify-payment`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: uid, payment_id: paymentId })
+                });
+                if (r.status === 429) return { success: false, rate_limited: true };
+                return await r.json();
+            } catch (e) {
+                console.error('verify payment error:', e);
+                return null;
+            } finally {
+                _verifyInFlight = null;
+            }
+        })();
+        return _verifyInFlight;
     }
 
     function _readPendingPaymentId() {
@@ -201,9 +214,20 @@
         } catch (e) {}
     }
 
+    let _autoVerifyActive = false;
     async function _autoVerifyOnReturn(container) {
         const paymentId = _readPendingPaymentId();
         if (!paymentId) return false;
+        // Второй одновременный цикл не нужен: он лишь удваивает частоту
+        // запросов и приближает 429.
+        if (_autoVerifyActive) return false;
+        _autoVerifyActive = true;
+        try {
+        return await _autoVerifyLoop(container, paymentId);
+        } finally { _autoVerifyActive = false; }
+    }
+
+    async function _autoVerifyLoop(container, paymentId) {
 
         if (container) {
             container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Проверяю оплату...</div></div>';
@@ -224,7 +248,9 @@
                 _toast('Оплата отменена', 'error');
                 return false;
             }
-            await new Promise(res => setTimeout(res, 3000));
+            // 5 секунд между проверками; после 429 — пауза длиннее,
+            // чтобы дать лимиту отпустить.
+            await new Promise(res => setTimeout(res, lastResult && lastResult.rate_limited ? 20000 : 5000));
         }
 
         if (lastResult && lastResult.status && lastResult.status !== 'pending' && lastResult.status !== 'waiting_for_capture') {
