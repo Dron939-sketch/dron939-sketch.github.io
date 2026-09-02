@@ -7,7 +7,7 @@
     if (window._meterLoaded) return;
     window._meterLoaded = true;
 
-    function _api() { return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
+    function _api() { return window.CONFIG?.API_BASE_URL || ''; }
     function _uid() { return window.CONFIG?.USER_ID; }
 
     // Лимит привязан к пользователю, поэтому под временным

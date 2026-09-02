@@ -11,7 +11,7 @@
     if (window._loginLoaded) return;
     window._loginLoaded = true;
 
-    var API_BASE = window.API_BASE_URL || (window.CONFIG && window.CONFIG.API_BASE_URL) || 'https://ffred-ddd989.amvera.io';
+    var API_BASE = window.API_BASE_URL || (window.CONFIG && window.CONFIG.API_BASE_URL) || '';
     var LS_LAST_EMAIL = 'fredi_last_email';
 
     function _safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }

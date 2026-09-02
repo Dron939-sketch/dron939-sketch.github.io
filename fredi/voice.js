@@ -204,7 +204,7 @@ class LoadingIndicator {
 // ============================================
 
 const VoiceConfig = {
-    apiBaseUrl: window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io',
+    apiBaseUrl: window.CONFIG?.API_BASE_URL || '',
 
     // WebSocket включён — с автофallback на HTTP при неудаче
     useWebSocket: true,
@@ -592,8 +592,13 @@ class VoiceTransport {
     async _connectWS(isRetry = false) {
         // Передаём текущий режим как query param — бэкенд использует его при создании mode_instance
         const modeParam = this.currentMode ? `?mode=${this.currentMode}` : '';
-        const wsUrl = this.apiBaseUrl.replace(/^https?/, 'wss').replace(/^http/, 'ws')
-                    + `/ws/voice/${this.userId}${modeParam}`;
+        // API_BASE_URL теперь same-origin (пустая строка): WebSocket требует
+        // абсолютный адрес, поэтому пустую базу разворачиваем из location.
+        // nginx сайта проксирует /ws/ на бэкенд с Upgrade-заголовками.
+        const wsBase = this.apiBaseUrl
+            ? this.apiBaseUrl.replace(/^https?/, 'wss').replace(/^http/, 'ws')
+            : (location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host;
+        const wsUrl = wsBase + `/ws/voice/${this.userId}${modeParam}`;
 
         console.log(`🔌 WS connect: ${wsUrl}${isRetry ? ' (retry)' : ''}`);
 

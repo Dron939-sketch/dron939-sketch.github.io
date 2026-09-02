@@ -319,7 +319,7 @@ const _str = window._strState;
 // ============================================
 function _strToast(msg, type) { if (window.showToast) window.showToast(msg, type||'info'); }
 function _strHome() { if (typeof renderDashboard==='function') renderDashboard(); else if (window.renderDashboard) window.renderDashboard(); }
-function _strApi() { return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
+function _strApi() { return window.CONFIG?.API_BASE_URL || ''; }
 function _strUid() { return window.CONFIG?.USER_ID; }
 function _strName() { return localStorage.getItem('fredi_user_name') || 'друг'; }
 function _strDomType() {

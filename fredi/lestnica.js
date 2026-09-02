@@ -17,7 +17,7 @@
   function toast(t, k) { if (typeof window.showToast === 'function') window.showToast(t, k || 'info'); }
   function track(ev, d) { try { if (window.FrediTracker) window.FrediTracker.track(ev, d || {}); } catch (e) {} }
   function container() { return document.getElementById('screenContainer'); }
-  function api() { return (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
+  function api() { return (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || ''; }
   function uid() { return (window.CONFIG && window.CONFIG.USER_ID) || window.USER_ID || 0; }
   async function aiGenerate(prompt, opts) {
     opts = opts || {};
