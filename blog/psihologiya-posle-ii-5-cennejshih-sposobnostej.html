@@ -120,6 +120,7 @@ body{overflow-wrap:break-word}</style>
     <span class="label">Главное за 30 секунд</span>
     <p><strong>К 2030 году ИИ возьмёт на себя 60-70% когнитивной работы.</strong> Программирование. Аналитика. Документация. Базовое творчество. Рутинная коммуникация. Это случится — не «может быть», а уже происходит. Что останется ценным в человеке? 5 способностей, которые ИИ не сможет заменить в обозримом будущем: способность к глубокой связи; моральная сложность; инсайтное распознавание паттернов; харизматическое лидерство; способность к выбору в неопределённости. Кто их развивает — тот выигрывает в эпоху ИИ.</p>
   </div>
+<div id="listenBox"></div>
 
   <div class="ability-card">
     <div class="ability-num">I</div>
@@ -237,5 +238,6 @@ body{overflow-wrap:break-word}</style>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>

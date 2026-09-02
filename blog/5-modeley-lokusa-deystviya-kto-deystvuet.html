@@ -163,6 +163,7 @@ body{overflow-wrap:break-word}</style>
       </div>
 
       <div class="article-content">
+<div id="listenBox"></div>
         <p>В психологии есть классическое понятие — <strong>локус контроля</strong>. Его ввёл Джулиан Роттер в 1954 году: внутренний (вижу причины внутри себя) или внешний (вижу причины снаружи). 70 лет спустя это понятие всё ещё используется в популярной литературе, но в современной науке оно сильно усложнилось — и не зря.</p>
 
         <p>Бинарная модель Роттера не объясняет, например, почему люди с подчёркнуто «внутренним» локусом массово выгорают, а люди со «здоровой» гибкостью оказываются более устойчивыми. Не объясняет, почему один и тот же человек в одной ситуации видит себя как причину, в другой — как объект обстоятельств, а в третьей — как часть совместного процесса. На самом деле моделей причинности у людей не две, а минимум пять. И застревание в любой из них — источник проблем.</p>
@@ -389,5 +390,6 @@ body{overflow-wrap:break-word}</style>
   <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
   <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>

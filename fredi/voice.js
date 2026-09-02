@@ -779,7 +779,9 @@ class VoiceTransport {
                             this._seqEnded = true;
                             this._drainSeq();
                             try {
-                                if (window.FrediMeter && typeof window.FrediMeter.recordUsage === 'function')
+                                if (window.FrediMeter && typeof window.FrediMeter.recordExchange === 'function')
+                                    window.FrediMeter.recordExchange();
+                                else if (window.FrediMeter && typeof window.FrediMeter.recordUsage === 'function')
                                     window.FrediMeter.recordUsage(15);
                             } catch (e) {}
                         } else if (msg.data) {
@@ -798,7 +800,9 @@ class VoiceTransport {
                             // дневной лимит от голоса не рос и пейволл по минутам не
                             // наступал. 15с/обмен — та же цена, что у текстового AI.
                             try {
-                                if (window.FrediMeter && typeof window.FrediMeter.recordUsage === 'function')
+                                if (window.FrediMeter && typeof window.FrediMeter.recordExchange === 'function')
+                                    window.FrediMeter.recordExchange();
+                                else if (window.FrediMeter && typeof window.FrediMeter.recordUsage === 'function')
                                     window.FrediMeter.recordUsage(15);
                             } catch (e) {}
                         }

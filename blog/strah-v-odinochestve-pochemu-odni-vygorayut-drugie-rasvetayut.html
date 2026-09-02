@@ -114,6 +114,7 @@ body{overflow-wrap:break-word}</style>
   <span class="label">Главное за 30 секунд</span>
   <p>Одиночество — это не одно явление, а четыре разных. Для <strong>Flight</strong> — это паническое заполнение чем угодно, чтобы не быть наедине. Для <strong>Fight</strong> — гнев на мир, который «не дал» близких. Для <strong>Freeze</strong> — медленное погружение в депрессию. Для <strong>Fawn</strong> — катастрофа идентичности («без кого я?»). Каждой реакции нужна своя стратегия работы. Универсальные советы «полюби себя» и «занимайся хобби» либо не работают, либо вредят — в зависимости от паттерна. Узнавание своего типа одиночества определяет, что делать.</p>
 </div>
+<div id="listenBox"></div>
 
 <h2>4 типа одиночества</h2>
 
@@ -211,5 +212,6 @@ body{overflow-wrap:break-word}</style>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>
