@@ -31,7 +31,7 @@ function goBackToDashboard() {
 async function checkTestCompleted() {
     try {
         const userId = window.CONFIG?.USER_ID || window.USER_ID;
-        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
         const response = await fetch(`${apiUrl}/api/user-status?user_id=${userId}`);
         const data = await response.json();
         return data.has_profile === true;
@@ -43,7 +43,7 @@ async function checkTestCompleted() {
 async function loadUserProfileForHealing() {
     try {
         const userId = window.CONFIG?.USER_ID || window.USER_ID;
-        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
 
         const contextRes = await fetch(`${apiUrl}/api/get-context/${userId}`);
         const contextData = await contextRes.json();
@@ -115,7 +115,7 @@ function buildHealingPrompt() {
 
 async function generateHealingContent() {
     const userId = window.CONFIG?.USER_ID || window.USER_ID;
-    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
 
     try {
         const response = await fetch(`${apiUrl}/api/ai/generate`, {

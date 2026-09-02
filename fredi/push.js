@@ -1,7 +1,7 @@
 // push.js — подписка на push-уведомления
 // VAPID public key подтягивается с бэка из env (VAPID_PUBLIC_KEY), чтобы фронт
 // и бэкенд гарантированно использовали одну и ту же пару ключей.
-const PUSH_API = window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+const PUSH_API = window.API_BASE_URL || '';
 let _pushPublicKey = null;
 let _pushKeyPromise = null;
 

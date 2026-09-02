@@ -80,7 +80,7 @@ function goBackToDashboard() {
 async function checkTestCompleted() {
     try {
         const userId = window.CONFIG?.USER_ID || window.USER_ID;
-        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
         const response = await fetch(`${apiUrl}/api/user-status?user_id=${userId}`);
         const data = await response.json();
         return data.has_profile === true;
@@ -95,7 +95,7 @@ async function checkTestCompleted() {
 async function loadUserProfileForRelationships() {
     try {
         const userId = window.CONFIG?.USER_ID || window.USER_ID;
-        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
 
         const contextRes = await fetch(`${apiUrl}/api/get-context/${userId}`);
         const contextData = await contextRes.json();
@@ -136,7 +136,7 @@ async function loadUserProfileForRelationships() {
 async function generateRelationshipAnalysis() {
     const v = relationshipsState.userVectors;
     const userId = window.CONFIG?.USER_ID || window.USER_ID;
-    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
     const attachmentInfo = ATTACHMENT_TYPES[relationshipsState.attachmentType] || ATTACHMENT_TYPES.secure;
 
     const prompt = `Ты — Фреди, виртуальный психолог. Сделай анализ стиля отношений пользователя.
@@ -187,7 +187,7 @@ async function generateRelationshipAnalysis() {
 async function analyzeSituation(situationText, partnerProfile = null) {
     const v = relationshipsState.userVectors;
     const userId = window.CONFIG?.USER_ID || window.USER_ID;
-    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
 
     let partnerContext = '';
     if (partnerProfile) {
@@ -239,7 +239,7 @@ async function analyzeSituation(situationText, partnerProfile = null) {
 async function getCrisisHelp(scenarioId, scenarioName) {
     const v = relationshipsState.userVectors;
     const userId = window.CONFIG?.USER_ID || window.USER_ID;
-    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+    const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
 
     const prompt = `Ты — Фреди, виртуальный психолог. Пользователь в кризисной ситуации: ${scenarioName}.
 

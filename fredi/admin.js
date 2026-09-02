@@ -198,7 +198,7 @@ function adminLogout() {
 // ГЛАВНЫЙ ДАШБОРД
 // ============================================
 async function renderAdminDashboard() {
-    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
+    const API = window.API_BASE_URL||'';
     document.getElementById('screenContainer').innerHTML = `
         <div class="adm-wrap">
 
@@ -407,7 +407,7 @@ function renderMirrors(c) {
 // ============================================
 async function renderUsers(c) {
     c.innerHTML = `<div style="text-align:center;padding:32px;color:rgba(255,255,255,0.3);font-size:13px;">⏳ Загружаю...</div>`;
-    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
+    const API = window.API_BASE_URL||'';
     let users = [];
     try {
         const res = await fetch(`${API}/api/admin/recent-users`).then(r=>r.json());
@@ -466,7 +466,7 @@ async function renderUsers(c) {
 // ============================================
 function renderSystem(c) {
     const ss = adminState.systemStatus;
-    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
+    const API = window.API_BASE_URL||'';
 
     const services = [
         ['🗄️','База данных',   ss.database],
@@ -541,7 +541,7 @@ function getDemoMirrors() {
 // ============================================
 async function renderLogs(c) {
     c.innerHTML = '<div style="text-align:center;padding:32px;color:rgba(255,255,255,0.3);font-size:13px;">⏳ Загружаю логи...</div>';
-    const API = window.API_BASE_URL||'https://ffred-ddd989.amvera.io';
+    const API = window.API_BASE_URL||'';
     let logs = [];
     let denied = false;
     // Ручка требует X-Admin-Token (раньше была открыта всем и отдавала

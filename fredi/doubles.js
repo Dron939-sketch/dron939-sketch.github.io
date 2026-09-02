@@ -504,7 +504,7 @@ function _getContainer() {
 }
 
 function _api() {
-    return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+    return window.CONFIG?.API_BASE_URL || '';
 }
 
 function _userId() {

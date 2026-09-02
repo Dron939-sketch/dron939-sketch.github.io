@@ -253,7 +253,7 @@ const _intState = window._intState;
 // ============================================
 function _intToast(msg) { if (window.showToast) window.showToast(msg, 'info'); }
 function _intHome()    { if (typeof renderDashboard === 'function') renderDashboard(); else if (window.renderDashboard) window.renderDashboard(); }
-function _api()        { return window.CONFIG?.API_BASE_URL || 'https://ffred-ddd989.amvera.io'; }
+function _api()        { return window.CONFIG?.API_BASE_URL || ''; }
 function _uid()        { return window.CONFIG?.USER_ID; }
 
 // ============================================

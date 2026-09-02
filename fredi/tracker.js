@@ -27,7 +27,7 @@
         return;
     }
 
-    var API=function(){return window.API_BASE_URL||window.CONFIG?.API_BASE_URL||'https://ffred-ddd989.amvera.io';};
+    var API=function(){return window.API_BASE_URL||window.CONFIG?.API_BASE_URL||'';};
     var UID=function(){return window.USER_ID||window.CONFIG?.USER_ID;};
 
     // Сессия переживает переход между страницами сайта.

@@ -20,7 +20,7 @@
 (function () {
   'use strict';
 
-  var API = (window.API_BASE_URL) || 'https://ffred-ddd989.amvera.io';
+  var API = (window.API_BASE_URL) || '';
   var LS = 'fredi_admin_token';
   var LINK = 'https://lichnosty.ru/type/eksperty/';
   var DATA = [];

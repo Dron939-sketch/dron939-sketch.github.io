@@ -123,7 +123,7 @@ async function subscribeToPushNotifications() {
 
         pushSubscription = subscription;
 
-        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+        const apiUrl = window.CONFIG?.API_BASE_URL || window.API_BASE_URL || '';
         const userId = window.CONFIG?.USER_ID || window.USER_ID;
 
         await fetch(`${apiUrl}/api/push/subscribe`, {

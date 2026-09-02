@@ -9,7 +9,7 @@
     if (window._authLoaded) return;
     window._authLoaded = true;
 
-    var API_BASE = window.API_BASE_URL || 'https://ffred-ddd989.amvera.io';
+    var API_BASE = window.API_BASE_URL || '';
     var LS_USER_ID = 'fredi_user_id';
     var LS_DEVICE_ID = 'fredi_device_id';
     var LS_AUTH_SYNCED = 'fredi_auth_synced_v1';

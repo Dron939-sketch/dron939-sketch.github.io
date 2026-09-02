@@ -2,7 +2,7 @@
 // Self-injecting лоадер. Использует localStorage['fredi_admin_token'].
 (function(){
   'use strict';
-  var API = (window.API_BASE_URL) || 'https://ffred-ddd989.amvera.io';
+  var API = (window.API_BASE_URL) || '';
   var LS = 'fredi_admin_token';
   var debTimer = null, currentSearch = '';
 
@@ -1186,7 +1186,7 @@
 // ============================================
 (function(){
   'use strict';
-  var API = (window.API_BASE_URL) || 'https://ffred-ddd989.amvera.io';
+  var API = (window.API_BASE_URL) || '';
   var LS = 'fredi_admin_token';
   function tok(){ try { return localStorage.getItem(LS) || ''; } catch(e){ return ''; } }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -1760,7 +1760,7 @@
 // ============================================
 (function(){
   'use strict';
-  var API = (window.API_BASE_URL) || 'https://ffred-ddd989.amvera.io';
+  var API = (window.API_BASE_URL) || '';
   var LS = 'fredi_admin_token';
   function tok(){ try { return localStorage.getItem(LS) || ''; } catch(e){ return ''; } }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
