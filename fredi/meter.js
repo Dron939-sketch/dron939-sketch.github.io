@@ -158,11 +158,24 @@
 
         var kind = _bindingKind(check);
 
+        // Пороги «осталось мало» масштабируются от лимита. Абсолютные 2/5
+        // минут писались под лимит в 10: анониму с дневными 3 минутами
+        // soft-порог ≤5 срабатывал на ПЕРВОМ же сообщении — человек ещё
+        // ценности не увидел, а ему уже тикает таймер (наблюдение из
+        // аналитики 02.09: meter_warning remaining=3 сразу после первого
+        // message_sent). Для лимита 10 пороги остаются прежними (2 и 5),
+        // для анонимных 3 минут — 1 и 1.5.
+        var limitForKind = (kind === 'trial')
+            ? (check.trial_limit_minutes || 10)
+            : (check.limit_minutes || 10);
+        var critThr = Math.min(2, limitForKind / 3);
+        var softThr = Math.min(5, limitForKind / 2);
+
         // Critical: осталось ≤ 2 мин. Карточку апселла показываем один раз
         // за сессию (и не поверх только что закрытой стены) — дальше на
         // critical напоминаем тостом, раз за 2-мин окно. meter_warning
         // пишем в обоих случаях: это замер, а не UI.
-        if (rem <= 2 && !_criticalShown) {
+        if (rem <= critThr && !_criticalShown) {
             _criticalShown = true;
             _trackWarning('critical', rem, kind);
             setTimeout(function() { _criticalShown = false; }, 120000);
@@ -190,8 +203,8 @@
             }
             return;
         }
-        // Soft: 2 < rem ≤ 5 — мягкая подготовка.
-        if (rem <= 5 && !_warningShown) {
+        // Soft: critThr < rem ≤ softThr — мягкая подготовка.
+        if (rem <= softThr && !_warningShown) {
             _warningShown = true;
             _toast(kind === 'trial'
                 ? '⏱ Бесплатных минут осталось ' + Math.round(rem)

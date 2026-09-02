@@ -492,10 +492,25 @@
             // отражает реальные недоступности, а не разовые обрывы. Не-GET (POST
             // /api/ai/generate и пр.) не ретраятся — они не идемпотентны.
             var canRetry = (method==='GET');
-            var maxTries = canRetry ? 3 : 1;
-            var backoffs = [400, 1200];
+            var maxTries = canRetry ? 4 : 1;
+            var backoffs = [400, 1200, 3000];
+            // Пробуждение телефона: вкладка стала видимой, запросы уже
+            // полетели, а радиомодуль ещё поднимает сеть — «Failed to
+            // fetch» сериями ровно после tab_visible (аналитика 02.09).
+            // Браузер это состояние знает: navigator.onLine === false.
+            // Ждём событие online (максимум 5 секунд) вместо того, чтобы
+            // жечь попытки в заведомо мёртвую сеть.
+            function _waitOnline(ms){
+                if (navigator.onLine !== false) return Promise.resolve();
+                return new Promise(function(res){
+                    var t = setTimeout(done, ms);
+                    function done(){ clearTimeout(t); window.removeEventListener('online', done); res(); }
+                    window.addEventListener('online', done);
+                });
+            }
             try{
                 for(var attempt=0; ; attempt++){
+                    if(canRetry) await _waitOnline(5000);
                     var opt = options;
                     // на повторах убираем уже сработавший таймаут-signal (иначе мгновенный abort)
                     if(attempt>0 && options && options.signal){ opt=Object.assign({},options); delete opt.signal; }
