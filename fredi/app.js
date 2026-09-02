@@ -3089,6 +3089,8 @@ document.addEventListener('DOMContentLoaded', function() {
             supervizor: { fn: 'showSupervizorScreen', src: 'supervizor.js', chat: 'supervizor' }, // супервизия для психологов
             brand: { fn: 'showPersonalBrandScreen', src: 'brand.js', chat: 'brand' }, // «Мой бренд»
             test: { fn: 'startTest', src: 'test.js', chat: 'test' }, // большой тест с портретом и рекомендациями
+            habits: { fn: 'showHabitsScreen', src: 'habits.js', chat: 'fredi' }, // привычки: петля триггер-реакция + трекер (режим коуч)
+            skills: { fn: 'showSkillChoiceScreen', src: 'skill_choice.js', chat: 'fredi' }, // каталог навыков с 21-дневными планами (режим тренер)
             diary: { fn: 'showDiaryScreen', src: 'diary.js', chat: 'diary' }, // дневник эмоций
             dreams: { fn: 'showDreamsScreen', src: 'dreams.js', chat: 'fredi' }, // толкование снов
             hypnosis: { fn: 'showHypnosisScreen', src: 'hypnosis.js', chat: 'hypnosis' }, // самогипноз
