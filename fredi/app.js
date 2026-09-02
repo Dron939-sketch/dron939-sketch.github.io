@@ -3088,6 +3088,15 @@ document.addEventListener('DOMContentLoaded', function() {
             esoterica: { fn: 'showEsotericaScreen', src: 'esoterica.js', chat: 'esoterica' }, // таро, гороскоп, натальная карта
             supervizor: { fn: 'showSupervizorScreen', src: 'supervizor.js', chat: 'supervizor' }, // супервизия для психологов
             brand: { fn: 'showPersonalBrandScreen', src: 'brand.js', chat: 'brand' }, // «Мой бренд»
+            test: { fn: 'startTest', src: 'test.js', chat: 'test' }, // большой тест с портретом и рекомендациями
+            diary: { fn: 'showDiaryScreen', src: 'diary.js', chat: 'diary' }, // дневник эмоций
+            dreams: { fn: 'showDreamsScreen', src: 'dreams.js', chat: 'fredi' }, // толкование снов
+            hypnosis: { fn: 'showHypnosisScreen', src: 'hypnosis.js', chat: 'hypnosis' }, // самогипноз
+            practices: { fn: 'showPracticesScreen', src: 'practices.js', chat: 'practices' }, // КПТ-практики
+            tales: { fn: 'showTalesScreen', src: 'tales.js', chat: 'fredi' }, // сказки-катарсис
+            anchors: { fn: 'showAnchorsScreen', src: 'anchors.js', chat: 'anchors' }, // якоря
+            mirrors: { fn: 'showMirrorsScreen', src: 'mirrors.js', chat: 'mirrors' }, // зеркала
+            berne: { fn: 'showBerneScreen', src: 'berne.js', chat: 'berne' }, // роли и игры, транзактный анализ
             kontur: { fn: 'showKonturGame', src: 'kontur.js', chat: 'kontur' }, // прямо в игру «О чём ты умеешь думать»
             games:  { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' }, // в список игр
             dvapotoka: { fn: 'showDvaPotokaGame', src: 'dvapotoka.js', chat: 'kontur' }, // прямо в игру «Два потока»
