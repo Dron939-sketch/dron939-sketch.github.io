@@ -3083,6 +3083,11 @@ document.addEventListener('DOMContentLoaded', function() {
         catch (e1) { var mm = (location.search || '').match(/[?&]m=([^&]+)/); m = mm ? decodeURIComponent(mm[1]) : null; }
         if (!m) return;
         var ROUTES = {
+            // Небигровые модули: до сих пор ?m= знал только игры, и ссылки
+            // с посадочных на эзотерику/супервизора/бренд молча умирали.
+            esoterica: { fn: 'showEsotericaScreen', src: 'esoterica.js', chat: 'esoterica' }, // таро, гороскоп, натальная карта
+            supervizor: { fn: 'showSupervizorScreen', src: 'supervizor.js', chat: 'supervizor' }, // супервизия для психологов
+            brand: { fn: 'showPersonalBrandScreen', src: 'brand.js', chat: 'brand' }, // «Мой бренд»
             kontur: { fn: 'showKonturGame', src: 'kontur.js', chat: 'kontur' }, // прямо в игру «О чём ты умеешь думать»
             games:  { fn: 'showKonturScreen', src: 'kontur.js', chat: 'kontur' }, // в список игр
             dvapotoka: { fn: 'showDvaPotokaGame', src: 'dvapotoka.js', chat: 'kontur' }, // прямо в игру «Два потока»
