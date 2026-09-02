@@ -114,6 +114,7 @@ body{overflow-wrap:break-word}</style>
   <span class="label">Главное за 30 секунд</span>
   <p>4 реакции на страх создают <strong>4 финансовых архетипа</strong>: <strong>Flight</strong> — «деньги текут как вода» (всё уходит на новые впечатления, поездки, переходы). <strong>Fight</strong> — «деньги не главное» (демонстративное пренебрежение, что часто скрывает страх не справиться). <strong>Freeze</strong> — «не открываю выписку 5 лет» (паралич в финансовых решениях, неспособность планировать). <strong>Fawn</strong> — «отдаю тем, кто просит» (не может удерживать собственные ресурсы, постоянно жертвует ради других). Без работы с базовой реакцией финансовое поведение не меняется. Курсы по инвестированию здесь не помогают — они работают на третьем этаже, а проблема — на первом.</p>
 </div>
+<div id="listenBox"></div>
 
 <h2>4 финансовых архетипа</h2>
 
@@ -207,5 +208,6 @@ body{overflow-wrap:break-word}</style>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>

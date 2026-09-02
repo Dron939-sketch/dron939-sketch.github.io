@@ -201,6 +201,27 @@
         }
     }
 
+    // Реальная цена обмена. Раньше каждый обмен стоил фиксированные 15
+    // секунд — при этом реальный такт «написал → прочитал длинный ответ →
+    // ответил» занимает 60-90 секунд. «10 бесплатных минут» на деле были
+    // 40 обменами: пользователь с 36 сообщениями за несколько дней так и
+    // не увидел стену, и подписка ему была ни к чему. Теперь списывается
+    // время, реально прошедшее с прошлого обмена: минимум прежние 15
+    // (быстрые короткие реплики не дороже, чем были), максимум 120 —
+    // отходил от экрана не в счёт (и сервер всё равно режет по 120).
+    var _lastExchangeTs = 0;
+    function recordExchange() {
+        var now = Date.now();
+        var sec = 15;
+        if (_lastExchangeTs) {
+            sec = Math.round((now - _lastExchangeTs) / 1000);
+            if (sec < 15) sec = 15;
+            if (sec > 120) sec = 120;
+        }
+        _lastExchangeTs = now;
+        return recordUsage(sec);
+    }
+
     async function recordUsage(seconds) {
         var uid = await _uidConfirmed();
         if (!uid) return;
@@ -792,11 +813,7 @@
                     }
                 } catch (e) {}
             }
-            // 15 сек на запрос — компромисс. При 10-мин/день это даёт
-            // примерно 40 сообщений. Реальное чтение длинного ответа
-            // часто занимает больше, но мы не хотим съедать лимит
-            // быстрее, чем юзер реально читает.
-            if (isAi && response.ok) recordUsage(15);
+            if (isAi && response.ok) recordExchange();
             return response;
         };
         console.log('meter: fetch patched');
@@ -969,6 +986,7 @@
     window.FrediMeter = {
         checkCanSend: checkCanSend,
         recordUsage: recordUsage,
+        recordExchange: recordExchange,
         showFatigueModal: showFatigueModal,
         showUpsellCard: showUpsellCard,
         // Наружу — чтобы предупреждение можно было показать из голосового

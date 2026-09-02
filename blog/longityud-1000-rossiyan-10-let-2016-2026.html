@@ -120,6 +120,7 @@ body{overflow-wrap:break-word}</style>
     <span class="label">Главное за 30 секунд</span>
     <p><strong>За 10 лет (2016-2026) российская психика изменилась радикальнее, чем за предыдущие 20.</strong> Анализ лонгитюдных данных по 1000+ респондентам показывает: тревога выросла в 2,3 раза, уровень доверия упал на 18%, обращение за психологической помощью увеличилось в 4 раза, но эмоциональная грамотность так и не выросла. Это эпоха парадоксов — больше работаем над собой, при этом больше страдаем. В этом манифесте — 15 главных изменений, разделённых на 3 категории: «выросло», «упало», «не меняется».</p>
   </div>
+<div id="listenBox"></div>
 
   <div class="method-box">
     <strong>Методология:</strong> Не классический лонгитюд (с одной когортой респондентов 10 лет), а реконструкция изменений на основе сопоставления 7 независимых исследований 2016-2026 с похожей методологией. Включает данные ВЦИОМ, Левада-Центра, РМЭЗ, а также 12 академических работ. Динамика построена через mean-comparison между периодами.
@@ -301,5 +302,6 @@ body{overflow-wrap:break-word}</style>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>

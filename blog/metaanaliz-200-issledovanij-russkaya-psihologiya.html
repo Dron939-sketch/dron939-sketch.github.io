@@ -120,6 +120,7 @@ body{overflow-wrap:break-word}</style>
     <span class="label">Главное за 30 секунд</span>
     <p><strong>В русскоязычной литературе 2015-2025 опубликовано около 200 серьёзных исследований эффективности психотерапевтических методов.</strong> Метаанализ показал: одни методы дают в российском контексте сильный эффект (КПТ, EMDR, схема-терапия), другие — слабый или неоднозначный (психоанализ, гештальт), третьи — практически не работают (расстановки, биоэнерготерапия). Есть также успешные российские адаптации (КПТ с учётом культурного контекста). Этот манифест — карта того, что реально работает у российских клиентов.</p>
   </div>
+<div id="listenBox"></div>
 
   <div class="method-box">
     <strong>Методология:</strong> Систематический обзор 200 рецензируемых публикаций 2015-2025, опубликованных в журналах «Психологический журнал», «Консультативная психология и психотерапия», «Психология. Журнал ВШЭ» и др. Включены RCT, квази-эксперименты, лонгитюдные исследования. Эффект-сайзы конвертированы в коэффициент Коэна d или процент клинически значимого улучшения.
@@ -281,5 +282,6 @@ body{overflow-wrap:break-word}</style>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>

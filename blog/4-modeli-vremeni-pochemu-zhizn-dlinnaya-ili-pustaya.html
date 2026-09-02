@@ -163,6 +163,7 @@ body{overflow-wrap:break-word}</style>
       </div>
 
       <div class="article-content">
+<div id="listenBox"></div>
         <p>Когда мы говорим «время идёт» — мы редко задумываемся, <strong>что именно идёт</strong>. Часы тикают всегда, это банальность. Но <em>проживаемое</em> время устроено иначе. У одного человека неделя в отпуске запоминается как месяц. У другого — три года рутинной работы сливаются в смутное «было что-то». Один в 80 лет рассказывает биографию как длинный сюжет. Другой в те же 80 — «вот вчера школу закончил, и где время».</p>
 
         <p>Психология времени — старая область. Уильям Джеймс ещё в 1890 году писал, что «время растягивается при разнообразии и сжимается при монотонности». Современная нейронаука это подтвердила и углубила: восприятие длительности зависит от <strong>плотности новых меток</strong>, которые мозг записывает в эпизодическую память (исследования Дэвида Иглмана, лаборатория Бэйлора). Чем больше различимых меток — тем «длиннее» промежуток в воспоминании.</p>
@@ -367,5 +368,6 @@ body{overflow-wrap:break-word}</style>
   <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
   <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>

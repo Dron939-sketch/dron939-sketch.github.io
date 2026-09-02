@@ -121,6 +121,7 @@ body{overflow-wrap:break-word}</style>
   <span class="label">Главное за 30 секунд</span>
   <p>В России выросло поколение мужчин 28–45 лет, чьи отцы — выдающиеся профессионалы 1990-х–2010-х: учёные, врачи, инженеры, предприниматели, военные, художники. Эти отцы не были плохими — они часто были хорошими, любящими, поддерживающими. Но они были <strong>выдающимися</strong>, и их успех создал у сыновей фоновое ощущение <em>«я никогда не дотянусь»</em>. Это <strong>«Синдром умного отца»</strong> — не клинический диагноз, а массовый феномен. Главный симптом — фоновое чувство «недостаточности» при объективно высоких собственных достижениях. Сыновья таких отцов часто становятся успешными в своей сфере, но <em>не могут признать свой успех</em> — он остаётся в категории «недотянул». Это даёт пожизненную хроническую неудовлетворённость, перфекционизм, страх публичности, прокрастинацию больших решений, иногда — депрессивные эпизоды. Лечится не «принижением отца» (это лечит худший вариант — обиду), а <strong>возвратом сыну права быть собой, в своей сфере, со своей меркой</strong>. У У-34 эта работа заняла 11 месяцев и привела к структурному изменению — впервые признал свою компанию как «настоящую», без оглядки на отца. Это и есть выход.</p>
 </div>
+<div id="listenBox"></div>
 
 <h2 id="kto-takoj">Часть 1. Кто такой У-34</h2>
 
@@ -375,5 +376,6 @@ body{overflow-wrap:break-word}</style>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/progress.js" defer></script>
+<script src="/blog/listen.js" defer></script>
 </body>
 </html>
