@@ -616,6 +616,7 @@
                     : '') +
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterSubscribeBtn">\u2728 Premium \u2014 990 \u20BD/\u043C\u0435\u0441, \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432</button>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 \u20BD \u0432 \u043C\u0435\u0441\u044F\u0446 \u2014 \u044D\u0442\u043E 33 \u20BD \u0432 \u0434\u0435\u043D\u044C \u0437\u0430 \u0441\u043E\u0431\u0435\u0441\u0435\u0434\u043D\u0438\u043A\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0440\u044F\u0434\u043E\u043C \u0438 \u0432 3 \u0447\u0430\u0441\u0430 \u043D\u043E\u0447\u0438.</div>' +
                 (trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
@@ -737,6 +738,7 @@
                     : '') +
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterUpsellSub">✨ Premium — 990 ₽/мес, без лимитов</button>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — это 33 ₽ в день за собеседника, который рядом и в 3 часа ночи.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
