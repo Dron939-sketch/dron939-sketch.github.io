@@ -505,6 +505,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://meysternlp.ru/bolshoj-test-lichnosti/</loc>
+    <lastmod>2026-09-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <url><loc>https://meysternlp.ru/ii-kouch/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://meysternlp.ru/ii-trener/</loc><lastmod>2026-09-01</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://meysternlp.ru/blog/derealizaciya-mir-kak-za-steklom.html</loc><lastmod>2026-08-29</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
