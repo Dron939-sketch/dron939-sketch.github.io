@@ -571,10 +571,10 @@ async function showReflectionsTab(container) {
                     <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);
                                 border-radius:20px;padding:20px;">
                         <div class="mirror-section-label">КАК ЭТО РАБОТАЕТ</div>
-                        ${['1️⃣ Создаёшь уникальную ссылку',
-                           '2️⃣ Отправляешь её другу любым удобным способом',
-                           '3️⃣ Друг проходит тест по твоей ссылке',
-                           '4️⃣ Тебе открывается его полный профиль + интимный + 4F ключи'].map(s => `
+                        ${['1. Создаёшь уникальную ссылку',
+                           '2. Отправляешь её другу любым удобным способом',
+                           '3. Друг проходит тест по твоей ссылке',
+                           '4. Тебе открывается его полный профиль + интимный + 4F ключи'].map(s => `
                             <div style="display:flex;align-items:center;gap:10px;padding:10px 0;
                                         border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;color:rgba(255,255,255,0.6);">
                                 ${s}
