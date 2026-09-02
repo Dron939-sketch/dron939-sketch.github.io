@@ -123,15 +123,40 @@ p{margin:0 0 14px}
 .faq-item{border-bottom:1px solid #E5E5EA;padding:16px 0}
 .faq-item h3{font-size:1.05rem;margin-bottom:8px}
 a{color:#3A86FF}
+
+/* ── Hero: тёмный первый экран с акцентом темы ─────────────────────── */
+.hero{background:
+  radial-gradient(900px 420px at 78% -10%, rgba(58,134,255,.28), transparent 60%),
+  radial-gradient(700px 380px at 12% 110%, rgba(58,134,255,.14), transparent 55%),
+  linear-gradient(160deg,#0E1116 0%,#141A26 100%);
+  color:#fff;padding:52px 20px 46px;text-align:center}
+.hero-inner{max-width:760px;margin:0 auto}
+.hero-glyph{font-size:3.2rem;line-height:1;margin-bottom:14px;filter:drop-shadow(0 6px 22px rgba(58,134,255,.45))}
+.hero h1{font-size:clamp(1.7rem,4.5vw,2.35rem);line-height:1.22;margin:0 0 14px;letter-spacing:-.015em}
+.hero .lead{color:rgba(255,255,255,.82);font-size:1.06rem;max-width:640px;margin:0 auto 24px}
+.hero .cta{background:#3A86FF;color:#0E1116;font-weight:800;box-shadow:0 10px 30px rgba(58,134,255,.35);margin:0}
+.hero .cta:hover{background:#fff;color:#0E1116}
+.hero .cta-note{color:rgba(255,255,255,.55);margin-top:12px}
+/* ── Карточки: объём вместо плоскости ─────────────────────────────── */
+.card{box-shadow:0 1px 2px rgba(16,24,40,.05);transition:box-shadow .2s,transform .2s;border-radius:16px}
+.card:hover{box-shadow:0 10px 26px rgba(16,24,40,.10);transform:translateY(-2px)}
+.card b{font-size:1.02rem}
+h2{letter-spacing:-.01em}
+h2::after{content:"";display:block;width:44px;height:3px;border-radius:2px;background:#3A86FF;margin-top:8px}
+.cta{box-shadow:0 6px 18px rgba(58,134,255,.30)}
 </style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div><script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 
-<div class="wrap">
+<div class="hero"><div class="hero-inner"><div class="hero-glyph" aria-hidden="true">🧠</div>
 <h1>Большой тест личности — портрет, с которым дальше работают</h1>
 <p class="lead">Обычный тест личности заканчивается страницей с описанием: прочитали, кивнули, закрыли. Этот устроен иначе: он проходится в диалоге, а его результат — рабочий профиль, на который дальше опирается всё остальное — от подбора привычек до персональной сказки.</p>
+<p style="margin:0"><a class="cta" id="openFredi" href="/fredi/?m=test">Пройти тест — около 15 минут</a></p>
+<p class="cta-note">Первые 10 минут разговора бесплатны. В диалоге, можно голосом.</p>
+</div></div>
+<div class="wrap">
 
 <h2>Пять этапов</h2>
 <div class="stages">
@@ -142,10 +167,6 @@ a{color:#3A86FF}
 <div class="stage"><div><b>Глубинные паттерны</b><p>Что вас сформировало — устойчивые сценарии, которые повторяются в разных сферах жизни.</p></div></div>
 </div>
 
-<p style="text-align:center;margin:26px 0 4px">
-<a class="cta" id="openFredi" href="/fredi/?m=test">Пройти тест — около 15 минут</a>
-</p>
-<p class="cta-note" style="text-align:center">Первые 10 минут разговора бесплатны. В диалоге, можно голосом.</p>
 
 <h2>Что происходит после теста</h2>
 <div class="cards">

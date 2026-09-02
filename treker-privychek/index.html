@@ -114,15 +114,40 @@ p{margin:0 0 14px}
 .loop span{border:1px solid #E5E5EA;border-radius:99px;padding:8px 16px;font-size:.94rem;background:#F5F5F7}
 .loop .arr{border:none;background:none;color:#8A93A3;padding:8px 2px}
 a{color:#3A86FF}
+
+/* ── Hero: тёмный первый экран с акцентом темы ─────────────────────── */
+.hero{background:
+  radial-gradient(900px 420px at 78% -10%, rgba(52,211,153,.28), transparent 60%),
+  radial-gradient(700px 380px at 12% 110%, rgba(52,211,153,.14), transparent 55%),
+  linear-gradient(160deg,#0E1116 0%,#141A26 100%);
+  color:#fff;padding:52px 20px 46px;text-align:center}
+.hero-inner{max-width:760px;margin:0 auto}
+.hero-glyph{font-size:3.2rem;line-height:1;margin-bottom:14px;filter:drop-shadow(0 6px 22px rgba(52,211,153,.45))}
+.hero h1{font-size:clamp(1.7rem,4.5vw,2.35rem);line-height:1.22;margin:0 0 14px;letter-spacing:-.015em}
+.hero .lead{color:rgba(255,255,255,.82);font-size:1.06rem;max-width:640px;margin:0 auto 24px}
+.hero .cta{background:#34D399;color:#0E1116;font-weight:800;box-shadow:0 10px 30px rgba(52,211,153,.35);margin:0}
+.hero .cta:hover{background:#fff;color:#0E1116}
+.hero .cta-note{color:rgba(255,255,255,.55);margin-top:12px}
+/* ── Карточки: объём вместо плоскости ─────────────────────────────── */
+.card{box-shadow:0 1px 2px rgba(16,24,40,.05);transition:box-shadow .2s,transform .2s;border-radius:16px}
+.card:hover{box-shadow:0 10px 26px rgba(16,24,40,.10);transform:translateY(-2px)}
+.card b{font-size:1.02rem}
+h2{letter-spacing:-.01em}
+h2::after{content:"";display:block;width:44px;height:3px;border-radius:2px;background:#34D399;margin-top:8px}
+.cta{box-shadow:0 6px 18px rgba(52,211,153,.30)}
 </style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
 <body>
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div><script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 
-<div class="wrap">
+<div class="hero"><div class="hero-inner"><div class="hero-glyph" aria-hidden="true">🔁</div>
 <h1>Трекер привычек, который начинает не с галочек</h1>
 <p class="lead">Вы ставили трекеры. Три недели галочек, потом один пропуск, обнулённый стрик — и приложение молча живёт на третьем экране телефона. Проблема не в дисциплине: галочки не трогают то, что запускает привычку.</p>
+<p style="margin:0"><a class="cta" id="openFredi" href="/fredi/?m=habits">Разобрать привычку — 10 минут бесплатно</a></p>
+<p class="cta-note">Без установки, в браузере. Можно голосом.</p>
+</div></div>
+<div class="wrap">
 
 <p>Любая привычка — это петля. Пока вы её не увидели, менять поведение приходится силой воли — а она заканчивается к вечеру:</p>
 <div class="loop">
@@ -130,10 +155,6 @@ a{color:#3A86FF}
 </div>
 <p>Здесь трекер начинается с разбора петли. Фреди помогает найти триггер, увидеть старую реакцию и поставить на её место новую — маленькую, выполнимую сегодня. Дальше — обычное ежедневное отслеживание, но срыв не обнуляет прогресс, а разбирается: какой триггер пробил, чего не хватило.</p>
 
-<p style="text-align:center;margin:26px 0 4px">
-<a class="cta" id="openFredi" href="/fredi/?m=habits">Разобрать привычку — 10 минут бесплатно</a>
-</p>
-<p class="cta-note" style="text-align:center">Без установки, в браузере. Можно голосом.</p>
 
 <h2>Что внутри</h2>
 <div class="cards">
