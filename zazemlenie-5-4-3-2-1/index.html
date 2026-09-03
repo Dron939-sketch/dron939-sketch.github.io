@@ -232,7 +232,7 @@ a{color:#65a30d}
     field.value='';
     field.placeholder = idx===0 ? 'например: синяя кружка, трещина на подоконнике…' : '';
     next.textContent = idx<STEPS.length-1 ? 'Дальше' : 'Готово';
-    field.focus();
+    if(idx>0) field.focus(); // на первом рендере фокус утаскивал страницу мимо hero
   }
 
   next.addEventListener('click',function(){
