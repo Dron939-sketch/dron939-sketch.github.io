@@ -172,7 +172,7 @@
         // промахнуться мимо того, что он только что делал.
         var verb = course.kind === 'test' ? 'Вы проходили «'
                  : course.kind === 'landing' ? 'Вы разбирали «'
-                 : 'Вы читали «';
+                 : 'Вы читали «';   // курсы Лектория и страницы-описания
         head.textContent = course.t ? verb + course.t + '». Можно спросить:'
                                     : 'Можно спросить:';
         panel.appendChild(head);
@@ -226,9 +226,13 @@
             course = { slug: slug, kind: 'course', t: _data.courses[slug].t, q: _data.courses[slug].q };
         } else {
             var lp = _landingFor(path);
-            course = lp
-                ? { slug: lp, kind: lp.indexOf('/testy/') === 0 ? 'test' : 'landing',
-                    t: _data.landings[lp].t, q: _data.landings[lp].q }
+            // Тип берём из данных, если он там проставлен: у страниц-описаний
+            // режимов «разбирали» не подходит — их читают. Адрес как запасной
+            // признак остаётся: /testy/ — это всегда пройденный тест.
+            var L = lp ? _data.landings[lp] : null;
+            course = L
+                ? { slug: lp, kind: L.k || (lp.indexOf('/testy/') === 0 ? 'test' : 'landing'),
+                    t: L.t, q: L.q }
                 : { slug: '', kind: '', t: '', q: _data.default };
         }
         if (!course.q || !course.q.length) return true;
