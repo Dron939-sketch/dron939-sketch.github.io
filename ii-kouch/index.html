@@ -505,7 +505,7 @@ body{overflow-wrap:break-word}</style>
     </div>
 
     <div class="hero-cta">
-      <a href="/fredi/" class="btn btn-large" style="background: linear-gradient(135deg, #3A86FF, #00A8E8); border: none;">⭐ ОТКРЫТЬ И ВЫБРАТЬ РОЛЬ «КОУЧ»</a>
+      <a href="/fredi/?from=/ii-kouch/" class="btn btn-large" style="background: linear-gradient(135deg, #3A86FF, #00A8E8); border: none;">⭐ ОТКРЫТЬ И ВЫБРАТЬ РОЛЬ «КОУЧ»</a>
     </div>
     <!-- do-now-hero --><p style="margin-top:16px;font-size:.95rem;opacity:.85;max-width:620px;margin-left:auto;margin-right:auto">Пока не готовы регистрироваться — начните с бесплатного, прямо на сайте: <a href="/koleso-balansa/" style="color:#7fb0ff">колесо баланса</a> за две минуты покажет перекос, а <a href="/svoi-cennosti/" style="color:#7fb0ff">выбор ценностей</a> — что для вас на самом деле первое.</p><!-- /do-now-hero -->
     <p style="margin-top: 18px; color: #999; font-size: 0.9rem;">Нужны имя, почта и пин-код из 4 цифр — чтобы разговор сохранялся и открывался с любого устройства. Внутри бесплатных минут роль коуча доступна целиком, без урезаний.</p>
@@ -650,7 +650,7 @@ body{overflow-wrap:break-word}</style>
     <h2>Попробовать режим коуча</h2>
     <p style="max-width:640px;margin:0 auto 26px;color:#6E6E73;line-height:1.7">Десять минут бесплатно, роль работает целиком. Если не подойдёт — вы ничего не теряете, а если подойдёт, подписка отключается в один клик.</p>
     <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-      <a href="/fredi/" class="btn btn-large" style="background: linear-gradient(135deg, #3A86FF, #00A8E8); border: none;">⭐ ОТКРЫТЬ ФРЕДИ</a>
+      <a href="/fredi/?from=/ii-kouch/" class="btn btn-large" style="background: linear-gradient(135deg, #3A86FF, #00A8E8); border: none;">⭐ ОТКРЫТЬ ФРЕДИ</a>
       <a href="/virtual-psychologist/" class="btn btn-large">Нужен психолог, а не коуч</a>
     </div>
     <p style="margin-top: 20px; color: #3A86FF; font-size: clamp(0.85rem, 3vw, 0.95rem);">💡 Роли психолога, коуча и тренера переключаются в одном разговоре</p>
@@ -731,5 +731,22 @@ body{overflow-wrap:break-word}</style>
   });
 </script>
 
+<!-- fredi-track -->
+<script>
+(function () {
+  // Клик по любой ссылке на /fredi/ — это открытие продукта. Слушаем на
+  // document: шапка и подвал приезжают позже через fetch, и их ссылок в
+  // момент загрузки ещё нет.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="/fredi"]') : null;
+    if (!a) return;
+    try {
+      ym(108138656, 'reachGoal', 'kouch_open_fredi');
+      ym(108138656, 'reachGoal', 'open_fredi');
+    } catch (err) {}
+  }, true);
+})();
+</script>
+<!-- /fredi-track -->
 </body>
 </html>
