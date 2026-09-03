@@ -208,7 +208,7 @@ a{color:#3A86FF}
 <div class="next-box">
 <b>Что дальше.</b>
 <!-- do-now --><div style="background:#fff;border:1px solid #CFE9DC;border-left:4px solid #34D399;border-radius:12px;padding:14px 16px;margin:12px 0 4px"><b style="color:#047857">Сделать прямо сейчас — бесплатно и без регистрации</b><p style="margin:6px 0 0;font-size:.97rem;color:#3c3c43"><a href="/test-na-vygoranie/">тест на выгорание</a> — отличить истощение от депрессии, это разные состояния и разная помощь; <a href="/zazemlenie-5-4-3-2-1/">заземление 5-4-3-2-1</a> — на тяжёлые минуты.</p></div><!-- /do-now -->
-<p style="margin:8px 0 0">Результат можно разобрать словами — что стоит за баллами именно у вас: <a class="btn" href="/fredi/?from=/testy/depressiya-phq-9/">Обсудить с Фреди</a></p>
+<p style="margin:8px 0 0" id="frediNext">Результат можно разобрать словами — что стоит за баллами именно у вас: <a class="btn" href="/fredi/?from=/testy/depressiya-phq-9/">Обсудить с Фреди</a></p>
 <p style="margin:14px 0 0;font-size:.95rem;color:#4A5563">Рядом: <a href="/testy/trevoga-gad-7/">Тест на тревожность (GAD-7)</a> — эти состояния часто ходят парой.</p>
 <p style="margin:12px 0 0;font-size:.95rem;color:#4A5563">Дальше по порталу: <a href="/blog/lektorij/">бесплатные курсы Лектория</a> с озвучкой, <a href="/igry/">психологические игры</a> и <a href="/istorii/">живые истории</a> — всё без регистрации.</p>
 </div>
@@ -283,6 +283,22 @@ a{color:#3A86FF}
     
       var c9 = document.querySelector('input[name="q9"]:checked');
       document.getElementById('crisisBox').classList.toggle('show', c9 && c9.value !== '0');
+
+    // «Что дальше» зависит от балла. С десяти авторы шкалы рекомендуют
+    // очную оценку, и на этом уровне звать разговаривать с программой
+    // так же, как при трёх баллах, — неправильно: у Фреди здесь другая
+    // роль, вспомогательная, и назвать её надо вслух. Тот же текст
+    // показываем при любом ненулевом ответе про мысли о смерти, каким бы
+    // ни был общий балл: опросники ошибаются в обе стороны.
+    var HREF = '/fredi/?from=/testy/depressiya-phq-9/';
+    var care = sum >= 10 || (c9 && c9.value !== '0');
+    document.getElementById('frediNext').innerHTML = care
+      ? 'Главный шаг здесь — очная консультация, и разговором с программой он не ' +
+        'заменяется. Но до приёма обычно проходит несколько дней, и провести их ' +
+        'молча тяжелее: <a class="btn" href="' + HREF + '">Проговорить с Фреди</a> — ' +
+        'помочь собрать то, что вы скажете врачу, и побыть рядом вечером он может.'
+      : 'Результат можно разобрать словами — что стоит за баллами именно у вас: ' +
+        '<a class="btn" href="' + HREF + '">Обсудить с Фреди</a>';
     form.style.display = 'none';
     document.getElementById('result').classList.add('show');
     try { document.getElementById('result').scrollIntoView({behavior: 'smooth'}); } catch (e) {}
