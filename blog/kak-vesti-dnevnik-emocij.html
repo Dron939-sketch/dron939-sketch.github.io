@@ -809,7 +809,7 @@ body{overflow-wrap:break-word}</style>
         <h3>📓 Не хочется вести вручную?</h3>
         <p>В Фреди дневник эмоций встроен в виртуального психолога — фиксация по шаблону за 60 секунд, автоматическое отслеживание частоты эмоций и кривой интенсивности по дням недели, мягкие напоминания. Бесплатный базовый функционал, без регистрации.</p>
         <div class="cta-buttons">
-          <a href="/fredi/" class="btn">Открыть дневник эмоций</a>
+          <a href="/fredi/?from=/blog/kak-vesti-dnevnik-emocij.html" class="btn">Открыть дневник эмоций</a>
           <a href="/blog/ai-psihologi-2026-prakticheskij-gid.html" class="btn btn-outline">Сравнение AI-психологов</a>
         </div>
       </div>
@@ -835,7 +835,7 @@ body{overflow-wrap:break-word}</style>
     </div>
 
     <!-- ЧИТАЙТЕ ТАКЖЕ -->
-    <div class="game-link-box" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#EEF4FF,#F5F0FF);border:1px solid #C7D8FF;border-radius:14px;padding:16px 20px;margin:40px 0 10px;flex-wrap:wrap"><span style="font-size:1.6rem" aria-hidden="true">🎮</span><div style="flex:1;min-width:220px"><b style="color:#1D1D1F">Потренируйте это в игре</b><br><span style="color:#6E6E73;font-size:.92rem">Тренажёр точного называния эмоций: ситуация + сигналы тела — что это за чувство на самом деле? Точно названное чувство теряет силу.</span></div><a href="/fredi/?m=chuvstva" style="background:#3A86FF;color:#fff;text-decoration:none;font-weight:600;padding:11px 20px;border-radius:10px;white-space:nowrap">💠 Чувства →</a></div>
+    <div class="game-link-box" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#EEF4FF,#F5F0FF);border:1px solid #C7D8FF;border-radius:14px;padding:16px 20px;margin:40px 0 10px;flex-wrap:wrap"><span style="font-size:1.6rem" aria-hidden="true">🎮</span><div style="flex:1;min-width:220px"><b style="color:#1D1D1F">Потренируйте это в игре</b><br><span style="color:#6E6E73;font-size:.92rem">Тренажёр точного называния эмоций: ситуация + сигналы тела — что это за чувство на самом деле? Точно названное чувство теряет силу.</span></div><a href="/fredi/?m=chuvstva&from=/blog/kak-vesti-dnevnik-emocij.html" style="background:#3A86FF;color:#fff;text-decoration:none;font-weight:600;padding:11px 20px;border-radius:10px;white-space:nowrap">💠 Чувства →</a></div>
 
 <style>.author-box{display:flex;gap:20px;align-items:center;background:linear-gradient(135deg,#F5F5F7,#FFF);border:1px solid #E0E0E0;border-radius:16px;padding:24px 28px;margin:50px 0 10px;flex-wrap:wrap}.author-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#3A86FF,#6366f1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1.4rem;letter-spacing:.05em;flex-shrink:0}.author-info{flex:1;min-width:220px}.author-name{font-weight:600;font-size:1.1rem;color:#1D1D1F;margin-bottom:4px}.author-cred{font-size:.92rem;color:#6E6E73;line-height:1.5;font-weight:300}.author-cred a{color:#3A86FF;text-decoration:none}.author-cred a:hover{text-decoration:underline}</style>
 <div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
@@ -891,5 +891,22 @@ body{overflow-wrap:break-word}</style>
 
 <script src="/blog/progress.js" defer></script>
 <script src="/blog/listen.js" defer></script>
+<!-- fredi-track -->
+<script>
+(function () {
+  // Клик по любой ссылке на /fredi/ — это открытие продукта. Слушаем на
+  // document: шапка и подвал приезжают позже через fetch, и их ссылок в
+  // момент загрузки ещё нет.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="/fredi"]') : null;
+    if (!a) return;
+    try {
+      ym(108138656, 'reachGoal', 'blog_open_fredi');
+      ym(108138656, 'reachGoal', 'open_fredi');
+    } catch (err) {}
+  }, true);
+})();
+</script>
+<!-- /fredi-track -->
 </body>
 </html>

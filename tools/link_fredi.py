@@ -49,6 +49,22 @@ PAGES = {
     "testy": "testy",
 }
 
+# Статьи блога, с которых чаще всего уходят с сайта (Метрика, 30 дней).
+# Все они ведут в Фреди — и ни одна ссылка не размечена, поэтому сколько
+# человек уходит в продукт со статей, до сих пор было неизвестно. Цель у
+# них общая, blog_open_fredi: нужен не рейтинг статей, а сам факт — доходит
+# со статей до продукта кто-нибудь или нет.
+BLOG_PAGES = [
+    "blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html",   # 513 выходов
+    "blog/100-kognitivnyh-iskazhenij-spravochnik.html",     # 155
+    "blog/samogipnoz-dlya-nachinayushih.html",              # 128
+    "blog/kognitivnye-iskazheniya-12-lovushek.html",        # 62
+    "blog/emocionalnyj-incest-7-tipov-posledstviya.html",   # 58
+    "blog/vozvrashchenie-posle-vygoraniya-7-etapov.html",   # 43
+    "blog/kak-vesti-dnevnik-emocij.html",                   # 33
+]
+BLOG_SLUG = "blog"
+
 MARK = "<!-- fredi-track -->"
 END = "<!-- /fredi-track -->"
 
@@ -106,14 +122,17 @@ def main():
     total_links = 0
     touched = 0
 
-    for page, slug in sorted(PAGES.items()):
-        f = os.path.join(ROOT, page, "index.html")
+    targets = [(os.path.join(ROOT, p, "index.html"), "/%s/" % p, sl)
+               for p, sl in sorted(PAGES.items())]
+    targets += [(os.path.join(ROOT, p), "/" + p, BLOG_SLUG) for p in BLOG_PAGES]
+
+    for f, path, slug in targets:
+        page = os.path.relpath(f, ROOT)
         if not os.path.exists(f):
             print("  НЕТ ФАЙЛА: %s" % page)
             continue
         s = io.open(f, encoding="utf-8").read()
         before = s
-        path = "/%s/" % page
 
         s, n = add_from(s, path)
         total_links += n
@@ -131,12 +150,13 @@ def main():
             touched += 1
             if not dry:
                 io.open(f, "w", encoding="utf-8").write(s)
-        print("  %-30s from= на %d ссылок, %s → цель %s_open_fredi"
-              % (page, n, script_note, slug))
+        print("  %-52s from= на %d ссылок, %s → %s_open_fredi"
+              % (page[:51], n, script_note, slug))
 
     print("\nстраниц изменено: %d, ссылок размечено: %d" % (touched, total_links))
     print("цели завести в Метрике: %s"
-          % ", ".join(sorted("%s_open_fredi" % v for v in PAGES.values())))
+          % ", ".join(sorted(set("%s_open_fredi" % v
+                                 for v in list(PAGES.values()) + [BLOG_SLUG]))))
     if dry:
         print("БЕЗ ЗАПИСИ")
 

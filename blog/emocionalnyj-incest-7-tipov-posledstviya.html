@@ -162,6 +162,8 @@ body{overflow-wrap:break-word}</style>
 <li><a href="#faq">Частые вопросы</a></li>
 </ol></div>
 <!-- depth-link --><div class="product-cta" style="display:flex;align-items:center;gap:12px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:14px;padding:14px 18px;margin:24px 0;flex-wrap:wrap"><span style="font-size:1.4rem" aria-hidden="true">🛑</span><div style="flex:1;min-width:220px;font-size:.97rem"><b>Отказать родителю и не рассыпаться от вины — навык, а не черта характера.</b> <a href="/trenazher-skazat-net/">Тренажёр «сказать нет»</a> — три сцены, где вы выбираете ответ и сразу видите, что он делает с разговором. Без регистрации.</div></div><!-- /depth-link -->
+<p class="tool-note" style="margin:22px 0;padding:12px 16px;border-left:3px solid #B45309;background:#FDF6EC;border-radius:0 10px 10px 0;color:#4A4A4F;font-size:.95rem">📞 Если разговор с родителем каждый раз ломается об одну и ту же фразу — <a href="/razgovor-s-roditelyami/">разберите её за 5 минут</a>: десять типичных фраз, механизм каждой и готовый ответ.</p>
+
 <h2 id="chto">Что такое эмоциональный инцест</h2>
 <p>В классической русскоязычной психологии для этого феномена нет точного термина. Часто используют «парентификация» (переворачивание родительско-детских ролей) — но эмоциональный инцест — это более узкое и специфическое явление.</p>
 <p>Суть: <strong>родитель эмоционально опирается на ребёнка вместо супруга</strong>. Ребёнок становится главным эмоциональным партнёром родителя — слушателем личных переживаний, советчиком в супружеских вопросах, опорой в трудностях.</p>
@@ -231,7 +233,7 @@ body{overflow-wrap:break-word}</style>
 <div class="icon">🤖</div>
 <div class="body">
 <p><strong>Узнали себя в одном из типов?</strong> Это не повод для самообвинения родителя — часто эти паттерны передаются через поколения. Но это повод понять и работать.</p>
-<a href="/fredi/">Разобрать вашу историю с Фреди →</a>
+<a href="/fredi/?from=/blog/emocionalnyj-incest-7-tipov-posledstviya.html">Разобрать вашу историю с Фреди →</a>
 </div>
 </div>
 <h2 id="vs-blizost">Эмоциональный инцест vs здоровые близкие отношения</h2>
@@ -307,7 +309,7 @@ body{overflow-wrap:break-word}</style>
 <div>
 <div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
 <div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: круглосуточно и без записи, первые 10 минут бесплатно. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
-<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+<a href="/fredi/?from=/blog/emocionalnyj-incest-7-tipov-posledstviya.html" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
 </div>
 </div>
 <div class="author-block"><div class="avatar">АМ</div><div><h4>Андрей Мейстер</h4><div class="role">Психолог, НЛП-тренер, 20 лет практики</div><p>За 20 лет работал со множеством клиентов, прошедших через эмоциональный инцест. Это глубокая работа — но при правильной поддержке выход реален, и качество жизни кардинально меняется.</p></div></div>
@@ -333,5 +335,22 @@ body{overflow-wrap:break-word}</style>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <script src="/blog/listen.js" defer></script>
 <script src="/blog/progress.js" defer></script>
+<!-- fredi-track -->
+<script>
+(function () {
+  // Клик по любой ссылке на /fredi/ — это открытие продукта. Слушаем на
+  // document: шапка и подвал приезжают позже через fetch, и их ссылок в
+  // момент загрузки ещё нет.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="/fredi"]') : null;
+    if (!a) return;
+    try {
+      ym(108138656, 'reachGoal', 'blog_open_fredi');
+      ym(108138656, 'reachGoal', 'open_fredi');
+    } catch (err) {}
+  }, true);
+})();
+</script>
+<!-- /fredi-track -->
 </body>
 </html>
