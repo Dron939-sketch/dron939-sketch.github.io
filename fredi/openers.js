@@ -72,6 +72,18 @@
         return null;
     }
 
+    // Посадочные-инструменты: /posle-rasstavaniya/ и такие же. С них
+    // приходят не реже, чем с лекций, и приходят на пике — человек только
+    // что сам разобрал свою историю. Общие вопросы здесь мимо: тому, кто
+    // пять минут разбирал расставание, «как отличить усталость от
+    // выгорания» сказать нечего.
+    function _landingFor(path) {
+        if (!path || !_data || !_data.landings) return null;
+        var p = path.replace(/index\.html$/, '');
+        if (p.charAt(p.length - 1) !== '/') p += '/';
+        return _data.landings[p] ? p : null;
+    }
+
     // ---- разметка -------------------------------------------------------
 
     function _style() {
@@ -148,15 +160,19 @@
             var open = panel.hidden;
             panel.hidden = !open;
             ask.setAttribute('aria-expanded', open ? 'true' : 'false');
-            if (open) _track('opener_shown', { course: course.slug || '', n: course.q.length });
+            if (open) _track('opener_shown', { course: course.slug || '', kind: course.kind || '', n: course.q.length });
         });
         bar.appendChild(ask);
         wrap.appendChild(bar);
 
         var head = document.createElement('div');
         head.className = 'op-head';
+        // «Читали» — про лекцию, «разбирали» — про посадочную: там человек
+        // не читал, а сам жал карточки, и назвать это чтением значит
+        // промахнуться мимо того, что он только что делал.
         head.textContent = course.t
-            ? 'Вы читали «' + course.t + '». Можно спросить:'
+            ? (course.kind === 'landing' ? 'Вы разбирали «' : 'Вы читали «') +
+              course.t + '». Можно спросить:'
             : 'Можно спросить:';
         panel.appendChild(head);
 
@@ -182,7 +198,7 @@
         // раскрытие — разные вещи, иначе воронка «увидел → нажал» превратится
         // в неправду: opener_available считает доступность, opener_shown —
         // тех, кто действительно раскрыл список.
-        _track('opener_available', { course: course.slug || '', n: course.q.length });
+        _track('opener_available', { course: course.slug || '', kind: course.kind || '', n: course.q.length });
     }
 
     function _hide() {
@@ -202,10 +218,17 @@
         var host = document.querySelector('.dash-composer');
         if (!host || !document.getElementById('dashComposerForm')) return false;
         if (!_chatEmpty()) return true;   // разговор уже идёт — не мешаем
-        var slug = _courseFor(_sourcePath());
-        var course = slug
-            ? { slug: slug, t: _data.courses[slug].t, q: _data.courses[slug].q }
-            : { slug: '', t: '', q: _data.default };
+        var path = _sourcePath();
+        var slug = _courseFor(path);
+        var course;
+        if (slug) {
+            course = { slug: slug, kind: 'course', t: _data.courses[slug].t, q: _data.courses[slug].q };
+        } else {
+            var lp = _landingFor(path);
+            course = lp
+                ? { slug: lp, kind: 'landing', t: _data.landings[lp].t, q: _data.landings[lp].q }
+                : { slug: '', kind: '', t: '', q: _data.default };
+        }
         if (!course.q || !course.q.length) return true;
         _render(host, course);
         return true;
