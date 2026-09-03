@@ -196,7 +196,7 @@ a{color:#3A86FF}
 <div class="next-box">
 <b>Что дальше.</b>
 <!-- do-now --><div style="background:#fff;border:1px solid #CFE9DC;border-left:4px solid #34D399;border-radius:12px;padding:14px 16px;margin:12px 0 4px"><b style="color:#047857">Сделать прямо сейчас — бесплатно и без регистрации</b><p style="margin:6px 0 0;font-size:.97rem;color:#3c3c43"><a href="/svoi-cennosti/">выбор ценностей</a> — 16 карточек сводятся к двум, и становится видно, что вы на самом деле защищаете в отношениях; <a href="/raznye-yazyki/">тест о партнёре</a> — на какой частоте до него доходит.</p></div><!-- /do-now -->
-<p style="margin:8px 0 0">Компоненты Фромма и его взгляд на любовь как практику разобраны в <a href="/blog/lekciya-6-horni-fromm-sociokulturnyj-psihoanaliz.html">лекции о Хорни и Фромме</a>. А свою ситуацию можно разобрать словами: <a class="btn" href="/fredi/">Обсудить с Фреди</a></p>
+<p style="margin:8px 0 0">Компоненты Фромма и его взгляд на любовь как практику разобраны в <a href="/blog/lekciya-6-horni-fromm-sociokulturnyj-psihoanaliz.html">лекции о Хорни и Фромме</a>. А свою ситуацию можно разобрать словами: <a class="btn" href="/fredi/?from=/testy/test-na-umenie-lyubit/">Обсудить с Фреди</a></p>
 <!-- do-now --><p style="margin:14px 0 0;font-size:.95rem;color:#4A5563"><b>Сделать прямо сейчас, бесплатно:</b> <a href="/svoi-cennosti/">выбор ценностей</a> — 16 карточек сводятся к двум, и становится видно, что вы на самом деле защищаете в отношениях; <a href="/raznye-yazyki/">тест о партнёре</a> — на какой частоте до него доходит.</p><!-- /do-now -->
 <p style="margin:14px 0 0;font-size:.95rem;color:#4A5563">Рядом: <a href="/testy/test-na-revnost/">тест на ревность</a> — если мешает не «как любить», а «как перестать бояться потерять».</p>
 <p style="margin:12px 0 0;font-size:.95rem;color:#4A5563">Дальше по порталу: <a href="/blog/lektorij/">бесплатные курсы Лектория</a> с озвучкой, <a href="/igry/">психологические игры</a> и <a href="/istorii/">живые истории</a> — всё без регистрации.</p>
@@ -312,5 +312,22 @@ a{color:#3A86FF}
   });
 })();
 </script>
+<!-- fredi-track -->
+<script>
+(function () {
+  // Клик по любой ссылке на /fredi/ — это открытие продукта. Слушаем на
+  // document: шапка и подвал приезжают позже через fetch, и их ссылок в
+  // момент загрузки ещё нет.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="/fredi"]') : null;
+    if (!a) return;
+    try {
+      ym(108138656, 'reachGoal', 'lyubit_open_fredi');
+      ym(108138656, 'reachGoal', 'open_fredi');
+    } catch (err) {}
+  }, true);
+})();
+</script>
+<!-- /fredi-track -->
 </body>
 </html>

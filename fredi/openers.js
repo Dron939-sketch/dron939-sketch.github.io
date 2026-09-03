@@ -170,10 +170,11 @@
         // «Читали» — про лекцию, «разбирали» — про посадочную: там человек
         // не читал, а сам жал карточки, и назвать это чтением значит
         // промахнуться мимо того, что он только что делал.
-        head.textContent = course.t
-            ? (course.kind === 'landing' ? 'Вы разбирали «' : 'Вы читали «') +
-              course.t + '». Можно спросить:'
-            : 'Можно спросить:';
+        var verb = course.kind === 'test' ? 'Вы проходили «'
+                 : course.kind === 'landing' ? 'Вы разбирали «'
+                 : 'Вы читали «';
+        head.textContent = course.t ? verb + course.t + '». Можно спросить:'
+                                    : 'Можно спросить:';
         panel.appendChild(head);
 
         // Примеры, а не кнопки. Кнопка обещает действие и сама его совершает —
@@ -226,7 +227,8 @@
         } else {
             var lp = _landingFor(path);
             course = lp
-                ? { slug: lp, kind: 'landing', t: _data.landings[lp].t, q: _data.landings[lp].q }
+                ? { slug: lp, kind: lp.indexOf('/testy/') === 0 ? 'test' : 'landing',
+                    t: _data.landings[lp].t, q: _data.landings[lp].q }
                 : { slug: '', kind: '', t: '', q: _data.default };
         }
         if (!course.q || !course.q.length) return true;
