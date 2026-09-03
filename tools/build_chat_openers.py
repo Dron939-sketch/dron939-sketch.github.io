@@ -21,7 +21,15 @@
     prefixes  общий кусок слага лекции → слаг курса (lekciya-dumat-3-… →
               kak-dumat). Реферер даёт адрес лекции, а вопросы лежат у курса.
     courses   слаг курса → заголовок и три вопроса.
+    landings  адрес посадочной → короткое имя и три вопроса.
     default   что показать тому, кто пришёл не из Лектория.
+
+Посадочные добавлены 03.09.2026. С них Фреди открывают не меньше, чем с
+лекций, а вопросы им доставались общие — «как отличить усталость от
+выгорания» человеку, который минуту назад разбирал своё расставание.
+Источник тот же и такой же надёжный: видимый блок «Частые вопросы» самой
+посадочной, написанный её же голосом. Короткое имя берём из og:title —
+<h1> у посадочных длинный и в строку «Вы разбирали…» не влезает.
 
 Файл читает fredi/openers.js. Руками не править: пересобирается отсюда.
 """
@@ -80,6 +88,30 @@ def h1(path):
     return text(m.group(1)) if m else ""
 
 
+# Короткое имя посадочной. og:title у них — как раз узнаваемая строчка без
+# хвоста «| Андрей Мейстер»; <h1> длиннее и в подпись не влезает.
+OG_RE = re.compile(r'<meta property="og:title" content="([^"]+)"')
+
+# Посадочные-инструменты лежат каталогами в корне. Служебные каталоги сюда
+# попасть не должны: у них либо нет FAQ, либо это вообще не страницы.
+SKIP_DIRS = {
+    "assets", "blog", "docs", "fonts", "fredi", "img", "scripts", "tools",
+    "b17-articles", "b17-drafts", "max-drafts", "vk-drafts", "video-drafts",
+    "v-razrabotke", "trenazhery", "testy", "igry", "knigi", "treningi",
+    "istorii", "sobytiya", "about", "kontakty", "oferta", "tarify",
+    "politika-konfidencialnosti", "obo-mne", "komplekt",
+}
+
+
+def landing_pages(root):
+    """Каталоги в корне сайта, у которых есть свой блок «Частые вопросы»."""
+    for page in sorted(glob.glob(os.path.join(root, "*", "index.html"))):
+        slug = os.path.basename(os.path.dirname(page))
+        if slug in SKIP_DIRS or slug.startswith("."):
+            continue
+        yield slug, page
+
+
 def main():
     courses, prefixes, thin = {}, {}, []
     collisions = {}
@@ -123,17 +155,33 @@ def main():
         # неоднозначный префикс молча увёл бы человека в чужой курс
         prefixes.pop(p, None)
 
+    # Посадочные-инструменты: вопросы из их же видимого FAQ.
+    landings, thin_land = {}, []
+    for slug, page in landing_pages(ROOT):
+        qs = [q for q in faq_questions(page)][:3]
+        if not qs:
+            continue
+        if len(qs) < 3:
+            thin_land.append((slug, len(qs)))
+        s = io.open(page, encoding="utf-8").read()
+        m = OG_RE.search(s)
+        landings["/%s/" % slug] = {"t": text(m.group(1)) if m else "", "q": qs}
+
     data = {
-        "note": "Собрано tools/build_chat_openers.py из блоков «Частые вопросы» лекций. Руками не править.",
+        "note": "Собрано tools/build_chat_openers.py из блоков «Частые вопросы» лекций и посадочных. Руками не править.",
         "default": DEFAULT_Q,
         "prefixes": prefixes,
         "courses": courses,
+        "landings": landings,
     }
     body = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
 
     print("курсов с тремя вопросами: %d из %d"
           % (sum(1 for c in courses.values() if len(c["q"]) == 3), len(courses)))
     print("префиксов лекций: %d" % len(prefixes))
+    print("посадочных с вопросами: %d (из них меньше трёх: %d%s)"
+          % (len(landings), len(thin_land),
+             " — " + ", ".join("%s(%d)" % t for t in thin_land[:6]) if thin_land else ""))
     if collisions:
         print("неоднозначные префиксы (выброшены): %s"
               % ", ".join("%s → %s" % (p, "/".join(sorted(v))) for p, v in collisions.items()))
