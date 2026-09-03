@@ -579,7 +579,7 @@ body{overflow-wrap:break-word}</style>
         <h3>📓 Хотите вести КПТ-дневник с подсказками?</h3>
         <p>В Фреди есть модули «Анализ» и «Привычки» с готовыми шаблонами для всех 7 упражнений: дневник автомыслей, SOAP-разбор, иерархия страхов, активация поведения, карточки совладания. С напоминаниями, аналитикой и подсказками типов искажений.</p>
         <div class="cta-buttons">
-          <a href="/fredi/" class="btn">Открыть Фреди</a>
+          <a href="/fredi/?from=/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html" class="btn">Открыть Фреди</a>
           <a href="/blog/kognitivnye-iskazheniya-12-lovushek.html" class="btn btn-outline">12 искажений</a>
         </div>
       </div>
@@ -621,7 +621,7 @@ body{overflow-wrap:break-word}</style>
 <div>
 <div style="font-weight:700;color:#1E293B;margin-bottom:4px">Хотите разобрать вашу ситуацию по этой теме?</div>
 <div style="color:#475569;font-size:.95em;line-height:1.55">Фреди — виртуальный психолог: круглосуточно и без записи, первые 10 минут бесплатно. Расскажите, что происходит, — он поможет разложить всё по полочкам.</div>
-<a href="/fredi/" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
+<a href="/fredi/?from=/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html" style="display:inline-block;margin-top:10px;background:#3A86FF;color:#fff;text-decoration:none;padding:9px 18px;border-radius:30px;font-size:.9em;font-weight:600">Поговорить с Фреди →</a>
 </div>
 </div>
 <div class="author-box"><div class="author-avatar" aria-hidden="true">АМ</div><div class="author-info"><div class="author-name">Андрей Мейстер</div><div class="author-cred">Кандидат психологических наук, психолог-методолог. Специалист по системному мышлению и разговорному гипнозу, автор образовательной системы «Вариатика» и виртуального психолога «Фреди». <a href="/obo-mne/">Подробнее об авторе →</a></div></div></div>
@@ -663,5 +663,22 @@ body{overflow-wrap:break-word}</style>
 
 <script src="/blog/progress.js" defer></script>
 <script src="/blog/listen.js" defer></script>
+<!-- fredi-track -->
+<script>
+(function () {
+  // Клик по любой ссылке на /fredi/ — это открытие продукта. Слушаем на
+  // document: шапка и подвал приезжают позже через fetch, и их ссылок в
+  // момент загрузки ещё нет.
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="/fredi"]') : null;
+    if (!a) return;
+    try {
+      ym(108138656, 'reachGoal', 'blog_open_fredi');
+      ym(108138656, 'reachGoal', 'open_fredi');
+    } catch (err) {}
+  }, true);
+})();
+</script>
+<!-- /fredi-track -->
 </body>
 </html>
