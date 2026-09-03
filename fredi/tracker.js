@@ -245,10 +245,30 @@
         auth_register_started: 'fredi_register_started',
         register_success: 'fredi_registered',
         login_success: 'fredi_login',
+        meter_auth_gate: 'fredi_auth_asked',
         meter_blocked_shown: 'fredi_paywall_shown',
         meter_subscribe_clicked: 'fredi_subscribe_clicked',
         checkout_opened: 'fredi_checkout_opened'
     };
+    // Первое сообщение — единственное событие, которое сейчас означает
+    // «человек начал пользоваться». Гейт на входе сняли 02.09, и
+    // fredi_gate_shown с тех пор срабатывает только у тех, кто уже
+    // регистрировался в этом браузере: 2 достижения в сутки против
+    // ~670 рекламных визитов. Кампания Директа оптимизировалась именно
+    // по нему и училась на возвратах вместо новых разговоров.
+    // Считаем один раз на устройство: цель должна означать «начал», а не
+    // «пишет часто», иначе разговорчивый пользователь весит как десять.
+    var LS_FIRST_MSG = 'fredi_first_message_sent';
+    function _maybeFirstMessageGoal() {
+        try {
+            if (localStorage.getItem(LS_FIRST_MSG)) return;
+            localStorage.setItem(LS_FIRST_MSG, String(Date.now()));
+        } catch (e) {
+            // Приватный режим: localStorage недоступен. Цель тогда уйдёт
+            // повторно — это лучше, чем не уйти совсем.
+        }
+        _reachGoal('fredi_first_message');
+    }
     // Счётчики: приложения и общий сайтовый. Кампании Директа привязаны к
     // обоим, поэтому цель должна дойти до каждого.
     var METRIKA_COUNTERS = [108965607, 108138656];
@@ -264,6 +284,7 @@
         try {
             var goal = METRIKA_GOALS[event];
             if (goal) { _reachGoal(goal); return; }
+            if (event === 'message_sent') { _maybeFirstMessageGoal(); return; }
             // Оплата приходит шагами внутри одного события — из них в
             // Метрику нужны два: платёж создан и подписка включилась.
             if (event === 'checkout_step' && data) {
