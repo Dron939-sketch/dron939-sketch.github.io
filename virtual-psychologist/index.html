@@ -326,6 +326,10 @@
     .badge strong { color: #3A86FF; }
 
     .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+    /* на мобильном обе кнопки должны попадать на первый экран: бесплатный вход виден сразу */
+    @media (max-width: 600px) { .hero-badges { gap: 8px; margin: 18px auto 12px; } .hero-cta { gap: 10px; margin-top: 16px; }
+      .badge { padding: 6px 12px; font-size: .82rem; letter-spacing: .02em; }
+      .hero-tagline { margin-bottom: 16px; } }
 
     /* ===== СЕКЦИЯ ВОЗМОЖНОСТЕЙ ===== */
     .modules-section { margin: clamp(40px, 8vw, 70px) 0; }
@@ -555,7 +559,7 @@ body{overflow-wrap:break-word}</style>
   <!-- HERO -->
   <section class="hero-section">
     <h1>Виртуальный психолог онлайн — ИИ-помощник Фреди</h1>
-    <p class="hero-tagline">ИИ-психолог 24/7. Знакомство бесплатное: 10 минут разговора после короткой регистрации, дальше 990 ₽/мес. Психологический тест за 15 минут, дневник эмоций, работа с тревогой, КПТ-практики, самогипноз и работа со снами. Прямо в браузере — без установки.</p>
+    <p class="hero-tagline">Собеседник, который отвечает в три часа ночи и не устаёт слушать. Первые 10 минут бесплатно, дальше 990 ₽/мес — это 33 ₽ в день. Прямо в браузере, без установки.</p>
 
     <div class="hero-badges">
       <span class="badge"><strong>🆓</strong> 10 минут бесплатно</span>
@@ -566,7 +570,7 @@ body{overflow-wrap:break-word}</style>
 
     <div class="hero-cta">
       <a href="/fredi/" class="btn btn-large" style="background: linear-gradient(135deg, #3A86FF, #00A8E8); border: none;">⭐ ОТКРЫТЬ ВЕБ-ВЕРСИЮ</a>
-      <a href="#bez-registracii" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:#fff;margin-left:10px">Сначала попробовать без регистрации</a>
+      <a href="#bez-registracii" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:#fff;margin-left:10px">Попробовать без регистрации</a>
     </div>
     <p style="margin-top: 18px; color: #999; font-size: 0.9rem;">Первые 10 минут бесплатно. Нужны имя, почта и пин-код из 4 цифр — чтобы разговор сохранялся и открывался с любого устройства. Дальше подписка 990 ₽ в месяц, отключается в один клик.</p>
   </section>
