@@ -16,6 +16,11 @@
       <a href="/tarify/">Тарифы</a>
       <a href="/kontakty/">Контакты</a>
     </nav>
+    <nav class="footer-legal footer-projects" aria-label="Проекты автора">
+      <span class="footer-projects-label">Проекты автора:</span>
+      <a href="https://personoteka.ru/?utm_source=meysternlp&amp;utm_medium=footer" rel="noopener" onclick="try{ym(108138656,'reachGoal','personoteka_click')}catch(e){}">Персонотека — архив биографий</a>
+      <a href="https://lichnosty.ru/?utm_source=meysternlp&amp;utm_medium=footer" rel="noopener" onclick="try{ym(108138656,'reachGoal','lichnosti_click')}catch(e){}">Личности — страница о себе</a>
+    </nav>
     <div class="copyright">© Андрей Мейстер · 2026</div>
   </div>
 </footer>
@@ -128,6 +133,19 @@
 
 .footer-legal a:hover {
   color: #3A86FF;
+}
+
+/* Строка проектов автора — тот же ряд, что документы, но без верхней
+   черты (она уже есть у footer-legal выше) и с приглушённой подписью. */
+.footer-projects {
+  border-top: none;
+  padding-top: 4px;
+}
+
+.footer-projects-label {
+  color: #666;
+  font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+  padding: 9px 4px;
 }
 
 .copyright {
