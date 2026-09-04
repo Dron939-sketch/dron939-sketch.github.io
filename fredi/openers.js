@@ -257,6 +257,85 @@
         return true;
     }
 
+    // ---- первое сообщение без пустого поля ------------------------------
+    // ?ask=<текст>: страница результата теста (PHQ-9, GAD-7) знает балл и
+    // уровень — и приводит человека в чат с уже отправленным вопросом, а
+    // не к пустому полю. Причина в цифрах за семь дней до 04.09: тесты
+    // дали 453 рекламных визита и 1 переход в продукт, а из 76 открывших
+    // Фреди написали 5 — пустое поле и есть главный разрыв воронки.
+    // То же окно наружу — window.FrediAsk(text, source): им пользуются
+    // модули внутри приложения (натальная карта после интерпретации).
+    var ASK_MAX = 600;
+    var _askBusy = false;
+
+    function _submitAsk(text, source) {
+        var form = document.getElementById('dashComposerForm');
+        var input = document.getElementById('dashComposerInput');
+        if (!form || !input || !form._wired) return false;
+        input.value = text;
+        _hide();
+        _track('auto_ask', { source: source || '', len: text.length });
+        // Через submit формы, а не прямым вызовом: send() в app.js закрыта
+        // в замыкании, и только так срабатывают её проверки — лимит,
+        // подтверждение личности, защёлка от двойной отправки.
+        if (typeof form.requestSubmit === 'function') form.requestSubmit();
+        else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        return true;
+    }
+
+    function FrediAsk(text, source, fromPending) {
+        text = String(text == null ? '' : text).trim().slice(0, ASK_MAX);
+        if (!text || _askBusy) return;
+        _askBusy = true;
+        // Модуль (карта, тест) живёт на своём экране — сначала возвращаем
+        // дашборд с полем ввода; он же и подключает форму.
+        if (!document.getElementById('dashComposerForm') && typeof window.renderDashboard === 'function') {
+            try { window.renderDashboard(); } catch (e) {}
+        }
+        var tries = 0;
+        var iv = setInterval(function () {
+            var ready = !!(document.getElementById('dashComposerForm') || {})._wired;
+            // Вынимаем из хранилища ровно перед отправкой: до этого момента
+            // перезагрузка не теряет вопрос, после — не повторяет его.
+            if (ready && fromPending) _takePending();
+            if (_submitAsk(text, source) || ++tries > 40) { clearInterval(iv); _askBusy = false; }
+        }, 300);
+    }
+    window.FrediAsk = FrediAsk;
+
+    // Вопрос из адреса переживает перезагрузку, но не отправляется дважды.
+    // Приложение может перезагрузить страницу в первые секунды (login.js
+    // после подтверждения личности) — если просто вырезать ?ask= из адреса и
+    // отправить, перезагрузка успевает раньше и вопрос теряется; если не
+    // вырезать — уходит второй раз. Поэтому: из адреса убираем сразу,
+    // кладём в sessionStorage, а вынимаем оттуда в момент отправки.
+    var PENDING_KEY = 'fredi_pending_ask';
+
+    function _takePending() {
+        try {
+            var v = sessionStorage.getItem(PENDING_KEY) || '';
+            if (v) sessionStorage.removeItem(PENDING_KEY);
+            return v;
+        } catch (e) { return ''; }
+    }
+
+    function _askFromUrl() {
+        var ask = '';
+        try { ask = new URLSearchParams(location.search).get('ask') || ''; } catch (e) {}
+        if (ask) {
+            try {
+                var u = new URL(location.href);
+                u.searchParams.delete('ask');
+                history.replaceState(null, '', u.pathname + (u.search || '') + (u.hash || ''));
+            } catch (e) {}
+            try { sessionStorage.setItem(PENDING_KEY, ask.slice(0, ASK_MAX)); } catch (e) {}
+        }
+        var pending = '';
+        try { pending = sessionStorage.getItem(PENDING_KEY) || ''; } catch (e) { pending = ask; }
+        if (!pending) return;
+        FrediAsk(pending, 'url:' + _sourcePath(), true);
+    }
+
     function _start() {
         // Дашборд рисуется не сразу и может перерисоваться — ждём поле.
         var tries = 0;
@@ -271,6 +350,9 @@
     }
 
     function init() {
+        // Вопрос из адреса не зависит от openers.json — если файл не
+        // приехал, разговор всё равно должен начаться.
+        _askFromUrl();
         fetch(SRC, { cache: 'force-cache' })
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (d) {
