@@ -79,6 +79,10 @@
     // выгорания» сказать нечего.
     function _landingFor(path) {
         if (!path || !_data || !_data.landings) return null;
+        // Статьи блога лежат по адресу с .html на конце, посадочные —
+        // каталогами со слэшем. Сначала пробуем адрес как есть, иначе
+        // приводим к виду каталога: без слэша статья не находилась.
+        if (_data.landings[path]) return path;
         var p = path.replace(/index\.html$/, '');
         if (p.charAt(p.length - 1) !== '/') p += '/';
         return _data.landings[p] ? p : null;

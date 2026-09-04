@@ -106,6 +106,56 @@ MANUAL = {
     ]},
 }
 
+# Статьи блога, с которых чаще всего уходят с сайта. У них нет блока
+# «Частые вопросы», собирать неоткуда — а человек, пришедший оттуда в
+# Фреди, получал общие вопросы про усталость и прокрастинацию. Здесь, как
+# и выше, рукописный блок: это вопросы, а не утверждения, фактов они не
+# несут. В скобках — выходов за 30 дней по Метрике.
+BLOG_MANUAL = {
+    "blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html": {          # 513
+        "t": "Техники КПТ для самостоятельной работы", "k": "read", "q": [
+            "Техника не сработала, мысль вернулась через час. Так и должно быть?",
+            "С какой из техник начать, если все сразу не осилю?",
+            "Как понять, что это работает, а не самоуговоры?",
+        ]},
+    "blog/100-kognitivnyh-iskazhenij-spravochnik.html": {           # 155
+        "t": "100 когнитивных искажений", "k": "read", "q": [
+            "У меня половина списка. Это нормально?",
+            "Как заметить искажение в моменте, а не задним числом?",
+            "С какого начинать, если их много?",
+        ]},
+    "blog/samogipnoz-dlya-nachinayushih.html": {                    # 128
+        "t": "Самогипноз для начинающих", "k": "read", "q": [
+            "Не получается расслабиться. Что я делаю не так?",
+            "Чем самогипноз отличается от обычной релаксации?",
+            "Сколько повторов нужно, прежде чем будет эффект?",
+        ]},
+    "blog/kognitivnye-iskazheniya-12-lovushek.html": {              # 62
+        "t": "12 ловушек мышления", "k": "read", "q": [
+            "Какая из ловушек у меня главная?",
+            "Как поймать себя на этом до того, как испорчу вечер?",
+            "Что делать, если уже накрыло?",
+        ]},
+    "blog/emocionalnyj-incest-7-tipov-posledstviya.html": {         # 58
+        "t": "Эмоциональный инцест", "k": "read", "q": [
+            "Это про меня или я преувеличиваю?",
+            "Что делать, если родитель до сих пор так себя ведёт?",
+            "Можно ли выстроить границы, не разрывая отношения?",
+        ]},
+    "blog/vozvrashchenie-posle-vygoraniya-7-etapov.html": {         # 43
+        "t": "Возвращение после выгорания", "k": "read", "q": [
+            "На каком я этапе, если сил нет, а работать надо?",
+            "Сколько это обычно занимает?",
+            "Как не свалиться обратно, когда станет полегче?",
+        ]},
+    "blog/kak-vesti-dnevnik-emocij.html": {                         # 33
+        "t": "Дневник эмоций", "k": "read", "q": [
+            "Веду неделю, а толку не вижу. Что не так?",
+            "Как назвать чувство, если не подбирается слово?",
+            "Обязательно ли писать каждый день?",
+        ]},
+}
+
 dry = "--dry-run" in sys.argv
 
 
@@ -179,6 +229,8 @@ def landing_pages(root):
         yield slug, page
     for page in sorted(glob.glob(os.path.join(root, "testy", "*", "index.html"))):
         yield "testy/" + os.path.basename(os.path.dirname(page)), page
+    for rel in sorted(BLOG_MANUAL):
+        yield rel, os.path.join(root, rel)
 
 
 def main():
@@ -227,7 +279,7 @@ def main():
     # Посадочные-инструменты: вопросы из их же видимого FAQ.
     landings, thin_land = {}, []
     for slug, page in landing_pages(ROOT):
-        man = MANUAL.get(slug)
+        man = MANUAL.get(slug) or BLOG_MANUAL.get(slug)
         qs = (man["q"] if man else faq_questions(page)[:3])
         if not qs:
             continue
@@ -241,7 +293,9 @@ def main():
             s = io.open(page, encoding="utf-8").read()
             m = OG_RE.search(s)
             entry = {"t": text(m.group(1)) if m else "", "q": qs}
-        landings["/%s/" % slug] = entry
+        # у статьи адрес заканчивается на .html, слэш ей не нужен
+        key = "/" + slug if slug.endswith(".html") else "/%s/" % slug
+        landings[key] = entry
 
     data = {
         "note": "Собрано tools/build_chat_openers.py из блоков «Частые вопросы» лекций и посадочных. Руками не править.",
