@@ -370,23 +370,58 @@
     // же день, а пересчитывает их tools/sync_counters.py — и только в HTML
     // страниц, до JS приложения он не дотягивается. Здесь число осталось бы
     // навсегда тем, каким я его вписал.
-    var PREMIUM_FEATURES =
-        '<ul class="meter-features">' +
-        '<li><span>\u2728</span> Разговор с Фреди 24/7 — голосом и текстом, без счётчика минут</li>' +
-        // Здесь стояло «Весь Лекторий: курсы целиком, лекции с озвучкой».
-        // Лекторий лежит на /blog/lektorij/ и открыт всем, озвучка на
-        // бэкенде тоже ничем не закрыта — человек проверял это одним
-        // кликом по меню и переставал верить двум остальным пунктам.
-        // Обещаем то, что подписка действительно снимает: каждый модуль
-        // ниже ходит в /api/ai/generate и жжёт те же минуты счётчика,
-        // поэтому «без счётчика» честно распространяется на весь список.
-        // Роли закрыты подпиской напрямую (app.js, effectiveMode).
-        '<li><span>\uD83C\uDFAD</span> Фреди в ролях: психолог, коуч и тренер</li>' +
-        '<li><span>\uD83D\uDCD3</span> Дневник эмоций, зеркало, мой портрет, разбор по Берну</li>' +
-        '<li><span>\uD83C\uDF00</span> Гипноз, практики, якоря, толкование снов, сказки-катарсис</li>' +
-        '<li><span>\uD83D\uDD2E</span> Таро, гороскоп и натальная карта с разбором</li>' +
-        '<li><span>\uD83E\uDDED</span> Супервизор для психологов, «Мой бренд», игры-тренажёры</li>' +
-        '</ul>';
+    // Здесь стояло «Весь Лекторий: курсы целиком, лекции с озвучкой».
+    // Лекторий лежит на /blog/lektorij/ и открыт всем, озвучка на
+    // бэкенде тоже ничем не закрыта — человек проверял это одним
+    // кликом по меню и переставал верить двум остальным пунктам.
+    // Обещаем то, что подписка действительно снимает: каждый модуль
+    // ниже ходит в /api/ai/generate и жжёт те же минуты счётчика,
+    // поэтому «без счётчика» честно распространяется на весь список.
+    // Роли закрыты подпиской напрямую (app.js, effectiveMode).
+    //
+    // keys — имена feature_opened из трекера: по последней использованной
+    // функции витрина переставляется, см. _premiumFeatures(). Зачем
+    // перестановка: по целям «открыл Фреди» за первые сутки их жизни
+    // (03–04.09) натальная карта — 73 из 144 именных переходов, вдвое
+    // больше любого другого входа, — а в витрине стояла пятой строкой.
+    // Человек, упёршийся в лимит посреди разбора карты, должен первой
+    // строкой увидеть карту, а не общий разговор. Когда последняя функция
+    // неизвестна, порядок прежний: стена чаще всего прерывает разговор.
+    var FEATURE_ITEMS = [
+        { icon: '\u2728', text: 'Разговор с Фреди 24/7 — голосом и текстом, без счётчика минут', keys: [] },
+        { icon: '\uD83C\uDFAD', text: 'Фреди в ролях: психолог, коуч и тренер', keys: [] },
+        { icon: '\uD83D\uDCD3', text: 'Дневник эмоций, зеркало, мой портрет, разбор по Берну',
+          keys: ['diary', 'mirrors', 'berne', 'kontur', 'messages', 'doubles',
+                 'opora', 'mysl', 'skazhinet', 'spiral', 'parus', 'perehod'] },
+        { icon: '\uD83C\uDF00', text: 'Гипноз, практики, якоря, толкование снов, сказки-катарсис',
+          keys: ['hypnosis', 'dreams', 'tales'] },
+        { icon: '\uD83D\uDD2E', text: 'Таро, гороскоп и натальная карта с разбором',
+          keys: ['esoterica'] },
+        { icon: '\uD83E\uDDED', text: 'Супервизор для психологов, «Мой бренд», игры-тренажёры',
+          keys: ['brand'] }
+    ];
+
+    function _premiumFeatures() {
+        var items = FEATURE_ITEMS.slice();
+        // Свежесть та же, что у _whatYouDid: полчаса. Дольше — человек уже
+        // занят другим, и поднятая наверх строка была бы про чужую сессию.
+        var act = (_lastAct.kind === 'feature' && (Date.now() - _lastAct.ts) <= 30 * 60 * 1000)
+            ? _lastAct.name : '';
+        if (act) {
+            for (var i = 1; i < items.length; i++) {
+                if (items[i].keys.indexOf(act) !== -1) {
+                    var hit = items.splice(i, 1)[0];
+                    items.unshift({ icon: hit.icon, text: '<b>' + hit.text + '</b>', keys: hit.keys });
+                    break;
+                }
+            }
+        }
+        var out = '<ul class="meter-features">';
+        for (var j = 0; j < items.length; j++) {
+            out += '<li><span>' + items[j].icon + '</span> ' + items[j].text + '</li>';
+        }
+        return out + '</ul>';
+    }
 
     // Кому платят. На стене про автора не было ни слова — а это первый
     // молчаливый вопрос человека, который видит цену.
@@ -627,7 +662,7 @@
                 timerHtml +
                 '<div class="meter-text">' + mainText + '</div>' +
                 '<div class="meter-features-title">Что даёт Premium:</div>' +
-                PREMIUM_FEATURES +
+                _premiumFeatures() +
                 AUTHOR_NOTE +
                 (gain
                     ? '<button class="meter-btn meter-btn-primary" id="meterRegBtn">\uD83D\uDCE9 \u0417\u0430\u0432\u0435\u0441\u0442\u0438 \u0430\u043A\u043A\u0430\u0443\u043D\u0442 \u2014 ' +
@@ -635,7 +670,7 @@
                     : '') +
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterSubscribeBtn">\u2728 Premium \u2014 990 \u20BD/\u043C\u0435\u0441, \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 \u20BD \u0432 \u043C\u0435\u0441\u044F\u0446 \u2014 \u044D\u0442\u043E 33 \u20BD \u0432 \u0434\u0435\u043D\u044C \u0437\u0430 \u0441\u043E\u0431\u0435\u0441\u0435\u0434\u043D\u0438\u043A\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0440\u044F\u0434\u043E\u043C \u0438 \u0432 3 \u0447\u0430\u0441\u0430 \u043D\u043E\u0447\u0438.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации. И Фреди рядом каждый день, а не раз в неделю.</div>' +
                 (trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
@@ -752,7 +787,7 @@
                 '<div class="meter-emoji">⏱️</div>' +
                 '<div class="meter-title">' + title + '</div>' +
                 '<div class="meter-text">' + text + '</div>' +
-                PREMIUM_FEATURES +
+                _premiumFeatures() +
                 AUTHOR_NOTE +
                 (upGain
                     ? '<button class="meter-btn meter-btn-primary" id="meterUpsellReg">📩 Завести аккаунт — ' +
@@ -760,7 +795,7 @@
                     : '') +
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterUpsellSub">✨ Premium — 990 ₽/мес, без лимитов</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — это 33 ₽ в день за собеседника, который рядом и в 3 часа ночи.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации. И Фреди рядом каждый день, а не раз в неделю.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
