@@ -137,7 +137,6 @@
         var panel = document.createElement('div');
         panel.className = 'op-panel';
         panel.id = 'openersPanel';
-        panel.hidden = true;
 
         var bar = document.createElement('div');
         bar.className = 'op-bar';
@@ -152,10 +151,24 @@
         ask.className = 'op-ask';
         ask.id = 'openersAsk';
         ask.textContent = '?';
-        ask.setAttribute('aria-expanded', 'false');
         ask.setAttribute('aria-controls', 'openersPanel');
         ask.setAttribute('aria-label', 'О чём можно спросить');
         ask.title = 'О чём можно спросить';
+
+        // Свёрнутыми вопросы лежат для того, кто пришёл сам и ещё не знает,
+        // о чём тут говорят. Пришедший по ?from= — другой случай: он минуту
+        // назад разбирал своё расставание или получил свои баллы по шкале и
+        // уже внутри темы. Ему опора нужна сразу, а не за одно касание.
+        // 4 сентября это узкое место стало видно в цифрах: 9 переходов в
+        // приложение против 2 первых сообщений — люди доходят и не пишут.
+        // Всем прочим ничего не меняется, панель по-прежнему свёрнута.
+        var openByDefault = !!course.slug;
+        panel.hidden = !openByDefault;
+        ask.setAttribute('aria-expanded', openByDefault ? 'true' : 'false');
+        if (openByDefault) {
+            _track('opener_shown', { course: course.slug, kind: course.kind || '',
+                                     n: course.q.length, auto: true });
+        }
         ask.addEventListener('click', function () {
             var open = panel.hidden;
             panel.hidden = !open;
