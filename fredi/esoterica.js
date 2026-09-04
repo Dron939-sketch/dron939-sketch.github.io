@@ -1193,11 +1193,28 @@ async function interpretNatalChart() {
         length: interpretation.length
     });
 
+    // Карта — главный вход в продукт (73 из 144 именных переходов за
+    // первые сутки целей 03–04.09), но из открывших её почти никто не
+    // писал Фреди: интерпретация прочитана — и экран закрыт. Дверь в
+    // разговор ставим ровно здесь, с сутью карты в первом сообщении, чтобы
+    // чат начинался с того, что человек только что прочитал.
     box.innerHTML = `
         <div class="hy-suggestion-box">
             <div class="hy-suggestion-label">🔮 Интерпретация Фреди</div>
             <div class="hy-suggestion-text" style="white-space:pre-line;">${_esMdToHtml(interpretation)}</div>
-        </div>`;
+        </div>` + (success
+            ? `<button class="hy-btn hy-btn-primary" id="askNatalBtn" style="margin-top:12px;">💬 Обсудить карту с Фреди</button>`
+            : '');
+    if (success) {
+        document.getElementById('askNatalBtn')?.addEventListener('click', () => {
+            _esTrack('natal_ask_chat', { has_question: !!question });
+            const gist = interpretation.replace(/\s+/g, ' ').trim().slice(0, 700);
+            const ask = 'Фреди, вот интерпретация моей натальной карты: «' + gist + '…». '
+                + (question ? 'Мой вопрос был: ' + question + '. ' : '')
+                + 'Что в ней главное для меня сейчас и с чего начать?';
+            if (typeof window.FrediAsk === 'function') window.FrediAsk(ask, 'natal');
+        });
+    }
 }
 
 // --- Привязка обработчиков ---
