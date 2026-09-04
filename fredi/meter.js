@@ -738,7 +738,10 @@
                 ? 'С аккаунтом на сегодня будет ' + upGain.big + ' минут вместо ' +
                   upGain.small + ' — почта, и разговор продолжается. ' +
                   'С Premium счётчика нет вовсе.'
-                : 'С Premium счётчик исчезает: разговор без лимита, весь Лекторий с озвучкой и все инструменты.');
+                // «Весь Лекторий с озвучкой» отсюда убрано по той же причине,
+                // что из PREMIUM_FEATURES: Лекторий открыт всем, обещание
+                // проверялось одним кликом и топило доверие к остальному.
+                : 'С Premium счётчик исчезает: разговор, голос, карты, сны, игры — всё без лимита.');
         text = text.charAt(0).toUpperCase() + text.slice(1);
 
         var overlay = document.createElement('div');
@@ -888,10 +891,11 @@
         badge.id = 'meterBadge';
         badge.className = 'meter-badge';
         // Подпись всплывает по наведению и на десктопе читается раньше клика.
-        // «Дневной лимит» тут стоял от прошлой модели с обновлением каждые
-        // сутки; сейчас проба выдаётся один раз на аккаунт, и обещать
-        // ежедневное пополнение — врать человеку, который на это рассчитает.
-        badge.title = 'Бесплатная проба: 10 минут на аккаунт, дальше 990 ₽/мес';
+        // С 04.09 лимит снова дневной и обновляется в полночь — подпись
+        // обязана обещать ровно это, ни больше ни меньше: прошлая версия
+        // («10 минут на аккаунт, дальше 990») осталась бы враньём в другую
+        // сторону — человек не ждал бы завтрашних минут, которые придут.
+        badge.title = 'Бесплатные минуты на сегодня — завтра будут снова. Premium — без счётчика.';
         badge.innerHTML = '<span class="meter-badge-icon">⏱</span>'
             + '<span class="meter-badge-time" id="meterBadgeTime">--:--</span>'
             + '<span class="meter-badge-day" id="meterBadgeDay"></span>';
@@ -916,7 +920,10 @@
             if (day == null && trial == null) return;
             var parts = [];
             if (day != null) parts.push('сегодня осталось ' + Math.round(day) + ' мин');
-            if (trial != null) parts.push('бесплатный запас — ' + Math.round(trial) + ' мин');
+            // Про окно «всё включено» — только пока оно есть. «Запас — 0 мин»
+            // у давнего пользователя читался бы как «всё кончилось», хотя
+            // кончился только голос, а текст обновляется каждый день.
+            if (trial != null && trial > 0) parts.push('🎙 голос — ещё ' + Math.round(trial) + ' мин');
             _toast('⏱ ' + parts.join(' · '), 'info');
         });
         document.body.appendChild(badge);
@@ -933,14 +940,27 @@
         var badge = _ensureBadge();
         var rem = check.remaining_minutes;
         var trialRem = check.remaining_trial_minutes;
-        // Если запас исчерпан — показываем без таймера, текстом «Купить».
-        if (check.trial_exhausted) {
+        // Красное «Купить» — только когда отправка действительно закрыта.
+        // Здесь стояло `if (check.trial_exhausted)` — зеркало ошибки 31.08,
+        // уже починенной в стене (строка ~490), но не тут: с 04.09 флаг
+        // trial_exhausted навсегда true у каждого со второго дня, а его
+        // дневные минуты при этом на месте. Человек с полными пятью
+        // минутами видел бы в углу красное «Trial · Купить» вместо счётчика
+        // — постоянный сигнал «всё кончилось» при работающем бесплатном
+        // уровне.
+        if (check.can_send === false) {
             badge.classList.remove('warn');
             badge.classList.add('danger');
             var t = document.getElementById('meterBadgeTime');
             var d = document.getElementById('meterBadgeDay');
-            if (t) t.textContent = 'Trial';
-            if (d) d.textContent = 'Купить';
+            if (t) t.textContent = '0:00';
+            if (d) {
+                // 'trial' приходит только со старого бэка, где запас
+                // терминальный — там «Купить» правда. Дневная пауза —
+                // «до завтра»: минуты вернутся, врать «кончилось» нельзя.
+                d.textContent = (check.block_reason === 'trial') ? 'Купить' : 'до завтра';
+                d.style.display = '';
+            }
             return;
         }
         // Цвет по остатку минут.
@@ -979,10 +999,6 @@
             // Бэк всё равно — источник правды; периодически (раз в 60 сек)
             // дёргаем checkCanSend, чтобы синхронизироваться.
             if (!_lastCheck || _lastCheck.is_premium) return;
-            if (_lastCheck.trial_exhausted) {
-                _renderBadge(_lastCheck);
-                return;
-            }
             // Уменьшаем local remaining только если идёт активный chat?
             // Безопаснее НЕ уменьшать, а просто перерисовывать —
             // обновление пойдёт через recordUsage → invalidate cache → next checkCanSend.
