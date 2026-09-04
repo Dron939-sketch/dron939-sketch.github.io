@@ -486,9 +486,13 @@
         // показываем обычную стену с ценой, иначе он ждёт завтра впустую —
         // ровно та ошибка, что лежала в аналитике 31.08 (блок daily и
         // блок trial одному человеку с разницей в 12 секунд).
-        var _trialBlocked = data.block_reason
-            ? data.block_reason === 'trial'
-            : !!data.trial_exhausted;
+        // 04.09: терминального 'trial' для текста больше нет — окно
+        // «всё включено» ограничивает только голос, а флаг trial_exhausted
+        // при этом честно торчит true у любого давнего пользователя.
+        // Выбирать ветку по флагу теперь нельзя: дневная стена показала бы
+        // «закончились навсегда» тому, у кого завтра снова будут минуты, —
+        // зеркальная форма ошибки 31.08. Только по причине.
+        var _trialBlocked = data.block_reason === 'trial';
         if (_newcomer() && !_trialBlocked) {
             // Дневная стена новичку — лучший момент для аккаунта: разговор
             // уже состоялся, и предложение читается как продолжение, а не
@@ -559,7 +563,8 @@
         // только потом цену: между «ничего» и 990 ₽ должна быть ступенька,
         // которая ничего не стоит и что-то даёт. На стене общего запаса
         // ступеньки нет — минуты там уже не про аккаунт.
-        var gain = trialExhausted ? null : _accountGain(data);
+        var gain = (data.block_reason === 'trial' || data.block_reason === 'voice')
+            ? null : _accountGain(data);
 
         _track('meter_blocked_shown', {
             limit_minutes: limit,
@@ -573,7 +578,21 @@
 
         var emoji, title, mainText, timerHtml;
 
-        if (trialExhausted) {
+        // 04.09: ветка выбирается по block_reason. Флаг trial_exhausted у
+        // давнего пользователя всегда true (окно «всё включено» выговорено),
+        // но его текст работает каждый день — финальную стену по флагу ему
+        // показывать нельзя. 'trial' с бэка больше не приходит; ветка
+        // оставлена для старых сборок бэка на время выката.
+        if (data.block_reason === 'voice') {
+            // Голосовая стена: дневные минуты ещё есть, кончился только
+            // голос. Не смешиваем с дневной — голос в полночь не вернётся.
+            emoji = '\uD83C\uDF99\uFE0F';
+            title = 'Голосовые минуты знакомства закончились';
+            mainText = 'Текстом можно продолжать бесплатно — дневной лимит ' +
+                'на месте. Голос возвращается с Premium: без счётчика, ' +
+                'в любое время.';
+            timerHtml = '';
+        } else if (data.block_reason === 'trial') {
             // Финальная стена: бесплатный запас израсходован.
             emoji = '\uD83D\uDD13';
             title = 'Бесплатные ' + trialLimit + ' минут закончились';
@@ -800,7 +819,7 @@
     // «process» шёл «_», а граница ждала /|$|? ) — из-за чего HTTP-путь
     // голоса проходил мимо пейволла И мимо учёта расхода. Расширяем до
     // process(_stream)?|stt|tts — в синхрон с _METER_AI_REGEX на бэке.
-    var AI_URL_REGEX = /\/api\/(?:chat|voice\/(?:process(?:_stream)?|stt|tts)|ai\/generate|deep-analysis|hypno\/support|psychologist-thoughts\/generate|dreams\/(?:interpret|clarify)|reality\/(?:check|parse\/[^/]+)|brand\/transformation|mirrors\/(?:complete|[^/]+\/complete)|morning\/send-now)(?:\/|$|\?)/;
+    var AI_URL_REGEX = /\/api\/(?:chat|voice\/(?:process(?:_stream)?|stt|tts)|ai\/generate|deep-analysis|hypno\/support|psychologist-thoughts\/generate|dreams\/(?:interpret|clarify)|reality\/(?:check|parse\/[^/]+)|brand\/transformation|mirrors\/(?:complete|[^/]+\/complete)|morning\/send-now|natal\/interpret|tarot\/interpret|horoscope)(?:\/|$|\?)/;
 
     function _isAiRequest(urlStr) {
         return AI_URL_REGEX.test(urlStr || '');
@@ -934,15 +953,17 @@
         var dayEl = document.getElementById('meterBadgeDay');
         if (timeEl) timeEl.textContent = _formatTime(rem);
         if (dayEl) {
-            // Вторая строка баджа — общий бесплатный запас. «День 2/3» тут
-            // стоял, пока лимит считался заходами; при подсчёте по минутам
-            // это число ничего не говорит о том, когда всё кончится.
-            if (trialRem != null) {
-                dayEl.textContent = 'Запас ' + Math.max(0, Math.round(trialRem)) + ' мин';
+            // Вторая строка баджа — окно «всё включено» (04.09): пока оно
+            // не выговорено, бесплатному уровню доступен и голос. «Запас»
+            // тут больше писать нельзя — общий запас текст не ограничивает,
+            // и слово обещало бы стену, которой нет.
+            if (trialRem != null && trialRem > 0) {
+                dayEl.textContent = '\uD83C\uDF99 голос: ' + Math.max(1, Math.round(trialRem)) + ' мин';
+                dayEl.style.display = '';
             } else {
-                // Раньше здесь стояло «День N/3» от модели с ежедневным
-                // пополнением. Её нет, а надпись обещала завтрашний заход.
-                dayEl.textContent = 'Проба';
+                // Окно выговорено: голос в Premium, текст — по дневному
+                // лимиту из первой строки. Вторая строка молчит.
+                dayEl.style.display = 'none';
             }
         }
     }
