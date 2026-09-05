@@ -3156,6 +3156,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var open = function () {
             var go = function () {
                 try {
+                    // Сильные игры — по подписке: прямая ссылка ?m=<игра> без
+                    // Premium открывает замок, а не игру (список — в meter.js).
+                    if (window.FrediMeter && typeof window.FrediMeter.gameLocked === 'function'
+                        && window.FrediMeter.gameLocked(r.fn)) {
+                        window.FrediMeter.showGameLock(r.fn, 'deeplink');
+                        return;
+                    }
                     if (typeof window[r.fn] === 'function') {
                         window[r.fn]();
                         document.querySelectorAll('.chat-item').forEach(function (i) { i.classList.remove('active'); });

@@ -1141,9 +1141,89 @@
         } catch (e) { console.warn('showPeakOffer failed:', e); }
     }
 
+    // Сильные игры — только по подписке (решение владельца 05.09.2026).
+    // Единственный список: по нему kontur.js рисует значок и перехватывает
+    // запуск, app.js закрывает прямые ссылки ?m=<игра>. Ключ — глобальная
+    // функция запуска, потому что именно её зовут и хаб, и роутер.
+    // Бесплатными остаются короткие тренажёры без Фреди-игротехника
+    // (N-back, счёт, калибровка, данетки, Ферми, «Лови ошибку») и входные
+    // игры первого экрана (Контур, Два потока, Мнемо, Чувства, Мысль под
+    // допросом, Скажи «нет», Чайник Рассела, Вариатика Basic).
+    var PREMIUM_GAMES = {
+        showOdiScreen: 'ОДИ: игра всерьёз',
+        showVsluhGame: 'Мысль вслух',
+        showSpiralGame: 'Спираль',
+        showParusGame: 'Парус',
+        showPerehodGame: 'Переход',
+        showLazejkaGame: 'Лазейка',
+        showIstoriaGame: 'Другая история',
+        showLgenijGame: 'Ленивый гений',
+        showAlfavitGame: 'Алфавит',
+        showSignalGame: 'Сигнал',
+        showKlinGame: 'Клин клином',
+        showRolGame: 'Смени роль',
+        showOporaGame: 'Опора',
+        showDeloGame: 'Своё дело',
+        showSovetGame: 'Земля в опасности',
+        showDostigatorGame: 'Достигатор',
+        showKorkaGame: 'Короли и капуста',
+        showMandatGame: 'Мандат: цена кресла',
+        showMeisterGame: 'МЕЙСТЕР-КОД',
+        showMarketologGame: 'Маркетолог',
+        showProgressiveGame: 'Вариатика — Progressive',
+        showIntensiveGame: 'Вариатика — Intensive',
+        showImperativeGame: 'Императив',
+        showExponentaGame: 'Экспонента',
+        showPatternGame: 'Паттерн',
+        showDotogokakScreen: 'До того, как',
+    };
+    function _isPremiumNow() {
+        if (window.IS_PREMIUM === true) return true;
+        return !!(_lastCheck && (_lastCheck.is_premium || _lastCheck.has_subscription));
+    }
+    // Заперта ли игра для этого человека: имя функции запуска → да/нет.
+    function gameLocked(fn) {
+        if (!fn || !PREMIUM_GAMES.hasOwnProperty(fn)) return false;
+        return !_isPremiumNow();
+    }
+    function showGameLock(fn, source) {
+        var name = PREMIUM_GAMES[fn] || 'эта игра';
+        _injectMeterStyles();
+        var old = document.getElementById('meterGameLock');
+        if (old) old.remove();
+        _track('game_lock_shown', { game: fn, source: source || '' });
+        var overlay = document.createElement('div');
+        overlay.className = 'meter-overlay';
+        overlay.id = 'meterGameLock';
+        overlay.innerHTML =
+            '<div class="meter-modal">' +
+                '<div class="meter-emoji">💎</div>' +
+                '<div class="meter-title">«' + _esc(name) + '» — с подпиской</div>' +
+                '<div class="meter-text">Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
+                    'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.</div>' +
+                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Открыть Premium — 990 ₽/мес</button>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации.</div>' +
+                '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
+            '</div>';
+        document.body.appendChild(overlay);
+        document.getElementById('meterGameLockSub').onclick = function () {
+            _track('meter_subscribe_clicked', { source: 'game_lock', game: fn });
+            overlay.remove();
+            if (typeof window.openCheckout === 'function') window.openCheckout('game_lock_' + fn);
+        };
+        document.getElementById('meterGameLockClose').onclick = function () {
+            _track('game_lock_dismissed', { game: fn });
+            overlay.remove();
+        };
+        overlay.onclick = function (e) { if (e.target === overlay) overlay.remove(); };
+    }
+
     window.FrediMeter = {
         checkCanSend: checkCanSend,
         showPeakOffer: showPeakOffer,
+        gameLocked: gameLocked,
+        showGameLock: showGameLock,
+        premiumGames: PREMIUM_GAMES,
         recordUsage: recordUsage,
         recordExchange: recordExchange,
         showFatigueModal: showFatigueModal,
