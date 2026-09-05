@@ -873,6 +873,15 @@ function setupDashComposer() {
         // отсюда списывал те же 15 секунд второй раз. Проба в 10 минут
         // расходовалась за 20 сообщений вместо обещанных на посадочной 40.
 
+        // Ритуал завершения (промпт BasicMode): Фреди подвёл итог и позвал
+        // продолжить завтра — пиковый момент для предложения подписки.
+        try {
+            if (answer && /завтра спрошу|продолжим завтра/i.test(answer)
+                && window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
+                setTimeout(function () { window.FrediMeter.showPeakOffer('closing'); }, 1500);
+            }
+        } catch (e) {}
+
         unwind();
     }
 

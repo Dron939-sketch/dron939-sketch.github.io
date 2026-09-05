@@ -1206,6 +1206,13 @@ async function interpretNatalChart() {
             ? `<button class="hy-btn hy-btn-primary" id="askNatalBtn" style="margin-top:12px;">💬 Обсудить карту с Фреди</button>`
             : '');
     if (success) {
+        // Карта разобрана — пиковый момент для «сохранить и продолжать»
+        // (meter.js решает сам, показывать ли: премиум и раз в сутки).
+        try {
+            if (window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
+                setTimeout(() => window.FrediMeter.showPeakOffer('natal'), 3000);
+            }
+        } catch (e) {}
         document.getElementById('askNatalBtn')?.addEventListener('click', () => {
             _esTrack('natal_ask_chat', { has_question: !!question });
             const gist = interpretation.replace(/\s+/g, ' ').trim().slice(0, 700);

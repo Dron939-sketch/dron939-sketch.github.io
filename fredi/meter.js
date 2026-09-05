@@ -1076,8 +1076,74 @@
         _applyPatches();
     }
 
+    // Предложение подписки в пиковый момент, а не по таймеру.
+    // Выгрузка диалогов и Метрика за 5 сентября: до стены оплаты по
+    // счётчику дошли двое за день, потому что пять бесплатных минут не
+    // кончаются, а самые долгие разговоры — голосовые и без подписки.
+    // Пиковых моментов три: Фреди подвёл итог и позвал продолжить завтра
+    // (ритуал завершения из промпта), готов профиль большого теста, готова
+    // интерпретация натальной карты. В эти секунды человек только что
+    // получил ценность, и «сохранить и продолжать» читается как
+    // продолжение, а не как турникет. Карточка не блокирует, закрывается
+    // кликом мимо, показывается не чаще раза в сутки на браузер.
+    var PEAK_KEY = 'meter_peak_offer_day';
+    function showPeakOffer(source) {
+        try {
+            if (_lastCheck && _lastCheck.is_premium) return;
+            var today = new Date().toISOString().slice(0, 10);
+            var shown = '';
+            try { shown = localStorage.getItem(PEAK_KEY) || ''; } catch (e) {}
+            if (shown === today) return;
+            if (document.getElementById('meterOverlay') || document.getElementById('meterUpsellOverlay')
+                || document.getElementById('meterPeakOverlay') || document.getElementById('faAuthModal')) return;
+            _injectMeterStyles();
+            try { localStorage.setItem(PEAK_KEY, today); } catch (e) {}
+            var anon = !!(_lastCheck && _lastCheck.is_registered === false);
+            _track('meter_peak_offer_shown', { source: source || '', anon: anon });
+            var who = _name();
+            var lead = {
+                closing: 'Разговор сегодня получился. ',
+                bigtest: 'Ваш портрет готов. ',
+                natal: 'Ваша карта разобрана. ',
+            }[source] || '';
+            var overlay = document.createElement('div');
+            overlay.className = 'meter-overlay';
+            overlay.id = 'meterPeakOverlay';
+            overlay.innerHTML =
+                '<div class="meter-modal">' +
+                    '<div class="meter-emoji">🔖</div>' +
+                    '<div class="meter-title">Сохранить и продолжать?</div>' +
+                    '<div class="meter-text">' + (who ? _esc(who) + ', ' + lead.charAt(0).toLowerCase() + lead.slice(1) : lead) +
+                        'С подпиской Фреди помнит каждый разговор и продолжает завтра с того же места. ' +
+                        'Голос, все режимы, без счётчика минут.' +
+                        (anon ? '<br><br>Без аккаунта этот разговор завтра не вспомнится: нужна почта и четыре цифры.' : '') +
+                    '</div>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Оформить подписку — 990 ₽/мес</button>' +
+                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации. И Фреди рядом каждый день, а не раз в неделю.</div>' +
+                    (anon ? '<button class="meter-btn meter-btn-secondary" id="meterPeakReg">📩 Сначала завести аккаунт</button>' : '') +
+                    '<button class="meter-btn meter-btn-secondary" id="meterPeakLater">Позже</button>' +
+                '</div>';
+            document.body.appendChild(overlay);
+            document.getElementById('meterPeakSub').onclick = function () {
+                _track('meter_subscribe_clicked', { source: 'peak_' + (source || '') });
+                overlay.remove();
+                if (typeof window.openCheckout === 'function') window.openCheckout('peak_' + (source || ''));
+            };
+            var reg = document.getElementById('meterPeakReg');
+            if (reg) reg.onclick = function () { overlay.remove(); _openRegister('peak_' + (source || '')); };
+            document.getElementById('meterPeakLater').onclick = function () {
+                _track('meter_peak_offer_dismissed', { source: source || '', reason: 'later' });
+                overlay.remove();
+            };
+            overlay.onclick = function (e) {
+                if (e.target === overlay) { _track('meter_peak_offer_dismissed', { source: source || '', reason: 'outside' }); overlay.remove(); }
+            };
+        } catch (e) { console.warn('showPeakOffer failed:', e); }
+    }
+
     window.FrediMeter = {
         checkCanSend: checkCanSend,
+        showPeakOffer: showPeakOffer,
         recordUsage: recordUsage,
         recordExchange: recordExchange,
         showFatigueModal: showFatigueModal,
