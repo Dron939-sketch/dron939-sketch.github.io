@@ -2415,6 +2415,14 @@ ${this.getStage3Interpretation()}
             : '👇 **ЧТО ДАЛЬШЕ?**\n\nСейчас профиль сохранён только в этом браузере. Аккаунт (email + пин-код) привяжет его к вам — он переживёт чистку истории и откроется с любого устройства.';
         this.addMessageWithButtons(whatNext, nextButtons);
 
+        // Профиль готов — пиковый момент для «сохранить и продолжать»
+        // (meter.js решает сам, показывать ли: премиум и раз в сутки).
+        try {
+            if (window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
+                setTimeout(function () { window.FrediMeter.showPeakOffer('bigtest'); }, 3000);
+            }
+        } catch (e) {}
+
         if (this.userId) {
             try {
                 localStorage.setItem('test_results_'+this.userId, JSON.stringify({
