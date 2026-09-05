@@ -324,6 +324,20 @@ body{overflow-wrap:break-word}</style>
             <input id="userIdJump" type="text" inputmode="numeric" placeholder="user_id → открыть диалог" style="flex:1;min-width:220px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit">
             <button id="userIdJumpBtn" style="padding:8px 14px;border-radius:8px;border:none;background:var(--accent);color:#fff;font:inherit;cursor:pointer">Открыть</button>
         </div>
+        <!-- Выгрузка файлом: все диалоги за период одним JSON, для разбора
+             по темам и возрасту. По умолчанию обезличена — без имён и
+             контактов, вместо user_id хеш; см. /api/analytics/messages/export. -->
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--text-dim)">
+            <select id="exportDays" style="padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit">
+                <option value="7">за 7 дней</option>
+                <option value="30" selected>за 30 дней</option>
+                <option value="90">за 90 дней</option>
+                <option value="365">за год</option>
+            </select>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input id="exportAnon" type="checkbox" checked> без имён и контактов</label>
+            <button id="exportDialogsBtn" style="padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer">⬇️ Выгрузить файлом</button>
+            <span id="exportStatus"></span>
+        </div>
         <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin-bottom:8px">Последние разговоры</h3>
         <div id="messagesList"></div>
     </section>
@@ -2935,6 +2949,33 @@ POV: ты на семейном ужине, и мама такая «как у �
         var container = document.getElementById('dialogMessages');
         container.scrollTop = container.scrollHeight;
     }
+
+    // Выгрузка диалогов файлом. Не через _fetch: там res.json(), а здесь
+    // нужен blob, чтобы отдать браузеру файл с именем от сервера.
+    document.getElementById('exportDialogsBtn').addEventListener('click', async function(){
+        var btn = this, st = document.getElementById('exportStatus');
+        var days = document.getElementById('exportDays').value;
+        var anon = document.getElementById('exportAnon').checked ? 1 : 0;
+        btn.disabled = true; st.textContent = 'Собираю файл…';
+        try {
+            var res = await fetch(API + '/api/analytics/messages/export?days=' + encodeURIComponent(days) + '&anon=' + anon, {
+                headers: { 'X-Admin-Token': token }
+            });
+            if (res.status === 401) throw new Error('Неверный ADMIN_TOKEN');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            var blob = await res.blob();
+            var cd = res.headers.get('Content-Disposition') || '';
+            var m = /filename="([^"]+)"/.exec(cd);
+            var name = m ? m[1] : ('fredi-dialogs-' + days + 'd.json');
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = name;
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000);
+            st.textContent = name + ' · ' + Math.round(blob.size / 1024) + ' КБ';
+        } catch (e) {
+            st.textContent = 'Ошибка: ' + (e.message || e);
+        } finally { btn.disabled = false; }
+    });
 
     document.getElementById('dialogClose').addEventListener('click', function(){
         document.getElementById('dialogOverlay').style.display = 'none';
