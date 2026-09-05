@@ -195,6 +195,7 @@
       '.kt-btn:hover{border-color:#3A86FF;transform:translateY(-1px)}',
       '.kt-btn .em{font-size:1.4rem;margin-right:10px}',
       '.kt-btn small{display:block;font-weight:400;color:#9a9da8;margin-top:3px;font-size:.85rem}',
+      '.kt-prem{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:9px;font-size:.68rem;font-weight:600;letter-spacing:.2px;color:#fde68a;background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.45);vertical-align:middle}',
       '.kt-primary{background:#3A86FF!important;color:#fff!important;border:none!important;text-align:center}',
       '.kt-primary small{color:rgba(255,255,255,.85)!important}',
       '.kt-primary:hover{background:#1d6fed!important}',
@@ -332,6 +333,44 @@
         '<button class="kt-btn" onclick="window.showDotogokakScreen&&window.showDotogokakScreen()"><span class="em">🎬</span>До того, как<small>Тренажёр поведенческих сценариев. 100 ситуаций в 8 сегментах — от переговоров до экзистенциальных. Мысленно репетируй ДО того, как случилось — чтобы в реальности был готовый паттерн.</small></button>' +
         '<div class="kt-card" style="opacity:.65"><div class="kt-ch">Скоро — новые игры</div>Каждую доводим до ума и проверяем, потом добавляем следующую.</div>' +
       '</div>';
+    _markPremiumGames(c);
+  }
+
+  // Сильные игры — по подписке. Список один, в meter.js (FrediMeter.premiumGames):
+  // здесь только значок на кнопке и перехват запуска. Кнопки хаба зовут
+  // глобальные функции по имени, поэтому ищем их в onclick, а не переписываем
+  // сорок строк разметки руками.
+  function _markPremiumGames(c, retry) {
+    var M = window.FrediMeter;
+    if (!M || !M.premiumGames) {
+      // meter.js мог ещё не загрузиться (прямая ссылка ?m=games открывает
+      // хаб через полсекунды после старта) — одна повторная попытка.
+      if (!retry) setTimeout(function () { if (c.isConnected) _markPremiumGames(c, true); }, 700);
+      return;
+    }
+    var locked = false;
+    c.querySelectorAll('.kt-btn').forEach(function (btn) {
+      var oc = btn.getAttribute('onclick') || '';
+      var m = oc.match(/window\.(show\w+)&&/);
+      if (!m || !M.premiumGames.hasOwnProperty(m[1])) return;
+      var fn = m[1];
+      var em = btn.querySelector('.em');
+      if (em && !btn.querySelector('.kt-prem')) {
+        var b = document.createElement('span');
+        b.className = 'kt-prem';
+        b.textContent = '💎 Premium';
+        em.insertAdjacentElement('afterend', b);
+      }
+      btn.setAttribute('onclick', "KONTUR.launch('" + fn + "')");
+      if (M.gameLocked(fn)) locked = true;
+    });
+    if (locked) track('games_hub_locked_shown', {});
+  }
+
+  function launch(fn) {
+    var M = window.FrediMeter;
+    if (M && M.gameLocked && M.gameLocked(fn)) { M.showGameLock(fn, 'hub'); return; }
+    if (typeof window[fn] === 'function') window[fn]();
   }
 
   // ХАБ ИГРЫ «О чём ты умеешь думать» (интро / тест / играть)
@@ -786,7 +825,8 @@
     gamesHome: showKonturScreen, gameHome: gameHome, home: gameHome,
     intro: intro, test: test, game: game, gameWith: gameWith,
     pick: pick, qback: qback, qnext: qnext, selTheme: selTheme, selArch: selArch,
-    startGame: startGame, send: send, verdict: verdict, grow: grow, playBlind: playBlind
+    startGame: startGame, send: send, verdict: verdict, grow: grow, playBlind: playBlind,
+    launch: launch
   };
   window.showKonturScreen = showKonturScreen;   // пункт меню «Игры» (список игр)
   window.showKonturGame = gameHome;             // deep-link на саму игру «О чём ты умеешь думать»
