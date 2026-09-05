@@ -274,6 +274,9 @@
         if (!form || !input || !form._wired) return false;
         input.value = text;
         _hide();
+        // Флаг для index.html: пока идёт автовопрос, страницу нельзя
+        // перезагружать ради обновления service worker — ответ оборвётся.
+        window.__frediAskBusy = true;
         _track('auto_ask', { source: source || '', len: text.length });
         // Через submit формы, а не прямым вызовом: send() в app.js закрыта
         // в замыкании, и только так срабатывают её проверки — лимит,
@@ -333,6 +336,7 @@
         var pending = '';
         try { pending = sessionStorage.getItem(PENDING_KEY) || ''; } catch (e) { pending = ask; }
         if (!pending) return;
+        window.__frediAskBusy = true;
         FrediAsk(pending, 'url:' + _sourcePath(), true);
     }
 
