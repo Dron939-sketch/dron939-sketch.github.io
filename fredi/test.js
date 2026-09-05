@@ -2369,6 +2369,25 @@ ${this.getStage3Interpretation()}
         // анонимы при 35 стартах стадий теста, — потому что просила аккаунт
         // ДО ценности. Здесь просим ПОСЛЕ, кнопкой, без принуждения.
         const nextButtons = [];
+        // Первая кнопка — разговор. 5 сентября большой тест давал 87 открытий
+        // Фреди из 106 визитов, а первых сообщений с этого трафика — 4: финал
+        // предлагал сохранить, выслать в MAX и уйти на главную, но не
+        // поговорить о том, что человек только что узнал о себе. Кнопка
+        // отправляет портрет первым сообщением через window.FrediAsk — тот же
+        // механизм, что у ?ask= в адресе и у тестов PHQ-9/GAD-7.
+        if (typeof window.FrediAsk === 'function') {
+            const ask = this._profileAskText(p, deep, { sbD, tfD, ubD, cvD });
+            nextButtons.push({
+                text: '💬 ОБСУДИТЬ С ФРЕДИ',
+                callback: () => {
+                    try { if (window.FrediTracker?.track) window.FrediTracker.track('test_ask_chat', { profile_code: p.displayName || null }); } catch {}
+                    // Экран теста живёт в screenContainer; сначала возвращаем
+                    // дашборд с полем ввода, потом отправляем — как goToDashboard.
+                    this.goToDashboard();
+                    try { window.FrediAsk(ask, 'bigtest'); } catch (e) { console.warn('FrediAsk failed:', e); }
+                }
+            });
+        }
         if (!isAuthed && window.FrediAuth && typeof window.FrediAuth.openRegister === 'function') {
             nextButtons.push({
                 text: '💾 СОХРАНИТЬ ПРОФИЛЬ',
@@ -2404,6 +2423,26 @@ ${this.getStage3Interpretation()}
                 }));
             } catch(e) { console.warn('Failed to save test results to localStorage:', e); }
         }
+    },
+
+    // Текст первого сообщения по итогам теста: портрет от первого лица плюс
+    // вопрос, на который Фреди может ответить сразу. AI-профиль режется до
+    // 500 знаков — ASK_MAX в openers.js равен 600, дальше текст обрезается.
+    _profileAskText(p, deep, d) {
+        const strip = s => String(s || '').replace(/\*\*/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+        let t = 'Фреди, я прошёл большой тест. Архетип: ' + strip(p.archetype) + ', код ' + strip(p.displayName)
+            + ', тип восприятия ' + strip(p.perceptionType) + ', уровень мышления ' + p.thinkingLevel + '/9. '
+            + 'Векторы: СБ ' + p.sbLevel + '/9 («' + d.sbD + '»), ТФ ' + p.tfLevel + '/9 («' + d.tfD + '»), '
+            + 'УБ ' + p.ubLevel + '/9 («' + d.ubD + '»), ЧВ ' + p.chvLevel + '/9 («' + d.cvD + '»). '
+            + 'Глубинный паттерн: ' + strip(deep.attachment) + '. ';
+        const q = 'Что в этом портрете главное для меня сейчас и с чего начать?';
+        const pre = 'Из AI-профиля: «', post = '…». ';
+        const room = 600 - t.length - q.length - pre.length - post.length;
+        if (this.aiGeneratedProfile && room > 80) {
+            const ai = strip(this.aiGeneratedProfile);
+            t += pre + ai.slice(0, room) + (ai.length > room ? post : '». ');
+        }
+        return t + q;
     },
 
     async fetchTestRecommendations() {
