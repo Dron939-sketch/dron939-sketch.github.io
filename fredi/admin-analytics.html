@@ -336,7 +336,7 @@ body{overflow-wrap:break-word}</style>
             </select>
             <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input id="exportAnon" type="checkbox" checked> без имён и контактов</label>
             <button id="exportDialogsBtn" style="padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer">⬇️ Выгрузить файлом</button>
-            <span id="exportStatus"></span>
+            <span id="exportDialogsStatus"></span>
         </div>
         <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin-bottom:8px">Последние разговоры</h3>
         <div id="messagesList"></div>
@@ -2953,7 +2953,7 @@ POV: ты на семейном ужине, и мама такая «как у �
     // Выгрузка диалогов файлом. Не через _fetch: там res.json(), а здесь
     // нужен blob, чтобы отдать браузеру файл с именем от сервера.
     document.getElementById('exportDialogsBtn').addEventListener('click', async function(){
-        var btn = this, st = document.getElementById('exportStatus');
+        var btn = this, st = document.getElementById("exportDialogsStatus");
         var days = document.getElementById('exportDays').value;
         var anon = document.getElementById('exportAnon').checked ? 1 : 0;
         btn.disabled = true; st.textContent = 'Собираю файл…';
