@@ -272,20 +272,54 @@
     // Человек, пришедший по кнопке из объявления, статьи или теста, не
     // формулировал вопрос сам и не знает, кто ему отвечает. За неделю до
     // 06.09 из 117 таких стартов продолжили 4. Поэтому через секунду после
-    // отправки автовопроса в ленте появляется одна фраза на всех — кто такой
-    // Фреди и что он обещает, — и звучит его голосом (/fredi/sounds/intro.mp3,
-    // текст и способ записи в fredi/sounds/README.md). Пока человек слушает,
+    // отправки автовопроса в ленте появляется одна фраза — кто такой Фреди и
+    // что он обещает, — и звучит его голосом (/fredi/sounds/intro-<v>.mp3,
+    // тексты и способ записи в fredi/sounds/README.md). Пока человек слушает,
     // ответ на его вопрос уже генерируется: запрос ушёл при submit.
     // Показывается один раз за сессию и только в пустой чат — тому, кто уже
     // разговаривал, представляться заново незачем.
-    // Фраза должна дать чувство «наконец-то в надёжных руках, теперь будет
-    // хорошо» — создать ожидание, а не объяснить устройство сервиса.
-    var INTRO_TEXT = 'Я Фреди. Вы пришли по адресу. Моя задача — чтобы вам стало лучше: ' +
-        'не когда-нибудь, а в вашей жизни, в вашем городе, с вашими людьми. ' +
-        'Я рядом каждый день, столько, сколько нужно. С этим можно справиться — ' +
-        'и мы справимся. А теперь о конкретике.';
-    var INTRO_SRC = '/fredi/sounds/intro.mp3';
+    //
+    // A/B: две фразы. «а» — надёжные руки и «мы справимся», «б» — качество
+    // жизни, психоэмоциональное состояние как основа, регион и ситуация.
+    // Вариант выпадает случайно при первом показе и закрепляется за
+    // браузером, чтобы вернувшийся не услышал вторую версию. Сравнивать по
+    // Метрике: цели fredi_intro_<v> (показ) и fredi_intro_reply_<v> (человек
+    // написал сам после ответа Фреди). Решать не раньше ~100 показов на
+    // вариант — при 15–20 автовопросах в день это около недели.
+    var INTROS = {
+        a: { text: 'Я Фреди. Вы пришли по адресу. Моя задача — чтобы вам стало лучше: ' +
+                   'не когда-нибудь, а в вашей жизни, в вашем городе, с вашими людьми. ' +
+                   'Я рядом каждый день, столько, сколько нужно. С этим можно справиться — ' +
+                   'и мы справимся. А теперь о конкретике.',
+             src: '/fredi/sounds/intro-a.mp3' },
+        b: { text: 'Я Фреди. Моя задача — улучшение качества вашей жизни, и в первую очередь ' +
+                   'ваше психоэмоциональное состояние: это основа, с неё всё начинается. ' +
+                   'Я буду учитывать ваш регион и вашу ситуацию и отвечать не вообще, ' +
+                   'а именно про вас. А теперь о конкретике.',
+             src: '/fredi/sounds/intro-b.mp3' }
+    };
     var INTRO_KEY = 'fredi_intro_done';
+    var VARIANT_KEY = 'fredi_intro_variant';
+    var _introVariant = '';   // показанный в этой сессии вариант
+    var _introReplied = false;
+
+    function _pickVariant() {
+        var v = '';
+        try { v = localStorage.getItem(VARIANT_KEY) || ''; } catch (e) {}
+        if (v !== 'a' && v !== 'b') {
+            v = Math.random() < 0.5 ? 'a' : 'b';
+            try { localStorage.setItem(VARIANT_KEY, v); } catch (e) {}
+        }
+        return v;
+    }
+
+    function _goal(name) {
+        if (typeof window.ym !== 'function') return;
+        // Оба счётчика — как у tracker.js: кампании Директа привязаны к обоим.
+        [108965607, 108138656].forEach(function (c) {
+            try { window.ym(c, 'reachGoal', name); } catch (e) {}
+        });
+    }
 
     function _introDue() {
         try { if (sessionStorage.getItem(INTRO_KEY)) return false; } catch (e) {}
@@ -295,7 +329,9 @@
     function _playIntro(source) {
         try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (e) {}
         if (typeof window.addMessage !== 'function') return;
-        var bubble = window.addMessage(INTRO_TEXT, 'bot');
+        var v = _pickVariant();
+        var intro = INTROS[v];
+        var bubble = window.addMessage(intro.text, 'bot');
         if (bubble) {
             bubble.classList.add('intro');
             // Ответ успел раньше секунды — представление всё равно должно
@@ -308,17 +344,33 @@
         if (typeof window._showThinkingBubble === 'function') {
             try { window._showThinkingBubble('Фреди печатает…'); } catch (e) {}
         }
-        _track('intro_shown', { source: source || '' });
+        _introVariant = v;
+        _track('intro_shown', { source: source || '', variant: v });
+        _goal('fredi_intro_' + v);
         var audio;
-        try { audio = new Audio(INTRO_SRC); } catch (e) { return; }
+        try { audio = new Audio(intro.src); } catch (e) { return; }
         audio.volume = 0.85;
         audio.onerror = function () {};
         // Без файла или при запрете автозапуска остаётся текст — этого
         // достаточно, звук здесь не условие.
         var p = audio.play();
         if (p && typeof p.then === 'function') p.then(function () {
-            _track('intro_voiced', { source: source || '' });
+            _track('intro_voiced', { source: source || '', variant: v });
         }).catch(function () {});
+    }
+
+    // Человек написал сам после представления — то, ради чего оно есть.
+    // Считается только реплика, отправленная после того, как в ленте уже
+    // стоит ответ Фреди: message_sent самого автовопроса может прийти и
+    // позже секунды (пока идёт проверка лимита), и без этой проверки он
+    // засчитался бы за ответ.
+    function _onMessageSent() {
+        if (!_introVariant || _introReplied) return;
+        var s = document.getElementById('dashChatStream');
+        if (!s || !s.querySelector('.message.bot:not(.thinking):not(.intro)')) return;
+        _introReplied = true;
+        _track('intro_reply', { variant: _introVariant });
+        _goal('fredi_intro_reply_' + _introVariant);
     }
 
     function _submitAsk(text, source) {
@@ -420,7 +472,7 @@
         // Написал сам — подсказки больше не нужны.
         window.addEventListener('fredi:track', function (e) {
             var ev = e && e.detail && e.detail.event;
-            if (ev === 'message_sent') _hide();
+            if (ev === 'message_sent') { _hide(); _onMessageSent(); }
         });
     }
 
