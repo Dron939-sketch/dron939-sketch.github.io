@@ -324,11 +324,21 @@
 
     function _askFromUrl() {
         var ask = '';
-        try { ask = new URLSearchParams(location.search).get('ask') || ''; } catch (e) {}
+        try {
+            var sp = new URLSearchParams(location.search);
+            ask = sp.get('ask') || '';
+            // Директ подставляет в ссылку ключевую фразу макросом {keyword}:
+            // тогда первое сообщение — слова самого человека, а не одна
+            // фраза на всю группу (за неделю 64 одинаковых «нет сил» и 4
+            // продолжения из 117). При показе по автотаргетингу макрос
+            // пустой, кавычки остаются пустыми — берём запасной текст askf.
+            if (/«\s*»|\{keyword\}/.test(ask)) ask = sp.get('askf') || '';
+        } catch (e) {}
         if (ask) {
             try {
                 var u = new URL(location.href);
                 u.searchParams.delete('ask');
+                u.searchParams.delete('askf');
                 history.replaceState(null, '', u.pathname + (u.search || '') + (u.hash || ''));
             } catch (e) {}
             try { sessionStorage.setItem(PENDING_KEY, ask.slice(0, ASK_MAX)); } catch (e) {}
