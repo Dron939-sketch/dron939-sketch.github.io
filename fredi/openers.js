@@ -268,10 +268,64 @@
     var ASK_MAX = 600;
     var _askBusy = false;
 
+    // ---- представление перед первым ответом ------------------------------
+    // Человек, пришедший по кнопке из объявления, статьи или теста, не
+    // формулировал вопрос сам и не знает, кто ему отвечает. За неделю до
+    // 06.09 из 117 таких стартов продолжили 4. Поэтому через секунду после
+    // отправки автовопроса в ленте появляется одна фраза на всех — кто такой
+    // Фреди и что он обещает, — и звучит его голосом (/fredi/sounds/intro.mp3,
+    // текст и способ записи в fredi/sounds/README.md). Пока человек слушает,
+    // ответ на его вопрос уже генерируется: запрос ушёл при submit.
+    // Показывается один раз за сессию и только в пустой чат — тому, кто уже
+    // разговаривал, представляться заново незачем.
+    // Фраза должна дать чувство «наконец-то в надёжных руках, теперь будет
+    // хорошо» — создать ожидание, а не объяснить устройство сервиса.
+    var INTRO_TEXT = 'Я Фреди. Вы пришли по адресу. Моя задача — чтобы вам стало лучше: ' +
+        'не когда-нибудь, а в вашей жизни, в вашем городе, с вашими людьми. ' +
+        'Я рядом каждый день, столько, сколько нужно. С этим можно справиться — ' +
+        'и мы справимся. А теперь о конкретике.';
+    var INTRO_SRC = '/fredi/sounds/intro.mp3';
+    var INTRO_KEY = 'fredi_intro_done';
+
+    function _introDue() {
+        try { if (sessionStorage.getItem(INTRO_KEY)) return false; } catch (e) {}
+        return _chatEmpty();
+    }
+
+    function _playIntro(source) {
+        try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (e) {}
+        if (typeof window.addMessage !== 'function') return;
+        var bubble = window.addMessage(INTRO_TEXT, 'bot');
+        if (bubble) {
+            bubble.classList.add('intro');
+            // Ответ успел раньше секунды — представление всё равно должно
+            // стоять перед ним, а не после.
+            var s = bubble.parentNode;
+            var first = s && s.querySelector('.message.bot:not(.thinking):not(.intro)');
+            if (first) s.insertBefore(bubble, first);
+        }
+        // addMessage снимает «Фреди печатает…» — а ответ ещё в пути.
+        if (typeof window._showThinkingBubble === 'function') {
+            try { window._showThinkingBubble('Фреди печатает…'); } catch (e) {}
+        }
+        _track('intro_shown', { source: source || '' });
+        var audio;
+        try { audio = new Audio(INTRO_SRC); } catch (e) { return; }
+        audio.volume = 0.85;
+        audio.onerror = function () {};
+        // Без файла или при запрете автозапуска остаётся текст — этого
+        // достаточно, звук здесь не условие.
+        var p = audio.play();
+        if (p && typeof p.then === 'function') p.then(function () {
+            _track('intro_voiced', { source: source || '' });
+        }).catch(function () {});
+    }
+
     function _submitAsk(text, source) {
         var form = document.getElementById('dashComposerForm');
         var input = document.getElementById('dashComposerInput');
         if (!form || !input || !form._wired) return false;
+        var intro = _introDue();
         input.value = text;
         _hide();
         // Флаг для index.html: пока идёт автовопрос, страницу нельзя
@@ -283,6 +337,13 @@
         // подтверждение личности, защёлка от двойной отправки.
         if (typeof form.requestSubmit === 'function') form.requestSubmit();
         else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        // Секунда — чтобы реплика человека успела встать в ленту первой.
+        if (intro) setTimeout(function () {
+            // Если send() отказала (лимит, стена) — реплики в ленте нет, и
+            // представляться некому.
+            if (_chatEmpty()) return;
+            _playIntro(source);
+        }, 1000);
         return true;
     }
 
