@@ -73,6 +73,20 @@
     // Защита от двойных/тройных списаний:
     // запоминаем, что прямо сейчас уже создаём платёж и блокируем повторные клики.
     let _isCreatingPayment = false;
+
+    // Тариф первого платежа. Пробная неделя за 290 ₽ появилась 06.09.2026:
+    // за пять дней рекламы было ~170 первых сообщений, 3 стены оплаты и
+    // 0 подписок — между «бесплатно» и 990 ₽ сразу не было ступеньки.
+    // Пробная неделя — один раз на аккаунт (бэкенд отдаёт trial_available),
+    // после неё обычные 990 ₽ в месяц автопродлением, отключается в один
+    // клик. Выбор приходит из адреса (?plan=trial_week со страницы
+    // «Тарифы») или из кнопки в карточке.
+    const PLAN_PRICE = { trial_week: 290, monthly: 990 };
+    let _selectedPlan = 'trial_week';
+    try {
+        const _pl = new URLSearchParams(window.location.search).get('plan');
+        if (_pl === 'monthly' || _pl === 'trial_week') _selectedPlan = _pl;
+    } catch (e) {}
     // Возврат со страницы ЮKassa кнопкой «назад» восстанавливает страницу
     // из bfcache вместе с выставленным флагом — и «Оформить» умирает
     // навсегда (01.09: «он не даёт второй раз попробовать»). На pageshow
@@ -86,11 +100,12 @@
         }
     });
 
-    async function _createPayment() {
+    async function _createPayment(plan) {
         if (_isCreatingPayment) return;
 
         const uid = _uid();
         if (!uid) return;
+        if (plan === 'monthly' || plan === 'trial_week') _selectedPlan = plan;
 
         const emailInput = document.getElementById('subEmailInput');
         const email = emailInput ? emailInput.value.trim() : '';
@@ -100,9 +115,12 @@
             if (emailInput) emailInput.focus();
             return;
         }
-        _payStep('pay_clicked');
+        _payStep('pay_clicked', { plan: _selectedPlan });
 
-        const payBtn = document.getElementById('subPayBtn');
+        const payBtn = document.getElementById(_selectedPlan === 'monthly' ? 'subPayMonthBtn' : 'subPayBtn')
+            || document.getElementById('subPayBtn');
+        const otherBtn = document.getElementById(_selectedPlan === 'monthly' ? 'subPayBtn' : 'subPayMonthBtn');
+        if (otherBtn) otherBtn.disabled = true;
         const prevBtnText = payBtn ? payBtn.innerHTML : '';
 
         _isCreatingPayment = true;
@@ -124,6 +142,7 @@
                     user_id: uid,
                     return_url: baseReturn,
                     email: email,
+                    plan: _selectedPlan,
                 })
             });
             if (r.status === 429) {
@@ -136,11 +155,12 @@
             }
             const data = await r.json();
             if (data.success && data.confirmation_url) {
-                _payStep('payment_created');
+                _payStep('payment_created', { plan: _selectedPlan });
                 try {
                     localStorage.setItem(_pendingKey(uid), JSON.stringify({
                         payment_id: data.payment_id,
                         created_at: Date.now(),
+                        plan: _selectedPlan,
                     }));
                 } catch (e) {}
                 // Уходим на ЮKassa — флаг сознательно НЕ сбрасываем,
@@ -149,8 +169,10 @@
                 window.location.href = data.confirmation_url;
                 return;
             } else {
-                _payStep('payment_failed', { reason: (data.error || 'unknown') });
+                _payStep('payment_failed', { reason: (data.error || 'unknown'), plan: _selectedPlan });
                 _toast(data.error || 'Не удалось создать платёж', 'error');
+                // Пробная неделя уже была — переключаемся на месяц.
+                if (data.code === 'trial_used') _selectedPlan = 'monthly';
             }
         } catch (e) {
             if (!e || e.message !== 'RATE_LIMITED') {
@@ -167,6 +189,7 @@
             payBtn.style.cursor = '';
             payBtn.innerHTML = prevBtnText;
         }
+        if (otherBtn) otherBtn.disabled = false;
         if (emailInput) emailInput.disabled = false;
     }
 
@@ -323,19 +346,22 @@
 
     function _renderActiveSubscription(sub) {
         const days = _daysLeft(sub.expires_at);
+        const trial = sub.plan === 'trial_week';
         return `
             <div class="sub-card sub-card-premium">
                 <div class="sub-badge sub-badge-active">&#x2713; Активна</div>
-                <div class="sub-title">Подписка Фреди Premium</div>
+                <div class="sub-title">${trial ? 'Пробная неделя Фреди Premium' : 'Подписка Фреди Premium'}</div>
                 <div class="sub-desc">Полный доступ ко всем возможностям</div>
-                <div class="sub-info-row"><span class="sub-info-label">Следующее списание</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">${trial ? 'Неделя до' : 'Следующее списание'}</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">990 &#8381;/мес</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">${trial ? '290 &#8381; за неделю, дальше 990 &#8381;/мес' : '990 &#8381;/мес'}</span></div>
                 <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew === false ? 'Отключено' : 'Включено'}</span></div>
                 <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:12px 0 14px">
                     ${sub.auto_renew === false
                         ? 'Списаний больше не будет. Доступ работает до ' + _formatDate(sub.expires_at) + '.'
-                        : 'Отключить можно прямо сейчас — доступ останется до конца оплаченного месяца.'}
+                        : (trial
+                            ? 'Когда неделя закончится, подписка продолжится за 990 ₽ в месяц. Отключить можно прямо сейчас — доступ останется до конца недели.'
+                            : 'Отключить можно прямо сейчас — доступ останется до конца оплаченного месяца.')}
                 </div>
                 <button class="sub-btn ${sub.auto_renew === false ? 'sub-btn-secondary' : 'sub-btn-danger'}" id="subRenewToggleBtn">
                     ${sub.auto_renew === false ? 'Включить автопродление' : 'Отключить автопродление'}
@@ -359,13 +385,26 @@
     function _renderNoSubscription(sub) {
         const isExpired = sub && sub.status === 'expired';
         const card = sub ? sub.card : null;
+        // Пробная неделя показывается, пока бэкенд не сказал обратного:
+        // без ответа статуса (сеть) кнопка есть, а отказ «уже была»
+        // придёт с create-payment и переключит на месяц.
+        const trial = !(sub && sub.trial_available === false);
+        if (!trial) _selectedPlan = 'monthly';
+        const priceHtml = trial
+            ? `<div class="sub-price">290 &#8381; <span style="font-size:14px;font-weight:400;color:var(--text-secondary)">за первую неделю</span></div>
+                <div class="sub-price-period">Полный доступ на 7 дней, с голосом и без счётчика. Потом 990 &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца недели.</div>`
+            : `<div class="sub-price">990 &#8381;</div>
+                <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>`;
+        const buttonsHtml = trial
+            ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать неделю — 290 &#8381;</button>
+                <button class="sub-btn sub-btn-secondary" id="subPayMonthBtn" style="margin-top:8px">Сразу месяц — 990 &#8381;</button>`
+            : `<button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 990 &#8381;</button>`;
         return `
             <div class="sub-card">
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
                 <div class="sub-title">Фреди Premium</div>
                 <div class="sub-desc">Разблокируйте полный доступ к виртуальному психологу</div>
-                <div class="sub-price">990 &#8381;</div>
-                <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>
+                ${priceHtml}
                 <ul class="sub-features">
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Безлимитные сессии с Фреди</li>
                     <li><span class="sub-feature-icon">&#x1F3AF;</span> Персональный план развития</li>
@@ -380,7 +419,7 @@
                         style="width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);font-size:14px;font-family:inherit;box-sizing:border-box;outline:none"
                         onfocus="this.style.borderColor='rgba(59,130,255,0.5)'" onblur="this.style.borderColor='rgba(224,224,224,0.18)'" />
                 </div>
-                <button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 990 &#8381;</button>
+                ${buttonsHtml}
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
                 <div style="text-align:center;margin-top:6px;font-size:11px;color:rgba(255,183,59,0.9)">Если у вас включён VPN — отключите его на время оплаты: иначе страница подтверждения банка не откроется.</div>
                 <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-secondary)">Оформляя подписку, вы принимаете <a href="/oferta/" target="_blank" rel="noopener" style="color:#3b82ff">Оферту</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener" style="color:#3b82ff">Политику конфиденциальности</a>.</div>
@@ -455,9 +494,16 @@
             _payStep('form_rendered', {
                 pending: !!pendingPid,
                 status_loaded: sub != null,
+                trial_offered: !(sub && sub.trial_available === false),
             });
             const payBtn = document.getElementById('subPayBtn');
-            if (payBtn) { payBtn.addEventListener('click', _createPayment); }
+            const monthBtn = document.getElementById('subPayMonthBtn');
+            if (payBtn) {
+                payBtn.addEventListener('click', function () {
+                    _createPayment(monthBtn ? 'trial_week' : 'monthly');
+                });
+            }
+            if (monthBtn) { monthBtn.addEventListener('click', function () { _createPayment('monthly'); }); }
             const restartBtn = document.getElementById('subRestartPaymentBtn');
             if (restartBtn) {
                 restartBtn.addEventListener('click', async () => {
@@ -499,8 +545,9 @@
 
     // Прямой чекаут: открывает оплату (email + ЮKassa) в фокус-модалке —
     // без ухода в экран настроек, где подписка теряется среди прочего.
-    function openCheckout(source) {
+    function openCheckout(source, plan) {
         try {
+            if (plan === 'monthly' || plan === 'trial_week') _selectedPlan = plan;
             var existing = document.getElementById('fredCheckoutOverlay');
             if (existing) existing.remove();
 
@@ -545,7 +592,7 @@
 
             try {
                 if (window.FrediTracker && window.FrediTracker.track) {
-                    window.FrediTracker.track('checkout_opened', { source: source || 'unknown' });
+                    window.FrediTracker.track('checkout_opened', { source: source || 'unknown', plan: _selectedPlan });
                 }
             } catch (e) {}
 

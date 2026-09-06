@@ -669,8 +669,8 @@
                       gain.big + ' \u043C\u0438\u043D\u0443\u0442 \u0432 \u0434\u0435\u043D\u044C</button>'
                     : '') +
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    '" id="meterSubscribeBtn">\u2728 Premium \u2014 990 \u20BD/\u043C\u0435\u0441, \u0431\u0435\u0437 \u043B\u0438\u043C\u0438\u0442\u043E\u0432</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации. И Фреди рядом каждый день, а не раз в неделю.</div>' +
+                    '" id="meterSubscribeBtn">✨ Попробовать неделю — 290 ₽</button>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 (trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
@@ -794,8 +794,8 @@
                       upGain.big + ' минут в день</button>'
                     : '') +
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    '" id="meterUpsellSub">✨ Premium — 990 ₽/мес, без лимитов</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации. И Фреди рядом каждый день, а не раз в неделю.</div>' +
+                    '" id="meterUpsellSub">✨ Попробовать неделю — 290 ₽</button>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
@@ -1118,8 +1118,8 @@
                         'Голос, все режимы, без счётчика минут.' +
                         (anon ? '<br><br>Без аккаунта этот разговор завтра не вспомнится: нужна почта и четыре цифры.' : '') +
                     '</div>' +
-                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Оформить подписку — 990 ₽/мес</button>' +
-                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации. И Фреди рядом каждый день, а не раз в неделю.</div>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать неделю — 290 ₽</button>' +
+                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, память о каждом разговоре. Потом 990 ₽ в месяц; отключить можно в один клик.</div>' +
                     (anon ? '<button class="meter-btn meter-btn-secondary" id="meterPeakReg">📩 Сначала завести аккаунт</button>' : '') +
                     '<button class="meter-btn meter-btn-secondary" id="meterPeakLater">Позже</button>' +
                 '</div>';
@@ -1201,8 +1201,8 @@
                 '<div class="meter-title">«' + _esc(name) + '» — с подпиской</div>' +
                 '<div class="meter-text">Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
                     'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.</div>' +
-                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Открыть Premium — 990 ₽/мес</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">990 ₽ в месяц — меньше одной очной консультации.</div>' +
+                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать неделю — 290 ₽</button>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
             '</div>';
         document.body.appendChild(overlay);
