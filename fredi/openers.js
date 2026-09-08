@@ -409,6 +409,84 @@
         _goal('fredi_intro_reply_' + _introVariant);
     }
 
+    // ---- Продолжения под первым ответом ----
+    //
+    // Пришедший из объявления получает ответ и упирается в пустое поле:
+    // подсказки прячутся в момент отправки автовопроса, а сам он писать не
+    // станет — из 615 автовопросов за неделю своей репликой продолжили
+    // единицы, и сессия обрывается через 6–9 секунд после ответа.
+    //
+    // Три готовых продолжения — единственное место, где это можно
+    // развернуть: нажатие вместо набора. Каждое ведёт разговор дальше, а
+    // не уводит со страницы: ссылки наружу здесь были бы выходом, а не
+    // продолжением.
+    var FOLLOWUPS = [
+        { id: 'why', label: 'Почему это со мной', text: 'Почему это происходит именно со мной?' },
+        { id: 'today', label: 'Что сделать сегодня', text: 'Что мне сделать сегодня вечером?' },
+        { id: 'other', label: 'У меня по-другому', text: 'У меня немного по-другому.' },
+    ];
+    var _autoAskUsed = false;   // сессия началась с автовопроса
+    var _followShown = false;
+
+    function _followStyle() {
+        if (document.getElementById('followStyle')) return;
+        var st = document.createElement('style');
+        st.id = 'followStyle';
+        st.textContent =
+            '.fu-wrap{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 10px;padding:0 2px}' +
+            '.fu-btn{cursor:pointer;font-family:inherit;font-size:13px;line-height:1.3;' +
+            'padding:8px 13px;border-radius:16px;color:var(--text-primary);' +
+            'background:rgba(59,130,255,.10);border:1px solid rgba(59,130,255,.35);' +
+            'transition:background .18s,border-color .18s}' +
+            '.fu-btn:hover{background:rgba(59,130,255,.20);border-color:rgba(59,130,255,.6)}' +
+            '@media(max-width:600px){.fu-btn{font-size:12.5px;padding:7px 11px}}';
+        document.head.appendChild(st);
+    }
+
+    function _hideFollow() {
+        var el = document.getElementById('frediFollowUps');
+        if (el) el.remove();
+    }
+
+    function _showFollowUps() {
+        if (_followShown || !_autoAskUsed || _ownCounted) return;
+        var stream = document.getElementById('dashChatStream');
+        if (!stream || !stream.querySelector('.message.bot:not(.thinking):not(.intro)')) return;
+        _followShown = true;
+        _followStyle();
+        var wrap = document.createElement('div');
+        wrap.id = 'frediFollowUps';
+        wrap.className = 'fu-wrap';
+        FOLLOWUPS.forEach(function (f) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'fu-btn';
+            b.textContent = f.label;
+            b.addEventListener('click', function () {
+                _track('follow_up_click', { id: f.id });
+                _hideFollow();
+                _sendAsOwn(f.text);
+            });
+            wrap.appendChild(b);
+        });
+        stream.appendChild(wrap);
+        try { stream.scrollTop = stream.scrollHeight; } catch (e) {}
+        _track('follow_up_shown', { n: FOLLOWUPS.length });
+    }
+
+    // Отправка от лица человека: в отличие от автовопроса флаг
+    // _autoAskPending не ставится — нажатие на продолжение и есть
+    // продолжение разговора, и цель fredi_own_message должна уйти.
+    function _sendAsOwn(text) {
+        var form = document.getElementById('dashComposerForm');
+        var input = document.getElementById('dashComposerInput');
+        if (!form || !input || !form._wired) return false;
+        input.value = text;
+        if (typeof form.requestSubmit === 'function') form.requestSubmit();
+        else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+        return true;
+    }
+
     function _submitAsk(text, source) {
         var form = document.getElementById('dashComposerForm');
         var input = document.getElementById('dashComposerInput');
@@ -416,6 +494,7 @@
         var intro = _introDue();
         input.value = text;
         _hide();
+        _autoAskUsed = true;
         // Флаг для index.html: пока идёт автовопрос, страницу нельзя
         // перезагружать ради обновления service worker — ответ оборвётся.
         window.__frediAskBusy = true;
@@ -515,11 +594,22 @@
             var ev = e && e.detail && e.detail.event;
             if (ev === 'message_sent') {
                 _hide();
-                // Первый message_sent после автоотправки — это она сама.
-                if (_autoAskPending) _autoAskPending = false;
-                else _onOwnMessage();
+                // Первый message_sent после автоотправки — это она сама, и
+                // продолжения ещё впереди: их место под ответом на неё.
+                if (_autoAskPending) {
+                    _autoAskPending = false;
+                } else {
+                    // Отправил своё — продолжения отработали или не
+                    // понадобились, второй раз их показывать незачем.
+                    _hideFollow();
+                    _followShown = true;
+                    _onOwnMessage();
+                }
                 _onMessageSent();
             }
+            // Ответ на автовопрос пришёл — под ним и место продолжениям.
+            // Ждём именно ответа, а не таймера: до него разговаривать не с чем.
+            if (ev === 'ai_response_received') setTimeout(_showFollowUps, 400);
         });
     }
 
