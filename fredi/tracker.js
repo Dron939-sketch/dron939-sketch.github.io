@@ -414,6 +414,20 @@
         try{ var u=new URL(urlStr,window.location.origin); return u.pathname.slice(0,80); }
         catch(e){ return (urlStr||'').split('?')[0].slice(0,80); }
     }
+    // ---- ожидаемые «ошибки» ----
+    // Часть кодов 4xx — это штатный ответ, а не сбой. auth.js на каждой
+    // загрузке спрашивает /api/auth/me, чтобы узнать, есть ли серверная
+    // сессия, и на 401 спокойно уходит в анонимную ветку (см. _tryAuthMe).
+    // В аналитике это давало по одному api_error на каждый анонимный визит —
+    // то есть почти на каждый визит вообще, и настоящие сбои тонули в этом
+    // фоне. Список нарочно узкий: пара «адрес + код», а не «401 не считаем».
+    // 401 на /api/chat — уже настоящая поломка, и он должен быть виден.
+    var _EXPECTED_STATUS = { '/api/auth/me': { 401: 1, 404: 1 } };
+    function _isExpectedStatus(urlStr, status){
+        var e = _EXPECTED_STATUS[_shortEndpoint(urlStr)];
+        return !!(e && e[status]);
+    }
+
     function _extractResponseText(data) {
         // AI-эндпоинты возвращают ответ в разных полях — /api/chat → response,
         // /api/ai/generate → generated/answer, /api/deep-analysis → analysis/text
@@ -569,7 +583,8 @@
                             }catch(e){}
                         }
 
-                        if(urlStr.indexOf('/api/')>=0 && response.status >= 400 && response.status !== 402){
+                        if(urlStr.indexOf('/api/')>=0 && response.status >= 400 && response.status !== 402
+                           && !_isExpectedStatus(urlStr, response.status)){
                             track('api_error',{endpoint:_shortEndpoint(urlStr),status:response.status,method:method});
                         }
                         return response;
