@@ -303,6 +303,22 @@
     var _introVariant = '';   // показанный в этой сессии вариант
     var _introReplied = false;
 
+    // Цель «написал сам» (fredi_own_message).
+    //
+    // Зачем отдельно от fredi_first_message: с 04.09 первое сообщение
+    // отправляет страница, а не человек — объявление приводит в чат с
+    // готовым вопросом. За 07.09 таких автовопросов 214, своих реплик
+    // после них четыре. Директ оптимизировался по first_message, то есть
+    // учился приводить тех, кто просто открыл вкладку.
+    //
+    // Здесь считается только то, что человек набрал руками: автовопрос
+    // помечается флагом до отправки и снимается первым же message_sent.
+    // Пришедший без автовопроса (органика) сразу попадает в «своё» —
+    // ему нечего снимать.
+    var OWN_KEY = 'fredi_own_message_sent';
+    var _autoAskPending = false;
+    var _ownCounted = false;
+
     function _pickVariant() {
         var v = '';
         try { v = localStorage.getItem(VARIANT_KEY) || ''; } catch (e) {}
@@ -364,6 +380,22 @@
     // стоит ответ Фреди: message_sent самого автовопроса может прийти и
     // позже секунды (пока идёт проверка лимита), и без этой проверки он
     // засчитался бы за ответ.
+    // Один раз на устройство, как и fredi_first_message: цель должна
+    // означать «человек заговорил», а не «человек разговорчивый», иначе
+    // один собеседник весит как десять.
+    function _onOwnMessage() {
+        if (_ownCounted) return;
+        _ownCounted = true;
+        try {
+            if (localStorage.getItem(OWN_KEY)) return;
+            localStorage.setItem(OWN_KEY, String(Date.now()));
+        } catch (e) {
+            // Приватный режим: цель уйдёт повторно. Это лучше, чем не уйти.
+        }
+        _track('own_message', { after_auto: _introVariant ? 1 : 0 });
+        _goal('fredi_own_message');
+    }
+
     function _onMessageSent() {
         if (!_introVariant || _introReplied) return;
         var s = document.getElementById('dashChatStream');
@@ -383,6 +415,7 @@
         // Флаг для index.html: пока идёт автовопрос, страницу нельзя
         // перезагружать ради обновления service worker — ответ оборвётся.
         window.__frediAskBusy = true;
+        _autoAskPending = true;
         _track('auto_ask', { source: source || '', len: text.length });
         // Через submit формы, а не прямым вызовом: send() в app.js закрыта
         // в замыкании, и только так срабатывают её проверки — лимит,
@@ -476,7 +509,13 @@
         // Написал сам — подсказки больше не нужны.
         window.addEventListener('fredi:track', function (e) {
             var ev = e && e.detail && e.detail.event;
-            if (ev === 'message_sent') { _hide(); _onMessageSent(); }
+            if (ev === 'message_sent') {
+                _hide();
+                // Первый message_sent после автоотправки — это она сама.
+                if (_autoAskPending) _autoAskPending = false;
+                else _onOwnMessage();
+                _onMessageSent();
+            }
         });
     }
 
