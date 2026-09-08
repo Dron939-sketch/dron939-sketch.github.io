@@ -464,6 +464,7 @@
             b.textContent = f.label;
             b.addEventListener('click', function () {
                 _track('follow_up_click', { id: f.id });
+                _goal('fredi_follow_up_click');
                 _hideFollow();
                 _sendAsOwn(f.text);
             });
@@ -471,7 +472,11 @@
         });
         stream.appendChild(wrap);
         try { stream.scrollTop = stream.scrollHeight; } catch (e) {}
+        // Дублируем в Метрику: FrediTracker пишет в свою таблицу, а доля
+        // нажатий к показам — то единственное, ради чего продолжения
+        // сделаны, и смотреть её нужно там же, где остальная воронка.
         _track('follow_up_shown', { n: FOLLOWUPS.length });
+        _goal('fredi_follow_up_shown');
     }
 
     // Отправка от лица человека: в отличие от автовопроса флаг
