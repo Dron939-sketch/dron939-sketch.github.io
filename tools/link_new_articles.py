@@ -12,6 +12,16 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Две статьи от 9 сентября 2026 висели сиротами: check_blog показывал
+    # «ни одной входящей ссылки из статей». Через рубрику и sitemap их
+    # находит краулер, читатель — нет.
+    "test-beka-na-depressiyu-i-drugie-shkaly": ["depressiya-12-tipov-chto-rabotaet",
+                                                "grust-ili-depressiya",
+                                                "gore-ili-depressiya"],
+    "kak-opredelit-harakter-cheloveka": ["psihotipy-po-povedeniyu",
+                                         "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
+                                         "patterny-povedeniya-kak-zamechat"],
+
     "grust-ili-depressiya": ["depressiya-12-tipov-chto-rabotaet",
                              "dvizhenie-kak-antidepressant"],
     "trevoga-ili-strah": ["kak-spravitsya-s-trevogoj", "trevozhnaya-spiral-kak-ostanovit"],
@@ -87,8 +97,17 @@ def add_inbound(rub_of):
                     '<span>%d мин · %s</span></div>\n' %
                     (new, short_title(m["title"]), m["mins"],
                      RUB_SHORT.get(rub_of.get(new), "разбор").lower()))
-            s = s.replace('<div class="related-grid">\n',
-                          '<div class="related-grid">\n' + item, 1)
+            # Раньше здесь искалось '<div class="related-grid">\n' — с
+            # переводом строки. На части страниц карточка идёт сразу за
+            # открывающим тегом, замена молча не срабатывала, файл
+            # переписывался без изменений, а счётчик всё равно рос: скрипт
+            # отчитывался о пяти вставленных ссылках, когда встало три.
+            open_tag = '<div class="related-grid">'
+            before = s
+            s = s.replace(open_tag, open_tag + "\n" + item, 1)
+            if s == before:
+                missing.append(d + " (не нашлось, куда вставить)")
+                continue
             io.open(p, "w", encoding="utf-8").write(s)
             added += 1
     return added, missing
