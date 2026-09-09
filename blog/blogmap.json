@@ -1030,6 +1030,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-opredelit-harakter-cheloveka",
+   "title": "Как определить характер человека: что видно за один разговор",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "kak-ostatsya-v-istorii-9-sposobov-sled",
    "title": "Как остаться в истории: 9 способов оставить след — Андрей Мейстер",
    "rubric": "emocii",
@@ -1238,6 +1245,13 @@
    "rubric": "dengi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "kak-razvit-kriticheskoe-myshlenie",
+   "title": "Как развить критическое мышление: 7 приёмов",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "kak-skazat-net",
@@ -9339,6 +9353,13 @@
    "mins": 14
   },
   {
+   "slug": "navyazannaya-vera",
+   "title": "Навязанная вера: что делать, если больше не верится",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "navyazchivye-mysli-chto-delat",
    "title": "Навязчивые мысли: почему лезут в голову и что с ними делать",
    "rubric": "strahi",
@@ -9820,6 +9841,13 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "priznaki-sekty",
+   "title": "Признаки секты: 8 признаков, по которым её узнают",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "prizvanie-vs-karyera-5-tipov-zhiznennogo-puti",
@@ -10900,6 +10928,13 @@
    "mins": 15
   },
   {
+   "slug": "test-beka-na-depressiyu-i-drugie-shkaly",
+   "title": "Тест Бека на депрессию: почему его нет в свободном доступе",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "test-glavnaya-i-tenevaya-reakciya-na-strah",
    "title": "Тест: какая у вас главная реакция на страх и какая теневая (вторая по силе)",
    "rubric": "strahi",
@@ -11437,20 +11472,6 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
-  },
-  {
-   "slug": "kak-opredelit-harakter-cheloveka",
-   "title": "Как определить характер человека: что видно за один разговор",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "test-beka-na-depressiyu-i-drugie-shkaly",
-   "title": "Тест Бека на депрессию: почему его нет в свободном доступе",
-   "rubric": "strahi",
-   "level": "n",
-   "mins": 11
   }
  ]
 }

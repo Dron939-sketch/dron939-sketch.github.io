@@ -12,6 +12,17 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Кластер УБ-6 «вера, истина, заблуждения», партия от 10.09.2026.
+    "priznaki-sekty": ["23-manipulyacii-v-otnosheniyah-spravochnik",
+                       "energeticheskie-vampiry-neuro",
+                       "chto-delat-esli-roditeli-vmeshivayutsya"],
+    "navyazannaya-vera": ["chto-delat-esli-roditeli-vmeshivayutsya",
+                          "ezoterika-i-psihologiya-7-peresechenij",
+                          "kak-skazat-net"],
+    "kak-razvit-kriticheskoe-myshlenie": ["pochemu-goroskopy-rabotayut-effekt-barnuma",
+                                          "rabotayut-li-ritualy-taro-astrologiya",
+                                          "ezoterika-i-psihologiya-7-peresechenij"],
+
     # Две статьи от 9 сентября 2026 висели сиротами: check_blog показывал
     # «ни одной входящей ссылки из статей». Через рубрику и sitemap их
     # находит краулер, читатель — нет.
