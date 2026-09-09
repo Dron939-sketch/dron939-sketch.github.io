@@ -3158,7 +3158,19 @@ document.addEventListener('DOMContentLoaded', function() {
             perehod: { fn: 'showPerehodGame', src: 'perehod.js', chat: 'kontur' }, // «Переход» — месяц из десяти решений: чьё решение вы выполнили
             lestnica: { fn: 'showLestnicaGame', src: 'lestnica.js', chat: 'kontur' }, // «Лестница» — конструктор экспозиции (курс «Страхи и фобии»)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' }, // «Мне плохо сейчас» — протокол стабилизации
-            alfavit: { fn: 'showAlfavitGame', src: 'alfavit.js', chat: 'kontur' } // «Алфавит» нового кода НЛП (Гриндер)
+            alfavit: { fn: 'showAlfavitGame', src: 'alfavit.js', chat: 'kontur' },
+            // Семь платных тренажёров были в списке премиума (meter.js), но
+            // не в этой таблице: попасть в них можно было только из списка
+            // игр внутри приложения. Ни статья, ни письмо, ни объявление не
+            // могли привести человека в «Вариатику» — самый дорогой по
+            // содержанию инструмент оставался без двери.
+            progressive: { fn: 'showProgressiveGame', src: 'progressive.js', chat: 'kontur' }, // «Вариатика — Progressive»
+            intensive: { fn: 'showIntensiveGame', src: 'intensive.js', chat: 'kontur' }, // «Вариатика — Intensive»
+            imperative: { fn: 'showImperativeGame', src: 'imperative.js', chat: 'kontur' }, // «Императив»
+            exponenta: { fn: 'showExponentaGame', src: 'exponenta.js', chat: 'kontur' }, // «Экспонента»
+            pattern: { fn: 'showPatternGame', src: 'pattern.js', chat: 'kontur' }, // «Паттерн»
+            meister: { fn: 'showMeisterGame', src: 'meister.js', chat: 'kontur' }, // «МЕЙСТЕР-КОД»
+            marketolog: { fn: 'showMarketologGame', src: 'marketolog.js', chat: 'kontur' } // «Алфавит» нового кода НЛП (Гриндер)
         };
         // Синонимы: под этими именами игры звали ссылки в блоге, а в таблице
         // их не было — роутер молча выходил, и человек оставался на дашборде,
