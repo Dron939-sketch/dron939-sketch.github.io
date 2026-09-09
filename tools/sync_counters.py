@@ -161,6 +161,19 @@ def sync_home(total):
         log.append("манифест: «в блоге их %d»" % total)
     write(p, s)
 
+    # llms.txt: строка «Все N статей блога». Её сюда не включали, и она
+    # тихо отстала — на 09.09 там стояло 1252 при 1620 реальных. Это тот
+    # самый счётчик, вписанный руками, который разъезжается в тот же день.
+    p = os.path.join(ROOT, "llms.txt")
+    if not os.path.exists(p):
+        return
+    s0 = read(p)
+    s = re.sub(r"Все \d+ стать\w+ блога",
+               "Все %d %s блога" % (total, plural(total)), s0)
+    if s != s0:
+        log.append("llms.txt: «Все %d %s блога»" % (total, plural(total)))
+    write(p, s)
+
 
 def sync_lektorij(n_courses, n_lectures):
     """Только сводные числа страницы.

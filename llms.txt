@@ -377,8 +377,9 @@
 
 ## Блог — другие популярные статьи
 
-- [Все 1252 статьи блога](https://meysternlp.ru/blog/) — полный архив, организованный по 9 тематическим волнам.
+- [Все 1620 статей блога](https://meysternlp.ru/blog/) — полный архив, организованный по 9 тематическим волнам.
 - [Как справиться с тревогой: 7 техник](https://meysternlp.ru/blog/kak-spravitsya-s-trevogoj.html)
+- [Навязчивые мысли: почему лезут в голову и что с ними делать](https://meysternlp.ru/blog/navyazchivye-mysli-chto-delat.html): чем навязчивость отличается от руминации и от намерения, почему подавление усиливает мысль, пять шагов в момент, экспозиция с предотвращением реакции при ОКР.
 - [AI-психологи 2026: можно ли заменить терапевта](https://meysternlp.ru/blog/ai-psiholog-2026-mozhno-li-zamenit-terapevta.html)
 - [Тест стиля привязанности по Боулби](https://meysternlp.ru/blog/test-stil-privyazannosti-boulbi.html)
 - [Почему "будь собой" — худший совет](https://meysternlp.ru/blog/pochemu-bud-soboj-hudshij-sovet.html)
