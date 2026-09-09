@@ -386,6 +386,13 @@
    "mins": 9
   },
   {
+   "slug": "bog-est-ili-net-chto-govorit-psihologiya",
+   "title": "«Бог есть или нет»: что об этом может сказать психология",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "bolshaya-lozh-samopomoschi-7-mifov",
    "title": "Большая ложь самопомощи: 7 разоблачённых мифов",
    "rubric": "emocii",
@@ -468,6 +475,13 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "chto-budet-posle-smerti-vzglyad-psihologii",
+   "title": "Что будет после смерти: чего психология не знает и что знает",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "chto-delat-esli-na-vas-nakrichali",
@@ -9687,6 +9701,13 @@
    "rubric": "ezoterika",
    "level": "n",
    "mins": 10
+  },
+  {
+   "slug": "pochemu-lyudi-veryat-v-teorii-zagovora",
+   "title": "Почему умные люди верят в теории заговора",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "pochemu-ne-mogu-zastavit-sebya",
