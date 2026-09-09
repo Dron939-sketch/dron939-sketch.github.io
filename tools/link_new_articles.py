@@ -12,6 +12,18 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Кластеры ЧВ-6 и ЧВ-7, партия от 10.09.2026.
+    "pochemu-so-mnoj-ne-hotyat-obshchatsya": ["psihologiya-odinochestva-4-tipa-2026",
+                                              "kak-zavodit-druzej-vzroslomu",
+                                              "ot-zhertvy-k-tvorcu-7-urovnej-evolyucii"],
+    "kak-perestat-sebya-zhalet": ["samosostradanie-vmesto-samokritiki",
+                                  "ot-zhertvy-k-tvorcu-7-urovnej-evolyucii"],
+    "kak-perestat-byt-zhertvoj": ["ot-zhertvy-k-tvorcu-7-urovnej-evolyucii",
+                                  "23-manipulyacii-v-otnosheniyah-spravochnik",
+                                  "kak-skazat-net"],
+    "kak-najti-sebya-nastoyashchego": ["triada-identichnosti-mejstera",
+                                       "psihotipy-po-povedeniyu"],
+
     # Кластер УБ-6 «вера, истина, заблуждения», партия от 10.09.2026.
     "priznaki-sekty": ["23-manipulyacii-v-otnosheniyah-spravochnik",
                        "energeticheskie-vampiry-neuro",
@@ -77,8 +89,19 @@ MONTH = {8: "августа"}
 
 def meta(slug):
     s = io.open(os.path.join(BLOG, slug + ".html"), encoding="utf-8").read()
+    # Раньше заголовок брался как «<title> и лениво до первой вертикальной
+    # черты», причём с re.S. У страниц, где в <title> черты нет вовсе
+    # (а таких в блоге большинство — там «— Андрей Мейстер»), поиск уезжал
+    # за пределы тега и утаскивал в карточку весь <head> до первой «|»
+    # где-нибудь в CSS. В файл вставлялась ссылка вида
+    # «https</a><span>11 мин · ...</span></div>», ломавшая страницу-донора.
+    # 10.09.2026 так пострадали четыре страницы; ещё две лежали сломанными
+    # в main с прошлого прогона. Теперь читаем ровно содержимое тега и
+    # отрезаем хвост после разделителя, каким бы он ни был.
+    raw = re.search(r"<title>(.*?)</title>", s, re.S).group(1).strip()
+    title = re.split(r"\s+[|—–]\s+", raw)[0].strip()
     return dict(
-        title=re.search(r"<title>(.*?)\s*\|", s, re.S).group(1).strip(),
+        title=title,
         mins=int(re.search(r"⏱️\s*(\d+)\s*мин", s).group(1)),
         date=re.search(r'article:published_time" content="(\d{4})-(\d{2})-(\d{2})', s).groups(),
     )

@@ -1002,6 +1002,13 @@
    "mins": 9
   },
   {
+   "slug": "kak-najti-sebya-nastoyashchego",
+   "title": "Как найти себя настоящего, если вы разный со всеми",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-naladit-son-gigiena-sna",
    "title": "Как наладить сон: гигиена сна простыми словами",
    "rubric": "telo",
@@ -1051,10 +1058,24 @@
    "mins": 11
   },
   {
+   "slug": "kak-perestat-byt-zhertvoj",
+   "title": "Как перестать быть жертвой: разбор по шагам",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-perestat-nakruchivat-sebya",
    "title": "Как перестать накручивать себя: механика накрутки и стоп-краны",
    "rubric": "strahi",
    "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "kak-perestat-sebya-zhalet",
+   "title": "Как перестать себя жалеть и начать действовать",
+   "rubric": "emocii",
+   "level": "n",
    "mins": 11
   },
   {
@@ -9687,6 +9708,13 @@
    "rubric": "dengi",
    "level": "p",
    "mins": 28
+  },
+  {
+   "slug": "pochemu-so-mnoj-ne-hotyat-obshchatsya",
+   "title": "Почему со мной не хотят общаться: 7 причин",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "pochemu-stesnyaemsya-mechtat-vsluh",
