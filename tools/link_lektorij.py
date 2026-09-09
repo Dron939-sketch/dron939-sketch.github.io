@@ -151,8 +151,8 @@ RULES = [
      "povedencheskaya-ekonomika"),
     (r"эконом|ekonom|инфляц|рынок труда", "ekonomika"),
     (r"продаж|prodazh|клиент|klient|покупател|маркетинг", "prodazhi"),
-    (r"карьер|karer|работ[аеуы]|rabota|увольнен|собеседован|коллег|"
-     r"начальник|офис", "rabota-i-karera"),
+    (r"карьер|karer|работ[аеуы]|rabota|увольн|уволил|уволен|сократил|"
+     r"uvolil|uvolnen|собеседован|коллег|начальник|офис", "rabota-i-karera"),
     (r"руковод|rukovod|лидер|lider|команд|komand|управлени|подчин[её]н|"
      r"делегиров|найм", "upravlenie-lyudmi"),
     (r"бизнес|biznes|предпринимател|стартап|svoe-delo|фриланс", "svoe-delo"),

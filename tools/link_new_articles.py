@@ -12,6 +12,49 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Кластер УБ-6, партия 3 от 10.09.2026: сомнение, уход не туда, смерть.
+    "pochemu-lyudi-veryat-v-teorii-zagovora": ["kak-razvit-kriticheskoe-myshlenie",
+                                               "pochemu-goroskopy-rabotayut-effekt-barnuma",
+                                               "priznaki-sekty"],
+    "bog-est-ili-net-chto-govorit-psihologiya": ["navyazannaya-vera",
+                                                 "ezoterika-i-psihologiya-7-peresechenij"],
+    "chto-budet-posle-smerti-vzglyad-psihologii": ["strah-smerti-kak-s-nim-zhit",
+                                                   "kak-perezhit-utratu-blizkogo-etapy-gorya",
+                                                   "kak-podderzhat-cheloveka-v-gore"],
+
+    # Кластеры ЧВ-6 и ЧВ-7, партия от 10.09.2026.
+    "pochemu-so-mnoj-ne-hotyat-obshchatsya": ["psihologiya-odinochestva-4-tipa-2026",
+                                              "kak-zavodit-druzej-vzroslomu",
+                                              "ot-zhertvy-k-tvorcu-7-urovnej-evolyucii"],
+    "kak-perestat-sebya-zhalet": ["samosostradanie-vmesto-samokritiki",
+                                  "ot-zhertvy-k-tvorcu-7-urovnej-evolyucii"],
+    "kak-perestat-byt-zhertvoj": ["ot-zhertvy-k-tvorcu-7-urovnej-evolyucii",
+                                  "23-manipulyacii-v-otnosheniyah-spravochnik",
+                                  "kak-skazat-net"],
+    "kak-najti-sebya-nastoyashchego": ["triada-identichnosti-mejstera",
+                                       "psihotipy-po-povedeniyu"],
+
+    # Кластер УБ-6 «вера, истина, заблуждения», партия от 10.09.2026.
+    "priznaki-sekty": ["23-manipulyacii-v-otnosheniyah-spravochnik",
+                       "energeticheskie-vampiry-neuro",
+                       "chto-delat-esli-roditeli-vmeshivayutsya"],
+    "navyazannaya-vera": ["chto-delat-esli-roditeli-vmeshivayutsya",
+                          "ezoterika-i-psihologiya-7-peresechenij",
+                          "kak-skazat-net"],
+    "kak-razvit-kriticheskoe-myshlenie": ["pochemu-goroskopy-rabotayut-effekt-barnuma",
+                                          "rabotayut-li-ritualy-taro-astrologiya",
+                                          "ezoterika-i-psihologiya-7-peresechenij"],
+
+    # Две статьи от 9 сентября 2026 висели сиротами: check_blog показывал
+    # «ни одной входящей ссылки из статей». Через рубрику и sitemap их
+    # находит краулер, читатель — нет.
+    "test-beka-na-depressiyu-i-drugie-shkaly": ["depressiya-12-tipov-chto-rabotaet",
+                                                "grust-ili-depressiya",
+                                                "gore-ili-depressiya"],
+    "kak-opredelit-harakter-cheloveka": ["psihotipy-po-povedeniyu",
+                                         "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
+                                         "patterny-povedeniya-kak-zamechat"],
+
     "grust-ili-depressiya": ["depressiya-12-tipov-chto-rabotaet",
                              "dvizhenie-kak-antidepressant"],
     "trevoga-ili-strah": ["kak-spravitsya-s-trevogoj", "trevozhnaya-spiral-kak-ostanovit"],
@@ -56,8 +99,19 @@ MONTH = {8: "августа"}
 
 def meta(slug):
     s = io.open(os.path.join(BLOG, slug + ".html"), encoding="utf-8").read()
+    # Раньше заголовок брался как «<title> и лениво до первой вертикальной
+    # черты», причём с re.S. У страниц, где в <title> черты нет вовсе
+    # (а таких в блоге большинство — там «— Андрей Мейстер»), поиск уезжал
+    # за пределы тега и утаскивал в карточку весь <head> до первой «|»
+    # где-нибудь в CSS. В файл вставлялась ссылка вида
+    # «https</a><span>11 мин · ...</span></div>», ломавшая страницу-донора.
+    # 10.09.2026 так пострадали четыре страницы; ещё две лежали сломанными
+    # в main с прошлого прогона. Теперь читаем ровно содержимое тега и
+    # отрезаем хвост после разделителя, каким бы он ни был.
+    raw = re.search(r"<title>(.*?)</title>", s, re.S).group(1).strip()
+    title = re.split(r"\s+[|—–]\s+", raw)[0].strip()
     return dict(
-        title=re.search(r"<title>(.*?)\s*\|", s, re.S).group(1).strip(),
+        title=title,
         mins=int(re.search(r"⏱️\s*(\d+)\s*мин", s).group(1)),
         date=re.search(r'article:published_time" content="(\d{4})-(\d{2})-(\d{2})', s).groups(),
     )
@@ -87,8 +141,17 @@ def add_inbound(rub_of):
                     '<span>%d мин · %s</span></div>\n' %
                     (new, short_title(m["title"]), m["mins"],
                      RUB_SHORT.get(rub_of.get(new), "разбор").lower()))
-            s = s.replace('<div class="related-grid">\n',
-                          '<div class="related-grid">\n' + item, 1)
+            # Раньше здесь искалось '<div class="related-grid">\n' — с
+            # переводом строки. На части страниц карточка идёт сразу за
+            # открывающим тегом, замена молча не срабатывала, файл
+            # переписывался без изменений, а счётчик всё равно рос: скрипт
+            # отчитывался о пяти вставленных ссылках, когда встало три.
+            open_tag = '<div class="related-grid">'
+            before = s
+            s = s.replace(open_tag, open_tag + "\n" + item, 1)
+            if s == before:
+                missing.append(d + " (не нашлось, куда вставить)")
+                continue
             io.open(p, "w", encoding="utf-8").write(s)
             added += 1
     return added, missing

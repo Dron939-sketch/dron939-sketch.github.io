@@ -386,6 +386,13 @@
    "mins": 9
   },
   {
+   "slug": "bog-est-ili-net-chto-govorit-psihologiya",
+   "title": "«Бог есть или нет»: что об этом может сказать психология",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "bolshaya-lozh-samopomoschi-7-mifov",
    "title": "Большая ложь самопомощи: 7 разоблачённых мифов",
    "rubric": "emocii",
@@ -468,6 +475,13 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "chto-budet-posle-smerti-vzglyad-psihologii",
+   "title": "Что будет после смерти: чего психология не знает и что знает",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "chto-delat-esli-na-vas-nakrichali",
@@ -1002,6 +1016,13 @@
    "mins": 9
   },
   {
+   "slug": "kak-najti-sebya-nastoyashchego",
+   "title": "Как найти себя настоящего, если вы разный со всеми",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-naladit-son-gigiena-sna",
    "title": "Как наладить сон: гигиена сна простыми словами",
    "rubric": "telo",
@@ -1030,6 +1051,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-opredelit-harakter-cheloveka",
+   "title": "Как определить характер человека: что видно за один разговор",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "kak-ostatsya-v-istorii-9-sposobov-sled",
    "title": "Как остаться в истории: 9 способов оставить след — Андрей Мейстер",
    "rubric": "emocii",
@@ -1044,10 +1072,24 @@
    "mins": 11
   },
   {
+   "slug": "kak-perestat-byt-zhertvoj",
+   "title": "Как перестать быть жертвой: разбор по шагам",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-perestat-nakruchivat-sebya",
    "title": "Как перестать накручивать себя: механика накрутки и стоп-краны",
    "rubric": "strahi",
    "level": "m",
+   "mins": 11
+  },
+  {
+   "slug": "kak-perestat-sebya-zhalet",
+   "title": "Как перестать себя жалеть и начать действовать",
+   "rubric": "emocii",
+   "level": "n",
    "mins": 11
   },
   {
@@ -1238,6 +1280,13 @@
    "rubric": "dengi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "kak-razvit-kriticheskoe-myshlenie",
+   "title": "Как развить критическое мышление: 7 приёмов",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "kak-skazat-net",
@@ -9339,6 +9388,13 @@
    "mins": 14
   },
   {
+   "slug": "navyazannaya-vera",
+   "title": "Навязанная вера: что делать, если больше не верится",
+   "rubric": "obshchestvo",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "navyazchivye-mysli-chto-delat",
    "title": "Навязчивые мысли: почему лезут в голову и что с ними делать",
    "rubric": "strahi",
@@ -9647,6 +9703,13 @@
    "mins": 10
   },
   {
+   "slug": "pochemu-lyudi-veryat-v-teorii-zagovora",
+   "title": "Почему умные люди верят в теории заговора",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "pochemu-ne-mogu-zastavit-sebya",
    "title": "Почему я не могу заставить себя, хотя понимаю, что надо",
    "rubric": "motivaciya",
@@ -9666,6 +9729,13 @@
    "rubric": "dengi",
    "level": "p",
    "mins": 28
+  },
+  {
+   "slug": "pochemu-so-mnoj-ne-hotyat-obshchatsya",
+   "title": "Почему со мной не хотят общаться: 7 причин",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "pochemu-stesnyaemsya-mechtat-vsluh",
@@ -9820,6 +9890,13 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "priznaki-sekty",
+   "title": "Признаки секты: 8 признаков, по которым её узнают",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "prizvanie-vs-karyera-5-tipov-zhiznennogo-puti",
@@ -10900,6 +10977,13 @@
    "mins": 15
   },
   {
+   "slug": "test-beka-na-depressiyu-i-drugie-shkaly",
+   "title": "Тест Бека на депрессию: почему его нет в свободном доступе",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "test-glavnaya-i-tenevaya-reakciya-na-strah",
    "title": "Тест: какая у вас главная реакция на страх и какая теневая (вторая по силе)",
    "rubric": "strahi",
@@ -11437,13 +11521,6 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
-  },
-  {
-   "slug": "kak-opredelit-harakter-cheloveka",
-   "title": "Как определить характер человека: что видно за один разговор",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 13
   }
  ]
 }
