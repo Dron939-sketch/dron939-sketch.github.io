@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Ставит предложение в середину статьи, а не в самый низ.
+
+Зачем. Замер Playwright на мобильном экране, 09.09:
+
+    статья                          высота      блок Фреди
+    Техники КПТ                     32 экрана   на 88 %
+    Самогипноз                      23 экрана   на 88 %
+    Навязчивые мысли                27 экранов  на 90 %
+    100 когнитивных искажений       45 экранов  блока нет вовсе
+
+То есть единственное предложение в статье лежит на двадцать восьмом
+экране из тридцати двух. Аналитика это подтверждает: страница про техники
+КПТ дала за неделю 121 визит из поиска и 3 открытия Фреди — 2,5 %.
+Человек не отказывается от предложения, он до него не доходит.
+
+Что делает. Вставляет компактную строку с предложением после первого
+содержательного раздела — там, где читатель уже получил пользу и ещё не
+устал. Место ищется так: блок «Содержание», затем второй заголовок
+второго уровня после него. До него обычно 15–25 % страницы.
+
+Текст подбирается по теме статьи (RULES): человеку, читающему про
+гипноз, предлагается комплект, человеку с тревогой — разговор с Фреди.
+Ни одна цена в тексте не вписана: где она нужна, стоит ссылка на
+страницу с ценой, иначе разъедется в тот же день.
+
+    python3 tools/mid_offer.py --dry-run
+    python3 tools/mid_offer.py
+    python3 tools/mid_offer.py --strip
+"""
+import argparse
+import glob
+import os
+import re
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MARK_OPEN = "<!-- mid-offer -->"
+MARK_CLOSE = "<!-- /mid-offer -->"
+
+ASK = ("/fredi/?from=%s&ask=%s")
+
+
+def q(s):
+    from urllib.parse import quote
+    return quote(s, safe="")
+
+
+# Правила читаются сверху вниз, первое совпадение выигрывает. Узкое выше
+# широкого. Последнее правило — общее, оно и закрывает большинство статей.
+RULES = [
+    (r"гипноз|транс\b|внушен|самовнушен|милтон|эриксон",
+     "🎧", "Это тема комплекта «Разговорный гипноз»",
+     "Тренинг, три книги и три игры — один маршрут вместо разрозненных статей.",
+     "/komplekt/", "Что входит →"),
+
+    (r"манипул|влиян|чалдини|убежд|переговор|газлайт",
+     "🛡️", "Разобрать свой случай с Фреди",
+     "Расскажите, кто и как на вас давит, — он поможет назвать приём и подобрать ответ.",
+     None, "Поговорить →"),
+
+    (r"тревог|паническ|страх|фоби|навязчив|обсесси",
+     "💬", "Если тревожно прямо сейчас",
+     "Фреди отвечает круглосуточно и без записи, первые десять минут бесплатно.",
+     None, "Написать Фреди →"),
+
+    (r"депресс|апати|нет сил|ничего не хочется|выгоран|усталост",
+     "💬", "Если сил нет прямо сейчас",
+     "Фреди поможет разложить состояние на части и понять, с чего начать.",
+     None, "Написать Фреди →"),
+
+    (r"расстава|бывш|развод|измен|ревност|влюб|отношени|партн|муж\b|жена",
+     "💬", "Разобрать свою ситуацию",
+     "Фреди выслушает и поможет отделить то, что зависит от вас, от того, что не зависит.",
+     None, "Поговорить →"),
+
+    (r"родител|мама|мать\b|отец|ребён|ребен|сын\b|дочь|семь",
+     "💬", "Разобрать свою семейную историю",
+     "Фреди поможет увидеть, где проходит граница и что можно сказать вслух.",
+     None, "Поговорить →"),
+
+] 
+
+# Запасное правило. В список RULES его класть нельзя: шаблон «.» совпадает
+# с любым заголовком, и проход по заголовку заканчивался на нём, так и не
+# дойдя до прохода по тексту. 1228 статей из 1448 получали безликое
+# «Примерить это на себя» вместо предложения по своей теме.
+GENERIC = ("💬", "Примерить это на себя",
+           "Фреди — виртуальный психолог: круглосуточно, без записи, первые десять минут бесплатно.",
+           None, "Поговорить →")
+
+BLOCK = (
+    '{o}<aside class="mid-offer" style="display:flex;gap:12px;align-items:flex-start;'
+    'background:linear-gradient(135deg,#F3F7FF,#FBFCFF);border:1px solid #C7D8FF;'
+    'border-left:4px solid #3A86FF;border-radius:14px;padding:15px 18px;margin:30px 0;'
+    'flex-wrap:wrap">'
+    '<span style="font-size:1.4rem" aria-hidden="true">{ic}</span>'
+    '<div style="flex:1;min-width:220px">'
+    '<b style="color:#1D1D1F;font-size:1rem">{title}</b>'
+    '<div style="color:#4A4A4F;font-size:.94rem;line-height:1.5;margin-top:3px">{text}</div>'
+    '<a href="{href}" style="display:inline-block;margin-top:9px;background:#3A86FF;color:#fff;'
+    'text-decoration:none;padding:8px 17px;border-radius:30px;font-size:.9rem;'
+    'font-weight:600">{cta}</a></div></aside>{c}')
+
+
+def strip_block(html):
+    return re.sub(re.escape(MARK_OPEN) + r".*?" + re.escape(MARK_CLOSE), "", html, flags=re.S)
+
+
+def pick(html, slug):
+    """Сначала по заголовку, и только потом по тексту.
+
+    Иначе статья про тревогу, где гипноз упомянут четыре раза, получала
+    предложение комплекта: правило про гипноз стоит выше, и попадание в
+    тело перебивало попадание в заголовок у более подходящего правила.
+    Заголовок — это тема; упоминание в тексте — только намёк на неё.
+    """
+    m = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.S)
+    head = re.sub(r"<[^>]+>", " ", m.group(1)) if m else ""
+    body = re.sub(r"<[^>]+>", " ", html)
+    for pat, ic, title, text, href, cta in RULES:
+        if re.search(pat, head, re.I):
+            return _build(ic, title, text, href, cta, slug, head)
+    for pat, ic, title, text, href, cta in RULES:
+        rx = re.compile(pat, re.I)
+        if len(rx.findall(body)) >= 6:
+            return _build(ic, title, text, href, cta, slug, head)
+    return _build(*GENERIC, slug, head)
+
+
+def _build(ic, title, text, href, cta, slug, head):
+    if href is None:
+        href = ASK % (q("/blog/" + slug),
+                      q("Я прочитал статью «%s». Помогите примерить это на мой случай."
+                        % re.sub(r"\s+", " ", head).strip()))
+    return ic, title, text, href, cta
+
+
+def insert_at(html):
+    """Точка вставки: второй <h2> после блока «Содержание».
+
+    Первый заголовок после содержания — это раздел, ради которого человек
+    и пришёл («Что сделать сразу», «Что такое…»). Предложение встаёт
+    после него: польза уже получена, усталость ещё не накопилась.
+    """
+    nav = html.find('class="toc-box"')
+    start = html.find("</nav>", nav) if nav >= 0 else -1
+    if start < 0:
+        start = html.find('<div class="article-content">')
+    if start >= 0:
+        pos = html.find("<h2", start)
+        if pos >= 0:
+            pos = html.find("<h2", pos + 3)
+            if pos > 0:
+                return pos
+
+    # Запасной путь для старой вёрстки. Справочник «100 когнитивных
+    # искажений» — третья по посещаемости страница сайта из поиска — не
+    # имеет ни .toc-box, ни .article-content, и всего два заголовка
+    # второго уровня при десяти третьего. Предложения на ней не было
+    # вообще: ни блока Фреди, ни товара. Считаем по всем заголовкам
+    # подряд и встаём перед третьим.
+    h1 = html.find("<h1")
+    if h1 < 0:
+        return -1
+    heads = [m.start() for m in re.finditer(r"<h[23][\s>]", html[h1:])]
+    return h1 + heads[2] if len(heads) >= 3 else -1
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--strip", action="store_true")
+    ap.add_argument("--limit", type=int, default=0, help="обработать не больше N статей")
+    args = ap.parse_args()
+
+    files = sorted(glob.glob(os.path.join(ROOT, "blog", "*.html")))
+    changed = skipped = 0
+    stats = {}
+    for path in files:
+        html = open(path, encoding="utf-8").read()
+        orig = html
+        html = strip_block(html)
+        if not args.strip:
+            slug = os.path.basename(path)
+            got = pick(html, slug)
+            pos = insert_at(html)
+            if got and pos > 0:
+                ic, title, text, href, cta = got
+                block = BLOCK.format(o=MARK_OPEN, c=MARK_CLOSE, ic=ic, title=title,
+                                     text=text, href=href, cta=cta)
+                html = html[:pos] + block + "\n" + html[pos:]
+                stats[title] = stats.get(title, 0) + 1
+            else:
+                skipped += 1
+        if html != orig:
+            changed += 1
+            if not args.dry_run:
+                open(path, "w", encoding="utf-8").write(html)
+        if args.limit and changed >= args.limit:
+            break
+    for t, n in sorted(stats.items(), key=lambda x: -x[1]):
+        print("  %-42s %4d статей" % (t, n))
+    print("страниц изменено: %d, пропущено (нет места): %d%s"
+          % (changed, skipped, "  (dry-run)" if args.dry_run else ""))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
