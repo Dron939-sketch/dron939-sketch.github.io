@@ -12,6 +12,13 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Порядок убеждения (ФДИЛС), 10.09.2026. Донорами взяты статьи про
+    # влияние и убеждение: статья отвечает на вопрос, который в них
+    # поставлен, но не закрыт, — в каком порядке применять приёмы.
+    "kak-ubedit-cheloveka-poryadok": ["psihologiya-ubezhdeniya-5-mehanizmov",
+                                      "6-principov-vliyaniya-chaldini-2026",
+                                      "psihologiya-prodazh-2026-7-patternov"],
+
     "kak-privlech-klientov-masteru": ["kak-nachat-rabotat-na-sebya",
                                       "psihologiya-prodazh-2026-7-patternov",
                                       "kak-poprosit-povyshenie-zarplaty"],
