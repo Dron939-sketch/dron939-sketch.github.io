@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Клиентура — библиотека архетипов</title>
+<style>
+:root{
+  --bg:#0f1115; --surface:#171a21; --surface-hi:#1e222b; --border:#272c37;
+  --border-hi:#3a4150; --text:#e6e9ef; --muted:#8b94a7; --blue:#3b82f6;
+  --green:#10b981; --amber:#f59e0b; --red:#ef4444;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.wrap{max-width:1500px;margin:0 auto;padding:18px 16px 60px}
+h1{font-size:20px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.card b{display:block;font-size:22px;line-height:1.2}
+.card span{color:var(--muted);font-size:12px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.filters button{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  border-radius:9px;padding:7px 13px;cursor:pointer;font:inherit}
+.filters button:hover{border-color:var(--border-hi);background:var(--surface-hi)}
+.filters button.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.tblwrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:1100px;background:var(--surface)}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{position:sticky;top:0;background:var(--surface-hi);font-size:12px;color:var(--muted);
+  font-weight:600;white-space:nowrap;cursor:pointer;z-index:2}
+th:hover{color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr.hole{background:rgba(239,68,68,.07)}
+tr.live{background:rgba(16,185,129,.07)}
+.key{font-weight:700;white-space:nowrap}
+.mast{color:var(--muted);font-size:12px}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.q{font-size:12.5px;color:#c8cfdd;max-width:360px}
+.q i{color:var(--muted);font-style:normal}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11.5px;
+  border:1px solid var(--border-hi);color:var(--muted);white-space:nowrap}
+.tag.hole{border-color:var(--red);color:#fca5a5}
+.tag.ok{border-color:var(--green);color:#6ee7b7}
+.tag.mute{border-color:var(--border);color:var(--muted)}
+.hyp{color:var(--amber);font-size:11px}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--muted);font-size:12px}
+details p{margin:6px 0 0;font-size:12.5px;color:#c8cfdd}
+.note{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--blue);
+  border-radius:0 10px 10px 0;padding:12px 14px;margin:18px 0 0;font-size:13px;color:#c8cfdd}
+a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Клиентура</h1>
+  <p class="sub">Библиотека архетипов: масть, уровень, пол, возраст, запросы и то, доходит ли клетка до разговора.
+    Данные обновляются скриптом <code>tools/build_klientura.py</code> — <span id="gen"></span>.</p>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="filters" id="fMast"></div>
+  <div class="filters" id="fState"></div>
+
+  <div class="tblwrap">
+    <table id="tbl">
+      <thead><tr>
+        <th data-sort="key">Клетка</th>
+        <th data-sort="name">Кто это</th>
+        <th data-sort="sex">Пол</th>
+        <th data-sort="age">Возраст</th>
+        <th data-sort="demand" class="num">Спрос/мес</th>
+        <th>Запросы</th>
+        <th data-sort="landings" class="num">Стр.</th>
+        <th data-sort="visits" class="num">Визиты 30д</th>
+        <th data-sort="open" class="num">Фреди</th>
+        <th data-sort="own" class="num">Разговор</th>
+        <th>Состояние</th>
+      </tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Как читать «Спрос/мес».</b> Это не численность людей в стране, а сумма показов Вордстата
+    по запросам клетки: сколько раз за месяц люди формулируют эту проблему в поиске. Один человек
+    может искать несколько раз, а часть запросов приходит от тех, кто ищет не для себя.
+    Число годится для сравнения клеток между собой и для прикидки потолка — не для отчётности.
+    <br><br>
+    <b>Как читать «Разговор».</b> Это цель «написал сам»: человек не просто открыл Фреди по кнопке,
+    а написал своё. Ноль в этой колонке при живом спросе означает, что клетку мы находим, но до
+    разговора не доводим, — и это место для гипотезы.
+  </div>
+</div>
+
+<script>
+(function(){
+  var DATA=null, mastF='все', stateF='все', sortKey='demand', sortDir=-1;
+
+  function state(c){
+    if(c.demand>0 && !c.landings.length) return 'дыра';
+    if(c.metrika.own>0) return 'разговоры';
+    if(c.metrika.visits>0) return 'трафик';
+    if(c.landings.length) return 'тихо';
+    return 'нет спроса';
+  }
+  function val(c,k){
+    if(k==='visits'||k==='open'||k==='own') return c.metrika[k];
+    if(k==='landings') return c.landings.length;
+    return c[k]||'';
+  }
+  function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML;}
+
+  function cards(){
+    var cs=DATA.cells, live=cs.filter(function(c){return c.metrika.visits>0});
+    var box=[
+      ['Клеток описано', cs.filter(function(c){return c.queries.length}).length+' / '+cs.length, 'у остальных запросов нет'],
+      ['Спрос всего', cs.reduce(function(a,c){return a+c.demand},0).toLocaleString('ru'), 'показов в месяц'],
+      ['Визитов за 30 дней', cs.reduce(function(a,c){return a+c.metrika.visits},0), 'на все посадочные клеток'],
+      ['Открыли Фреди', cs.reduce(function(a,c){return a+c.metrika.open},0), 'с этих же страниц'],
+      ['Написали сами', cs.reduce(function(a,c){return a+c.metrika.own},0), 'дошли до разговора'],
+      ['Дыр', cs.filter(function(c){return state(c)==='дыра'}).length, 'спрос есть, страницы нет']
+    ];
+    document.getElementById('cards').innerHTML=box.map(function(b){
+      return '<div class="card"><span>'+b[0]+'</span><b>'+b[1]+'</b><span>'+b[2]+'</span></div>';
+    }).join('');
+  }
+
+  function filters(){
+    var masts=['все'].concat(Object.keys(DATA.cells.reduce(function(a,c){a[c.mast]=1;return a},{})));
+    document.getElementById('fMast').innerHTML=masts.map(function(m){
+      return '<button data-m="'+m+'"'+(m===mastF?' class="active"':'')+'>'+m+'</button>';
+    }).join('');
+    var sts=['все','дыра','разговоры','трафик','тихо','нет спроса'];
+    document.getElementById('fState').innerHTML=sts.map(function(s){
+      return '<button data-s="'+s+'"'+(s===stateF?' class="active"':'')+'>'+s+'</button>';
+    }).join('');
+    document.querySelectorAll('#fMast button').forEach(function(b){
+      b.onclick=function(){mastF=b.dataset.m;filters();render();};});
+    document.querySelectorAll('#fState button').forEach(function(b){
+      b.onclick=function(){stateF=b.dataset.s;filters();render();};});
+  }
+
+  function render(){
+    var rows=DATA.cells.filter(function(c){
+      return (mastF==='все'||c.mast===mastF) && (stateF==='все'||state(c)===stateF);
+    });
+    rows.sort(function(a,b){
+      var x=val(a,sortKey), y=val(b,sortKey);
+      if(typeof x==='number') return (x-y)*sortDir;
+      return String(x).localeCompare(String(y),'ru')*sortDir;
+    });
+    document.getElementById('body').innerHTML=rows.map(function(c){
+      var st=state(c);
+      var cls = st==='дыра'?'hole' : (st==='разговоры'?'live':'');
+      var q=c.queries.length
+        ? c.queries.slice(0,4).map(function(x){
+            return esc(x.q)+(x.shows?' <i>'+x.shows+'</i>':' <i>—</i>');}).join('<br>')
+          + (c.queries.length>4?'<br><i>и ещё '+(c.queries.length-4)+'</i>':'')
+        : '<i>'+(c.comes_instead?'в поиск не идёт · приходит: '+esc(c.comes_instead):'запросов нет')+'</i>';
+      var land=c.landings.length
+        ? '<span class="tag ok">'+c.landings.length+'</span>'
+        : '<span class="tag hole">нет</span>';
+      var sex=esc(c.sex).replace(/\(гипотеза[^)]*\)/,'<span class="hyp">гипотеза</span>');
+      var det='';
+      if(c.porog||c.pays||c.avoid){
+        det='<details><summary>чек и продукт</summary><p>'
+          +(c.porog?'<b>Порог:</b> '+esc(c.porog)+'<br>':'')
+          +(c.pays?'<b>Платит за:</b> '+esc(c.pays)+'<br>':'')
+          +(c.basket?'<b>Корзина:</b> '+esc(c.basket)+'<br>':'')
+          +(c.avoid?'<b>Не предлагать:</b> '+esc(c.avoid):'')
+          +'</p></details>';
+      }
+      return '<tr class="'+cls+'">'
+        +'<td><span class="key">'+esc(c.key)+'</span><br><span class="mast">'+esc(c.mast_full)+'</span></td>'
+        +'<td>'+esc(c.name)+det+'</td>'
+        +'<td>'+sex+'</td><td>'+esc(c.age)+'</td>'
+        +'<td class="num">'+(c.demand?c.demand.toLocaleString('ru'):'—')+'</td>'
+        +'<td class="q">'+q+'</td>'
+        +'<td class="num">'+land+'</td>'
+        +'<td class="num">'+c.metrika.visits+'</td>'
+        +'<td class="num">'+c.metrika.open+'</td>'
+        +'<td class="num">'+c.metrika.own+'</td>'
+        +'<td><span class="tag '+(st==='дыра'?'hole':(st==='разговоры'?'ok':'mute'))+'">'+st+'</span></td>'
+        +'</tr>';
+    }).join('') || '<tr><td colspan="11" style="color:var(--muted)">Ничего не подошло под фильтр.</td></tr>';
+  }
+
+  document.querySelectorAll('#tbl th[data-sort]').forEach(function(th){
+    th.onclick=function(){
+      var k=th.dataset.sort;
+      if(sortKey===k) sortDir=-sortDir; else {sortKey=k;sortDir=-1;}
+      render();
+    };
+  });
+
+  fetch('data.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
+    DATA=d;
+    document.getElementById('gen').textContent='обновлено '+d.generated;
+    cards(); filters(); render();
+  }).catch(function(e){
+    document.getElementById('body').innerHTML=
+      '<tr><td colspan="11" style="color:#fca5a5">Не удалось загрузить data.json: '+e+'</td></tr>';
+  });
+})();
+</script>
+</body>
+</html>
