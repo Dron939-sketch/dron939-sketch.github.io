@@ -1072,6 +1072,20 @@
    "mins": 11
   },
   {
+   "slug": "kak-otvetit-na-hamstvo",
+   "title": "Как ответить на хамство: 12 готовых фраз",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-perestat-boyatsya-lyudej",
+   "title": "Как перестать бояться людей: лестница из 10 ступеней",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "kak-perestat-byt-zhertvoj",
    "title": "Как перестать быть жертвой: разбор по шагам",
    "rubric": "emocii",
@@ -9388,6 +9402,13 @@
    "mins": 14
   },
   {
+   "slug": "nasilie-i-kontrol-v-otnosheniyah",
+   "title": "Если над вами доминируют: насилие, контроль и выход",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 14
+  },
+  {
    "slug": "navyazannaya-vera",
    "title": "Навязанная вера: что делать, если больше не верится",
    "rubric": "obshchestvo",
@@ -9416,6 +9437,13 @@
    "mins": 15
   },
   {
+   "slug": "ne-hochu-rabotat-chto-delat",
+   "title": "Не хочу работать: что за этим стоит на самом деле",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "ne-hochu-rabotat-nad-soboy",
    "title": "«Я больше не хочу работать над собой». Почему отказ от саморазвития часто и есть взросление",
    "rubric": "dengi",
@@ -9435,6 +9463,13 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "ne-mogu-najti-rabotu-chto-delat",
+   "title": "Не могу найти работу: что делать, если поиск затянулся",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "ne-mogu-perestat-dumat-o-cheloveke",
@@ -10802,6 +10837,13 @@
    "mins": 18
   },
   {
+   "slug": "stoit-li-menyat-rabotu",
+   "title": "Стоит ли менять работу: как решить, а не гадать",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "storytelling-geroj-perelom-urok",
    "title": "Сторителлинг по структуре «герой → перелом → урок»: рабочий каркас на 30 секунд — Андрей Мейстер",
    "rubric": "gipnoz",
@@ -11521,6 +11563,83 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "kak-poprosit-povyshenie-zarplaty",
+   "title": "Как попросить повышение зарплаты: подготовка и фразы",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-manipulirovat-lyudmi",
+   "title": "Как манипулировать людьми",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchitsya-doveryat-lyudyam",
+   "title": "Как научиться доверять людям снова",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "rebenok-deretsya-chto-delat",
+   "title": "Ребёнок дерётся: что делать родителю",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-naladit-otnosheniya-s-podrostkom",
+   "title": "Как наладить отношения с подростком",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-ponyat-chto-chelovek-vret",
+   "title": "Как понять, что человек врёт",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-perestat-byt-udobnym",
+   "title": "Как перестать быть удобным",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchit-rebenka-postoyat-za-sebya",
+   "title": "Как научить ребёнка постоять за себя",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nachat-rabotat-na-sebya",
+   "title": "Как начать работать на себя",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "strah-zadavat-voprosy",
+   "title": "Страх задавать вопросы: как спрашивать, не выглядя глупо",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "boyus-chto-menya-brosyat",
+   "title": "Боюсь, что меня бросят: что с этим делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   }
  ]
 }

@@ -12,6 +12,74 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Десятые уровни, партия от 10.09.2026. СБ-10 («как перестать быть
+    # удобным» 1483) и ТФ-10 («не могу делегировать» 303) уже закрыты
+    # статьями, дыр было две.
+    "strah-zadavat-voprosy": ["sindrom-samozvanca-priznaki-i-protokol",
+                              "kak-perestat-boyatsya-lyudej",
+                              "kak-razvit-kriticheskoe-myshlenie"],
+    "boyus-chto-menya-brosyat": ["tipy-privyazannosti-test-i-rabota",
+                                 "emocionalnaya-zavisimost-priznaki-i-protokol",
+                                 "kak-nauchitsya-doveryat-lyudyam"],
+
+    # Девятые уровни, партия от 10.09.2026.
+    "kak-ponyat-chto-chelovek-vret": ["kak-raspoznat-lozh-12-markerov-ekmana",
+                                      "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
+                                      "kak-nauchitsya-doveryat-lyudyam"],
+    "kak-perestat-byt-udobnym": ["kak-skazat-net",
+                                 "granicy-ili-egoizm",
+                                 "chto-delat-esli-vas-obescenivayut"],
+    "kak-nauchit-rebenka-postoyat-za-sebya": ["rebenok-deretsya-chto-delat",
+                                              "granicy-rebenku-bez-krika",
+                                              "adaptaciya-k-sadu-i-shkole"],
+    "kak-nachat-rabotat-na-sebya": ["stoit-li-menyat-rabotu",
+                                    "ne-hochu-rabotat-chto-delat",
+                                    "vygoranie-5-tipov-i-protokoly-vosstanovleniya"],
+
+    # Клетка СБ-8 «задира», партия от 10.09.2026. Замер разделил клетку
+    # надвое: родитель дошкольника (~5274 показа, покрытия не было вовсе)
+    # и родитель подростка (~1990 сверх того, что уже несут две статьи).
+    "rebenok-deretsya-chto-delat": ["granicy-rebenku-bez-krika",
+                                    "adaptaciya-k-sadu-i-shkole",
+                                    "kak-pravilno-hvalit-rebenka"],
+    "kak-naladit-otnosheniya-s-podrostkom": ["podrostok-buntuet-i-grubit-chto-delat",
+                                             "chto-delat-esli-podrostok-zamolchal",
+                                             "pervaya-lyubov-podrostka-chto-delat-roditelyu"],
+
+    # Восьмые уровни ТФ, ЧВ и УБ, партия от 10.09.2026.
+    "kak-poprosit-povyshenie-zarplaty": ["yakorenie-v-peregovorah",
+                                         "psihologiya-peregovorov-metod-voss-fbi",
+                                         "stoit-li-menyat-rabotu"],
+    "kak-manipulirovat-lyudmi": ["23-manipulyacii-v-otnosheniyah-spravochnik",
+                                 "6-principov-vliyaniya-chaldini-2026",
+                                 "kak-perestat-byt-zhertvoj"],
+    "kak-nauchitsya-doveryat-lyudyam": ["kak-perezhit-predatelstvo",
+                                        "kak-perestat-boyatsya-lyudej",
+                                        "emocionalnoe-nasilie-kak-raspoznat"],
+
+    "ne-mogu-najti-rabotu-chto-delat": ["chto-delat-esli-vas-uvolili",
+                                        "ne-hochu-rabotat-chto-delat",
+                                        "stoit-li-menyat-rabotu"],
+
+    # Клетки СБ-7 и ТФ-7, партия от 10.09.2026.
+    "kak-perestat-boyatsya-lyudej": ["sociofobiya-ili-zastenchivost",
+                                     "introvert-ili-zastenchivost",
+                                     "kak-zavodit-druzej-vzroslomu"],
+    "stoit-li-menyat-rabotu": ["prizvanie-vs-karyera-5-tipov-zhiznennogo-puti",
+                               "vygoranie-5-tipov-i-protokoly-vosstanovleniya",
+                               "ne-hochu-rabotat-chto-delat"],
+
+    # Клетки СБ-6 и ТФ-6, партия от 10.09.2026, плюс статья про насилие.
+    "ne-hochu-rabotat-chto-delat": ["vygoranie-5-tipov-i-protokoly-vosstanovleniya",
+                                    "chto-delat-esli-vas-uvolili",
+                                    "len-kak-simptom-6-prichin"],
+    "kak-otvetit-na-hamstvo": ["chto-delat-esli-na-vas-nakrichali",
+                               "chto-delat-esli-vas-obescenivayut",
+                               "travlya-na-rabote-chto-delat"],
+    "nasilie-i-kontrol-v-otnosheniyah": ["emocionalnoe-nasilie-kak-raspoznat",
+                                         "gazlayting-chto-eto",
+                                         "rossijskij-abyuz-9-unikalnyh-patternov"],
+
     # Кластер УБ-6, партия 3 от 10.09.2026: сомнение, уход не туда, смерть.
     "pochemu-lyudi-veryat-v-teorii-zagovora": ["kak-razvit-kriticheskoe-myshlenie",
                                                "pochemu-goroskopy-rabotayut-effekt-barnuma",
@@ -94,7 +162,16 @@ INBOUND = {
 RUB_SHORT = {"emocii": "Эмоции и личность", "strahi": "Страхи и тревога",
              "telo": "Тело и сон", "motivaciya": "Мотивация",
              "otnosheniya": "Отношения", "shkoly": "Школы психологии"}
-MONTH = {8: "августа"}
+# Раньше здесь стоял один месяц — {8: "августа"}, — а подзаголовок хаба
+# был вписан строкой «август 2026». Скрипт написан в августе и в сентябре
+# упал с KeyError: 9 на первой же новой статье. Месяц берётся из даты
+# самой свежей карточки, руками не пишется.
+MONTH = {1: "января", 2: "февраля", 3: "марта", 4: "апреля", 5: "мая",
+         6: "июня", 7: "июля", 8: "августа", 9: "сентября", 10: "октября",
+         11: "ноября", 12: "декабря"}
+MONTH_NOM = {1: "январь", 2: "февраль", 3: "март", 4: "апрель", 5: "май",
+             6: "июнь", 7: "июль", 8: "август", 9: "сентябрь",
+             10: "октябрь", 11: "ноябрь", 12: "декабрь"}
 
 
 def meta(slug):
@@ -173,7 +250,9 @@ def upd_hub(rub_of, n_latest=10):
     j = s.index('<div class="latest">', i)
     k = s.index('</div>', s.rindex('</a>', j, s.index('</section>', j)))
     s = s[:j] + '<div class="latest">' + cards + s[k:]
-    s = re.sub(r'(Свежее</h2><span class="sub">)[^<]*', r'\g<1>август 2026', s, count=1)
+    newest = items[0][0]["date"]
+    sub = "%s %s" % (MONTH_NOM[int(newest[1])], newest[0])
+    s = re.sub(r'(Свежее</h2><span class="sub">)[^<]*', r'\g<1>' + sub, s, count=1)
 
     # словарь — в «Глубокие разборы»
     if 'slovar-psihologii-100-let' not in s:

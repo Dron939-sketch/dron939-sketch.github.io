@@ -115,25 +115,31 @@ RULES = [
     # отношения
     (r"обесценива|obesceniva|манипул|manipul|газлайт|gazlajt|нарцисс|"
      r"narciss|токсичн|абьюз|abyuz|вербовк|влияни", "vliyanie-i-manipulyacii"),
-    (r"границ|granic|отказыва|otkazyva|сказать[- ]нет|ассертивн",
+    (r"границ|granic|отказыва|otkazyva|сказать[- ]нет|ассертивн|удобн\w* (?:чело|для|быть)|быть удобн",
      "lichnye-granicy"),
+    # Родительство раньше отношений: «Как наладить отношения с подростком»
+    # уходило в курс про привязанность и партнёров.
+    (r"родител|roditel|воспитан|vospitan|подростк|podrostk|подрост[коа]|"
+     r"\bмать\b|\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
     (r"привязанност|privyazannost|отношени|otnosheni|партн[её]р|любов|"
-     r"lyubov|ревност", "privyazannost-i-otnosheniya"),
+     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери|брос[яи]т|брошенн",
+     "privyazannost-i-otnosheniya"),
     (r"конфликт|konflikt|ссор|ssor|примирен", "konflikty"),
     (r"переговор|peregovor|\bторг\b|договорит", "peregovory"),
     (r"дружб|druzhb|\bдруз|druz", "druzhba"),
-    (r"родител|roditel|воспитан|vospitan|подростк|podrostk|\bмать\b|"
-     r"\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
     (r"реб[её]н|reben|\bдет[еи]\b|deti|садик|школьник|adaptaciya-k-sadu",
      "razvitie-rebenka"),
     (r"секс|seks|камасутр|kamasutr|интимн|либидо", "kamasutra"),
-    (r"язык[- ]тела|yazyk-tela|\bложь\b|lozh|вран|обман|obman|мимик",
+    (r"язык[- ]тела|yazyk-tela|\bложь\b|lozh|вран|обман|obman|мимик|вр[её]т|врут|лжи\b",
      "yazyk-tela-i-lozh"),
 
     # мышление и учёба
     (r"логик|logik|аргумент|argument|софизм|силлогизм", "logika"),
     (r"памят|pamyat|запомин|zapomin|мнемоник|mnemonik|забыва", "mnemonika"),
-    (r"учит[ьс]|uchit|уч[её]б|ucheb|обучен|obuchen|конспект|экзамен",
+    # Граница слова обязательна: без неё «учитьс» находилось внутри
+    # «научиться», и статья «Как научиться доверять людям» получала курс
+    # «Как учиться». В заголовках блога «научиться» стоит часто.
+    (r"\bучит[ьс]|\buchit|уч[её]б|ucheb|обучен|obuchen|конспект|экзамен",
      "kak-uchitsya"),
     (r"решени|resheni|выбор|vybor|дилемм|dilemm", "prinyatie-reshenij"),
     (r"креативн|kreativn|изобрет|izobret|триз|triz|генерац\w*[- ]идей",

@@ -248,8 +248,21 @@
         meter_auth_gate: 'fredi_auth_asked',
         meter_blocked_shown: 'fredi_paywall_shown',
         meter_subscribe_clicked: 'fredi_subscribe_clicked',
-        checkout_opened: 'fredi_checkout_opened'
+        checkout_opened: 'fredi_checkout_opened',
+        // Раунд, доведённый до конца, — единственный имеющийся признак,
+        // что тренажёром действительно пользовались, а не открыли и
+        // закрыли. Не дедуплицируется намеренно: повторный раунд — это
+        // и есть глубина, ради которой тренажёры и делаются.
+        game_round_finish: 'fredi_game_round'
     };
+    // Открытие тренажёра или инструмента. В Метрике этого не было вовсе:
+    // 121 цель на сайте, и ни одной про тренажёры, хотя они закрыты
+    // подпиской и предлагаются из четырёхсот статей. Про «Собеседование»,
+    // «Скажи нет» и «Опору» отчёты не могли сказать ничего.
+    // Считается один раз на устройство — как первое сообщение: цель
+    // означает «начал пользоваться», а не «пользуется часто», иначе один
+    // увлечённый человек весит как десять пришедших.
+    var LS_TOOL_OPEN = 'fredi_tool_open_sent';
     // Первое сообщение — единственное событие, которое сейчас означает
     // «человек начал пользоваться». Гейт на входе сняли 02.09, и
     // fredi_gate_shown с тех пор срабатывает только у тех, кто уже
@@ -259,15 +272,21 @@
     // Считаем один раз на устройство: цель должна означать «начал», а не
     // «пишет часто», иначе разговорчивый пользователь весит как десять.
     var LS_FIRST_MSG = 'fredi_first_message_sent';
-    function _maybeFirstMessageGoal() {
+
+    // Цель, которая уходит один раз на устройство.
+    function _onceGoal(key, goal) {
         try {
-            if (localStorage.getItem(LS_FIRST_MSG)) return;
-            localStorage.setItem(LS_FIRST_MSG, String(Date.now()));
+            if (localStorage.getItem(key)) return;
+            localStorage.setItem(key, String(Date.now()));
         } catch (e) {
             // Приватный режим: localStorage недоступен. Цель тогда уйдёт
             // повторно — это лучше, чем не уйти совсем.
         }
-        _reachGoal('fredi_first_message');
+        _reachGoal(goal);
+    }
+
+    function _maybeFirstMessageGoal() {
+        _onceGoal(LS_FIRST_MSG, 'fredi_first_message');
     }
     // Счётчики: приложения и общий сайтовый. Кампании Директа привязаны к
     // обоим, поэтому цель должна дойти до каждого.
@@ -285,6 +304,9 @@
             var goal = METRIKA_GOALS[event];
             if (goal) { _reachGoal(goal); return; }
             if (event === 'message_sent') { _maybeFirstMessageGoal(); return; }
+            if (event === 'feature_opened' || event === 'game_open') {
+                _onceGoal(LS_TOOL_OPEN, 'fredi_tool_open'); return;
+            }
             // Оплата приходит шагами внутри одного события — из них в
             // Метрику нужны два: платёж создан и подписка включилась.
             if (event === 'checkout_step' && data) {
