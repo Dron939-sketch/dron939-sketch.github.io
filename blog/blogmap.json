@@ -11710,6 +11710,20 @@
    "rubric": "emocii",
    "level": "b",
    "mins": 11
+  },
+  {
+   "slug": "klient-prosit-skidku",
+   "title": "Клиент просит скидку: что ответить",
+   "rubric": "dengi",
+   "level": "b",
+   "mins": 10
+  },
+  {
+   "slug": "nachinayu-i-brosayu",
+   "title": "Начинаю делать и бросаю: почему так и что с этим делать",
+   "rubric": "motivaciya",
+   "level": "b",
+   "mins": 10
   }
  ]
 }

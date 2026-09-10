@@ -12,6 +12,18 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # ТФ-9: «клиент просит скидку» 343 — статья про цену была, ответа на
+    # саму реплику не было.
+    "klient-prosit-skidku": ["kak-postavit-normalnuyu-cenu",
+                             "kak-privlech-klientov-masteru",
+                             "kak-nachat-rabotat-na-sebya"],
+
+    # УБ-9/10: «начинаю делать и бросаю» 659 — описание вместо ярлыка
+    # «прокрастинация» (74 788, студент с рефератом).
+    "nachinayu-i-brosayu": ["len-kak-simptom-6-prichin",
+                            "kak-nauchitsya-kopit-dengi",
+                            "vygoranie-5-tipov-i-protokoly-vosstanovleniya"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
