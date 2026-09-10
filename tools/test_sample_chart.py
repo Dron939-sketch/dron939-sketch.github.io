@@ -90,9 +90,8 @@ def radar(scores, labels, mx, rings):
 
     s = []
     for ring in rings:
-        pts = ["%g,%g" % pt(i, R * ring / mx) for i in range(n)]
-        s.append('<polygon points="%s" fill="none" stroke="#E4E4E7" '
-                 'stroke-width="1"/>' % " ".join(pts))
+        s.append('<circle cx="%d" cy="%d" r="%g" fill="none" stroke="#E4E4E7" '
+                 'stroke-width="1"/>' % (cx, cy, R * ring / mx))
     for i in range(n):
         e = pt(i, R)
         s.append('<line x1="%d" y1="%d" x2="%g" y2="%g" stroke="#E4E4E7" '
@@ -132,11 +131,15 @@ def main():
         s = open(path, encoding="utf-8").read()
         before = s
 
-        if 'id="sample-chart"' not in s:
-            block = BLOCK % (cfg["alt"],
-                             radar(cfg["scores"], cfg["labels"],
-                                   cfg["mx"], cfg["rings"]),
-                             cfg["cap"])
+        block = BLOCK % (cfg["alt"],
+                         radar(cfg["scores"], cfg["labels"],
+                               cfg["mx"], cfg["rings"]),
+                         cfg["cap"])
+        if 'id="sample-chart"' in s:
+            # перерисовать: геометрия drawRadar() могла измениться
+            s = re.sub(r'<figure class="sample-chart" id="sample-chart">.*?</figure>',
+                       lambda _: block, s, count=1, flags=re.S)
+        else:
             m = re.search(r'(<div class="badges">.*?</div>)\s*\n', s, re.S)
             if not m:
                 print("  %s: не найден блок плашек — пропуск" % rel)
