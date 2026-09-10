@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-10 21:16",
+ "generated": "2026-09-10 22:02",
  "counter": 108138656,
  "cells": [
   {
@@ -43,7 +43,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.1921,
+     "src": "оценка",
+     "demand": 383,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.3424,
+     "src": "оценка",
+     "demand": 682,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0313,
+     "src": "оценка",
+     "demand": 62,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1151,
+     "src": "оценка",
+     "demand": 229,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3028,
+     "src": "оценка",
+     "demand": 603,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0163,
+     "src": "оценка",
+     "demand": 33,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-7",
@@ -90,7 +224,141 @@
     "open": 2,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.1909,
+     "src": "оценка",
+     "demand": 384,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.2518,
+     "src": "оценка",
+     "demand": 506,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0449,
+     "src": "оценка",
+     "demand": 90,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.1584,
+     "src": "оценка",
+     "demand": 318,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.2803,
+     "src": "оценка",
+     "demand": 563,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.0737,
+     "src": "оценка",
+     "demand": 148,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-8",
@@ -133,11 +401,145 @@
    ],
    "comes_instead": "мать подростка",
    "metrika": {
-    "visits": 3,
+    "visits": 4,
     "open": 1,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.8561,
+     "src": "оценка",
+     "demand": 1698,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.1439,
+     "src": "оценка",
+     "demand": 286,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-9",
@@ -171,7 +573,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0785,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1399,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0128,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.2038,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.5361,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0289,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-10",
@@ -214,11 +750,145 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 1,
+    "visits": 2,
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.2277,
+     "src": "оценка",
+     "demand": 593,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.5797,
+     "src": "оценка",
+     "demand": 1510,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.053,
+     "src": "оценка",
+     "demand": 138,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0282,
+     "src": "оценка",
+     "demand": 73,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1058,
+     "src": "оценка",
+     "demand": 276,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0057,
+     "src": "оценка",
+     "demand": 15,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-Валет",
@@ -241,7 +911,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1528,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.8038,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0434,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-Дама",
@@ -264,7 +1068,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1045,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0021,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.5149,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.278,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0051,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-Король",
@@ -287,7 +1225,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0571,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1044,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0135,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3752,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.4052,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0447,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "СБ-Туз",
@@ -310,7 +1382,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0724,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1702,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1556,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.1509,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0296,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0523,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1377,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0743,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0614,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-6",
@@ -349,7 +1555,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0556,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.1027,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.183,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1004,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0461,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1143,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3006,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0974,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-7",
@@ -383,7 +1723,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.2511,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.2685,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1863,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.294,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-8",
@@ -421,7 +1895,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.1569,
+     "src": "оценка",
+     "demand": 113,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1678,
+     "src": "оценка",
+     "demand": 121,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.2619,
+     "src": "оценка",
+     "demand": 189,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.4134,
+     "src": "оценка",
+     "demand": 299,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-9",
@@ -465,7 +2073,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.2025,
+     "src": "оценка",
+     "demand": 431,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.2165,
+     "src": "оценка",
+     "demand": 461,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.2253,
+     "src": "оценка",
+     "demand": 480,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3556,
+     "src": "оценка",
+     "demand": 758,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-10",
@@ -504,7 +2246,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0368,
+     "src": "оценка",
+     "demand": 11,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.131,
+     "src": "оценка",
+     "demand": 40,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0719,
+     "src": "оценка",
+     "demand": 22,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 29,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.5022,
+     "src": "оценка",
+     "demand": 152,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1627,
+     "src": "оценка",
+     "demand": 49,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-Валет",
@@ -527,7 +2403,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0111,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0662,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0363,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0703,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.6163,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1997,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-Дама",
@@ -557,7 +2567,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1045,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0021,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.5149,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.278,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0051,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-Король",
@@ -580,7 +2724,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.2065,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.3774,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0488,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.167,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1804,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0199,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ТФ-Туз",
@@ -603,7 +2881,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0724,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1702,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1556,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.1509,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0296,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0523,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1377,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0743,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0614,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-6",
@@ -639,7 +3051,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0724,
+     "src": "оценка",
+     "demand": 9,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 12,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1702,
+     "src": "оценка",
+     "demand": 22,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1556,
+     "src": "оценка",
+     "demand": 20,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.1509,
+     "src": "оценка",
+     "demand": 20,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0296,
+     "src": "оценка",
+     "demand": 4,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0523,
+     "src": "оценка",
+     "demand": 7,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1377,
+     "src": "оценка",
+     "demand": 18,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0743,
+     "src": "оценка",
+     "demand": 10,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0614,
+     "src": "оценка",
+     "demand": 8,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-7",
@@ -662,7 +3208,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.1165,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.2151,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.3834,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.035,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0242,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0599,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1574,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0085,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-8",
@@ -685,7 +3365,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0534,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0952,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0522,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1783,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.469,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1519,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-9",
@@ -725,7 +3539,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0889,
+     "src": "оценка",
+     "demand": 46,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1585,
+     "src": "оценка",
+     "demand": 82,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0869,
+     "src": "оценка",
+     "demand": 45,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1485,
+     "src": "оценка",
+     "demand": 77,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3906,
+     "src": "оценка",
+     "demand": 202,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1265,
+     "src": "оценка",
+     "demand": 65,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-10",
@@ -818,7 +3766,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0587,
+     "src": "оценка",
+     "demand": 529,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.1807,
+     "src": "оценка",
+     "demand": 1627,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1933,
+     "src": "оценка",
+     "demand": 1740,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0487,
+     "src": "оценка",
+     "demand": 439,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.2011,
+     "src": "оценка",
+     "demand": 1811,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3174,
+     "src": "оценка",
+     "demand": 2859,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-Валет",
@@ -857,7 +3939,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.04,
+     "src": "оценка",
+     "demand": 30,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0713,
+     "src": "оценка",
+     "demand": 54,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0065,
+     "src": "оценка",
+     "demand": 5,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.2338,
+     "src": "оценка",
+     "demand": 177,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.6151,
+     "src": "оценка",
+     "demand": 466,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0332,
+     "src": "оценка",
+     "demand": 25,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-Дама",
@@ -880,7 +4096,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.2146,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1962,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0254,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3525,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1903,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.021,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-Король",
@@ -903,7 +4253,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0724,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1702,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1556,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.1509,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0296,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0523,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1377,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0743,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0614,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "УБ-Туз",
@@ -926,7 +4410,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0724,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1702,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1556,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.1509,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0296,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0523,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1377,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0743,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0614,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-6",
@@ -960,7 +4578,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0988,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.1825,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.3253,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0297,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0351,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0871,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.229,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0124,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-7",
@@ -994,7 +4746,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.3915,
+     "src": "оценка",
+     "demand": 5040,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.5165,
+     "src": "оценка",
+     "demand": 6648,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.092,
+     "src": "оценка",
+     "demand": 1185,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-8",
@@ -1017,7 +4903,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.3092,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.547,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1439,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-9",
@@ -1052,7 +5072,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0518,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0956,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1704,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0156,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0644,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.1596,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.4199,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0227,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-10",
@@ -1087,11 +5241,145 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 2,
+    "visits": 3,
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.2713,
+     "src": "оценка",
+     "demand": 326,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.4835,
+     "src": "оценка",
+     "demand": 581,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0442,
+     "src": "оценка",
+     "demand": 53,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0533,
+     "src": "оценка",
+     "demand": 64,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1402,
+     "src": "оценка",
+     "demand": 168,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0076,
+     "src": "оценка",
+     "demand": 9,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-Валет",
@@ -1129,7 +5417,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0368,
+     "src": "оценка",
+     "demand": 46,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.131,
+     "src": "оценка",
+     "demand": 163,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.0719,
+     "src": "оценка",
+     "demand": 89,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 119,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.5022,
+     "src": "оценка",
+     "demand": 625,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1627,
+     "src": "оценка",
+     "demand": 203,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-Дама",
@@ -1152,7 +5574,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.2232,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.204,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0044,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.3667,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.198,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0036,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-Король",
@@ -1175,7 +5731,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.2065,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.3774,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.0488,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.167,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.1804,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0199,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   },
   {
    "key": "ЧВ-Туз",
@@ -1198,7 +5888,141 @@
     "open": 0,
     "msg": 0,
     "own": 0
-   }
+   },
+   "segments": [
+    {
+     "sex": "ж",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "18–24",
+     "share": 0.0724,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "25–34",
+     "share": 0.0955,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.1702,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.1556,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "55+",
+     "share": 0.1509,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "до 18",
+     "share": 0.0,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "18–24",
+     "share": 0.0296,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "25–34",
+     "share": 0.0523,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "35–44",
+     "share": 0.1377,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "45–54",
+     "share": 0.0743,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "м",
+     "age": "55+",
+     "share": 0.0614,
+     "src": "оценка",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    }
+   ]
   }
  ]
 }

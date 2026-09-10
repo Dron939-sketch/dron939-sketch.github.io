@@ -46,6 +46,16 @@ tr.live{background:rgba(16,185,129,.07)}
 .tag.ok{border-color:var(--green);color:#6ee7b7}
 .tag.mute{border-color:var(--border);color:var(--muted)}
 .hyp{color:var(--amber);font-size:11px}
+tr.sub td{background:rgba(59,130,246,.05);font-size:13px}
+tr.sub2 td{background:rgba(59,130,246,.09);font-size:12.5px;color:#b9c2d4}
+tr.cell{cursor:pointer}
+tr.cell:hover td{background:var(--surface-hi)}
+.caret{display:inline-block;width:12px;color:var(--muted)}
+.pad1{padding-left:26px}
+.pad2{padding-left:48px}
+.src{font-size:10.5px;color:var(--muted);border:1px solid var(--border);
+  border-radius:20px;padding:1px 6px;margin-left:6px}
+.src.izm{border-color:var(--green);color:#6ee7b7}
 details{margin-top:6px}
 summary{cursor:pointer;color:var(--muted);font-size:12px}
 details p{margin:6px 0 0;font-size:12.5px;color:#c8cfdd}
@@ -144,6 +154,37 @@ a{color:var(--blue)}
       b.onclick=function(){stateF=b.dataset.s;filters();render();};});
   }
 
+  var OPEN={};   // ключи раскрытых узлов: «СБ-6» и «СБ-6|ж»
+
+  function segRow(c,sex,age,seg,depth){
+    var pad = depth===1?'pad1':'pad2';
+    var label = depth===1
+      ? '<span class="caret">'+(OPEN[c.key+'|'+sex]?'▾':'▸')+'</span> '+(sex==='ж'?'Женщины':'Мужчины')
+      : age;
+    var src = seg.src==='измерено'
+      ? '<span class="src izm">измерено</span>' : '<span class="src">оценка</span>';
+    return '<tr class="'+(depth===1?'sub':'sub2')+'"'
+      +(depth===1?' data-open="'+esc(c.key+'|'+sex)+'"':'')+'>'
+      +'<td class="'+pad+'" colspan="4">'+label+(depth===1?src:'')+'</td>'
+      +'<td class="num">'+(seg.demand?seg.demand.toLocaleString('ru'):'—')+'</td>'
+      +'<td class="q">'+(depth===1?'доля клетки '+(seg.share*100).toFixed(1)+' %':'')+'</td>'
+      +'<td class="num"></td>'
+      +'<td class="num">'+seg.visits+'</td>'
+      +'<td class="num">'+seg.open+'</td>'
+      +'<td class="num">'+seg.own+'</td>'
+      +'<td></td></tr>';
+  }
+
+  function sexAgg(c,sex){
+    var rows=c.segments.filter(function(s){return s.sex===sex});
+    return {share:rows.reduce(function(a,s){return a+s.share},0),
+      demand:rows.reduce(function(a,s){return a+s.demand},0),
+      visits:rows.reduce(function(a,s){return a+s.visits},0),
+      open:rows.reduce(function(a,s){return a+s.open},0),
+      own:rows.reduce(function(a,s){return a+s.own},0),
+      src:(rows[0]||{}).src||'оценка'};
+  }
+
   function render(){
     var rows=DATA.cells.filter(function(c){
       return (mastF==='все'||c.mast===mastF) && (stateF==='все'||state(c)===stateF);
@@ -153,7 +194,7 @@ a{color:var(--blue)}
       if(typeof x==='number') return (x-y)*sortDir;
       return String(x).localeCompare(String(y),'ru')*sortDir;
     });
-    document.getElementById('body').innerHTML=rows.map(function(c){
+    var html=rows.map(function(c){
       var st=state(c);
       var cls = st==='дыра'?'hole' : (st==='разговоры'?'live':'');
       var q=c.queries.length
@@ -174,8 +215,9 @@ a{color:var(--blue)}
           +(c.avoid?'<b>Не предлагать:</b> '+esc(c.avoid):'')
           +'</p></details>';
       }
-      return '<tr class="'+cls+'">'
-        +'<td><span class="key">'+esc(c.key)+'</span><br><span class="mast">'+esc(c.mast_full)+'</span></td>'
+      var out='<tr class="cell '+cls+'" data-open="'+esc(c.key)+'">'
+        +'<td><span class="caret">'+(OPEN[c.key]?'▾':'▸')+'</span> <span class="key">'+esc(c.key)+'</span>'
+        +'<br><span class="mast">'+esc(c.mast_full)+'</span></td>'
         +'<td>'+esc(c.name)+det+'</td>'
         +'<td>'+sex+'</td><td>'+esc(c.age)+'</td>'
         +'<td class="num">'+(c.demand?c.demand.toLocaleString('ru'):'—')+'</td>'
@@ -186,7 +228,27 @@ a{color:var(--blue)}
         +'<td class="num">'+c.metrika.own+'</td>'
         +'<td><span class="tag '+(st==='дыра'?'hole':(st==='разговоры'?'ok':'mute'))+'">'+st+'</span></td>'
         +'</tr>';
-    }).join('') || '<tr><td colspan="11" style="color:var(--muted)">Ничего не подошло под фильтр.</td></tr>';
+      if(OPEN[c.key]){
+        ['ж','м'].forEach(function(sx){
+          out+=segRow(c,sx,'',sexAgg(c,sx),1);
+          if(OPEN[c.key+'|'+sx]){
+            c.segments.filter(function(s){return s.sex===sx}).forEach(function(s){
+              out+=segRow(c,sx,s.age,s,2);
+            });
+          }
+        });
+      }
+      return out;
+    }).join('');
+    document.getElementById('body').innerHTML=html
+      || '<tr><td colspan="11" style="color:var(--muted)">Ничего не подошло под фильтр.</td></tr>';
+    document.querySelectorAll('#body tr[data-open]').forEach(function(tr){
+      tr.style.cursor='pointer';
+      tr.onclick=function(e){
+        if(e.target.closest('details')||e.target.tagName==='SUMMARY') return;
+        var k=tr.dataset.open; OPEN[k]=!OPEN[k]; render();
+      };
+    });
   }
 
   document.querySelectorAll('#tbl th[data-sort]').forEach(function(th){
