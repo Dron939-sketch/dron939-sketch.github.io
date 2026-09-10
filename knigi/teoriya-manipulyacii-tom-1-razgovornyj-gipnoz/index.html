@@ -218,8 +218,10 @@ body{overflow-wrap:break-word}</style>
 <h3>Чем она отличается от «Вариатики»?</h3>
 <p>«Разговорный гипноз» — про то, как устроено влияние в речи. <a href="/knigi/variatika-biblioteka-chelovecheskih-patternov/">«Вариатика»</a> — про то, почему одни и те же слова работают на одного человека и не работают на другого.</p>
 
-<p style="margin:26px 0 6px"><a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527" target="_blank" rel="noopener noreferrer" class="btn" style="display:inline-block;padding:13px 30px;background:#3A86FF;color:#fff;text-decoration:none;border-radius:30px;letter-spacing:.08em;font-size:.9rem">КУПИТЬ НА OZON</a></p>
-<p style="color:#9aa4b2;font-size:.9rem;margin-top:0">Бумажная книга. Цена и наличие — на Ozon.</p>
+<div class="download-block" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:26px 0;padding:18px 20px;background:#F1F5F9;border-radius:14px">
+<div class="dl-text"><b>Бумажная книга</b><span>Цена и наличие — на Ozon.</span></div>
+<a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527" target="_blank" rel="noopener noreferrer" class="btn-download"><span class="ic">📦</span> Купить на Ozon</a>
+</div>
 
 <h2 id="dalshe">Что рядом</h2>
 <p><a href="/knigi/">Все книги</a> · <a href="/knigi/variatika-biblioteka-chelovecheskih-patternov/">«Вариатика»</a> · <a href="/knigi/kontseptikon-sem-linz/">«Концептикон»</a> · <a href="/treningi/">Тренинги по разговорному гипнозу</a></p>
@@ -228,5 +230,16 @@ body{overflow-wrap:break-word}</style>
 
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<!-- tovar-goals -->
+<script>
+/* Уход на Ozon — единственное действие, которое эта страница может дать.
+   Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
+(function(){var C=108138656;
+function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
+document.addEventListener('click',function(e){
+var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
+if(a){g('tovar_ozon');g('tovar_ozon_kniga_gipnoz');}},true);})();
+</script>
+<!-- /tovar-goals -->
 </body>
 </html>

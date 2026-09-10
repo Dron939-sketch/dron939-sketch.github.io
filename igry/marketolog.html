@@ -1034,6 +1034,24 @@ body{overflow-wrap:break-word}</style>
     <li><strong>Знойная колода</strong> — заключительная часть истории, логичный вывод, который должен сделать рассказчик.</li>
   </ul>
 
+  <h3>Как выглядит раздача</h3>
+
+  <p>На стол ложатся три карты, по одной из каждой колоды. Например, такие:</p>
+
+  <ul class="composition-list">
+    <li><strong>Пихтовая</strong> (зелёная рамка): «Кемеровская область, Шерегеш. Зима.»</li>
+    <li><strong>Алая</strong> (красная рамка): фотография зеркального фотоаппарата.</li>
+    <li><strong>Знойная</strong> (синяя рамка): «В гостях хорошо, а дома лучше.»</li>
+  </ul>
+
+  <p>Дальше дело рассказчика: собрать историю, в которой зимний Шерегеш, фотоаппарат и «дома лучше» сойдутся не притянуто, а сами собой. Причём фотоаппарат обязан попасть в руки слушателю — по правилам с предметом из алой колоды взаимодействует именно он.</p>
+
+  <h3>Как считают результат</h3>
+
+  <p>Судья смотрит не на историю, а на лицо слушателя. Минус балл — наморщенный лоб, нахмуренные брови: человек разбирается в сюжете, а не смотрит кино. Плюс балл — натянутые уголки губ, улыбка, смех, расфокусированный взгляд, желание услышать продолжение.</p>
+
+  <p>Минимальный уровень — слушатель формально представил историю. Максимальный — история ему искренне понравилась, и он был в ней сам. Разница между этими двумя результатами и есть навык.</p>
+
   <!-- ХАРАКТЕРИСТИКИ -->
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 40px 0;">
     <div>
@@ -1055,6 +1073,7 @@ body{overflow-wrap:break-word}</style>
     <p style="text-align: center; color: #666; margin-bottom: 20px; font-style: italic;">
       *Это один из моих камней. Берите и бросайте.
     </p>
+    <p style="text-align:center;color:#666;margin-bottom:20px">Колода входит в комплект пакета <a href="/treningi/razgovornyy-gipnoz-standart.html" style="color:#3A86FF">«Разговорный гипноз. Стандартный»</a> вместе с книгой, блокнотом и схемами — если берёте курс, отдельно игру покупать не нужно.</p>
     <a href="https://www.ozon.ru/product/nastolnaya-kartochnaya-igra-marketolog-984307394" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру на Ozon</a>
   </div>
 </div>
@@ -1121,5 +1140,16 @@ body{overflow-wrap:break-word}</style>
   });
 </script>
 
+<!-- tovar-goals -->
+<script>
+/* Уход на Ozon — единственное действие, которое эта страница может дать.
+   Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
+(function(){var C=108138656;
+function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
+document.addEventListener('click',function(e){
+var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
+if(a){g('tovar_ozon');g('tovar_ozon_igra_marketolog');}},true);})();
+</script>
+<!-- /tovar-goals -->
 </body>
 </html>
