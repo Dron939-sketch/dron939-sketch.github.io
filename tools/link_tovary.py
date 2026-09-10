@@ -48,6 +48,7 @@ MARK_CLOSE = "<!-- /tovar-link -->"
 # ——————————————————————————————————————————————————————————————————————
 PRODUCTS = {
     "kniga-gipnoz": dict(
+        goal="tovar_dver_kniga_gipnoz",
         icon="📕",
         href="/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/",
         head="Как это устроено — разобрано в книге",
@@ -57,6 +58,7 @@ PRODUCTS = {
         paid="Книга платная, продаётся на Ozon.",
         cta="О книге"),
     "kniga-variatika": dict(
+        goal="tovar_dver_kniga_variatika",
         icon="📘",
         href="/knigi/variatika-biblioteka-chelovecheskih-patternov/",
         head="Система целиком — в книге",
@@ -66,6 +68,7 @@ PRODUCTS = {
         paid="Книга платная, продаётся на Ozon.",
         cta="О книге"),
     "kniga-konceptikon": dict(
+        goal="tovar_dver_kniga_konceptikon",
         icon="📗",
         href="/knigi/kontseptikon-sem-linz/",
         head="Семь способов увидеть одно и то же",
@@ -75,6 +78,7 @@ PRODUCTS = {
         paid="Книга платная, продаётся на Ozon.",
         cta="О книге"),
     "igra-marketolog": dict(
+        goal="tovar_dver_igra_marketolog",
         icon="🎲",
         href="/igry/marketolog.html",
         head="Потренировать на живом человеке",
@@ -84,6 +88,7 @@ PRODUCTS = {
         paid="Игра платная, продаётся на Ozon.",
         cta="Об игре"),
     "igra-basic": dict(
+        goal="tovar_dver_igra_basic",
         icon="🃏",
         href="/igry/variatika-basic.html",
         head="Разобрать человека напротив",
@@ -93,6 +98,7 @@ PRODUCTS = {
         paid="Игра платная, продаётся на Ozon.",
         cta="Об игре"),
     "igra-intensive": dict(
+        goal="tovar_dver_igra_intensive",
         icon="🃏",
         href="/igry/variatika-intensive.html",
         head="Когда очевидное решение — неверное",
@@ -102,6 +108,7 @@ PRODUCTS = {
         paid="Игра платная, продаётся на Ozon.",
         cta="Об игре"),
     "igra-progressive": dict(
+        goal="tovar_dver_igra_progressive",
         icon="🃏",
         href="/igry/variatika-progressive.html",
         head="Как делать удачу закономерной",
@@ -110,6 +117,7 @@ PRODUCTS = {
         paid="Игра платная, продаётся на Ozon.",
         cta="Об игре"),
     "trening-gipnoz": dict(
+        goal="tovar_dver_trening_gipnoz",
         icon="🎧",
         href="/treningi/razgovornyy-gipnoz-standart.html",
         head="Освоить это как навык",
@@ -120,6 +128,7 @@ PRODUCTS = {
         paid="Курс платный, продаётся на Ozon.",
         cta="О курсе"),
     "trening-proryv": dict(
+        goal="tovar_dver_trening_proryv",
         icon="🧗",
         href="/treningi/proryv.html",
         head="Когда понимания уже мало",
@@ -254,10 +263,17 @@ BOX_TPL = (
     '<div style="flex:1;min-width:220px">'
     '<b style="color:#1D1D1F">{head}</b><br>'
     '<span style="color:#6E6E73;font-size:.92rem">{body} {paid}</span></div>'
-    '<a href="{href}" style="background:#F97316;color:#fff;text-decoration:'
-    'none;padding:10px 18px;border-radius:10px;font-weight:600;'
+    '<a href="{href}" onclick="{track}" style="background:#F97316;color:#fff;'
+    'text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:600;'
     'font-size:.92rem">{cta}&nbsp;→</a></div>{close}'
 )
+
+# Цели Метрики. Без них правка вслепую: видно переходы на страницу товара,
+# но не видно, из какой статьи и какого товара дверь сработала. Общая цель
+# плюс своя на каждый товар — чтобы потом убирать то, что не работает,
+# а не всё сразу.
+TRACK = ("try{{ym(108138656,'reachGoal','tovar_dver');"
+         "ym(108138656,'reachGoal','{goal}')}}catch(e){{}}")
 
 # ——————————————————————————————————————————————————————————————————————
 # Старые коробки. Ведущие на товар или на Ozon — это предыдущая версия той
@@ -297,8 +313,10 @@ def insert_tail(html, block):
 
 
 def build(key):
-    p = PRODUCTS[key]
-    return BOX_TPL.format(open=MARK_OPEN, close=MARK_CLOSE, **p)
+    p = dict(PRODUCTS[key])
+    goal = p.pop("goal")
+    return BOX_TPL.format(open=MARK_OPEN, close=MARK_CLOSE,
+                          track=TRACK.format(goal=goal), **p)
 
 
 def main():

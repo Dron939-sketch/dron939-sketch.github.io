@@ -1140,5 +1140,16 @@ body{overflow-wrap:break-word}</style>
   });
 </script>
 
+<!-- tovar-goals -->
+<script>
+/* Уход на Ozon — единственное действие, которое эта страница может дать.
+   Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
+(function(){var C=108138656;
+function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
+document.addEventListener('click',function(e){
+var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
+if(a){g('tovar_ozon');g('tovar_ozon_igra_marketolog');}},true);})();
+</script>
+<!-- /tovar-goals -->
 </body>
 </html>

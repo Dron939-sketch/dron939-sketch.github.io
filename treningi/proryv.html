@@ -567,5 +567,14 @@ body{overflow-wrap:break-word}</style>
 }
 </script>
 
+<!-- tovar-goals -->
+<script>
+/* На «Прорыве» покупки нет — есть заявка в Telegram. Считаем её. */
+(function(){var C=108138656;
+document.addEventListener('click',function(e){
+var t=e.target,a=t&&t.closest?t.closest('a[href*="t.me/"]'):null;
+if(a){try{if(window.ym)ym(C,'reachGoal','proryv_zayavka')}catch(err){}}},true);})();
+</script>
+<!-- /tovar-goals -->
 </body>
 </html>
