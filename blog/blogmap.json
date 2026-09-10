@@ -11626,6 +11626,20 @@
    "rubric": "dengi",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "strah-zadavat-voprosy",
+   "title": "Страх задавать вопросы: как спрашивать, не выглядя глупо",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "boyus-chto-menya-brosyat",
+   "title": "Боюсь, что меня бросят: что с этим делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   }
  ]
 }

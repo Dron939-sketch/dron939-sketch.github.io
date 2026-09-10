@@ -122,7 +122,7 @@ RULES = [
     (r"родител|roditel|воспитан|vospitan|подростк|podrostk|подрост[коа]|"
      r"\bмать\b|\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
     (r"привязанност|privyazannost|отношени|otnosheni|партн[её]р|любов|"
-     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери",
+     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери|брос[яи]т|брошенн",
      "privyazannost-i-otnosheniya"),
     (r"конфликт|konflikt|ссор|ssor|примирен", "konflikty"),
     (r"переговор|peregovor|\bторг\b|договорит", "peregovory"),

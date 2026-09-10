@@ -12,6 +12,16 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Десятые уровни, партия от 10.09.2026. СБ-10 («как перестать быть
+    # удобным» 1483) и ТФ-10 («не могу делегировать» 303) уже закрыты
+    # статьями, дыр было две.
+    "strah-zadavat-voprosy": ["sindrom-samozvanca-priznaki-i-protokol",
+                              "kak-perestat-boyatsya-lyudej",
+                              "kak-razvit-kriticheskoe-myshlenie"],
+    "boyus-chto-menya-brosyat": ["tipy-privyazannosti-test-i-rabota",
+                                 "emocionalnaya-zavisimost-priznaki-i-protokol",
+                                 "kak-nauchitsya-doveryat-lyudyam"],
+
     # Девятые уровни, партия от 10.09.2026.
     "kak-ponyat-chto-chelovek-vret": ["kak-raspoznat-lozh-12-markerov-ekmana",
                                       "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
