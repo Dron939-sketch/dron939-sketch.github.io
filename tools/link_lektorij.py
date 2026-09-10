@@ -117,14 +117,16 @@ RULES = [
      r"narciss|токсичн|абьюз|abyuz|вербовк|влияни", "vliyanie-i-manipulyacii"),
     (r"границ|granic|отказыва|otkazyva|сказать[- ]нет|ассертивн",
      "lichnye-granicy"),
+    # Родительство раньше отношений: «Как наладить отношения с подростком»
+    # уходило в курс про привязанность и партнёров.
+    (r"родител|roditel|воспитан|vospitan|подростк|podrostk|подрост[коа]|"
+     r"\bмать\b|\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
     (r"привязанност|privyazannost|отношени|otnosheni|партн[её]р|любов|"
      r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери",
      "privyazannost-i-otnosheniya"),
     (r"конфликт|konflikt|ссор|ssor|примирен", "konflikty"),
     (r"переговор|peregovor|\bторг\b|договорит", "peregovory"),
     (r"дружб|druzhb|\bдруз|druz", "druzhba"),
-    (r"родител|roditel|воспитан|vospitan|подростк|podrostk|\bмать\b|"
-     r"\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
     (r"реб[её]н|reben|\bдет[еи]\b|deti|садик|школьник|adaptaciya-k-sadu",
      "razvitie-rebenka"),
     (r"секс|seks|камасутр|kamasutr|интимн|либидо", "kamasutra"),

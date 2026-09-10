@@ -11584,6 +11584,20 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "rebenok-deretsya-chto-delat",
+   "title": "Ребёнок дерётся: что делать родителю",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-naladit-otnosheniya-s-podrostkom",
+   "title": "Как наладить отношения с подростком",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
   }
  ]
 }
