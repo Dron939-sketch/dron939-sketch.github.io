@@ -3135,6 +3135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chuvstva: { fn: 'showChuvstvaGame', src: 'chuvstva.js', chat: 'kontur' }, // «Чувства»
             mysl: { fn: 'showMyslGame', src: 'mysl.js', chat: 'kontur' }, // «Мысль под допросом»
             skazhinet: { fn: 'showSkazhiNetGame', src: 'skazhinet.js', chat: 'kontur' }, // «Скажи нет»
+            sobes: { fn: 'showSobesGame', src: 'sobes.js', chat: 'kontur' }, // «Собеседование» — Фреди играет работодателя
             opora: { fn: 'showOporaGame', src: 'opora.js', chat: 'kontur' }, // «Опора» — ответ внутреннему критику
             rol: { fn: 'showRolGame', src: 'rol.js', chat: 'kontur' }, // «Смени роль»
             danetki: { fn: 'showDanetkiGame', src: 'danetki.js', chat: 'kontur' }, // «Данетки»
