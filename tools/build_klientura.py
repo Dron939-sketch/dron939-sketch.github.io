@@ -163,6 +163,79 @@ COMES_INSTEAD = {
 }
 
 
+# ——————————————————————————————————————————————————————————————————————
+# Возрастные корзины Метрики и наша измеренная структура (90 дней, 6945
+# визитов с известными полом и возрастом). Она нужна как весовая: диапазон
+# клетки «25–45» сам по себе не говорит, сколько там кого, а вместе с нашей
+# структурой — уже говорит. Плоское распределение было бы выдумкой.
+# ——————————————————————————————————————————————————————————————————————
+AGES = ["до 18", "18–24", "25–34", "35–44", "45–54", "55+"]
+AGE_BOUNDS = {"до 18": (0, 17), "18–24": (18, 24), "25–34": (25, 34),
+              "35–44": (35, 44), "45–54": (45, 54), "55+": (55, 99)}
+YM_AGE = {"Younger than 18": "до 18", "Age 18‑24": "18–24", "Age 18-24": "18–24",
+          "Age 25‑34": "25–34", "Age 25-34": "25–34", "Age 35‑44": "35–44",
+          "Age 35-44": "35–44", "Age 45‑54": "45–54", "Age 45-54": "45–54",
+          "Age 55+": "55+"}
+# Доля корзины внутри своего пола, из наших же данных.
+BASE = {
+    "ж": {"до 18": .116, "18–24": .094, "25–34": .124, "35–44": .221,
+          "45–54": .202, "55+": .196},
+    "м": {"до 18": .078, "18–24": .078, "25–34": .138, "35–44": .363,
+          "45–54": .196, "55+": .162},
+}
+
+
+def sex_split(field):
+    """«ж ~65 % (гипотеза)» → (0.65, 0.35). «поровну» → (0.5, 0.5)."""
+    f = (field or "").lower()
+    m = re.search(r"(ж|м)\s*~?\s*(\d{1,3})\s*%", f)
+    if m:
+        p = int(m.group(2)) / 100.0
+        return (p, 1 - p) if m.group(1) == "ж" else (1 - p, p)
+    if "поровну" in f:
+        return (0.5, 0.5)
+    return (0.67, 0.33)      # общая измеренная доля сайта
+
+
+def age_weights(field):
+    """Диапазон «25–45» → веса по корзинам, взвешенные нашей структурой."""
+    m = re.search(r"(\d{2})\s*[–-]\s*(\d{2})", field or "")
+    lo, hi = (int(m.group(1)), int(m.group(2))) if m else (18, 99)
+    out = {}
+    for a, (b1, b2) in AGE_BOUNDS.items():
+        overlap = max(0, min(hi, b2) - max(lo, b1) + 1)
+        out[a] = overlap / float(b2 - b1 + 1)
+    return out
+
+
+def segments(cell, measured, demand):
+    """Пол × возраст. Где Метрика набрала 30+ визитов — по ней, иначе оценка."""
+    fz, mz = sex_split(cell.get("sex", ""))
+    aw = age_weights(cell.get("age", ""))
+    tot_measured = sum(v["visits"] for v in measured.values())
+    rows = []
+    raw = {}
+    for sex, share in (("ж", fz), ("м", mz)):
+        for a in AGES:
+            raw[(sex, a)] = share * aw[a] * BASE[sex][a]
+    ssum = sum(raw.values()) or 1.0
+    for sex, _ in (("ж", fz), ("м", mz)):
+        for a in AGES:
+            k = (sex, a)
+            m = measured.get(k, dict(visits=0, open=0, msg=0, own=0))
+            if tot_measured >= 30:
+                share = m["visits"] / float(tot_measured)
+                src = "измерено"
+            else:
+                share = raw[k] / ssum
+                src = "оценка"
+            rows.append(dict(sex=sex, age=a, share=round(share, 4),
+                             src=src, demand=int(round(demand * share)),
+                             visits=m["visits"], open=m["open"],
+                             msg=m["msg"], own=m["own"]))
+    return rows
+
+
 def parse_cells():
     """Разбирает CA-ARHETIPY.md: масть, уровень, пол, возраст, чек, продукт."""
     s = open(os.path.join(ROOT, "CA-ARHETIPY.md"), encoding="utf-8").read()
@@ -188,27 +261,60 @@ def parse_cells():
     return out
 
 
-def metrika(paths, offline):
-    """Визиты, открытия Фреди, первые сообщения и «написал сам» по страницам."""
-    if offline or not paths:
-        return dict(visits=0, open=0, msg=0, own=0)
+METRICS = ("ym:s:visits,ym:s:goal%dreaches,ym:s:goal%dreaches,ym:s:goal%dreaches"
+           % (GOAL_OPEN, GOAL_MSG, GOAL_OWN))
+
+
+def _ask(params):
     token = os.environ.get("YM_TOKEN", "")
     if not token:
-        return dict(visits=0, open=0, msg=0, own=0)
-    flt = " OR ".join("ym:pv:URLPath=='%s'" % p for p in paths)
-    q = urllib.parse.urlencode({
-        "ids": COUNTER, "date1": "30daysAgo", "date2": "today", "accuracy": "full",
-        "filters": flt,
-        "metrics": "ym:s:visits,ym:s:goal%dreaches,ym:s:goal%dreaches,ym:s:goal%dreaches"
-                   % (GOAL_OPEN, GOAL_MSG, GOAL_OWN)})
+        return None
+    q = urllib.parse.urlencode(params)
     try:
         r = urllib.request.Request(
             "https://api-metrika.yandex.net/stat/v1/data?" + q,
             headers={"Authorization": "OAuth " + token})
-        t = json.load(urllib.request.urlopen(r, timeout=60))["totals"]
-        return dict(visits=int(t[0]), open=int(t[1]), msg=int(t[2]), own=int(t[3]))
+        return json.load(urllib.request.urlopen(r, timeout=60))
     except Exception:
-        return dict(visits=0, open=0, msg=0, own=0)
+        return None
+
+
+def metrika(paths, offline):
+    """Итог по клетке и разбивка по полу и возрасту.
+
+    Возвращает (totals, by_segment). Разбивка нужна затем, что клетка — это
+    не один человек: «не могу дать отпор» набирают и женщина 40 лет, и
+    подросток, и им нужно разное. Без сегмента план пишется для среднего
+    посетителя, которого не существует.
+    """
+    zero = dict(visits=0, open=0, msg=0, own=0)
+    if offline or not paths:
+        return zero, {}
+    flt = " OR ".join("ym:pv:URLPath=='%s'" % p for p in paths)
+    base = dict(ids=COUNTER, date1="30daysAgo", date2="today",
+                accuracy="full", filters=flt, metrics=METRICS)
+    d = _ask(base)
+    if not d:
+        return zero, {}
+    t = d["totals"]
+    tot = dict(visits=int(t[0]), open=int(t[1]), msg=int(t[2]), own=int(t[3]))
+
+    seg = {}
+    p2 = dict(base)
+    p2.update(dimensions="ym:s:gender,ym:s:ageInterval", limit=40,
+              sort="-ym:s:visits")
+    d2 = _ask(p2)
+    for row in (d2 or {}).get("data", []):
+        g = row["dimensions"][0]["name"]
+        a = YM_AGE.get(row["dimensions"][1]["name"])
+        if a is None or g not in ("female", "male"):
+            continue
+        m = row["metrics"]
+        k = ("ж" if g == "female" else "м", a)
+        cur = seg.setdefault(k, dict(visits=0, open=0, msg=0, own=0))
+        cur["visits"] += int(m[0]); cur["open"] += int(m[1])
+        cur["msg"] += int(m[2]); cur["own"] += int(m[3])
+    return tot, seg
 
 
 def main():
@@ -235,8 +341,10 @@ def main():
                 demand=demand,
                 landings=landings,
                 comes_instead=COMES_INSTEAD.get(key, ""),
-                metrika=metrika(landings, args.offline),
             ))
+            tot, seg = metrika(landings, args.offline)
+            rows[-1]["metrika"] = tot
+            rows[-1]["segments"] = segments(c, seg, demand)
 
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     payload = dict(
