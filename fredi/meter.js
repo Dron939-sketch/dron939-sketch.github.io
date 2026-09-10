@@ -1177,6 +1177,7 @@
         showPatternGame: 'Паттерн',
         showDotogokakScreen: 'До того, как',
         showSobesGame: 'Собеседование',
+        showPodrostokGame: 'Разговор с подростком',
     };
     function _isPremiumNow() {
         if (window.IS_PREMIUM === true) return true;
