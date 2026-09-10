@@ -12,6 +12,17 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Клетки СБ-6 и ТФ-6, партия от 10.09.2026, плюс статья про насилие.
+    "ne-hochu-rabotat-chto-delat": ["vygoranie-5-tipov-i-protokoly-vosstanovleniya",
+                                    "chto-delat-esli-vas-uvolili",
+                                    "len-kak-simptom-6-prichin"],
+    "kak-otvetit-na-hamstvo": ["chto-delat-esli-na-vas-nakrichali",
+                               "chto-delat-esli-vas-obescenivayut",
+                               "travlya-na-rabote-chto-delat"],
+    "nasilie-i-kontrol-v-otnosheniyah": ["emocionalnoe-nasilie-kak-raspoznat",
+                                         "gazlayting-chto-eto",
+                                         "rossijskij-abyuz-9-unikalnyh-patternov"],
+
     # Кластер УБ-6, партия 3 от 10.09.2026: сомнение, уход не туда, смерть.
     "pochemu-lyudi-veryat-v-teorii-zagovora": ["kak-razvit-kriticheskoe-myshlenie",
                                                "pochemu-goroskopy-rabotayut-effekt-barnuma",

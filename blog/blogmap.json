@@ -1072,6 +1072,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-otvetit-na-hamstvo",
+   "title": "Как ответить на хамство: 12 готовых фраз",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-perestat-byt-zhertvoj",
    "title": "Как перестать быть жертвой: разбор по шагам",
    "rubric": "emocii",
@@ -9388,6 +9395,13 @@
    "mins": 14
   },
   {
+   "slug": "nasilie-i-kontrol-v-otnosheniyah",
+   "title": "Если над вами доминируют: насилие, контроль и выход",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 14
+  },
+  {
    "slug": "navyazannaya-vera",
    "title": "Навязанная вера: что делать, если больше не верится",
    "rubric": "obshchestvo",
@@ -9414,6 +9428,13 @@
    "rubric": "myshlenie",
    "level": "m",
    "mins": 15
+  },
+  {
+   "slug": "ne-hochu-rabotat-chto-delat",
+   "title": "Не хочу работать: что за этим стоит на самом деле",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "ne-hochu-rabotat-nad-soboy",
