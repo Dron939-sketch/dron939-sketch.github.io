@@ -12,6 +12,14 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
+    # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
+    # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
+    # посадочной не было ни одной.
+    "kak-perezhit-pozor": ["styd-vs-vina-raznica-kotoraya-kalechit",
+                           "kak-perestat-nakruchivat-sebya",
+                           "sindrom-samozvanca-priznaki-i-protokol"],
+
     # СБ-10, дыра на 1282 показа: три статьи про гнев, и ни в одной нет
     # ребёнка. Доноры — те самые три плюс статья про границы без крика.
     "kak-ne-sryvatsya-na-rebenka": ["gnev-kak-perestat-vzryvatsya",
