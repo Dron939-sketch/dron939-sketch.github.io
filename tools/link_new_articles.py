@@ -12,6 +12,20 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Девятые уровни, партия от 10.09.2026.
+    "kak-ponyat-chto-chelovek-vret": ["kak-raspoznat-lozh-12-markerov-ekmana",
+                                      "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
+                                      "kak-nauchitsya-doveryat-lyudyam"],
+    "kak-perestat-byt-udobnym": ["kak-skazat-net",
+                                 "granicy-ili-egoizm",
+                                 "chto-delat-esli-vas-obescenivayut"],
+    "kak-nauchit-rebenka-postoyat-za-sebya": ["rebenok-deretsya-chto-delat",
+                                              "granicy-rebenku-bez-krika",
+                                              "adaptaciya-k-sadu-i-shkole"],
+    "kak-nachat-rabotat-na-sebya": ["stoit-li-menyat-rabotu",
+                                    "ne-hochu-rabotat-chto-delat",
+                                    "vygoranie-5-tipov-i-protokoly-vosstanovleniya"],
+
     # Клетка СБ-8 «задира», партия от 10.09.2026. Замер разделил клетку
     # надвое: родитель дошкольника (~5274 показа, покрытия не было вовсе)
     # и родитель подростка (~1990 сверх того, что уже несут две статьи).

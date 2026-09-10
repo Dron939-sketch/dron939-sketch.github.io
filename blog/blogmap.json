@@ -11598,6 +11598,34 @@
    "rubric": "roditeli",
    "level": "n",
    "mins": 12
+  },
+  {
+   "slug": "kak-ponyat-chto-chelovek-vret",
+   "title": "Как понять, что человек врёт",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-perestat-byt-udobnym",
+   "title": "Как перестать быть удобным",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchit-rebenka-postoyat-za-sebya",
+   "title": "Как научить ребёнка постоять за себя",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nachat-rabotat-na-sebya",
+   "title": "Как начать работать на себя",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
   }
  ]
 }
