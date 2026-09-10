@@ -118,7 +118,8 @@ RULES = [
     (r"границ|granic|отказыва|otkazyva|сказать[- ]нет|ассертивн",
      "lichnye-granicy"),
     (r"привязанност|privyazannost|отношени|otnosheni|партн[её]р|любов|"
-     r"lyubov|ревност", "privyazannost-i-otnosheniya"),
+     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери",
+     "privyazannost-i-otnosheniya"),
     (r"конфликт|konflikt|ссор|ssor|примирен", "konflikty"),
     (r"переговор|peregovor|\bторг\b|договорит", "peregovory"),
     (r"дружб|druzhb|\bдруз|druz", "druzhba"),
@@ -133,7 +134,10 @@ RULES = [
     # мышление и учёба
     (r"логик|logik|аргумент|argument|софизм|силлогизм", "logika"),
     (r"памят|pamyat|запомин|zapomin|мнемоник|mnemonik|забыва", "mnemonika"),
-    (r"учит[ьс]|uchit|уч[её]б|ucheb|обучен|obuchen|конспект|экзамен",
+    # Граница слова обязательна: без неё «учитьс» находилось внутри
+    # «научиться», и статья «Как научиться доверять людям» получала курс
+    # «Как учиться». В заголовках блога «научиться» стоит часто.
+    (r"\bучит[ьс]|\buchit|уч[её]б|ucheb|обучен|obuchen|конспект|экзамен",
      "kak-uchitsya"),
     (r"решени|resheni|выбор|vybor|дилемм|dilemm", "prinyatie-reshenij"),
     (r"креативн|kreativn|изобрет|izobret|триз|triz|генерац\w*[- ]идей",

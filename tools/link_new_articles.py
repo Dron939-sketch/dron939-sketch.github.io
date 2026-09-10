@@ -12,6 +12,17 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    # Восьмые уровни ТФ, ЧВ и УБ, партия от 10.09.2026.
+    "kak-poprosit-povyshenie-zarplaty": ["yakorenie-v-peregovorah",
+                                         "psihologiya-peregovorov-metod-voss-fbi",
+                                         "stoit-li-menyat-rabotu"],
+    "kak-manipulirovat-lyudmi": ["23-manipulyacii-v-otnosheniyah-spravochnik",
+                                 "6-principov-vliyaniya-chaldini-2026",
+                                 "kak-perestat-byt-zhertvoj"],
+    "kak-nauchitsya-doveryat-lyudyam": ["kak-perezhit-predatelstvo",
+                                        "kak-perestat-boyatsya-lyudej",
+                                        "emocionalnoe-nasilie-kak-raspoznat"],
+
     "ne-mogu-najti-rabotu-chto-delat": ["chto-delat-esli-vas-uvolili",
                                         "ne-hochu-rabotat-chto-delat",
                                         "stoit-li-menyat-rabotu"],
@@ -117,7 +128,16 @@ INBOUND = {
 RUB_SHORT = {"emocii": "Эмоции и личность", "strahi": "Страхи и тревога",
              "telo": "Тело и сон", "motivaciya": "Мотивация",
              "otnosheniya": "Отношения", "shkoly": "Школы психологии"}
-MONTH = {8: "августа"}
+# Раньше здесь стоял один месяц — {8: "августа"}, — а подзаголовок хаба
+# был вписан строкой «август 2026». Скрипт написан в августе и в сентябре
+# упал с KeyError: 9 на первой же новой статье. Месяц берётся из даты
+# самой свежей карточки, руками не пишется.
+MONTH = {1: "января", 2: "февраля", 3: "марта", 4: "апреля", 5: "мая",
+         6: "июня", 7: "июля", 8: "августа", 9: "сентября", 10: "октября",
+         11: "ноября", 12: "декабря"}
+MONTH_NOM = {1: "январь", 2: "февраль", 3: "март", 4: "апрель", 5: "май",
+             6: "июнь", 7: "июль", 8: "август", 9: "сентябрь",
+             10: "октябрь", 11: "ноябрь", 12: "декабрь"}
 
 
 def meta(slug):
@@ -196,7 +216,9 @@ def upd_hub(rub_of, n_latest=10):
     j = s.index('<div class="latest">', i)
     k = s.index('</div>', s.rindex('</a>', j, s.index('</section>', j)))
     s = s[:j] + '<div class="latest">' + cards + s[k:]
-    s = re.sub(r'(Свежее</h2><span class="sub">)[^<]*', r'\g<1>август 2026', s, count=1)
+    newest = items[0][0]["date"]
+    sub = "%s %s" % (MONTH_NOM[int(newest[1])], newest[0])
+    s = re.sub(r'(Свежее</h2><span class="sub">)[^<]*', r'\g<1>' + sub, s, count=1)
 
     # словарь — в «Глубокие разборы»
     if 'slovar-psihologii-100-let' not in s:

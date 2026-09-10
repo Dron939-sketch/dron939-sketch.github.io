@@ -11563,6 +11563,27 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "kak-poprosit-povyshenie-zarplaty",
+   "title": "Как попросить повышение зарплаты: подготовка и фразы",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-manipulirovat-lyudmi",
+   "title": "Как манипулировать людьми",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchitsya-doveryat-lyudyam",
+   "title": "Как научиться доверять людям снова",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
