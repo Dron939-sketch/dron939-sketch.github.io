@@ -1079,6 +1079,13 @@
    "mins": 12
   },
   {
+   "slug": "kak-perestat-boyatsya-lyudej",
+   "title": "Как перестать бояться людей: лестница из 10 ступеней",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "kak-perestat-byt-zhertvoj",
    "title": "Как перестать быть жертвой: разбор по шагам",
    "rubric": "emocii",
@@ -9458,6 +9465,13 @@
    "mins": 12
   },
   {
+   "slug": "ne-mogu-najti-rabotu-chto-delat",
+   "title": "Не могу найти работу: что делать, если поиск затянулся",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "ne-mogu-perestat-dumat-o-cheloveke",
    "title": "Не могу перестать думать о человеке: почему это происходит и что делать",
    "rubric": "otnosheniya",
@@ -10821,6 +10835,13 @@
    "rubric": "dengi",
    "level": "m",
    "mins": 18
+  },
+  {
+   "slug": "stoit-li-menyat-rabotu",
+   "title": "Стоит ли менять работу: как решить, а не гадать",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "storytelling-geroj-perelom-urok",
