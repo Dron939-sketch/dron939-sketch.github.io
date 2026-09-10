@@ -11640,6 +11640,55 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 12
+  },
+  {
+   "slug": "kak-perestat-vsyo-kontrolirovat",
+   "title": "Как перестать всё контролировать",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchitsya-kopit-dengi",
+   "title": "Как научиться копить деньги",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "biznes-bez-menya-kak-vyjti-iz-operacionki",
+   "title": "Бизнес без меня: как выйти из операционки",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchitsya-dumat-samomu",
+   "title": "Как научиться думать самому",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchitsya-obyasnyat",
+   "title": "Как научиться объяснять",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-o-vas-uznayut-cifrovoj-sled-i-precedent",
+   "title": "Как о вас узнают: цифровой след, повод и миф",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-privlech-klientov-masteru",
+   "title": "Как привлечь клиентов: что мешает мастеру",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
   }
  ]
 }

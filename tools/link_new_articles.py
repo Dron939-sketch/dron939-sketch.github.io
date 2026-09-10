@@ -12,6 +12,35 @@ BLOG = os.path.join(ROOT, "blog")
 
 # новая статья -> статьи, из которых на неё должна вести ссылка
 INBOUND = {
+    "kak-privlech-klientov-masteru": ["kak-nachat-rabotat-na-sebya",
+                                      "psihologiya-prodazh-2026-7-patternov",
+                                      "kak-poprosit-povyshenie-zarplaty"],
+
+    # Валеты и Дамы, вторая партия от 10.09.2026 — по клетке на статью.
+    "biznes-bez-menya-kak-vyjti-iz-operacionki": ["kak-perestat-vsyo-kontrolirovat",
+                                                  "ne-mogu-delegirovat-kak-otpustit",
+                                                  "kak-nachat-rabotat-na-sebya"],
+    "kak-nauchitsya-dumat-samomu": ["kak-razvit-kriticheskoe-myshlenie",
+                                    "100-kognitivnyh-iskazhenij-spravochnik",
+                                    "strah-zadavat-voprosy"],
+    "kak-nauchitsya-obyasnyat": ["kak-nauchitsya-dumat-samomu",
+                                 "strah-zadavat-voprosy",
+                                 "kak-perestat-vsyo-kontrolirovat"],
+    "kak-o-vas-uznayut-cifrovoj-sled-i-precedent": ["kak-sobrat-o-sebe-dostovernuyu-stranicu",
+                                                    "sindrom-samozvanca-priznaki-i-protokol",
+                                                    "kak-perestat-boyatsya-lyudej"],
+
+    # Валеты и Дамы, партия от 10.09.2026. Из восьми клеток статьи
+    # потребовались двум: СБ-Валет закрыт четырьмя существующими
+    # статьями про уверенность (нужна была только мета), ТФ-Валет,
+    # УБ-Валет, УБ-Дама, ЧВ-Валет и ЧВ-Дама — см. разбор в коммите.
+    "kak-perestat-vsyo-kontrolirovat": ["ne-mogu-delegirovat-kak-otpustit",
+                                        "granicy-ili-egoizm",
+                                        "kak-nauchitsya-doveryat-lyudyam"],
+    "kak-nauchitsya-kopit-dengi": ["strah-v-dengah-4-arhetipa-otnoshenij-s-finansami",
+                                   "privychka-ekonomit-4-tipa-skuposti",
+                                   "kak-nachat-rabotat-na-sebya"],
+
     # Десятые уровни, партия от 10.09.2026. СБ-10 («как перестать быть
     # удобным» 1483) и ТФ-10 («не могу делегировать» 303) уже закрыты
     # статьями, дыр было две.
