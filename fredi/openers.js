@@ -421,9 +421,9 @@
     // не уводит со страницы: ссылки наружу здесь были бы выходом, а не
     // продолжением.
     var FOLLOWUPS = [
-        { id: 'why', label: 'Почему это со мной', text: 'Почему это происходит именно со мной?' },
-        { id: 'today', label: 'Что сделать сегодня', text: 'Что мне сделать сегодня вечером?' },
-        { id: 'other', label: 'У меня по-другому', text: 'У меня немного по-другому.' },
+        { id: 'why', label: 'Почему именно со мной?', text: 'Почему это происходит именно со мной?' },
+        { id: 'today', label: 'Что сделать сегодня вечером?', text: 'Что мне сделать сегодня вечером?' },
+        { id: 'other', label: 'У меня немного не так', text: 'У меня немного по-другому.' },
     ];
     var _autoAskUsed = false;   // сессия началась с автовопроса
     var _followShown = false;
@@ -434,12 +434,14 @@
         st.id = 'followStyle';
         st.textContent =
             '.fu-wrap{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 10px;padding:0 2px}' +
+            '.fu-hint{width:100%;font-size:11.5px;line-height:1.4;margin:0 0 2px;' +
+            'color:var(--text-secondary);opacity:.9}' +
             '.fu-btn{cursor:pointer;font-family:inherit;font-size:13px;line-height:1.3;' +
-            'padding:8px 13px;border-radius:16px;color:var(--text-primary);' +
-            'background:rgba(59,130,255,.10);border:1px solid rgba(59,130,255,.35);' +
+            'padding:9px 14px;border-radius:16px;color:#3b82ff;font-weight:600;' +
+            'background:rgba(59,130,255,.10);border:1px solid rgba(59,130,255,.55);' +
             'transition:background .18s,border-color .18s}' +
-            '.fu-btn:hover{background:rgba(59,130,255,.20);border-color:rgba(59,130,255,.6)}' +
-            '@media(max-width:600px){.fu-btn{font-size:12.5px;padding:7px 11px}}';
+            '.fu-btn:hover{background:rgba(59,130,255,.20);border-color:rgba(59,130,255,.8)}' +
+            '@media(max-width:600px){.fu-btn{font-size:12.5px;padding:8px 12px}}';
         document.head.appendChild(st);
     }
 
@@ -457,6 +459,13 @@
         var wrap = document.createElement('div');
         wrap.id = 'frediFollowUps';
         wrap.className = 'fu-wrap';
+        // Подпись обязательна. Без неё три бледные плашки под ответом
+        // читаются как оформление, а не как «нажмите вместо того, чтобы
+        // печатать»: за два дня 110 показов и ни одного нажатия.
+        var hint = document.createElement('div');
+        hint.className = 'fu-hint';
+        hint.textContent = 'Можно нажать вместо того, чтобы печатать:';
+        wrap.appendChild(hint);
         FOLLOWUPS.forEach(function (f) {
             var b = document.createElement('button');
             b.type = 'button';
@@ -470,8 +479,18 @@
             });
             wrap.appendChild(b);
         });
-        stream.appendChild(wrap);
-        try { stream.scrollTop = stream.scrollHeight; } catch (e) {}
+        // Место — над полем ввода, а не в конце ленты. Лента прокручивается
+        // отдельно, и под длинным ответом кнопки оказывались ниже экрана:
+        // человек дочитывал первый абзац и уходил, ни разу их не увидев.
+        // Композер на мобильном sticky bottom — там кнопки видно всегда и
+        // ровно в тот момент, когда решается, писать или закрыть.
+        var composer = document.querySelector('.dash-composer');
+        if (composer) {
+            composer.insertBefore(wrap, composer.firstChild);
+        } else {
+            stream.appendChild(wrap);
+            try { stream.scrollTop = stream.scrollHeight; } catch (e) {}
+        }
         // Дублируем в Метрику: FrediTracker пишет в свою таблицу, а доля
         // нажатий к показам — то единственное, ради чего продолжения
         // сделаны, и смотреть её нужно там же, где остальная воронка.
