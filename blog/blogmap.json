@@ -11857,6 +11857,41 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "ne-lyublyu-svoego-rebenka-chto-delat",
+   "title": "Не люблю своего ребёнка: что делать, если он раздражает, а сказать об этом нельзя никому",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "vlechenie-posle-60-chto-s-nim-delat",
+   "title": "Влечение после шестидесяти: что с ним делать, когда все считают, что его быть не должно",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-za-roditelej-chto-delat",
+   "title": "Стыдно за родителей: что делать с этим стыдом, когда они такие, какие есть",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "zaviduyu-podruge-chto-delat",
+   "title": "Завидую подруге и стыжусь этого: что зависть говорит о вас и что с ней делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "otvrashchenie-k-muzhu-chto-delat",
+   "title": "Отвращение к мужу: откуда оно берётся и что с ним делать, если он «ничего не сделал»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   }
  ]
 }

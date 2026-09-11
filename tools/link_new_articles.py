@@ -133,6 +133,28 @@ INBOUND = {
                                         "styd-vs-vina-raznica-kotoraya-kalechit",
                                         "u-menya-roman-na-storone-chto-delat"],
 
+    # Третья пятёрка «тем, с которыми не идут к друзьям» (12.09).
+    "ne-lyublyu-svoego-rebenka-chto-delat": ["kak-ne-sryvatsya-na-rebenka",
+                                             "ya-nenavizhu-svoyu-mat",
+                                             "rebenok-deretsya-chto-delat",
+                                             "trevoga-roditelya-pervoklassnika"],
+    "vlechenie-posle-60-chto-s-nim-delat": ["net-seksa-v-brake-chto-delat",
+                                            "vozrastnye-krizisy-karta",
+                                            "krizis-srednego-vozrasta-chto-delat",
+                                            "psihologiya-seksualnosti-2026-5-sdvigov"],
+    "stydno-za-roditelej-chto-delat": ["ya-nenavizhu-svoyu-mat",
+                                       "kak-perezhit-pozor",
+                                       "vzroslye-deti-alkogolikov-vda",
+                                       "svekrov-vmeshivaetsya-chto-delat"],
+    "zaviduyu-podruge-chto-delat": ["kak-zavodit-druzej-vzroslomu",
+                                    "sindrom-samozvanca-priznaki-i-protokol",
+                                    "kak-perezhit-pozor",
+                                    "psihologiya-odinochestva-4-tipa-2026"],
+    "otvrashchenie-k-muzhu-chto-delat": ["ne-lyublyu-muzha-no-ne-uhozhu",
+                                         "net-seksa-v-brake-chto-delat",
+                                         "muzh-stal-holodnym",
+                                         "zabota-ili-kontrol"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

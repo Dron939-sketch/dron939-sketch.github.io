@@ -76,6 +76,13 @@ RULES = [
     # а не про пару и не про стыд; «не люблю мужа» и «мучает совесть» — про пару.
     (r"muzh-pyot|муж пьёт|skryvayu-stavki|ставки и долги|smotrit-porno|смотрит порно|порнозавис", "zavisimosti"),
     (r"ne-lyublyu-muzha|не люблю мужа|muchaet-sovest|мучает совесть|изменила муж", "privyazannost-i-otnosheniya"),
+    # Третья пятёрка: родитель без чувства — «Родительство», стыд за
+    # родителей — «Сепарация», зависть — «Стоицизм», влечение и отвращение
+    # в паре — «Привязанность».
+    (r"ne-lyublyu-svoego-rebenka|не люблю своего реб", "roditelstvo"),
+    (r"stydno-za-roditelej|стыдно за родител", "separaciya"),
+    (r"zaviduyu|завиду|\bзавист", "stoicizm"),
+    (r"vlechenie-posle|влечение после|otvrashchenie-k-muzhu|отвращение к муж", "privyazannost-i-otnosheniya"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),
