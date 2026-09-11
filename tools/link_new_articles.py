@@ -24,6 +24,21 @@ INBOUND = {
                             "kak-nauchitsya-kopit-dengi",
                             "vygoranie-5-tipov-i-protokoly-vosstanovleniya"],
 
+    # УБ-9: «как повысить компетенцию» 445 + хвосты ≈ 516 — посадочной не
+    # было. Догматик о себе не спрашивает, он спрашивает о профессии.
+    "kak-povysit-kompetenciyu": ["strah-zadavat-voprosy",
+                                 "uchitsya-uchitsya",
+                                 "kak-nauchitsya-dumat-samomu",
+                                 "nachinayu-i-brosayu"],
+
+    # УБ-6: вход через предмет, а не через разговор о себе. «Почему люди
+    # верят в теории заговора» 76, «как проверить информацию на
+    # достоверность» 53, «как отличить правду от лжи в интернете» 15.
+    "kak-proverit-informaciyu": ["kak-nauchitsya-dumat-samomu",
+                                 "bolshaya-lozh-samopomoschi-7-mifov",
+                                 "kak-raspoznat-lozh-12-markerov-ekmana",
+                                 "100-kognitivnyh-iskazhenij-spravochnik"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

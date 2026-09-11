@@ -11724,6 +11724,20 @@
    "rubric": "motivaciya",
    "level": "b",
    "mins": 10
+  },
+  {
+   "slug": "kak-povysit-kompetenciyu",
+   "title": "Как повысить компетенцию, когда учиться некогда: 7 шагов",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
+   "slug": "kak-proverit-informaciyu",
+   "title": "Как проверить информацию на достоверность: два источника и пять вопросов",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
