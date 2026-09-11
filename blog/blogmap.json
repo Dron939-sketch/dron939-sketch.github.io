@@ -11738,6 +11738,13 @@
    "rubric": "myshlenie",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "trevoga-v-tele-ruki-davlenie-serdce",
+   "title": "Тревога в теле: трясутся руки, скачет давление, колотится сердце",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 12
   }
  ]
 }

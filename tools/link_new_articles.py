@@ -39,6 +39,20 @@ INBOUND = {
                                  "kak-raspoznat-lozh-12-markerov-ekmana",
                                  "100-kognitivnyh-iskazhenij-spravochnik"],
 
+    # Вебвизор 10–11.09: пятнадцать фраз про тревогу в теле (руки, давление,
+    # сердцебиение, утро, жжение языка) — посадочной не было.
+    "trevoga-v-tele-ruki-davlenie-serdce": ["kak-spravitsya-s-trevogoj",
+                                            "panicheskaya-ataka-ili-serdechnyj-pristup",
+                                            "kak-perestat-nakruchivat-sebya",
+                                            "trevozhnaya-spiral-kak-ostanovit"],
+
+    # Вебвизор 10–11.09: десять фраз со стороны того, кто уходит —
+    # «прощальное сообщение», «без истерик», «без обид», «безболезненно».
+    "kak-rasstatsya-proshchalnoe-soobshchenie": ["kak-zabyt-byvshego",
+                                                 "psihologiya-razvoda-7-etapov",
+                                                 "ne-mogu-perestat-dumat-o-cheloveke",
+                                                 "emocionalnaya-zavisimost-priznaki-i-protokol"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
