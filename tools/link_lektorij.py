@@ -90,6 +90,10 @@ RULES = [
     (r"тревог|trevog|паническ|panichesk|фоби|fobi|страх|strah", "trevoga"),
     (r"депресси|depressi|апати|apati", "depressiya-i-apatiya"),
     (r"травм|travm|птср|ptsr|насили|nasili", "travma"),
+    # «Ребёнок после развода» — статья для родителя, не для расстающегося:
+    # ловим её до общего правила про развод.
+    (r"реб[её]н\w*[- ]после[- ]развод|rebenok-posle-razvoda|дет\w*[- ]после[- ]развод",
+     "roditelstvo"),
     (r"расстава|rasstava|расстать|rasstatsya|прощальн|proshchaln|развод|razvod|разрыв|razryv|бывш", "rasstavanie"),
     (r"одиночеств|odinochestv", "odinochestvo"),
     (r"стресс|stress", "stress-menedzhment"),
@@ -121,8 +125,11 @@ RULES = [
     # уходило в курс про привязанность и партнёров.
     (r"родител|roditel|воспитан|vospitan|подростк|podrostk|подрост[коа]|"
      r"\bмать\b|\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
+    # «Муж не работает и всем недоволен» уходило в «Работу и карьеру» — по
+    # слову «работает»; супруги в заголовке — это про пару, не про карьеру.
     (r"привязанност|privyazannost|отношени|otnosheni|партн[её]р|любов|"
-     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери|брос[яи]т|брошенн",
+     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери|брос[яи]т|брошенн|"
+     r"\bмуж\b|\bmuzh\b|\bжен[аеуы]\b|\bzhen[aeuy]\b|супруг",
      "privyazannost-i-otnosheniya"),
     (r"конфликт|konflikt|ссор|ssor|примирен", "konflikty"),
     (r"переговор|peregovor|\bторг\b|договорит", "peregovory"),

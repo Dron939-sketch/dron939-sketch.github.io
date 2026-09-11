@@ -67,6 +67,28 @@ INBOUND = {
                                                     "strah-zadavat-voprosy",
                                                     "kak-perezhit-pozor"],
 
+    # Вебвизор 10–11.09: «ребёнка в первом классе уже начали обзывать» (час на
+    # сайте — искал и не нашёл) и «буллинг в старших классах».
+    "rebenka-obzyvayut-v-shkole-chto-delat": ["bulling-v-shkole-chto-delat",
+                                              "kak-nauchit-rebenka-postoyat-za-sebya",
+                                              "trevoga-roditelya-pervoklassnika",
+                                              "kak-ne-sryvatsya-na-rebenka",
+                                              "travlya-na-rabote-chto-delat"],
+
+    # Вебвизор 10–11.09: «муж не работает постоянно недоволен и не хочет меня
+    # слушать», «что сказать свекрови», «когда пора разводиться».
+    "muzh-ne-rabotaet-i-vsem-nedovolen": ["svekrov-vmeshivaetsya-chto-delat",
+                                          "psihologiya-razvoda-7-etapov",
+                                          "zabota-ili-kontrol",
+                                          "kak-nauchitsya-govorit-net"],
+
+    # Вебвизор 10–11.09: «отец настраивает ребенка против мамы как себя вести
+    # маме», «апатия и снижение мотивации у ребенка после развода родителей».
+    "rebenok-posle-razvoda-chto-delat": ["psihologiya-razvoda-7-etapov",
+                                         "chto-delat-esli-podrostok-zamolchal",
+                                         "kak-ne-sryvatsya-na-rebenka",
+                                         "ushla-zhena-razvod-glazami-muzhchiny"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
