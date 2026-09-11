@@ -53,6 +53,20 @@ INBOUND = {
                                                  "ne-mogu-perestat-dumat-o-cheloveke",
                                                  "emocionalnaya-zavisimost-priznaki-i-protokol"],
 
+    # Вебвизор 10–11.09: пять фраз от мужчины, которого бросили, — все наши
+    # тексты про расставание написаны для неё.
+    "ushla-zhena-razvod-glazami-muzhchiny": ["psihologiya-razvoda-7-etapov",
+                                             "kak-perezhit-rasstavanie",
+                                             "kak-zabyt-byvshego",
+                                             "alkogol-seraya-zona-tihiy-alkogolizm"],
+
+    # Вебвизор 10–11.09: четыре фразы про первое сообщение девушке, и
+    # «страх подойти познакомиться… быть униженным» — ушёл через 3 секунды.
+    "chto-napisat-devushke-v-pervom-soobshchenii": ["netvorking-dlya-introvertov",
+                                                    "kak-zavodit-druzej-vzroslomu",
+                                                    "strah-zadavat-voprosy",
+                                                    "kak-perezhit-pozor"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

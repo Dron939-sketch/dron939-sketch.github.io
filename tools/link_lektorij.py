@@ -90,7 +90,7 @@ RULES = [
     (r"тревог|trevog|паническ|panichesk|фоби|fobi|страх|strah", "trevoga"),
     (r"депресси|depressi|апати|apati", "depressiya-i-apatiya"),
     (r"травм|travm|птср|ptsr|насили|nasili", "travma"),
-    (r"расстава|rasstava|развод|razvod|разрыв|razryv|бывш", "rasstavanie"),
+    (r"расстава|rasstava|расстать|rasstatsya|прощальн|proshchaln|развод|razvod|разрыв|razryv|бывш", "rasstavanie"),
     (r"одиночеств|odinochestv", "odinochestvo"),
     (r"стресс|stress", "stress-menedzhment"),
     (r"бессонниц|bessonnic|\bсон\b|\bсна\b|высыпа|засыпа", "son"),
