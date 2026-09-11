@@ -177,6 +177,28 @@ INBOUND = {
                                              "vozvrashchenie-posle-vygoraniya-7-etapov",
                                              "stydno-za-roditelej-chto-delat"],
 
+    # Пятая пятёрка «тем, с которыми не идут к друзьям» (12.09).
+    "pozhalela-chto-vyshla-zamuzh": ["ne-lyublyu-muzha-no-ne-uhozhu",
+                                     "psihologiya-razvoda-7-etapov",
+                                     "kak-perestat-zaviset-ot-chuzhogo-mneniya",
+                                     "longityud-300-par-8-let-privyazannost"],
+    "stydno-chto-razvelas": ["psihologiya-razvoda-7-etapov",
+                             "rebenok-posle-razvoda-chto-delat",
+                             "uspeshnaya-odinokaya-zhenshchina-35",
+                             "kak-perezhit-pozor"],
+    "stydno-chto-ne-rabotayu": ["trevoga-iz-za-deneg",
+                                "kak-perestat-zaviset-ot-chuzhogo-mneniya",
+                                "kak-nachat-rabotat-na-sebya",
+                                "muzh-ne-rabotaet-i-vsem-nedovolen"],
+    "zhena-zarabatyvaet-bolshe-muzha": ["trevoga-iz-za-deneg",
+                                        "muzh-ne-rabotaet-i-vsem-nedovolen",
+                                        "zabota-ili-kontrol",
+                                        "strah-v-dengah-4-arhetipa-otnoshenij-s-finansami"],
+    "skryvayu-ot-muzha-proshloe": ["izmenila-muzhu-i-muchaet-sovest",
+                                   "kak-prostit-sebya",
+                                   "retroaktivnaya-revnost-proshloe-partnera",
+                                   "kak-perezhit-pozor"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

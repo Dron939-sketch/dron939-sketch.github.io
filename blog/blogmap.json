@@ -11927,6 +11927,41 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 12
+  },
+  {
+   "slug": "pozhalela-chto-vyshla-zamuzh",
+   "title": "Пожалела, что вышла замуж: что делать, если ошибка стала ясна через год, а все были на свадьбе",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-chto-razvelas",
+   "title": "Стыдно, что развелась: как перестать чувствовать себя неудавшейся перед мамой, коллегами и собой",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "stydno-chto-ne-rabotayu",
+   "title": "Стыдно, что не работаю: как отвечать на «а ты где работаешь», когда вы дома",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zhena-zarabatyvaet-bolshe-muzha",
+   "title": "Жена зарабатывает больше мужа: что с этим делать обоим, чтобы деньги не съели брак",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "skryvayu-ot-muzha-proshloe",
+   "title": "Скрываю от мужа прошлое: рассказывать ли то, что было до него, и как жить, если решили молчать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   }
  ]
 }

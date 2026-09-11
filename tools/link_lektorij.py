@@ -89,6 +89,11 @@ RULES = [
     (r"muzh-unizhaet|муж унижает", "vliyanie-i-manipulyacii"),
     (r"uhazhivat-za-bolnym|ухаживать за больн", "separaciya"),
     (r"zhaleyu-chto-rodila|жалею, что родила|ne-hochu-detej|не хочу детей", "roditelstvo"),
+    # Пятая пятёрка: замужество и развод — «Расставание» (решение и
+    # «что дальше»), «не работаю» и разница в доходах — «Деньги и психология».
+    (r"pozhalela-chto-vyshla|пожалела, что вышла|stydno-chto-razvelas|стыдно, что развел", "rasstavanie"),
+    (r"stydno-chto-ne-rabotayu|стыдно, что не работаю|zarabatyvaet-bolshe|зарабатывает больше", "dengi-i-psihologiya"),
+    (r"skryvayu-ot-muzha|скрываю от мужа", "privyazannost-i-otnosheniya"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),
