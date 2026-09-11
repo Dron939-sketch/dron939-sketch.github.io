@@ -245,6 +245,29 @@ INBOUND = {
                                     "retroaktivnaya-revnost-proshloe-partnera",
                                     "zaviduyu-podruge-chto-delat"],
 
+    # Восьмая пятёрка: стыд за ребёнка, деньги родителей в 30, образование,
+    # происхождение, измена в мыслях.
+    "stydno-za-svoego-rebenka": ["ne-lyublyu-svoego-rebenka-chto-delat",
+                                 "podrostok-buntuet-i-grubit-chto-delat",
+                                 "granicy-rebenku-bez-krika",
+                                 "stydno-za-roditelej-chto-delat"],
+    "beru-dengi-u-roditelej-v-30-stydno": ["zhivu-s-roditelyami-v-30-stydno",
+                                           "skryvayu-stavki-i-dolgi-ot-semi",
+                                           "stydno-chto-ne-rabotayu",
+                                           "chto-delat-esli-prosyat-deneg-v-dolg"],
+    "stydno-za-svoe-obrazovanie": ["sindrom-samozvanca-priznaki-i-protokol",
+                                   "kak-povysit-kompetenciyu",
+                                   "kak-perestat-sravnivat-sebya-s-drugimi",
+                                   "nizkaya-samoocenka-priznaki-i-protokol"],
+    "styzhus-svoej-semi": ["stydno-za-roditelej-chto-delat",
+                           "differenciaciya-ya-po-bouenu",
+                           "vzroslye-deti-alkogolikov-vda",
+                           "zhivu-s-roditelyami-v-30-stydno"],
+    "izmenyayu-muzhu-v-myslyah": ["stydnye-mysli-i-vozbuzhdenie-ne-k-mestu",
+                                  "u-menya-roman-na-storone-chto-delat",
+                                  "ne-hochu-seksa-s-muzhem",
+                                  "izmenila-muzhu-i-muchaet-sovest"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

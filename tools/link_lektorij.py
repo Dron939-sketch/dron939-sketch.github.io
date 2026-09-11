@@ -80,6 +80,11 @@ RULES = [
     # родителей — «Сепарация», зависть — «Стоицизм», влечение и отвращение
     # в паре — «Привязанность».
     (r"ne-lyublyu-svoego-rebenka|не люблю своего реб", "roditelstvo"),
+    (r"stydno-za-svoego-rebenka|стыдно за своего реб", "roditelstvo"),
+    (r"beru-dengi-u-roditelej|беру деньги у родителей", "separaciya"),
+    (r"stydno-za-svoe-obrazovanie|стыдно за сво[её] образование", "samoocenka"),
+    (r"styzhus-svoej-semi|стыжусь своей семьи", "separaciya"),
+    (r"izmenyayu-muzhu-v-myslyah|изменяю мужу в мыслях", "privyazannost-i-otnosheniya"),
     (r"stydno-idti-k-psihologu|стыдно идти к психологу", "psihoterapiya"),
     (r"ne-hochu-seksa|не хочу секса", "privyazannost-i-otnosheniya"),
     (r"stydno-za-muzha|стыдно за мужа", "privyazannost-i-otnosheniya"),
