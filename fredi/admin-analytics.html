@@ -154,7 +154,7 @@
 
         /* ===== Nav ===== */
         .nav { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-        .nav button {
+        .nav button, .nav a {
             flex: 1; min-width: 140px; padding: 11px 16px; border-radius: 12px;
             border: 1px solid var(--border); background: var(--surface); color: var(--text);
             font: inherit; cursor: pointer; font-weight: 600;
@@ -223,7 +223,7 @@ body{overflow-wrap:break-word}</style>
         <button data-tab="messengers">📱 Messenger</button>
         <button data-tab="wave">🌊 2-я волна</button>
         <button data-tab="friends">👥 Друзья из ВК</button>
-        <button id="klienturaBtn" onclick="window.open('/admin/klientura/','_blank')" style="background:#3b82f6;color:#fff;border-color:#3b82f6;flex:0 0 auto">👥 Клиентура</button>
+        <a id="klienturaBtn" href="/admin/klientura/" target="_blank" rel="noopener" style="background:#3b82f6;color:#fff;border:1px solid #3b82f6;flex:0 0 auto;text-decoration:none;display:inline-flex;align-items:center">👥 Клиентура</a>
         <button id="exportClaudeBtn" style="background:#10b981;color:#fff;border-color:#10b981;flex:0 0 auto">📋 Экспорт для Claude</button>
     </div>
 
@@ -2048,9 +2048,9 @@ POV: ты на семейном ужине, и мама такая «как у �
     };
 
     var currentTab = 'summary';
-    document.querySelectorAll('#navBar button').forEach(function(b){
+    document.querySelectorAll('#navBar button[data-tab]').forEach(function(b){
         b.onclick = function(){
-            document.querySelectorAll('#navBar button').forEach(function(x){ x.classList.remove('active'); });
+            document.querySelectorAll('#navBar button[data-tab]').forEach(function(x){ x.classList.remove('active'); });
             b.classList.add('active');
             currentTab = b.dataset.tab;
             refresh();
