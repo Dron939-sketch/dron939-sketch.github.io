@@ -3,6 +3,20 @@
 // Версия 5.1 - С ПОГОДОЙ В КОНТЕКСТЕ
 // ============================================
 
+// Дубль событий теста в Метрику. FrediTracker пишет в свою таблицу, а вся
+// остальная воронка — визиты, open_fredi, «написал сам», стены, оплаты —
+// живёт в Метрике, и большой тест до сих пор выпадал из неё целиком.
+// Цена вопроса видна в цифрах: группа «Большой тест личности» за 7 дней —
+// 181 визит, 142 открытия Фреди и ноль по всем метрикам разговора. Ноль
+// был не результатом, а слепым пятном: тест идёт кнопками, цель «написал
+// сам» в нём не может сработать по устройству, а своей цели у теста нет.
+function _testGoal(name) {
+    if (typeof window.ym !== 'function') return;
+    [108965607, 108138656].forEach(function (c) {
+        try { window.ym(c, 'reachGoal', name); } catch (e) {}
+    });
+}
+
 const TEST_API_BASE_URL = (window.CONFIG && window.CONFIG.API_BASE_URL) || window.API_BASE_URL || '';
 
 const Test = {
@@ -1657,6 +1671,7 @@ const Test = {
                     has_userId: !!this.userId
                 });
             }
+            _testGoal('fredi_test_start');
         } catch {}
         // Параллельно подтягиваем расширенные интерпретации с бэка —
         // нужны для этапа 4 (Дилтс). До этапа 4 пользователь идёт
@@ -2352,6 +2367,7 @@ ${this.getStage3Interpretation()}
                     profile_code: p.displayName || null,
                     archetype: p.archetype || null
                 });
+                _testGoal('fredi_test_completed');
             }
         } catch {}
 
