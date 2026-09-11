@@ -11822,6 +11822,286 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "muzh-pyot-chto-delat-zhene",
+   "title": "Муж пьёт: что делать жене, когда уговоры, скандалы и слёзы уже не работают",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "skryvayu-stavki-i-dolgi-ot-semi",
+   "title": "Скрываю ставки и долги от семьи: как выйти, не дожидаясь разоблачения",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-smotrit-porno-chto-delat",
+   "title": "Муж смотрит порно: что это значит, что делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "ne-lyublyu-muzha-no-ne-uhozhu",
+   "title": "Не люблю мужа, но не ухожу: что с этим делать, если он ни в чём не виноват",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "izmenila-muzhu-i-muchaet-sovest",
+   "title": "Изменила мужу, и мучает совесть: рассказывать или нет, и как жить с этим дальше",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "ne-lyublyu-svoego-rebenka-chto-delat",
+   "title": "Не люблю своего ребёнка: что делать, если он раздражает, а сказать об этом нельзя никому",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "vlechenie-posle-60-chto-s-nim-delat",
+   "title": "Влечение после шестидесяти: что с ним делать, когда все считают, что его быть не должно",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-za-roditelej-chto-delat",
+   "title": "Стыдно за родителей: что делать с этим стыдом, когда они такие, какие есть",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "zaviduyu-podruge-chto-delat",
+   "title": "Завидую подруге и стыжусь этого: что зависть говорит о вас и что с ней делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "otvrashchenie-k-muzhu-chto-delat",
+   "title": "Отвращение к мужу: откуда оно берётся и что с ним делать, если он «ничего не сделал»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stesnyayus-svoego-tela-pri-muzhe",
+   "title": "Стесняюсь своего тела при муже: откуда этот стыд и как перестать гасить свет",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "ne-hochu-detej-a-muzh-hochet",
+   "title": "Не хочу детей, а муж хочет: что делать, когда на главный вопрос у вас разные ответы",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "zhaleyu-chto-rodila-rebenka",
+   "title": "Жалею, что родила: что делать с этой мыслью, которую нельзя сказать никому",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-unizhaet-chto-delat",
+   "title": "Муж унижает: что делать, если после его слов вас становится меньше, а уйти вы не можете",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "ustala-uhazhivat-za-bolnym-roditelem",
+   "title": "Устала ухаживать за больным родителем: что делать с мыслью «скорее бы», за которую стыдно",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "pozhalela-chto-vyshla-zamuzh",
+   "title": "Пожалела, что вышла замуж: что делать, если ошибка стала ясна через год, а все были на свадьбе",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-chto-razvelas",
+   "title": "Стыдно, что развелась: как перестать чувствовать себя неудавшейся перед мамой, коллегами и собой",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "stydno-chto-ne-rabotayu",
+   "title": "Стыдно, что не работаю: как отвечать на «а ты где работаешь», когда вы дома",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zhena-zarabatyvaet-bolshe-muzha",
+   "title": "Жена зарабатывает больше мужа: что с этим делать обоим, чтобы деньги не съели брак",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "skryvayu-ot-muzha-proshloe",
+   "title": "Скрываю от мужа прошлое: рассказывать ли то, что было до него, и как жить, если решили молчать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "muzhchine-stydno-plakat",
+   "title": "Мужчине стыдно плакать: что делать, если слёзы приходят в машине, а показать их некому",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zhivu-s-roditelyami-v-30-stydno",
+   "title": "Живу с родителями в 30 и стыдно: что за этим стоит на самом деле и как уехать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-priglashat-gostej-domoj",
+   "title": "Стыдно приглашать гостей домой: за что именно стыдно, чьими глазами вы смотрите на свою квартиру и как перестать жить «пока не как у людей»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zaviduyu-sestre-chto-delat",
+   "title": "Завидую сестре и ненавижу себя за это: откуда зависть к родному человеку, кто на самом деле судья и что с этим делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "odinoka-v-40-i-stydno",
+   "title": "Одинока в 40 и стыдно: за что на самом деле стыд, что из этого одиночество, а что",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-idti-k-psihologu",
+   "title": "Стыдно идти к психологу: откуда стыд, что за ним стоит на самом деле и как дойти до первой встречи, никому не рассказывая",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "ne-hochu-seksa-s-muzhem",
+   "title": "Не хочу секса с мужем: куда ушло желание",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "stydno-za-muzha-pered-druzyami",
+   "title": "Стыдно за мужа перед друзьями и родными: за что именно, чьими глазами вы на него смотрите и что делать, если стыд перерос в презрение",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "net-druzej-v-30-stydno",
+   "title": "Нет друзей в 30 и стыдно: почему это случилось с половиной взрослых, чей это стыд и как за три месяца получить одного человека, которому можно написать «как ты»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "byvshij-schastliv-bez-menya",
+   "title": "Бывший счастлив без меня, а я нет: почему его страница ранит сильнее расставания, что именно болит и как перестать сверять свою жизнь с его",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-za-svoego-rebenka",
+   "title": "Стыдно за своего ребёнка: за что именно, чьими глазами вы на него смотрите, почему ему нельзя об этом знать и что делать, когда стыд мешает быть на его стороне",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "beru-dengi-u-roditelej-v-30-stydno",
+   "title": "Беру деньги у родителей в 30 и стыдно: чем помощь отличается от зависимости, сколько это стоит на самом деле и как выйти без ссоры и без нищеты",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "stydno-za-svoe-obrazovanie",
+   "title": "Стыдно за своё образование: без вуза, с «не тем» дипломом или с заочкой среди людей «с образованием»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "styzhus-svoej-semi",
+   "title": "Стыжусь своей семьи и происхождения: когда вы «перешли» в другой круг и живёте между двумя мирами",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "izmenyayu-muzhu-v-myslyah",
+   "title": "Изменяю мужу в мыслях: думаю о другом и мучаюсь виной",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "oblegchenie-posle-smerti-roditelya",
+   "title": "Облегчение после смерти родителя: почему стало легче, а не больно, за что на самом деле стыдно и придёт ли горе потом",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "hochu-razvoda-no-stydno",
+   "title": "Хочу развода, но стыдно: перед мамой, детьми, людьми и собой",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "hochu-ujti-ot-bolnogo-muzha",
+   "title": "Хочу уйти от больного мужа: чем «уйти от него» отличается от «уйти от ухода», что между «остаться и сгореть» и «бросить»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "nenavizhu-nevestku-chto-delat",
+   "title": "Ненавижу невестку: за что именно, почему это чувство приходит к матери сына чаще, чем к матери дочери, что она на самом деле «забрала»",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "muzh-masturbiruet-chto-delat",
+   "title": "Муж мастурбирует: что это значит на самом деле, когда это отдельно от вас, когда",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   }
  ]
 }

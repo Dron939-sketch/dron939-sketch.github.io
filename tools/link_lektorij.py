@@ -72,6 +72,48 @@ RULES = [
     (r"стыдн\w*[- ]мысл|stydnye[- ]mysli|навязчив\w*[- ]мысл|navyazchivye[- ]mysli", "kpt-samostoyatelno"),
     # «Роман на стороне» — про пару, не про древнюю книгу и не в хаб.
     (r"роман на сторон|na-storone|любовник|lyubovnik", "privyazannost-i-otnosheniya"),
+    # «Муж пьёт», «Скрываю ставки», «Муж смотрит порно» — про зависимость,
+    # а не про пару и не про стыд; «не люблю мужа» и «мучает совесть» — про пару.
+    (r"muzh-pyot|муж пьёт|skryvayu-stavki|ставки и долги|smotrit-porno|смотрит порно|порнозавис", "zavisimosti"),
+    (r"ne-lyublyu-muzha|не люблю мужа|muchaet-sovest|мучает совесть|изменила муж", "privyazannost-i-otnosheniya"),
+    # Третья пятёрка: родитель без чувства — «Родительство», стыд за
+    # родителей — «Сепарация», зависть — «Стоицизм», влечение и отвращение
+    # в паре — «Привязанность».
+    (r"ne-lyublyu-svoego-rebenka|не люблю своего реб", "roditelstvo"),
+    (r"oblegchenie-posle-smerti|облегчение после смерти", "gore"),
+    (r"hochu-razvoda|хочу развода", "rasstavanie"),
+    (r"hochu-ujti-ot-bolnogo|уйти от больного мужа", "rasstavanie"),
+    (r"nenavizhu-nevestku|ненавижу невестку", "separaciya"),
+    (r"muzh-masturbiruet|муж мастурбирует", "privyazannost-i-otnosheniya"),
+    (r"stydno-za-svoego-rebenka|стыдно за своего реб", "roditelstvo"),
+    (r"beru-dengi-u-roditelej|беру деньги у родителей", "separaciya"),
+    (r"stydno-za-svoe-obrazovanie|стыдно за сво[её] образование", "samoocenka"),
+    (r"styzhus-svoej-semi|стыжусь своей семьи", "separaciya"),
+    (r"izmenyayu-muzhu-v-myslyah|изменяю мужу в мыслях", "privyazannost-i-otnosheniya"),
+    (r"stydno-idti-k-psihologu|стыдно идти к психологу", "psihoterapiya"),
+    (r"ne-hochu-seksa|не хочу секса", "privyazannost-i-otnosheniya"),
+    (r"stydno-za-muzha|стыдно за мужа", "privyazannost-i-otnosheniya"),
+    (r"net-druzej|нет друзей", "druzhba"),
+    (r"byvshij-schastliv|бывший счастлив", "rasstavanie"),
+    (r"muzhchine-stydno-plakat|стыдно плакать", "emocionalnyj-intellekt"),
+    (r"zhivu-s-roditelyami|живу с родителями", "separaciya"),
+    (r"priglashat-gostej|приглашать гостей", "samoocenka"),
+    (r"zaviduyu-sestre|завидую сестре", "separaciya"),
+    (r"odinoka-v-40|одинока в 40", "odinochestvo"),
+    (r"stydno-za-roditelej|стыдно за родител", "separaciya"),
+    (r"zaviduyu|завиду|\bзавист", "stoicizm"),
+    (r"vlechenie-posle|влечение после|otvrashchenie-k-muzhu|отвращение к муж", "privyazannost-i-otnosheniya"),
+    # Четвёртая пятёрка: стыд за тело — «Самооценка», унижение — «Влияние и
+    # манипуляции», уход за родителем — «Сепарация», дети и сожаление — «Родительство».
+    (r"stesnyayus-svoego-tela|стесняюсь своего тела", "samoocenka"),
+    (r"muzh-unizhaet|муж унижает", "vliyanie-i-manipulyacii"),
+    (r"uhazhivat-za-bolnym|ухаживать за больн", "separaciya"),
+    (r"zhaleyu-chto-rodila|жалею, что родила|ne-hochu-detej|не хочу детей", "roditelstvo"),
+    # Пятая пятёрка: замужество и развод — «Расставание» (решение и
+    # «что дальше»), «не работаю» и разница в доходах — «Деньги и психология».
+    (r"pozhalela-chto-vyshla|пожалела, что вышла|stydno-chto-razvelas|стыдно, что развел", "rasstavanie"),
+    (r"stydno-chto-ne-rabotayu|стыдно, что не работаю|zarabatyvaet-bolshe|зарабатывает больше", "dengi-i-psihologiya"),
+    (r"skryvayu-ot-muzha|скрываю от мужа", "privyazannost-i-otnosheniya"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),
