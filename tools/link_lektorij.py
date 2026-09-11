@@ -67,6 +67,11 @@ RULES = [
     # общая «Психотерапия» забирает остальные школы
     (r"\bкпт\b|\bkpt\b|когнитивно-повед|kognitivno-poved|аарон бек|bek-kpt|"
      r"бернс|дневник автомысл|автоматическ\w* мысл", "kpt-samostoyatelno"),
+    # Навязчивости — рабочая тема КПТ; «Стыдные мысли» без этого уходили в
+    # «Эмоциональный интеллект» по слову «стыд».
+    (r"стыдн\w*[- ]мысл|stydnye[- ]mysli|навязчив\w*[- ]мысл|navyazchivye[- ]mysli", "kpt-samostoyatelno"),
+    # «Роман на стороне» — про пару, не про древнюю книгу и не в хаб.
+    (r"роман на сторон|na-storone|любовник|lyubovnik", "privyazannost-i-otnosheniya"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),
@@ -136,6 +141,9 @@ RULES = [
     (r"дружб|druzhb|\bдруз|druz", "druzhba"),
     (r"реб[её]н|reben|\bдет[еи]\b|deti|садик|школьник|adaptaciya-k-sadu",
      "razvitie-rebenka"),
+    # Статьи про близость в паре — это про пару, а не про древнюю книгу:
+    # «Нет секса в браке» уходила в «Камасутру».
+    (r"net-seksa|секса в браке|svoih-zhelaniyah|о своих желаниях|близост", "privyazannost-i-otnosheniya"),
     (r"секс|seks|камасутр|kamasutr|интимн|либидо", "kamasutra"),
     (r"язык[- ]тела|yazyk-tela|\bложь\b|lozh|вран|обман|obman|мимик|вр[её]т|врут|лжи\b",
      "yazyk-tela-i-lozh"),

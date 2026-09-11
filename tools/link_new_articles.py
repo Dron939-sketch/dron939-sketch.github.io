@@ -89,6 +89,28 @@ INBOUND = {
                                          "kak-ne-sryvatsya-na-rebenka",
                                          "ushla-zhena-razvod-glazami-muzhchiny"],
 
+    # Диалоги Фреди 4–11.09: сексуальные темы — 19 диалогов, 11 глубоких.
+    "net-seksa-v-brake-chto-delat": ["muzh-stal-holodnym",
+                                     "zhena-postoyanno-nedovolna",
+                                     "zabota-ili-kontrol",
+                                     "psihologiya-seksualnosti-2026-5-sdvigov"],
+    "kak-skazat-partneru-o-svoih-zhelaniyah": ["muzh-stal-holodnym",
+                                               "kak-nauchitsya-govorit-net",
+                                               "psihologiya-seksualnosti-2026-5-sdvigov",
+                                               "boyus-chto-menya-brosyat"],
+    "stydnye-mysli-i-vozbuzhdenie-ne-k-mestu": ["navyazchivye-mysli-chto-delat",
+                                                "kak-perezhit-pozor",
+                                                "trevoga-v-tele-ruki-davlenie-serdce",
+                                                "psihologiya-seksualnosti-2026-5-sdvigov"],
+    "u-menya-roman-na-storone-chto-delat": ["psihologiya-izmeny-8-prichin-nauchnyj-vzglyad",
+                                            "kak-prostit-izmenu",
+                                            "kak-perezhit-izmenu",
+                                            "chto-delat-esli-uznali-ob-izmene"],
+    "retroaktivnaya-revnost-proshloe-partnera": ["psihologiya-revnosti-6-tipov",
+                                                 "navyazchivye-mysli-chto-delat",
+                                                 "boyus-chto-menya-brosyat",
+                                                 "zabota-ili-kontrol"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
