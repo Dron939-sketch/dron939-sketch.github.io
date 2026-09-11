@@ -111,6 +111,28 @@ INBOUND = {
                                                  "boyus-chto-menya-brosyat",
                                                  "zabota-ili-kontrol"],
 
+    # Вторая пятёрка «тем, с которыми не идут к друзьям» (12.09).
+    "muzh-pyot-chto-delat-zhene": ["sozavisimost-zhizn-ryadom-s-zavisimym",
+                                   "chto-delat-esli-u-blizkogo-zavisimost",
+                                   "vzroslye-deti-alkogolikov-vda",
+                                   "alkogol-seraya-zona-tihiy-alkogolizm"],
+    "skryvayu-stavki-i-dolgi-ot-semi": ["stavki-lyudomaniya-mehanika",
+                                        "chto-delat-esli-u-blizkogo-zavisimost",
+                                        "kak-prostit-sebya",
+                                        "chto-delat-esli-prosyat-deneg-v-dolg"],
+    "muzh-smotrit-porno-chto-delat": ["net-seksa-v-brake-chto-delat",
+                                      "kak-skazat-partneru-o-svoih-zhelaniyah",
+                                      "psihologiya-seksualnosti-2026-5-sdvigov",
+                                      "cifrovaya-zavisimost-telefon-um"],
+    "ne-lyublyu-muzha-no-ne-uhozhu": ["muzh-stal-holodnym",
+                                      "u-menya-roman-na-storone-chto-delat",
+                                      "psihologiya-razvoda-7-etapov",
+                                      "zhena-postoyanno-nedovolna"],
+    "izmenila-muzhu-i-muchaet-sovest": ["kak-prostit-sebya",
+                                        "kak-prostit-izmenu",
+                                        "styd-vs-vina-raznica-kotoraya-kalechit",
+                                        "u-menya-roman-na-storone-chto-delat"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

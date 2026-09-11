@@ -72,6 +72,10 @@ RULES = [
     (r"стыдн\w*[- ]мысл|stydnye[- ]mysli|навязчив\w*[- ]мысл|navyazchivye[- ]mysli", "kpt-samostoyatelno"),
     # «Роман на стороне» — про пару, не про древнюю книгу и не в хаб.
     (r"роман на сторон|na-storone|любовник|lyubovnik", "privyazannost-i-otnosheniya"),
+    # «Муж пьёт», «Скрываю ставки», «Муж смотрит порно» — про зависимость,
+    # а не про пару и не про стыд; «не люблю мужа» и «мучает совесть» — про пару.
+    (r"muzh-pyot|муж пьёт|skryvayu-stavki|ставки и долги|smotrit-porno|смотрит порно|порнозавис", "zavisimosti"),
+    (r"ne-lyublyu-muzha|не люблю мужа|muchaet-sovest|мучает совесть|изменила муж", "privyazannost-i-otnosheniya"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),

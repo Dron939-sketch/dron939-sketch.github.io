@@ -11822,6 +11822,41 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "muzh-pyot-chto-delat-zhene",
+   "title": "Муж пьёт: что делать жене, когда уговоры, скандалы и слёзы уже не работают",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "skryvayu-stavki-i-dolgi-ot-semi",
+   "title": "Скрываю ставки и долги от семьи: как выйти, не дожидаясь разоблачения",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-smotrit-porno-chto-delat",
+   "title": "Муж смотрит порно: что это значит, что делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "ne-lyublyu-muzha-no-ne-uhozhu",
+   "title": "Не люблю мужа, но не ухожу: что с этим делать, если он ни в чём не виноват",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "izmenila-muzhu-i-muchaet-sovest",
+   "title": "Изменила мужу, и мучает совесть: рассказывать или нет, и как жить с этим дальше",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   }
  ]
 }
