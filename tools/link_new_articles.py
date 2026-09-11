@@ -222,6 +222,29 @@ INBOUND = {
                               "krizis-40-let-7-etapov-nauchnyj-podhod",
                               "stydno-chto-razvelas"],
 
+    # Седьмая пятёрка: стыд перед психологом, желание в браке, стыд за
+    # мужа, дружба после тридцати, бывший на странице.
+    "stydno-idti-k-psihologu": ["kak-podgotovitsya-k-pervoj-vstreche-s-psihologom",
+                                "kak-vybrat-psihologa-10-kriteriev",
+                                "anonimnaya-psihologicheskaya-pomoshch-onlajn-gajd",
+                                "muzhchine-stydno-plakat"],
+    "ne-hochu-seksa-s-muzhem": ["net-seksa-v-brake-chto-delat",
+                                "otvrashchenie-k-muzhu-chto-delat",
+                                "kak-skazat-partneru-o-svoih-zhelaniyah",
+                                "muzh-stal-holodnym"],
+    "stydno-za-muzha-pered-druzyami": ["stydno-za-roditelej-chto-delat",
+                                       "muzh-ne-rabotaet-i-vsem-nedovolen",
+                                       "zhena-postoyanno-nedovolna",
+                                       "otvrashchenie-k-muzhu-chto-delat"],
+    "net-druzej-v-30-stydno": ["kak-zavodit-druzej-vzroslomu",
+                               "odinoka-v-40-i-stydno",
+                               "stydno-priglashat-gostej-domoj",
+                               "uspeshnaya-odinokaya-zhenshchina-35"],
+    "byvshij-schastliv-bez-menya": ["kak-zabyt-byvshego",
+                                    "kak-perezhit-rasstavanie",
+                                    "retroaktivnaya-revnost-proshloe-partnera",
+                                    "zaviduyu-podruge-chto-delat"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
