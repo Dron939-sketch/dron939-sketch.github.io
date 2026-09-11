@@ -268,6 +268,29 @@ INBOUND = {
                                   "ne-hochu-seksa-s-muzhem",
                                   "izmenila-muzhu-i-muchaet-sovest"],
 
+    # Девятая пятёрка: облегчение после смерти родителя, развод и стыд,
+    # больной муж, невестка, мастурбация мужа.
+    "oblegchenie-posle-smerti-roditelya": ["kak-perezhit-smert-roditelya",
+                                           "ustala-uhazhivat-za-bolnym-roditelem",
+                                           "gore-ili-depressiya",
+                                           "ya-nenavizhu-svoyu-mat"],
+    "hochu-razvoda-no-stydno": ["ne-lyublyu-muzha-no-ne-uhozhu",
+                                "stydno-chto-razvelas",
+                                "pozhalela-chto-vyshla-zamuzh",
+                                "psihologiya-razvoda-7-etapov"],
+    "hochu-ujti-ot-bolnogo-muzha": ["ustala-uhazhivat-za-bolnym-roditelem",
+                                    "ne-lyublyu-muzha-no-ne-uhozhu",
+                                    "muzh-unizhaet-chto-delat",
+                                    "otvrashchenie-k-muzhu-chto-delat"],
+    "nenavizhu-nevestku-chto-delat": ["svekrov-vmeshivaetsya-chto-delat",
+                                      "zaviduyu-sestre-chto-delat",
+                                      "stydno-za-svoego-rebenka",
+                                      "ya-nenavizhu-svoyu-mat"],
+    "muzh-masturbiruet-chto-delat": ["muzh-smotrit-porno-chto-delat",
+                                     "net-seksa-v-brake-chto-delat",
+                                     "ne-hochu-seksa-s-muzhem",
+                                     "stesnyayus-svoego-tela-pri-muzhe"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
