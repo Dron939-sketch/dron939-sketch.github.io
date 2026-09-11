@@ -616,7 +616,27 @@ def insert_at(html):
     if h1 < 0:
         return -1
     heads = [m.start() for m in re.finditer(r"<h[23][\s>]", html[h1:])]
-    return h1 + heads[2] if len(heads) >= 3 else -1
+    if len(heads) < 3:
+        return -1
+    pos = h1 + heads[2]
+    # 11.09.2026: на хабе /blog/ третий заголовок — это <h3> внутри
+    # карточки-ссылки <a class="step">. Вставка легла внутрь <a>, браузер
+    # закрыл ссылку досрочно, aside стал отдельной ячейкой сетки, а
+    # заголовок карточки вывалился голым текстом. <a> в <a> запрещено
+    # HTML — точка вставки внутри открытой ссылки не годится никогда.
+    if _inside_anchor(html, pos):
+        return -1
+    return pos
+
+
+def _inside_anchor(html, pos):
+    """Открыта ли ссылка <a> в точке pos (последний <a до pos без </a>)."""
+    before = html[:pos]
+    last_open = before.rfind("<a ")
+    if last_open < 0:
+        last_open = before.rfind("<a>")
+    last_close = before.rfind("</a>")
+    return last_open > last_close
 
 
 def main():
@@ -627,6 +647,10 @@ def main():
     args = ap.parse_args()
 
     files = sorted(glob.glob(os.path.join(ROOT, "blog", "*.html")))
+    # index.html — хаб-каталог, не статья: у него нет ни .toc-box, ни
+    # .article-content, и запасной путь по заголовкам ставил блок внутрь
+    # карточки-ссылки «Скорой помощи» (11.09.2026).
+    files = [p for p in files if os.path.basename(p) != "index.html"]
     changed = skipped = 0
     stats = {}
     for path in files:
