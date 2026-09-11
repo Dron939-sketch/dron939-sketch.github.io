@@ -80,6 +80,11 @@ RULES = [
     # родителей — «Сепарация», зависть — «Стоицизм», влечение и отвращение
     # в паре — «Привязанность».
     (r"ne-lyublyu-svoego-rebenka|не люблю своего реб", "roditelstvo"),
+    (r"muzhchine-stydno-plakat|стыдно плакать", "emocionalnyj-intellekt"),
+    (r"zhivu-s-roditelyami|живу с родителями", "separaciya"),
+    (r"priglashat-gostej|приглашать гостей", "samoocenka"),
+    (r"zaviduyu-sestre|завидую сестре", "separaciya"),
+    (r"odinoka-v-40|одинока в 40", "odinochestvo"),
     (r"stydno-za-roditelej|стыдно за родител", "separaciya"),
     (r"zaviduyu|завиду|\bзавист", "stoicizm"),
     (r"vlechenie-posle|влечение после|otvrashchenie-k-muzhu|отвращение к муж", "privyazannost-i-otnosheniya"),

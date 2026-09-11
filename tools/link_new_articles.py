@@ -199,6 +199,29 @@ INBOUND = {
                                    "retroaktivnaya-revnost-proshloe-partnera",
                                    "kak-perezhit-pozor"],
 
+    # Шестая пятёрка «тем, с которыми не идут к друзьям»: стыд за слёзы,
+    # за адрес, за дом, зависть в семье, одиночество в 40.
+    "muzhchine-stydno-plakat": ["pochemu-ya-plachu-bez-prichiny",
+                                "ushla-zhena-razvod-glazami-muzhchiny",
+                                "muzhchina-posle-40-vsyo-shvacheno",
+                                "styd-vs-vina-raznica-kotoraya-kalechit"],
+    "zhivu-s-roditelyami-v-30-stydno": ["stydno-za-roditelej-chto-delat",
+                                        "ustala-uhazhivat-za-bolnym-roditelem",
+                                        "ya-nenavizhu-svoyu-mat",
+                                        "stydno-chto-ne-rabotayu"],
+    "stydno-priglashat-gostej-domoj": ["kak-perestat-sravnivat-sebya-s-drugimi",
+                                       "zhivu-s-roditelyami-v-30-stydno",
+                                       "stydno-chto-ne-rabotayu",
+                                       "nizkaya-samoocenka-priznaki-i-protokol"],
+    "zaviduyu-sestre-chto-delat": ["zaviduyu-podruge-chto-delat",
+                                   "kak-perestat-sravnivat-sebya-s-drugimi",
+                                   "ya-nenavizhu-svoyu-mat",
+                                   "stydno-za-roditelej-chto-delat"],
+    "odinoka-v-40-i-stydno": ["uspeshnaya-odinokaya-zhenshchina-35",
+                              "bezdetnye-po-vyboru-novyj-tip-odinochestva",
+                              "krizis-40-let-7-etapov-nauchnyj-podhod",
+                              "stydno-chto-razvelas"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),

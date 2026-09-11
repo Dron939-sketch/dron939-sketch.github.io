@@ -11962,6 +11962,41 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "muzhchine-stydno-plakat",
+   "title": "Мужчине стыдно плакать: что делать, если слёзы приходят в машине, а показать их некому",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zhivu-s-roditelyami-v-30-stydno",
+   "title": "Живу с родителями в 30 и стыдно: что за этим стоит на самом деле и как уехать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-priglashat-gostej-domoj",
+   "title": "Стыдно приглашать гостей домой: за что именно стыдно, чьими глазами вы смотрите на свою квартиру и как перестать жить «пока не как у людей»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zaviduyu-sestre-chto-delat",
+   "title": "Завидую сестре и ненавижу себя за это: откуда зависть к родному человеку, кто на самом деле судья и что с этим делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "odinoka-v-40-i-stydno",
+   "title": "Одинока в 40 и стыдно: за что на самом деле стыд, что из этого одиночество, а что",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   }
  ]
 }
