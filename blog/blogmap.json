@@ -11892,6 +11892,41 @@
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 12
+  },
+  {
+   "slug": "stesnyayus-svoego-tela-pri-muzhe",
+   "title": "Стесняюсь своего тела при муже: откуда этот стыд и как перестать гасить свет",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "ne-hochu-detej-a-muzh-hochet",
+   "title": "Не хочу детей, а муж хочет: что делать, когда на главный вопрос у вас разные ответы",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "zhaleyu-chto-rodila-rebenka",
+   "title": "Жалею, что родила: что делать с этой мыслью, которую нельзя сказать никому",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-unizhaet-chto-delat",
+   "title": "Муж унижает: что делать, если после его слов вас становится меньше, а уйти вы не можете",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "ustala-uhazhivat-za-bolnym-roditelem",
+   "title": "Устала ухаживать за больным родителем: что делать с мыслью «скорее бы», за которую стыдно",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   }
  ]
 }

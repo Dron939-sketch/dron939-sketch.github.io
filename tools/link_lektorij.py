@@ -83,6 +83,12 @@ RULES = [
     (r"stydno-za-roditelej|стыдно за родител", "separaciya"),
     (r"zaviduyu|завиду|\bзавист", "stoicizm"),
     (r"vlechenie-posle|влечение после|otvrashchenie-k-muzhu|отвращение к муж", "privyazannost-i-otnosheniya"),
+    # Четвёртая пятёрка: стыд за тело — «Самооценка», унижение — «Влияние и
+    # манипуляции», уход за родителем — «Сепарация», дети и сожаление — «Родительство».
+    (r"stesnyayus-svoego-tela|стесняюсь своего тела", "samoocenka"),
+    (r"muzh-unizhaet|муж унижает", "vliyanie-i-manipulyacii"),
+    (r"uhazhivat-za-bolnym|ухаживать за больн", "separaciya"),
+    (r"zhaleyu-chto-rodila|жалею, что родила|ne-hochu-detej|не хочу детей", "roditelstvo"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),

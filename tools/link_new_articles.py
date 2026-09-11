@@ -155,6 +155,28 @@ INBOUND = {
                                          "muzh-stal-holodnym",
                                          "zabota-ili-kontrol"],
 
+    # Четвёртая пятёрка «тем, с которыми не идут к друзьям» (12.09).
+    "stesnyayus-svoego-tela-pri-muzhe": ["uverennost-v-sebe-telesnyj-navyk",
+                                         "net-seksa-v-brake-chto-delat",
+                                         "kak-skazat-partneru-o-svoih-zhelaniyah",
+                                         "kak-perezhit-pozor"],
+    "ne-hochu-detej-a-muzh-hochet": ["bezdetnye-po-vyboru-novyj-tip-odinochestva",
+                                     "ne-lyublyu-muzha-no-ne-uhozhu",
+                                     "zabota-ili-kontrol",
+                                     "ne-lyublyu-svoego-rebenka-chto-delat"],
+    "zhaleyu-chto-rodila-rebenka": ["ne-lyublyu-svoego-rebenka-chto-delat",
+                                    "kak-ne-sryvatsya-na-rebenka",
+                                    "kak-prostit-sebya",
+                                    "ustalost-i-apatiya-bez-prichiny"],
+    "muzh-unizhaet-chto-delat": ["emocionalnoe-nasilie-kak-raspoznat",
+                                 "nasilie-i-kontrol-v-otnosheniyah",
+                                 "chto-delat-esli-vas-obescenivayut",
+                                 "muzh-pyot-chto-delat-zhene"],
+    "ustala-uhazhivat-za-bolnym-roditelem": ["ya-nenavizhu-svoyu-mat",
+                                             "sozavisimost-zhizn-ryadom-s-zavisimym",
+                                             "vozvrashchenie-posle-vygoraniya-7-etapov",
+                                             "stydno-za-roditelej-chto-delat"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
