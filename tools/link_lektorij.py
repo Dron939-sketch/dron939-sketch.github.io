@@ -67,6 +67,11 @@ RULES = [
     # общая «Психотерапия» забирает остальные школы
     (r"\bкпт\b|\bkpt\b|когнитивно-повед|kognitivno-poved|аарон бек|bek-kpt|"
      r"бернс|дневник автомысл|автоматическ\w* мысл", "kpt-samostoyatelno"),
+    # Навязчивости — рабочая тема КПТ; «Стыдные мысли» без этого уходили в
+    # «Эмоциональный интеллект» по слову «стыд».
+    (r"стыдн\w*[- ]мысл|stydnye[- ]mysli|навязчив\w*[- ]мысл|navyazchivye[- ]mysli", "kpt-samostoyatelno"),
+    # «Роман на стороне» — про пару, не про древнюю книгу и не в хаб.
+    (r"роман на сторон|na-storone|любовник|lyubovnik", "privyazannost-i-otnosheniya"),
     (r"act-терап|act-terap|dbt|схема-терап|психотерап|psihoterap|терапи[яию]|"
      r"терапевт|гештальт|geshtalt|психоанализ|психолога|к психологу|"
      r"расстановк|rasstanovk|emdr|логотерап", "psihoterapiya"),
@@ -90,7 +95,11 @@ RULES = [
     (r"тревог|trevog|паническ|panichesk|фоби|fobi|страх|strah", "trevoga"),
     (r"депресси|depressi|апати|apati", "depressiya-i-apatiya"),
     (r"травм|travm|птср|ptsr|насили|nasili", "travma"),
-    (r"расстава|rasstava|развод|razvod|разрыв|razryv|бывш", "rasstavanie"),
+    # «Ребёнок после развода» — статья для родителя, не для расстающегося:
+    # ловим её до общего правила про развод.
+    (r"реб[её]н\w*[- ]после[- ]развод|rebenok-posle-razvoda|дет\w*[- ]после[- ]развод",
+     "roditelstvo"),
+    (r"расстава|rasstava|расстать|rasstatsya|прощальн|proshchaln|развод|razvod|разрыв|razryv|бывш", "rasstavanie"),
     (r"одиночеств|odinochestv", "odinochestvo"),
     (r"стресс|stress", "stress-menedzhment"),
     (r"бессонниц|bessonnic|\bсон\b|\bсна\b|высыпа|засыпа", "son"),
@@ -121,14 +130,20 @@ RULES = [
     # уходило в курс про привязанность и партнёров.
     (r"родител|roditel|воспитан|vospitan|подростк|podrostk|подрост[коа]|"
      r"\bмать\b|\bотец\b|\bмам[аыу]\b|семейн", "roditelstvo"),
+    # «Муж не работает и всем недоволен» уходило в «Работу и карьеру» — по
+    # слову «работает»; супруги в заголовке — это про пару, не про карьеру.
     (r"привязанност|privyazannost|отношени|otnosheni|партн[её]р|любов|"
-     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери|брос[яи]т|брошенн",
+     r"lyubov|ревност|довер\w* люд|doveryat lyudyam|недовери|брос[яи]т|брошенн|"
+     r"\bмуж\b|\bmuzh\b|\bжен[аеуы]\b|\bzhen[aeuy]\b|супруг",
      "privyazannost-i-otnosheniya"),
     (r"конфликт|konflikt|ссор|ssor|примирен", "konflikty"),
     (r"переговор|peregovor|\bторг\b|договорит", "peregovory"),
     (r"дружб|druzhb|\bдруз|druz", "druzhba"),
     (r"реб[её]н|reben|\bдет[еи]\b|deti|садик|школьник|adaptaciya-k-sadu",
      "razvitie-rebenka"),
+    # Статьи про близость в паре — это про пару, а не про древнюю книгу:
+    # «Нет секса в браке» уходила в «Камасутру».
+    (r"net-seksa|секса в браке|svoih-zhelaniyah|о своих желаниях|близост", "privyazannost-i-otnosheniya"),
     (r"секс|seks|камасутр|kamasutr|интимн|либидо", "kamasutra"),
     (r"язык[- ]тела|yazyk-tela|\bложь\b|lozh|вран|обман|obman|мимик|вр[её]т|врут|лжи\b",
      "yazyk-tela-i-lozh"),

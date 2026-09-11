@@ -24,6 +24,93 @@ INBOUND = {
                             "kak-nauchitsya-kopit-dengi",
                             "vygoranie-5-tipov-i-protokoly-vosstanovleniya"],
 
+    # УБ-9: «как повысить компетенцию» 445 + хвосты ≈ 516 — посадочной не
+    # было. Догматик о себе не спрашивает, он спрашивает о профессии.
+    "kak-povysit-kompetenciyu": ["strah-zadavat-voprosy",
+                                 "uchitsya-uchitsya",
+                                 "kak-nauchitsya-dumat-samomu",
+                                 "nachinayu-i-brosayu"],
+
+    # УБ-6: вход через предмет, а не через разговор о себе. «Почему люди
+    # верят в теории заговора» 76, «как проверить информацию на
+    # достоверность» 53, «как отличить правду от лжи в интернете» 15.
+    "kak-proverit-informaciyu": ["kak-nauchitsya-dumat-samomu",
+                                 "bolshaya-lozh-samopomoschi-7-mifov",
+                                 "kak-raspoznat-lozh-12-markerov-ekmana",
+                                 "100-kognitivnyh-iskazhenij-spravochnik"],
+
+    # Вебвизор 10–11.09: пятнадцать фраз про тревогу в теле (руки, давление,
+    # сердцебиение, утро, жжение языка) — посадочной не было.
+    "trevoga-v-tele-ruki-davlenie-serdce": ["kak-spravitsya-s-trevogoj",
+                                            "panicheskaya-ataka-ili-serdechnyj-pristup",
+                                            "kak-perestat-nakruchivat-sebya",
+                                            "trevozhnaya-spiral-kak-ostanovit"],
+
+    # Вебвизор 10–11.09: десять фраз со стороны того, кто уходит —
+    # «прощальное сообщение», «без истерик», «без обид», «безболезненно».
+    "kak-rasstatsya-proshchalnoe-soobshchenie": ["kak-zabyt-byvshego",
+                                                 "psihologiya-razvoda-7-etapov",
+                                                 "ne-mogu-perestat-dumat-o-cheloveke",
+                                                 "emocionalnaya-zavisimost-priznaki-i-protokol"],
+
+    # Вебвизор 10–11.09: пять фраз от мужчины, которого бросили, — все наши
+    # тексты про расставание написаны для неё.
+    "ushla-zhena-razvod-glazami-muzhchiny": ["psihologiya-razvoda-7-etapov",
+                                             "kak-perezhit-rasstavanie",
+                                             "kak-zabyt-byvshego",
+                                             "alkogol-seraya-zona-tihiy-alkogolizm"],
+
+    # Вебвизор 10–11.09: четыре фразы про первое сообщение девушке, и
+    # «страх подойти познакомиться… быть униженным» — ушёл через 3 секунды.
+    "chto-napisat-devushke-v-pervom-soobshchenii": ["netvorking-dlya-introvertov",
+                                                    "kak-zavodit-druzej-vzroslomu",
+                                                    "strah-zadavat-voprosy",
+                                                    "kak-perezhit-pozor"],
+
+    # Вебвизор 10–11.09: «ребёнка в первом классе уже начали обзывать» (час на
+    # сайте — искал и не нашёл) и «буллинг в старших классах».
+    "rebenka-obzyvayut-v-shkole-chto-delat": ["bulling-v-shkole-chto-delat",
+                                              "kak-nauchit-rebenka-postoyat-za-sebya",
+                                              "trevoga-roditelya-pervoklassnika",
+                                              "kak-ne-sryvatsya-na-rebenka",
+                                              "travlya-na-rabote-chto-delat"],
+
+    # Вебвизор 10–11.09: «муж не работает постоянно недоволен и не хочет меня
+    # слушать», «что сказать свекрови», «когда пора разводиться».
+    "muzh-ne-rabotaet-i-vsem-nedovolen": ["svekrov-vmeshivaetsya-chto-delat",
+                                          "psihologiya-razvoda-7-etapov",
+                                          "zabota-ili-kontrol",
+                                          "kak-nauchitsya-govorit-net"],
+
+    # Вебвизор 10–11.09: «отец настраивает ребенка против мамы как себя вести
+    # маме», «апатия и снижение мотивации у ребенка после развода родителей».
+    "rebenok-posle-razvoda-chto-delat": ["psihologiya-razvoda-7-etapov",
+                                         "chto-delat-esli-podrostok-zamolchal",
+                                         "kak-ne-sryvatsya-na-rebenka",
+                                         "ushla-zhena-razvod-glazami-muzhchiny"],
+
+    # Диалоги Фреди 4–11.09: сексуальные темы — 19 диалогов, 11 глубоких.
+    "net-seksa-v-brake-chto-delat": ["muzh-stal-holodnym",
+                                     "zhena-postoyanno-nedovolna",
+                                     "zabota-ili-kontrol",
+                                     "psihologiya-seksualnosti-2026-5-sdvigov"],
+    "kak-skazat-partneru-o-svoih-zhelaniyah": ["muzh-stal-holodnym",
+                                               "kak-nauchitsya-govorit-net",
+                                               "psihologiya-seksualnosti-2026-5-sdvigov",
+                                               "boyus-chto-menya-brosyat"],
+    "stydnye-mysli-i-vozbuzhdenie-ne-k-mestu": ["navyazchivye-mysli-chto-delat",
+                                                "kak-perezhit-pozor",
+                                                "trevoga-v-tele-ruki-davlenie-serdce",
+                                                "psihologiya-seksualnosti-2026-5-sdvigov"],
+    "u-menya-roman-na-storone-chto-delat": ["psihologiya-izmeny-8-prichin-nauchnyj-vzglyad",
+                                            "kak-prostit-izmenu",
+                                            "kak-perezhit-izmenu",
+                                            "chto-delat-esli-uznali-ob-izmene"],
+    "retroaktivnaya-revnost-proshloe-partnera": ["psihologiya-revnosti-6-tipov",
+                                                 "navyazchivye-mysli-chto-delat",
+                                                 "boyus-chto-menya-brosyat",
+                                                 "zabota-ili-kontrol"],
+
     # Стыд как состояние — сквозная тема через СБ-6, УБ-10 и ЧВ-6.
     # ~900 показов («как пережить позор» 221, «стыдно за своё поведение»
     # 217, «краснею когда говорю» 373, «мне стыдно за прошлое» 92),
