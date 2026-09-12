@@ -535,9 +535,15 @@ async function openAnalysisScreen() {
         const tData = await tRes.json();
         _analysis.thought = tData.success ? tData.thought : '';
 
+        // Полный разбор — часть подписки (12.09.2026). Без неё экран
+        // показывает, что внутри, и первый шаг — бесплатно; сервер на
+        // не-подписчика отвечает premium_required и ничего не генерирует.
+        if (!_isPremium()) { _renderLocked(); return; }
+
         // Сохранённый анализ из БД
         const sRes  = await fetch(`${api}/api/deep-analysis/${userId}`);
         const sData = await sRes.json();
+        if (sData && sData.premium_required) { _renderLocked(); return; }
 
         if (sData.success && sData.analysis) {
             console.log('📦 Загружен сохранённый анализ от', sData.created_at);
@@ -577,6 +583,7 @@ async function generateDeepAnalysis() {
         });
         const data = await res.json();
         clearInterval(timer);
+        if (data && data.premium_required) { _renderLocked(); return; }
 
         if (data.success && data.analysis) {
             _analysis = { ..._analysis, ...data.analysis };
@@ -713,6 +720,70 @@ function _tabThought() {
 // ============================================
 // ЗАГЛУШКА
 // ============================================
+// ============================================
+// ЗАМОК: что внутри разбора и первый шаг — без подписки
+// ============================================
+function _isPremium() {
+    if (window.IS_PREMIUM === true) return true;
+    try {
+        const s = window.FrediMeter && window.FrediMeter.lastCheck;
+        return !!(s && (s.is_premium || s.has_subscription));
+    } catch (e) { return false; }
+}
+
+// Первый шаг на сегодня считает meter.js (он загружен всегда):
+// window.frediFirstStepFor(displayName).
+function firstStepFor(code) {
+    return (typeof window.frediFirstStepFor === 'function')
+        ? window.frediFirstStepFor(code)
+        : 'Сегодня вспомните одну ситуацию, где промолчали, и запишите одним предложением, что хотели сказать.';
+}
+
+function _renderLocked() {
+    _injectStyles();
+    const c = document.getElementById('screenContainer');
+    if (!c) return;
+    const code = (_profile && (_profile.profile_data || {}).display_name) || '';
+    const step = firstStepFor(code);
+    try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('analysis_lock_shown', {}); } catch (e) {}
+    c.innerHTML = `
+        <div class="analysis-page">
+            <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
+            <div class="analysis-heading">
+                <h1>🧠 Полный разбор вашего теста</h1>
+                <p>Портрет и первый шаг — бесплатно. Шесть разделов разбора — с подпиской.</p>
+            </div>
+            <div class="analysis-card" style="margin-bottom:14px">
+                <div class="analysis-card-title">✅ Первый шаг на сегодня — бесплатно</div>
+                <div class="analysis-card-text">${step}</div>
+            </div>
+            <div class="analysis-card" style="opacity:.92">
+                <div class="analysis-card-title">🔒 Что откроется с подпиской</div>
+                <ul style="margin:8px 0 0;padding-left:20px;line-height:1.6">
+                    <li><b>Глубинный портрет</b> — как устроены ваши реакции, а не только их названия</li>
+                    <li><b>Системные петли</b> — что вас изматывает по кругу и где у петли вход</li>
+                    <li><b>Скрытые механизмы</b> — зачем психика держится за привычное</li>
+                    <li><b>Точки роста</b> — три места, где изменение даёт больше всего</li>
+                    <li><b>Прогноз</b> — что будет через полгода, если ничего не менять, и если менять</li>
+                    <li><b>Персональные ключи</b> — что говорить себе в момент срыва</li>
+                </ul>
+                <div style="font-size:13px;opacity:.75;margin-top:10px">Плюс коуч и тренер без лимита, голос и память Фреди о каждом разговоре.</div>
+                <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+                    <button class="back-btn" id="analysisLockSub" style="background:#3b82ff;color:#fff;border-color:#3b82ff">✨ Открыть разбор — неделя 290 ₽</button>
+                    <button class="back-btn" id="analysisLockHome">🏠 На главную</button>
+                </div>
+                <div style="font-size:12px;opacity:.65;margin-top:8px">Потом 990 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
+            </div>
+        </div>`;
+    document.getElementById('analysisBackBtn').onclick = () => _goHome();
+    document.getElementById('analysisLockHome').onclick = () => _goHome();
+    document.getElementById('analysisLockSub').onclick = () => {
+        try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'analysis_lock' }); } catch (e) {}
+        if (typeof window.openCheckout === 'function') window.openCheckout('analysis_lock');
+    };
+    _removeFooter();
+}
+
 function _renderFallback() {
     _injectStyles();
     const c = document.getElementById('screenContainer');

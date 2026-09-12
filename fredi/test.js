@@ -2431,13 +2431,11 @@ ${this.getStage3Interpretation()}
             : '👇 **ЧТО ДАЛЬШЕ?**\n\nСейчас профиль сохранён только в этом браузере. Аккаунт (email + пин-код) привяжет его к вам — он переживёт чистку истории и откроется с любого устройства.';
         this.addMessageWithButtons(whatNext, nextButtons);
 
-        // Профиль готов — пиковый момент для «сохранить и продолжать»
-        // (meter.js решает сам, показывать ли: премиум и раз в сутки).
-        try {
-            if (window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
-                setTimeout(function () { window.FrediMeter.showPeakOffer('bigtest'); }, 3000);
-            }
-        } catch (e) {}
+        // Что откроется с подпиской — прямо под портретом, с первым шагом
+        // бесплатно (решение владельца 12.09.2026). Раньше через три
+        // секунды всплывало общее «сохранить и продолжать» без предмета,
+        // и его закрывали «позже».
+        this.showPremiumTeaser(p);
 
         if (this.userId) {
             try {
@@ -2447,6 +2445,39 @@ ${this.getStage3Interpretation()}
                 }));
             } catch(e) { console.warn('Failed to save test results to localStorage:', e); }
         }
+    },
+
+    // Блок «что откроется с подпиской» после портрета. Первый шаг считается
+    // на клиенте по самому низкому уровню профиля (analysis.js) — он
+    // бесплатный и мгновенный. Подписчику вместо цены — кнопка в разбор.
+    showPremiumTeaser(p) {
+        const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const premium = (window.IS_PREMIUM === true)
+            || !!(window.FrediMeter && window.FrediMeter.lastCheck
+                  && (window.FrediMeter.lastCheck.is_premium || window.FrediMeter.lastCheck.has_subscription));
+        const step = (typeof window.frediFirstStepFor === 'function')
+            ? window.frediFirstStepFor(p && p.displayName)
+            : 'Сегодня вспомните одну ситуацию, где промолчали, и запишите одним предложением, что хотели сказать.';
+        let html = '✅ **ПЕРВЫЙ ШАГ НА СЕГОДНЯ — БЕСПЛАТНО**\n\n' + esc(step) + '\n\n'
+            + (premium ? '🔓 **ВАШ ПОЛНЫЙ РАЗБОР ГОТОВ К ОТКРЫТИЮ**' : '🔒 **ЧТО ОТКРОЕТСЯ С ПОДПИСКОЙ**') + '\n\n'
+            + '• Полный разбор именно вашего профиля: глубинный портрет, системные петли, скрытые механизмы\n'
+            + '• Точки роста, прогноз на полгода и персональные ключи на момент срыва\n'
+            + '• Коуч и тренер без лимита (без подписки — три ответа)\n'
+            + '• Голос, все тренажёры и память Фреди о каждом разговоре';
+        try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_shown', { premium: premium }); } catch {}
+        this.addBotMessage(html, true);
+        const btn = premium
+            ? { text: '🔍 ОТКРЫТЬ ПОЛНЫЙ РАЗБОР', callback: () => {
+                    try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_clicked', { premium: true }); } catch {}
+                    this.goToDashboard();
+                    if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
+                    else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
+                } }
+            : { text: '✨ ОТКРЫТЬ РАЗБОР — НЕДЕЛЯ 290 ₽', callback: () => {
+                    try { if (window.FrediTracker?.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'bigtest_teaser' }); } catch {}
+                    if (typeof window.openCheckout === 'function') window.openCheckout('bigtest_teaser');
+                } };
+        this.addMessageWithButtons('', [btn]);
     },
 
     // Текст первого сообщения по итогам теста: портрет от первого лица плюс
