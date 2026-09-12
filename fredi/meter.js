@@ -671,7 +671,13 @@
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterSubscribeBtn">✨ Попробовать неделю — 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
-                (trialExhausted
+                // Голосовая стена: голос завтра не вернётся, а текст доступен
+                // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
+                // стояло «Понятно, до завтра», и вернувшийся с аккаунтом
+                // уходил, хотя мог продолжить текстом.
+                (data.block_reason === 'voice'
+                    ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">Продолжу текстом</button>'
+                    : trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
             '</div>';
@@ -1190,6 +1196,11 @@
     }
     function showGameLock(fn, source) {
         var name = PREMIUM_GAMES[fn] || 'эта игра';
+        // Пришёл из блока «Практика к курсу» (from=lektorij-<курс>) —
+        // стена должна говорить о курсе, а не о «сильных играх» вообще:
+        // студент курса иначе решает, что попал не туда (фокус-группа 12.09.2026).
+        var fromCourse = false;
+        try { fromCourse = /^lektorij-/.test(new URLSearchParams(location.search).get('from') || ''); } catch (e) {}
         _injectMeterStyles();
         var old = document.getElementById('meterGameLock');
         if (old) old.remove();
@@ -1200,9 +1211,12 @@
         overlay.innerHTML =
             '<div class="meter-modal">' +
                 '<div class="meter-emoji">💎</div>' +
-                '<div class="meter-title">«' + _esc(name) + '» — с подпиской</div>' +
-                '<div class="meter-text">Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
-                    'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.</div>' +
+                '<div class="meter-title">«' + _esc(name) + '» — ' + (fromCourse ? 'практика к вашему курсу' : 'с подпиской') + '</div>' +
+                '<div class="meter-text">' + (fromCourse
+                    ? 'Это тренажёр из курса, который вы читали: те же ситуации, но на живых сценах и с разбором Фреди. ' +
+                      'Лекции и курс бесплатны, тренажёр входит в подписку вместе с голосом и памятью о каждом разговоре.'
+                    : 'Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
+                      'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.') + '</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать неделю — 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
