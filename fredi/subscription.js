@@ -403,15 +403,15 @@
             <div class="sub-card">
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
                 <div class="sub-title">Фреди Premium</div>
-                <div class="sub-desc">Разблокируйте полный доступ к виртуальному психологу</div>
+                <div class="sub-desc">Что открывается с подпиской</div>
                 ${priceHtml}
                 <ul class="sub-features">
-                    <li><span class="sub-feature-icon">&#x1F9E0;</span> Безлимитные сессии с Фреди</li>
-                    <li><span class="sub-feature-icon">&#x1F3AF;</span> Персональный план развития</li>
-                    <li><span class="sub-feature-icon">&#x1F4D3;</span> AI-дневник с глубокой рефлексией</li>
-                    <li><span class="sub-feature-icon">&#x1F319;</span> Гипнотические сессии и практики</li>
-                    <li><span class="sub-feature-icon">&#x1FA9E;</span> Зеркало — анализ отношений</li>
-                    <li><span class="sub-feature-icon">&#x1F3AD;</span> Транзактный анализ по Берну</li>
+                    <li><span class="sub-feature-icon">&#x1F9E0;</span> Фреди помнит каждый разговор и продолжает с того же места</li>
+                    <li><span class="sub-feature-icon">&#x2728;</span> Голосом и текстом 24/7, без счётчика минут</li>
+                    <li><span class="sub-feature-icon">&#x1F3AD;</span> Коуч и тренер без лимита (без подписки — три ответа)</li>
+                    <li><span class="sub-feature-icon">&#x1F50D;</span> Полный разбор вашего теста: петли, механизмы, точки роста, прогноз, ключи</li>
+                    <li><span class="sub-feature-icon">&#x1F3AE;</span> Сильные тренажёры: «Переход», «Опора», «Парус», «Спираль», «Скажи нет»</li>
+                    <li><span class="sub-feature-icon">&#x1F4D3;</span> Дневник эмоций, зеркало, разбор переписки, роли по Берну, гипноз и практики</li>
                 </ul>
                 <div style="margin-bottom:14px">
                     <label style="font-size:12px;color:var(--text-secondary);display:block;margin-bottom:6px">Email для чека</label>

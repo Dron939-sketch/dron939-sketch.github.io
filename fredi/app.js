@@ -3134,6 +3134,9 @@ document.addEventListener('DOMContentLoaded', function() {
             oshibka: { fn: 'showOshibkaGame', src: 'oshibka.js', chat: 'kontur' }, // «Лови ошибку»
             chuvstva: { fn: 'showChuvstvaGame', src: 'chuvstva.js', chat: 'kontur' }, // «Чувства»
             mysl: { fn: 'showMyslGame', src: 'mysl.js', chat: 'kontur' }, // «Мысль под допросом»
+            // /dnevnik-myslej/ и статьи про КПТ ссылались на m=cbt, которого не было:
+            // ссылка молча открывала общий экран. Алиас на КПТ-тренажёр автомыслей.
+            cbt: { fn: 'showMyslGame', src: 'mysl.js', chat: 'kontur' },
             skazhinet: { fn: 'showSkazhiNetGame', src: 'skazhinet.js', chat: 'kontur' }, // «Скажи нет»
             sobes: { fn: 'showSobesGame', src: 'sobes.js', chat: 'kontur' }, // «Собеседование» — Фреди играет работодателя
             podrostok: { fn: 'showPodrostokGame', src: 'podrostok.js', chat: 'kontur' }, // «Разговор с подростком» — Фреди играет подростка

@@ -140,68 +140,12 @@ a{color:#9333ea}
 
 <h2 style="font-size:clamp(1.2rem,4.6vw,1.5rem);margin:32px 0 12px">Если захочется дальше</h2>
 
-<p style="line-height:1.7;margin:0 0 14px">В курсе 38 занятий. Это первое. Остальные — в двух пакетах: <a href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html" style="color:#3A86FF">«Самостоятельный»</a> — видео и закрытый канал; <a href="/treningi/razgovornyy-gipnoz-standart.html" style="color:#3A86FF">«Стандартный»</a> — то же плюс комплект на бумаге (книга «Матчасть», блокнот с заданиями, колода для отработки, две схемы) и разбор ваших разговоров со мной. Оба платные, продаются на Ozon.</p>
+<p style="line-height:1.7;margin:0 0 14px">В курсе 38 занятий. Это первое. Остальные — в двух пакетах: <a href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html" style="color:#3A86FF">«Самостоятельный»</a> — видео и закрытый канал; <a href="/treningi/razgovornyy-gipnoz-standart.html" style="color:#3A86FF">«Стандартный»</a> — то же плюс комплект на бумаге (книга «Матчасть», блокнот с заданиями, колода для отработки, две схемы) и разбор ваших разговоров со мной. Оба платные, продаются на Ozon. Всё вместе одной посылкой — <a href="/komplekt/" style="color:#3A86FF">комплект «Разговорный гипноз»</a>: тренинг, три книги и три игры, 19 999 ₽, доставка СДЭК включена.</p>
 
 <p style="line-height:1.7;margin:0 0 30px;color:#64748B;font-size:.95rem">Если после занятия покупать не захотелось — это нормальный исход. Схема у вас уже есть, и она работает независимо от того, купили вы что-нибудь или нет.</p>
 
 </div>
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div><script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){document.getElementById('footer-placeholder').innerHTML=html;});})();</script>
-<script>
-(function(){
-  var STEPS=[
-    'Представьте лимон. Обычный жёлтый лимон. Вы держите его в руке и чувствуете прохладную бугристую кожуру — она чуть маслянистая, с порами, тяжесть плода ощущается в ладони.',
-    'Теперь вы берёте острый нож и медленно разрезаете лимон пополам. Слышите лёгкий хруст кожуры. На срезе выступают прозрачные капельки сока. Кислый аромат становится сильнее и отчётливее.',
-    'А теперь подносите половинку лимона ко рту и… кусаете. Зубы прокалывают мякоть, и кислый сок заполняет рот, растекается по языку…'
-  ];
-  var idx=-1;
-  var box=document.getElementById('limBox'), stepEl=document.getElementById('limStep'),
-      btn=document.getElementById('limNext'), btnRow=document.getElementById('limBtnRow'),
-      opts=document.getElementById('limOpts'), progress=document.getElementById('limProgress'),
-      done=document.getElementById('limDone');
-  STEPS.forEach(function(){ var d=document.createElement('div'); d.className='lim-dot'; progress.appendChild(d); });
-
-  function goal(id){ try { ym(108138656,'reachGoal',id); } catch(e){} }
-
-  stepEl.textContent='Сядьте удобно. Сейчас на экране будет только текст — а работать будет ваше воображение.';
-
-  btn.addEventListener('click',function(){
-    idx++;
-    if(idx<STEPS.length){
-      Array.prototype.forEach.call(progress.children,function(d,i){ d.className='lim-dot'+(i<=idx?' on':''); });
-      stepEl.textContent=STEPS[idx];
-      btn.textContent = idx<STEPS.length-1 ? 'Дальше' : 'Что вы почувствовали?';
-      return;
-    }
-    btnRow.style.display='none';
-    stepEl.textContent='Честно: что произошло, пока вы читали?';
-    opts.style.display='flex';
-    [['Выделилась слюна или свело скулы','yes'],
-     ['Поморщился(лась), представил(а) кислое','yes'],
-     ['Ничего особенного не почувствовал(а)','no']].forEach(function(o){
-      var b=document.createElement('button');
-      b.type='button'; b.className='lim-opt'; b.textContent=o[0];
-      b.addEventListener('click',function(){
-        var t=document.getElementById('doneTitle'), x=document.getElementById('doneText');
-        if(o[1]==='yes'){
-          x.innerHTML='<b>Ваше тело только что выполнило команду, отданную буквами на экране.</b> Никакого лимона не было — были слова. Сознание построило по ним образ, а организм отреагировал на образ как на настоящий плод: слюна, гримаса, «кисло» во рту.';
-        } else {
-          t.textContent='Ничего не почувствовали? Тоже результат';
-          x.innerHTML='<b>У части людей визуализация тише, и телесный отклик слабее — это нормально.</b> Но механизм на вас работает так же: просто его каналы — не картинка, а ритм речи, паузы, эмоциональные слова. Именно поэтому люди «без воображения» не защищены от внушений — они лишь не замечают входа.';
-        }
-        box.style.display='none';
-        done.style.display='block';
-        goal('gipnoz_done');
-        done.scrollIntoView({behavior:'smooth',block:'start'});
-      });
-      opts.appendChild(b);
-    });
-  });
-
-  var buy=document.getElementById('buyOzon');
-  if(buy) buy.addEventListener('click',function(){ goal('gipnoz_ozon'); });
-})();
-</script>
-
 <script>
 (function(){
   function goal(n){try{if(window.ym)ym(108138656,'reachGoal',n)}catch(e){}}

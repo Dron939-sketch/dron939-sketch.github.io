@@ -387,18 +387,23 @@
     // Человек, упёршийся в лимит посреди разбора карты, должен первой
     // строкой увидеть карту, а не общий разговор. Когда последняя функция
     // неизвестна, порядок прежний: стена чаще всего прерывает разговор.
+    // Порядок — по тому, за чем люди приходят (фокус-группа 12.09.2026):
+    // память и продолжение, голос, роли, разбор теста, сильные игры.
+    // Таро и супервизор — в конце: для пришедшего за КПТ или сном они
+    // читались как «не про психологию».
     var FEATURE_ITEMS = [
-        { icon: '\u2728', text: 'Разговор с Фреди 24/7 — голосом и текстом, без счётчика минут', keys: [] },
-        { icon: '\uD83C\uDFAD', text: 'Фреди в ролях: психолог, коуч и тренер', keys: [] },
-        { icon: '\uD83D\uDCD3', text: 'Дневник эмоций, зеркало, мой портрет, разбор по Берну',
-          keys: ['diary', 'mirrors', 'berne', 'kontur', 'messages', 'doubles',
-                 'opora', 'mysl', 'skazhinet', 'spiral', 'parus', 'perehod'] },
+        { icon: '\uD83E\uDDE0', text: 'Фреди помнит каждый разговор и продолжает завтра с того же места', keys: [] },
+        { icon: '\u2728', text: 'Голосом и текстом 24/7, без счётчика минут', keys: [] },
+        { icon: '\uD83C\uDFAD', text: 'Коуч и тренер без лимита (без подписки — три ответа)', keys: [] },
+        { icon: '\uD83D\uDD0D', text: 'Полный разбор вашего теста: петли, механизмы, точки роста, прогноз и ключи', keys: ['analysis', 'test'] },
+        { icon: '\uD83C\uDFAE', text: 'Сильные тренажёры: «Переход», «Опора», «Парус», «Спираль», «Скажи нет»',
+          keys: ['opora', 'mysl', 'skazhinet', 'spiral', 'parus', 'perehod'] },
+        { icon: '\uD83D\uDCD3', text: 'Дневник эмоций, зеркало, разбор переписки и роли по Берну',
+          keys: ['diary', 'mirrors', 'berne', 'kontur', 'messages', 'doubles'] },
         { icon: '\uD83C\uDF00', text: 'Гипноз, практики, якоря, толкование снов, сказки-катарсис',
           keys: ['hypnosis', 'dreams', 'tales'] },
-        { icon: '\uD83D\uDD2E', text: 'Таро, гороскоп и натальная карта с разбором',
-          keys: ['esoterica'] },
-        { icon: '\uD83E\uDDED', text: 'Супервизор для психологов, «Мой бренд», игры-тренажёры',
-          keys: ['brand'] }
+        { icon: '\uD83D\uDD2E', text: 'Таро, натальная карта, супервизор для психологов, «Мой бренд»',
+          keys: ['esoterica', 'brand'] }
     ];
 
     function _premiumFeatures() {
@@ -671,7 +676,13 @@
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterSubscribeBtn">✨ Попробовать неделю — 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
-                (trialExhausted
+                // Голосовая стена: голос завтра не вернётся, а текст доступен
+                // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
+                // стояло «Понятно, до завтра», и вернувшийся с аккаунтом
+                // уходил, хотя мог продолжить текстом.
+                (data.block_reason === 'voice'
+                    ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">Продолжу текстом</button>'
+                    : trialExhausted
                     ? '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u0434\u0443\u043C\u0430\u044E \u043F\u043E\u0437\u0436\u0435</button>'
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
             '</div>';
@@ -1106,16 +1117,25 @@
                 bigtest: 'Ваш портрет готов. ',
                 natal: 'Ваша карта разобрана. ',
             }[source] || '';
+            // После большого теста предмет предложения конкретный: полный
+            // разбор именно этого профиля, а не подписка «вообще».
+            var bigtest = source === 'bigtest';
+            var title = bigtest ? 'Открыть полный разбор?' : 'Сохранить и продолжать?';
+            var body = bigtest
+                ? 'Портрет и первый шаг — бесплатно. С подпиской откроются шесть разделов разбора именно вашего профиля: ' +
+                  'петли, скрытые механизмы, точки роста, прогноз и персональные ключи; коуч и тренер без лимита; ' +
+                  'Фреди помнит каждый разговор.'
+                : 'С подпиской Фреди помнит каждый разговор и продолжает завтра с того же места. ' +
+                  'Голос, все режимы, без счётчика минут.';
             var overlay = document.createElement('div');
             overlay.className = 'meter-overlay';
             overlay.id = 'meterPeakOverlay';
             overlay.innerHTML =
                 '<div class="meter-modal">' +
                     '<div class="meter-emoji">🔖</div>' +
-                    '<div class="meter-title">Сохранить и продолжать?</div>' +
+                    '<div class="meter-title">' + title + '</div>' +
                     '<div class="meter-text">' + (who ? _esc(who) + ', ' + lead.charAt(0).toLowerCase() + lead.slice(1) : lead) +
-                        'С подпиской Фреди помнит каждый разговор и продолжает завтра с того же места. ' +
-                        'Голос, все режимы, без счётчика минут.' +
+                        body +
                         (anon ? '<br><br>Без аккаунта этот разговор завтра не вспомнится: нужна почта и четыре цифры.' : '') +
                     '</div>' +
                     '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать неделю — 290 ₽</button>' +
@@ -1190,6 +1210,11 @@
     }
     function showGameLock(fn, source) {
         var name = PREMIUM_GAMES[fn] || 'эта игра';
+        // Пришёл из блока «Практика к курсу» (from=lektorij-<курс>) —
+        // стена должна говорить о курсе, а не о «сильных играх» вообще:
+        // студент курса иначе решает, что попал не туда (фокус-группа 12.09.2026).
+        var fromCourse = false;
+        try { fromCourse = /^lektorij-/.test(new URLSearchParams(location.search).get('from') || ''); } catch (e) {}
         _injectMeterStyles();
         var old = document.getElementById('meterGameLock');
         if (old) old.remove();
@@ -1200,9 +1225,12 @@
         overlay.innerHTML =
             '<div class="meter-modal">' +
                 '<div class="meter-emoji">💎</div>' +
-                '<div class="meter-title">«' + _esc(name) + '» — с подпиской</div>' +
-                '<div class="meter-text">Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
-                    'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.</div>' +
+                '<div class="meter-title">«' + _esc(name) + '» — ' + (fromCourse ? 'практика к вашему курсу' : 'с подпиской') + '</div>' +
+                '<div class="meter-text">' + (fromCourse
+                    ? 'Это тренажёр из курса, который вы читали: те же ситуации, но на живых сценах и с разбором Фреди. ' +
+                      'Лекции и курс бесплатны, тренажёр входит в подписку вместе с голосом и памятью о каждом разговоре.'
+                    : 'Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
+                      'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.') + '</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать неделю — 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
@@ -1276,6 +1304,24 @@
             };
         } catch (e) { console.warn('showAccountDoor failed:', e); }
     }
+
+    // Первый шаг на сегодня — по самому низкому из четырёх уровней профиля.
+    // Считается на клиенте из кода СБ-x_ТФ-x_УБ-x_ЧВ-x: бесплатно, мгновенно,
+    // и это честная часть разбора, а не реклама.
+    function _firstStepFor(displayName) {
+        const m = String(displayName || '').match(/СБ-(\d)_ТФ-(\d)_УБ-(\d)_ЧВ-(\d)/);
+        const steps = {
+            'СБ': 'Сегодня вспомните одну ситуацию, где промолчали, и запишите одним предложением, что хотели сказать. Завтра скажете это Фреди вслух — и разберём, что останавливает.',
+            'ТФ': 'Сегодня выпишите три траты недели, о которых жалеете, и одну, о которой нет. Разница между ними — ваша первая тема с Фреди.',
+            'УБ': 'Сегодня поймайте одно утверждение, в которое верите без проверки, и спросите себя: откуда я это знаю? Ответ принесите Фреди.',
+            'ЧВ': 'Сегодня заметьте момент, когда подстроились под другого, и назовите про себя, чего хотели сами. Только заметить — этого хватит для начала.',
+        };
+        if (!m) return steps['СБ'];
+        const lv = { 'СБ': +m[1], 'ТФ': +m[2], 'УБ': +m[3], 'ЧВ': +m[4] };
+        const key = Object.keys(lv).sort((a, b) => lv[a] - lv[b])[0];
+        return steps[key];
+    }
+    window.frediFirstStepFor = _firstStepFor;
 
     window.FrediMeter = {
         checkCanSend: checkCanSend,

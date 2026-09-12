@@ -64,6 +64,12 @@
         if (!path || !_data) return null;
         var m = path.match(/\/blog\/lektorij\/([a-z0-9-]+)\/?$/);
         if (m && _data.courses[m[1]]) return m[1];
+        // Блок «Практика к курсу» на страницах курсов передаёт
+        // from=lektorij-<slug>, а не путь: до 12.09.2026 такой from не
+        // распознавался, и все 103 курса открывали Фреди с вопросами
+        // «по умолчанию» вместо готовых вопросов курса.
+        m = path.match(/^\/?(?:fredi\/)?lektorij-([a-z0-9-]+)\/?$/);
+        if (m && _data.courses[m[1]]) return m[1];
         m = path.match(/\/blog\/lekciya-([a-z0-9]+)-\d+/);
         if (m) {
             var slug = _data.prefixes[m[1]];
