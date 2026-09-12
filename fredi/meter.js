@@ -300,8 +300,23 @@
         if (data && data.is_registered === true) return null;
         var big = data && data.registered_limit_minutes;
         var small = data && data.anon_limit_minutes;
-        if (!big || !small || big <= small) return null;
+        // small может быть 0: со второго дня аноним без минут (12.09.2026),
+        // и это ровно тот случай, когда аккаунт даёт больше всего.
+        if (!big || small == null || big <= small) return null;
         return { big: big, small: small, plus: Math.round((big - small) * 10) / 10 };
+    }
+    // Одна фраза про выигрыш от аккаунта на все стены: при нуле анонимных
+    // минут «5 вместо 0» звучит как арифметика, а не как предложение.
+    function _gainPhrase(gain, today) {
+        if (!gain) return '';
+        if (!gain.small) {
+            return today
+                ? 'С аккаунтом сегодня будет ' + gain.big + ' минут; без него минут на сегодня нет.'
+                : 'С аккаунтом — ' + gain.big + ' минут каждый день; без него со второго дня минут нет.';
+        }
+        return today
+            ? 'С аккаунтом на сегодня будет ' + gain.big + ' минут вместо ' + gain.small + '.'
+            : 'С аккаунтом ' + gain.big + ' минут каждый день вместо ' + gain.small + '.';
     }
     function _openRegister(source) {
         _track('meter_register_clicked', { source: source });
@@ -647,8 +662,7 @@
                 '<br>Завтра снова будут ' + limit + ' бесплатных минут — ' +
                 'или можно продолжить прямо сейчас.' +
                 (gain
-                    ? '<br><br>С аккаунтом дневное время больше: ' + gain.big +
-                      ' минут вместо ' + gain.small + '. Нужна только почта — ' +
+                    ? '<br><br>' + _gainPhrase(gain, false) + ' Нужна только почта — ' +
                       'и разговор перестанет зависеть от того, с какого ' +
                       'устройства вы зашли.'
                     : '');
@@ -781,8 +795,7 @@
             + (kind === 'trial' ? 'бесплатного знакомства' : 'сегодняшнего времени')
             + ' осталось около ' + rem + ' мин. '
             + (upGain
-                ? 'С аккаунтом на сегодня будет ' + upGain.big + ' минут вместо ' +
-                  upGain.small + ' — почта, и разговор продолжается. ' +
+                ? _gainPhrase(upGain, true) + ' Почта — и разговор продолжается. ' +
                   'С Premium счётчика нет вовсе.'
                 // «Весь Лекторий с озвучкой» отсюда убрано по той же причине,
                 // что из PREMIUM_FEATURES: Лекторий открыт всем, обещание
@@ -1204,9 +1217,21 @@
         return !!(_lastCheck && (_lastCheck.is_premium || _lastCheck.has_subscription));
     }
     // Заперта ли игра для этого человека: имя функции запуска → да/нет.
+    // Первый заход в сильную игру — бесплатно, со второго — подписка
+    // (решение владельца 12.09.2026). Замок на входе давал 5–14 секунд
+    // на экран и уход; один раунд показывает, за что платить.
+    function _gameSeenKey(fn) { return 'fredi_game_seen_' + fn; }
     function gameLocked(fn) {
         if (!fn || !PREMIUM_GAMES.hasOwnProperty(fn)) return false;
-        return !_isPremiumNow();
+        if (_isPremiumNow()) return false;
+        var seen = '';
+        try { seen = localStorage.getItem(_gameSeenKey(fn)) || ''; } catch (e) {}
+        if (!seen) {
+            try { localStorage.setItem(_gameSeenKey(fn), new Date().toISOString().slice(0, 10)); } catch (e) {}
+            _track('game_first_open_free', { game: fn });
+            return false;
+        }
+        return true;
     }
     function showGameLock(fn, source) {
         var name = PREMIUM_GAMES[fn] || 'эта игра';
@@ -1229,8 +1254,9 @@
                 '<div class="meter-text">' + (fromCourse
                     ? 'Это тренажёр из курса, который вы читали: те же ситуации, но на живых сценах и с разбором Фреди. ' +
                       'Лекции и курс бесплатны, тренажёр входит в подписку вместе с голосом и памятью о каждом разговоре.'
-                    : 'Сильные игры открываются в Premium вместе с голосом, всеми режимами ' +
-                      'и памятью Фреди о каждом разговоре. Короткие тренажёры и вход в игры остаются бесплатными.') + '</div>' +
+                    : 'Первый заход в «' + _esc(name) + '» был бесплатным — вы уже видели, как это работает. ' +
+                      'Дальше игра открывается с подпиской вместе с голосом, всеми режимами ' +
+                      'и памятью Фреди о каждом разговоре. Короткие тренажёры остаются бесплатными.') + '</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать неделю — 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
@@ -1283,9 +1309,7 @@
                     '<div class="meter-text">' + (who ? _esc(who) + ', разговор пошёл. ' : 'Разговор пошёл. ') +
                         'Без аккаунта Фреди его завтра не вспомнит и начнёт с чистого листа. ' +
                         'Аккаунт — это почта и четыре цифры, минута времени.' +
-                        (gain
-                            ? ' С аккаунтом ' + gain.big + ' минут каждый день вместо ' + gain.small + '.'
-                            : '') +
+                        (gain ? ' ' + _gainPhrase(gain, false) : '') +
                     '</div>' +
                     '<button class="meter-btn meter-btn-primary" id="meterDoorReg">📩 Завести аккаунт</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +

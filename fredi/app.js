@@ -892,9 +892,17 @@ function setupDashComposer() {
         // не дожили. Показывает meter.js, он же знает, аноним ли это.
         try {
             _dashMsgCount++;
-            if (answer && _dashMsgCount === 2
-                && window.FrediMeter && typeof window.FrediMeter.showAccountDoor === 'function') {
-                setTimeout(function () { window.FrediMeter.showAccountDoor('second_message'); }, 1500);
+            if (answer && _dashMsgCount === 2 && window.FrediMeter) {
+                var _authedNow = !!(window.FrediAuth && typeof window.FrediAuth.isAuthed === 'function' && window.FrediAuth.isAuthed());
+                if (!_authedNow && typeof window.FrediMeter.showAccountDoor === 'function') {
+                    setTimeout(function () { window.FrediMeter.showAccountDoor('second_message'); }, 1500);
+                } else if (_authedNow && typeof window.FrediMeter.showPeakOffer === 'function') {
+                    // У человека с аккаунтом дверь аккаунта не нужна — а
+                    // разговор на втором своём сообщении уже пошёл. Это
+                    // пиковый момент «сохранить и продолжать» (12.09.2026);
+                    // meter.js сам не покажет его подписчику и чаще раза в день.
+                    setTimeout(function () { window.FrediMeter.showPeakOffer('second_message'); }, 1500);
+                }
             }
         } catch (e) {}
 
@@ -2121,6 +2129,13 @@ function renderDashboard() {
         ? `${_hgBody}, <span class="hero-name">${_hgName}</span>${_hgPunct}`
         : `${_hgBody}${_hgPunct}`;
 
+    // Пункты меню, которые анониму без теста показывают только замок или
+    // пустой экран («Практики» 14 секунд, «Супервизор» 5, «Мой бренд» 4 —
+    // аналитика 12.09.2026): прячем, пока нет аккаунта или профиля.
+    try {
+        var _anonNow = !(window.IS_AUTHENTICATED || (CONFIG.PROFILE_CODE && CONFIG.PROFILE_CODE !== '···'));
+        document.querySelectorAll('[data-anon-hide]').forEach(function (el) { el.style.display = _anonNow ? 'none' : ''; });
+    } catch (e) {}
     container.innerHTML = `
         <div class="dashboard-container">
             ${maxBannerHtml}
@@ -2156,25 +2171,25 @@ function renderDashboard() {
                  потом селектор стиля общения. Раньше было наоборот, и юзер
                  уходил, не дойдя до микрофона. -->
             <div class="voice-section">
+                <!-- Сначала текст, потом голос (фокус-группа 12.09.2026): ночью,
+                     в офисе и в 58 лет вслух не говорят; из 1304 сообщений за
+                     неделю своих было 96. Поле — главное действие, микрофон —
+                     второй путь. Внутри .voice-section, чтобы на мобильном оба
+                     остались в липком низу экрана. -->
+                <div class="dash-composer">
+                    <form class="dash-composer-row" id="dashComposerForm" autocomplete="off">
+                        <input type="text" class="dash-composer-input" id="dashComposerInput"
+                               placeholder="Напишите, что беспокоит…" maxlength="2000" autocomplete="off">
+                        <button type="submit" class="dash-composer-send" id="dashComposerSend" aria-label="Отправить">↑</button>
+                    </form>
+                    <div class="dash-composer-or"><span>или скажите голосом</span></div>
+                </div>
                 <div class="voice-card">
                     <button class="voice-record-btn-premium" id="mainVoiceBtn">
                         <span class="voice-icon">🎤</span>
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
                     </button>
                     <div style="text-align:center;font-size:11px;color:var(--text-secondary);margin-top:8px">🎙️ Нажмите и удерживайте для записи</div>
-                </div>
-                <!-- Альтернатива голосу: написать текстом. Живёт внутри
-                     .voice-section — на мобильном она sticky bottom, значит
-                     поле оказывается в самом низу экрана и всегда под рукой.
-                     Голос остаётся главным действием, текст — запасной путь
-                     для тех, кому неудобно говорить (транспорт, работа, ночь). -->
-                <div class="dash-composer">
-                    <div class="dash-composer-or"><span>или напишите</span></div>
-                    <form class="dash-composer-row" id="dashComposerForm" autocomplete="off">
-                        <input type="text" class="dash-composer-input" id="dashComposerInput"
-                               placeholder="Напишите, что беспокоит…" maxlength="2000" autocomplete="off">
-                        <button type="submit" class="dash-composer-send" id="dashComposerSend" aria-label="Отправить">↑</button>
-                    </form>
                 </div>
             </div>
 
