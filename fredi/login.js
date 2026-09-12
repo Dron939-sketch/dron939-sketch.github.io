@@ -144,7 +144,7 @@
         })();
 
         var title = isRegister
-            ? (hasAnonData ? 'Сохраните прогресс' : 'Знакомимся')
+            ? (hasAnonData ? 'Сохранить этот разговор?' : 'Сохранить и продолжить')
             : 'Вход';
         // Сабтайтл подстраиваем под контекст. Фреди работает по подписке,
         // и это говорится прямо на пороге: человек должен знать условия до того,
@@ -226,7 +226,7 @@
                 passCheckField +
                 '<label class="fa-check"><input id="faRemember" type="checkbox" checked>Запомнить меня на этом устройстве</label>' +
                 (isRegister
-                  ? '<label class="fa-check"><input id="faOptIn" type="checkbox" checked>Согласен(на) получать редкие сообщения от Фреди (≤ 1 в неделю, отписаться — 1 клик)</label>'
+                  ? '<label class="fa-check"><input id="faOptIn" type="checkbox" checked>Фреди может написать завтра, как прошло (не чаще раза в неделю, отписаться — один клик)</label>'
                   : '') +
                 '<div class="fa-actions">' +
                   '<button class="fa-btn fa-btn-primary" id="faSubmit">' + primaryLabel + '</button>' +
@@ -234,7 +234,7 @@
                     ? ''
                     : '<button class="fa-btn fa-btn-ghost" id="faForgot">Забыли пин-код?</button>') +
                 '</div>' +
-                '<div class="fa-info">Пин-код хранится в виде необратимого хеша (Argon2). Сессия защищена HttpOnly-cookie и живёт до 1 года.</div>' +
+                '<div class="fa-info">Пин-код нужен только для входа, его никто не видит. Переписку не читает никто, кроме вас.</div>' +
               '</div></div>' +
             '</div>';
     }
