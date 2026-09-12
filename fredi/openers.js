@@ -140,6 +140,11 @@
     // раскрывает одним касанием.
     function _render(host, course) {
         _style();
+        // Человек пришёл из статьи, курса или теста — его тема важнее
+        // общего приглашения «Узнайте свой психотип» (фокус-группа 12.09.2026).
+        if (course && course.slug) {
+            try { var _b = document.getElementById('ctaTestBanner'); if (_b) _b.style.display = 'none'; } catch (e) {}
+        }
         var wrap = document.createElement('div');
         wrap.className = 'op-wrap';
         wrap.id = 'openersWrap';

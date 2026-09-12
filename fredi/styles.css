@@ -823,7 +823,7 @@ img.emoji {
     padding: 12px 16px;
     color: var(--text-primary);
     font-family: inherit;
-    font-size: 15px; /* 16px и меньше — iOS не зумит при фокусе; 15 безопасно */
+    font-size: 16px; /* 16px — iOS не зумит при фокусе; крупнее, чем было (15): поле теперь главное действие */
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
