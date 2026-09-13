@@ -768,6 +768,16 @@ let _isLoading = false;
 // Живёт вне setupDashComposer: дашборд перерисовывается, а счёт нет.
 let _dashMsgCount = 0;
 
+// Сообщение о сделанном шаге. Прошедшее время первого лица плюс глагол
+// действия или результата; отрицание рядом («не получилось», «не смогла»)
+// снимает совпадение — там не момент пользы, а момент поддержки.
+function _isProgressReport(text) {
+    var t = String(text || '').toLowerCase();
+    if (t.length < 8 || t.length > 400) return false;
+    if (/\b(не|ничего не|так и не)\s+(получил|смог|вышл|сделал|попробовал|сработал|помогл)/.test(t)) return false;
+    return /\b(попробовал[аи]?|получилось|сработало|помогло|стало легче|полегчало|сделал[аи]?\b|написал[аи]?\s+(ему|ей|им|письмо)|сказал[аи]?\s+(ему|ей|им|вслух)|доклеил|дописал[аи]?|записал[аи]?|выписал[аи]?|позвонил[аи]?|поговорил[аи]?|справил[ас]я|выдержал[аи]?|отказал[аи]?)\b/.test(t);
+}
+
 // Текстовая отправка с главного экрана — альтернатива голосу.
 // Голос идёт через voiceManager (/api/voice/process_stream), текст — прямо
 // в /api/chat. Ответ падает в тот же #dashChatStream, что и голосовой,
@@ -882,6 +892,16 @@ function setupDashComposer() {
             if (answer && /завтра спрошу|продолжим завтра/i.test(answer)
                 && window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
                 setTimeout(function () { window.FrediMeter.showPeakOffer('closing'); }, 1500);
+            }
+        } catch (e) {}
+        // Момент пользы: человек сообщил о сделанном шаге — «попробовала»,
+        // «получилось», «сказала ему», «доклеила». Не раньше третьего своего
+        // сообщения, чтобы не поймать «получилось» из первой жалобы.
+        // meter.js сам не покажет подписчику и чаще раза в день.
+        try {
+            if (answer && _dashMsgCount >= 3 && _isProgressReport(text)
+                && window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
+                setTimeout(function () { window.FrediMeter.showPeakOffer('progress'); }, 2500);
             }
         } catch (e) {}
 
@@ -3111,6 +3131,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 8000); // через 8 сек после загрузки страницы — после welcome voice
     } catch (e) {}
 });
+
+// ============================================
+// ОТВЕТ ИЗ ПИСЬМА ТРЕТЬЕГО ДНЯ: /fredi/?why=<код>
+// Четыре ссылки «что остановило от подписки» в письме (backend/free_tier.py).
+// Клик по ссылке — событие sub_why_not с источником mail_d3.
+// ============================================
+(function () {
+    try {
+        var why = new URLSearchParams(location.search).get('why');
+        if (!why || !/^[a-z_]{2,20}$/.test(why)) return;
+        var send = function () {
+            try {
+                if (window.FrediTracker && window.FrediTracker.track) {
+                    window.FrediTracker.track('sub_why_not', { reason: why, source: 'mail_d3' });
+                }
+                if (typeof ym === 'function') ym(108965607, 'reachGoal', 'sub_why_not');
+            } catch (e) {}
+        };
+        if (window.authReady && typeof window.authReady.then === 'function') {
+            window.authReady.then(send).catch(send);
+        } else {
+            setTimeout(send, 2000);
+        }
+    } catch (e) {}
+})();
 
 // ============================================
 // DEEP-LINK НА ПОДПИСКУ: /fredi/?sub=<тема>&from=<страница сайта>
