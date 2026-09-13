@@ -337,6 +337,13 @@
    "mins": 12
   },
   {
+   "slug": "beru-dengi-u-roditelej-v-30-stydno",
+   "title": "Беру деньги у родителей в 30 и стыдно: чем помощь отличается от зависимости, сколько это стоит на самом деле и как выйти без ссоры и без нищеты",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "besplatnaya-psihologicheskaya-konsultaciya-onlajn",
    "title": "Бесплатная психологическая консультация онлайн: где найти качество 2026",
    "rubric": "obshchestvo",
@@ -379,6 +386,13 @@
    "mins": 11
   },
   {
+   "slug": "biznes-bez-menya-kak-vyjti-iz-operacionki",
+   "title": "Бизнес без меня: как выйти из операционки",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 12
+  },
+  {
    "slug": "body-memory-gde-zhivyot-vasha-reakciya-na-strah",
    "title": "Body memory: где живёт ваша реакция на страх и как обнаружить её в теле",
    "rubric": "strahi",
@@ -407,6 +421,13 @@
    "mins": 22
   },
   {
+   "slug": "boyus-chto-menya-brosyat",
+   "title": "Боюсь, что меня бросят: что с этим делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "boyus-zvonit-po-telefonu",
    "title": "Боюсь звонить по телефону: почему звонок страшнее ста сообщений и как это расшатать",
    "rubric": "strahi",
@@ -424,6 +445,13 @@
    "slug": "bulling-v-shkole-chto-delat",
    "title": "Ребёнка травят в школе: что делать родителю по шагам",
    "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "byvshij-schastliv-bez-menya",
+   "title": "Бывший счастлив без меня, а я нет: почему его страница ранит сильнее расставания, что именно болит и как перестать сверять свою жизнь с его",
+   "rubric": "otnosheniya",
    "level": "n",
    "mins": 12
   },
@@ -550,6 +578,13 @@
    "slug": "chto-delat-esli-vas-uvolili",
    "title": "Что делать, если вас уволили",
    "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "chto-napisat-devushke-v-pervom-soobshchenii",
+   "title": "Что написать девушке в первом сообщении: три первых реплики и что делать с молчанием",
+   "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
   },
@@ -925,11 +960,25 @@
    "mins": 11
   },
   {
+   "slug": "hochu-razvoda-no-stydno",
+   "title": "Хочу развода, но стыдно: перед мамой, детьми, людьми и собой",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "hochu-stat-znamenitym-5-tipov-slavy",
    "title": "Хочу стать знаменитым: 5 типов славы и психология жажды признания",
    "rubric": "emocii",
    "level": "m",
    "mins": 18
+  },
+  {
+   "slug": "hochu-ujti-ot-bolnogo-muzha",
+   "title": "Хочу уйти от больного мужа: чем «уйти от него» отличается от «уйти от ухода», что между «остаться и сгореть» и «бросить»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 14
   },
   {
    "slug": "horoshaya-devochka-35-let",
@@ -988,6 +1037,20 @@
    "mins": 11
   },
   {
+   "slug": "izmenila-muzhu-i-muchaet-sovest",
+   "title": "Изменила мужу, и мучает совесть: рассказывать или нет, и как жить с этим дальше",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "izmenyayu-muzhu-v-myslyah",
+   "title": "Изменяю мужу в мыслях: думаю о другом и мучаюсь виной",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-chitat-lyudej-7-urovnej-nablyudatelnosti",
    "title": "Как читать людей: 7 уровней наблюдательности — Андрей Мейстер",
    "rubric": "emocii",
@@ -1009,6 +1072,13 @@
    "mins": 12
   },
   {
+   "slug": "kak-manipulirovat-lyudmi",
+   "title": "Как манипулировать людьми",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "kak-my-dumaem-kognitivnye-iskazheniya-vvedenie",
    "title": "Как мы думаем: что такое когнитивные искажения и зачем их знать",
    "rubric": "myshlenie",
@@ -1016,9 +1086,23 @@
    "mins": 9
   },
   {
+   "slug": "kak-nachat-rabotat-na-sebya",
+   "title": "Как начать работать на себя",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "kak-najti-sebya-nastoyashchego",
    "title": "Как найти себя настоящего, если вы разный со всеми",
    "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-naladit-otnosheniya-s-podrostkom",
+   "title": "Как наладить отношения с подростком",
+   "rubric": "roditeli",
    "level": "n",
    "mins": 12
   },
@@ -1037,6 +1121,27 @@
    "mins": 5
   },
   {
+   "slug": "kak-nauchit-rebenka-postoyat-za-sebya",
+   "title": "Как научить ребёнка постоять за себя",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-nauchitsya-doveryat-lyudyam",
+   "title": "Как научиться доверять людям снова",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "kak-nauchitsya-dumat-samomu",
+   "title": "Как научиться думать самому",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "kak-nauchitsya-govorit-net",
    "title": "Как научиться говорить «нет»: формула отказа и готовые фразы на каждый случай",
    "rubric": "otnosheniya",
@@ -1044,11 +1149,39 @@
    "mins": 11
   },
   {
+   "slug": "kak-nauchitsya-kopit-dengi",
+   "title": "Как научиться копить деньги",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "kak-nauchitsya-obyasnyat",
+   "title": "Как научиться объяснять",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "kak-nauchitsya-otdyhat",
    "title": "Как научиться отдыхать: почему выходные не восстанавливают и что с этим делать",
    "rubric": "telo",
    "level": "m",
    "mins": 11
+  },
+  {
+   "slug": "kak-ne-sryvatsya-na-rebenka",
+   "title": "Как не срываться на ребёнка",
+   "rubric": "roditeli",
+   "level": "b",
+   "mins": 11
+  },
+  {
+   "slug": "kak-o-vas-uznayut-cifrovoj-sled-i-precedent",
+   "title": "Как о вас узнают: цифровой след, повод и миф",
+   "rubric": "obshchestvo",
+   "level": "m",
+   "mins": 12
   },
   {
    "slug": "kak-opredelit-harakter-cheloveka",
@@ -1086,6 +1219,13 @@
    "mins": 13
   },
   {
+   "slug": "kak-perestat-byt-udobnym",
+   "title": "Как перестать быть удобным",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "kak-perestat-byt-zhertvoj",
    "title": "Как перестать быть жертвой: разбор по шагам",
    "rubric": "emocii",
@@ -1114,6 +1254,13 @@
    "mins": 10
   },
   {
+   "slug": "kak-perestat-vsyo-kontrolirovat",
+   "title": "Как перестать всё контролировать",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "kak-perestat-zaviset-ot-chuzhogo-mneniya",
    "title": "Как перестать зависеть от чужого мнения: почему «просто не обращай внимания» не работает",
    "rubric": "emocii",
@@ -1126,6 +1273,13 @@
    "rubric": "otnosheniya",
    "level": "m",
    "mins": 13
+  },
+  {
+   "slug": "kak-perezhit-pozor",
+   "title": "Стыдно за своё поведение: как пережить позор",
+   "rubric": "emocii",
+   "level": "b",
+   "mins": 11
   },
   {
    "slug": "kak-perezhit-predatelstvo",
@@ -1198,11 +1352,32 @@
    "mins": 11
   },
   {
+   "slug": "kak-ponyat-chto-chelovek-vret",
+   "title": "Как понять, что человек врёт",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "kak-poprosit-povyshenie-zarplaty",
+   "title": "Как попросить повышение зарплаты: подготовка и фразы",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "kak-postavit-normalnuyu-cenu",
    "title": "Как поставить нормальную цену на свои услуги: 5 причин заниженного тарифа и протокол поднятия",
    "rubric": "strahi",
    "level": "m",
    "mins": 15
+  },
+  {
+   "slug": "kak-povysit-kompetenciyu",
+   "title": "Как повысить компетенцию, когда учиться некогда: 7 шагов",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
   },
   {
    "slug": "kak-pravilno-hvalit-rebenka",
@@ -1224,6 +1399,13 @@
    "rubric": "myshlenie",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "kak-privlech-klientov-masteru",
+   "title": "Как привлечь клиентов: что мешает мастеру",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 12
   },
   {
    "slug": "kak-prosit-o-pomoshchi",
@@ -1261,6 +1443,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-proverit-informaciyu",
+   "title": "Как проверить информацию на достоверность: два источника и пять вопросов",
+   "rubric": "myshlenie",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "kak-rabotaet-infopole-vk",
    "title": "Информационное поле в VK: как ежедневные посты «зарабатывающих» дрессируют твоё внимание",
    "rubric": "dengi",
@@ -1280,6 +1469,13 @@
    "rubric": "gipnoz",
    "level": "m",
    "mins": 14
+  },
+  {
+   "slug": "kak-rasstatsya-proshchalnoe-soobshchenie",
+   "title": "Как расстаться без истерик и обид: порядок, слова и прощальное сообщение",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "kak-razgovarivat-s-ii-psihologom-7-pravil",
@@ -1310,6 +1506,13 @@
    "mins": 11
   },
   {
+   "slug": "kak-skazat-partneru-o-svoih-zhelaniyah",
+   "title": "Как сказать партнёру о своих желаниях в близости",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "kak-sobrat-o-sebe-dostovernuyu-stranicu",
    "title": "Как собрать о себе достоверную страницу: 7 шагов, чтобы поиск показывал вас",
    "rubric": "obshchestvo",
@@ -1329,6 +1532,13 @@
    "rubric": "emocii",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "kak-ubedit-cheloveka-poryadok",
+   "title": "Как убедить человека: порядок важнее аргументов",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 9
   },
   {
    "slug": "kak-vesti-dnevnik-emocij",
@@ -1412,6 +1622,13 @@
    "title": "Карта желаний не работает: разбор 47 исследований, которые показали обратное",
    "rubric": "dengi",
    "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "klient-prosit-skidku",
+   "title": "Клиент просит скидку: что ответить",
+   "rubric": "dengi",
+   "level": "b",
    "mins": 10
   },
   {
@@ -9346,11 +9563,46 @@
    "mins": 20
   },
   {
+   "slug": "muzh-masturbiruet-chto-delat",
+   "title": "Муж мастурбирует: что это значит на самом деле, когда это отдельно от вас, когда",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-ne-rabotaet-i-vsem-nedovolen",
+   "title": "Муж не работает и всем недоволен: что делать жене, когда терпение кончилось",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-pyot-chto-delat-zhene",
+   "title": "Муж пьёт: что делать жене, когда уговоры, скандалы и слёзы уже не работают",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "muzh-smotrit-porno-chto-delat",
+   "title": "Муж смотрит порно: что это значит, что делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "muzh-stal-holodnym",
    "title": "Муж стал холодным: шесть причин, и страшная из них — одна",
    "rubric": "otnosheniya",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "muzh-unizhaet-chto-delat",
+   "title": "Муж унижает: что делать, если после его слов вас становится меньше, а уйти вы не можете",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "muzhchina-kotoryj-vsyo-tashchit-molcha",
@@ -9365,6 +9617,20 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 12
+  },
+  {
+   "slug": "muzhchine-stydno-plakat",
+   "title": "Мужчине стыдно плакать: что делать, если слёзы приходят в машине, а показать их некому",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "nachinayu-i-brosayu",
+   "title": "Начинаю делать и бросаю: почему так и что с этим делать",
+   "rubric": "motivaciya",
+   "level": "b",
+   "mins": 10
   },
   {
    "slug": "nado-bylo-skazat",
@@ -9437,6 +9703,13 @@
    "mins": 15
   },
   {
+   "slug": "ne-hochu-detej-a-muzh-hochet",
+   "title": "Не хочу детей, а муж хочет: что делать, когда на главный вопрос у вас разные ответы",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "ne-hochu-rabotat-chto-delat",
    "title": "Не хочу работать: что за этим стоит на самом деле",
    "rubric": "dengi",
@@ -9451,11 +9724,32 @@
    "mins": 12
   },
   {
+   "slug": "ne-hochu-seksa-s-muzhem",
+   "title": "Не хочу секса с мужем: куда ушло желание",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "ne-lentyaj-kopish-i-vydayosh-zalpom",
    "title": "Ты не лентяй и не прокрастинатор. Ты человек, который копит и выдаёт залпом",
    "rubric": "motivaciya",
    "level": "m",
    "mins": 14
+  },
+  {
+   "slug": "ne-lyublyu-muzha-no-ne-uhozhu",
+   "title": "Не люблю мужа, но не ухожу: что с этим делать, если он ни в чём не виноват",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "ne-lyublyu-svoego-rebenka-chto-delat",
+   "title": "Не люблю своего ребёнка: что делать, если он раздражает, а сказать об этом нельзя никому",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "ne-mogu-delegirovat-kak-otpustit",
@@ -9507,11 +9801,32 @@
    "mins": 11
   },
   {
+   "slug": "nenavizhu-nevestku-chto-delat",
+   "title": "Ненавижу невестку: за что именно, почему это чувство приходит к матери сына чаще, чем к матери дочери, что она на самом деле «забрала»",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 13
+  },
+  {
    "slug": "net-deneg-na-psihologa-5-strategij",
    "title": "Что делать, если нет денег на психолога: 5 рабочих стратегий 2026",
    "rubric": "obshchestvo",
    "level": "m",
    "mins": 19
+  },
+  {
+   "slug": "net-druzej-v-30-stydno",
+   "title": "Нет друзей в 30 и стыдно: почему это случилось с половиной взрослых, чей это стыд и как за три месяца получить одного человека, которому можно написать «как ты»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "net-seksa-v-brake-chto-delat",
+   "title": "Нет секса в браке: что делать, когда «подожду» длится годами",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "netvorking-dlya-introvertov",
@@ -9570,6 +9885,13 @@
    "mins": 15
   },
   {
+   "slug": "oblegchenie-posle-smerti-roditelya",
+   "title": "Облегчение после смерти родителя: почему стало легче, а не больно, за что на самом деле стыдно и придёт ли горе потом",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "obratnaya-svyaz-formula-pixar",
    "title": "Обратная связь: формула, разработанная в Pixar и работающая в семье",
    "rubric": "roditeli",
@@ -9582,6 +9904,13 @@
    "rubric": "otnosheniya",
    "level": "m",
    "mins": 17
+  },
+  {
+   "slug": "odinoka-v-40-i-stydno",
+   "title": "Одинока в 40 и стыдно: за что на самом деле стыд, что из этого одиночество, а что",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "opros-200-terapevtov-rasstanovki-hellingera",
@@ -9610,6 +9939,13 @@
    "rubric": "otnosheniya",
    "level": "m",
    "mins": 11
+  },
+  {
+   "slug": "otvrashchenie-k-muzhu-chto-delat",
+   "title": "Отвращение к мужу: откуда оно берётся и что с ним делать, если он «ничего не сделал»",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "panicheskaya-ataka-ili-serdechnyj-pristup",
@@ -9892,6 +10228,13 @@
    "mins": 20
   },
   {
+   "slug": "ponimanie-mira-devyat-urovnej",
+   "title": "Понимание мира: девять уровней — где вы и что делать дальше",
+   "rubric": "myshlenie",
+   "level": "m",
+   "mins": 12
+  },
+  {
    "slug": "poslerodovaya-depressiya-priznaki",
    "title": "Послеродовая депрессия: как отличить от усталости и что делать",
    "rubric": "roditeli",
@@ -9904,6 +10247,13 @@
    "rubric": "obshchestvo",
    "level": "p",
    "mins": 28
+  },
+  {
+   "slug": "pozhalela-chto-vyshla-zamuzh",
+   "title": "Пожалела, что вышла замуж: что делать, если ошибка стала ясна через год, а все были на свадьбе",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "princip-urovnya-dveri-mejstera",
@@ -10270,6 +10620,20 @@
    "mins": 12
   },
   {
+   "slug": "rebenka-obzyvayut-v-shkole-chto-delat",
+   "title": "Ребёнка обзывают в школе: что делать родителю в первый вечер и дальше",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "rebenok-deretsya-chto-delat",
+   "title": "Ребёнок дерётся: что делать родителю",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "rebenok-i-gadzhety-pravila-bez-vojny",
    "title": "Ребёнок и гаджеты: правила экрана без ежедневной войны",
    "rubric": "roditeli",
@@ -10282,6 +10646,13 @@
    "rubric": "roditeli",
    "level": "n",
    "mins": 11
+  },
+  {
+   "slug": "rebenok-posle-razvoda-chto-delat",
+   "title": "Ребёнок после развода: настраивают против вас, замкнулся, ничего не хочет",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "rebenok-uchitsya-svoemu-treneru",
@@ -10324,6 +10695,13 @@
    "rubric": "otnosheniya",
    "level": "m",
    "mins": 15
+  },
+  {
+   "slug": "retroaktivnaya-revnost-proshloe-partnera",
+   "title": "Ретроактивная ревность: когда мучает прошлое партнёра и нельзя перестать спрашивать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "ritual-prisutstviya-devyat-chashek-tishiny",
@@ -10718,6 +11096,20 @@
    "mins": 26
   },
   {
+   "slug": "skryvayu-ot-muzha-proshloe",
+   "title": "Скрываю от мужа прошлое: рассказывать ли то, что было до него, и как жить, если решили молчать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "skryvayu-stavki-i-dolgi-ot-semi",
+   "title": "Скрываю ставки и долги от семьи: как выйти, не дожидаясь разоблачения",
+   "rubric": "zavisimosti",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "slovar-psihologii-100-let",
    "title": "Психологические термины и их значение: 70 понятий, вошедших в обычную речь",
    "rubric": "shkoly",
@@ -10814,6 +11206,13 @@
    "rubric": "gipnoz",
    "level": "p",
    "mins": 24
+  },
+  {
+   "slug": "stesnyayus-svoego-tela-pri-muzhe",
+   "title": "Стесняюсь своего тела при муже: откуда этот стыд и как перестать гасить свет",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
   },
   {
    "slug": "stimulnyj-kontrol-7-rychagov-izmeneniya-povedeniya",
@@ -10921,6 +11320,13 @@
    "mins": 10
   },
   {
+   "slug": "strah-zadavat-voprosy",
+   "title": "Страх задавать вопросы: как спрашивать, не выглядя глупо",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
    "slug": "stress-na-rabote-chto-delat",
    "title": "Стресс на работе: почему выматывает не нагрузка и что делать прямо в рабочий день",
    "rubric": "dengi",
@@ -10940,6 +11346,76 @@
    "rubric": "emocii",
    "level": "m",
    "mins": 20
+  },
+  {
+   "slug": "stydno-chto-ne-rabotayu",
+   "title": "Стыдно, что не работаю: как отвечать на «а ты где работаешь», когда вы дома",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "stydno-chto-razvelas",
+   "title": "Стыдно, что развелась: как перестать чувствовать себя неудавшейся перед мамой, коллегами и собой",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "stydno-idti-k-psihologu",
+   "title": "Стыдно идти к психологу: откуда стыд, что за ним стоит на самом деле и как дойти до первой встречи, никому не рассказывая",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-priglashat-gostej-domoj",
+   "title": "Стыдно приглашать гостей домой: за что именно стыдно, чьими глазами вы смотрите на свою квартиру и как перестать жить «пока не как у людей»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "stydno-za-muzha-pered-druzyami",
+   "title": "Стыдно за мужа перед друзьями и родными: за что именно, чьими глазами вы на него смотрите и что делать, если стыд перерос в презрение",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-za-roditelej-chto-delat",
+   "title": "Стыдно за родителей: что делать с этим стыдом, когда они такие, какие есть",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "stydno-za-svoe-obrazovanie",
+   "title": "Стыдно за своё образование: без вуза, с «не тем» дипломом или с заочкой среди людей «с образованием»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "stydno-za-svoego-rebenka",
+   "title": "Стыдно за своего ребёнка: за что именно, чьими глазами вы на него смотрите, почему ему нельзя об этом знать и что делать, когда стыд мешает быть на его стороне",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "stydnye-mysli-i-vozbuzhdenie-ne-k-mestu",
+   "title": "Стыдные мысли и возбуждение не к месту: почему это приходит и что с этим делать",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "styzhus-svoej-semi",
+   "title": "Стыжусь своей семьи и происхождения: когда вы «перешли» в другой круг и живёте между двумя мирами",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 13
   },
   {
    "slug": "svekrov-vmeshivaetsya-chto-delat",
@@ -11180,6 +11656,13 @@
    "mins": 10
   },
   {
+   "slug": "trevoga-v-tele-ruki-davlenie-serdce",
+   "title": "Тревога в теле: трясутся руки, скачет давление, колотится сердце",
+   "rubric": "strahi",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "trevozhnaya-spiral-kak-ostanovit",
    "title": "Тревожная спираль мыслей: как остановить прямо сейчас",
    "rubric": "strahi",
@@ -11243,6 +11726,13 @@
    "mins": 3
   },
   {
+   "slug": "u-menya-roman-na-storone-chto-delat",
+   "title": "У меня роман на стороне: как понять, что делать дальше,",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "uchitsya-uchitsya",
    "title": "Учиться учиться: почему перечитывание не работает и три техники, которые работают — Андрей Мейстер",
    "rubric": "dengi",
@@ -11264,11 +11754,25 @@
    "mins": 90
   },
   {
+   "slug": "ushla-zhena-razvod-glazami-muzhchiny",
+   "title": "Ушла жена: как пережить развод мужчине, когда «я в порядке» уже не работает",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "uspeshnaya-odinokaya-zhenshchina-35",
    "title": "«Успешная одинокая женщина 35+»: психология феномена — Андрей Мейстер",
    "rubric": "emocii",
    "level": "m",
    "mins": 18
+  },
+  {
+   "slug": "ustala-uhazhivat-za-bolnym-roditelem",
+   "title": "Устала ухаживать за больным родителем: что делать с мыслью «скорее бы», за которую стыдно",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "ustalost-i-apatiya-bez-prichiny",
@@ -11316,6 +11820,13 @@
    "slug": "viktor-frankl-logoterapiya-biografiya-metod",
    "title": "Виктор Франкл и логотерапия: смысл как лекарство",
    "rubric": "shkoly",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "vlechenie-posle-60-chto-s-nim-delat",
+   "title": "Влечение после шестидесяти: что с ним делать, когда все считают, что его быть не должно",
+   "rubric": "otnosheniya",
    "level": "n",
    "mins": 12
   },
@@ -11495,6 +12006,20 @@
    "mins": 13
   },
   {
+   "slug": "zaviduyu-podruge-chto-delat",
+   "title": "Завидую подруге и стыжусь этого: что зависть говорит о вас и что с ней делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "zaviduyu-sestre-chto-delat",
+   "title": "Завидую сестре и ненавижу себя за это: откуда зависть к родному человеку, кто на самом деле судья и что с этим делать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "zavisimosti-9-vidov-nauchnyj-vzglyad",
    "title": "Зависимости: 9 видов и научный взгляд 2026 — Андрей Мейстер",
    "rubric": "zavisimosti",
@@ -11509,6 +12034,13 @@
    "mins": 18
   },
   {
+   "slug": "zhaleyu-chto-rodila-rebenka",
+   "title": "Жалею, что родила: что делать с этой мыслью, которую нельзя сказать никому",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "zhena-postoyanno-nedovolna",
    "title": "Жена постоянно недовольна: что она говорит на самом деле",
    "rubric": "otnosheniya",
@@ -11516,11 +12048,25 @@
    "mins": 10
   },
   {
+   "slug": "zhena-zarabatyvaet-bolshe-muzha",
+   "title": "Жена зарабатывает больше мужа: что с этим делать обоим, чтобы деньги не съели брак",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
+  },
+  {
    "slug": "zhenskoj-psihologii-net-eto-marketing",
    "title": "«Женской психологии» не существует. Это маркетинг — Андрей Мейстер",
    "rubric": "emocii",
    "level": "m",
    "mins": 17
+  },
+  {
+   "slug": "zhivu-s-roditelyami-v-30-stydno",
+   "title": "Живу с родителями в 30 и стыдно: что за этим стоит на самом деле и как уехать",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 12
   },
   {
    "slug": "zhizn-v-rezhime-begi-flight-pattern",
@@ -11563,545 +12109,6 @@
    "rubric": "strahi",
    "level": "m",
    "mins": 10
-  },
-  {
-   "slug": "kak-poprosit-povyshenie-zarplaty",
-   "title": "Как попросить повышение зарплаты: подготовка и фразы",
-   "rubric": "dengi",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-manipulirovat-lyudmi",
-   "title": "Как манипулировать людьми",
-   "rubric": "gipnoz",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-nauchitsya-doveryat-lyudyam",
-   "title": "Как научиться доверять людям снова",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "rebenok-deretsya-chto-delat",
-   "title": "Ребёнок дерётся: что делать родителю",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-naladit-otnosheniya-s-podrostkom",
-   "title": "Как наладить отношения с подростком",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-ponyat-chto-chelovek-vret",
-   "title": "Как понять, что человек врёт",
-   "rubric": "gipnoz",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-perestat-byt-udobnym",
-   "title": "Как перестать быть удобным",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-nauchit-rebenka-postoyat-za-sebya",
-   "title": "Как научить ребёнка постоять за себя",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-nachat-rabotat-na-sebya",
-   "title": "Как начать работать на себя",
-   "rubric": "dengi",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "strah-zadavat-voprosy",
-   "title": "Страх задавать вопросы: как спрашивать, не выглядя глупо",
-   "rubric": "strahi",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "boyus-chto-menya-brosyat",
-   "title": "Боюсь, что меня бросят: что с этим делать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-perestat-vsyo-kontrolirovat",
-   "title": "Как перестать всё контролировать",
-   "rubric": "emocii",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-nauchitsya-kopit-dengi",
-   "title": "Как научиться копить деньги",
-   "rubric": "dengi",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "biznes-bez-menya-kak-vyjti-iz-operacionki",
-   "title": "Бизнес без меня: как выйти из операционки",
-   "rubric": "dengi",
-   "level": "p",
-   "mins": 12
-  },
-  {
-   "slug": "kak-nauchitsya-dumat-samomu",
-   "title": "Как научиться думать самому",
-   "rubric": "myshlenie",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-nauchitsya-obyasnyat",
-   "title": "Как научиться объяснять",
-   "rubric": "gipnoz",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-o-vas-uznayut-cifrovoj-sled-i-precedent",
-   "title": "Как о вас узнают: цифровой след, повод и миф",
-   "rubric": "obshchestvo",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-privlech-klientov-masteru",
-   "title": "Как привлечь клиентов: что мешает мастеру",
-   "rubric": "dengi",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-ubedit-cheloveka-poryadok",
-   "title": "Как убедить человека: порядок важнее аргументов",
-   "rubric": "gipnoz",
-   "level": "m",
-   "mins": 9
-  },
-  {
-   "slug": "kak-ne-sryvatsya-na-rebenka",
-   "title": "Как не срываться на ребёнка",
-   "rubric": "roditeli",
-   "level": "b",
-   "mins": 11
-  },
-  {
-   "slug": "kak-perezhit-pozor",
-   "title": "Стыдно за своё поведение: как пережить позор",
-   "rubric": "emocii",
-   "level": "b",
-   "mins": 11
-  },
-  {
-   "slug": "klient-prosit-skidku",
-   "title": "Клиент просит скидку: что ответить",
-   "rubric": "dengi",
-   "level": "b",
-   "mins": 10
-  },
-  {
-   "slug": "nachinayu-i-brosayu",
-   "title": "Начинаю делать и бросаю: почему так и что с этим делать",
-   "rubric": "motivaciya",
-   "level": "b",
-   "mins": 10
-  },
-  {
-   "slug": "kak-povysit-kompetenciyu",
-   "title": "Как повысить компетенцию, когда учиться некогда: 7 шагов",
-   "rubric": "dengi",
-   "level": "m",
-   "mins": 12
-  },
-  {
-   "slug": "kak-proverit-informaciyu",
-   "title": "Как проверить информацию на достоверность: два источника и пять вопросов",
-   "rubric": "myshlenie",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "trevoga-v-tele-ruki-davlenie-serdce",
-   "title": "Тревога в теле: трясутся руки, скачет давление, колотится сердце",
-   "rubric": "strahi",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-rasstatsya-proshchalnoe-soobshchenie",
-   "title": "Как расстаться без истерик и обид: порядок, слова и прощальное сообщение",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "ushla-zhena-razvod-glazami-muzhchiny",
-   "title": "Ушла жена: как пережить развод мужчине, когда «я в порядке» уже не работает",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "chto-napisat-devushke-v-pervom-soobshchenii",
-   "title": "Что написать девушке в первом сообщении: три первых реплики и что делать с молчанием",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "rebenka-obzyvayut-v-shkole-chto-delat",
-   "title": "Ребёнка обзывают в школе: что делать родителю в первый вечер и дальше",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "muzh-ne-rabotaet-i-vsem-nedovolen",
-   "title": "Муж не работает и всем недоволен: что делать жене, когда терпение кончилось",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "rebenok-posle-razvoda-chto-delat",
-   "title": "Ребёнок после развода: настраивают против вас, замкнулся, ничего не хочет",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "net-seksa-v-brake-chto-delat",
-   "title": "Нет секса в браке: что делать, когда «подожду» длится годами",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "kak-skazat-partneru-o-svoih-zhelaniyah",
-   "title": "Как сказать партнёру о своих желаниях в близости",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "stydnye-mysli-i-vozbuzhdenie-ne-k-mestu",
-   "title": "Стыдные мысли и возбуждение не к месту: почему это приходит и что с этим делать",
-   "rubric": "strahi",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "u-menya-roman-na-storone-chto-delat",
-   "title": "У меня роман на стороне: как понять, что делать дальше,",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "retroaktivnaya-revnost-proshloe-partnera",
-   "title": "Ретроактивная ревность: когда мучает прошлое партнёра и нельзя перестать спрашивать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "muzh-pyot-chto-delat-zhene",
-   "title": "Муж пьёт: что делать жене, когда уговоры, скандалы и слёзы уже не работают",
-   "rubric": "zavisimosti",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "skryvayu-stavki-i-dolgi-ot-semi",
-   "title": "Скрываю ставки и долги от семьи: как выйти, не дожидаясь разоблачения",
-   "rubric": "zavisimosti",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "muzh-smotrit-porno-chto-delat",
-   "title": "Муж смотрит порно: что это значит, что делать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "ne-lyublyu-muzha-no-ne-uhozhu",
-   "title": "Не люблю мужа, но не ухожу: что с этим делать, если он ни в чём не виноват",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "izmenila-muzhu-i-muchaet-sovest",
-   "title": "Изменила мужу, и мучает совесть: рассказывать или нет, и как жить с этим дальше",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "ne-lyublyu-svoego-rebenka-chto-delat",
-   "title": "Не люблю своего ребёнка: что делать, если он раздражает, а сказать об этом нельзя никому",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "vlechenie-posle-60-chto-s-nim-delat",
-   "title": "Влечение после шестидесяти: что с ним делать, когда все считают, что его быть не должно",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "stydno-za-roditelej-chto-delat",
-   "title": "Стыдно за родителей: что делать с этим стыдом, когда они такие, какие есть",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "zaviduyu-podruge-chto-delat",
-   "title": "Завидую подруге и стыжусь этого: что зависть говорит о вас и что с ней делать",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "otvrashchenie-k-muzhu-chto-delat",
-   "title": "Отвращение к мужу: откуда оно берётся и что с ним делать, если он «ничего не сделал»",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "stesnyayus-svoego-tela-pri-muzhe",
-   "title": "Стесняюсь своего тела при муже: откуда этот стыд и как перестать гасить свет",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "ne-hochu-detej-a-muzh-hochet",
-   "title": "Не хочу детей, а муж хочет: что делать, когда на главный вопрос у вас разные ответы",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "zhaleyu-chto-rodila-rebenka",
-   "title": "Жалею, что родила: что делать с этой мыслью, которую нельзя сказать никому",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "muzh-unizhaet-chto-delat",
-   "title": "Муж унижает: что делать, если после его слов вас становится меньше, а уйти вы не можете",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "ustala-uhazhivat-za-bolnym-roditelem",
-   "title": "Устала ухаживать за больным родителем: что делать с мыслью «скорее бы», за которую стыдно",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "pozhalela-chto-vyshla-zamuzh",
-   "title": "Пожалела, что вышла замуж: что делать, если ошибка стала ясна через год, а все были на свадьбе",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "stydno-chto-razvelas",
-   "title": "Стыдно, что развелась: как перестать чувствовать себя неудавшейся перед мамой, коллегами и собой",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "stydno-chto-ne-rabotayu",
-   "title": "Стыдно, что не работаю: как отвечать на «а ты где работаешь», когда вы дома",
-   "rubric": "dengi",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "zhena-zarabatyvaet-bolshe-muzha",
-   "title": "Жена зарабатывает больше мужа: что с этим делать обоим, чтобы деньги не съели брак",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "skryvayu-ot-muzha-proshloe",
-   "title": "Скрываю от мужа прошлое: рассказывать ли то, что было до него, и как жить, если решили молчать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "muzhchine-stydno-plakat",
-   "title": "Мужчине стыдно плакать: что делать, если слёзы приходят в машине, а показать их некому",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "zhivu-s-roditelyami-v-30-stydno",
-   "title": "Живу с родителями в 30 и стыдно: что за этим стоит на самом деле и как уехать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "stydno-priglashat-gostej-domoj",
-   "title": "Стыдно приглашать гостей домой: за что именно стыдно, чьими глазами вы смотрите на свою квартиру и как перестать жить «пока не как у людей»",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 11
-  },
-  {
-   "slug": "zaviduyu-sestre-chto-delat",
-   "title": "Завидую сестре и ненавижу себя за это: откуда зависть к родному человеку, кто на самом деле судья и что с этим делать",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "odinoka-v-40-i-stydno",
-   "title": "Одинока в 40 и стыдно: за что на самом деле стыд, что из этого одиночество, а что",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "stydno-idti-k-psihologu",
-   "title": "Стыдно идти к психологу: откуда стыд, что за ним стоит на самом деле и как дойти до первой встречи, никому не рассказывая",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "ne-hochu-seksa-s-muzhem",
-   "title": "Не хочу секса с мужем: куда ушло желание",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "stydno-za-muzha-pered-druzyami",
-   "title": "Стыдно за мужа перед друзьями и родными: за что именно, чьими глазами вы на него смотрите и что делать, если стыд перерос в презрение",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "net-druzej-v-30-stydno",
-   "title": "Нет друзей в 30 и стыдно: почему это случилось с половиной взрослых, чей это стыд и как за три месяца получить одного человека, которому можно написать «как ты»",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "byvshij-schastliv-bez-menya",
-   "title": "Бывший счастлив без меня, а я нет: почему его страница ранит сильнее расставания, что именно болит и как перестать сверять свою жизнь с его",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "stydno-za-svoego-rebenka",
-   "title": "Стыдно за своего ребёнка: за что именно, чьими глазами вы на него смотрите, почему ему нельзя об этом знать и что делать, когда стыд мешает быть на его стороне",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "beru-dengi-u-roditelej-v-30-stydno",
-   "title": "Беру деньги у родителей в 30 и стыдно: чем помощь отличается от зависимости, сколько это стоит на самом деле и как выйти без ссоры и без нищеты",
-   "rubric": "dengi",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "stydno-za-svoe-obrazovanie",
-   "title": "Стыдно за своё образование: без вуза, с «не тем» дипломом или с заочкой среди людей «с образованием»",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "styzhus-svoej-semi",
-   "title": "Стыжусь своей семьи и происхождения: когда вы «перешли» в другой круг и живёте между двумя мирами",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "izmenyayu-muzhu-v-myslyah",
-   "title": "Изменяю мужу в мыслях: думаю о другом и мучаюсь виной",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "oblegchenie-posle-smerti-roditelya",
-   "title": "Облегчение после смерти родителя: почему стало легче, а не больно, за что на самом деле стыдно и придёт ли горе потом",
-   "rubric": "emocii",
-   "level": "n",
-   "mins": 12
-  },
-  {
-   "slug": "hochu-razvoda-no-stydno",
-   "title": "Хочу развода, но стыдно: перед мамой, детьми, людьми и собой",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "hochu-ujti-ot-bolnogo-muzha",
-   "title": "Хочу уйти от больного мужа: чем «уйти от него» отличается от «уйти от ухода», что между «остаться и сгореть» и «бросить»",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 14
-  },
-  {
-   "slug": "nenavizhu-nevestku-chto-delat",
-   "title": "Ненавижу невестку: за что именно, почему это чувство приходит к матери сына чаще, чем к матери дочери, что она на самом деле «забрала»",
-   "rubric": "roditeli",
-   "level": "n",
-   "mins": 13
-  },
-  {
-   "slug": "muzh-masturbiruet-chto-delat",
-   "title": "Муж мастурбирует: что это значит на самом деле, когда это отдельно от вас, когда",
-   "rubric": "otnosheniya",
-   "level": "n",
-   "mins": 12
   }
  ]
 }
