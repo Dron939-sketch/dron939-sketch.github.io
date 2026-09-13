@@ -713,6 +713,7 @@
             _track('meter_closed', { reason: 'continue_tomorrow' });
             _rememberDismiss();
             overlay.remove();
+            setTimeout(function () { askWhyNot('wall'); }, 400);
         };
         overlay.onclick = function(e) {
             if (e.target === overlay) {
@@ -833,6 +834,7 @@
         document.getElementById('meterUpsellClose').onclick = function() {
             _track('meter_upsell_dismissed', { reason: 'later' });
             overlay.remove();
+            setTimeout(function () { askWhyNot('upsell'); }, 400);
         };
         overlay.onclick = function(e) {
             if (e.target === overlay) { _track('meter_upsell_dismissed', { reason: 'outside' }); overlay.remove(); }
@@ -910,11 +912,63 @@
             document.getElementById('meterSiteFree').onclick = function () {
                 _track('meter_site_offer_dismissed', { topic: topic });
                 overlay.remove();
+                setTimeout(function () { askWhyNot('site_' + topic); }, 400);
             };
             overlay.onclick = function (e) {
                 if (e.target === overlay) { _track('meter_site_offer_dismissed', { topic: topic, reason: 'outside' }); overlay.remove(); }
             };
         } catch (e) { console.warn('[meter] site offer', e); }
+    }
+
+    // Опрос на закрытии любой карточки подписки: «что остановило?».
+    // Владелец, 13.09.2026: за месяц 70 стен, 8 кликов, 4 оплаты — и ни
+    // одного ответа, почему остальные ушли. Четыре кнопки, одно нажатие,
+    // событие sub_why_not {reason, source}. Раз в день на человека.
+    var WHY_KEY = 'meter_why_not_day';
+    var WHY_REASONS = [
+        ['expensive', 'Дорого'],
+        ['unclear', 'Не понял, что даёт'],
+        ['doubt', 'Не верю, что поможет'],
+        ['later', 'Попробую потом'],
+    ];
+    function askWhyNot(source) {
+        try {
+            if (_lastCheck && _lastCheck.is_premium) return;
+            var today = new Date().toISOString().slice(0, 10);
+            var shown = '';
+            try { shown = localStorage.getItem(WHY_KEY) || ''; } catch (e) {}
+            if (shown === today) return;
+            if (document.getElementById('meterWhyOverlay')) return;
+            try { localStorage.setItem(WHY_KEY, today); } catch (e) {}
+            _injectMeterStyles();
+            _track('sub_why_not_shown', { source: source || '' });
+            var overlay = document.createElement('div');
+            overlay.className = 'meter-overlay';
+            overlay.id = 'meterWhyOverlay';
+            var btns = '';
+            for (var i = 0; i < WHY_REASONS.length; i++) {
+                btns += '<button class="meter-btn meter-btn-secondary" data-why="' + WHY_REASONS[i][0] + '" style="margin-bottom:8px">' + WHY_REASONS[i][1] + '</button>';
+            }
+            overlay.innerHTML =
+                '<div class="meter-modal">' +
+                    '<div class="meter-title" style="font-size:18px">Один вопрос: что остановило?</div>' +
+                    '<div class="meter-text">Без обязательств. Ответ помогает сделать Фреди лучше.</div>' +
+                    btns +
+                    '<button class="meter-btn" id="meterWhySkip" style="background:none;color:#8e8e93;font-size:13px">Не отвечать</button>' +
+                '</div>';
+            document.body.appendChild(overlay);
+            var done = function (reason) {
+                _track('sub_why_not', { reason: reason, source: source || '' });
+                try { if (typeof ym === 'function') ym(108965607, 'reachGoal', 'sub_why_not'); } catch (e) {}
+                overlay.remove();
+            };
+            var list = overlay.querySelectorAll('[data-why]');
+            for (var j = 0; j < list.length; j++) {
+                list[j].onclick = function () { done(this.getAttribute('data-why')); };
+            }
+            document.getElementById('meterWhySkip').onclick = function () { done('skip'); };
+            overlay.onclick = function (e) { if (e.target === overlay) done('skip'); };
+        } catch (e) { console.warn('[meter] why-not', e); }
     }
 
     function _patchApiCall() {
@@ -1198,11 +1252,16 @@
                 closing: 'Разговор сегодня получился. ',
                 bigtest: 'Ваш портрет готов. ',
                 natal: 'Ваша карта разобрана. ',
+                // Человек написал, что сделал шаг («попробовала», «получилось»,
+                // «доклеила»). Момент пользы — единственный честный момент
+                // для предложения (владелец, 13.09.2026).
+                progress: 'Шаг сделан — это и есть работа. ',
             }[source] || '';
             // После большого теста предмет предложения конкретный: полный
             // разбор именно этого профиля, а не подписка «вообще».
             var bigtest = source === 'bigtest';
-            var title = bigtest ? 'Открыть полный разбор?' : 'Сохранить и продолжать?';
+            var title = bigtest ? 'Открыть полный разбор?'
+                : (source === 'progress' ? 'Продолжить завтра с этого места?' : 'Сохранить и продолжать?');
             var body = bigtest
                 ? 'Портрет и первый шаг — бесплатно. С подпиской откроются шесть разделов разбора именно вашего профиля: ' +
                   'петли, скрытые механизмы, точки роста, прогноз и персональные ключи; коуч и тренер без лимита; ' +
@@ -1236,6 +1295,7 @@
             document.getElementById('meterPeakLater').onclick = function () {
                 _track('meter_peak_offer_dismissed', { source: source || '', reason: 'later' });
                 overlay.remove();
+                setTimeout(function () { askWhyNot('peak_' + (source || '')); }, 400);
             };
             overlay.onclick = function (e) {
                 if (e.target === overlay) { _track('meter_peak_offer_dismissed', { source: source || '', reason: 'outside' }); overlay.remove(); }
@@ -1339,6 +1399,7 @@
         document.getElementById('meterGameLockClose').onclick = function () {
             _track('game_lock_dismissed', { game: fn });
             overlay.remove();
+            setTimeout(function () { askWhyNot('game_lock'); }, 400);
         };
         overlay.onclick = function (e) { if (e.target === overlay) overlay.remove(); };
     }
@@ -1374,13 +1435,15 @@
             overlay.innerHTML =
                 '<div class="meter-modal">' +
                     '<div class="meter-emoji">📩</div>' +
-                    '<div class="meter-title">Продолжим завтра?</div>' +
+                    '<div class="meter-title">Вы в бесплатной версии</div>' +
                     '<div class="meter-text">' + (who ? _esc(who) + ', разговор пошёл. ' : 'Разговор пошёл. ') +
-                        'Без аккаунта Фреди его завтра не вспомнит и начнёт с чистого листа. ' +
-                        'Аккаунт — это почта и четыре цифры, минута времени.' +
+                        'Но этот разговор не сохраняется: завтра Фреди начнёт с чистого листа, и всё придётся рассказывать заново. ' +
+                        'Сохранить его — аккаунт, почта и четыре цифры, бесплатно.' +
                         (gain ? ' ' + _gainPhrase(gain, false) : '') +
+                        ' Чтобы Фреди помнил вас и продолжал завтра с того же места — подписка, первая неделя 290 ₽.' +
                     '</div>' +
-                    '<button class="meter-btn meter-btn-primary" id="meterDoorReg">📩 Завести аккаунт</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterDoorReg">📩 Сохранить разговор — аккаунт</button>' +
+                    '<button class="meter-btn meter-btn-secondary" id="meterDoorSub">✨ Попробовать неделю — 290 ₽</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
@@ -1388,9 +1451,15 @@
                 overlay.remove();
                 _openRegister('door_' + (source || ''));
             };
+            document.getElementById('meterDoorSub').onclick = function () {
+                _track('meter_subscribe_clicked', { source: 'door_' + (source || '') });
+                overlay.remove();
+                if (typeof window.openCheckout === 'function') window.openCheckout('door_' + (source || ''));
+            };
             document.getElementById('meterDoorLater').onclick = function () {
                 _track('meter_account_door_dismissed', { source: source || '', reason: 'later' });
                 overlay.remove();
+                setTimeout(function () { askWhyNot('door'); }, 400);
             };
             overlay.onclick = function (e) {
                 if (e.target === overlay) { _track('meter_account_door_dismissed', { source: source || '', reason: 'outside' }); overlay.remove(); }
@@ -1428,6 +1497,7 @@
         showFatigueModal: showFatigueModal,
         showUpsellCard: showUpsellCard,
         showSiteOffer: showSiteOffer,
+        askWhyNot: askWhyNot,
         // Наружу — чтобы предупреждение можно было показать из голосового
         // пути (он не идёт через apiCall/fetch-патчи) и чтобы его поведение
         // на границах остатка можно было проверить, а не додумывать.
