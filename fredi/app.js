@@ -3113,6 +3113,37 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
+// DEEP-LINK НА ПОДПИСКУ: /fredi/?sub=<тема>&from=<страница сайта>
+// Кнопка «Попробовать неделю — 290 ₽» в блоке подписки на результатах
+// тестов и в популярных статьях (tools/link_premium.py). Открывает
+// карточку с тем, что даёт подписка, и кнопкой оплаты — сразу, не дожидаясь
+// стены минут. Без параметра ничего не меняется.
+// ============================================
+(function () {
+    try {
+        var sp = new URLSearchParams(location.search);
+        var sub = sp.get('sub');
+        if (!sub) return;
+        var from = sp.get('from') || '';
+        var open = function () {
+            var go = function () {
+                try {
+                    if (window.FrediMeter && typeof window.FrediMeter.showSiteOffer === 'function') {
+                        window.FrediMeter.showSiteOffer(sub, from);
+                    }
+                } catch (e) { console.warn('[Fredi] sub deep-link', e); }
+            };
+            setTimeout(go, 900);
+        };
+        if (window.authReady && typeof window.authReady.then === 'function') {
+            window.authReady.then(open).catch(open);
+        } else {
+            setTimeout(open, 1800);
+        }
+    } catch (e) {}
+})();
+
+// ============================================
 // DEEP-LINK НА МОДУЛЬ: /fredi/?m=kontur
 // Позволяет вести из статьи/поста прямо в модуль, минуя поиск в меню.
 // ============================================

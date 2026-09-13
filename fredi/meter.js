@@ -848,6 +848,75 @@
         };
     }
 
+    // Предложение подписки по ссылке с сайта: /fredi/?sub=<тема>&from=<страница>.
+    // Результат теста и популярные статьи — самые посещаемые адреса сайта
+    // (за 30 дней до 13.09.2026: 9078 визитов, 8 кликов «подписаться», все
+    // с /fredi/ и одной статьи). На самих страницах подписка не упоминалась
+    // вовсе, всё было «бесплатно и без регистрации». Теперь страница
+    // называет, что открывает подписка по её теме, а кнопка ведёт сюда:
+    // человек видит тот же список, что на стене, и кнопку оплаты — без
+    // ожидания, пока кончатся минуты. Без суточного ограничения показа:
+    // человек пришёл по кнопке сам.
+    var SITE_LEADS = {
+        phq9: 'Результат PHQ-9 у вас на руках. ',
+        gad7: 'Результат GAD-7 у вас на руках. ',
+        revnost: 'Тип ревности вы уже знаете. ',
+        lyubit: 'Результат теста у вас на руках. ',
+        vygoranie: 'Где горит — вы уже увидели. ',
+        odinochestvo: 'Свой тип одиночества вы уже знаете. ',
+        samozvanec: 'Свой балл вы уже знаете. ',
+        express: 'Ведущую стратегию вы уже знаете. ',
+        kpt: 'Техники из статьи — на бумаге. ',
+        trevoga: 'Семь техник из статьи — на бумаге. ',
+        rasstavanie: 'Фазы расставания вы прочитали. ',
+        iskazheniya: 'Справочник искажений вы прочитали. ',
+        gipnoz: 'Инструкцию вы прочитали. ',
+        myshlenie: 'Статью вы прочитали. ',
+    };
+    function showSiteOffer(topic, from) {
+        try {
+            if (_lastCheck && _lastCheck.is_premium) return;
+            if (document.getElementById('meterSiteOverlay')) return;
+            _injectMeterStyles();
+            topic = String(topic || '').replace(/[^a-z0-9_-]/gi, '').slice(0, 24);
+            _track('meter_site_offer_shown', { topic: topic, from: from || '' });
+            var who = _name();
+            var lead = SITE_LEADS[topic] || '';
+            var overlay = document.createElement('div');
+            overlay.className = 'meter-overlay';
+            overlay.id = 'meterSiteOverlay';
+            overlay.innerHTML =
+                '<div class="meter-modal">' +
+                    '<div class="meter-emoji">💎</div>' +
+                    '<div class="meter-title">Что открывает подписка</div>' +
+                    '<div class="meter-text">' + (who ? _esc(who) + ', ' + lead.charAt(0).toLowerCase() + lead.slice(1) : lead) +
+                        'Дальше — работа с Фреди, который помнит вас и не считает минуты.</div>' +
+                    _premiumFeatures() +
+                    AUTHOR_NOTE +
+                    '<button class="meter-btn meter-btn-primary" id="meterSiteSub">✨ Попробовать неделю — 290 ₽</button>' +
+                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней, потом 990 ₽ в месяц; отключить можно в один клик в разделе «Подписка». Оплата картой любого российского банка через ЮKassa.</div>' +
+                    '<button class="meter-btn meter-btn-secondary" id="meterSiteFree">Сначала поговорить бесплатно</button>' +
+                '</div>';
+            document.body.appendChild(overlay);
+            document.getElementById('meterSiteSub').onclick = function () {
+                _track('meter_subscribe_clicked', { source: 'site_' + topic });
+                overlay.remove();
+                if (typeof window.openCheckout === 'function') {
+                    window.openCheckout('site_' + topic);
+                } else if (typeof showSettingsScreen === 'function') {
+                    showSettingsScreen();
+                }
+            };
+            document.getElementById('meterSiteFree').onclick = function () {
+                _track('meter_site_offer_dismissed', { topic: topic });
+                overlay.remove();
+            };
+            overlay.onclick = function (e) {
+                if (e.target === overlay) { _track('meter_site_offer_dismissed', { topic: topic, reason: 'outside' }); overlay.remove(); }
+            };
+        } catch (e) { console.warn('[meter] site offer', e); }
+    }
+
     function _patchApiCall() {
         if (!window.apiCall || window._apiCallPatched) return;
         var _origApiCall = window.apiCall;
@@ -1358,6 +1427,7 @@
         recordExchange: recordExchange,
         showFatigueModal: showFatigueModal,
         showUpsellCard: showUpsellCard,
+        showSiteOffer: showSiteOffer,
         // Наружу — чтобы предупреждение можно было показать из голосового
         // пути (он не идёт через apiCall/fetch-патчи) и чтобы его поведение
         // на границах остатка можно было проверить, а не додумывать.
