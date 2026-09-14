@@ -2454,6 +2454,7 @@ ${this.getStage3Interpretation()}
                 text: '💬 ОБСУДИТЬ С ФРЕДИ',
                 callback: () => {
                     try { if (window.FrediTracker?.track) window.FrediTracker.track('test_ask_chat', { profile_code: p.displayName || null }); } catch {}
+                    _testGoal('test_ask_chat');
                     // Экран теста живёт в screenContainer; сначала возвращаем
                     // дашборд с полем ввода, потом отправляем — как goToDashboard.
                     this.goToDashboard();
@@ -2469,6 +2470,7 @@ ${this.getStage3Interpretation()}
                     try {
                         if (window.FrediTracker?.track) {
                             window.FrediTracker.track('test_save_profile_clicked', {});
+                            _testGoal('test_save_profile_clicked');
                         }
                     } catch {}
                     window.FrediAuth.openRegister({
@@ -2484,8 +2486,11 @@ ${this.getStage3Interpretation()}
         // экране этой двери не было вовсе, хотя механизм «зеркал» в
         // приложении есть и работает: друг проходит тест по ссылке, и
         // результат возвращается пригласившему.
+        const mv = this.mirrorVariant();
         nextButtons.push({
-            text: '📨 ОТПРАВИТЬ ТЕСТ ДРУГУ',
+            text: mv === 'b'
+                ? '📨 ОТПРАВИТЬ ДРУГУ И УВИДЕТЬ ЕГО РАЗБОР'
+                : '📨 ОТПРАВИТЬ ТЕСТ ДРУГУ',
             keepEnabled: true,
             callback: () => this.shareTestWithFriend()
         });
@@ -2598,6 +2603,7 @@ ${this.getStage3Interpretation()}
         const msg = this.addBotMessage(html, true);
         try {
             if (window.FrediTracker?.track) {
+                _testGoal('test_recommendations_shown');
                 window.FrediTracker.track('test_recommendations_shown', {
                     count: items.length,
                     ids: items.map(it => it.id).join(',')
@@ -2612,11 +2618,28 @@ ${this.getStage3Interpretation()}
                             window.FrediTracker.track('test_recommendation_clicked', {
                                 id: a.dataset.rec, type: a.dataset.rectype
                             });
+                            _testGoal('test_recommendation_clicked');
                         }
                     } catch {}
                 });
             });
         }
+    },
+
+    // A/B формулировки приглашения. А обещает разговор с Фреди, Б —
+    // возможность увидеть интерпретацию друга. Гипотеза владельца: вторая
+    // причина сильнее, потому что она про любопытство к близкому человеку,
+    // а не про ещё один разговор с ИИ. Вариант закрепляется за браузером,
+    // чтобы человек не видел разные тексты при повторных заходах.
+    mirrorVariant() {
+        try {
+            var v = localStorage.getItem('fredi_mirror_ab');
+            if (v !== 'a' && v !== 'b') {
+                v = Math.random() < 0.5 ? 'a' : 'b';
+                localStorage.setItem('fredi_mirror_ab', v);
+            }
+            return v;
+        } catch (e) { return 'a'; }
     },
 
     // Зеркало: ссылка на тест для друга. Создаётся на бэке
@@ -2638,7 +2661,11 @@ ${this.getStage3Interpretation()}
             this._mirrorLink = data.link;
             this._showMirrorLink(data.link);
             try {
-                if (window.FrediTracker?.track) window.FrediTracker.track('test_mirror_created', {});
+                if (window.FrediTracker?.track) {
+                    window.FrediTracker.track('test_mirror_created', { variant: this.mirrorVariant() });
+                }
+                _testGoal('test_mirror_created');
+                _testGoal('test_mirror_created_' + this.mirrorVariant());
             } catch (e) {}
         } catch (e) {
             console.warn('Зеркало не создалось:', e);
@@ -2649,9 +2676,13 @@ ${this.getStage3Interpretation()}
     _showMirrorLink(link) {
         const esc = t => String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
             .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        // Текст под вариант: А про разговор с Фреди, Б про разбор друга.
+        const lead = this.mirrorVariant() === 'b'
+            ? 'Он пройдёт тот же тест, и его разбор придёт вам — увидите, чем вы отличаетесь.'
+            : 'Он пройдёт тот же тест, а потом это можно будет обсудить с Фреди вдвоём.';
         const msg = this.addBotMessage(
             '📨 <b>Ссылка для друга готова</b><br><br>'
-            + 'Он пройдёт тот же тест, а его результат вернётся сюда — будет что сравнить.<br><br>'
+            + lead + '<br><br>'
             + '<a href="' + esc(link) + '" target="_blank" rel="noopener" '
             + 'style="color:#3b82ff;font-weight:600;word-break:break-all">' + esc(link) + '</a>'
             + '<br><br><button type="button" id="mirrorCopyBtn" style="background:#3b82ff;color:#fff;'
@@ -2667,7 +2698,10 @@ ${this.getStage3Interpretation()}
                     btn.textContent = 'Выделите ссылку и скопируйте вручную';
                 }
                 try {
-                    if (window.FrediTracker?.track) window.FrediTracker.track('test_mirror_copied', {});
+                    if (window.FrediTracker?.track) {
+                        window.FrediTracker.track('test_mirror_copied', { variant: this.mirrorVariant() });
+                    }
+                    _testGoal('test_mirror_copied');
                 } catch (e) {}
             });
         }
