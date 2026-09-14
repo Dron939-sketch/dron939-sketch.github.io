@@ -1393,6 +1393,7 @@ const Test = {
         // Профиль прошлого прохождения, восстановленный showSavedResult:
         // без сброса новый тест дорисовал бы старые векторы.
         this._restoredProfile=null;
+        this._testMeterDebt=0; this._testMeterTotal=0;
         this.context={city:null,gender:null,age:null,weather:null,isComplete:false,name:null};
     },
 
@@ -1718,10 +1719,93 @@ const Test = {
     // ============================================
     // ЗАПУСК ТЕСТА
     // ============================================
+    /**
+     * Время теста расходует дневной лимит.
+     *
+     * Решение владельца 14.09.2026: пятнадцать минут прохождения и
+     * ожидание генерации портрета — такая же работа сервиса, как
+     * разговор, и должны считаться так же. Побочный и главный эффект:
+     * человек доходит до разговора с Фреди уже с небольшим остатком, и
+     * вопрос подписки встаёт в тот момент, когда ему есть что обсуждать.
+     *
+     * Считаем реально прошедшее время, а не «пятнадцать минут по факту
+     * запуска»: кто бросил на третьем вопросе, платит тремя минутами.
+     * Пока вкладка скрыта, счёт стоит — человек, отошедший от экрана,
+     * сервис не занимает, и это та же логика, по которой обмен в чате
+     * ограничен сверху двумя минутами.
+     *
+     * Запись идёт кусками по 60 секунд: ручка record-usage режет всё
+     * вне диапазона 1..120 секунд.
+     */
+    // Потолок: сколько секунд теста вообще может уйти в дневной лимит.
+    //
+    // Дневной запас — 10 минут, тест идёт 15. Без потолка человек упрётся
+    // в ноль ещё внутри теста и, нажав «Обсудить с Фреди», получит стену
+    // вместо разговора — ни одного сообщения. А «продолжил сам» с 08.09
+    // приоритетная цель всех кампаний Директа: обнулив её, мы потеряем
+    // обратную связь по всей рекламе.
+    //
+    // Половина запаса оставляет человеку время на два-три настоящих
+    // вопроса по своему портрету — и стена приходит на пике, когда ему
+    // есть что обсуждать, а не вместо разговора.
+    TEST_METER_CAP_SEC: 300,
+
+    _startTestMeter() {
+        if (this._testMeterTimer) return;
+        this._testMeterLastTick = Date.now();
+        this._testMeterDebt = 0;
+        this._testMeterTotal = 0;
+        this._testMeterTimer = setInterval(() => {
+            const now = Date.now();
+            const dt = Math.round((now - this._testMeterLastTick) / 1000);
+            this._testMeterLastTick = now;
+            // Вкладка была скрыта или спал таймер — не списываем.
+            if (document.hidden || dt <= 0 || dt > 120) return;
+            this._testMeterDebt += dt;
+            while (this._testMeterDebt >= 60 && this._testMeterTotal < this.TEST_METER_CAP_SEC) {
+                this._testMeterDebt -= 60;
+                this._testMeterTotal += 60;
+                this._meterTick(60);
+            }
+            // Потолок выбран — дальше просто не считаем, чтобы долг не рос.
+            if (this._testMeterTotal >= this.TEST_METER_CAP_SEC) this._testMeterDebt = 0;
+        }, 15000);
+    },
+
+    _meterTick(sec) {
+        try {
+            if (window.FrediMeter && typeof window.FrediMeter.recordUsageQuiet === 'function') {
+                window.FrediMeter.recordUsageQuiet(sec);
+            }
+        } catch (e) {}
+    },
+
+    /**
+     * Остановить счёт и дописать остаток.
+     *
+     * Остаток дописывается обязательно: без этого человек, прошедший
+     * тест за 12 минут 40 секунд, платил бы двенадцатью — а на десятках
+     * прохождений это уже заметная разница.
+     */
+    _stopTestMeter() {
+        if (this._testMeterTimer) {
+            clearInterval(this._testMeterTimer);
+            this._testMeterTimer = null;
+        }
+        const room = this.TEST_METER_CAP_SEC - (this._testMeterTotal || 0);
+        const tail = Math.min(Math.round(this._testMeterDebt || 0), Math.max(0, room));
+        if (tail >= 1) {
+            this._testMeterTotal = (this._testMeterTotal || 0) + tail;
+            this._meterTick(Math.min(120, tail));
+        }
+        this._testMeterDebt = 0;
+    },
+
     startTest() {
         this.currentStage=0; this.currentQuestionIndex=0;
         this.reset(); this.saveProgress();
         this.showTestScreen();
+        this._startTestMeter();
         // Инструментирование воронки теста. В дампе аналитики:
         // 7 screen_view test, 5 feature_open, средняя 21 сек —
         // люди открывают и сразу уходят. Нам нужно знать ГДЕ.
@@ -2448,6 +2532,7 @@ ${this.getStage3Interpretation()}
 
     async showFinalProfileButtons() {
         this._hideAILoader();
+        this._stopTestMeter();
         // _restoredProfile ставит showSavedResult(): после перезагрузки
         // страницы ответов в памяти нет, и calculateFinalProfile() выдал бы
         // всем одинаковые 3/3/3/3 из пустых массивов.
@@ -2616,6 +2701,18 @@ ${this.getStage3Interpretation()}
         // вниз, и ранняя прокрутка вверх тут же перебивалась. Человек
         // должен увидеть начало своего портрета, а не хвост списка кнопок.
         this.scrollMessageToTop(profileMsg);
+
+        // Сколько осталось — говорим здесь, а не посреди теста. Человек
+        // только что увидел портрет и хочет его обсудить; знать остаток
+        // ему нужно именно сейчас. Модалку не показываем: она перекроет
+        // портрет, ради которого он пятнадцать минут отвечал на вопросы.
+        try {
+            const m = window.FrediMeter;
+            if (m && typeof m.checkCanSend === 'function' && typeof m.showWarningToast === 'function') {
+                const st = await m.checkCanSend();
+                if (st && !st.is_premium) m.showWarningToast(st);
+            }
+        } catch (e) {}
     },
 
     // Блок «что откроется с подпиской» после портрета. Первый шаг считается
@@ -2895,6 +2992,9 @@ ${recs ? `<h2>С чего начать</h2>${recs}` : ''}
     },
 
     goToDashboard() {
+        // Ушёл с экрана теста — счёт времени прекращаем: дальше он либо
+        // разговаривает (там свой учёт), либо не пользуется ничем.
+        this._stopTestMeter();
         const c = document.getElementById('screenContainer');
         if (c) c.innerHTML='';
         if (typeof renderDashboard==='function') renderDashboard();

@@ -233,6 +233,31 @@
         return recordUsage(sec);
     }
 
+    /**
+     * Списать время без стены и без предупреждения.
+     *
+     * Нужно тесту: пятнадцать минут прохождения и ожидание генерации
+     * портрета тоже расходуют дневной запас — решение владельца
+     * 14.09.2026. Но обычный recordUsage после каждой записи дёргает
+     * checkCanSend и при исчерпанном лимите показывает модалку; посреди
+     * теста это оборвало бы человека на середине и убило бы то самое
+     * прохождение, ради которого всё делается. Здесь только запись:
+     * стена и предупреждение сработают позже, когда человек придёт в
+     * разговор, — то есть ровно там, где они уместны.
+     */
+    async function recordUsageQuiet(seconds) {
+        var uid = await _uidConfirmed();
+        if (!uid) return;
+        try {
+            await fetch(_api() + '/api/meter/record-usage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: uid, seconds: seconds || 60 })
+            });
+            _lastCheck = null;
+        } catch (e) {}
+    }
+
     async function recordUsage(seconds) {
         var uid = await _uidConfirmed();
         if (!uid) return;
@@ -1528,6 +1553,7 @@
         showGameLock: showGameLock,
         premiumGames: PREMIUM_GAMES,
         recordUsage: recordUsage,
+        recordUsageQuiet: recordUsageQuiet,
         recordExchange: recordExchange,
         showFatigueModal: showFatigueModal,
         showUpsellCard: showUpsellCard,
