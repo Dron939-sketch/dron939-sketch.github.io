@@ -1393,6 +1393,7 @@ const Test = {
         // Профиль прошлого прохождения, восстановленный showSavedResult:
         // без сброса новый тест дорисовал бы старые векторы.
         this._restoredProfile=null;
+        this._testMeterDebt=0; this._testMeterTotal=0;
         this.context={city:null,gender:null,age:null,weather:null,isComplete:false,name:null};
     },
 
@@ -1718,10 +1719,93 @@ const Test = {
     // ============================================
     // ЗАПУСК ТЕСТА
     // ============================================
+    /**
+     * Время теста расходует дневной лимит.
+     *
+     * Решение владельца 14.09.2026: пятнадцать минут прохождения и
+     * ожидание генерации портрета — такая же работа сервиса, как
+     * разговор, и должны считаться так же. Побочный и главный эффект:
+     * человек доходит до разговора с Фреди уже с небольшим остатком, и
+     * вопрос подписки встаёт в тот момент, когда ему есть что обсуждать.
+     *
+     * Считаем реально прошедшее время, а не «пятнадцать минут по факту
+     * запуска»: кто бросил на третьем вопросе, платит тремя минутами.
+     * Пока вкладка скрыта, счёт стоит — человек, отошедший от экрана,
+     * сервис не занимает, и это та же логика, по которой обмен в чате
+     * ограничен сверху двумя минутами.
+     *
+     * Запись идёт кусками по 60 секунд: ручка record-usage режет всё
+     * вне диапазона 1..120 секунд.
+     */
+    // Потолок: сколько секунд теста вообще может уйти в дневной лимит.
+    //
+    // Дневной запас — 10 минут, тест идёт 15. Без потолка человек упрётся
+    // в ноль ещё внутри теста и, нажав «Обсудить с Фреди», получит стену
+    // вместо разговора — ни одного сообщения. А «продолжил сам» с 08.09
+    // приоритетная цель всех кампаний Директа: обнулив её, мы потеряем
+    // обратную связь по всей рекламе.
+    //
+    // Половина запаса оставляет человеку время на два-три настоящих
+    // вопроса по своему портрету — и стена приходит на пике, когда ему
+    // есть что обсуждать, а не вместо разговора.
+    TEST_METER_CAP_SEC: 300,
+
+    _startTestMeter() {
+        if (this._testMeterTimer) return;
+        this._testMeterLastTick = Date.now();
+        this._testMeterDebt = 0;
+        this._testMeterTotal = 0;
+        this._testMeterTimer = setInterval(() => {
+            const now = Date.now();
+            const dt = Math.round((now - this._testMeterLastTick) / 1000);
+            this._testMeterLastTick = now;
+            // Вкладка была скрыта или спал таймер — не списываем.
+            if (document.hidden || dt <= 0 || dt > 120) return;
+            this._testMeterDebt += dt;
+            while (this._testMeterDebt >= 60 && this._testMeterTotal < this.TEST_METER_CAP_SEC) {
+                this._testMeterDebt -= 60;
+                this._testMeterTotal += 60;
+                this._meterTick(60);
+            }
+            // Потолок выбран — дальше просто не считаем, чтобы долг не рос.
+            if (this._testMeterTotal >= this.TEST_METER_CAP_SEC) this._testMeterDebt = 0;
+        }, 15000);
+    },
+
+    _meterTick(sec) {
+        try {
+            if (window.FrediMeter && typeof window.FrediMeter.recordUsageQuiet === 'function') {
+                window.FrediMeter.recordUsageQuiet(sec);
+            }
+        } catch (e) {}
+    },
+
+    /**
+     * Остановить счёт и дописать остаток.
+     *
+     * Остаток дописывается обязательно: без этого человек, прошедший
+     * тест за 12 минут 40 секунд, платил бы двенадцатью — а на десятках
+     * прохождений это уже заметная разница.
+     */
+    _stopTestMeter() {
+        if (this._testMeterTimer) {
+            clearInterval(this._testMeterTimer);
+            this._testMeterTimer = null;
+        }
+        const room = this.TEST_METER_CAP_SEC - (this._testMeterTotal || 0);
+        const tail = Math.min(Math.round(this._testMeterDebt || 0), Math.max(0, room));
+        if (tail >= 1) {
+            this._testMeterTotal = (this._testMeterTotal || 0) + tail;
+            this._meterTick(Math.min(120, tail));
+        }
+        this._testMeterDebt = 0;
+    },
+
     startTest() {
         this.currentStage=0; this.currentQuestionIndex=0;
         this.reset(); this.saveProgress();
         this.showTestScreen();
+        this._startTestMeter();
         // Инструментирование воронки теста. В дампе аналитики:
         // 7 screen_view test, 5 feature_open, средняя 21 сек —
         // люди открывают и сразу уходят. Нам нужно знать ГДЕ.
@@ -1793,15 +1877,30 @@ const Test = {
     addQuestionMessage(text, options, callback, current, total) {
         const c = document.getElementById('testChatMessages');
         if (!c) return;
+
+        // Прошлые вопросы гасим по-настоящему. До 14.09.2026 отключалась
+        // только нажатая кнопка: её соседи по вопросу и варианты всех
+        // предыдущих вопросов оставались кликабельными. Человек, пролистав
+        // ленту вверх, мог нажать вариант вопроса, на который уже ответил,
+        // и добавить себе лишний балл — тест считал бы его по ответам,
+        // которых он не давал. Заодно это и есть главная причина, почему
+        // непонятно, где сейчас находишься: на экране несколько живых
+        // наборов кнопок сразу.
+        this._lockPreviousOptions();
+
         const msgDiv = document.createElement('div');
         msgDiv.className = 'test-message test-message-bot';
         const bubble = document.createElement('div');
         bubble.className = 'test-message-bubble test-message-bubble-bot';
         const textDiv = document.createElement('div');
         textDiv.className = 'test-message-text';
-        textDiv.innerHTML = '<b>Вопрос '+current+'/'+total+'</b><br><br>'+text;
+        textDiv.innerHTML = text;
         const buttonsDiv = document.createElement('div');
-        buttonsDiv.className = 'test-message-buttons';
+        // test-options — колонка во всю ширину: варианты ответа читаются
+        // сверху вниз и попадают под палец. Ряд из пилюль годится для
+        // навигации («Назад», «Подробнее»), но не для выбора из пяти
+        // строк по десять слов — они рвались по словам вразнобой.
+        buttonsDiv.className = 'test-message-buttons test-options';
         options.forEach((opt, idx) => {
             const optText = typeof opt==='object' ? opt.text : opt;
             const btn = document.createElement('button');
@@ -1809,23 +1908,91 @@ const Test = {
             btn.textContent = optText;
             btn.addEventListener('click', () => {
                 if (btn.disabled) return;
-                btn.disabled = true; btn.style.opacity='0.4';
+                // Гасим всю группу, а выбранный помечаем — человек видит,
+                // что именно он ответил, не листая ленту к своему пузырю.
+                buttonsDiv.querySelectorAll('button').forEach(b => { b.disabled = true; });
+                buttonsDiv.classList.add('test-options--answered');
+                btn.classList.add('test-option--chosen');
                 this.addUserMessage(optText);
                 callback(idx, opt);
             });
             buttonsDiv.appendChild(btn);
         });
-        const timeDiv = document.createElement('div');
-        timeDiv.className = 'test-message-time';
-        timeDiv.textContent = '📊 '+Math.round((current/total)*100)+'%';
-        bubble.appendChild(textDiv); bubble.appendChild(buttonsDiv); bubble.appendChild(timeDiv);
+        bubble.appendChild(textDiv); bubble.appendChild(buttonsDiv);
         msgDiv.appendChild(bubble); c.appendChild(msgDiv);
+        this._renderProgress();
         this.scrollToBottom();
+    },
+
+    /** Погасить варианты всех предыдущих вопросов. */
+    _lockPreviousOptions() {
+        document.querySelectorAll('.test-options').forEach(g => {
+            g.classList.add('test-options--answered');
+            g.querySelectorAll('button').forEach(b => { b.disabled = true; });
+        });
+    },
+
+    /**
+     * Полоса прогресса поверх ленты.
+     *
+     * Тест идёт пятнадцать минут и состоит из пяти этапов, а единственным
+     * указателем был «Вопрос 3/8» внутри пузыря — он уезжал вверх вместе с
+     * лентой, и через минуту человек не знал ни где он, ни сколько
+     * осталось. Процент в поле времени («📊 38%») стоял на месте, где во
+     * всём приложении стоит время, и читался как ошибка.
+     *
+     * Считаем по вопросам всего теста, а не внутри этапа: человеку важно,
+     * сколько осталось до конца, а не до конца текущего куска.
+     */
+    _renderProgress() {
+        const host = document.getElementById('testChatContainer');
+        if (!host) return;
+        let bar = document.getElementById('testProgress');
+        if (!bar) {
+            bar = document.createElement('div');
+            bar.id = 'testProgress';
+            bar.className = 'test-progress';
+            bar.innerHTML = '<div class="test-progress-line"><i></i></div>'
+                          + '<div class="test-progress-label"></div>';
+            host.insertBefore(bar, host.firstChild);
+        }
+        const stages = this.stages || [];
+        let done = 0, all = 0;
+        stages.forEach((st, i) => {
+            const t = st.total || 0;
+            all += t;
+            if (i < this.currentStage) done += t;
+            else if (i === this.currentStage) done += Math.min(this.currentQuestionIndex, t);
+        });
+        const pct = all ? Math.round(done / all * 100) : 0;
+        const cur = stages[this.currentStage];
+        const fill = bar.querySelector('.test-progress-line i');
+        if (fill) fill.style.width = pct + '%';
+        const label = bar.querySelector('.test-progress-label');
+        if (label && cur) {
+            // Номер вопроса переехал сюда из пузыря: там он уезжал вверх
+            // вместе с лентой и через минуту переставал что-либо значить.
+            const qn = Math.min(this.currentQuestionIndex + 1, cur.total || 1);
+            // Порядок важен: сначала то, что обязано быть видно всегда
+            // (этап и вопрос), потом название этапа — его и обрежет, если
+            // не хватит места. Процент не пишем: его показывает сама
+            // полоса, а лишняя цифра в короткой строке съедает место.
+            const name = (cur.name || '').toLowerCase();
+            label.innerHTML = '<b>Этап ' + (cur.number || this.currentStage + 1) + '/' + stages.length
+                + ' · вопрос ' + qn + '/' + (cur.total || '?') + '</b>'
+                + (name ? ' <span>· ' + name.replace(/</g, '&lt;') + '</span>' : '');
+        }
+    },
+
+    _removeProgress() {
+        const bar = document.getElementById('testProgress');
+        if (bar) bar.remove();
     },
 
     addMessageWithButtons(text, buttons) {
         const c = document.getElementById('testChatMessages');
         if (!c) return;
+        this._lockPreviousOptions();
         const msgDiv = document.createElement('div');
         msgDiv.className = 'test-message test-message-bot';
         const bubble = document.createElement('div');
@@ -1865,6 +2032,31 @@ const Test = {
             const c = document.getElementById('testChatMessages');
             if (c) c.scrollTop = c.scrollHeight;
         }, 50);
+    },
+
+    /**
+     * Поставить сообщение НАЧАЛОМ видимой области, а не концом.
+     *
+     * Лента теста всегда прокручивалась вниз — для вопроса с кнопками это
+     * верно, там читать надо последнюю строку. Но портрет и разбор — это
+     * несколько экранов текста, и человек оказывался в самом их конце:
+     * видел хвост и не понимал, откуда начинать. Владелец сказал об этом
+     * дважды, про финальный экран и про полный отчёт.
+     *
+     * Два захода: сразу и после кадра отрисовки — до него высота блока
+     * ещё не посчитана, и браузер возвращает прокрутку обратно.
+     */
+    scrollMessageToTop(el) {
+        if (!el) return;
+        const go = () => {
+            const c = document.getElementById('testChatMessages');
+            if (!c) return;
+            // offsetTop считается от контейнера ленты, минус небольшой
+            // отступ, чтобы текст не прилипал к верхней кромке.
+            c.scrollTop = Math.max(0, el.offsetTop - 12);
+        };
+        setTimeout(go, 60);
+        setTimeout(go, 260);
     },
 
     // ============================================
@@ -1928,6 +2120,7 @@ const Test = {
     },
 
     sendNextQuestion() {
+        this._renderProgress();
         if (this.currentStage>=this.stages.length) { this.showFinalProfile(); return; }
         const stage = this.stages[this.currentStage];
         const questions = this.getCurrentQuestions();
@@ -2423,6 +2616,9 @@ ${this.getStage3Interpretation()}
 
     async showFinalProfileButtons() {
         this._hideAILoader();
+        this._stopTestMeter();
+        // Тест закончился — полосе прогресса здесь делать нечего.
+        this._removeProgress();
         // _restoredProfile ставит showSavedResult(): после перезагрузки
         // страницы ответов в памяти нет, и calculateFinalProfile() выдал бы
         // всем одинаковые 3/3/3/3 из пустых массивов.
@@ -2473,7 +2669,7 @@ ${this.getStage3Interpretation()}
             }
         } catch {}
 
-        this.addBotMessage(text, true);
+        const profileMsg = this.addBotMessage(text, true);
 
         // Рекомендации ДО кнопок и до предложения подписки. Раньше запрос
         // уходил здесь же, но без ожидания — и ответ приземлялся в самом
@@ -2553,20 +2749,12 @@ ${this.getStage3Interpretation()}
                 }
             });
         }
-        // Отправить тест другу. Человек, который только что увидел свой
-        // портрет, — единственный, у кого есть настоящая причина позвать
-        // знакомого: ему интересно сравнить. До 14.09.2026 на финальном
-        // экране этой двери не было вовсе, хотя механизм «зеркал» в
-        // приложении есть и работает: друг проходит тест по ссылке, и
-        // результат возвращается пригласившему.
-        const mv = this.mirrorVariant();
-        nextButtons.push({
-            text: mv === 'b'
-                ? '📨 ОТПРАВИТЬ ДРУГУ И УВИДЕТЬ ЕГО РАЗБОР'
-                : '📨 ОТПРАВИТЬ ТЕСТ ДРУГУ',
-            keepEnabled: true,
-            callback: () => this.shareTestWithFriend()
-        });
+        // Приглашение друга здесь убрано по решению владельца 14.09.2026:
+        // на экране результата оно лишнее. Человек пришёл читать про себя,
+        // а не звать знакомых, и кнопка растягивала и без того длинный
+        // список действий. Сам механизм зеркал цел — shareTestWithFriend,
+        // mirrorVariant и цели test_mirror_created_a/_b на месте, их можно
+        // повесить в другую точку, где приглашение уместно.
         nextButtons.push(
             { text: '⬇️ СКАЧАТЬ РАЗБОР', keepEnabled: true,
               callback: () => this.downloadReport(p, deep, { sbD, tfD, ubD, cvD }) },
@@ -2593,6 +2781,24 @@ ${this.getStage3Interpretation()}
                 }));
             } catch(e) { console.warn('Failed to save test results to localStorage:', e); }
         }
+
+        // Последним действием, а не сразу после портрета: каждое следующее
+        // сообщение — рекомендации, кнопки, блок подписки — тянет ленту
+        // вниз, и ранняя прокрутка вверх тут же перебивалась. Человек
+        // должен увидеть начало своего портрета, а не хвост списка кнопок.
+        this.scrollMessageToTop(profileMsg);
+
+        // Сколько осталось — говорим здесь, а не посреди теста. Человек
+        // только что увидел портрет и хочет его обсудить; знать остаток
+        // ему нужно именно сейчас. Модалку не показываем: она перекроет
+        // портрет, ради которого он пятнадцать минут отвечал на вопросы.
+        try {
+            const m = window.FrediMeter;
+            if (m && typeof m.checkCanSend === 'function' && typeof m.showWarningToast === 'function') {
+                const st = await m.checkCanSend();
+                if (st && !st.is_premium) m.showWarningToast(st);
+            }
+        } catch (e) {}
     },
 
     // Блок «что откроется с подпиской» после портрета. Первый шаг считается
@@ -2872,6 +3078,9 @@ ${recs ? `<h2>С чего начать</h2>${recs}` : ''}
     },
 
     goToDashboard() {
+        // Ушёл с экрана теста — счёт времени прекращаем: дальше он либо
+        // разговаривает (там свой учёт), либо не пользуется ничем.
+        this._stopTestMeter();
         const c = document.getElementById('screenContainer');
         if (c) c.innerHTML='';
         if (typeof renderDashboard==='function') renderDashboard();

@@ -1354,7 +1354,12 @@ async function handleShowProfile() {
         if (code)  meta += `<div class="profile-meta-row"><span class="profile-meta-label">Код</span><span class="profile-meta-value">${code.replace(/_/g,' · ')}</span></div>`;
         if (type)  meta += `<div class="profile-meta-row"><span class="profile-meta-label">Восприятие</span><span class="profile-meta-value">${type}</span></div>`;
         if (lvl)   meta += `<div class="profile-meta-row"><span class="profile-meta-label">Мышление</span><span class="profile-meta-value">${lvl}/9</span></div>`;
-        if (bl['СБ']) meta += `<div class="profile-vectors-row"><span class="profile-vector">СБ ${sb}/9</span><span class="profile-vector">ТФ ${tf}/9</span><span class="profile-vector">УБ ${ub}/9</span><span class="profile-vector">ЧВ ${cv}/9</span></div>`;
+        // Векторы — по шкале 1..6, как на экране теста и как их считает
+        // бэкенд. До 14.09.2026 здесь стояло /9, и человек видел в шапке
+        // код «СБ-5 · ТФ-6», а строкой ниже «СБ 5/9 ТФ 6/9»: одни и те же
+        // числа с разными знаменателями на одном экране. Уровень мышления
+        // ниже — действительно /9, это другая шкала.
+        if (bl['СБ']) meta += `<div class="profile-vectors-row"><span class="profile-vector">СБ ${sb}/6</span><span class="profile-vector">ТФ ${tf}/6</span><span class="profile-vector">УБ ${ub}/6</span><span class="profile-vector">ЧВ ${cv}/6</span></div>`;
         meta += '</div>';
 
         const rawAI   = profile.ai_generated_profile || '';

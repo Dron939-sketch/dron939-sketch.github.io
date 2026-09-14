@@ -1568,6 +1568,147 @@ img.emoji {
 .test-message-button:disabled { opacity: 0.35; cursor: default; transform: none; }
 .test-message-button:focus-visible { outline: 2px solid rgba(224, 224, 224, 0.4); }
 
+/* ===== ВАРИАНТЫ ОТВЕТА =====
+   Колонка во всю ширину, а не ряд пилюль. Варианты в тесте — это фразы
+   по десять слов; в ряду они рвались по словам вразнобой, читать их
+   приходилось зигзагом, и попасть пальцем в нужный было тем труднее,
+   чем длиннее вариант. Ряд оставлен навигационным кнопкам («Назад»,
+   «Подробнее») — там он уместен. */
+.test-options {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+/* Варианты появляются на такт позже текста вопроса: сначала читаешь, что
+   спросили, потом видишь, из чего выбирать. Задержка маленькая — это не
+   «подождите», а порядок прочтения. Отвеченные группы не анимируем: они
+   перерисовываются при смене класса, и повтор выглядел бы как мигание. */
+.test-options:not(.test-options--answered) .test-message-button {
+    animation: testOptionIn 0.28s ease-out both;
+}
+.test-options:not(.test-options--answered) .test-message-button:nth-child(1) { animation-delay: 0.16s; }
+.test-options:not(.test-options--answered) .test-message-button:nth-child(2) { animation-delay: 0.22s; }
+.test-options:not(.test-options--answered) .test-message-button:nth-child(3) { animation-delay: 0.28s; }
+.test-options:not(.test-options--answered) .test-message-button:nth-child(4) { animation-delay: 0.34s; }
+.test-options:not(.test-options--answered) .test-message-button:nth-child(5) { animation-delay: 0.40s; }
+.test-options:not(.test-options--answered) .test-message-button:nth-child(n+6) { animation-delay: 0.46s; }
+
+@keyframes testOptionIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* У кого в системе выключены анимации — показываем сразу. */
+@media (prefers-reduced-motion: reduce) {
+    .test-options .test-message-button { animation: none !important; }
+    .test-message { animation: none !important; }
+    .test-progress-line i { transition: none; }
+}
+
+.test-options .test-message-button {
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 14.5px;
+    border-radius: 16px;
+}
+
+/* Отвеченный вопрос: варианты гаснут целиком, выбранный остаётся
+   читаемым и помечен галочкой. Человек видит свой ответ, не листая
+   ленту вниз к своему пузырю, и ни один вариант уже не нажимается. */
+.test-options--answered .test-message-button {
+    opacity: 0.3;
+    border-color: rgba(224, 224, 224, 0.1);
+    background: transparent;
+}
+
+.test-options--answered .test-option--chosen {
+    opacity: 1;
+    color: var(--text-primary);
+    background: rgba(224, 224, 224, 0.12);
+    border-color: rgba(224, 224, 224, 0.4);
+    position: relative;
+    padding-right: 40px;
+}
+
+.test-options--answered .test-option--chosen::after {
+    content: '✓';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--chrome);
+    font-weight: 700;
+}
+
+/* ===== ПОЛОСА ПРОГРЕССА =====
+   Тест идёт пятнадцать минут и состоит из пяти этапов. Единственным
+   указателем был «Вопрос 3/8» внутри пузыря — он уезжал вверх вместе с
+   лентой, и через минуту человек не знал ни где он, ни сколько осталось.
+   Полоса липнет к верху экрана и никуда не девается. */
+.test-progress {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    flex-shrink: 0;
+    padding: 10px 16px 8px;
+    /* Фон берём из --black-obsidian: в тёмной теме это #0a0a0a, в светлой
+       (theme-light.css) — #f5f5f7. Переменной --bg-primary в проекте нет,
+       и с ней полоса выезжала чёрной полосой поверх светлой темы. */
+    background: linear-gradient(180deg, var(--black-obsidian) 72%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    /* Справа висит бейдж таймера (position: fixed) — оставляем ему место,
+       иначе подпись уезжает под него. */
+    padding-right: 150px;
+}
+
+.test-progress-line {
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(224, 224, 224, 0.12);
+    overflow: hidden;
+}
+
+.test-progress-line i {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--silver-brushed, #9aa4b2), var(--chrome, #e0e0e0));
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.test-progress-label {
+    margin-top: 6px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Название этапа отдаём остатку строки и обрезаем именно его: номер
+   этапа и вопроса обязаны быть видны всегда — ради них полоса и
+   заводилась, а при обрезке всей строки целиком первым исчезало как раз
+   самое нужное, «вопрос 2 из 8». */
+.test-progress-label b {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.test-progress-label span {
+    opacity: 0.75;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 420px) {
+    .test-progress { padding-right: 132px; }
+    .test-progress-label { font-size: 10.5px; }
+}
+
 /* Форма контекста внутри чата */
 .test-context-form {
     background: linear-gradient(135deg, rgba(224, 224, 224, 0.05), rgba(192, 192, 192, 0.02));

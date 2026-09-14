@@ -538,12 +538,12 @@ async function openAnalysisScreen() {
         // Полный разбор — часть подписки (12.09.2026). Без неё экран
         // показывает, что внутри, и первый шаг — бесплатно; сервер на
         // не-подписчика отвечает premium_required и ничего не генерирует.
-        if (!_isPremium()) { _renderLocked(); return; }
+        if (!_isPremium()) { _goHome(); _showLockModal(); return; }
 
         // Сохранённый анализ из БД
         const sRes  = await fetch(`${api}/api/deep-analysis/${userId}`);
         const sData = await sRes.json();
-        if (sData && sData.premium_required) { _renderLocked(); return; }
+        if (sData && sData.premium_required) { _goHome(); _showLockModal(); return; }
 
         if (sData.success && sData.analysis) {
             console.log('📦 Загружен сохранённый анализ от', sData.created_at);
@@ -583,7 +583,7 @@ async function generateDeepAnalysis() {
         });
         const data = await res.json();
         clearInterval(timer);
-        if (data && data.premium_required) { _renderLocked(); return; }
+        if (data && data.premium_required) { _goHome(); _showLockModal(); return; }
 
         if (data.success && data.analysis) {
             _analysis = { ..._analysis, ...data.analysis };
@@ -617,7 +617,10 @@ function _renderScreen() {
 
     c.innerHTML = `
         <div class="analysis-page">
-            <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
+                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ РАЗБОР</button>
+            </div>
             <div class="analysis-heading">
                 <h1>🧠 Глубинный анализ</h1>
                 <p>Системный AI-анализ на основе психологического теста</p>
@@ -632,6 +635,8 @@ function _renderScreen() {
         </div>`;
 
     document.getElementById('analysisBackBtn').onclick = () => _goHome();
+    const saveBtn = document.getElementById('analysisSaveBtn');
+    if (saveBtn) saveBtn.onclick = () => _downloadAnalysis();
 
     document.querySelectorAll('.analysis-tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -768,6 +773,155 @@ function firstStepFor(code) {
     return (typeof window.frediFirstStepFor === 'function')
         ? window.frediFirstStepFor(code)
         : 'Сегодня вспомните одну ситуацию, где промолчали, и запишите одним предложением, что хотели сказать.';
+}
+
+/**
+ * Замок на полный разбор — модалкой, а не отдельным экраном.
+ *
+ * До 14.09.2026 человек без подписки, нажав «Полный разбор», попадал на
+ * целый экран-заглушку вместо того, что он читал: экран теста исчезал, и
+ * возвращаться приходилось руками. Модалка оставляет его там, где он был:
+ * закрыл — и продолжил читать свой разбор.
+ */
+/**
+ * Полный разбор одним документом.
+ *
+ * Шесть разделов — это то, за что человек заплатил, и возвращаться к ним
+ * он будет не через приложение, а когда припечёт. Печать, а не библиотека
+ * PDF: те рисуют кириллицу картинкой, текст не выделяется и не ищется.
+ * Системный диалог даёт «Сохранить как PDF» на всех платформах.
+ */
+function _downloadAnalysis() {
+    const esc = t => String(t == null ? '' : t)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const sections = [
+        ['Глубинный портрет', 'portrait'],
+        ['Системные петли', 'loops'],
+        ['Скрытые механизмы', 'mechanisms'],
+        ['Точки роста', 'growth'],
+        ['Прогноз', 'forecast'],
+        ['Персональные ключи', 'keys'],
+        ['Мысли психолога', 'thought']
+    ];
+    const body = sections
+        .filter(([, k]) => _analysis[k])
+        .map(([t, k]) => `<h2>${esc(t)}</h2><div class="s">${esc(_analysis[k])}</div>`)
+        .join('');
+    if (!body) {
+        if (window.showToast) window.showToast('Разбор ещё не собран', 'error');
+        return;
+    }
+    const code = (_profile && (_profile.profile_data || {}).display_name) || '';
+    const site = location.origin;
+
+    const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<title>Глубинный разбор${code ? ' — ' + esc(code) : ''}</title>
+<style>
+  body{font:15px/1.7 -apple-system,Segoe UI,Roboto,sans-serif;color:#111;max-width:760px;margin:32px auto;padding:0 20px}
+  h1{font-size:24px;margin:0 0 4px}
+  h2{font-size:17px;margin:26px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px}
+  .meta{color:#555;font-size:13px;margin-bottom:18px}
+  .s{white-space:pre-wrap}
+  .foot{margin-top:32px;color:#666;font-size:12px;border-top:1px solid #ddd;padding-top:10px}
+  @media print{body{margin:0}}
+</style></head><body>
+<h1>Глубинный разбор</h1>
+<div class="meta">${code ? 'Код профиля ' + esc(code) + ' · ' : ''}${new Date().toLocaleDateString('ru-RU')}</div>
+${body}
+<div class="foot">Фреди — ИИ-психолог · <a href="${esc(site)}/fredi/">${esc(site)}/fredi/</a><br>
+Это не медицинский диагноз. При тяжёлом состоянии нужен врач.</div>
+</body></html>`;
+
+    const w = window.open('', '_blank');
+    if (!w) {
+        if (window.showToast) window.showToast('Разрешите всплывающие окна, чтобы сохранить разбор', 'error');
+        return;
+    }
+    w.document.write(html);
+    w.document.close();
+    // Без задержки Safari печатает пустую страницу.
+    setTimeout(() => { try { w.focus(); w.print(); } catch (e) {} }, 400);
+    try {
+        if (window.FrediTracker && window.FrediTracker.track) {
+            window.FrediTracker.track('analysis_downloaded', {});
+        }
+        if (typeof window.ym === 'function') {
+            [108965607, 108138656].forEach(c => {
+                try { window.ym(c, 'reachGoal', 'analysis_downloaded'); } catch (e) {}
+            });
+        }
+    } catch (e) {}
+}
+
+function _showLockModal() {
+    if (document.getElementById('analysisLockOverlay')) return;
+    _injectLockStyles();
+    const code = (_profile && (_profile.profile_data || {}).display_name) || '';
+    const step = firstStepFor(code);
+    try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('analysis_lock_shown', {}); } catch (e) {}
+
+    const o = document.createElement('div');
+    o.className = 'alock-overlay';
+    o.id = 'analysisLockOverlay';
+    o.innerHTML = `
+        <div class="alock-modal" role="dialog" aria-modal="true" aria-label="Полный разбор доступен с подпиской">
+            <button class="alock-close" id="alockClose" aria-label="Закрыть">✕</button>
+            <div class="alock-emoji">🔒</div>
+            <div class="alock-title">Полный разбор — с подпиской</div>
+            <div class="alock-text">Портрет и первый шаг у вас уже есть, они бесплатны. Шесть разделов разбора открываются с подпиской.</div>
+            <div class="alock-step"><b>✅ Первый шаг на сегодня — бесплатно</b><br>${step}</div>
+            <ul class="alock-list">
+                <li><b>Глубинный портрет</b> — как устроены ваши реакции, а не только их названия</li>
+                <li><b>Системные петли</b> — что изматывает по кругу и где у петли вход</li>
+                <li><b>Скрытые механизмы</b> — зачем психика держится за привычное</li>
+                <li><b>Точки роста</b> — три места, где изменение даёт больше всего</li>
+                <li><b>Прогноз</b> — что будет через полгода, если ничего не менять, и если менять</li>
+                <li><b>Персональные ключи</b> — что говорить себе в момент срыва</li>
+            </ul>
+            <button class="alock-btn alock-btn-primary" id="alockSub">✨ Открыть разбор — неделя 290 ₽</button>
+            <button class="alock-btn" id="alockLater">Позже</button>
+            <div class="alock-note">Потом 990 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
+        </div>`;
+    document.body.appendChild(o);
+
+    const close = () => { try { o.remove(); } catch (e) {} };
+    o.querySelector('#alockClose').onclick = close;
+    o.querySelector('#alockLater').onclick = close;
+    // Клик мимо окна закрывает — иначе замок выглядит как ловушка.
+    o.addEventListener('click', e => { if (e.target === o) close(); });
+    o.querySelector('#alockSub').onclick = () => {
+        try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'analysis_lock' }); } catch (e) {}
+        close();
+        if (typeof window.openCheckout === 'function') window.openCheckout('analysis_lock');
+    };
+}
+
+function _injectLockStyles() {
+    if (document.getElementById('analysis-lock-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'analysis-lock-styles';
+    st.textContent = `
+        .alock-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+            background:rgba(0,0,0,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:16px}
+        .alock-modal{position:relative;max-width:420px;width:100%;max-height:88vh;overflow-y:auto;
+            background:#17181c;border:1px solid rgba(224,224,224,.18);border-radius:22px;padding:26px 22px 20px;
+            color:#e6e6e6;font-family:inherit;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+        .alock-close{position:absolute;top:10px;right:12px;background:none;border:none;color:#9a9a9a;
+            font-size:18px;cursor:pointer;padding:4px 8px;line-height:1}
+        .alock-emoji{font-size:34px;margin-bottom:8px}
+        .alock-title{font-size:19px;font-weight:700;margin-bottom:10px}
+        .alock-text{font-size:14px;line-height:1.6;color:#b9b9b9;margin-bottom:14px}
+        .alock-step{font-size:13.5px;line-height:1.6;text-align:left;border-left:3px solid #3b82ff;
+            padding:8px 0 8px 12px;margin:0 0 14px;color:#d6d6d6}
+        .alock-list{text-align:left;margin:0 0 16px;padding-left:20px;font-size:13.5px;line-height:1.6;color:#b9b9b9}
+        .alock-list li{margin:5px 0}
+        .alock-btn{display:block;width:100%;padding:13px 16px;margin-top:9px;border-radius:14px;
+            border:1px solid rgba(224,224,224,.2);background:rgba(224,224,224,.06);color:#e6e6e6;
+            font-size:14.5px;font-weight:600;font-family:inherit;cursor:pointer}
+        .alock-btn-primary{background:#3b82ff;border-color:#3b82ff;color:#fff}
+        .alock-note{font-size:12px;color:#8f8f8f;margin-top:10px}
+        @media (max-width:420px){.alock-modal{padding:22px 16px 16px}}`;
+    document.head.appendChild(st);
 }
 
 function _renderLocked() {
