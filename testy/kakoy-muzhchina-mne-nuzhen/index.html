@@ -70,6 +70,13 @@ a{color:#3A86FF}
 .next-box a.btn{display:inline-block;background:#3A86FF;color:#fff;text-decoration:none;font-weight:600;padding:11px 22px;border-radius:10px;margin-top:8px}
 .faq-item{border-top:1px solid #E7E7EA;padding:18px 0 4px}
 .retake{background:none;border:1px solid #3A86FF;color:#3A86FF;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit;font-size:.95rem;margin-top:6px}
+.recs{margin-top:20px;padding-top:16px;border-top:1px solid #E5E5EA}
+.recs>b{display:block;margin-bottom:6px}
+.rec{margin:0 0 14px;padding-left:12px;border-left:3px solid #3A86FF}
+.rec a{font-weight:700;text-decoration:none}
+.rec a:hover{text-decoration:underline}
+.rec-fmt{font-size:.85rem;color:#6e6e73;margin:2px 0 3px}
+.rec-why{font-size:.93rem;color:#3c3c43}
 </style>
 <style>.qual{border:1px solid #E4E4E7;border-left:4px solid #3A86FF;border-radius:12px;padding:14px 18px;margin:10px 0;background:#FBFCFE}.qual b{display:block;font-size:1.05rem;margin-bottom:4px}.qual span{color:#4A5563;font-size:.97rem;font-weight:300}.sig{border-top:1px solid #E7E7EA;padding:14px 0 2px}.sig b{display:block;margin-bottom:4px}.sig p{margin:0 0 .4rem;font-size:1rem}.where{background:#F7F9FF;border:1px solid #C7D8FF;border-radius:14px;padding:16px 20px;margin:14px 0;font-weight:300}</style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
@@ -146,6 +153,38 @@ a{color:#3A86FF}
 <div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div><script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){document.getElementById('footer-placeholder').innerHTML=html;});})();</script>
 <script>
 (function () {
+  // Рекомендации под ПЕРВОЕ по важности качество. Тест отвечает на
+  // вопрос «какой человек мне нужен», но половина ответа — про себя:
+  // рядом с надёжным неуютно тому, кто не умеет опираться, а к
+  // эмоционально доступному не подойти, не умея говорить о чувствах.
+  // Поэтому рекомендация идёт в то, что понадобится ЕЙ.
+  // Названия и адреса — из blog/lektorij/, knigi/ и таблицы ROUTES.
+  function recsFor(k) {
+    var P = {
+      nadezhnost: ['Чтобы надёжность рядом работала, нужно уметь на неё опираться — а это отдельный навык.', [
+        ['Курс «Привязанность и отношения»', '/blog/lektorij/privyazannost-i-otnosheniya/', 'Бесплатно, без регистрации', 'Почему рядом со спокойным человеком иногда скучно, а рядом с непредсказуемым — «искра».'],
+        ['Тренажёр «Опора»', '/fredi/?m=opora', '10–15 минут', 'Ответ внутреннему голосу, который твердит, что вас всё равно оставят.']]],
+      byt: ['Включённость в быт делится, а не выпрашивается: договариваться придётся вслух и заранее.', [
+        ['Курс «Личные границы»', '/blog/lektorij/lichnye-granicy/', 'Бесплатно, без регистрации', 'Как просить и отказывать, не копя обиду вместо счёта.'],
+        ['Тренажёр «Скажи нет»', '/fredi/?m=skazhinet', '10–15 минут', 'Тренировка прямого разговора в безопасной песочнице.']]],
+      teplo: ['К эмоционально доступному человеку не подойти, не умея говорить о своём.', [
+        ['Курс «Эмоциональный интеллект»', '/blog/lektorij/emocionalnyj-intellekt/', 'Бесплатно, без регистрации', 'Читать своё и чужое состояние до того, как оно станет ссорой.'],
+        ['Игра «Чувства»', '/fredi/?m=chuvstva', '10–15 минут', 'Точные слова вместо «всё нормально» — на них и держится близость.']]],
+      risk: ['Рядом с предприимчивым спокойно тому, кто сам выдерживает неопределённость.', [
+        ['Курс «Принятие решений»', '/blog/lektorij/prinyatie-reshenij/', 'Бесплатно, без регистрации', 'Что делать, когда гарантий нет, а решать надо вдвоём.'],
+        ['Курс «Психология денег»', '/blog/lektorij/dengi-i-psihologiya/', 'Бесплатно', 'Общие деньги при разном отношении к риску — частая точка разрыва.']]],
+      sam: ['Самостоятельный человек не заполняет собой вашу жизнь — её придётся наполнить самой.', [
+        ['Курс «Своя колея»', '/blog/lektorij/svoya-koleya/', 'Бесплатно, без регистрации', 'Про своё направление, которое не зависит от того, кто сейчас рядом.'],
+        ['Книга «Вариатика»', '/knigi/variatika-biblioteka-chelovecheskih-patternov/', 'Книга', 'Почему люди делают то, что делают, — чтобы выбирать по устройству, а не по первому впечатлению.']]]
+    }[k];
+    if (!P) return '';
+    var h = '<div class="recs"><b>Что пригодится вам</b><p style="margin:0 0 12px;font-size:.95rem">' + P[0] + '</p>';
+    P[1].forEach(function (r) {
+      h += '<div class="rec"><a href="' + r[1] + '">' + r[0] + '</a><div class="rec-fmt">' + r[2] + '</div><div class="rec-why">' + r[3] + '</div></div>';
+    });
+    return h + '</div>';
+  }
+
   var QUAL = {"nadezhnost": ["Надёжность", "Сказал — сделал, и планы с ним не рассыпаются. Не про подвиги, про мелочи, которые он держит без напоминаний."], "byt": ["Включённость в быт", "Участвует руками, а не деньгами: знает, что заканчивается в холодильнике, и делает, не дожидаясь просьбы."], "teplo": ["Эмоциональная доступность", "Может назвать, что чувствует, и слышит вас, не переводя разговор на решение задачи."], "risk": ["Предприимчивость", "Выдерживает неопределённость и принимает решения, когда гарантий нет. Не путайте с азартом: важно, как он ведёт себя, когда не вышло."], "sam": ["Самостоятельность", "У него есть своя жизнь: дело, друзья, занятие. Вы — не единственное его содержание, и это разгружает вас обоих."], "lyudi": ["Лёгкость с людьми", "С ним просто в компании, дом открыт, гости не катастрофа. Это отдельный навык, и он есть не у всех."], "rost": ["Тяга к развитию", "Учится и меняется, а не защищает привычное. Проверяется просто: чему он научился за последний год?"], "dengi": ["Ровное отношение к деньгам", "Без качелей — ни скупости, ни куража. С таким человеком можно планировать, а не гадать."]};
   var WHERE = {"nadezhnost": "Там, где люди делают что-то <b>регулярно и по расписанию</b>: секции и клубы с занятиями по дням, волонтёрство, походы, дачные и ремонтные сообщества, родительские дела. Сама регулярность — фильтр: человек, который не держит слово, отсеивается оттуда за месяц, и вам не придётся выяснять это годами.", "byt": "Там, где что-то делают руками и вместе: мастерские, ремонт, стройка, огород, кухня, волонтёрские субботники, походы с общим лагерем. В таких местах видно за один день, кто берётся за скучное, а кто рассказывает, как надо.", "teplo": "Среды, где принято говорить и слушать: клубы обсуждений, книжные, творческие мастерские, психологические и поддерживающие группы, волонтёрство с людьми. Там эмоциональная доступность — норма, а не редкость, и мужчина, который туда пришёл, уже прошёл первичный отбор.", "risk": "Деловые среды: отраслевые конференции, клубы предпринимателей, профильные сообщества, курсы про дело. Смотреть там нужно не на успешных, а на тех, кто спокойно рассказывает про свой провал, — это и есть выдержка неопределённости.", "sam": "Увлечения, которыми занимаются в одиночку, но в сообществе: бег, велосипед, горы, рыбалка, фотография, профессиональные сообщества. Человек с собственным делом и собственным кругом не потребует, чтобы вы стали его единственным занятием.", "lyudi": "Там, где собираются компаниями: походы, командный спорт, танцы, настолки, соседские и дворовые сообщества, любые праздники, которые кто-то организует. Организаторы, кстати, чаще всего и есть те, кого вы ищете.", "rost": "Учебные среды: курсы, лектории, языковые клубы, мастерские, профессиональная переподготовка. Человек, который вкладывает в собственное развитие своё время, обычно и в паре не стоит на месте.", "dengi": "Среды с длинным горизонтом: профессиональные сообщества, инвестиционные и образовательные клубы, спорт с долгой подготовкой. Ровное отношение к деньгам заметно там, где нужно терпение, а не быстрый результат."};
   var form = document.getElementById('testForm');
@@ -188,6 +227,19 @@ a{color:#3A86FF}
     document.getElementById('quals').innerHTML = html;
     document.getElementById('where').innerHTML = WHERE[keys[0]]
       + (keys[1] && WHERE[keys[1]] !== WHERE[keys[0]] ? '<p style="margin:10px 0 0">Второе по важности качество — «' + QUAL[keys[1]][0] + '». ' + WHERE[keys[1]] + '</p>' : '');
+    document.getElementById('where').innerHTML += recsFor(keys[0]);
+    Array.prototype.forEach.call(document.querySelectorAll('.rec a'), function (a) {
+      a.addEventListener('click', function () { try { ym(108138656, 'reachGoal', 'muzh_rec_click'); } catch (e) {} });
+    });
+    if (window.FrediRazbor) {
+      window.FrediRazbor.mount({
+        host: document.getElementById('result'),
+        goal: 'muzh_open_fredi',
+        text: 'Прошла тест «какой мужчина мне нужен». Вышли качества по важности: '
+            + keys.map(function (k) { return QUAL[k][0].toLowerCase(); }).join(', ')
+            + '. Где такого искать и по каким признакам понять на первых встречах?'
+      });
+    }
     document.getElementById('result').classList.add('show');
     document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
     try { ym(108138656, 'reachGoal', 'muzh_test_done'); } catch (e) {}
@@ -218,5 +270,6 @@ a{color:#3A86FF}
 })();
 </script>
 <!-- /fredi-track -->
+<script src="/testy/razbor.js" defer></script>
 </body>
 </html>
