@@ -1390,6 +1390,9 @@ const Test = {
         // человек, прошедший тест дважды за сессию, во второй раз
         // оставался без рекомендаций и без последней ступени воронки.
         this._testCompletedTracked=false; this._recsRequested=false;
+        // Профиль прошлого прохождения, восстановленный showSavedResult:
+        // без сброса новый тест дорисовал бы старые векторы.
+        this._restoredProfile=null;
         this.context={city:null,gender:null,age:null,weather:null,isComplete:false,name:null};
     },
 
@@ -1463,6 +1466,63 @@ const Test = {
             </div>`;
         setTimeout(()=>this.optimizeMobileView(), 100);
         this.scrollToBottom();
+    },
+
+    /**
+     * Открыть готовый разбор заново — чтобы дочитать.
+     *
+     * Человек тратит на тест пятнадцать минут, получает длинный разбор с
+     * рекомендациями и закрывает вкладку, не дочитав. Вернуться было
+     * некуда: экран жил только в памяти текущего прохождения, а кнопка
+     * «🧠 К ПРОФИЛЮ» лежала внутри той же ленты, до которой уже не
+     * добраться. Единственным выходом было пройти тест заново.
+     *
+     * Берём последний результат: сначала localStorage (мгновенно, работает
+     * и без сети), потом сервер — он переживает чистку истории и открывается
+     * с другого устройства.
+     */
+    async showSavedResult() {
+        const uid = this.userId || (window.CONFIG && window.CONFIG.USER_ID);
+        if (!uid) return false;
+        this.userId = uid;
+
+        let rec = null;
+        try {
+            const raw = localStorage.getItem('test_results_' + uid);
+            if (raw) rec = JSON.parse(raw);
+        } catch (e) { /* приватный режим — идём на сервер */ }
+
+        if (!rec || !rec.profile) {
+            try {
+                const r = await fetch(TEST_API_BASE_URL + '/api/get-profile/' + uid);
+                const d = await r.json();
+                const pr = d && d.profile;
+                const pd = pr && pr.profile_data;
+                if (pd && pd.displayName) {
+                    rec = {
+                        profile: pd,
+                        deepPatterns: pr.deep_patterns || {},
+                        perceptionType: pr.perception_type,
+                        thinkingLevel: pr.thinking_level,
+                        aiProfile: pr.ai_generated_profile || ''
+                    };
+                }
+            } catch (e) { console.warn('Профиль с сервера не пришёл:', e); }
+        }
+        if (!rec || !rec.profile) return false;
+
+        this._restoredProfile = rec.profile;
+        this.deepPatterns = rec.deepPatterns || this.deepPatterns;
+        this.perceptionType = rec.perceptionType || this.perceptionType;
+        this.thinkingLevel = rec.thinkingLevel || this.thinkingLevel;
+        this.aiGeneratedProfile = rec.aiProfile || this.aiGeneratedProfile;
+        // Рекомендации запрашиваются заново: _recsRequested мог остаться
+        // взведённым с прошлого показа, и блок бы не появился.
+        this._recsRequested = false;
+
+        this.showTestScreen();
+        await this.showFinalProfileButtons();
+        return true;
     },
 
     // ============================================
@@ -1969,7 +2029,7 @@ ${this.getStage3Interpretation()}
 
     showStage4Result() {
         const p = this.calculateFinalProfile();
-        // Шкала /9 — синхронно с финальным экраном (см. showFinalProfileButtons).
+        // Шкала /6 — синхронно с финальным экраном (см. showFinalProfileButtons).
         const sbD = {1:'Под давлением замираете',2:'Избегаете конфликтов',3:'Внешне соглашаетесь',4:'Внешне спокойны',5:'Умеете защищать',6:'Защищаете и используете силу',7:'Видите давление как жизненный урок',8:'Распознаёте универсальные паттерны',9:'Опираетесь на законы развития'}[p.sbLevel]||'—';
         const tfD = {1:'Деньги как повезёт',2:'Ищете возможности',3:'Зарабатываете трудом',4:'Хорошо зарабатываете',5:'Создаёте системы дохода',6:'Управляете капиталом',7:'Видите деньги как часть экономики',8:'Деньги — отражение ценности',9:'Деньги — универсальный эквивалент'}[p.tfLevel]||'—';
         const ubD = {1:'Не думаете о сложном',2:'Верите в знаки',3:'Доверяете экспертам',4:'Ищете заговоры',5:'Анализируете факты',6:'Строите теории',7:'Ищете аналогии в истории',8:'Строите модели мира',9:'Видите закономерности'}[p.ubLevel]||'—';
@@ -2008,10 +2068,10 @@ ${this.getStage3Interpretation()}
         const text = '🧠 ПРЕДВАРИТЕЛЬНЫЙ ПОРТРЕТ\n\n'
             + (p.archetype ? '✨ Архетип: ' + p.archetype + '\n\n' : '')
             + '📊 ТВОИ ВЕКТОРЫ:\n\n'
-            + '• СБ ' + p.sbLevel + '/9: ' + sbD + '\n'
-            + '• ТФ ' + p.tfLevel + '/9: ' + tfD + '\n'
-            + '• УБ ' + p.ubLevel + '/9: ' + ubD + '\n'
-            + '• ЧВ ' + p.chvLevel + '/9: ' + cvD + '\n\n'
+            + '• СБ ' + p.sbLevel + '/6: ' + sbD + '\n'
+            + '• ТФ ' + p.tfLevel + '/6: ' + tfD + '\n'
+            + '• УБ ' + p.ubLevel + '/6: ' + ubD + '\n'
+            + '• ЧВ ' + p.chvLevel + '/6: ' + cvD + '\n\n'
             + distBlock + '\n\n'
             + interpBlock + '\n\n'
             + confBlock + '\n\n'
@@ -2108,24 +2168,15 @@ ${this.getStage3Interpretation()}
             crossBlock = `\n\n━━━━━━━━━━━━━━━━━\n🧬 ВАША КОНФИГУРАЦИЯ:\n\n${lines.join('\n\n')}`;
         }
 
-        // Рекомендации скиллов — финальный продукт теста, мост к Фреди.
-        let recBlock = '';
-        const meta = this.interpretations?.recommendations?.skill_meta;
-        if (meta) {
-            const top = this.recommendSkills();
-            const lines = [];
-            for (const skillId of top) {
-                const m = meta[skillId];
-                if (m) lines.push(`${m.icon} <b>${m.name}</b> — ${m.tagline}`);
-            }
-            if (lines.length) {
-                const tagline = this.interpretations?.recommendations?.tagline_template || 'По вашему профилю особенно ляжет:';
-                const footer = this.interpretations?.recommendations?.footer || '';
-                recBlock = `\n\n━━━━━━━━━━━━━━━━━\n🎯 ${tagline}\n\n${lines.join('\n')}${footer ? `\n\n<i>${footer}</i>` : ''}`;
-            }
-        }
+        // Блок со списком навыков отсюда убран 14.09.2026. Он выводился
+        // ДО портрета — то есть до того, как человек вообще узнал свой
+        // профиль, — пятью строчками без объяснения, зачем ему это, а ниже
+        // на том же экране шёл второй, серверный блок рекомендаций с
+        // курсом и играми. Восемь позиций подряд из двух разных систем
+        // читались как каталог, а не как совет. Рекомендация теперь одна и
+        // стоит после интерпретации (renderTestRecommendations).
 
-        const text = `🧠 ЭТАП 5: ГЛУБИННЫЕ ПАТТЕРНЫ\n\n${body}${crossBlock}${recBlock}\n\n✅ Тест завершён! Собираю воедино результаты 5 этапов...`;
+        const text = `🧠 ЭТАП 5: ГЛУБИННЫЕ ПАТТЕРНЫ\n\n${body}${crossBlock}\n\n✅ Тест завершён! Собираю воедино результаты 5 этапов...`;
         this.addBotMessage(text, true);
         this._showAILoader('AI составляет ваш психологический портрет', 'Анализ 5 этапов, подбор инсайтов и формирование рекомендаций. 20-40 секунд.');
         this.sendTestResultsToServer();
@@ -2370,19 +2421,29 @@ ${this.getStage3Interpretation()}
         this.showFinalProfileButtons();
     },
 
-    showFinalProfileButtons() {
+    async showFinalProfileButtons() {
         this._hideAILoader();
-        const p = this.calculateFinalProfile();
+        // _restoredProfile ставит showSavedResult(): после перезагрузки
+        // страницы ответов в памяти нет, и calculateFinalProfile() выдал бы
+        // всем одинаковые 3/3/3/3 из пустых массивов.
+        const p = this._restoredProfile || this.calculateFinalProfile();
         const deep = this.deepPatterns||{attachment:'🤗 Надежный'};
-        // Шкала 1–9: уровни 1–6 описывают поведение (стадия 2), 7–9 — рефлексивные
-        // паттерны из стадии 3 (Дилтс), куда behavioralLevels тоже пишет уровни.
-        // Раньше выводилось /6 и при level≥7 показывался прочерк.
+        // Шкала векторов — 1..6, и это проверено по самим вопросам: уровень
+        // попадает в behavioralLevels только у опций с полем strategy, а у
+        // них level не выше 6. Ответы 7–9 помечены measures и уходят в
+        // strategyLevels, к векторам отношения не имеющий.
+        //
+        // До 14.09.2026 здесь стояло /9 — при том, что этап 3 на том же
+        // прохождении показывал те же числа как /6. Человек с максимальным
+        // ЧВ видел «6/9» вместо «6/6», то есть сильную сторону ему
+        // показывали как среднюю. Описания 7–9 ниже недостижимы и оставлены
+        // только чтобы не падать на чужих данных.
         const sbD = {1:'Под давлением замираете',2:'Избегаете конфликтов',3:'Внешне соглашаетесь',4:'Внешне спокойны',5:'Умеете защищать',6:'Защищаете и используете силу',7:'Видите давление как жизненный урок',8:'Распознаёте универсальные паттерны',9:'Опираетесь на законы развития'}[p.sbLevel]||'—';
         const tfD = {1:'Деньги как повезёт',2:'Ищете возможности',3:'Зарабатываете трудом',4:'Хорошо зарабатываете',5:'Создаёте системы дохода',6:'Управляете капиталом',7:'Видите деньги как часть экономики',8:'Деньги — отражение ценности',9:'Деньги — универсальный эквивалент'}[p.tfLevel]||'—';
         const ubD = {1:'Не думаете о сложном',2:'Верите в знаки',3:'Доверяете экспертам',4:'Ищете заговоры',5:'Анализируете факты',6:'Строите теории',7:'Ищете аналогии в истории',8:'Строите модели мира',9:'Видите закономерности'}[p.ubLevel]||'—';
         const cvD = {1:'Сильно привязываетесь',2:'Подстраиваетесь',3:'Хотите нравиться',4:'Умеете влиять',5:'Строите равные отношения',6:'Создаёте сообщества',7:'Понимаете историю группы',8:'Видите архетипы отношений',9:'Понимаете универсальные законы'}[p.chvLevel]||'—';
 
-        let text = `🧠 **ВАШ ПСИХОЛОГИЧЕСКИЙ ПРОФИЛЬ**\n\n**Архетип:** ${p.archetype}\n**Код:** ${p.displayName}\n**Тип восприятия:** ${p.perceptionType}\n**Уровень мышления:** ${p.thinkingLevel}/9\n\n**📊 ВАШИ ВЕКТОРЫ:**\n\n**СБ ${p.sbLevel}/9:** ${sbD}\n**ТФ ${p.tfLevel}/9:** ${tfD}\n**УБ ${p.ubLevel}/9:** ${ubD}\n**ЧВ ${p.chvLevel}/9:** ${cvD}\n\n**🧠 Глубинный паттерн:** ${deep.attachment}`;
+        let text = `🧠 **ВАШ ПСИХОЛОГИЧЕСКИЙ ПРОФИЛЬ**\n\n**Архетип:** ${p.archetype}\n**Код:** ${p.displayName}\n**Тип восприятия:** ${p.perceptionType}\n**Уровень мышления:** ${p.thinkingLevel}/9\n\n**📊 ВАШИ ВЕКТОРЫ:**\n\n**СБ ${p.sbLevel}/6:** ${sbD}\n**ТФ ${p.tfLevel}/6:** ${tfD}\n**УБ ${p.ubLevel}/6:** ${ubD}\n**ЧВ ${p.chvLevel}/6:** ${cvD}\n\n**🧠 Глубинный паттерн:** ${deep.attachment}`;
 
         if (this.aiGeneratedProfile) {
             text += '\n\n**🧠 AI-СГЕНЕРИРОВАННЫЙ ПРОФИЛЬ:**\n\n' + this.aiGeneratedProfile.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
@@ -2414,10 +2475,18 @@ ${this.getStage3Interpretation()}
 
         this.addBotMessage(text, true);
 
-        // Персональные рекомендации: AI по профилю выбирает курс Лектория,
-        // игру-тренажёр и третий шаг. Запрашиваем асинхронно — сообщение
-        // появится в чате, когда сервер ответит (кэшируется в профиле).
-        this.fetchTestRecommendations();
+        // Рекомендации ДО кнопок и до предложения подписки. Раньше запрос
+        // уходил здесь же, но без ожидания — и ответ приземлялся в самом
+        // низу, после «ЧТО ДАЛЬШЕ» и после блока про подписку. Человек
+        // читал портрет, упирался в цену и уходил, а совет, ради которого
+        // всё затевалось, появлялся у него за спиной.
+        //
+        // Ждём не дольше восьми секунд: кнопки должны появиться в любом
+        // случае, даже если сервер молчит.
+        await Promise.race([
+            this.fetchTestRecommendations(),
+            new Promise(r => setTimeout(r, 8000))
+        ]);
 
         // Финал теста — единственная точка, где у анонима есть своя причина
         // назваться: он только что вложил полчаса и получил профиль, который
@@ -2499,6 +2568,8 @@ ${this.getStage3Interpretation()}
             callback: () => this.shareTestWithFriend()
         });
         nextButtons.push(
+            { text: '⬇️ СКАЧАТЬ РАЗБОР', keepEnabled: true,
+              callback: () => this.downloadReport(p, deep, { sbD, tfD, ubD, cvD }) },
             { text: '📄 ПОЛНЫЙ ОТЧЁТ В MAX', callback: () => this.sendPortraitToMax() },
             { text: '🧠 МЫСЛИ ПСИХОЛОГА',    callback: () => this.showPsychologistThought() },
             { text: '🏠 НА ГЛАВНУЮ',         callback: () => this.goToDashboard() }
@@ -2564,8 +2635,8 @@ ${this.getStage3Interpretation()}
         const strip = s => String(s || '').replace(/\*\*/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
         let t = 'Фреди, я прошёл большой тест. Архетип: ' + strip(p.archetype) + ', код ' + strip(p.displayName)
             + ', тип восприятия ' + strip(p.perceptionType) + ', уровень мышления ' + p.thinkingLevel + '/9. '
-            + 'Векторы: СБ ' + p.sbLevel + '/9 («' + d.sbD + '»), ТФ ' + p.tfLevel + '/9 («' + d.tfD + '»), '
-            + 'УБ ' + p.ubLevel + '/9 («' + d.ubD + '»), ЧВ ' + p.chvLevel + '/9 («' + d.cvD + '»). '
+            + 'Векторы: СБ ' + p.sbLevel + '/6 («' + d.sbD + '»), ТФ ' + p.tfLevel + '/6 («' + d.tfD + '»), '
+            + 'УБ ' + p.ubLevel + '/6 («' + d.ubD + '»), ЧВ ' + p.chvLevel + '/6 («' + d.cvD + '»). '
             + 'Глубинный паттерн: ' + strip(deep.attachment) + '. ';
         const q = 'Что в этом портрете главное для меня сейчас и с чего начать?';
         const pre = 'Из AI-профиля: «', post = '…». ';
@@ -2577,6 +2648,86 @@ ${this.getStage3Interpretation()}
         return t + q;
     },
 
+    /**
+     * Разбор одним документом — забрать с собой.
+     *
+     * Человек проходит тест один раз, а возвращаться к выводам будет
+     * месяцами: там его векторы, объяснение и три конкретных шага со
+     * ссылками. Держать это внутри веб-приложения — значит потерять при
+     * первой же смене устройства.
+     *
+     * Печать, а не готовый файл. Библиотеки для PDF в браузере рисуют
+     * текст картинкой: ссылки перестают нажиматься, кириллица требует
+     * отдельного шрифта на сотни килобайт, а выделить текст нельзя.
+     * Системный диалог печати даёт «Сохранить как PDF» на всех платформах,
+     * сохраняет ссылки живыми и ничего не весит.
+     */
+    downloadReport(p, deep, d) {
+        const esc = t => String(t == null ? '' : t)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const site = location.origin;
+        const abs = u => (String(u || '').startsWith('http') ? u : site + u);
+
+        const recs = (this._lastRecommendations || []).map(it => `
+            <div class="rec">
+                <a href="${esc(abs(it.url))}">${esc(it.title)}</a>
+                ${it.format ? `<div class="fmt">${esc(it.format)}</div>` : ''}
+                ${it.reason ? `<div><b>Зачем вам:</b> ${esc(it.reason)}</div>` : ''}
+                ${it.what ? `<div><b>Что даст:</b> ${esc(it.what)}</div>` : ''}
+            </div>`).join('');
+
+        // AI-портрет приходит с разметкой <b> из бэкенда — переносы строк
+        // в нём значимы, поэтому <pre>-подобный блок, а не <p>.
+        const ai = this.aiGeneratedProfile
+            ? `<h2>Интерпретация</h2><div class="ai">${this.aiGeneratedProfile}</div>` : '';
+
+        const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<title>Психологический профиль — ${esc(p.displayName)}</title>
+<style>
+  body{font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;color:#111;max-width:760px;margin:32px auto;padding:0 20px}
+  h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:28px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px}
+  .meta{color:#555;font-size:13px;margin-bottom:20px}
+  table{border-collapse:collapse;width:100%} td{padding:6px 8px;border-bottom:1px solid #eee;vertical-align:top}
+  td.v{white-space:nowrap;font-weight:600;width:96px}
+  .ai{white-space:pre-wrap}
+  .rec{margin:0 0 16px;padding-left:12px;border-left:3px solid #3b82ff}
+  .rec a{color:#1a4fd0;font-weight:600;text-decoration:none}
+  .fmt{color:#666;font-size:13px;margin:2px 0 4px}
+  .foot{margin-top:32px;color:#666;font-size:12px;border-top:1px solid #ddd;padding-top:10px}
+  @media print{body{margin:0}}
+</style></head><body>
+<h1>Психологический профиль</h1>
+<div class="meta">${esc(p.archetype)} · код ${esc(p.displayName)} · ${new Date().toLocaleDateString('ru-RU')}</div>
+<table>
+  <tr><td class="v">Восприятие</td><td>${esc(p.perceptionType)}</td></tr>
+  <tr><td class="v">Мышление</td><td>${esc(p.thinkingLevel)}/9</td></tr>
+  <tr><td class="v">СБ ${esc(p.sbLevel)}/6</td><td>${esc(d.sbD)}</td></tr>
+  <tr><td class="v">ТФ ${esc(p.tfLevel)}/6</td><td>${esc(d.tfD)}</td></tr>
+  <tr><td class="v">УБ ${esc(p.ubLevel)}/6</td><td>${esc(d.ubD)}</td></tr>
+  <tr><td class="v">ЧВ ${esc(p.chvLevel)}/6</td><td>${esc(d.cvD)}</td></tr>
+  <tr><td class="v">Привязанность</td><td>${esc(deep && deep.attachment)}</td></tr>
+</table>
+${ai}
+${recs ? `<h2>С чего начать</h2>${recs}` : ''}
+<div class="foot">Фреди — ИИ-психолог · <a href="${esc(site)}/fredi/">${esc(site)}/fredi/</a><br>
+Это не медицинский диагноз. При тяжёлом состоянии нужен врач.</div>
+</body></html>`;
+
+        const w = window.open('', '_blank');
+        if (!w) {
+            if (window.showToast) window.showToast('Разрешите всплывающие окна, чтобы сохранить разбор', 'error');
+            return;
+        }
+        w.document.write(html);
+        w.document.close();
+        // Печать после отрисовки: без задержки Safari печатает пустую страницу.
+        setTimeout(() => { try { w.focus(); w.print(); } catch (e) {} }, 400);
+        try {
+            if (window.FrediTracker?.track) window.FrediTracker.track('test_report_downloaded', {});
+            _testGoal('test_report_downloaded');
+        } catch {}
+    },
+
     async fetchTestRecommendations() {
         if (this._recsRequested || !this.userId) return;
         this._recsRequested = true;
@@ -2584,6 +2735,8 @@ ${this.getStage3Interpretation()}
             const r = await fetch(TEST_API_BASE_URL + '/api/test/recommendations/' + this.userId);
             const data = await r.json();
             if (data.success && Array.isArray(data.items) && data.items.length) {
+                // Запоминаем: те же позиции уходят в выгрузку разбора.
+                this._lastRecommendations = data.items;
                 this.renderTestRecommendations(data.items);
             }
         } catch (e) { console.warn('recommendations failed:', e); }
@@ -2595,14 +2748,21 @@ ${this.getStage3Interpretation()}
         // Курс и тренинг — отдельные страницы, открываем в новой вкладке,
         // чтобы не потерять экран результатов. Игра живёт в этом же
         // приложении (?m=...) — туда переходим в текущей вкладке.
-        let html = '🧭 **С ЧЕГО НАЧАТЬ ИМЕННО ТЕБЕ**\n\nПо твоему профилю я выбрал три шага:\n';
+        // Каждая позиция отвечает на три вопроса, а не на ноль: что это за
+        // формат, почему именно вам и что вы получите. До 14.09.2026 была
+        // одна строка причины, и «Курс „Тревога“» читался как ссылка без
+        // объяснения, куда человек идёт и во что это ему обойдётся.
+        let html = '🧭 **С ЧЕГО НАЧАТЬ ИМЕННО ВАМ**\n\nПо вашему профилю — три шага, по одному на ближайшие недели:\n';
         items.forEach(it => {
             const blank = it.type === 'game' ? '' : ' target="_blank" rel="noopener"';
             html += '\n' + (icons[it.type] || '👉')
                 + ' <a href="' + esc(it.url) + '"' + blank
                 + ' data-rec="' + esc(it.id) + '" data-rectype="' + esc(it.type) + '"'
-                + ' style="color:#3b82ff;font-weight:600">' + esc(it.title) + '</a><br>'
-                + esc(it.reason) + '\n';
+                + ' style="color:#3b82ff;font-weight:600">' + esc(it.title) + '</a><br>';
+            if (it.format) html += '<i style="opacity:.75">' + esc(it.format) + '</i><br>';
+            if (it.reason) html += '<b>Зачем вам:</b> ' + esc(it.reason) + '<br>';
+            if (it.what)   html += '<b>Что даст:</b> ' + esc(it.what) + '<br>';
+            html += '\n';
         });
         const msg = this.addBotMessage(html, true);
         try {
