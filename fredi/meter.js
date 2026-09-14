@@ -466,6 +466,23 @@
         return lead.charAt(0).toUpperCase() + lead.slice(1);
     }
 
+    // Что человек теряет, если сейчас закроет. Воронка 14.09: из 61
+    // человека, увидевшего предупреждение, до модалки доходят 16, и из них
+    // жмут «Открыть подписку» 6. Модалка при этом начиналась со списка
+    // возможностей Premium — то есть отвечала на вопрос «что я куплю», хотя
+    // человек в этот момент думает «что я теряю». Строка ниже отвечает
+    // именно на второй вопрос и только правдой: анонимный разговор
+    // действительно не сохраняется (free_tier.session_history на бэкенде),
+    // а у зарегистрированного он сохранён, и ждать придётся до завтра.
+    function _whatBreaks(data, kind) {
+        if (_authed() || (data && data.is_registered === true)) {
+            return kind === 'trial'
+                ? 'Разговор сохранён — он никуда не денется. Без Premium продолжение будет по бесплатным минутам, порциями.'
+                : 'Разговор сохранён, и завтра Фреди начнёт с того же места. Вопрос только в том, ждать ли до завтра.';
+        }
+        return 'Этот разговор не сохранится: вы без аккаунта. Завтра Фреди не вспомнит ни слова — всё придётся рассказывать заново.';
+    }
+
     function _track(event, data) {
         try {
             if (window.FrediTracker && window.FrediTracker.track) {
@@ -629,6 +646,7 @@
             trial_used_minutes: data.trial_used_minutes,
             free_days_used: daysUsed,
             account_offer: !!gain,
+            wall_v: 'what_breaks',
         });
 
         var emoji, title, mainText, timerHtml;
@@ -680,6 +698,8 @@
                 '<div class="meter-title">' + title + '</div>' +
                 timerHtml +
                 '<div class="meter-text">' + mainText + '</div>' +
+                '<div class="meter-text" style="border-left:3px solid #3b82ff;padding-left:10px;margin:0 0 14px;text-align:left">' +
+                    _whatBreaks(data, data.block_reason || (trialExhausted ? 'trial' : 'daily')) + '</div>' +
                 '<div class="meter-features-title">Что даёт Premium:</div>' +
                 _premiumFeatures() +
                 AUTHOR_NOTE +
@@ -688,7 +708,10 @@
                       gain.big + ' \u043C\u0438\u043D\u0443\u0442 \u0432 \u0434\u0435\u043D\u044C</button>'
                     : '') +
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    '" id="meterSubscribeBtn">✨ Попробовать неделю — 290 ₽</button>' +
+                    // «Попробовать» ставит человека перед покупкой, «продолжить» —
+                    // перед продолжением того, что он уже делает. Кнопка на стене
+                    // должна называть действие, ради которого он сюда пришёл.
+                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — неделя 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
@@ -723,7 +746,7 @@
             }
         };
         document.getElementById('meterSubscribeBtn').onclick = function() {
-            _track('meter_subscribe_clicked', {});
+            _track('meter_subscribe_clicked', { wall_v: 'what_breaks' });
             // Иначе фоновая проверка накрывает стеной открывшийся чекаут.
             _rememberDismiss();
             overlay.remove();
