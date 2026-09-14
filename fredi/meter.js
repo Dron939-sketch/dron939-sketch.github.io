@@ -192,23 +192,21 @@
                     reason: _newcomer() ? 'newcomer' : 'no_conversation',
                     visits: _visits(), exchanges: _exchanges,
                 });
-                _toast('\u23F1 Осталось ~' + Math.max(1, Math.round(rem)) + ' мин', 'info');
+                _toast(_freeEndsToast(rem, kind), 'info');
             } else {
                 _track('meter_upsell_suppressed', {
                     remaining_minutes: rem,
                     kind: kind,
                     reason: _upsellShownThisSession() ? 'already_shown' : 'paywall_quiet',
                 });
-                _toast('⏱ Осталось ~' + Math.max(1, Math.round(rem)) + ' мин — Premium снимает лимит', 'info');
+                _toast(_freeEndsToast(rem, kind), 'info');
             }
             return;
         }
         // Soft: critThr < rem ≤ softThr — мягкая подготовка.
         if (rem <= softThr && !_warningShown) {
             _warningShown = true;
-            _toast(kind === 'trial'
-                ? '⏱ Бесплатных минут осталось ' + Math.round(rem)
-                : '⏱ Осталось ' + Math.round(rem) + ' мин на сегодня', 'info');
+            _toast(_freeEndsToast(rem, kind), 'info');
             _trackWarning('soft', rem, kind);
             setTimeout(function() { _warningShown = false; }, 120000);
         }
@@ -464,6 +462,20 @@
             ? 'Бесплатное знакомство на этом заканчивается.'
             : 'На сегодня бесплатное время вышло.';
         return lead.charAt(0).toUpperCase() + lead.slice(1);
+    }
+
+    // Текст предупреждения о лимите. До 14.09.2026 здесь стоял чистый
+    // отсчёт — «Осталось 3 мин на сегодня». Это сигнал закругляться, и
+    // люди закруглялись: из 61 человека, получившего предупреждение, до
+    // стены доходили 16. Отсчёт остался, но теперь он называет режим
+    // («в бесплатном режиме») и говорит, что альтернатива существует, —
+    // человек узнаёт о ней, пока разговор ещё идёт, а не когда его
+    // прервали. Без давления: одна короткая строка, без цены и без кнопки.
+    function _freeEndsToast(rem, kind) {
+        var m = Math.max(1, Math.round(rem));
+        return kind === 'trial'
+            ? '⏱ Бесплатное знакомство закончится через ' + m + ' мин. Дальше — по подписке'
+            : '⏱ В бесплатном режиме доступ закончится через ' + m + ' мин. Дальше — завтра или по подписке';
     }
 
     // Что человек теряет, если сейчас закроет. Воронка 14.09: из 61
