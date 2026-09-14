@@ -2478,6 +2478,17 @@ ${this.getStage3Interpretation()}
                 }
             });
         }
+        // Отправить тест другу. Человек, который только что увидел свой
+        // портрет, — единственный, у кого есть настоящая причина позвать
+        // знакомого: ему интересно сравнить. До 14.09.2026 на финальном
+        // экране этой двери не было вовсе, хотя механизм «зеркал» в
+        // приложении есть и работает: друг проходит тест по ссылке, и
+        // результат возвращается пригласившему.
+        nextButtons.push({
+            text: '📨 ОТПРАВИТЬ ТЕСТ ДРУГУ',
+            keepEnabled: true,
+            callback: () => this.shareTestWithFriend()
+        });
         nextButtons.push(
             { text: '📄 ПОЛНЫЙ ОТЧЁТ В MAX', callback: () => this.sendPortraitToMax() },
             { text: '🧠 МЫСЛИ ПСИХОЛОГА',    callback: () => this.showPsychologistThought() },
@@ -2604,6 +2615,60 @@ ${this.getStage3Interpretation()}
                         }
                     } catch {}
                 });
+            });
+        }
+    },
+
+    // Зеркало: ссылка на тест для друга. Создаётся на бэке
+    // (/api/mirrors/create), возвращает готовый адрес и текст приглашения.
+    async shareTestWithFriend() {
+        if (!this.userId) {
+            this.addBotMessage('Чтобы отправить тест другу, нужен аккаунт — нажмите «Сохранить профиль».');
+            return;
+        }
+        if (this._mirrorLink) { this._showMirrorLink(this._mirrorLink); return; }
+        this.addBotMessage('Готовлю ссылку…');
+        try {
+            const r = await fetch(TEST_API_BASE_URL + '/api/mirrors/create', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: parseInt(this.userId), mirror_type: 'web' })
+            });
+            const data = await r.json();
+            if (!data.success || !data.link) throw new Error(data.error || 'нет ссылки');
+            this._mirrorLink = data.link;
+            this._showMirrorLink(data.link);
+            try {
+                if (window.FrediTracker?.track) window.FrediTracker.track('test_mirror_created', {});
+            } catch (e) {}
+        } catch (e) {
+            console.warn('Зеркало не создалось:', e);
+            this.addBotMessage('Ссылку сейчас создать не удалось — попробуйте ещё раз через минуту.');
+        }
+    },
+
+    _showMirrorLink(link) {
+        const esc = t => String(t || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        const msg = this.addBotMessage(
+            '📨 <b>Ссылка для друга готова</b><br><br>'
+            + 'Он пройдёт тот же тест, а его результат вернётся сюда — будет что сравнить.<br><br>'
+            + '<a href="' + esc(link) + '" target="_blank" rel="noopener" '
+            + 'style="color:#3b82ff;font-weight:600;word-break:break-all">' + esc(link) + '</a>'
+            + '<br><br><button type="button" id="mirrorCopyBtn" style="background:#3b82ff;color:#fff;'
+            + 'border:none;border-radius:10px;padding:9px 18px;font-weight:600;cursor:pointer;'
+            + 'font-family:inherit">Скопировать ссылку</button>', true);
+        const btn = msg && msg.querySelector('#mirrorCopyBtn');
+        if (btn) {
+            btn.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(link);
+                    btn.textContent = 'Скопировано';
+                } catch (e) {
+                    btn.textContent = 'Выделите ссылку и скопируйте вручную';
+                }
+                try {
+                    if (window.FrediTracker?.track) window.FrediTracker.track('test_mirror_copied', {});
+                } catch (e) {}
             });
         }
     },
