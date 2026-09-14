@@ -670,8 +670,8 @@ function _renderScreen() {
                 <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
             </div>
             <div class="analysis-heading">
-                <h1>🧠 Глубинный анализ</h1>
-                <p>Системный AI-анализ на основе психологического теста</p>
+                <h1>🧠 Глубинный разбор</h1>
+                <p>Шесть разделов на основе психологического теста. Краткий разбор остаётся на экране теста.</p>
             </div>
             <div class="analysis-tabs-row" id="analysisTabsRow">
                 <button class="analysis-tab-btn active" data-tab="overview">📊 Полный анализ</button>
@@ -689,7 +689,7 @@ function _renderScreen() {
                  выход должен быть здесь, а не только на экране теста. -->
             <div id="analysisNextBlock"></div>
             <div class="analysis-footer">
-                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ РАЗБОР</button>
+                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ ГЛУБИННЫЙ РАЗБОР</button>
             </div>
         </div>`;
 
@@ -1055,10 +1055,10 @@ function _showLockModal() {
     o.className = 'alock-overlay';
     o.id = 'analysisLockOverlay';
     o.innerHTML = `
-        <div class="alock-modal" role="dialog" aria-modal="true" aria-label="Полный разбор доступен с подпиской">
+        <div class="alock-modal" role="dialog" aria-modal="true" aria-label="Глубинный разбор доступен с подпиской">
             <button class="alock-close" id="alockClose" aria-label="Закрыть">✕</button>
             <div class="alock-emoji">🔒</div>
-            <div class="alock-title">Полный разбор — с подпиской</div>
+            <div class="alock-title">Глубинный разбор — с подпиской</div>
             <div class="alock-text">Портрет и первый шаг у вас уже есть, они бесплатны. Шесть разделов разбора открываются с подпиской.</div>
             <div class="alock-step"><b>✅ Первый шаг на сегодня — бесплатно</b><br>${step}</div>
             <ul class="alock-list">
@@ -1126,7 +1126,7 @@ function _renderLocked() {
         <div class="analysis-page">
             <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
             <div class="analysis-heading">
-                <h1>🧠 Полный разбор вашего теста</h1>
+                <h1>🧠 Глубинный разбор</h1>
                 <p>Портрет и первый шаг — бесплатно. Шесть разделов разбора — с подпиской.</p>
             </div>
             <div class="analysis-card" style="margin-bottom:14px">

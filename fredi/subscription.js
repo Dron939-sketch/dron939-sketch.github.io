@@ -409,7 +409,7 @@
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Фреди помнит каждый разговор и продолжает с того же места</li>
                     <li><span class="sub-feature-icon">&#x2728;</span> Голосом и текстом 24/7, без счётчика минут</li>
                     <li><span class="sub-feature-icon">&#x1F3AD;</span> Коуч и тренер без лимита (без подписки — три ответа)</li>
-                    <li><span class="sub-feature-icon">&#x1F50D;</span> Полный разбор вашего теста: петли, механизмы, точки роста, прогноз, ключи</li>
+                    <li><span class="sub-feature-icon">&#x1F50D;</span> Глубинный разбор вашего теста: петли, механизмы, точки роста, прогноз, ключи</li>
                     <li><span class="sub-feature-icon">&#x1F3AE;</span> Сильные тренажёры: «Переход», «Опора», «Парус», «Спираль», «Скажи нет»</li>
                     <li><span class="sub-feature-icon">&#x1F4D3;</span> Дневник эмоций, зеркало, разбор переписки, роли по Берну, гипноз и практики</li>
                 </ul>
