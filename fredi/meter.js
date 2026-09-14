@@ -192,23 +192,21 @@
                     reason: _newcomer() ? 'newcomer' : 'no_conversation',
                     visits: _visits(), exchanges: _exchanges,
                 });
-                _toast('\u23F1 Осталось ~' + Math.max(1, Math.round(rem)) + ' мин', 'info');
+                _toast(_freeEndsToast(rem, kind), 'info');
             } else {
                 _track('meter_upsell_suppressed', {
                     remaining_minutes: rem,
                     kind: kind,
                     reason: _upsellShownThisSession() ? 'already_shown' : 'paywall_quiet',
                 });
-                _toast('⏱ Осталось ~' + Math.max(1, Math.round(rem)) + ' мин — Premium снимает лимит', 'info');
+                _toast(_freeEndsToast(rem, kind), 'info');
             }
             return;
         }
         // Soft: critThr < rem ≤ softThr — мягкая подготовка.
         if (rem <= softThr && !_warningShown) {
             _warningShown = true;
-            _toast(kind === 'trial'
-                ? '⏱ Бесплатных минут осталось ' + Math.round(rem)
-                : '⏱ Осталось ' + Math.round(rem) + ' мин на сегодня', 'info');
+            _toast(_freeEndsToast(rem, kind), 'info');
             _trackWarning('soft', rem, kind);
             setTimeout(function() { _warningShown = false; }, 120000);
         }
@@ -466,6 +464,37 @@
         return lead.charAt(0).toUpperCase() + lead.slice(1);
     }
 
+    // Текст предупреждения о лимите. До 14.09.2026 здесь стоял чистый
+    // отсчёт — «Осталось 3 мин на сегодня». Это сигнал закругляться, и
+    // люди закруглялись: из 61 человека, получившего предупреждение, до
+    // стены доходили 16. Отсчёт остался, но теперь он называет режим
+    // («в бесплатном режиме») и говорит, что альтернатива существует, —
+    // человек узнаёт о ней, пока разговор ещё идёт, а не когда его
+    // прервали. Без давления: одна короткая строка, без цены и без кнопки.
+    function _freeEndsToast(rem, kind) {
+        var m = Math.max(1, Math.round(rem));
+        return kind === 'trial'
+            ? '⏱ Бесплатное знакомство закончится через ' + m + ' мин. Дальше — по подписке'
+            : '⏱ В бесплатном режиме доступ закончится через ' + m + ' мин. Дальше — завтра или по подписке';
+    }
+
+    // Что человек теряет, если сейчас закроет. Воронка 14.09: из 61
+    // человека, увидевшего предупреждение, до модалки доходят 16, и из них
+    // жмут «Открыть подписку» 6. Модалка при этом начиналась со списка
+    // возможностей Premium — то есть отвечала на вопрос «что я куплю», хотя
+    // человек в этот момент думает «что я теряю». Строка ниже отвечает
+    // именно на второй вопрос и только правдой: анонимный разговор
+    // действительно не сохраняется (free_tier.session_history на бэкенде),
+    // а у зарегистрированного он сохранён, и ждать придётся до завтра.
+    function _whatBreaks(data, kind) {
+        if (_authed() || (data && data.is_registered === true)) {
+            return kind === 'trial'
+                ? 'Разговор сохранён — он никуда не денется. Без Premium продолжение будет по бесплатным минутам, порциями.'
+                : 'Разговор сохранён, и завтра Фреди начнёт с того же места. Вопрос только в том, ждать ли до завтра.';
+        }
+        return 'Этот разговор не сохранится: вы без аккаунта. Завтра Фреди не вспомнит ни слова — всё придётся рассказывать заново.';
+    }
+
     function _track(event, data) {
         try {
             if (window.FrediTracker && window.FrediTracker.track) {
@@ -629,6 +658,7 @@
             trial_used_minutes: data.trial_used_minutes,
             free_days_used: daysUsed,
             account_offer: !!gain,
+            wall_v: 'what_breaks',
         });
 
         var emoji, title, mainText, timerHtml;
@@ -680,6 +710,8 @@
                 '<div class="meter-title">' + title + '</div>' +
                 timerHtml +
                 '<div class="meter-text">' + mainText + '</div>' +
+                '<div class="meter-text" style="border-left:3px solid #3b82ff;padding-left:10px;margin:0 0 14px;text-align:left">' +
+                    _whatBreaks(data, data.block_reason || (trialExhausted ? 'trial' : 'daily')) + '</div>' +
                 '<div class="meter-features-title">Что даёт Premium:</div>' +
                 _premiumFeatures() +
                 AUTHOR_NOTE +
@@ -688,7 +720,10 @@
                       gain.big + ' \u043C\u0438\u043D\u0443\u0442 \u0432 \u0434\u0435\u043D\u044C</button>'
                     : '') +
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    '" id="meterSubscribeBtn">✨ Попробовать неделю — 290 ₽</button>' +
+                    // «Попробовать» ставит человека перед покупкой, «продолжить» —
+                    // перед продолжением того, что он уже делает. Кнопка на стене
+                    // должна называть действие, ради которого он сюда пришёл.
+                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — неделя 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
@@ -723,7 +758,7 @@
             }
         };
         document.getElementById('meterSubscribeBtn').onclick = function() {
-            _track('meter_subscribe_clicked', {});
+            _track('meter_subscribe_clicked', { wall_v: 'what_breaks' });
             // Иначе фоновая проверка накрывает стеной открывшийся чекаут.
             _rememberDismiss();
             overlay.remove();
