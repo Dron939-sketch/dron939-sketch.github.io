@@ -2242,10 +2242,34 @@ ${this.getStage3Interpretation()}
             });
             let data; try { data=await r.json(); } catch { data={success:r.ok}; }
             if (data.success) {
+                this._saveFailed = false;
                 await this.fetchAIGeneratedProfile();
                 await this.completeMirrorIfReferred(profile, deep);
-            } else { this.showFinalProfileButtons(); }
-        } catch(error) { console.error('❌ Ошибка сети:', error); this.showFinalProfileButtons(); }
+            } else { await this._onSaveFailed(String(data && data.error || r.status)); }
+        } catch(error) { console.error('❌ Ошибка сети:', error); await this._onSaveFailed(String(error && error.message || error)); }
+    },
+
+    // Несохранённый результат ломает главное, ради чего тест и проходят:
+    // рекомендации Фреди берутся из профиля на сервере (arsenal.py), и без
+    // него человек получает общий ответ, не понимая почему. Раньше сбой
+    // сохранения проглатывался молча — показывались те же кнопки финала.
+    // Теперь: одна повторная попытка через две секунды (лимит ручки — пять
+    // запросов в минуту, сеть на телефоне отваливается и возвращается), а
+    // если и она не прошла — человеку говорится прямо, с кнопкой «повторить».
+    async _onSaveFailed(reason) {
+        if (!this._saveRetried) {
+            this._saveRetried = true;
+            await new Promise(r => setTimeout(r, 2000));
+            return this.sendTestResultsToServer();
+        }
+        this._saveFailed = true;
+        console.warn('Профиль не сохранён:', reason);
+        try {
+            if (window.FrediTracker?.track) {
+                window.FrediTracker.track('test_save_failed', { reason: String(reason).slice(0, 120) });
+            }
+        } catch (e) {}
+        this.showFinalProfileButtons();
     },
 
     async completeMirrorIfReferred(profile, deep) {
@@ -2385,6 +2409,26 @@ ${this.getStage3Interpretation()}
         // анонимы при 35 стартах стадий теста, — потому что просила аккаунт
         // ДО ценности. Здесь просим ПОСЛЕ, кнопкой, без принуждения.
         const nextButtons = [];
+        // Результат не доехал до сервера — говорим об этом до кнопок, а не
+        // делаем вид, что всё в порядке: без профиля на сервере Фреди
+        // ответит общими словами, и человек решит, что тест бесполезен.
+        if (this._saveFailed) {
+            this.addBotMessage(
+                '⚠️ Профиль посчитан, но сохранить его на сервере не удалось — ' +
+                'похоже, связь. Это важно: без сохранённого профиля Фреди не увидит ' +
+                'ваши векторы и ответит общими словами. Нажмите кнопку ниже, ' +
+                'чтобы попробовать ещё раз.');
+            nextButtons.push({
+                text: '🔄 СОХРАНИТЬ РЕЗУЛЬТАТ ЕЩЁ РАЗ',
+                keepEnabled: true,
+                callback: () => {
+                    this._saveRetried = false;
+                    this._saveFailed = false;
+                    this.addBotMessage('Пробую сохранить результат ещё раз…');
+                    this.sendTestResultsToServer();
+                }
+            });
+        }
         // Первая кнопка — разговор. 5 сентября большой тест давал 87 открытий
         // Фреди из 106 визитов, а первых сообщений с этого трафика — 4: финал
         // предлагал сохранить, выслать в MAX и уйти на главную, но не
