@@ -133,9 +133,17 @@ a{color:#0D9488}
 .quiz-progress{font-size:.86rem;color:#0F766E;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
 .quiz-part{font-size:.82rem;color:#6e6e73;margin:0 0 10px}
 .quiz-q{font-size:1.08rem;font-weight:700;margin:0 0 16px;min-height:3.2em}
-.quiz-opts{display:flex;gap:10px}
-.quiz-opt{flex:1;min-width:90px;font:inherit;font-size:.95rem;font-weight:600;padding:12px 10px;border:1.5px solid #E5E5EA;border-radius:12px;background:#fff;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.quiz-opts{display:flex;gap:10px;flex-wrap:wrap}
+.quiz-opt{flex:1 1 90px;min-width:0;font:inherit;font-size:.95rem;font-weight:600;padding:12px 10px;border:1.5px solid #E5E5EA;border-radius:12px;background:#fff;cursor:pointer;transition:border-color .15s,box-shadow .15s}
 .quiz-opt:hover{border-color:#14B8A6;box-shadow:0 4px 14px rgba(20,184,166,.14)}
+/* На узком экране три варианта в строку не помещаются: «Точно про меня»
+   длиннее, чем «Да», и на 320px строка вылезала за край на 13 пикселей —
+   страницу можно было утащить вбок. Ставим в столбик: палец попадает
+   вернее, а текст не режется. */
+@media (max-width:400px){
+  .quiz-opts{flex-direction:column}
+  .quiz-opt{flex:1 1 auto;padding:13px 12px}
+}
 #quizResult{display:none}
 .result-card{border:1.5px solid #14B8A6;border-radius:20px;padding:26px 24px;margin:18px 0;background:linear-gradient(180deg,#ECFDF9 0%,#fff 55%)}
 .result-card h3{font-size:1.35rem;margin:0 0 14px}

@@ -2755,10 +2755,15 @@ ${this.getStage3Interpretation()}
         // список действий. Сам механизм зеркал цел — shareTestWithFriend,
         // mirrorVariant и цели test_mirror_created_a/_b на месте, их можно
         // повесить в другую точку, где приглашение уместно.
+        // «Полный отчёт в MAX» убран по решению владельца 14.09.2026: на
+        // экране результата это лишний шаг в сторону. Отчёт уже скачивается
+        // файлом кнопкой выше, а отправка в MAX требовала завести бота,
+        // написать ему /start и вернуться — половина людей отваливалась на
+        // середине. Механизм цел: sendPortraitToMax и ручка на бэкенде
+        // остались, их можно повесить туда, где мессенджер уже привязан.
         nextButtons.push(
             { text: '⬇️ СКАЧАТЬ РАЗБОР', keepEnabled: true,
               callback: () => this.downloadReport(p, deep, { sbD, tfD, ubD, cvD }) },
-            { text: '📄 ПОЛНЫЙ ОТЧЁТ В MAX', callback: () => this.sendPortraitToMax() },
             { text: '🧠 МЫСЛИ ПСИХОЛОГА',    callback: () => this.showPsychologistThought() },
             { text: '🏠 НА ГЛАВНУЮ',         callback: () => this.goToDashboard() }
         );

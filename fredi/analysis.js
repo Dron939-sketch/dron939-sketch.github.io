@@ -28,6 +28,10 @@ let _analysis = {
     portrait: '', loops: '', mechanisms: '',
     growth: '', forecast: '', keys: '', thought: ''
 };
+// Рекомендации — те же, что под результатом теста (одна ручка на бэкенде).
+// Владелец 14.09.2026: разбор дочитывают здесь, и именно здесь должен быть
+// выход в наши курсы, тренажёры и тренинги, а не только на экране теста.
+let _recs = [];
 
 // ============================================
 // CSS — инжектируем один раз
@@ -135,6 +139,51 @@ function _injectStyles() {
         @keyframes analysisDotPulse {
             0%, 100% { opacity: 0.3; transform: scale(0.8); }
             50%       { opacity: 1;   transform: scale(1.2); }
+        }
+
+        /* Куда идти после разбора: рекомендации и разговор с Фреди. */
+        .anext { margin-top: 28px; }
+        .anext-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+        .anext-rec {
+            margin: 0 0 14px;
+            padding-left: 12px;
+            border-left: 3px solid #3b82ff;
+        }
+        .anext-rec a { color: #3b82ff; font-weight: 600; text-decoration: none; font-size: 14.5px; }
+        .anext-rec a:hover { text-decoration: underline; }
+        .anext-fmt { font-size: 12.5px; opacity: 0.7; margin: 2px 0 3px; }
+        .anext-why { font-size: 13.5px; line-height: 1.6; }
+        .anext-talk {
+            margin-top: 20px;
+            padding: 16px 18px;
+            border: 1px solid rgba(59, 130, 255, 0.35);
+            border-left: 3px solid #3b82ff;
+            border-radius: 14px;
+            background: rgba(59, 130, 255, 0.06);
+        }
+        .anext-talk b { display: block; margin-bottom: 6px; font-size: 15px; }
+        .anext-talk p { margin: 0 0 12px; font-size: 13.5px; line-height: 1.6; opacity: 0.85; }
+        .anext-btn {
+            width: 100%;
+            padding: 13px 18px;
+            border: none;
+            border-radius: 12px;
+            background: #3b82ff;
+            color: #fff;
+            font: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .anext-btn:hover { background: #2563eb; }
+
+        /* Подвал разбора: кнопка скачивания под текстом, а не над ним. */
+        .analysis-footer {
+            display: flex;
+            justify-content: center;
+            margin: 28px 0 8px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(224, 224, 224, 0.1);
         }
 
         /* ===== ТАБЫ ===== */
@@ -619,7 +668,6 @@ function _renderScreen() {
         <div class="analysis-page">
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
                 <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
-                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ РАЗБОР</button>
             </div>
             <div class="analysis-heading">
                 <h1>🧠 Глубинный анализ</h1>
@@ -632,11 +680,24 @@ function _renderScreen() {
                 <button class="analysis-tab-btn" data-tab="thought">🧠 Психолог</button>
             </div>
             <div class="analysis-content" id="analysisTabContent"></div>
+            <!-- Скачивание — внизу, под текстом (решение владельца 14.09.2026).
+                 Наверху, рядом с «Назад», кнопка предлагала сохранить разбор
+                 раньше, чем человек его прочитал: сохраняют то, что уже
+                 прочли и хотят оставить. -->
+            <!-- Куда идти после разбора: разговор с Фреди и наши курсы,
+                 тренажёры, тренинги. Дочитывают разбор здесь — значит и
+                 выход должен быть здесь, а не только на экране теста. -->
+            <div id="analysisNextBlock"></div>
+            <div class="analysis-footer">
+                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ РАЗБОР</button>
+            </div>
         </div>`;
 
     document.getElementById('analysisBackBtn').onclick = () => _goHome();
     const saveBtn = document.getElementById('analysisSaveBtn');
     if (saveBtn) saveBtn.onclick = () => _downloadAnalysis();
+    _renderNextBlock();
+    _loadRecs();
 
     document.querySelectorAll('.analysis-tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -784,6 +845,114 @@ function firstStepFor(code) {
  * закрыл — и продолжил читать свой разбор.
  */
 /**
+ * Рекомендации под разбором — та же ручка, что под результатом теста.
+ *
+ * Отдельного подбора здесь нет и не нужно: сервер считает позиции по
+ * профилю, а профиль у человека один. Молчим, если ручка не ответила, —
+ * пустой заголовок «С чего начать» хуже, чем его отсутствие.
+ */
+async function _loadRecs() {
+    const uid = window.CONFIG && window.CONFIG.USER_ID;
+    if (!uid || _recs.length) return;
+    try {
+        const api = (window.CONFIG && window.CONFIG.API_BASE_URL) || '';
+        const r = await fetch(api + '/api/test/recommendations/' + uid);
+        const d = await r.json();
+        if (d && d.success && Array.isArray(d.items) && d.items.length) {
+            _recs = d.items;
+            _renderNextBlock();
+        }
+    } catch (e) { /* без рекомендаций разбор остаётся полным */ }
+}
+
+/**
+ * Реплика, с которой человек приходит к Фреди после разбора.
+ *
+ * Не пересказ всего отчёта: у первой реплики есть предел (600 знаков в
+ * openers.js), а важно, чтобы Фреди понял, о чём речь, и не начинал
+ * анкету заново. Берём код профиля и начало «точек роста» — то место
+ * разбора, из которого вырастает разговор про «что делать».
+ */
+function _askText() {
+    const code = (_profile && (_profile.profile_data || {}).display_name) || '';
+    let core = String(_analysis.growth || _analysis.portrait || '').replace(/<[^>]+>/g, ' ');
+    core = core.replace(/\s+/g, ' ').trim();
+    if (core.length > 320) {
+        const cut = core.slice(0, 320);
+        const dot = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+        core = dot > 180 ? cut.slice(0, dot + 1) : cut;
+    }
+    return 'Прочитал свой глубинный разбор'
+        + (code ? ' (профиль ' + code + ')' : '') + '. '
+        + (core ? 'Вот главное оттуда: ' + core + ' ' : '')
+        + 'Помоги выбрать, с чего начать на этой неделе, — один шаг, а не список.';
+}
+
+function _renderNextBlock() {
+    const host = document.getElementById('analysisNextBlock');
+    if (!host) return;
+    const esc = t => String(t == null ? '' : t)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const icons = { course: '🎓', game: '🎮', trening: '🧑‍🏫', book: '📖' };
+
+    let recsHtml = '';
+    if (_recs.length) {
+        recsHtml = '<div class="anext-title">🧭 С чего начать именно вам</div>'
+            + _recs.map(it => {
+                // Курс и тренинг — отдельные страницы, открываем новой вкладкой,
+                // чтобы не потерять разбор. Тренажёр живёт в этом же приложении.
+                const blank = it.type === 'game' ? '' : ' target="_blank" rel="noopener"';
+                return '<div class="anext-rec">'
+                    + '<a href="' + esc(it.url) + '"' + blank
+                    + ' data-rec="' + esc(it.id) + '" data-rectype="' + esc(it.type) + '">'
+                    + (icons[it.type] || '👉') + ' ' + esc(it.title) + '</a>'
+                    + (it.format ? '<div class="anext-fmt">' + esc(it.format) + '</div>' : '')
+                    + (it.reason ? '<div class="anext-why"><b>Зачем вам:</b> ' + esc(it.reason) + '</div>' : '')
+                    + (it.what ? '<div class="anext-why"><b>Что даст:</b> ' + esc(it.what) + '</div>' : '')
+                    + '</div>';
+            }).join('');
+    }
+
+    host.innerHTML =
+        '<div class="anext">'
+        + recsHtml
+        + '<div class="anext-talk">'
+        +   '<b>💬 Обсудить разбор с Фреди</b>'
+        +   '<p>Он уже знает, что у вас вышло: не придётся объяснять заново. '
+        +      'Разберёт, что это значит в вашей ситуации, и поможет выбрать первый шаг.</p>'
+        +   '<button class="anext-btn" id="analysisAskBtn">Обсудить разбор</button>'
+        + '</div></div>';
+
+    const ask = document.getElementById('analysisAskBtn');
+    if (ask) ask.onclick = () => {
+        try {
+            if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('analysis_ask_chat', {});
+            if (typeof window.ym === 'function') {
+                [108965607, 108138656].forEach(c => {
+                    try { window.ym(c, 'reachGoal', 'analysis_ask_chat'); } catch (e) {}
+                });
+            }
+        } catch (e) {}
+        const text = _askText();
+        // Сначала возвращаем дашборд с полем ввода, потом отправляем —
+        // тем же порядком, что кнопка «обсудить» на экране теста.
+        _goHome();
+        try {
+            if (typeof window.FrediAsk === 'function') window.FrediAsk(text, 'analysis');
+        } catch (e) { console.warn('FrediAsk failed:', e); }
+    };
+
+    host.querySelectorAll('.anext-rec a').forEach(a => {
+        a.addEventListener('click', () => {
+            try {
+                if (window.FrediTracker && window.FrediTracker.track)
+                    window.FrediTracker.track('analysis_rec_click', { id: a.dataset.rec, type: a.dataset.rectype });
+            } catch (e) {}
+        });
+    });
+}
+
+/**
  * Полный разбор одним документом.
  *
  * Шесть разделов — это то, за что человек заплатил, и возвращаться к ним
@@ -813,6 +982,19 @@ function _downloadAnalysis() {
     }
     const code = (_profile && (_profile.profile_data || {}).display_name) || '';
     const site = location.origin;
+    const abs = u => (String(u || '').startsWith('http') ? u : site + u);
+
+    // Рекомендации и дверь к Фреди — и в выгрузке тоже: к сохранённому
+    // файлу человек возвращается через недели, и именно там ему нужны
+    // живые ссылки, а не память о том, что «что-то предлагали в приложении».
+    // Печать, а не PDF-библиотека — поэтому ссылки остаются нажимаемыми.
+    const recs = _recs.map(it => `
+    <div class="rec"><a href="${esc(abs(it.url))}">${esc(it.title)}</a>
+      ${it.format ? `<div class="fmt">${esc(it.format)}</div>` : ''}
+      ${it.reason ? `<div><b>Зачем вам:</b> ${esc(it.reason)}</div>` : ''}
+      ${it.what ? `<div><b>Что даст:</b> ${esc(it.what)}</div>` : ''}
+    </div>`).join('');
+    const askUrl = esc(site + '/fredi/?ask=' + encodeURIComponent(_askText()));
 
     const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8">
 <title>Глубинный разбор${code ? ' — ' + esc(code) : ''}</title>
@@ -822,12 +1004,21 @@ function _downloadAnalysis() {
   h2{font-size:17px;margin:26px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px}
   .meta{color:#555;font-size:13px;margin-bottom:18px}
   .s{white-space:pre-wrap}
+  .rec{margin:0 0 16px;padding-left:12px;border-left:3px solid #3b82ff}
+  .rec a{color:#1a4fd0;font-weight:600;text-decoration:none}
+  .fmt{color:#666;font-size:13px;margin:2px 0 4px}
+  .talk{margin-top:22px;padding:14px 16px;border:1px solid #cfe0ff;border-left:3px solid #3b82ff;border-radius:10px}
+  .talk a{color:#1a4fd0;font-weight:700}
   .foot{margin-top:32px;color:#666;font-size:12px;border-top:1px solid #ddd;padding-top:10px}
   @media print{body{margin:0}}
 </style></head><body>
 <h1>Глубинный разбор</h1>
 <div class="meta">${code ? 'Код профиля ' + esc(code) + ' · ' : ''}${new Date().toLocaleDateString('ru-RU')}</div>
 ${body}
+${recs ? `<h2>С чего начать</h2>${recs}` : ''}
+<div class="talk"><b>💬 Обсудить разбор с Фреди</b><br>
+Откройте ссылку — он получит выжимку из этого разбора и продолжит с того места, где вы остановились:<br>
+<a href="${askUrl}">${esc(site)}/fredi/</a></div>
 <div class="foot">Фреди — ИИ-психолог · <a href="${esc(site)}/fredi/">${esc(site)}/fredi/</a><br>
 Это не медицинский диагноз. При тяжёлом состоянии нужен врач.</div>
 </body></html>`;
