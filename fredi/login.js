@@ -502,7 +502,7 @@
         // обычная перерисовка (состояние аккаунта изменилось), потом экран
         // теста с профилем. test_completed при этом не задваивается — там
         // свой флаг (_testCompletedTracked).
-        if (_lastSource === 'test_complete' && window.Test) {
+        if ((_testScreenWasOpen || _lastSource === 'test_complete') && window.Test) {
             try {
                 if (typeof window.renderDashboard === 'function') window.renderDashboard();
                 if (typeof window.Test.showTestScreen === 'function') window.Test.showTestScreen();
@@ -528,6 +528,8 @@
     // вороночные события, чтобы видеть, откуда пришёл юзер
     // (test_complete / settings / dashboard / иначе).
     var _lastSource = null;
+    // Экран теста был открыт, когда показали модалку регистрации.
+    var _testScreenWasOpen = false;
     // Обязательный режим: модалку нельзя закрыть, пока человек не
     // зарегистрируется или не войдёт. Ставится через opts.mandatory
     // и переживает переключение вкладок Вход/Регистрация.
@@ -536,6 +538,13 @@
     function _open(mode, opts) {
         opts = opts || {};
         if (opts.source) _lastSource = opts.source;
+        // Был ли под модалкой экран теста. Источник для этого не годится:
+        // 14.09.2026 владельца высадило на дашборд после регистрации, и
+        // модалка пришла не из теста (source='test_complete'), а от стены
+        // аккаунта — «Сохранить этот разговор?». Смотрим на сам экран.
+        try {
+            _testScreenWasOpen = !!document.getElementById('testChatMessages');
+        } catch (e) { _testScreenWasOpen = false; }
         if (opts.mandatory !== undefined) _lastMandatory = !!opts.mandatory;
         _injectStyles();
         _closeModal();
