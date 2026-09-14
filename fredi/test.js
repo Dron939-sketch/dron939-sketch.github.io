@@ -2241,12 +2241,25 @@ ${this.getStage3Interpretation()}
                 })
             });
             let data; try { data=await r.json(); } catch { data={success:r.ok}; }
-            if (data.success) {
-                this._saveFailed = false;
-                await this.fetchAIGeneratedProfile();
-                await this.completeMirrorIfReferred(profile, deep);
-            } else { await this._onSaveFailed(String(data && data.error || r.status)); }
-        } catch(error) { console.error('❌ Ошибка сети:', error); await this._onSaveFailed(String(error && error.message || error)); }
+            if (!data.success) {
+                await this._onSaveFailed(String(data && data.error || r.status));
+                return;
+            }
+            this._saveFailed = false;
+        } catch(error) {
+            console.error('❌ Ошибка сети:', error);
+            await this._onSaveFailed(String(error && error.message || error));
+            return;
+        }
+        // Дальше — уже после успешного сохранения, и каждый шаг со своей
+        // защитой. Раньше они стояли внутри того же try: любая осечка
+        // AI-профиля или зеркала читалась как несохранённый результат, и
+        // весь путь запускался заново. /api/mirrors/complete отвечает 402
+        // приглашённому без подписки — то есть штатно и регулярно.
+        try { await this.fetchAIGeneratedProfile(); }
+        catch (e) { console.error('AI-профиль не собрался:', e); this.showFinalProfileButtons(); }
+        try { await this.completeMirrorIfReferred(profile, deep); }
+        catch (e) { console.warn('Зеркало не активировано:', e); }
     },
 
     // Несохранённый результат ломает главное, ради чего тест и проходят:
