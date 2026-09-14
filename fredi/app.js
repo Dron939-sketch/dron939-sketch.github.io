@@ -2185,6 +2185,20 @@ function renderDashboard() {
                 <div style="flex-shrink:0;background:linear-gradient(135deg,rgba(168,196,224,0.25),rgba(120,160,210,0.15));border:1px solid rgba(168,196,224,0.5);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:700;color:rgba(168,196,224,0.95);white-space:nowrap">Начать →</div>
             </div>
 
+            <!-- Дверь обратно в разбор для тех, кто тест уже прошёл. Разбор
+                 длинный, за один заход его не дочитывают, а вернуться было
+                 некуда: экран жил только в памяти текущего прохождения, и
+                 единственным способом увидеть его снова было пройти тест
+                 заново. -->
+            <div id="ctaResultBanner" style="display:none;background:linear-gradient(135deg,rgba(168,196,224,0.12),rgba(120,160,210,0.06));border:1px solid rgba(168,196,224,0.3);border-radius:20px;padding:18px 20px;margin-bottom:20px;align-items:center;gap:16px;cursor:pointer">
+                <div style="font-size:36px;flex-shrink:0">🧠</div>
+                <div style="flex:1">
+                    <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px">Ваш разбор</div>
+                    <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">Профиль, интерпретация и рекомендации — открыть и дочитать.</div>
+                </div>
+                <div style="flex-shrink:0;background:linear-gradient(135deg,rgba(168,196,224,0.25),rgba(120,160,210,0.15));border:1px solid rgba(168,196,224,0.5);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:700;color:rgba(168,196,224,0.95);white-space:nowrap">Открыть →</div>
+            </div>
+
             <div class="dash-cols">
             <div class="dash-main">
             <!-- Сначала голосовая кнопка (главное действие — говорить с Фреди),
@@ -2321,6 +2335,31 @@ function renderDashboard() {
                     if (statusEl) statusEl.textContent = 'ваш архетип';
                 }
             }).catch(() => {});
+            // Тест пройден — показываем дверь обратно в разбор.
+            const resBanner = document.getElementById('ctaResultBanner');
+            if (resBanner) {
+                resBanner.style.display = 'flex';
+                resBanner.onclick = async () => {
+                    try {
+                        if (window.FrediTracker?.track) {
+                            window.FrediTracker.track('dashboard_cta_clicked', { cta: 'result_banner' });
+                        }
+                        if (typeof window.ym === 'function') {
+                            [108965607, 108138656].forEach(c => {
+                                try { window.ym(c, 'reachGoal', 'test_result_reopened'); } catch (e) {}
+                            });
+                        }
+                    } catch {}
+                    const ok = window.Test && typeof window.Test.showSavedResult === 'function'
+                        ? await window.Test.showSavedResult()
+                        : false;
+                    // Профиля нет ни в браузере, ни на сервере — честно
+                    // говорим об этом, а не показываем пустой экран.
+                    if (!ok && typeof window.showToast === 'function') {
+                        window.showToast('Разбор не нашёлся — попробуйте ещё раз', 'error');
+                    }
+                };
+            }
         } else {
             if (codeEl) { codeEl.textContent = '📊'; codeEl.style.fontSize = '22px'; }
             if (statusEl) statusEl.textContent = '→ пройти тест';

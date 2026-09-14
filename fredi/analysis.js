@@ -639,10 +639,41 @@ function _renderScreen() {
             btn.classList.add('active');
             _tab = btn.dataset.tab;
             _renderTab(_tab);
+            _scrollToTop();
         });
     });
 
     _renderTab('overview');
+    _scrollToTop();
+}
+
+/**
+ * Разбор начинается сверху, а не с того места, где стоял экран.
+ *
+ * 14.09.2026 владелец открыл готовый отчёт и оказался в конце текста:
+ * экран теста — длинная лента сообщений, и после перерисовки прокрутка
+ * оставалась там, где была. Человек видел хвост разбора и не понимал, с
+ * чего начинать читать.
+ *
+ * Прокручиваем и окно, и возможный внутренний контейнер: экран живёт в
+ * screenContainer, и скроллится в разных браузерах то один, то другое.
+ */
+function _scrollToTop() {
+    const go = () => {
+        try { window.scrollTo(0, 0); } catch {}
+        ['screenContainer', 'analysisTabContent'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.scrollTop = 0;
+        });
+        const page = document.querySelector('.analysis-page');
+        if (page && typeof page.scrollIntoView === 'function') {
+            page.scrollIntoView({ block: 'start' });
+        }
+    };
+    go();
+    // Второй заход после кадра отрисовки: до него высота контента ещё
+    // нулевая, и браузер возвращает прокрутку обратно.
+    requestAnimationFrame(go);
 }
 
 // ============================================
