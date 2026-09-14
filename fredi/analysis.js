@@ -137,6 +137,15 @@ function _injectStyles() {
             50%       { opacity: 1;   transform: scale(1.2); }
         }
 
+        /* Подвал разбора: кнопка скачивания под текстом, а не над ним. */
+        .analysis-footer {
+            display: flex;
+            justify-content: center;
+            margin: 28px 0 8px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(224, 224, 224, 0.1);
+        }
+
         /* ===== ТАБЫ ===== */
         .analysis-tabs-row {
             display: flex;
@@ -619,7 +628,6 @@ function _renderScreen() {
         <div class="analysis-page">
             <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
                 <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
-                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ РАЗБОР</button>
             </div>
             <div class="analysis-heading">
                 <h1>🧠 Глубинный анализ</h1>
@@ -632,6 +640,13 @@ function _renderScreen() {
                 <button class="analysis-tab-btn" data-tab="thought">🧠 Психолог</button>
             </div>
             <div class="analysis-content" id="analysisTabContent"></div>
+            <!-- Скачивание — внизу, под текстом (решение владельца 14.09.2026).
+                 Наверху, рядом с «Назад», кнопка предлагала сохранить разбор
+                 раньше, чем человек его прочитал: сохраняют то, что уже
+                 прочли и хотят оставить. -->
+            <div class="analysis-footer">
+                <button class="back-btn" id="analysisSaveBtn">⬇️ СКАЧАТЬ РАЗБОР</button>
+            </div>
         </div>`;
 
     document.getElementById('analysisBackBtn').onclick = () => _goHome();
