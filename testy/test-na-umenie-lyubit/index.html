@@ -157,6 +157,13 @@ a{color:#3A86FF}
 .next-box a.btn{display:inline-block;background:#3A86FF;color:#fff;text-decoration:none;font-weight:600;padding:11px 22px;border-radius:10px;margin-top:8px}
 .faq-item{border-top:1px solid #E7E7EA;padding:18px 0 4px}
 .retake{background:none;border:1px solid #3A86FF;color:#3A86FF;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:inherit;font-size:.95rem;margin-top:6px}
+.recs{margin-top:20px;padding-top:16px;border-top:1px solid #E5E5EA}
+.recs>b{display:block;margin-bottom:6px}
+.rec{margin:0 0 14px;padding-left:12px;border-left:3px solid #3A86FF}
+.rec a{font-weight:700;text-decoration:none}
+.rec a:hover{text-decoration:underline}
+.rec-fmt{font-size:.85rem;color:#6e6e73;margin:2px 0 3px}
+.rec-why{font-size:.93rem;color:#3c3c43}
 </style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
@@ -278,6 +285,33 @@ a{color:#3A86FF}
   var btn = document.getElementById('submitBtn');
   var remain = document.getElementById('remain');
   /* Вопросы идут каруселью по четырём компонентам: q1 — забота, q2 — ответственность, q3 — уважение, q4 — знание, q5 — снова забота… */
+  // Рекомендации под САМЫЙ СЛАБЫЙ компонент: по Фромму они не заменяют
+  // друг друга, и сильная забота при слабом уважении превращается в
+  // контроль. Поэтому рекомендация идёт в просевшую ось, а не в сумму.
+  // Названия и адреса — из blog/lektorij/, knigi/ и таблицы ROUTES.
+  function recsFor(i) {
+    var P = [
+      ['Забота — это знать, чем человек живёт сейчас, и вкладываться в это делом.', [
+        ['Курс «Эмоциональный интеллект»', '/blog/lektorij/emocionalnyj-intellekt/', 'Бесплатно, без регистрации', 'Учит читать чужое состояние до того, как о нём скажут словами.'],
+        ['Игра «Чувства»', '/fredi/?m=chuvstva', '10–15 минут', 'Точные слова вместо «нормально» — и своим состояниям, и чужим.']]],
+      ['Ответственность — считать климат отношений своей работой, а не погодой.', [
+        ['Курс «Конфликты»', '/blog/lektorij/konflikty/', 'Бесплатно, без регистрации', 'Про один и тот же круг ссор с одними и теми же людьми и как из него выйти.'],
+        ['Тренажёр «Клин клином»', '/fredi/?m=klin', '10–15 минут', 'Переключение вовлечённости: вернуть себя и собеседника из аффекта в разговор.']]],
+      ['Уважение — видеть человека таким, какой он есть, а не таким, каким удобнее.', [
+        ['Курс «Личные границы»', '/blog/lektorij/lichnye-granicy/', 'Бесплатно, без регистрации', 'Где заканчивается забота и начинается распоряжение чужой жизнью.'],
+        ['Тренажёр «Смени роль»', '/fredi/?m=rol', '10–15 минут', 'Посмотреть на ту же сцену с места другого — без этого уважение не собирается.']]],
+      ['Знание — интерес к внутренней жизни другого, а не к отчёту о его дне.', [
+        ['Курс «Привязанность и отношения»', '/blog/lektorij/privyazannost-i-otnosheniya/', 'Бесплатно, без регистрации', 'Почему близость пугает ровно тех, кто её больше всего хочет.'],
+        ['Книга «Вариатика»', '/knigi/variatika-biblioteka-chelovecheskih-patternov/', 'Книга', 'Почему люди делают то, что делают, — если хочется понимать, а не догадываться.']]]
+    ][i];
+    if (!P) return '';
+    var h = '<div class="recs"><b>Что с этим делать</b><p style="margin:0 0 12px;font-size:.95rem">' + P[0] + '</p>';
+    P[1].forEach(function (r) {
+      h += '<div class="rec"><a href="' + r[1] + '">' + r[0] + '</a><div class="rec-fmt">' + r[2] + '</div><div class="rec-why">' + r[3] + '</div></div>';
+    });
+    return h + '</div>';
+  }
+
   var COMPS = [
     {name: 'Забота',
      html: "Зона роста — <b>забота</b>: активный интерес к жизни другого. Не «я же люблю», а знать, чем человек живёт на этой неделе, и вкладываться в это делом. Упражнение на сегодня: спросите партнёра, что его сейчас больше всего занимает, — и не давайте советов, только слушайте."},
@@ -355,7 +389,21 @@ a{color:#3A86FF}
     } else {
       document.getElementById('bandName').textContent = 'Зона роста — ' + COMPS[weak].name.toLowerCase();
       document.getElementById('bandText').innerHTML = '<p>' + COMPS[weak].html + '</p>' +
-        '<p style="font-size:.95rem;color:#6E6E73">По Фромму компоненты не заменяют друг друга: сильная забота не компенсирует слабое уважение — она без него превращается в контроль. Поэтому смотрите на самую низкую ось, а не на сумму.</p>';
+        '<p style="font-size:.95rem;color:#6E6E73">По Фромму компоненты не заменяют друг друга: сильная забота не компенсирует слабое уважение — она без него превращается в контроль. Поэтому смотрите на самую низкую ось, а не на сумму.</p>' +
+        recsFor(weak);
+      Array.prototype.forEach.call(document.getElementById('bandText').querySelectorAll('.rec a'), function (a) {
+        a.addEventListener('click', function () { try { ym(108138656, 'reachGoal', 'lyubit_rec_click'); } catch (e) {} });
+      });
+    }
+    if (window.FrediRazbor) {
+      var L4 = ['забота', 'ответственность', 'уважение', 'знание'];
+      window.FrediRazbor.mount({
+        host: document.getElementById('result'),
+        goal: 'lyubit_open_fredi',
+        text: 'Прошёл тест на умение любить (по четырём компонентам Фромма). '
+            + 'Баллы: ' + L4.map(function (n, i) { return n + ' ' + scores[i]; }).join(', ') + '. '
+            + 'Самый слабый компонент — ' + L4[weak] + '. Как его развивать?'
+      });
     }
     drawRadar(scores);
     var LBL = ['Забота', 'Ответственность', 'Уважение', 'Знание'];
@@ -388,5 +436,6 @@ a{color:#3A86FF}
 })();
 </script>
 <!-- /fredi-track -->
+<script src="/testy/razbor.js" defer></script>
 </body>
 </html>

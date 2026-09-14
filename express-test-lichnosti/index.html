@@ -100,6 +100,13 @@
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 /* Эмодзи, которых нет в системном шрифте, подменяются своим файлом — tools/build_emoji_subset.py. */
 @font-face{font-family:'Inter';font-weight:100 900;src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+2600-26FF,U+1F0CF,U+1F300-1F5FF,U+1F600-1F6FF,U+1F7E0-1F7EB,U+1F900-1FAFF;font-display:swap}
+.recs{margin-top:20px;padding-top:16px;border-top:1px solid #E5E5EA}
+.recs>b{display:block;margin-bottom:6px}
+.rec{margin:0 0 14px;padding-left:12px;border-left:3px solid #3A86FF}
+.rec a{font-weight:700;text-decoration:none}
+.rec a:hover{text-decoration:underline}
+.rec-fmt{font-size:.85rem;color:#6e6e73;margin:2px 0 3px}
+.rec-why{font-size:.93rem;color:#3c3c43}
 </style>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -252,16 +259,89 @@ a{color:#db2777}
     qEl.textContent=QUESTIONS[idx].t;
   }
 
+  // Рекомендации под ведущую стратегию и в её цену: каждая из четырёх
+
+  // чем-то платит, и работать имеет смысл именно с этой платой. Сама
+
+  // стратегия не ошибка — она человека досюда довезла.
+
+  // Названия и адреса — из blog/lektorij/ и таблицы ROUTES в app.js.
+
+  function recsFor(k){
+
+    var P={
+
+      k:['Контроль стоит дорого: напряжение держится даже там, где всё идёт нормально.',[
+
+        ['Курс «Принятие решений»','/blog/lektorij/prinyatie-reshenij/','Бесплатно, без регистрации','Что делать, когда данных не хватает, а решать надо — вместо попытки просчитать всё.'],
+
+        ['Курс «Тревога и как с ней жить»','/blog/lektorij/trevoga/','Бесплатно','Под потребностью всё держать обычно лежит именно она.'],
+
+        ['Тренажёр «Опора»','/fredi/?m=opora','10–15 минут','Ответ голосу, который говорит, что без вашего контроля всё рухнет.']]],
+
+      u:['Угождение платит собой: соглашаешься чаще, чем хочешь, и копишь обиду вместо счёта.',[
+
+        ['Курс «Личные границы»','/blog/lektorij/lichnye-granicy/','Бесплатно, без регистрации','Как отказывать, не разрушая отношений, — по шагам.'],
+
+        ['Тренажёр «Скажи нет»','/fredi/?m=skazhinet','10–15 минут','Тренировка отказа в безопасной песочнице, пока это не понадобилось всерьёз.'],
+
+        ['Курс «Самооценка»','/blog/lektorij/samoocenka/','Бесплатно','Зависимость от чужого одобрения, на которой держится угождение.']]],
+
+      d:['Достижение платит остановками: пауза ощущается как провал, и отдых приходится заслуживать.',[
+
+        ['Курс «Прокрастинация и мотивация»','/blog/lektorij/prokrastinaciya-i-motivaciya/','Бесплатно, без регистрации','Про мотивацию рывками и чем она отличается от устойчивого движения.'],
+
+        ['Курс «Психология перегрузок»','/blog/lektorij/psihologiya-peregruzok/','Бесплатно','Где проходит граница между высокой планкой и выгоранием.'],
+
+        ['Игра «Ленивый гений»','/fredi/?m=lgenij','10–15 минут','Амбициозная цель и ленивый путь к ней — результат без надрыва.']]],
+
+      n:['Наблюдение платит участием: вы видите больше других, но реже оказываетесь внутри событий.',[
+
+        ['Курс «Ораторское искусство»','/blog/lektorij/oratorskoe-iskusstvo/','Бесплатно, без регистрации','Как предъявлять своё вслух, а не оставлять при себе.'],
+
+        ['Тренажёр «Собеседование»','/fredi/?m=sobes','10–15 минут','Безопасная тренировка разговора, где нужно занять позицию.'],
+
+        ['Курс «Переговоры»','/blog/lektorij/peregovory/','Бесплатно','Когда уступать проще, чем спорить, а уступать больше нельзя.']]]
+
+    }[k];
+
+    if(!P) return '';
+
+    var h='<div class="recs"><b>Что с этим делать</b><p style="margin:0 0 12px;font-size:.95rem">'+P[0]+'</p>';
+
+    P[1].forEach(function(r){
+
+      h+='<div class="rec"><a href="'+r[1]+'">'+r[0]+'</a><div class="rec-fmt">'+r[2]+'</div><div class="rec-why">'+r[3]+'</div></div>';
+
+    });
+
+    return h+'</div>';
+
+  }
+
+
   function finish(){
     var order=['k','u','d','n'].sort(function(a,b){ return score[b]-score[a]; });
     var top=order[0], second=order[1];
     var r=RESULTS[top];
     if(score[top]===score[second]){
       resName.textContent=r.name+' + '+RESULTS[second].name.toLowerCase();
-      resBody.innerHTML='<p>У вас двойной профиль: стратегии «'+r.name.toLowerCase()+'» и «'+RESULTS[second].name.toLowerCase()+'» набрали поровну — они и сменяют друг друга в зависимости от ситуации. Ведущая описана ниже, вторую вы узнаете сами.</p>'+r.body;
+      resBody.innerHTML='<p>У вас двойной профиль: стратегии «'+r.name.toLowerCase()+'» и «'+RESULTS[second].name.toLowerCase()+'» набрали поровну — они и сменяют друг друга в зависимости от ситуации. Ведущая описана ниже, вторую вы узнаете сами.</p>'+r.body+recsFor(top);
     } else {
       resName.textContent=r.name;
-      resBody.innerHTML=r.body;
+      resBody.innerHTML=r.body+recsFor(top);
+    }
+    resBody.querySelectorAll('.rec a').forEach(function(a){ a.addEventListener('click', function(){ goal('express_rec_click'); }); });
+    if (window.FrediRazbor) {
+      window.FrediRazbor.mount({
+        host: result,
+        goal: 'express_open_fredi',
+        text: 'Прошёл экспресс-тест личности. Ведущая стратегия: ' + r.name.toLowerCase()
+            + (score[top]===score[second] ? ' и ' + RESULTS[second].name.toLowerCase() + ' поровну' : '')
+            + '. Баллы: контроль ' + score.k + ', угождение ' + score.u
+            + ', достижение ' + score.d + ', наблюдение ' + score.n + '. '
+            + 'Чем эта стратегия мне мешает и с чего начать?'
+      });
     }
     box.style.display='none';
     result.style.display='block';
@@ -282,5 +362,6 @@ a{color:#db2777}
   if(f) f.addEventListener('click',function(){ goal('express_open_fredi'); goal('open_fredi'); });
 })();
 </script>
+<script src="/testy/razbor.js" defer></script>
 </body>
 </html>

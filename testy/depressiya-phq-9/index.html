@@ -120,6 +120,13 @@
 .pro-legend{display:flex;justify-content:space-between;font-size:.82rem;color:#8A8A8E;margin-top:10px}
 .pro-top{margin-top:14px;font-size:.97rem}
 @media(max-width:600px){.pro-row{grid-template-columns:1fr 68px}}
+.recs{margin-top:20px;padding-top:16px;border-top:1px solid #E5E5EA}
+.recs>b{display:block;margin-bottom:6px}
+.rec{margin:0 0 14px;padding-left:12px;border-left:3px solid #3A86FF}
+.rec a{font-weight:700;text-decoration:none}
+.rec a:hover{text-decoration:underline}
+.rec-fmt{font-size:.85rem;color:#6e6e73;margin:2px 0 3px}
+.rec-why{font-size:.93rem;color:#3c3c43}
 </style>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -239,6 +246,21 @@ a{color:#3A86FF}
   var form = document.getElementById('testForm');
   var btn = document.getElementById('submitBtn');
   var remain = document.getElementById('remain');
+  // Рекомендации на клинической шкале — только там, где самопомощь
+  // уместна. С десяти баллов авторы шкалы рекомендуют очную оценку, и
+  // подставлять туда курс вперёд врача нельзя: человек в таком
+  // состоянии возьмёт первое, что предложат, и отложит визит.
+  function recsFor(sum) {
+    if (sum > 9) return '<div class="recs"><b>Что делать сейчас</b><p style="margin:0 0 10px;font-size:.95rem">С этого уровня первым делом нужен очный специалист — психиатр или психотерапевт. Никакой курс и никакой тренажёр его не заменяют, и предлагать их вместо визита было бы нечестно.</p><div class="rec"><a href="/fredi/?m=sos">«Мне плохо сейчас»</a><div class="rec-fmt">Несколько минут</div><div class="rec-why">Протокол стабилизации на острый момент — чтобы продержаться до приёма, а не вместо него.</div></div></div>';
+    var intro = 'На этом уровне обычно работает режим и посильная нагрузка — и материалы ниже как раз про это.';
+    var ITEMS = [['Курс «Депрессия и апатия»','/blog/lektorij/depressiya-i-apatiya/','Бесплатно, без регистрации','Что отличает тоску от болезни и почему «взять себя в руки» не работает.'],['Курс «Сон»','/blog/lektorij/son/','Бесплатно','Сон держит настроение сильнее, чем кажется, и просаживается первым.'],['Симулятор дня «Спираль»','/fredi/?m=spiral','10–15 минут','День, который не собирается: видно, где именно он рассыпается и за что зацепиться.'],];
+    var h = '<div class="recs"><b>Что с этим делать</b><p style="margin:0 0 12px;font-size:.95rem">' + intro + '</p>';
+    ITEMS.forEach(function (r) {
+      h += '<div class="rec"><a href="' + r[1] + '">' + r[0] + '</a><div class="rec-fmt">' + r[2] + '</div><div class="rec-why">' + r[3] + '</div></div>';
+    });
+    return h + '</div>';
+  }
+
   var BANDS = [{"lo": 0, "hi": 4, "name": "Минимальные симптомы", "html": "Выраженность депрессивных симптомов за две недели — в пределах обычного. Если при этом «всё есть, а радости нет» — возможно, вам в другую сторону: <a href='/blog/ekzistencialnaya-pustota-net-smysla.html'>разбор про пустоту и смысл</a>."}, {"lo": 5, "hi": 9, "name": "Лёгкие симптомы", "html": "Симптомы есть, но лёгкие. Что обычно помогает на этом уровне: режим сна, движение, живые люди, посильные дела — и наблюдение за собой. Повторите тест через две недели; если балл растёт — к специалисту. Про разницу тоски и болезни — <a href='/blog/gore-ili-depressiya.html'>«Горе или депрессия»</a>."}, {"lo": 10, "hi": 14, "name": "Умеренные симптомы", "html": "С балла 10 авторы шкалы рекомендуют очную оценку специалиста. Это не диагноз, но уровень, на котором состояние обычно уже отбирает работу, сон и отношения. Психиатр или психотерапевт — обычные врачи; возьмите результат с собой."}, {"lo": 15, "hi": 19, "name": "Выраженные симптомы", "html": "Серьёзный уровень. Настоятельно рекомендуем очную консультацию психиатра в ближайшее время — депрессия лечится, и на этом уровне лечение обычно заметно возвращает силы и краски."}, {"lo": 20, "hi": 27, "name": "Тяжёлые симптомы", "html": "Очень высокий балл. Пожалуйста, обратитесь к психиатру как можно быстрее — очно, не откладывая на «после праздников». Это состояние, с которым не надо справляться в одиночку, и оно поддаётся лечению."}];
   function answered() {
     var k = 0;
@@ -261,7 +283,26 @@ a{color:#3A86FF}
     var band = BANDS.filter(function (b) { return sum >= b.lo && sum <= b.hi; })[0];
     document.getElementById('scoreNum').textContent = sum;
     document.getElementById('bandName').textContent = band.name;
-    document.getElementById('bandText').innerHTML = '<p>' + band.html + '</p>';
+    document.getElementById('bandText').innerHTML = '<p>' + band.html + '</p>' + recsFor(sum);
+      // Разговор с Фреди — с результатом внутри. На высоком балле вопрос
+      // другой: не «что мне делать», а «как дойти до врача». Подменять
+      // специалиста разговором с ИИ на этом уровне нельзя.
+      if (window.FrediRazbor) {
+        window.FrediRazbor.mount({
+          host: document.getElementById('bandText').parentNode,
+          goal: 'phq9_open_fredi',
+          note: sum > 9
+            ? 'Он не заменяет врача и скажет это сам. Но поможет разобраться, к кому идти, что сказать на приёме и как продержаться до него.'
+            : 'Он уже будет знать ваш результат: не придётся объяснять заново.',
+          text: 'Прошёл тест PHQ-9 (депрессия). Балл ' + sum + ' из 27 — «' + band.name.toLowerCase() + '». '
+              + (sum > 9
+                 ? 'Балл высокий. Помоги понять, к какому специалисту идти и как подготовиться к приёму — я понимаю, что ты не заменяешь врача.'
+                 : 'Что мне с этим делать и на что обратить внимание?')
+        });
+      }
+      Array.prototype.forEach.call(document.getElementById('bandText').querySelectorAll('.rec a'), function (a) {
+        a.addEventListener('click', function () { try { ym(108138656, 'reachGoal', 'phq9_rec_click'); } catch (e) {} });
+      });
     document.getElementById('scaleDot').style.left = (sum / 27 * 100) + '%';
 
     // Разбивка по пунктам — не новая шкала, а собственные ответы человека
@@ -342,5 +383,6 @@ a{color:#3A86FF}
 })();
 </script>
 <!-- /fredi-track -->
+<script src="/testy/razbor.js" defer></script>
 </body>
 </html>

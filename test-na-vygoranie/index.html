@@ -155,6 +155,13 @@ a{color:#f43f5e}
 .scale-fill{height:100%;border-radius:5px;transition:width .6s}
 .scale-note{font-size:.9rem;color:#3c3c43;margin-top:6px}
 .result-verdict{margin-top:18px;font-size:.98rem}
+.recs{margin-top:20px;padding-top:16px;border-top:1px solid #F6E0E3}
+.recs>b{display:block;margin-bottom:6px}
+.rec{margin:0 0 14px;padding-left:12px;border-left:3px solid #FB7185}
+.rec a{font-weight:700;text-decoration:none}
+.rec a:hover{text-decoration:underline}
+.rec-fmt{font-size:.85rem;color:#6e6e73;margin:2px 0 3px}
+.rec-why{font-size:.93rem;color:#3c3c43}
 </style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
@@ -266,6 +273,32 @@ a{color:#f43f5e}
     qEl.textContent=QUESTIONS[idx].t;
   }
 
+  // Рекомендации под ту шкалу, что просела сильнее: энергию, смысл и
+  // отдачу восстанавливают разным, и общий список здесь не работает.
+  // Названия и адреса — из каталогов blog/lektorij/ и таблицы ROUTES.
+  function recsFor(k){
+    var P={
+      e:['Пока бак пустой, смыслы не пересматривают — начинать надо с восстановления.', [
+        ['Курс «Психология перегрузок»','/blog/lektorij/psihologiya-peregruzok/','Бесплатно, без регистрации','Почему дел становится больше, чем ресурса, и что из этого действительно ваше.'],
+        ['Курс «Сон»','/blog/lektorij/son/','Бесплатно','Сон возвращает остальное быстрее любых техник, и начинать стоит с него.'],
+        ['Тренажёр «Парус»','/fredi/?m=parus','10–15 минут','Разводит навалившееся по потокам: видно, что тянет ко дну, а что можно отпустить.']]],
+      s:['Отчуждение от дела отпуском не лечится: отдохнувший человек возвращается к тому же.', [
+        ['Курс «Своя колея»','/blog/lektorij/svoya-koleya/','Бесплатно, без регистрации','Про жизнь по чужим решениям и про то, как нащупать своё направление.'],
+        ['Курс «Работа и карьера»','/blog/lektorij/rabota-i-karera/','Бесплатно','Что делать, когда дело перестало быть вашим, а уходить некуда или страшно.'],
+        ['Симулятор «Переход»','/fredi/?m=perehod','10–15 минут','Месяц из десяти решений: видно, чьи решения вы на самом деле выполняете.']]],
+      o:['Когда непонятно, куда уходит труд, помогает собственное мерило результата.', [
+        ['Курс «Самооценка»','/blog/lektorij/samoocenka/','Бесплатно, без регистрации','Про зависимость от чужой оценки, на которой и держится ощущение бесполезности.'],
+        ['Курс «Прокрастинация и мотивация»','/blog/lektorij/prokrastinaciya-i-motivaciya/','Бесплатно','Что делать, когда усилие есть, а видимого результата нет.'],
+        ['Тренажёр «Опора»','/fredi/?m=opora','10–15 минут','Ответ внутреннему критику, который обесценивает сделанное.']]]
+    }[k];
+    if(!P) return '';
+    var h='<div class="recs"><b>Что с этим делать</b><p style="margin:0 0 12px;font-size:.95rem">'+P[0]+'</p>';
+    P[1].forEach(function(r){
+      h+='<div class="rec"><a href="'+r[1]+'">'+r[0]+'</a><div class="rec-fmt">'+r[2]+'</div><div class="rec-why">'+r[3]+'</div></div>';
+    });
+    return h+'</div>';
+  }
+
   function finish(){
     var total=score.e+score.s+score.o;
     var stage = total<=7 ? 'Похоже на усталость, не на выгорание'
@@ -285,7 +318,19 @@ a{color:#f43f5e}
       s:'Сильнее всего просел смысл — работа стала чужой. Отпуск тут почти не помогает: отдохнувший человек возвращается к тому же отчуждению. Работать нужно с отношением к делу — что в нём было вашим и куда оно делось.',
       o:'Сильнее всего просела отдача — непонятно, куда уходит труд. Первый шаг: завести собственное мерило результата, не зависящее от чужой оценки, и еженедельно фиксировать сделанное.'
     };
-    resVerdict.innerHTML='<p>'+advice[worst]+'</p>'+(total<=7?'<p>Общий балл невысокий: скорее всего, это усталость, которая лечится обычным отдыхом. Но если картина держится месяцами — вернитесь к тесту через две недели.</p>':'');
+    resVerdict.innerHTML='<p>'+advice[worst]+'</p>'+(total<=7?'<p>Общий балл невысокий: скорее всего, это усталость, которая лечится обычным отдыхом. Но если картина держится месяцами — вернитесь к тесту через две недели.</p>':'')+recsFor(worst);
+    resVerdict.querySelectorAll('.rec a').forEach(function(a){ a.addEventListener('click', function(){ goal('vygoranie_rec_click'); }); });
+    if (window.FrediRazbor) {
+      var NM={e:'истощение — нет сил',s:'отчуждение — работа стала чужой',o:'ощущение бесполезности'};
+      window.FrediRazbor.mount({
+        host: result,
+        goal: 'vygoranie_open_fredi',
+        text: 'Прошёл тест на выгорание. Итог: ' + stage.toLowerCase() + '. '
+            + 'По шкалам (чем выше балл, тем хуже, максимум 8): энергия ' + score.e
+            + ', смысл ' + score.s + ', отдача ' + score.o + '. '
+            + 'Сильнее всего просело: ' + NM[worst] + '. Что мне с этим делать в первую очередь?'
+      });
+    }
     box.style.display='none';
     result.style.display='block';
     goal('vygoranie_done');
@@ -305,5 +350,6 @@ a{color:#f43f5e}
   if(f) f.addEventListener('click',function(){ goal('vygoranie_open_fredi'); goal('open_fredi'); });
 })();
 </script>
+<script src="/testy/razbor.js" defer></script>
 </body>
 </html>
