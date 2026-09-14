@@ -495,6 +495,25 @@
     }
 
     function _reloadApp() {
+        // Регистрация в конце теста: перерисовка дашборда затирала экран с
+        // результатом, и человек, только что вложивший пятнадцать минут,
+        // оказывался на пустом дашборде без расшифровки. Владелец поймал это
+        // на себе 14.09.2026. Возвращаем его туда, где он был: сначала
+        // обычная перерисовка (состояние аккаунта изменилось), потом экран
+        // теста с профилем. test_completed при этом не задваивается — там
+        // свой флаг (_testCompletedTracked).
+        if (_lastSource === 'test_complete' && window.Test) {
+            try {
+                if (typeof window.renderDashboard === 'function') window.renderDashboard();
+                if (typeof window.Test.showTestScreen === 'function') window.Test.showTestScreen();
+                if (typeof window.Test.showFinalProfileButtons === 'function') {
+                    window.Test.showFinalProfileButtons();
+                }
+                return;
+            } catch (e) {
+                console.warn('Не удалось вернуть экран результата теста:', e);
+            }
+        }
         // Пытаемся мягко перерисовать экран приложения; если функции нет — полный reload.
         try {
             if (typeof window.renderDashboard === 'function') {
