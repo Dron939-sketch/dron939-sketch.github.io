@@ -2277,6 +2277,10 @@ ${this.getStage3Interpretation()}
         }
         this._saveFailed = true;
         console.warn('Профиль не сохранён:', reason);
+        // В Метрику тоже: остальная воронка теста живёт там, и сравнивать
+        // «сколько дошло до портрета» с «у скольких профиль не сохранился»
+        // по двум разным системам нельзя.
+        _testGoal('test_save_failed');
         try {
             if (window.FrediTracker?.track) {
                 window.FrediTracker.track('test_save_failed', { reason: String(reason).slice(0, 120) });
