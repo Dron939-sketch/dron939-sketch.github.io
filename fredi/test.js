@@ -1851,6 +1851,7 @@ const Test = {
         bubble.appendChild(textDiv); bubble.appendChild(timeDiv);
         msgDiv.appendChild(bubble);
         c.appendChild(msgDiv);
+        this._keepTailLast(c);
         this.scrollToBottom();
         return msgDiv;
     },
@@ -1870,6 +1871,7 @@ const Test = {
         timeDiv.textContent = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
         bubble.appendChild(textDiv); bubble.appendChild(timeDiv);
         msgDiv.appendChild(bubble); c.appendChild(msgDiv);
+        this._keepTailLast(c);
         this.scrollToBottom();
         return msgDiv;
     },
@@ -1920,6 +1922,7 @@ const Test = {
         });
         bubble.appendChild(textDiv); bubble.appendChild(buttonsDiv);
         msgDiv.appendChild(bubble); c.appendChild(msgDiv);
+        this._keepTailLast(c);
         this._renderProgress();
         this.scrollToBottom();
     },
@@ -2023,6 +2026,7 @@ const Test = {
         timeDiv.className='test-message-time'; timeDiv.textContent='только что';
         bubble.appendChild(buttonsDiv); bubble.appendChild(timeDiv);
         msgDiv.appendChild(bubble); c.appendChild(msgDiv);
+        this._keepTailLast(c);
         this.scrollToBottom();
         return msgDiv;
     },
@@ -2050,13 +2054,67 @@ const Test = {
         if (!el) return;
         const go = () => {
             const c = document.getElementById('testChatMessages');
-            if (!c) return;
-            // offsetTop считается от контейнера ленты, минус небольшой
-            // отступ, чтобы текст не прилипал к верхней кромке.
-            c.scrollTop = Math.max(0, el.offsetTop - 12);
+            if (!c) return true;
+            // Считаем через прямоугольники, а не через offsetTop: offsetTop
+            // отмеряется от ближайшего позиционированного предка, и это не
+            // обязательно лента. В Safari на 320px из-за этого прыжок к
+            // части 3 уезжал на 275 вместо 2041 — проверено.
+            const cr = c.getBoundingClientRect();
+            const er = el.getBoundingClientRect();
+            c.scrollTop = Math.max(0, c.scrollTop + (er.top - cr.top) - 12);
+            // Промеряем заново ПОСЛЕ прокрутки: раскладка нередко досчитывается
+            // уже потом — дорисовался шрифт, пришла картинка, — и заголовок
+            // уезжает. Двух попыток вслепую не хватало: в Chrome заголовок
+            // части 3 замирал в 260 пикселях от верха вместо 12. Здесь мы
+            // возвращаемся и поправляем, пока не сойдётся.
+            return Math.abs(el.getBoundingClientRect().top
+                            - c.getBoundingClientRect().top - 12) < 3;
         };
-        setTimeout(go, 60);
-        setTimeout(go, 260);
+        let tries = 0;
+        const tick = () => {
+            if (go() || ++tries > 6) return;
+            setTimeout(tick, 90);
+        };
+        setTimeout(tick, 60);
+    },
+
+    /**
+     * Запас под лентой, чтобы последние части разбора доходили до верха.
+     *
+     * Под частью 3 остаются только кнопки и блок подписки — высоты не
+     * хватает, прокрутка упирается в конец, и «перейти к части 3» приводило
+     * не туда, куда обещало оглавление. Резервируем хвост один раз, когда
+     * разбор собран целиком: делать это в момент прокрутки нельзя — Chrome
+     * якорит прокрутку при росте содержимого, и попадание становится
+     * случайным (проверено: промах 259px, потом 216px, потом 103px).
+     *
+     * Только на экране результата: во время теста лента прокручивается вниз,
+     * и пустой хвост там был бы виден.
+     */
+    // Распорка обязана оставаться последней: после разбора в ленту ещё
+    // добавляются сообщения («мысли психолога», возврат к профилю), и
+    // оставленная на месте распорка разорвала бы ленту пустотой посередине.
+    _keepTailLast(c) {
+        const sp = c && c.querySelector('.test-tail-spacer');
+        if (sp && sp !== c.lastElementChild) c.appendChild(sp);
+    },
+
+    _reserveTail() {
+        const c = document.getElementById('testChatMessages');
+        if (!c) return;
+        let sp = c.querySelector('.test-tail-spacer');
+        if (!sp) {
+            sp = document.createElement('div');
+            sp.className = 'test-tail-spacer';
+            sp.setAttribute('aria-hidden', 'true');
+            // Лента — колоночный флексбокс: у обычного потомка высота
+            // сжимается до нуля, поэтому flex-basis фиксируем явно.
+            sp.style.flex = '0 0 auto';
+            c.appendChild(sp);
+        }
+        const h = Math.max(0, c.clientHeight - 160);
+        sp.style.height = h + 'px';
+        sp.style.minHeight = h + 'px';
     },
 
     // ============================================
@@ -2639,11 +2697,7 @@ ${this.getStage3Interpretation()}
         const ubD = {1:'Не думаете о сложном',2:'Верите в знаки',3:'Доверяете экспертам',4:'Ищете заговоры',5:'Анализируете факты',6:'Строите теории',7:'Ищете аналогии в истории',8:'Строите модели мира',9:'Видите закономерности'}[p.ubLevel]||'—';
         const cvD = {1:'Сильно привязываетесь',2:'Подстраиваетесь',3:'Хотите нравиться',4:'Умеете влиять',5:'Строите равные отношения',6:'Создаёте сообщества',7:'Понимаете историю группы',8:'Видите архетипы отношений',9:'Понимаете универсальные законы'}[p.chvLevel]||'—';
 
-        let text = `🧠 **ВАШ ПСИХОЛОГИЧЕСКИЙ ПРОФИЛЬ**\n\n**Архетип:** ${p.archetype}\n**Код:** ${p.displayName}\n**Тип восприятия:** ${p.perceptionType}\n**Уровень мышления:** ${p.thinkingLevel}/9\n\n**📊 ВАШИ ВЕКТОРЫ:**\n\n**СБ ${p.sbLevel}/6:** ${sbD}\n**ТФ ${p.tfLevel}/6:** ${tfD}\n**УБ ${p.ubLevel}/6:** ${ubD}\n**ЧВ ${p.chvLevel}/6:** ${cvD}\n\n**🧠 Глубинный паттерн:** ${deep.attachment}`;
-
-        if (this.aiGeneratedProfile) {
-            text += '\n\n**🧠 AI-СГЕНЕРИРОВАННЫЙ ПРОФИЛЬ:**\n\n' + this.aiGeneratedProfile.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
-        }
+        let text = `🧠 **ЧАСТЬ 1. ПОРТРЕТ И ВЕКТОРЫ**\n\n**Архетип:** ${p.archetype}\n**Код:** ${p.displayName}\n**Тип восприятия:** ${p.perceptionType}\n**Уровень мышления:** ${p.thinkingLevel}/9\n\n**📊 ВАШИ ВЕКТОРЫ:**\n\n**СБ ${p.sbLevel}/6:** ${sbD}\n**ТФ ${p.tfLevel}/6:** ${tfD}\n**УБ ${p.ubLevel}/6:** ${ubD}\n**ЧВ ${p.chvLevel}/6:** ${cvD}\n\n**🧠 Глубинный паттерн:** ${deep.attachment}`;
 
         // Инструментирование: финальная точка воронки. Различаем anon и authed —
         // именно здесь должна срабатывать первая регистрация для anon-юзеров.
@@ -2669,7 +2723,36 @@ ${this.getStage3Interpretation()}
             }
         } catch {}
 
+        // Оглавление ПЕРЕД частями.
+        //
+        // До 14.09.2026 результат теста был лентой без опознавательных
+        // знаков: одно огромное сообщение (портрет + векторы + AI-текст),
+        // под ним рекомендации, кнопки и блок про подписку. Человек не
+        // понимал, сколько ещё читать, где кончается бесплатное и
+        // начинается платное, и что из этого «полный отчёт», — а слово
+        // «полный» в трёх местах означало разное. Владелец назвал это
+        // хаосом, и это ровно оно.
+        //
+        // Теперь наверху карточка с четырьмя частями и ссылками на них.
+        // Части регистрируются в _resultAnchors по мере появления, ссылки
+        // резолвятся в момент клика: рекомендации приходят с сервера позже
+        // оглавления.
+        this._resultAnchors = {};
+        const toc = this._renderResultToc(p);
+
         const profileMsg = this.addBotMessage(text, true);
+        this._resultAnchors.portrait = profileMsg;
+
+        // Интерпретация — отдельным сообщением, а не хвостом портрета.
+        // В одном сообщении таблица векторов и пять абзацев связного текста
+        // читались как одна стена, и до интерпретации, ради которой человек
+        // и проходил тест, добирались не все.
+        if (this.aiGeneratedProfile) {
+            const meaningMsg = this.addBotMessage(
+                '💡 **ЧАСТЬ 2. ЧТО ЭТО ЗНАЧИТ**\n\n'
+                + this.aiGeneratedProfile.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), true);
+            this._resultAnchors.meaning = meaningMsg;
+        }
 
         // Рекомендации ДО кнопок и до предложения подписки. Раньше запрос
         // уходил здесь же, но без ожидания — и ответ приземлялся в самом
@@ -2762,7 +2845,7 @@ ${this.getStage3Interpretation()}
         // середине. Механизм цел: sendPortraitToMax и ручка на бэкенде
         // остались, их можно повесить туда, где мессенджер уже привязан.
         nextButtons.push(
-            { text: '⬇️ СКАЧАТЬ РАЗБОР', keepEnabled: true,
+            { text: '⬇️ СКАЧАТЬ ЭТОТ РАЗБОР', keepEnabled: true,
               callback: () => this.downloadReport(p, deep, { sbD, tfD, ubD, cvD }) },
             { text: '🧠 МЫСЛИ ПСИХОЛОГА',    callback: () => this.showPsychologistThought() },
             { text: '🏠 НА ГЛАВНУЮ',         callback: () => this.goToDashboard() }
@@ -2790,8 +2873,10 @@ ${this.getStage3Interpretation()}
         // Последним действием, а не сразу после портрета: каждое следующее
         // сообщение — рекомендации, кнопки, блок подписки — тянет ленту
         // вниз, и ранняя прокрутка вверх тут же перебивалась. Человек
-        // должен увидеть начало своего портрета, а не хвост списка кнопок.
-        this.scrollMessageToTop(profileMsg);
+        // должен увидеть начало разбора, а не хвост списка кнопок.
+        // Начало — оглавление: с него видно, из чего разбор состоит.
+        this._reserveTail();
+        this.scrollMessageToTop(toc || profileMsg);
 
         // Сколько осталось — говорим здесь, а не посреди теста. Человек
         // только что увидел портрет и хочет его обсудить; знать остаток
@@ -2806,6 +2891,100 @@ ${this.getStage3Interpretation()}
         } catch (e) {}
     },
 
+    /**
+     * Оглавление разбора — первым сообщением после теста.
+     *
+     * Две вещи, которых людям не хватало. Первая — понять объём: разбор
+     * идёт четырьмя частями, а не бесконечной лентой. Вторая — понять,
+     * где кончается бесплатное. Здесь это сказано словами: части 1–3 уже
+     * перед вами, часть 4 — отдельный экран по подписке.
+     *
+     * Ссылки резолвятся в момент клика, а не при сборке: рекомендации
+     * приходят с сервера на несколько секунд позже оглавления, и на
+     * момент отрисовки их элемента ещё нет.
+     */
+    _renderResultToc(p) {
+        const c = document.getElementById('testChatMessages');
+        if (!c) return null;
+        const premium = (window.IS_PREMIUM === true)
+            || !!(window.FrediMeter && window.FrediMeter.lastCheck
+                  && (window.FrediMeter.lastCheck.is_premium || window.FrediMeter.lastCheck.has_subscription));
+
+        const items = [
+            ['portrait', '1', 'Портрет и векторы', 'кто вы по результатам теста'],
+            ['meaning',  '2', 'Что это значит',    'связный разбор вашего профиля'],
+            ['steps',    '3', 'С чего начать',     'три шага под ваш результат'],
+            ['deep',     '4', 'Глубинный разбор',  premium
+                ? 'шесть разделов — открыть'
+                : 'шесть разделов — по подписке']
+        ];
+
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'test-message test-message-bot';
+        const bubble = document.createElement('div');
+        bubble.className = 'test-message-bubble test-message-bubble-bot';
+
+        const head = document.createElement('div');
+        head.className = 'test-message-text';
+        head.innerHTML = '<strong>✅ ТЕСТ ПРОЙДЕН. ВАШ РАЗБОР ГОТОВ</strong><br><br>'
+            + 'Части 1–3 ниже — они бесплатные и целиком ваши. '
+            + 'Часть 4 — отдельный экран.<br>'
+            + '<span style="opacity:.7;font-size:13px">Нажмите на часть, чтобы перейти к ней.</span>';
+        bubble.appendChild(head);
+
+        const list = document.createElement('div');
+        list.className = 'test-toc';
+        items.forEach(([key, num, title, note]) => {
+            const row = document.createElement('button');
+            row.className = 'test-toc-item';
+            row.type = 'button';
+            row.innerHTML = '<span class="test-toc-num">' + num + '</span>'
+                + '<span class="test-toc-body"><b>' + title + '</b>'
+                + '<span class="test-toc-note">' + note + '</span></span>'
+                + '<span class="test-toc-go">' + (key === 'deep' ? (premium ? '→' : '🔒') : '↓') + '</span>';
+            row.addEventListener('click', () => {
+                try { if (window.FrediTracker?.track) window.FrediTracker.track('test_toc_click', { part: key }); } catch {}
+                if (key === 'deep') {
+                    this.goToDashboard();
+                    if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
+                    else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
+                    return;
+                }
+                const el = this._resultAnchors && this._resultAnchors[key];
+                if (el) this.scrollMessageToTop(el);
+                else if (window.showToast) window.showToast('Эта часть ещё собирается — секунду', 'info');
+            });
+            list.appendChild(row);
+        });
+        bubble.appendChild(list);
+        msgDiv.appendChild(bubble);
+        c.appendChild(msgDiv);
+        this._injectTocStyles();
+        return msgDiv;
+    },
+
+    _injectTocStyles() {
+        if (document.getElementById('test-toc-styles')) return;
+        const s = document.createElement('style');
+        s.id = 'test-toc-styles';
+        s.textContent = `
+        .test-toc{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+        .test-toc-item{display:flex;align-items:center;gap:12px;width:100%;
+            padding:11px 13px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;
+            background:rgba(224,224,224,0.05);color:inherit;font:inherit;text-align:left;
+            cursor:pointer;transition:background .15s,border-color .15s}
+        .test-toc-item:hover{background:rgba(59,130,255,0.10);border-color:rgba(59,130,255,0.45)}
+        .test-toc-num{flex:0 0 26px;height:26px;border-radius:50%;display:flex;
+            align-items:center;justify-content:center;font-size:13px;font-weight:700;
+            background:rgba(59,130,255,0.18);color:#3b82ff}
+        .test-toc-body{flex:1;display:flex;flex-direction:column;min-width:0}
+        .test-toc-body b{font-size:14.5px;line-height:1.3}
+        .test-toc-note{font-size:12.5px;opacity:.65;line-height:1.35;margin-top:2px}
+        .test-toc-go{flex:0 0 auto;opacity:.6;font-size:15px}
+        `;
+        document.head.appendChild(s);
+    },
+
     // Блок «что откроется с подпиской» после портрета. Первый шаг считается
     // на клиенте по самому низкому уровню профиля (analysis.js) — он
     // бесплатный и мгновенный. Подписчику вместо цены — кнопка в разбор.
@@ -2818,21 +2997,21 @@ ${this.getStage3Interpretation()}
             ? window.frediFirstStepFor(p && p.displayName)
             : 'Сегодня вспомните одну ситуацию, где промолчали, и запишите одним предложением, что хотели сказать.';
         let html = '✅ **ПЕРВЫЙ ШАГ НА СЕГОДНЯ — БЕСПЛАТНО**\n\n' + esc(step) + '\n\n'
-            + (premium ? '🔓 **ВАШ ПОЛНЫЙ РАЗБОР ГОТОВ К ОТКРЫТИЮ**' : '🔒 **ЧТО ОТКРОЕТСЯ С ПОДПИСКОЙ**') + '\n\n'
-            + '• Полный разбор именно вашего профиля: глубинный портрет, системные петли, скрытые механизмы\n'
+            + (premium ? '🔓 **ГЛУБИННЫЙ РАЗБОР ГОТОВ К ОТКРЫТИЮ**' : '🔒 **ЧТО ОТКРОЕТСЯ С ПОДПИСКОЙ**') + '\n\n'
+            + '• Глубинный разбор именно вашего профиля: портрет, системные петли, скрытые механизмы\n'
             + '• Точки роста, прогноз на полгода и персональные ключи на момент срыва\n'
             + '• Коуч и тренер без лимита (без подписки — три ответа)\n'
             + '• Голос, все тренажёры и память Фреди о каждом разговоре';
         try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_shown', { premium: premium }); } catch {}
         this.addBotMessage(html, true);
         const btn = premium
-            ? { text: '🔍 ОТКРЫТЬ ПОЛНЫЙ РАЗБОР', callback: () => {
+            ? { text: '🔍 ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР', callback: () => {
                     try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_clicked', { premium: true }); } catch {}
                     this.goToDashboard();
                     if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
                     else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
                 } }
-            : { text: '✨ ОТКРЫТЬ РАЗБОР — НЕДЕЛЯ 290 ₽', callback: () => {
+            : { text: '✨ ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР — НЕДЕЛЯ 290 ₽', callback: () => {
                     try { if (window.FrediTracker?.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'bigtest_teaser' }); } catch {}
                     if (typeof window.openCheckout === 'function') window.openCheckout('bigtest_teaser');
                 } };
@@ -2963,7 +3142,7 @@ ${recs ? `<h2>С чего начать</h2>${recs}` : ''}
         // формат, почему именно вам и что вы получите. До 14.09.2026 была
         // одна строка причины, и «Курс „Тревога“» читался как ссылка без
         // объяснения, куда человек идёт и во что это ему обойдётся.
-        let html = '🧭 **С ЧЕГО НАЧАТЬ ИМЕННО ВАМ**\n\nПо вашему профилю — три шага, по одному на ближайшие недели:\n';
+        let html = '🧭 **ЧАСТЬ 3. С ЧЕГО НАЧАТЬ**\n\nПо вашему профилю — три шага, по одному на ближайшие недели:\n';
         items.forEach(it => {
             const blank = it.type === 'game' ? '' : ' target="_blank" rel="noopener"';
             html += '\n' + (icons[it.type] || '👉')
@@ -2976,6 +3155,9 @@ ${recs ? `<h2>С чего начать</h2>${recs}` : ''}
             html += '\n';
         });
         const msg = this.addBotMessage(html, true);
+        // Часть 3 приходит с сервера позже оглавления — регистрируем
+        // якорь здесь, ссылка в оглавлении резолвится в момент клика.
+        if (this._resultAnchors) this._resultAnchors.steps = msg;
         try {
             if (window.FrediTracker?.track) {
                 _testGoal('test_recommendations_shown');
