@@ -133,6 +133,13 @@ a{color:#D97706}
 .scale-fill{height:100%;border-radius:5px;transition:width .6s}
 .scale-note{font-size:.9rem;color:#3c3c43;margin-top:6px}
 .result-verdict{margin-top:18px;font-size:.98rem}
+.recs{margin-top:20px;padding-top:16px;border-top:1px solid #FDE8C8}
+.recs>b{display:block;margin-bottom:12px}
+.rec{margin:0 0 14px;padding-left:12px;border-left:3px solid #F59E0B}
+.rec a{font-weight:700;text-decoration:none}
+.rec a:hover{text-decoration:underline}
+.rec-fmt{font-size:.85rem;color:#6e6e73;margin:2px 0 3px}
+.rec-why{font-size:.93rem;color:#3c3c43}
 </style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
@@ -199,6 +206,9 @@ a{color:#D97706}
   <div class="card"><b>🧠 Разобрать своё</b><p>Фреди, ИИ-психолог: задаёт уточняющие вопросы по вашему результату и помогает наметить первые шаги. <a href="/fredi/">Бесплатно</a>.</p></div>
   <div class="card"><b>🧬 Понять устройство</b><p><a href="/bolshoj-test-lichnosti/">Большой тест личности</a>: отчего вы реагируете на давление именно так и где ваша точка роста.</p></div>
   <div class="card"><b>🔥 Проверить выгорание</b><p>Если дело в работе и интерес погас — <a href="/test-na-vygoranie/">тест на выгорание</a> про другое состояние.</p></div>
+  <div class="card"><b>🎓 Курсы Лектория</b><p>«<a href="/blog/lektorij/stress-menedzhment/">Стресс-менеджмент</a>», «<a href="/blog/lektorij/psihologiya-peregruzok/">Психология перегрузок</a>», «<a href="/blog/lektorij/son/">Сон</a>» — открыты целиком и бесплатно, без регистрации.</p></div>
+  <div class="card"><b>🎮 Тренажёры</b><p>«<a href="/fredi/?m=parus">Парус</a>» разводит навалившееся по потокам, «<a href="/fredi/?m=opora">Опора</a>» тренирует ответ внутреннему критику.</p></div>
+  <div class="card"><b>🧑‍🏫 Живой формат</b><p>Когда нужен не текст, а группа и обратная связь ведущего — <a href="/treningi/">тренинги Андрея Мейстера</a>.</p></div>
 </div>
 
 <h2>❓ Частые вопросы</h2>
@@ -281,7 +291,32 @@ a{color:#D97706}
       o:'Выше всего нехватка опоры. Это важнее объёма дел: одна и та же нагрузка переносится совсем иначе, когда есть ощущение влияния и есть кому рассказать. Найдите в ситуации то, на что вы всё-таки влияете, и начните с этого куска.',
       t:'Выше всего отзывается тело. Сон и движение здесь возвращают остальное быстрее любых разговоров: невыспавшийся человек не может ни решить задачу, ни выдержать разговор, и круг замыкается.'
     }[top];
-    resVerdict.innerHTML='<b>С чего начать.</b> '+advice;
+
+    // Рекомендации под ту шкалу, что выше, — не общий список. Названия и
+    // адреса взяты из каталогов blog/lektorij/ и таблицы ROUTES в app.js:
+    // человек пойдёт искать по названию, и придуманное имя он не найдёт.
+    var PICKS={
+      n:[['Курс «Психология перегрузок»','/blog/lektorij/psihologiya-peregruzok/','Бесплатно, без регистрации','Разбирает, почему дел становится больше, чем времени, и что из этого действительно ваше.'],
+         ['Тренажёр «Парус»','/fredi/?m=parus','10–15 минут','Разводит навалившееся по потокам: видно, что тянет ко дну, а что можно отпустить.'],
+         ['Курс «Тайм-менеджмент и планирование»','/blog/lektorij/tajm-menedzhment/','Бесплатно','Не про тайминг ради тайминга — про то, как перестать держать всё в голове.']],
+      o:[['Курс «Личные границы»','/blog/lektorij/lichnye-granicy/','Бесплатно, без регистрации','Опора чаще всего просаживается там, где вы соглашаетесь против воли. Курс разбирает это по шагам.'],
+         ['Тренажёр «Опора»','/fredi/?m=opora','10–15 минут','Тренировка ответа внутреннему критику — тому голосу, который говорит, что вы не справитесь.'],
+         ['Курс «Стресс-менеджмент»','/blog/lektorij/stress-menedzhment/','Бесплатно','Про то, как возвращать себе влияние на ситуацию, а не терпеть её.']],
+      t:[['Курс «Сон»','/blog/lektorij/son/','Бесплатно, без регистрации','Сон возвращает остальное быстрее любых техник, и начинать стоит с него.'],
+         ['Курс «Эмоциональная саморегуляция»','/blog/lektorij/samoregulyaciya/','Бесплатно','Что делать с напряжением в теле, когда разговоры уже не помогают.'],
+         ['«Мне плохо сейчас»','/fredi/?m=sos','Несколько минут','Протокол стабилизации на острый момент — когда накрыло прямо сейчас.']]
+    }[top];
+    var rec='<div class="recs"><b>Что с этим делать</b>';
+    PICKS.forEach(function(r){
+      rec+='<div class="rec"><a href="'+r[1]+'">'+r[0]+'</a>'
+         + '<div class="rec-fmt">'+r[2]+'</div>'
+         + '<div class="rec-why">'+r[3]+'</div></div>';
+    });
+    rec+='</div>';
+    resVerdict.innerHTML='<b>С чего начать.</b> '+advice+rec;
+    resVerdict.querySelectorAll('.rec a').forEach(function(a){
+      a.addEventListener('click', function(){ goal('stress_rec_click'); });
+    });
 
     box.style.display='none';
     result.style.display='block';
