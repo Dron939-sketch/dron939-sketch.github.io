@@ -78,6 +78,34 @@
   ],
   "articles": [
     {
+      "slug": "stydno-za-svoi-zhelaniya",
+      "title": "Стыдно за свои желания: откуда берётся стыд и что с ним делать",
+      "rubric": "otnosheniya",
+      "level": "n",
+      "mins": 11
+    },
+    {
+      "slug": "chto-takoe-fetish",
+      "title": "Что такое фетиш: откуда берётся и когда это становится проблемой",
+      "rubric": "otnosheniya",
+      "level": "n",
+      "mins": 12
+    },
+    {
+      "slug": "kollegi-nastraivayut-protiv-menya",
+      "title": "Коллеги настраивают против меня: что происходит и что делать",
+      "rubric": "otnosheniya",
+      "level": "n",
+      "mins": 11
+    },
+    {
+      "slug": "mobbing-chto-eto",
+      "title": "Моббинг: что это, почему участвует весь отдел и что делать",
+      "rubric": "otnosheniya",
+      "level": "n",
+      "mins": 12
+    },
+    {
       "slug": "10-koldovskih-ritualov-navigator",
       "title": "10 колдовских ритуалов: какой выбрать для себя. Полный навигатор серии о ритуалах как поведенческих программах",
       "rubric": "ezoterika",
