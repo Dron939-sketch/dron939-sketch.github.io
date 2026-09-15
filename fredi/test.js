@@ -3011,7 +3011,7 @@ ${this.getStage3Interpretation()}
                     if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
                     else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
                 } }
-            : { text: '✨ ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР — НЕДЕЛЯ 290 ₽', callback: () => {
+            : { text: '✨ ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР — 3 ДНЯ 99 ₽', callback: () => {
                     try { if (window.FrediTracker?.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'bigtest_teaser' }); } catch {}
                     if (typeof window.openCheckout === 'function') window.openCheckout('bigtest_teaser');
                 } };
