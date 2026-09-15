@@ -1309,7 +1309,23 @@ function updateModeUI() {
     if (desc && MODE_DESCS[currentMode]) desc.textContent = MODE_DESCS[currentMode];
 }
 
-function showPremiumLockPopup(modeName) {
+// Окно «это по подписке». Второй аргумент — необязательный:
+//   { kind: 'mode' | 'other', text: 'своя строка' }
+//
+// Раньше текст был один и говорил про режимы: «диалог сейчас идёт в базовом
+// режиме, с подпиской Фреди начнёт говорить как психолог». Но зовут эту
+// функцию девять модулей — «Экспонента», «Императив», «Паттерн», «Вариатика»,
+// «Супервизор» и другие, — и человек, нажавший на игру, читал ответ про роли
+// в диалоге. Ни одного вызова с именем режима в коде нет, поэтому общий текст
+// стал основным, а прежний остался под kind:'mode'.
+function showPremiumLockPopup(modeName, opts) {
+    const o = opts || {};
+    const isMode = o.kind === 'mode';
+    const title = isMode ? `Роль «${modeName}» — с подпиской`
+                         : `«${modeName}» — с подпиской`;
+    const text = o.text || (isMode
+        ? 'Диалог сейчас идёт в базовом режиме. С подпиской Фреди начнёт говорить как психолог, коуч или тренер — на ваш выбор.'
+        : 'Открывается с подпиской вместе с голосом, всеми режимами и памятью Фреди о каждом разговоре. Неделя полного Premium — 290 ₽, дальше 990 ₽ в месяц, отключается в один клик.');
     // Удаляем предыдущее окно, если есть
     document.getElementById('premiumLockPopup')?.remove();
 
@@ -1321,8 +1337,8 @@ function showPremiumLockPopup(modeName) {
         <div class="plp-card" role="dialog" aria-modal="true" aria-labelledby="plpTitle">
             <button class="plp-close" aria-label="Закрыть">×</button>
             <div class="plp-emoji">💎</div>
-            <div class="plp-title" id="plpTitle">Роль «${modeName}» — с подпиской</div>
-            <div class="plp-text">Диалог сейчас идёт в базовом режиме. С подпиской Фреди начнёт говорить как психолог, коуч или тренер — на ваш выбор.</div>
+            <div class="plp-title" id="plpTitle">${title}</div>
+            <div class="plp-text">${text}</div>
             <div class="plp-actions">
                 <button class="plp-btn plp-btn-primary" data-action="upgrade">Открыть Premium</button>
                 <button class="plp-btn plp-btn-secondary" data-action="close">Понятно</button>
@@ -1337,6 +1353,17 @@ function showPremiumLockPopup(modeName) {
     popup.querySelector('[data-action="close"]')?.addEventListener('click', close);
     popup.querySelector('[data-action="upgrade"]')?.addEventListener('click', () => {
         close();
+        // Прямой чекаут, если он есть: настройки — это ещё два экрана до
+        // оплаты, и на них человек и терялся.
+        if (typeof window.openCheckout === 'function') {
+            try {
+                if (window.FrediTracker?.track) {
+                    window.FrediTracker.track('meter_subscribe_clicked',
+                                              { source: o.source || 'premium_lock' });
+                }
+            } catch {}
+            try { window.openCheckout(o.source || 'premium_lock'); return; } catch {}
+        }
         if (typeof showSettingsScreen === 'function') {
             try { showSettingsScreen(); return; } catch {}
         }

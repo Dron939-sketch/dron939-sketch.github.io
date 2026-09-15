@@ -15,6 +15,9 @@ function _scInjectStyles() {
         .sc-skill-body  { flex: 1; min-width: 0; }
         .sc-skill-name  { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .sc-skill-new   { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; background: rgba(255,107,53,0.15); color: #FF8B5C; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; }
+        /* Навык по подписке. Значок стоит в списке, а не только на стене:
+           человек должен видеть, за что платят, до того как выберет. */
+        .sc-skill-prem  { display: inline-block; margin-left: 6px; font-size: 9px; font-weight: 700; letter-spacing: 0.4px; background: rgba(168,196,224,0.16); color: rgba(168,196,224,0.95); padding: 2px 6px; border-radius: 6px; white-space: nowrap; }
         .sc-skill-sub   { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
         .sc-skill-hint  { font-size: 10px; color: var(--chrome); margin-top: 4px; opacity: 0; transition: opacity 0.2s; }
         .sc-skill-card:hover .sc-skill-hint { opacity: 1; }
@@ -423,6 +426,77 @@ try {
         }
     }
 } catch (e) { /* extras corrupted — продолжаем со штатным каталогом */ }
+
+// ============================================
+// НАВЫКИ ПО ПОДПИСКЕ
+// ============================================
+// «Некоторые из них сделать доступными только с премиум-подпиской» —
+// владелец, 15.09.2026. Заперты два блока, и оба по одному признаку:
+// это содержание, которое в живом виде продаётся отдельно и дорого.
+//
+//  • «Влияние и коммуникация» целиком — языковые паттерны, калибровка,
+//    работа с эмоциями собеседника и группы. Тот же арсенал, что на
+//    очных тренингах по разговорному гипнозу.
+//  • Два тяжёлых когнитивных — «Навык Рассела» и диалектическое
+//    мышление: длинные авторские программы, а не упражнение на неделю.
+//
+// Остальные двадцать с лишним навыков открыты целиком и бесплатно —
+// уверенность, границы, дисциплина, «слышать себя», все профессиональные.
+// Человек, который пришёл с «не могу сказать нет», не должен упираться
+// в стену: он за этим и пришёл.
+//
+// Каталог и описание видны всем. Стена — на кнопке «Беру этот навык»,
+// когда человек уже прочитал, что навык даёт: там она понятна, а на
+// входе выглядела бы запертой дверью без вывески.
+const SC_PREMIUM_SKILLS = {
+    speech_influence: 'Речевое воздействие',
+    emotion_partner: 'Управление эмоциями собеседника',
+    emotion_group: 'Управление эмоциями группы',
+    media_influence: 'Информационное воздействие через СМИ',
+    calibration: 'Калибровка собеседника',
+    russell: 'Навык Рассела',
+    hegelian_dialectic: 'Диалектическое мышление',
+};
+function _scIsPremiumUser() {
+    if (window.IS_PREMIUM === true) return true;
+    try {
+        var M = window.FrediMeter;
+        if (M && typeof M.isPremium === 'function') return !!M.isPremium();
+    } catch (e) {}
+    return false;
+}
+function _scSkillLocked(id) {
+    return !!SC_PREMIUM_SKILLS[id] && !_scIsPremiumUser();
+}
+// Значок в списке рисуется по принадлежности к премиуму, а не по замку:
+// подписчику он говорит, что входит в оплаченное, а не «сюда нельзя».
+// Плюс снимается гонка: статус подписки приезжает асинхронно, и пока он
+// неизвестен, замок считается снятым — значок бы тогда не появился вовсе.
+function _scPremiumBadge(id) {
+    return SC_PREMIUM_SKILLS[id]
+        ? '<span class="sc-skill-prem" title="Входит в подписку Premium">💎 Premium</span>'
+        : '';
+}
+function _scShowSkillLock(id) {
+    const name = SC_PREMIUM_SKILLS[id] || 'Этот навык';
+    try {
+        if (window.FrediTracker?.track) {
+            window.FrediTracker.track('skill_lock_shown', { skill: id });
+        }
+    } catch (e) {}
+    if (typeof window.showPremiumLockPopup === 'function') {
+        window.showPremiumLockPopup(name, {
+            source: 'skill_' + id,
+            text: 'Двадцать один день этого навыка — с подпиской: ежедневные задания, '
+                + 'напоминания в вашем канале и разбор от Фреди по каждому дню. '
+                + 'Описание выше открыто целиком — вы знаете, что берёте. '
+                + 'Остальные навыки каталога тренируются бесплатно. '
+                + 'Неделя полного Premium — 290 ₽, дальше 990 ₽ в месяц, отключается в один клик.',
+        });
+        return;
+    }
+    _scToast('Этот навык открывается с подпиской', 'info');
+}
 
 const _SC_CUSTOM_PROMISE = 'Через 21 день у вас будет рабочий навык, который вы тренировали ежедневно — устойчивая привычка, а не разовая попытка.';
 const _SC_CUSTOM_LONGDESC = 'Свой навык — мы тренируем его по тому же 21-дневному каркасу: знакомство, активная тренировка, закрепление. Каждый день — короткое упражнение.';
@@ -968,7 +1042,7 @@ function _scRenderSelect() {
                     return `<div class="sc-skill-card" data-id="${skill.id}">
                         <div class="sc-skill-icon">${skill.icon||'🎯'}</div>
                         <div class="sc-skill-body">
-                            <div class="sc-skill-name">${skill.name}</div>
+                            <div class="sc-skill-name">${skill.name}${_scPremiumBadge(skill.id)}</div>
                             <div class="sc-skill-sub">${skill.desc}</div>
                             <div class="sc-skill-bar-wrap"><div class="sc-skill-bar-fill" style="width:${pct}%"></div></div>
                             <div class="sc-skill-hint">Узнать подробнее →</div>
@@ -986,7 +1060,7 @@ function _scRenderSelect() {
         <div class="sc-skill-card" data-id="${sk.id}">
             <div class="sc-skill-icon">${sk.icon||'🎯'}</div>
             <div class="sc-skill-body">
-                <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}</div>
+                <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}${_scPremiumBadge(sk.id)}</div>
                 <div class="sc-skill-sub">${sk.desc}</div>
                 <div class="sc-skill-hint">Узнать подробнее →</div>
             </div>
@@ -1096,7 +1170,7 @@ function _scRenderDetail() {
         </div>
 
         <button class="sc-btn sc-btn-primary" id="scChooseBtn" style="margin-top:14px">
-            🤝 Беру этот навык →
+            ${_scSkillLocked(_sc.skillId) ? '💎 Открыть по подписке →' : '🤝 Беру этот навык →'}
         </button>
         <button class="sc-btn sc-btn-ghost" id="scBackToList" style="width:100%;margin-top:10px">
             ← Посмотреть другие
@@ -1720,6 +1794,12 @@ function _scBindHandlers() {
 
     // === DETAIL ===
     document.getElementById('scChooseBtn')?.addEventListener('click', async () => {
+        // Навык по подписке: человек прочитал описание и обещание — вот
+        // здесь и стена, а не на входе в каталог.
+        if (_scSkillLocked(_sc.skillId)) {
+            _scShowSkillLock(_sc.skillId);
+            return;
+        }
         if (!_sc.channel) _sc.channel = 'telegram';
         _sc.view = 'setup';
         _scRender();
@@ -1841,6 +1921,10 @@ function _scBindHandlers() {
     document.getElementById('scStartBtn')?.addEventListener('click', () => {
         if (!_sc.channel) { _scToast('Выберите канал', 'error'); return; }
         if (!_sc.skillId || !_sc.skillName) { _scToast('Выберите навык', 'error'); return; }
+        // Вторая проверка на самом запуске: до экрана настройки можно
+        // добраться и не через кнопку «Беру» — например, вернувшись назад
+        // из сохранённого состояния.
+        if (_scSkillLocked(_sc.skillId)) { _scShowSkillLock(_sc.skillId); return; }
 
         // Защита от повторного запуска:
         // - тот же навык уже идёт → показываем "уже формируется", не перезапускаем;
@@ -1953,13 +2037,11 @@ function _scBindHandlers() {
 // ТОЧКА ВХОДА
 // ============================================
 async function showSkillChoiceScreen(opts) {
-    // Со второго захода — по подписке (список в meter.js, решение владельца
-    // 15.09.2026): 21-дневный план с трекером человек ведёт неделями, и это
-    // ровно то, ради чего подписку и оформляют.
-    if (window.FrediMeter?.gameLocked?.('showSkillChoiceScreen')) {
-        window.FrediMeter.showGameLock('showSkillChoiceScreen', 'tool');
-        return;
-    }
+    // Замок стоит не здесь, а на отдельных навыках (SC_PREMIUM_SKILLS):
+    // владелец 15.09.2026 просил закрыть подпиской «некоторые из них», а не
+    // весь каталог. Закрытый каталог нечего хотеть — человек должен увидеть
+    // список целиком, прочитать, что навык даёт, и упереться в стену на
+    // кнопке «Беру этот навык», а не на входе.
     // Сначала рендерим экран выбора (мгновенно), параллельно подтягиваем план
     // с бэка/localStorage. Если план есть — UI обновится автоматически.
     _sc.view = 'select';
