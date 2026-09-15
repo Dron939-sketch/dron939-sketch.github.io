@@ -74,14 +74,18 @@
     // запоминаем, что прямо сейчас уже создаём платёж и блокируем повторные клики.
     let _isCreatingPayment = false;
 
-    // Тариф первого платежа. Пробная неделя за 290 ₽ появилась 06.09.2026:
-    // за пять дней рекламы было ~170 первых сообщений, 3 стены оплаты и
-    // 0 подписок — между «бесплатно» и 990 ₽ сразу не было ступеньки.
-    // Пробная неделя — один раз на аккаунт (бэкенд отдаёт trial_available),
-    // после неё обычные 990 ₽ в месяц автопродлением, отключается в один
-    // клик. Выбор приходит из адреса (?plan=trial_week со страницы
-    // «Тарифы») или из кнопки в карточке.
-    const PLAN_PRICE = { trial_week: 290, monthly: 990 };
+    // Тариф первого платежа. Ступенька между «бесплатно» и 990 ₽ появилась
+    // 06.09.2026 как неделя за 290 ₽: до неё за пять дней рекламы было
+    // ~170 первых сообщений, 3 стены оплаты и 0 подписок. Неделя за 290 ₽
+    // за следующие девять дней дала 59 показов стены, 6 кликов и одну
+    // оплату — ступенька оказалась всё ещё высокой, и 15.09.2026 владелец
+    // снизил её до 99 ₽ за три дня: «возможно, это дорого для кого-то».
+    // Ключ тарифа остался trial_week — он лежит в строках таблицы подписок
+    // и в ссылках вида ?plan=trial_week, разошедшихся по сайту; менять его
+    // значит ломать и то, и другое ради названия.
+    // Проба — один раз на аккаунт (бэкенд отдаёт trial_available), после неё
+    // обычные 990 ₽ в месяц автопродлением, отключается в один клик.
+    const PLAN_PRICE = { trial_week: 99, monthly: 990 };
     let _selectedPlan = 'trial_week';
     try {
         const _pl = new URLSearchParams(window.location.search).get('plan');
@@ -171,7 +175,7 @@
             } else {
                 _payStep('payment_failed', { reason: (data.error || 'unknown'), plan: _selectedPlan });
                 _toast(data.error || 'Не удалось создать платёж', 'error');
-                // Пробная неделя уже была — переключаемся на месяц.
+                // Пробные три дня уже была — переключаемся на месяц.
                 if (data.code === 'trial_used') _selectedPlan = 'monthly';
             }
         } catch (e) {
@@ -350,17 +354,17 @@
         return `
             <div class="sub-card sub-card-premium">
                 <div class="sub-badge sub-badge-active">&#x2713; Активна</div>
-                <div class="sub-title">${trial ? 'Пробная неделя Фреди Premium' : 'Подписка Фреди Premium'}</div>
+                <div class="sub-title">${trial ? 'Пробные три дня Фреди Premium' : 'Подписка Фреди Premium'}</div>
                 <div class="sub-desc">Полный доступ ко всем возможностям</div>
                 <div class="sub-info-row"><span class="sub-info-label">${trial ? 'Неделя до' : 'Следующее списание'}</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">${trial ? '290 &#8381; за неделю, дальше 990 &#8381;/мес' : '990 &#8381;/мес'}</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">${trial ? '99 &#8381; за три дня, дальше 990 &#8381;/мес' : '990 &#8381;/мес'}</span></div>
                 <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew === false ? 'Отключено' : 'Включено'}</span></div>
                 <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:12px 0 14px">
                     ${sub.auto_renew === false
                         ? 'Списаний больше не будет. Доступ работает до ' + _formatDate(sub.expires_at) + '.'
                         : (trial
-                            ? 'Когда неделя закончится, подписка продолжится за 990 ₽ в месяц. Отключить можно прямо сейчас — доступ останется до конца недели.'
+                            ? 'Когда три дня закончатся, подписка продолжится за 990 ₽ в месяц. Отключить можно прямо сейчас — доступ останется до конца оплаченного срока.'
                             : 'Отключить можно прямо сейчас — доступ останется до конца оплаченного месяца.')}
                 </div>
                 <button class="sub-btn ${sub.auto_renew === false ? 'sub-btn-secondary' : 'sub-btn-danger'}" id="subRenewToggleBtn">
@@ -385,18 +389,18 @@
     function _renderNoSubscription(sub) {
         const isExpired = sub && sub.status === 'expired';
         const card = sub ? sub.card : null;
-        // Пробная неделя показывается, пока бэкенд не сказал обратного:
+        // Пробные три дня показывается, пока бэкенд не сказал обратного:
         // без ответа статуса (сеть) кнопка есть, а отказ «уже была»
         // придёт с create-payment и переключит на месяц.
         const trial = !(sub && sub.trial_available === false);
         if (!trial) _selectedPlan = 'monthly';
         const priceHtml = trial
-            ? `<div class="sub-price">290 &#8381; <span style="font-size:14px;font-weight:400;color:var(--text-secondary)">за первую неделю</span></div>
-                <div class="sub-price-period">Полный доступ на 7 дней, с голосом и без счётчика. Потом 990 &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца недели. Оплата картой любого российского банка через ЮKassa.</div>`
+            ? `<div class="sub-price">99 &#8381; <span style="font-size:14px;font-weight:400;color:var(--text-secondary)">за первые три дня</span></div>
+                <div class="sub-price-period">Полный доступ на 3 дня, с голосом и без счётчика. Потом 990 &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца оплаченного срока. Оплата картой любого российского банка через ЮKassa.</div>`
             : `<div class="sub-price">990 &#8381;</div>
                 <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>`;
         const buttonsHtml = trial
-            ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать неделю — 290 &#8381;</button>
+            ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать 3 дня — 99 &#8381;</button>
                 <button class="sub-btn sub-btn-secondary" id="subPayMonthBtn" style="margin-top:8px">Сразу месяц — 990 &#8381;</button>`
             : `<button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 990 &#8381;</button>`;
         return `
