@@ -2601,14 +2601,20 @@ POV: ты на семейном ужине, и мама такая «как у �
         var step2 = f.meter_subscribe_clicked || 0;
         var step3 = f.subscription_activated || 0;
         var html = '';
-        function row(name, cnt, prev){
+        function row(name, cnt, prev, loss){
             var conv = prev > 0 ? ((cnt/prev)*100).toFixed(1)+' %' : '—';
             var width = step1 > 0 ? Math.round((cnt/step1)*100) : 0;
+            // Шаг потери рисуем от активаций, а не от показов стены: иначе
+            // одна отписка из одной подписки даёт полоску в пиксель и
+            // читается как «ничего не произошло».
+            if (loss) width = prev > 0 ? Math.round((cnt/prev)*100) : (cnt ? 100 : 0);
+            var st = loss ? ';background:linear-gradient(90deg,#f87171,#ef4444)' : '';
+            var nameSt = loss ? ' style="color:#f87171"' : '';
             return '<div class="funnel-step">' +
-                '<div class="name">'+name+'</div>' +
-                '<div class="bar-track"><div class="bar" style="width:'+width+'%"></div></div>' +
-                '<div class="count">'+cnt+'</div>' +
-                '<div class="conv">'+conv+'</div>' +
+                '<div class="name"'+nameSt+'>'+name+'</div>' +
+                '<div class="bar-track"><div class="bar" style="width:'+width+'%'+st+'"></div></div>' +
+                '<div class="count"'+nameSt+'>'+cnt+'</div>' +
+                '<div class="conv"'+nameSt+'>'+conv+'</div>' +
             '</div>';
         }
         var step0 = f.meter_warning || 0;
@@ -2617,6 +2623,12 @@ POV: ты на семейном ужине, и мама такая «как у �
         html += row('Показ модалки meter', step1, baseForStart);
         html += row('Клик «Открыть подписку»', step2, step1 || baseForStart);
         html += row('Подписка активирована', step3, step2 || step1 || baseForStart);
+        // Отписки — прямо под активациями, и это единственная строка
+        // воронки, которая идёт вниз: процент считается от активаций и
+        // означает, сколько подписавшихся уже уходят. Красным, чтобы её
+        // не читали как ещё одно достижение.
+        var step4 = f.auto_renew_off || 0;
+        if (step4) html += row('↳ Отключили автопродление', step4, step3, true);
         if (!step0 && !step1 && !step2 && !step3) html = '<div class="empty">Нет данных для воронки</div>';
         document.getElementById('funnel').innerHTML = html;
 

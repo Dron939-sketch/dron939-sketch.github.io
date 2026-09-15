@@ -2869,6 +2869,18 @@ ${this.getStage3Interpretation()}
                 '💡 **ЧАСТЬ 2. ЧТО ЭТО ЗНАЧИТ**\n\n'
                 + this.aiGeneratedProfile.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), true);
             this._resultAnchors.meaning = meaningMsg;
+        } else {
+            // Часть 2 не собралась. Раньше её просто не было: человек
+            // получал портрет с цифрами и ни слова о том, что они значат,
+            // и не мог понять, так задумано или сломалось. Молчание здесь
+            // хуже ошибки — оно выглядит как «вот и весь ваш разбор».
+            this._resultAnchors.meaning = this._retryBlock(
+                'meaning',
+                '💡 <strong>ЧАСТЬ 2. ЧТО ЭТО ЗНАЧИТ</strong><br><br>' +
+                'Разбор не собрался — Meyster AI не ответил вовремя. ' +
+                'Портрет выше сохранён, терять нечего.',
+                '🔄 Собрать часть 2',
+                () => this._retryAiProfile());
         }
 
         // Рекомендации ДО кнопок и до предложения подписки. Раньше запрос
@@ -3261,8 +3273,73 @@ ${recs ? `<h2>С чего начать</h2>${recs}` : ''}
                 // Запоминаем: те же позиции уходят в выгрузку разбора.
                 this._lastRecommendations = data.items;
                 this.renderTestRecommendations(data.items);
+                return true;
             }
-        } catch (e) { console.warn('recommendations failed:', e); }
+            this._recsFailed(data && data.status === 'no_profile' ? 'no_profile' : 'empty');
+        } catch (e) {
+            console.warn('recommendations failed:', e);
+            this._recsFailed('network');
+        }
+        return false;
+    },
+
+    // Часть 3 тоже не должна исчезать молча: без неё человек остаётся с
+    // описанием себя и без единого следующего шага — ровно того, ради чего
+    // правило «результат теста ведёт в наши продукты» и существует.
+    _recsFailed(reason) {
+        if (this._recsFailShown) return;
+        this._recsFailShown = true;
+        try {
+            if (window.FrediTracker?.track)
+                window.FrediTracker.track('test_recs_failed', { reason: reason || '' });
+        } catch (e) {}
+        this._resultAnchors = this._resultAnchors || {};
+        this._resultAnchors.recs = this._retryBlock(
+            'recs',
+            '🧭 <strong>ЧАСТЬ 3. С ЧЕГО НАЧАТЬ</strong><br><br>' +
+            'Шаги не подобрались с первого раза. Это чинится одним нажатием.',
+            '🔄 Подобрать шаги',
+            () => { this._recsRequested = false; this._recsFailShown = false;
+                    return this.fetchTestRecommendations(); });
+    },
+
+    // Общий блок «не собралось + кнопка». Сообщение с кнопкой, которая
+    // сама себя убирает на время попытки и возвращается, если снова не
+    // вышло: две одинаковые кнопки подряд читаются как поломка.
+    _retryBlock(key, html, label, run) {
+        const msg = this.addBotMessage(html, true);
+        const btn = document.createElement('button');
+        btn.className = 'test-context-submit';
+        btn.style.cssText = 'margin-top:10px';
+        btn.textContent = label;
+        btn.onclick = async () => {
+            btn.disabled = true;
+            btn.textContent = 'Собираю…';
+            let ok = false;
+            try { ok = await run(); } catch (e) { ok = false; }
+            if (ok) { try { msg.remove(); } catch (e) {} return; }
+            btn.disabled = false;
+            btn.textContent = label;
+        };
+        try { msg.querySelector('.test-message-bubble').appendChild(btn); } catch (e) {}
+        this.scrollToBottom();
+        return msg;
+    },
+
+    // Пересборка части 2: тот же запрос, что и при первом показе.
+    async _retryAiProfile() {
+        if (!this.userId) return false;
+        try {
+            const r = await fetch(TEST_API_BASE_URL + '/api/generated-profile/' + this.userId);
+            const d = await r.json();
+            const txt = d && (d.ai_generated_profile || d.aiProfile || (d.profile && d.profile.ai_generated_profile));
+            if (!txt) return false;
+            this.aiGeneratedProfile = txt;
+            this._resultAnchors.meaning = this.addBotMessage(
+                '💡 **ЧАСТЬ 2. ЧТО ЭТО ЗНАЧИТ**\n\n'
+                + String(txt).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'), true);
+            return true;
+        } catch (e) { return false; }
     },
 
     renderTestRecommendations(items) {
