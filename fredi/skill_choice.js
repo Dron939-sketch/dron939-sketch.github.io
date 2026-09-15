@@ -1953,6 +1953,13 @@ function _scBindHandlers() {
 // ТОЧКА ВХОДА
 // ============================================
 async function showSkillChoiceScreen(opts) {
+    // Со второго захода — по подписке (список в meter.js, решение владельца
+    // 15.09.2026): 21-дневный план с трекером человек ведёт неделями, и это
+    // ровно то, ради чего подписку и оформляют.
+    if (window.FrediMeter?.gameLocked?.('showSkillChoiceScreen')) {
+        window.FrediMeter.showGameLock('showSkillChoiceScreen', 'tool');
+        return;
+    }
     // Сначала рендерим экран выбора (мгновенно), параллельно подтягиваем план
     // с бэка/localStorage. Если план есть — UI обновится автоматически.
     _sc.view = 'select';

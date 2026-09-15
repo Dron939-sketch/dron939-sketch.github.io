@@ -579,6 +579,14 @@ function _hyBindResultHandlers() {
 // ТОЧКА ВХОДА
 // ============================================
 async function showHypnosisScreen() {
+    // Со второго захода — по подписке (список в meter.js, решение владельца
+    // 15.09.2026). Проверка стоит здесь, а не в роутере: в самогипноз ведут
+    // и левое меню, и быстрые действия, и ссылки из статей — в модуле она
+    // одна на все входы.
+    if (window.FrediMeter?.gameLocked?.('showHypnosisScreen')) {
+        window.FrediMeter.showGameLock('showHypnosisScreen', 'tool');
+        return;
+    }
     try { window.FrediTracker?.openFeature?.('hypnosis'); } catch (e) {}
     _hy.tab = 'create';
     // Загружаем векторы для рекомендации типа
