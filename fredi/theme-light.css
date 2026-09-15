@@ -234,6 +234,18 @@ body, .app, .chats-panel, .chat-panel, .chat-header,
 [data-theme="light"] .test-context-submit:hover {
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.16), rgba(100, 100, 100, 0.12));
 }
+
+/* Кнопка-стрелка рядом с полем — главное действие вопроса, и на светлой
+   теме она тоже должна быть синей: общее правило для широкой кнопки
+   красило её в серый, и стрелка терялась на белом фоне. */
+[data-theme="light"] .test-context-submit--icon {
+    background: linear-gradient(135deg, #3b82ff, #2f6fe0);
+    border-color: rgba(59, 130, 255, 0.85);
+    color: #fff;
+}
+[data-theme="light"] .test-context-submit--icon:hover {
+    background: linear-gradient(135deg, #4a8dff, #3a79e8);
+}
 [data-theme="light"] .analysis-content {
     background: rgba(0, 0, 0, 0.02);
 }
