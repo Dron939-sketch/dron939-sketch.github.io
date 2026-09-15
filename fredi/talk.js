@@ -110,23 +110,33 @@
         return !!(window.FrediSound && window.FrediSound.isOff());
     }
 
+    // Динамик рисуем вектором, а не эмодзи: 🔇 на телефоне приходит
+    // перечёркнутым кружком и читается как «запрещено» — состояние выбора
+    // выглядит поломкой. Вектор одинаков везде и тянет цвет кнопки.
+    var _ICON_ON =
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/>' +
+        '<path d="M16.2 9.2a4 4 0 0 1 0 5.6"/><path d="M18.8 6.6a7.5 7.5 0 0 1 0 10.8"/></svg>';
+    var _ICON_OFF =
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/>' +
+        '<path d="M16.5 9.8l4.5 4.4"/><path d="M21 9.8l-4.5 4.4"/></svg>';
+
     function _paintMute() {
         var btn = _panel && _panel.querySelector('#talkMute');
         if (!btn) return;
         var off = _soundOff();
-        btn.textContent = off ? '🔇' : '🔊';
+        btn.innerHTML = off ? _ICON_OFF : _ICON_ON;
         btn.classList.toggle('is-off', off);
         btn.setAttribute('aria-pressed', off ? 'true' : 'false');
         btn.title = off ? 'Включить голос Фреди' : 'Выключить голос — Фреди будет отвечать текстом';
         btn.setAttribute('aria-label', btn.title);
+        // Состояние называет подзаголовок под именем — второй раз то же
+        // самое в углу шапки не пишем: на снимке владельца «без звука»
+        // стояло дважды в одной строке.
         if (_panel) _panel.classList.toggle('is-muted', off);
-        var sub = document.getElementById('talkSub');
-        // Подпись живёт под заголовком и занята загрузкой истории — не
-        // затираем её, показываем только в спокойном состоянии.
-        if (sub && (!sub.textContent || sub.dataset.mute === '1')) {
-            sub.textContent = off ? 'без звука' : '';
-            sub.dataset.mute = off ? '1' : '';
-        }
     }
 
     function _wireMute() {
@@ -190,13 +200,13 @@
         var uid = _uid();
         if (!uid) return Promise.resolve();
         var sub = document.getElementById('talkSub');
-        if (sub) { sub.textContent = 'загружаю…'; sub.dataset.mute = ''; }
+        if (sub) sub.textContent = 'загружаю…';
         return fetch(_api() + '/api/chat/history/' + uid + '?limit=' + HISTORY_LIMIT)
             .then(function (r) { return r.json(); })
             .then(function (d) {
                 var msgs = (d && d.messages) || [];
                 var inner = _streamInner();
-                if (sub) { sub.textContent = ''; _paintMute(); }
+                if (sub) sub.textContent = '';
                 if (!inner || !msgs.length) return;
                 // Хвост истории — это те же реплики, что уже висят в ленте
                 // текущего захода. Сверяем по тексту и не повторяем.
@@ -225,7 +235,7 @@
                 if (stream) stream.classList.add('has-messages');
                 _track('talk_history_shown', { n: shown });
             })
-            .catch(function () { if (sub) { sub.textContent = ''; _paintMute(); } });
+            .catch(function () { if (sub) sub.textContent = ''; });
     }
 
     // Внутри окна прокручивается .talk-body, а лента лежит в ней во всю

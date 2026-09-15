@@ -2768,8 +2768,9 @@ input, textarea, select, button { box-sizing: border-box; }
    кнопку, а не гасим её, иначе состояние читается как ошибка. Соседняя
    кнопка сворачивания стоит рядом, поэтому отступ слева здесь меньше —
    две круглые иконки держатся парой. */
-.talk-mute { margin-left: 10px; }
+.talk-mute { margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; }
 .talk-mute + .talk-icon { margin-left: 4px; }
+.talk-mute svg { display: block; }
 .talk-mute.is-off {
     color: var(--text-primary);
     background: rgba(59, 130, 255, 0.16);
