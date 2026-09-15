@@ -58,6 +58,15 @@ class AudioPlayer {
     }
 
     async play(audioData, mimeType = 'audio/mpeg') {
+        // Беззвучный режим (sound.js). Запрет стоит здесь, у плеера, а не
+        // у кнопок: через play() проходит вообще всё — потоковые куски
+        // ответа, «🔊 Озвучить» из двух десятков модулей, отдельный TTS.
+        // Промис резолвится как после проигрывания, чтобы очереди и
+        // цепочки .then у вызывающих не подвисали.
+        if (window.FrediSound && window.FrediSound.isOff()) {
+            this.stop();
+            return;
+        }
         this.stop();
         let audioUrl = null;
         let isObjectUrl = false;
@@ -1125,6 +1134,13 @@ class VoiceTransport {
             formData.append('voice_emotion', voiceConf.emotion);
         }
 
+        // Беззвучный режим (sound.js): говорить человек может, а слушать
+        // сейчас не может. Сервер в этом случае не синтезирует ничего и
+        // отдаёт те же события с одним текстом — предложение за
+        // предложением, как и раньше, только молча.
+        const silent = !!(window.FrediSound && window.FrediSound.isOff());
+        if (silent) formData.append('text_only', 'true');
+
         if (this.onStatusChange) this.onStatusChange('processing');
         if (this.onThinking) this.onThinking(true);
 
@@ -1230,12 +1246,16 @@ class VoiceTransport {
                 } else if (ev.type === 'audio') {
                     if (!firstAudioPlayed) {
                         firstAudioPlayed = true;
-                        _emitLatency('voice_latency_first_audio', { text_length: (ev.text || '').length });
+                        _emitLatency('voice_latency_first_audio', {
+                            text_length: (ev.text || '').length, silent: silent
+                        });
                         // Первый аудио-чанк: гасим thinking-бабл в чате и
                         // переключаем САМУ КНОПКУ на «🔊 Фреди отвечает…»,
                         // чтобы прогресс ответа был виден без прокрутки вниз.
+                        // В беззвучном режиме звучать нечему — кнопка так и
+                        // остаётся на «думает», пока текст дописывается.
                         if (this.onThinking) this.onThinking(false);
-                        if (this.onStatusChange) this.onStatusChange('speaking');
+                        if (this.onStatusChange && !silent) this.onStatusChange('speaking');
                     }
                     if (ev.text) fullText += (fullText ? ' ' : '') + ev.text;
                     // Стриминговый показ AI-текста в чате: бабл создаётся при
@@ -1511,6 +1531,9 @@ class VoiceManager {
     stopRecording() { return this._rec.stop(); }
 
     async textToSpeech(text, mode) {
+        // Беззвучный режим: на синтез не отправляем вовсе. Плеер бы всё
+        // равно промолчал, но запрос уже стоил бы денег и секунды ожидания.
+        if (window.FrediSound && window.FrediSound.isOff()) return;
         try {
             const params = new URLSearchParams();
             params.append('text', text);

@@ -2170,7 +2170,10 @@ async function initVoice() {
         const btn = document.getElementById('mainVoiceBtn');
         if (btn && (btn._voiceStatus === 'thinking' || btn._voiceStatus === 'processing')
             && voiceManager.onStatusChange) {
-            voiceManager.onStatusChange('tts_loading');
+            // В беззвучном режиме ждать нечего: текст ответа уже на экране,
+            // а «ждём озвучку» повисло бы на кнопке до конца стрима.
+            const muted = window.FrediSound && window.FrediSound.isOff();
+            voiceManager.onStatusChange(muted ? 'idle' : 'tts_loading');
         }
     };
 
@@ -2379,25 +2382,30 @@ function renderDashboard() {
                         <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
                     </div>
                 </div>
-                <!-- Сначала текст, потом голос (фокус-группа 12.09.2026): ночью,
-                     в офисе и в 58 лет вслух не говорят; из 1304 сообщений за
-                     неделю своих было 96. Поле — главное действие, микрофон —
-                     второй путь. Внутри .voice-section, чтобы на мобильном оба
-                     остались в липком низу экрана. -->
-                <div class="dash-composer">
-                    <form class="dash-composer-row" id="dashComposerForm" autocomplete="off">
-                        <input type="text" class="dash-composer-input" id="dashComposerInput"
-                               placeholder="Напишите, что беспокоит…" maxlength="2000" autocomplete="off">
-                        <button type="submit" class="dash-composer-send" id="dashComposerSend" aria-label="Отправить">↑</button>
-                    </form>
-                    <div class="dash-composer-or"><span>или скажите голосом</span></div>
-                </div>
+                <!-- Сначала голос, потом текст (решение владельца 15.09.2026).
+                     С 12.09 порядок был обратным — по фокус-группе: ночью, в
+                     офисе и в 58 лет вслух не говорят, и за неделю из 1304
+                     сообщений своих было 96. Порядок перевёрнут назад; если
+                     доля голосовых не вырастет, вернуть прежний — одна правка
+                     здесь и подпись-разделитель ниже.
+                     Оба внутри .voice-section, чтобы на мобильном остаться в
+                     липком низу экрана. -->
                 <div class="voice-card">
                     <button class="voice-record-btn-premium" id="mainVoiceBtn">
                         <span class="voice-icon">🎤</span>
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
                     </button>
                     <div style="text-align:center;font-size:11px;color:var(--text-secondary);margin-top:8px">🎙️ Нажмите и удерживайте для записи</div>
+                </div>
+                <div class="dash-composer">
+                    <!-- Разделитель называет то, что идёт СЛЕДОМ: над ним
+                         теперь кнопка голоса, поэтому «или напишите». -->
+                    <div class="dash-composer-or"><span>или напишите</span></div>
+                    <form class="dash-composer-row" id="dashComposerForm" autocomplete="off">
+                        <input type="text" class="dash-composer-input" id="dashComposerInput"
+                               placeholder="Напишите, что беспокоит…" maxlength="2000" autocomplete="off">
+                        <button type="submit" class="dash-composer-send" id="dashComposerSend" aria-label="Отправить">↑</button>
+                    </form>
                 </div>
             </div>
 
@@ -3513,6 +3521,10 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (e) { return; }
 
     setTimeout(function() {
+        // Беззвучный режим (sound.js): приветствие не проигрываем. Оно
+        // звучит один раз после регистрации — ровно тот момент, когда
+        // неожиданный голос из динамика дороже всего стоит.
+        if (window.FrediSound && window.FrediSound.isOff()) return;
         var audio = new Audio('/fredi/sounds/welcome.mp3');
         audio.volume = 0.85;
         var toast = document.getElementById('toastMessage');

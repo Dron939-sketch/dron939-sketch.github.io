@@ -60,6 +60,7 @@
                 '<span class="talk-ava">🧠<i class="talk-dot"></i></span>' +
                 '<span class="talk-title">Разговор с Фреди</span>' +
                 '<span class="talk-sub" id="talkSub"></span>' +
+                '<button type="button" class="talk-icon talk-mute" id="talkMute"></button>' +
                 '<button type="button" class="talk-icon" id="talkCollapse" ' +
                         'title="Свернуть" aria-label="Свернуть">—</button>' +
             '</div>' +
@@ -87,12 +88,68 @@
         _back.addEventListener('click', collapse);
 
         _panel.querySelector('#talkCollapse').addEventListener('click', collapse);
+        _wireMute();
         _pill.addEventListener('click', function () { open('pill'); });
         // Esc сворачивает — окно поверх экрана, и выход должен быть под рукой.
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && _open) collapse();
         });
         return _panel;
+    }
+
+    // ---- звук --------------------------------------------------------
+    //
+    // Выключенный звук превращает окно в обычную переписку: Фреди отвечает
+    // текстом и молчит, на синтез ничего не уходит (sound.js). Это не
+    // настройка «для аккуратных», а выход из тупика: голос из динамика в
+    // метро или в открытом офисе — неуместный формат, и человек закрывает
+    // вкладку, а не ищет, где его убавить (замечание владельца 15.09.2026).
+    // Поэтому кнопка стоит не в настройках, а прямо в шапке разговора.
+
+    function _soundOff() {
+        return !!(window.FrediSound && window.FrediSound.isOff());
+    }
+
+    // Динамик рисуем вектором, а не эмодзи: 🔇 на телефоне приходит
+    // перечёркнутым кружком и читается как «запрещено» — состояние выбора
+    // выглядит поломкой. Вектор одинаков везде и тянет цвет кнопки.
+    var _ICON_ON =
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/>' +
+        '<path d="M16.2 9.2a4 4 0 0 1 0 5.6"/><path d="M18.8 6.6a7.5 7.5 0 0 1 0 10.8"/></svg>';
+    var _ICON_OFF =
+        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" ' +
+        'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/>' +
+        '<path d="M16.5 9.8l4.5 4.4"/><path d="M21 9.8l-4.5 4.4"/></svg>';
+
+    function _paintMute() {
+        var btn = _panel && _panel.querySelector('#talkMute');
+        if (!btn) return;
+        var off = _soundOff();
+        btn.innerHTML = off ? _ICON_OFF : _ICON_ON;
+        btn.classList.toggle('is-off', off);
+        btn.setAttribute('aria-pressed', off ? 'true' : 'false');
+        btn.title = off ? 'Включить голос Фреди' : 'Выключить голос — Фреди будет отвечать текстом';
+        btn.setAttribute('aria-label', btn.title);
+        // Состояние называет подзаголовок под именем — второй раз то же
+        // самое в углу шапки не пишем: на снимке владельца «без звука»
+        // стояло дважды в одной строке.
+        if (_panel) _panel.classList.toggle('is-muted', off);
+    }
+
+    function _wireMute() {
+        var btn = _panel && _panel.querySelector('#talkMute');
+        if (!btn || btn._wired) return;
+        btn._wired = true;
+        btn.addEventListener('click', function () {
+            if (window.FrediSound) window.FrediSound.toggle();
+            _paintMute();
+            _track('talk_sound_toggled', { off: _soundOff() });
+        });
+        document.addEventListener('fredi:sound', _paintMute);
+        _paintMute();
     }
 
     // ---- перенос узлов туда и обратно --------------------------------
@@ -208,11 +265,15 @@
         if (_open) { _scrollDown(); return; }
         var body = document.getElementById('talkBody');
         var foot = document.getElementById('talkFoot');
+        // Порядок в подвале окна тот же, что на дашборде: сначала кнопка
+        // голоса, под ней поле ввода (решение владельца 15.09.2026).
         _slots = {
             stream: _take('dashChatStream', null, body),
-            composer: _take(null, '.dash-composer', foot),
             voice: _take(null, '.voice-card', foot),
+            composer: _take(null, '.dash-composer', foot),
         };
+        var stream0 = document.getElementById('dashChatStream');
+        if (stream0) stream0.hidden = false;
         _panel.classList.add('is-open');
         if (_back) _back.hidden = false;
         _pill.hidden = true;
@@ -238,11 +299,19 @@
         // Узлы возвращаются на дашборд: под свёрнутым окном он должен
         // остаться рабочим, с полем ввода и микрофоном на своих местах.
         if (_slots) {
-            _give(_slots.voice);
+            // Возврат в обратном порядке: метки стоят на своих местах, но
+            // так узлы встают в дашборд той же чередой, что и лежали.
             _give(_slots.composer);
+            _give(_slots.voice);
             _give(_slots.stream);
             _slots = null;
         }
+        // Переписка остаётся в окне и только в нём. Иначе под дашбордом
+        // висит вторая копия того же разговора — с историей, приветствием
+        // и всеми репликами: владелец увидел это первым же вечером.
+        // Обратно человек попадает язычком, а не прокруткой вниз.
+        var stream = document.getElementById('dashChatStream');
+        if (stream) stream.hidden = true;
         if (_watch) { _watch.disconnect(); _watch = null; }
         _panel.classList.remove('is-open');
         if (_back) _back.hidden = true;
@@ -289,15 +358,39 @@
             if (_autoWatch) { _autoWatch.disconnect(); _autoWatch = null; }
             var out = orig.apply(this, arguments);
             // Лента после перерисовки новая — наблюдателя ставим заново.
-            setTimeout(_autoOpenOnFirstMessage, 60);
+            setTimeout(function () { _autoOpenOnFirstMessage(); _openOnTyping(); }, 60);
             _historyLoaded = false;
             return out;
         };
     }
 
+    // Человек начал печатать — окно открывается сразу, не дожидаясь
+    // отправки (решение владельца 15.09.2026): писать своё в узкую строчку
+    // посреди дашборда и не видеть, кому пишешь, — это не разговор.
+    // Поле переезжает в окно вместе с набранным текстом, поэтому фокус и
+    // позицию курсора возвращаем руками: перенос узла их сбрасывает.
+    function _openOnTyping() {
+        var input = document.getElementById('dashComposerInput');
+        if (!input || input._talkTyping) return;
+        input._talkTyping = true;
+        input.addEventListener('input', function () {
+            if (_open || _userCollapsed) return;
+            if (!input.value) return;
+            var pos = input.selectionStart;
+            open('typing');
+            setTimeout(function () {
+                var el = document.getElementById('dashComposerInput');
+                if (!el) return;
+                el.focus();
+                try { el.setSelectionRange(pos, pos); } catch (e) {}
+            }, 0);
+        });
+    }
+
     function _init() {
         _guardRerender();
         _autoOpenOnFirstMessage();
+        _openOnTyping();
     }
     if (document.readyState === 'loading')
         document.addEventListener('DOMContentLoaded', function () { setTimeout(_init, 300); });

@@ -286,6 +286,9 @@
         _introVariant = v;
         _track('intro_shown', { source: source || '', variant: v });
         _goal('fredi_intro_' + v);
+        // Беззвучный режим (sound.js): представление остаётся текстом.
+        // Голос здесь и так не условие — он только сопровождает реплику.
+        if (window.FrediSound && window.FrediSound.isOff()) return;
         var audio;
         try { audio = new Audio(intro.src); } catch (e) { return; }
         audio.volume = 0.85;
