@@ -2579,12 +2579,16 @@ input, textarea, select, button { box-sizing: border-box; }
     border-bottom: 1px solid rgba(224,224,224,0.06);
     padding: 11px 14px;
 }
+/* Подпись слева фиксированной ширины, вопрос справа: без фиксированной
+   ширины вопросы начинались бы на разном расстоянии от края и колонка
+   разъезжалась бы на каждой новой строке. */
 .dash-live-text { flex: 1 1 auto; min-width: 0; }
 /* Подпись размыта намеренно и не проявляется ни по наведению, ни выделением:
    имена придуманы, читать там нечего. Без user-select строку копировали бы
    мимо размытия — браузер размывает пиксели, а не текст. */
 .dash-live-who {
-    flex: 0 0 auto; font-size: 11.5px; color: var(--text-secondary);
+    flex: 0 0 168px; font-size: 11.5px; color: var(--text-secondary);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     /* Размытие слабое: при 3,2 пикселя подпись превращалась в серое пятно,
        и человек не понимал, что там вообще надпись. Нужно, чтобы читалось
        «здесь имя»; владелец выбрал 1,4 пикселя — имя почти разбирается,
@@ -2609,7 +2613,8 @@ input, textarea, select, button { box-sizing: border-box; }
        занимал окно целиком, и лента переставала быть лентой: человек видел
        одну реплику без намёка, что за ней идут другие. */
     .dash-live-q { font-size: 12.5px; padding: 9px 12px; gap: 8px; }
-    .dash-live-who { font-size: 10.5px; }
+    .dash-live-who { font-size: 10.5px; flex-basis: 74px; }
+    .dash-live-city { display: none; }
     .dash-live-view { height: 104px; }
 }
 /* Движение выключено — лента становится обычным списком с прокруткой. */
