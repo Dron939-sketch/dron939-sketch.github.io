@@ -121,6 +121,10 @@
         }
         _payStep('pay_clicked', { plan: _selectedPlan });
 
+        // Сначала аккаунт, потом оплата: иначе подписка виснет на
+        // идентификаторе устройства и теряется вместе с браузером.
+        if (!(await _ensureAccount(email))) return;
+
         const payBtn = document.getElementById(_selectedPlan === 'monthly' ? 'subPayMonthBtn' : 'subPayBtn')
             || document.getElementById('subPayBtn');
         const otherBtn = document.getElementById(_selectedPlan === 'monthly' ? 'subPayBtn' : 'subPayMonthBtn');
@@ -339,6 +343,116 @@
         } catch (e) { return ''; }
     }
 
+    // Аккаунт заводится покупкой (решение владельца 15.09.2026). До этого
+    // аноним платил — и подписка вставала на идентификатор устройства:
+    // почистил браузер или зашёл с телефона, и оплаченного нет. Почту он
+    // здесь и так вводит для чека, поэтому имя и пин-код рядом стоят
+    // дешевле, чем отдельный шаг регистрации до оплаты: тот уводил с
+    // экрана оплаты и ничего человеку не открывал.
+    function _needsAccount() {
+        try {
+            if (window.IS_AUTHENTICATED) return false;
+            return !(window.CURRENT_USER_EMAIL);
+        } catch (e) { return true; }
+    }
+
+    var _FIELD_CSS = 'width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);' +
+        'border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);' +
+        'font-size:14px;font-family:inherit;box-sizing:border-box;outline:none';
+    var _LABEL_CSS = 'font-size:12px;color:var(--text-secondary);display:block;margin-bottom:6px';
+
+    function _knownName() {
+        try {
+            var n = (window.CONFIG && window.CONFIG.USER_NAME) || '';
+            n = String(n).trim();
+            return (n && n !== 'друг' && n !== 'undefined') ? n.replace(/"/g, '&quot;') : '';
+        } catch (e) { return ''; }
+    }
+
+    function _accountFieldsHtml() {
+        var email =
+            '<div style="margin-bottom:12px">' +
+                '<label style="' + _LABEL_CSS + '">Email' + (_needsAccount() ? '' : ' для чека') + '</label>' +
+                '<input type="email" id="subEmailInput" placeholder="your@email.com" value="' + _knownEmail() + '" ' +
+                    'style="' + _FIELD_CSS + '" autocomplete="email" />' +
+            '</div>';
+        if (!_needsAccount()) return '<div style="margin-bottom:14px">' + email + '</div>';
+        return '' +
+            '<div style="margin-bottom:14px">' +
+                '<div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;' +
+                     'border-left:3px solid #3b82ff;padding-left:10px;text-align:left">' +
+                    'Подписка встаёт на аккаунт — заведём его прямо здесь, одним шагом. ' +
+                    'Пин-код нужен, чтобы вернуться к своим разговорам с другого устройства.' +
+                '</div>' +
+                '<div style="margin-bottom:12px">' +
+                    '<label style="' + _LABEL_CSS + '">Как к вам обращаться</label>' +
+                    '<input type="text" id="subNameInput" placeholder="Имя" value="' + _knownName() + '" ' +
+                        'style="' + _FIELD_CSS + '" autocomplete="given-name" maxlength="100" />' +
+                '</div>' +
+                email +
+                '<div>' +
+                    '<label style="' + _LABEL_CSS + '">Пин-код — четыре цифры</label>' +
+                    '<input type="tel" id="subPinInput" placeholder="0000" inputmode="numeric" ' +
+                        'maxlength="4" pattern="[0-9]*" autocomplete="new-password" ' +
+                        'style="' + _FIELD_CSS + ';letter-spacing:6px;text-align:center" />' +
+                '</div>' +
+            '</div>';
+    }
+
+    // Регистрация перед оплатой. Возвращает true, если можно платить.
+    async function _ensureAccount(email) {
+        if (!_needsAccount()) return true;
+        var nameEl = document.getElementById('subNameInput');
+        var pinEl = document.getElementById('subPinInput');
+        var name = nameEl ? nameEl.value.trim() : '';
+        var pin = pinEl ? pinEl.value.trim() : '';
+        if (!name) {
+            _toast('Напишите, как к вам обращаться', 'error');
+            if (nameEl) nameEl.focus();
+            return false;
+        }
+        if (!/^\d{4}$/.test(pin)) {
+            _payStep('pin_invalid', { empty: !pin });
+            _toast('Пин-код — ровно четыре цифры', 'error');
+            if (pinEl) pinEl.focus();
+            return false;
+        }
+        _payStep('register_before_pay');
+        try {
+            var r = await fetch(_api() + '/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ name: name, email: email, password: pin, remember: true }),
+            });
+            if (r.ok) {
+                window.IS_AUTHENTICATED = true;
+                window.CURRENT_USER_EMAIL = email;
+                try { localStorage.setItem('fredi_last_email', email); } catch (e) {}
+                try { if (window.CONFIG) window.CONFIG.USER_NAME = name; } catch (e) {}
+                _payStep('registered_before_pay');
+                return true;
+            }
+            var data = await r.json().catch(function () { return {}; });
+            var code = (data && data.detail && data.detail.error) || (data && data.error) || '';
+            if (code === 'email_exists') {
+                // Почта занята — платить всё равно можно: подписка встанет
+                // на того же человека, когда он войдёт. Но молчать нельзя,
+                // иначе он решит, что оплата не прошла.
+                _payStep('register_email_exists');
+                _toast('Эта почта уже зарегистрирована — после оплаты войдите с ней и пин-кодом', 'info');
+                return true;
+            }
+            _payStep('register_failed', { code: code || String(r.status) });
+            _toast((data && data.detail && data.detail.message) || 'Не получилось завести аккаунт. Попробуйте ещё раз', 'error');
+            return false;
+        } catch (e) {
+            _payStep('register_network_error');
+            _toast('Не получилось связаться с сервером. Проверьте связь и попробуйте ещё раз', 'error');
+            return false;
+        }
+    }
+
     function _cardTypeIcon(type) {
         const t = (type || '').toLowerCase();
         if (t.includes('visa')) return '&#x1F4B3;';
@@ -417,12 +531,7 @@
                     <li><span class="sub-feature-icon">&#x1F3AE;</span> Сильные тренажёры: «Переход», «Опора», «Парус», «Спираль», «Скажи нет»</li>
                     <li><span class="sub-feature-icon">&#x1F4D3;</span> Дневник эмоций, зеркало, разбор переписки, роли по Берну, гипноз и практики</li>
                 </ul>
-                <div style="margin-bottom:14px">
-                    <label style="font-size:12px;color:var(--text-secondary);display:block;margin-bottom:6px">Email для чека</label>
-                    <input type="email" id="subEmailInput" placeholder="your@email.com" value="${_knownEmail()}"
-                        style="width:100%;padding:12px 14px;border:1px solid rgba(224,224,224,0.18);border-radius:12px;background:rgba(224,224,224,0.05);color:var(--text-primary);font-size:14px;font-family:inherit;box-sizing:border-box;outline:none"
-                        onfocus="this.style.borderColor='rgba(59,130,255,0.5)'" onblur="this.style.borderColor='rgba(224,224,224,0.18)'" />
-                </div>
+                ${_accountFieldsHtml()}
                 ${buttonsHtml}
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
                 <div style="text-align:center;margin-top:6px;font-size:11px;color:rgba(255,183,59,0.9)">Если у вас включён VPN — отключите его на время оплаты: иначе страница подтверждения банка не откроется.</div>
