@@ -1561,7 +1561,7 @@ const Test = {
     // как остальные стадии теста. Раньше всё было одной формой-карточкой,
     // что выбивалось из общего флоу.
     showContextCollectionScreen() {
-        this.addBotMessage('📝 ДАВАЙТЕ ПОЗНАКОМИМСЯ\n\nЯ задам три коротких вопроса — это займёт меньше минуты.', true);
+        this.addBotMessage('📝 ДАВАЙТЕ ПОЗНАКОМИМСЯ\n\nЯ задам четыре коротких вопроса — это займёт меньше минуты.', true);
         this.askContextCity();
     },
 
@@ -1601,9 +1601,33 @@ const Test = {
             },
             onSubmit: v => {
                 this.context.age = parseInt(v, 10);
+                this.saveProgress();
+                this.askContextEmail();
+            }
+        });
+    },
+
+    // Почта спрашивается здесь же, в одном ряду с городом и возрастом
+    // (решение владельца 15.09.2026), и спрашивается за дело: разбор
+    // приходит письмом с PDF. Человек его не потеряет вместе с вкладкой,
+    // а у нас появляется канал — единственный способ позвать вернувшегося.
+    //
+    // Пропуск оставлен намеренно. Обязательное поле здесь стоит дороже
+    // почты: до результата ещё пятнадцать минут, и упереться в него на
+    // четвёртом вопросе — значит не пройти тест вовсе.
+    askContextEmail() {
+        this.addInputMessage('📄 Куда прислать разбор в PDF?\n\nПришлю файл письмом — он останется у вас, даже если закроете вкладку. Можно пропустить: нажмите ✦ с пустым полем.', {
+            placeholder: 'your@email.com',
+            type: 'email',
+            validate: v => (!v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
+                ? null : 'Проверьте адрес — похоже, в нём опечатка',
+            onSubmit: v => {
+                if (v) this.context.email = v;
                 this.context.isComplete = true;
                 this.saveProgress();
-                this.addBotMessage('⏳ Сохраняю данные и узнаю погоду...', true);
+                this.addBotMessage(v
+                    ? '⏳ Записал. Разбор пришлю на ' + v + ' — сохраняю данные и узнаю погоду...'
+                    : '⏳ Хорошо, без письма. Сохраняю данные и узнаю погоду...', true);
                 this.saveContextToServer().then(() => this.showContextSummary());
             }
         });
@@ -1672,7 +1696,7 @@ const Test = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: parseInt(this.userId),
-                    context: { name:this.context.name, city:this.context.city, gender:this.context.gender, age:this.context.age }
+                    context: { name:this.context.name, city:this.context.city, gender:this.context.gender, age:this.context.age, email:this.context.email || null }
                 })
             });
             // Ждём погоду ВНУТРИ этого метода
@@ -1772,6 +1796,41 @@ const Test = {
         }, 15000);
     },
 
+    // Защита отрезка: включается на старте теста, снимается, когда
+    // результат уже на экране. Счётчик в meter.js парный, поэтому свой
+    // флаг обязателен — иначе повторный вызов уронил бы счётчик в минус
+    // или, наоборот, оставил защиту навсегда.
+    // Письмо с разбором. Адрес — тот, что человек назвал на знакомстве;
+    // сервер при пустом теле возьмёт его из контекста или из аккаунта.
+    // Один раз на прохождение: повторный вызов на перерисовке экрана
+    // прислал бы человеку второе такое же письмо.
+    _emailPdf() {
+        if (this._pdfMailed || !this.userId) return;
+        var email = (this.context && this.context.email) || '';
+        if (!email) return;
+        this._pdfMailed = true;
+        try {
+            fetch(TEST_API_BASE_URL + '/api/test/email-pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: parseInt(this.userId), email: email }),
+            }).then(function (r) { return r.json(); }).then(function (d) {
+                try {
+                    if (window.FrediTracker && window.FrediTracker.track)
+                        window.FrediTracker.track('test_pdf_emailed', { sent: !!(d && d.success) });
+                } catch (e) {}
+            }).catch(function () {});
+        } catch (e) {}
+    },
+
+    _meterProtect(on) {
+        try {
+            if (!window.FrediMeter || typeof window.FrediMeter.protect !== 'function') return;
+            if (on && !this._meterProtected) { this._meterProtected = true; window.FrediMeter.protect(true); }
+            else if (!on && this._meterProtected) { this._meterProtected = false; window.FrediMeter.protect(false); }
+        } catch (e) {}
+    },
+
     _meterTick(sec) {
         try {
             if (window.FrediMeter && typeof window.FrediMeter.recordUsageQuiet === 'function') {
@@ -1788,6 +1847,9 @@ const Test = {
      * прохождений это уже заметная разница.
      */
     _stopTestMeter() {
+        // Защиту снимаем здесь же: счёт останавливается ровно тогда, когда
+        // тест закончен, — значит и отложенная стена может выходить.
+        this._meterProtect(false);
         if (this._testMeterTimer) {
             clearInterval(this._testMeterTimer);
             this._testMeterTimer = null;
@@ -1806,6 +1868,12 @@ const Test = {
         this.reset(); this.saveProgress();
         this.showTestScreen();
         this._startTestMeter();
+        // Начатое доводится до конца (правило владельца 15.09.2026): тест
+        // идёт пятнадцать минут и сам тратит минуты, поэтому лимит чаще
+        // всего кончается ровно посреди него. Стена в этот момент отнимает
+        // не разговор, а сорок отвеченных вопросов. Она не пропадает —
+        // meter.js покажет её сразу после результата, в пиковый момент.
+        this._meterProtect(true);
         // Инструментирование воронки теста. В дампе аналитики:
         // 7 screen_view test, 5 feature_open, средняя 21 сек —
         // люди открывают и сразу уходят. Нам нужно знать ГДЕ.
@@ -2675,6 +2743,9 @@ ${this.getStage3Interpretation()}
     async showFinalProfileButtons() {
         this._hideAILoader();
         this._stopTestMeter();
+        // Разбор письмом — если человек оставил почту на знакомстве.
+        // Не ждём ответа: письмо не должно задерживать экран результата.
+        this._emailPdf();
         // Тест закончился — полосе прогресса здесь делать нечего.
         this._removeProgress();
         // _restoredProfile ставит showSavedResult(): после перезагрузки

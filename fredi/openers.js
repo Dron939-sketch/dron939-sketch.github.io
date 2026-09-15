@@ -286,9 +286,11 @@
         _introVariant = v;
         _track('intro_shown', { source: source || '', variant: v });
         _goal('fredi_intro_' + v);
-        // Беззвучный режим (sound.js): представление остаётся текстом.
-        // Голос здесь и так не условие — он только сопровождает реплику.
-        if (window.FrediSound && window.FrediSound.isOff()) return;
+        // Правило формата (sound.js): представление звучит только тому, кто
+        // сам заговорил вслух. Набравшему вопрос руками оно приходит
+        // текстом — голос здесь и так не условие, он только сопровождает
+        // реплику. Беззвучный режим молчит в любом случае.
+        if (window.FrediSound && !window.FrediSound.mayVoice()) return;
         var audio;
         try { audio = new Audio(intro.src); } catch (e) { return; }
         audio.volume = 0.85;

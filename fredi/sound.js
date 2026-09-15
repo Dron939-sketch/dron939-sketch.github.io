@@ -28,6 +28,22 @@
     function isOff() { return _off; }
     function isOn() { return !_off; }
 
+    // Правило владельца 15.09.2026: спросили текстом — отвечаем текстом,
+    // спросили голосом — отвечаем голосом. Формат ответа задаёт человек, а
+    // не приложение: голос в ответ на набранный вопрос застаёт врасплох
+    // ровно того, кто печатал именно потому, что говорить не мог.
+    //
+    // В самом разговоре правило держится само: текст уходит в
+    // /api/chat/stream и не озвучивается, голос — в
+    // /api/voice/process_stream и озвучивается. Флаг нужен тем местам,
+    // которые звучат вне ответа, — прежде всего представлению Фреди.
+    var _lastAsk = '';            // 'voice' | 'text' | ''
+    function noteAsk(kind) { _lastAsk = (kind === 'voice') ? 'voice' : 'text'; }
+    function askedByVoice() { return _lastAsk === 'voice'; }
+    // Озвучивать ли то, что звучит само по себе: не выключен звук и
+    // человек говорил вслух.
+    function mayVoice() { return !_off && _lastAsk === 'voice'; }
+
     function set(off) {
         off = !!off;
         if (off === _off) return _off;
@@ -58,5 +74,8 @@
         isOn: isOn,
         set: set,
         toggle: toggle,
+        noteAsk: noteAsk,
+        askedByVoice: askedByVoice,
+        mayVoice: mayVoice,
     };
 })();

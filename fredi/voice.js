@@ -1518,6 +1518,8 @@ class VoiceManager {
     _status(s) { if (this.onStatusChange) this.onStatusChange(s); }
 
     startRecording() {
+        // Человек говорит вслух — значит и ответ ему можно вслух (sound.js).
+        try { window.FrediSound && window.FrediSound.noteAsk('voice'); } catch (e) {}
         // Unlock плеера прямо здесь — это вызывается из обработчика
         // нажатия кнопки, т.е. внутри user gesture (критично для iOS)
         this._player.primeForPlayback();

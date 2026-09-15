@@ -306,6 +306,14 @@
         catch (e) { return 1; }
     }
     function _authed() { return !!window.IS_AUTHENTICATED; }
+    // Пройден ли тест. Код профиля — единственный признак, доступный на
+    // клиенте: «···» означает, что профиля нет.
+    function _hasProfile() {
+        try {
+            var code = window.CONFIG && window.CONFIG.PROFILE_CODE;
+            return !!(code && code !== '···');
+        } catch (e) { return false; }
+    }
     function _newcomer() { return !_authed() && _visits() <= 1; }
     // Разговор состоялся — три и больше сообщений за сессию. Предложение
     // в середине живого разговора читается как «уберём помеху», а на
@@ -318,6 +326,18 @@
     // единственным ответом на стену была цена в первый же вечер — 101
     // закрытая стена, один клик, ноль оплат.
     function _accountGain(data) {
+        // 15.09.2026 (решение владельца): регистрация больше не продаётся
+        // минутами. Надбавка первого дня на бэкенде снята, и звать «оставь
+        // почту — будет больше» стало неправдой; но дело не только в
+        // числах. Регистрация сама по себе человеку ничего не открывает —
+        // он остаётся в той же бесплатной версии, — а место на стене
+        // занимает ровно то, ради чего стена и стоит: пробу за 99 ₽.
+        // Почта приходит там, где человек и так её оставляет: на разборе
+        // теста в PDF и на оплате. Возврат пустого выигрыша схлопывает
+        // все ветки «Завести аккаунт — N минут» разом, поэтому сами ветки
+        // оставлены на месте: вернуть предложение — снять этот return.
+        return null;
+        /* eslint-disable no-unreachable */
         // Два независимых признака аккаунта: сессия на фронте и почта в
         // базе. Хватает любого — иначе человеку с протухшей кукой предложат
         // завести то, что у него уже есть.
@@ -329,6 +349,7 @@
         // и это ровно тот случай, когда аккаунт даёт больше всего.
         if (!big || small == null || big <= small) return null;
         return { big: big, small: small, plus: Math.round((big - small) * 10) / 10 };
+        /* eslint-enable no-unreachable */
     }
     // Одна фраза про выигрыш от аккаунта на все стены: при нуле анонимных
     // минут «5 вместо 0» звучит как арифметика, а не как предложение.
@@ -560,6 +581,8 @@
     }
 
     function showFatigueModal(data) {
+        // Внутри защищённого отрезка стена откладывается до его конца.
+        if (_protect > 0) { _pendingWall = data; return; }
         data = data || {};
         // Нет аккаунта — это не пейволл, а дверь в регистрацию: с
         // платной моделью сервер отвечает block_reason='auth' всем без
@@ -751,7 +774,7 @@
                     // перед продолжением того, что он уже делает. Кнопка на стене
                     // должна называть действие, ради которого он сюда пришёл.
                     '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 99 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
                 // стояло «Понятно, до завтра», и вернувшийся с аккаунтом
@@ -882,7 +905,7 @@
                     : '') +
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterUpsellSub">✨ Попробовать 3 дня — 99 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
@@ -986,6 +1009,15 @@
     // Владелец, 13.09.2026: за месяц 70 стен, 8 кликов, 4 оплаты — и ни
     // одного ответа, почему остальные ушли. Четыре кнопки, одно нажатие,
     // событие sub_why_not {reason, source}. Раз в день на человека.
+    //
+    // 15.09.2026: ответы два дня уходили в никуда. В Метрику отправлялась
+    // одна цель sub_why_not — незарегистрированная, Метрика такие молча
+    // выбрасывает, — и без причины. Сама причина оставалась только в
+    // fredi_analytics, куда без админ-токена не заглянуть. Поэтому теперь
+    // на каждый ответ уходит своя цель (sub_why_expensive и так далее), а
+    // на показ — sub_why_shown: без него доля ответивших неизвестна.
+    // Цели заведены в счётчике приложения 108965607; сайтовый 108138656
+    // упёрся в лимит 200 целей, и лишние вызовы там просто не считаются.
     var WHY_KEY = 'meter_why_not_day';
     var WHY_REASONS = [
         ['expensive', 'Дорого'],
@@ -993,6 +1025,21 @@
         ['doubt', 'Не верю, что поможет'],
         ['later', 'Попробую потом'],
     ];
+    // Цель Метрики на каждый ответ: ym-цели не принимают параметров, и
+    // разбивку по причинам даёт только отдельная цель на причину.
+    var WHY_GOAL = {
+        expensive: 'sub_why_expensive',
+        unclear: 'sub_why_unclear',
+        doubt: 'sub_why_doubt',
+        later: 'sub_why_later',
+        skip: 'sub_why_skip',
+    };
+    function _whyGoal(name) {
+        if (!name || typeof ym !== 'function') return;
+        try { ym(108965607, 'reachGoal', name); } catch (e) {}
+        try { ym(108138656, 'reachGoal', name); } catch (e) {}
+    }
+
     function askWhyNot(source) {
         try {
             if (_lastCheck && _lastCheck.is_premium) return;
@@ -1004,6 +1051,7 @@
             try { localStorage.setItem(WHY_KEY, today); } catch (e) {}
             _injectMeterStyles();
             _track('sub_why_not_shown', { source: source || '' });
+            _whyGoal('sub_why_shown');
             var overlay = document.createElement('div');
             overlay.className = 'meter-overlay';
             overlay.id = 'meterWhyOverlay';
@@ -1021,7 +1069,7 @@
             document.body.appendChild(overlay);
             var done = function (reason) {
                 _track('sub_why_not', { reason: reason, source: source || '' });
-                try { if (typeof ym === 'function') ym(108965607, 'reachGoal', 'sub_why_not'); } catch (e) {}
+                _whyGoal(WHY_GOAL[reason]);
                 overlay.remove();
             };
             var list = overlay.querySelectorAll('[data-why]');
@@ -1066,10 +1114,40 @@
     // «process» шёл «_», а граница ждала /|$|? ) — из-за чего HTTP-путь
     // голоса проходил мимо пейволла И мимо учёта расхода. Расширяем до
     // process(_stream)?|stt|tts — в синхрон с _METER_AI_REGEX на бэке.
-    var AI_URL_REGEX = /\/api\/(?:chat|voice\/(?:process(?:_stream)?|stt|tts)|ai\/generate|deep-analysis|hypno\/support|psychologist-thoughts\/generate|dreams\/(?:interpret|clarify)|reality\/(?:check|parse\/[^/]+)|brand\/transformation|mirrors\/(?:complete|[^/]+\/complete)|morning\/send-now|natal\/interpret|tarot\/interpret|horoscope)(?:\/|$|\?)/;
+    // mirrors/complete отсюда убран 15.09.2026 — он разъехался с бэком.
+    // Там его вынесли из _METER_AI_REGEX намеренно: это чистая запись в
+    // fredi_mirrors, ни одного токена, и зовётся она в самом конце теста,
+    // когда пятнадцать минут уже потрачены. Бэк пропускал, а клиент гасил
+    // запрос своей же стеной, и зеркало у приглашённого молча не
+    // активировалось — пригласивший не получал ничего.
+    var AI_URL_REGEX = /\/api\/(?:chat|voice\/(?:process(?:_stream)?|stt|tts)|ai\/generate|deep-analysis|hypno\/support|psychologist-thoughts\/generate|dreams\/(?:interpret|clarify)|reality\/(?:check|parse\/[^/]+)|brand\/transformation|morning\/send-now|natal\/interpret|tarot\/interpret|horoscope)(?:\/|$|\?)/;
 
     function _isAiRequest(urlStr) {
         return AI_URL_REGEX.test(urlStr || '');
+    }
+
+    // Начатое доводится до конца (правило владельца 15.09.2026). Тест идёт
+    // пятнадцать минут и сам же тратит минуты — то есть лимит кончается
+    // ровно посреди него чаще всего. Стена в этот момент отнимает не
+    // разговор, а сорок отвеченных вопросов: человек не получает ни
+    // результата, ни причины возвращаться, и назад он не садится.
+    //
+    // Поэтому на время теста стена не показывается и запросы не гасятся,
+    // а отложенная стена выходит СРАЗУ ПОСЛЕ результата. Это не потеря
+    // продажи, а перенос её в пиковый момент: человек только что узнал
+    // о себе что-то новое — он и готов действовать.
+    var _protect = 0;
+    var _pendingWall = null;
+    function isProtected() { return _protect > 0; }
+    function protect(on) {
+        if (on) { _protect++; return; }
+        _protect = Math.max(0, _protect - 1);
+        if (_protect === 0 && _pendingWall) {
+            var data = _pendingWall;
+            _pendingWall = null;
+            // Даём результату встать на экран, и только потом стена.
+            setTimeout(function () { showFatigueModal(data); }, 1200);
+        }
     }
 
     function _patchFetch() {
@@ -1082,7 +1160,11 @@
             var method = (options && options.method) || 'GET';
             if (isAi && method === 'POST') {
                 var check = await checkCanSend();
-                if (!check.can_send) {
+                if (!check.can_send && _protect > 0) {
+                    // Начатое доводим до конца: запрос пропускаем, а стену
+                    // запоминаем и покажем, когда отрезок закончится.
+                    _pendingWall = check;
+                } else if (!check.can_send) {
                     showFatigueModal(check);
                     return new Response(JSON.stringify({ success: false, error: 'METER_BLOCKED', response: check.message || '\u0424\u0440\u0435\u0434\u0438 \u0443\u0441\u0442\u0430\u043B' }), { status: 402, headers: { 'Content-Type': 'application/json' } });
                 }
@@ -1340,11 +1422,14 @@
                     '<div class="meter-title">' + title + '</div>' +
                     '<div class="meter-text">' + (who ? _esc(who) + ', ' + lead.charAt(0).toLowerCase() + lead.slice(1) : lead) +
                         body +
-                        (anon ? '<br><br>Без аккаунта этот разговор завтра не вспомнится: нужна почта и четыре цифры.' : '') +
+                        (anon ? '<br><br>Сейчас этот разговор завтра не вспомнится: бесплатная версия его не хранит.' : '') +
                     '</div>' +
                     '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать 3 дня — 99 ₽</button>' +
-                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней: голос, все режимы, память о каждом разговоре. Потом 990 ₽ в месяц; отключить можно в один клик.</div>' +
-                    (anon ? '<button class="meter-btn meter-btn-secondary" id="meterPeakReg">📩 Сначала завести аккаунт</button>' : '') +
+                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, память о каждом разговоре. Потом 990 ₽ в месяц; отключить можно в один клик.</div>' +
+                    // «Сначала завести аккаунт» отсюда убрано 15.09.2026:
+                    // аккаунт заводится самой покупкой, отдельным шагом он
+                    // только уводит человека с оплаты.
+
                     '<button class="meter-btn meter-btn-secondary" id="meterPeakLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
@@ -1586,25 +1671,47 @@
             var overlay = document.createElement('div');
             overlay.className = 'meter-overlay';
             overlay.id = 'meterDoorOverlay';
+            // Регистрация из этой карточки убрана (решение владельца
+            // 15.09.2026). Почту человек и так оставит на оплате пробы, и
+            // тогда предложение завести аккаунт для него уже норма. Звать
+            // регистрироваться раньше — отвлекать на шаг, который ничего
+            // ему не открывает: он остаётся в той же бесплатной версии.
+            //
+            // Вместо этого карточка называет ровно то, во что он упрётся:
+            // без теста Фреди отвечает вслепую, время кончится сегодня, а
+            // завтра разговор начнётся с нуля. Числа минут — из статуса
+            // счётчика, руками не вписываются.
+            // Поле статуса называется limit_minutes — это сегодняшний лимит
+            // человека. daily_limit_minutes бэкенд не отдаёт вовсе, и строка
+            // про минуты молча уходила бы в «времени в обрез».
+            var mins = (_lastCheck && _lastCheck.limit_minutes) ||
+                       (gain && gain.small) || null;
+            var noTest = !_hasProfile();
+            var lines = [];
+            if (noTest) {
+                lines.push('<b>Тест вы не проходили.</b> Фреди отвечает вслепую: ' +
+                           'он не знает ни ваших опор, ни того, откуда у трудности корни.');
+            }
+            lines.push('<b>Времени' + (mins ? ' — ' + mins + ' минут в день' : ' в обрез') +
+                       '.</b> Кончится — продолжение завтра.');
+            lines.push('<b>Разговор не сохраняется.</b> Завтра Фреди начнёт с чистого ' +
+                       'листа, и всё придётся рассказывать заново.');
             overlay.innerHTML =
                 '<div class="meter-modal">' +
-                    '<div class="meter-emoji">📩</div>' +
+                    '<div class="meter-emoji">🔓</div>' +
                     '<div class="meter-title">Вы в бесплатной версии</div>' +
                     '<div class="meter-text">' + (who ? _esc(who) + ', разговор пошёл. ' : 'Разговор пошёл. ') +
-                        'Но этот разговор не сохраняется: завтра Фреди начнёт с чистого листа, и всё придётся рассказывать заново. ' +
-                        'Сохранить его — аккаунт, почта и четыре цифры, бесплатно.' +
-                        (gain ? ' ' + _gainPhrase(gain, false) : '') +
-                        ' Чтобы Фреди помнил вас и продолжал завтра с того же места — подписка, первые три дня 99 ₽.' +
-                    '</div>' +
-                    '<button class="meter-btn meter-btn-primary" id="meterDoorReg">📩 Сохранить разговор — аккаунт</button>' +
-                    '<button class="meter-btn meter-btn-secondary" id="meterDoorSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                        'Дальше он упрётся в ' + (noTest ? 'три' : 'две') + ' вещи.</div>' +
+                    '<div class="meter-text" style="text-align:left;border-left:3px solid #3b82ff;padding-left:11px;margin:0 0 15px">' +
+                        lines.join('<br><br>') + '</div>' +
+                    '<div class="meter-text">Три дня за 99 ₽ снимают это разом: ' +
+                        (noTest ? 'тест с разбором, ' : '') +
+                        'память о каждом разговоре, время без счётчика, голос и все режимы. ' +
+                        'Понравится — дальше 990 ₽ в месяц, отключить можно в один клик.</div>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 99 ₽</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
-            document.getElementById('meterDoorReg').onclick = function () {
-                overlay.remove();
-                _openRegister('door_' + (source || ''));
-            };
             document.getElementById('meterDoorSub').onclick = function () {
                 _track('meter_subscribe_clicked', { source: 'door_' + (source || '') });
                 overlay.remove();
@@ -1641,6 +1748,8 @@
 
     window.FrediMeter = {
         checkCanSend: checkCanSend,
+        protect: protect,
+        isProtected: isProtected,
         showPeakOffer: showPeakOffer,
         showAccountDoor: showAccountDoor,
         gameLocked: gameLocked,
