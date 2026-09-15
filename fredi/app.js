@@ -2302,40 +2302,55 @@ function renderDashboard() {
         <div class="dashboard-container">
             ${maxBannerHtml}
             ${ritualBannerHtml}
-            <div class="hero-section">
-                <div class="hero-greeting">
-                    <div class="hero-mode-emoji">${modeConfig.emoji}</div>
-                    <h2 class="hero-title">${heroGreetingHtml}</h2>
-                    <!-- От первого лица: над этой строкой Фреди говорит
-                         «Я Фреди — ваш виртуальный психолог», а следом сам
-                         о себе в третьем лице. Так пишут о ком-то другом. -->
-                    <p class="hero-sub">Слушаю, поддерживаю, помогаю разобраться — скажите голосом, напишите или выберите действие</p>
-                </div>
-                <!-- Архетип и дверь в разбор — одной строкой. Раньше это были
-                     две вещи в разных местах экрана: бейдж с архетипом здесь и
-                     широкая карточка «Ваш разбор» ниже. Обе вели в один и тот
-                     же разбор и занимали два блока подряд. -->
-                <div class="profile-line">
-                    <div class="profile-badge" id="profileBadge">
+            <!-- Шапка-полоса вместо прежнего приветствия во весь экран
+                 (решение владельца 15.09.2026, вариант «незакрытый разговор»).
+                 Прежняя занимала 200 пикселей на десктопе и 300 на телефоне —
+                 треть первого экрана — и говорила «Я Фреди, ваш виртуальный
+                 психолог» и тому, кто здесь впервые, и тому, кто разговаривает
+                 девятый день. При этом вернувшийся ценнее: 15.09 в приложении
+                 50 новых и 16 вернувшихся, но новые сидели 349 секунд, а
+                 вернувшиеся 935.
+                 Теперь в первой строке — кто перед человеком и его архетип, во
+                 второй — его собственная незакрытая тема с кнопкой «Продолжить»
+                 (/api/chat/last-topic). Новичку вместо темы предлагается тест:
+                 прежний широкий баннер «Узнайте свой психотип» отсюда и уехал,
+                 он дублировал бейдж. -->
+            <div class="hero-strip" id="heroStrip">
+                <div class="hero-row">
+                    <div class="hero-ava">${modeConfig.emoji}<i class="hero-dot"></i></div>
+                    <div class="hero-who">
+                        <div class="hero-name-line" id="heroNameLine">${heroGreetingHtml}</div>
+                        <div class="hero-sub" id="heroSub">Слушаю, помогаю разобраться</div>
+                    </div>
+                    <span class="hero-gap"></span>
+                    <span class="hero-mins" id="heroMins" hidden></span>
+                    <div class="profile-badge" id="profileBadge" hidden>
                         <div class="profile-code" id="profileCode">${CONFIG.PROFILE_CODE || '···'}</div>
                         <div class="profile-status" id="profileStatus">загрузка...</div>
                     </div>
                     <button type="button" class="profile-open" id="profileOpenBtn" hidden>Ваш разбор →</button>
                 </div>
+                <!-- Строка возврата. Скрыта, пока не известно, к чему
+                     возвращать: показывать пустую рамку хуже, чем не
+                     показывать ничего. -->
+                <div class="hero-resume-wrap">
+                    <button type="button" class="hero-resume" id="heroResume" hidden>
+                        <span class="hero-resume-was" id="heroResumeWas">В прошлый раз:</span>
+                        <span class="hero-resume-q" id="heroResumeQ"></span>
+                        <span class="hero-resume-go" id="heroResumeGo">Продолжить →</span>
+                    </button>
+                    <!-- Тема разговора на общем телефоне окажется на виду у
+                         чужих глаз, поэтому её можно убрать одним касанием —
+                         выбор запоминается. Кнопка лежит рядом со строкой, а не
+                         внутри: кнопка внутри кнопки — невалидная разметка, и
+                         клик по ней уходил бы заодно в «Продолжить». -->
+                    <button type="button" class="hero-resume-hide" id="heroResumeHide" hidden
+                            title="Не показывать тему прошлого разговора">скрыть</button>
+                </div>
             </div>
 
             <!-- Виджет «Сегодня»: стрик + один рекомендованный шаг (segodnya.js) -->
             <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div id="todayMount"></div> -->
-
-            <!-- CTA-баннер для новых пользователей -->
-            <div id="ctaTestBanner" style="display:none;background:linear-gradient(135deg,rgba(168,196,224,0.12),rgba(120,160,210,0.06));border:1px solid rgba(168,196,224,0.3);border-radius:20px;padding:18px 20px;margin-bottom:20px;align-items:center;gap:16px;cursor:pointer" onclick="startTest()">
-                <div style="font-size:36px;flex-shrink:0">🧬</div>
-                <div style="flex:1">
-                    <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px">Узнайте свой психотип</div>
-                    <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">15 минут — и Фреди будет знать вас по-настоящему. Персональные рекомендации, точный анализ, инструменты под вас.</div>
-                </div>
-                <div style="flex-shrink:0;background:linear-gradient(135deg,rgba(168,196,224,0.25),rgba(120,160,210,0.15));border:1px solid rgba(168,196,224,0.5);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:700;color:rgba(168,196,224,0.95);white-space:nowrap">Начать →</div>
-            </div>
 
             <div class="dash-cols">
             <div class="dash-main">
@@ -2482,7 +2497,7 @@ function renderDashboard() {
             // /api/get-profile, которого нет в /api/user-status.
             if (codeEl) codeEl.textContent = status.profile_code;
             if (statusEl) statusEl.textContent = 'ваш психотип';
-            if (badge) badge.classList.remove('profile-badge--cta');
+            if (badge) { badge.hidden = false; badge.classList.remove('profile-badge--cta'); }
             apiCall(`/api/get-profile/${CONFIG.USER_ID}`).then(data => {
                 const archetype = _computeArchetype(data?.profile?.perception_type, status.profile_code);
                 if (archetype) {
@@ -2493,7 +2508,10 @@ function renderDashboard() {
                         // подписью, а не тем, что человек про себя узнал.
                         codeEl.textContent = archetype;
                         codeEl.title = status.profile_code;
-                        codeEl.style.fontSize = '15px';
+                        // Размер задаёт CSS: в полосе бейдж стоит в одну
+                        // строку, и пятнадцатый кегль ломал её на две —
+                        // «Прагматичный / наставник», полоса вырастала
+                        // со 112 пикселей до 161.
                     }
                     if (statusEl) statusEl.textContent = 'ваш архетип';
                 }
@@ -2528,22 +2546,17 @@ function renderDashboard() {
                 };
             }
         } else {
-            if (codeEl) { codeEl.textContent = '📊'; codeEl.style.fontSize = '22px'; }
-            if (statusEl) statusEl.textContent = '→ пройти тест';
-            if (badge) badge.classList.add('profile-badge--cta');
-            // Показываем CTA-баннер для anon. Делаем визуально доминирующим:
-            // увеличиваем тень, padding и приглушаем нижние кнопки чтобы
-            // взгляд анона направлялся на тест, а не на пёструю сетку модулей.
-            const ctaBanner = document.getElementById('ctaTestBanner');
-            if (ctaBanner) {
-                ctaBanner.style.display = 'flex';
-                ctaBanner.style.padding = '24px 22px';
-                ctaBanner.style.boxShadow = '0 12px 40px rgba(168,196,224,0.18)';
-                ctaBanner.style.border = '1.5px solid rgba(168,196,224,0.45)';
-            }
-            // Visually de-emphasise the modules grid + quick actions for anon
-            // so that the test CTA is the obvious primary action. Не скрываем
-            // полностью — если кому-то надо, пусть видит, но не визуально первым.
+            // Профиля нет — бейдж архетипа показывать нечем, и его место
+            // занимает приглашение пройти тест: раньше это был широкий
+            // баннер под шапкой, теперь строка внутри полосы.
+            if (badge) badge.hidden = true;
+            _heroInvite('Узнать свой психотип',
+                        '15 минут — и Фреди отвечает под вас',
+                        'Пройти →',
+                        () => { try { startTest(); } catch (e) {} },
+                        'test');
+            // Сетка модулей и быстрые действия приглушены, чтобы взгляд
+            // анонима шёл на тест, а не на пёструю сетку.
             const modulesGrid = document.querySelector('.modules-grid');
             if (modulesGrid) modulesGrid.style.opacity = '0.62';
             const quickActions = document.querySelector('.quick-actions');
@@ -2554,15 +2567,115 @@ function renderDashboard() {
         if (statusEl) statusEl.textContent = 'нет профиля';
     });
 
-    // Инструментирование клика по CTA-баннеру теста (отдельным событием,
-    // чтобы было видно: сколько анонов проходят CTA → тест).
-    document.getElementById('ctaTestBanner')?.addEventListener('click', () => {
+    // ===== Шапка-полоса: возврат в свой прошлый разговор =====
+    //
+    // Вернувшегося встречало то же приветствие, что и новичка. Здесь на его
+    // месте — тема, с которой он приходил в прошлый раз, и кнопка обратно
+    // в неё. Тему отдаёт /api/chat/last-topic (Frederick): первая реплика
+    // последнего захода, обрезанная по границе слова.
+    const HERO_HIDE_KEY = 'fredi_hero_resume_off';
+
+    function _heroSetResume(was, text, go, onClick, kind) {
+        const box = document.getElementById('heroResume');
+        const wasEl = document.getElementById('heroResumeWas');
+        const qEl = document.getElementById('heroResumeQ');
+        const goEl = document.getElementById('heroResumeGo');
+        if (!box || !qEl) return;
+        wasEl.textContent = was;
+        qEl.textContent = text;
+        goEl.textContent = go;
+        box.dataset.kind = kind || '';
+        box.hidden = false;
+        box.onclick = onClick;
         try {
             if (window.FrediTracker?.track) {
-                window.FrediTracker.track('dashboard_cta_clicked', { cta: 'test_banner' });
+                window.FrediTracker.track('hero_resume_shown', { kind: kind || '' });
             }
-        } catch {}
-    });
+        } catch (e) {}
+    }
+
+    // Приглашение новичку — та же строка, только зовёт не назад, а вперёд.
+    function _heroInvite(was, text, go, onClick, kind) {
+        _heroSetResume(was, text, go, onClick, kind);
+        const hide = document.getElementById('heroResumeHide');
+        if (hide) hide.hidden = true;   // прятать приглашение незачем
+    }
+
+    (function heroResume() {
+        const uid = CONFIG.USER_ID;
+        if (!uid) return;
+        let off = false;
+        try { off = localStorage.getItem(HERO_HIDE_KEY) === '1'; } catch (e) {}
+        if (off) return;
+        fetch(`${CONFIG.API_BASE_URL}/api/chat/last-topic/${uid}`)
+            .then(r => r.json())
+            .then(d => {
+                if (!d || !d.topic) return;
+                // Приглашение новичку уже могло встать в эту строку — своя
+                // тема важнее: она про него, а не про продукт.
+                const days = d.days_ago;
+                const was = days === 0 ? 'Сегодня говорили:'
+                          : days === 1 ? 'Вчера говорили:'
+                          : 'В прошлый раз:';
+                _heroSetResume(was, '«' + d.topic + '»', 'Продолжить →', () => {
+                    try {
+                        if (window.FrediTracker?.track) {
+                            window.FrediTracker.track('hero_resume_clicked', { days_ago: days });
+                        }
+                    } catch (e) {}
+                    // Отправляем это как реплику человека: он сам нажал
+                    // «Продолжить», и Фреди должен ответить по прошлой теме,
+                    // а не ждать, пока человек перескажет её заново.
+                    const text = 'Давайте вернёмся к тому, о чём говорили: ' + d.topic;
+                    if (typeof window.FrediAsk === 'function') window.FrediAsk(text, 'hero_resume');
+                    else {
+                        const input = document.getElementById('dashComposerInput');
+                        if (input) { input.value = text; input.focus(); }
+                    }
+                }, 'topic');
+                const hide = document.getElementById('heroResumeHide');
+                if (hide) {
+                    hide.hidden = false;
+                    hide.onclick = (e) => {
+                        e.stopPropagation();
+                        try { localStorage.setItem(HERO_HIDE_KEY, '1'); } catch (er) {}
+                        const box = document.getElementById('heroResume');
+                        if (box) box.hidden = true;
+                        hide.hidden = true;
+                        try {
+                            if (window.FrediTracker?.track) window.FrediTracker.track('hero_resume_hidden', {});
+                        } catch (er) {}
+                    };
+                }
+            })
+            .catch(() => {});
+    })();
+
+    // Остаток бесплатных минут — в той же строке, где имя. Человек должен
+    // видеть, сколько у него есть, до того как упрётся в стену: раньше он
+    // узнавал об этом ровно в момент отказа.
+    (function heroMinutes() {
+        const el = document.getElementById('heroMins');
+        if (!el || !window.FrediMeter || typeof window.FrediMeter.checkCanSend !== 'function') return;
+        window.FrediMeter.checkCanSend().then(check => {
+            if (!check) return;
+            if (check.is_premium || check.has_subscription) {
+                el.textContent = 'Premium';
+                el.classList.add('hero-mins--prem');
+                el.hidden = false;
+                return;
+            }
+            const left = [check.remaining_trial_minutes, check.remaining_today_minutes]
+                .filter(v => typeof v === 'number');
+            if (!left.length) return;
+            const m = Math.max(0, Math.floor(Math.min.apply(null, left)));
+            const word = (m % 10 === 1 && m % 100 !== 11) ? 'минута'
+                       : ([2, 3, 4].indexOf(m % 10) >= 0 && (m % 100 < 11 || m % 100 > 14)) ? 'минуты'
+                       : 'минут';
+            el.textContent = m + ' ' + word + ' сегодня';
+            el.hidden = false;
+        }).catch(() => {});
+    })();
 
     // ===== Лента вопросов =====
     // Клик кладёт вопрос в поле и отдаёт человеку последний шаг: разговоры,

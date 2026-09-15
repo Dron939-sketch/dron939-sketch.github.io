@@ -576,6 +576,7 @@ img.emoji {
 }
 /* Класс с display перебивает атрибут hidden — как у .dash-live-now. */
 .profile-open[hidden] { display: none; }
+.profile-badge[hidden] { display: none; }
 .profile-badge {
     display: inline-flex;
     flex-direction: column;
@@ -2521,6 +2522,88 @@ input, textarea, select, button { box-sizing: border-box; }
 [data-theme="light"] .message.thinking .thinking-wrap {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Шапка-полоса =====
+   Прежняя шапка занимала 200 пикселей на десктопе и 300 на телефоне и
+   здоровалась одинаково с тем, кто здесь впервые, и с тем, кто ходит
+   девятый день. Здесь всё то же в одну строку плюс строка возврата в
+   свой прошлый разговор. */
+.hero-strip {
+    background: linear-gradient(180deg, rgba(224,224,224,0.045), rgba(224,224,224,0.02));
+    border: 1px solid rgba(224, 224, 224, 0.10);
+    border-radius: 18px; padding: 12px 16px; margin-bottom: 16px;
+}
+.hero-row { display: flex; align-items: center; gap: 12px; }
+.hero-gap { flex: 1 1 auto; }
+.hero-ava {
+    position: relative; flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 19px;
+    background: linear-gradient(135deg, rgba(59,130,255,0.22), rgba(120,160,210,0.10));
+}
+.hero-dot {
+    position: absolute; right: 0; bottom: 0; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--success); border: 2px solid var(--black-obsidian);
+}
+.hero-who { min-width: 0; }
+.hero-name-line {
+    font-size: 15px; font-weight: 700; color: var(--text-primary);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hero-strip .hero-sub {
+    font-size: 11.5px; color: var(--text-secondary); margin: 2px 0 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hero-mins { flex: 0 0 auto; font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; }
+/* Бейдж архетипа в полосе — в одну строку и не шире трети: имя архетипа
+   бывает длинным («Прагматичный наставник»), и перенос растил всю полосу. */
+.hero-row .profile-badge { flex: 0 1 auto; min-width: 0; max-width: 44%; padding: 5px 13px; }
+.hero-row .profile-code {
+    font-size: 12.5px; max-width: 100%;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hero-row .profile-status { font-size: 9.5px; }
+.hero-mins--prem { color: rgba(168, 196, 224, 0.95); font-weight: 700; }
+.hero-mins[hidden] { display: none; }
+/* Строка возврата: своя тема человека и дверь обратно в неё. */
+.hero-resume {
+    display: flex; align-items: center; gap: 10px; width: 100%; margin-top: 10px;
+    padding: 9px 12px; padding-right: 58px; border-radius: 13px; cursor: pointer; text-align: left;
+    font: inherit; color: var(--text-primary);
+    background: rgba(59, 130, 255, 0.08); border: 1px solid rgba(59, 130, 255, 0.22);
+    transition: background .18s, border-color .18s;
+}
+.hero-resume:hover { background: rgba(59,130,255,0.14); border-color: rgba(59,130,255,0.4); }
+.hero-resume[hidden] { display: none; }
+.hero-resume-was { flex: 0 0 auto; font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
+.hero-resume-q {
+    /* Цвет темы, а не свой: на светлой теме собственный светлый оттенок
+       делал строку почти невидимой. */
+    flex: 1 1 auto; min-width: 0; font-size: 13px; color: var(--text-primary);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hero-resume-go { flex: 0 0 auto; font-size: 12px; font-weight: 700; color: var(--amg-blue); white-space: nowrap; }
+/* «Скрыть» — в самой строке, а не под ней: отдельная строка стоила
+   двадцати пикселей ради одного слова. Сидит у правого края, место под
+   неё освобождает padding-right самой строки — иначе она легла бы поверх
+   «Продолжить». */
+.hero-resume-wrap { position: relative; }
+.hero-resume-hide {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    padding: 3px 6px; font: inherit; font-size: 10.5px; line-height: 1;
+    color: var(--text-secondary); background: none; border: 0; cursor: pointer; opacity: .55;
+}
+.hero-resume-hide:hover { opacity: 1; }
+.hero-resume-hide[hidden] { display: none; }
+@media (max-width: 600px) {
+    .hero-strip { padding: 11px 13px; }
+    .hero-ava { width: 36px; height: 36px; font-size: 17px; }
+    .hero-name-line { font-size: 14px; }
+    /* Остаток минут на телефоне уезжает под имя: в строке с ним, кнопкой
+       разбора и бейджем архетипа ему места нет. */
+    .hero-mins { display: none; }
+    .hero-resume-was { display: none; }
+    .hero-resume-q { font-size: 12.5px; }
 }
 
 /* ===== Лента вопросов над полем ввода =====
