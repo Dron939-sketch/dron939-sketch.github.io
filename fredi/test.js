@@ -2667,6 +2667,11 @@ ${this.getStage3Interpretation()}
             await this._onSaveFailed(String(error && error.message || error));
             return;
         }
+        // Рекомендации заказываем ЗДЕСЬ, параллельно с AI-профилем: обе
+        // генерации идут у модели, и последовательно это две минуты вместо
+        // одной. Промис ждём позже, на экране результата.
+        this._recsPromise = this.fetchTestRecommendations().catch(function () { return false; });
+
         // Дальше — уже после успешного сохранения, и каждый шаг со своей
         // защитой. Раньше они стояли внутри того же try: любая осечка
         // AI-профиля или зеркала читалась как несохранённый результат, и
@@ -2754,6 +2759,11 @@ ${this.getStage3Interpretation()}
 
     async fetchAIGeneratedProfile() {
         if (!this.userId) { this.showFinalProfileButtons(); return; }
+        // Лучше подождать, чем показать разбор кусками (решение владельца
+        // 15.09.2026): человек не понимает, почему часть текста появилась
+        // позже, и читает это как поломку. 20 попыток по 3 секунды — до
+        // минуты на модель, и всё это время на экране честный счётчик.
+        var AI_PROFILE_TRIES = 20;
 
         if (this._aiProfileRetries === 0) {
             this.addBotMessage('🧠 Собираю ваш портрет — Meyster AI...\n\n⏳ Это займёт 15-30 секунд. Анализирую ответы всех 5 этапов...', true);
@@ -2769,7 +2779,12 @@ ${this.getStage3Interpretation()}
                 this.showFinalProfileButtons();
                 return;
             }
-            if (data.status === 'generating' && this._aiProfileRetries < 15) {
+            // Повтор по ПУСТОМУ профилю, а не по статусу 'generating':
+            // такого статуса сервер не возвращает никогда — он всегда
+            // отвечает 'ready', даже когда модель не успела и ai_profile
+            // пуст. Условие было невыполнимым, повтор не срабатывал ни
+            // разу, и часть 2 исчезала с первой же неудачи навсегда.
+            if (this._aiProfileRetries < AI_PROFILE_TRIES) {
                 this._aiProfileRetries++;
                 const dots = '.'.repeat(Math.min(this._aiProfileRetries, 5));
                 const msgs = ['Анализирую ваши паттерны', 'Строю карту личности', 'Формирую инсайты', 'Почти готово'];
@@ -2789,6 +2804,9 @@ ${this.getStage3Interpretation()}
     async showFinalProfileButtons() {
         this._hideAILoader();
         this._stopTestMeter();
+        // Портрет сейчас встанет на экран — с этого момента часть 3 можно
+        // рисовать по приходу: выше портрета ей делать нечего.
+        this._resultShown = true;
         // Разбор письмом — если человек оставил почту на знакомстве.
         // Не ждём ответа: письмо не должно задерживать экран результата.
         this._emailPdf();
@@ -2891,10 +2909,23 @@ ${this.getStage3Interpretation()}
         //
         // Ждём не дольше восьми секунд: кнопки должны появиться в любом
         // случае, даже если сервер молчит.
+        // Ждём рекомендации под тем же экраном ожидания, а не показываем
+        // разбор без них (решение владельца 15.09.2026): часть 3, пришедшая
+        // через десять секунд после портрета, читается как сбой, а не как
+        // продолжение. Запрос стартовал параллельно с профилем ещё в
+        // sendTestResultsToServer, поэтому здесь чаще всего ждать уже
+        // нечего; потолок — 25 секунд, чтобы экран не завис навсегда.
+        this._showAILoader('Meyster AI подбирает ваши шаги',
+                           'Курс, тренажёр и третий шаг по вашему профилю. Несколько секунд.');
         await Promise.race([
-            this.fetchTestRecommendations(),
-            new Promise(r => setTimeout(r, 8000))
+            this._recsPromise || this.fetchTestRecommendations(),
+            new Promise(r => setTimeout(r, 25000))
         ]);
+        this._hideAILoader();
+        // Пришли, пока портрета ещё не было на экране, — рисуем сейчас.
+        if (this._lastRecommendations && !this._recsRendered) {
+            this.renderTestRecommendations(this._lastRecommendations);
+        }
 
         // Финал теста — единственная точка, где у анонима есть своя причина
         // назваться: он только что вложил полчаса и получил профиль, который
@@ -3343,6 +3374,10 @@ ${recs ? `<h2>С чего начать</h2>${recs}` : ''}
     },
 
     renderTestRecommendations(items) {
+        // Часть 3 рисуется один раз: запрос уходит параллельно с профилем,
+        // и без этого её нарисовали бы дважды — по приходу и по ожиданию.
+        if (this._recsRendered) return;
+        this._recsRendered = true;
         const esc = t => String(t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
         const icons = { course: '🎓', game: '🎮', trening: '🧑\u200d🏫' };
         // Курс и тренинг — отдельные страницы, открываем в новой вкладке,
