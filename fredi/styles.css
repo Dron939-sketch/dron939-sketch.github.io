@@ -2795,7 +2795,7 @@ input, textarea, select, button { box-sizing: border-box; }
     background: var(--black-matte);
 }
 [data-theme="light"] .talk-foot { background: #fff; border-top-color: rgba(0,0,0,0.07); }
-.talk-foot .dash-composer { margin: 0 0 8px; }
+.talk-foot .dash-composer { margin: 8px 0 0; }
 .talk-foot .dash-composer-or { display: none; }
 .talk-foot .voice-card { margin: 0; }
 .talk-foot .voice-record-btn-premium { padding: 13px 18px; font-size: 14px; }

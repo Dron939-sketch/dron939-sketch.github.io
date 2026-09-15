@@ -208,11 +208,15 @@
         if (_open) { _scrollDown(); return; }
         var body = document.getElementById('talkBody');
         var foot = document.getElementById('talkFoot');
+        // Порядок в подвале окна тот же, что на дашборде: сначала кнопка
+        // голоса, под ней поле ввода (решение владельца 15.09.2026).
         _slots = {
             stream: _take('dashChatStream', null, body),
-            composer: _take(null, '.dash-composer', foot),
             voice: _take(null, '.voice-card', foot),
+            composer: _take(null, '.dash-composer', foot),
         };
+        var stream0 = document.getElementById('dashChatStream');
+        if (stream0) stream0.hidden = false;
         _panel.classList.add('is-open');
         if (_back) _back.hidden = false;
         _pill.hidden = true;
@@ -238,11 +242,19 @@
         // Узлы возвращаются на дашборд: под свёрнутым окном он должен
         // остаться рабочим, с полем ввода и микрофоном на своих местах.
         if (_slots) {
-            _give(_slots.voice);
+            // Возврат в обратном порядке: метки стоят на своих местах, но
+            // так узлы встают в дашборд той же чередой, что и лежали.
             _give(_slots.composer);
+            _give(_slots.voice);
             _give(_slots.stream);
             _slots = null;
         }
+        // Переписка остаётся в окне и только в нём. Иначе под дашбордом
+        // висит вторая копия того же разговора — с историей, приветствием
+        // и всеми репликами: владелец увидел это первым же вечером.
+        // Обратно человек попадает язычком, а не прокруткой вниз.
+        var stream = document.getElementById('dashChatStream');
+        if (stream) stream.hidden = true;
         if (_watch) { _watch.disconnect(); _watch = null; }
         _panel.classList.remove('is-open');
         if (_back) _back.hidden = true;
@@ -289,15 +301,39 @@
             if (_autoWatch) { _autoWatch.disconnect(); _autoWatch = null; }
             var out = orig.apply(this, arguments);
             // Лента после перерисовки новая — наблюдателя ставим заново.
-            setTimeout(_autoOpenOnFirstMessage, 60);
+            setTimeout(function () { _autoOpenOnFirstMessage(); _openOnTyping(); }, 60);
             _historyLoaded = false;
             return out;
         };
     }
 
+    // Человек начал печатать — окно открывается сразу, не дожидаясь
+    // отправки (решение владельца 15.09.2026): писать своё в узкую строчку
+    // посреди дашборда и не видеть, кому пишешь, — это не разговор.
+    // Поле переезжает в окно вместе с набранным текстом, поэтому фокус и
+    // позицию курсора возвращаем руками: перенос узла их сбрасывает.
+    function _openOnTyping() {
+        var input = document.getElementById('dashComposerInput');
+        if (!input || input._talkTyping) return;
+        input._talkTyping = true;
+        input.addEventListener('input', function () {
+            if (_open || _userCollapsed) return;
+            if (!input.value) return;
+            var pos = input.selectionStart;
+            open('typing');
+            setTimeout(function () {
+                var el = document.getElementById('dashComposerInput');
+                if (!el) return;
+                el.focus();
+                try { el.setSelectionRange(pos, pos); } catch (e) {}
+            }, 0);
+        });
+    }
+
     function _init() {
         _guardRerender();
         _autoOpenOnFirstMessage();
+        _openOnTyping();
     }
     if (document.readyState === 'loading')
         document.addEventListener('DOMContentLoaded', function () { setTimeout(_init, 300); });
