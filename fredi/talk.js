@@ -260,9 +260,56 @@
 
     // ---- открыть / свернуть ------------------------------------------
 
+    // Превращение поля в окно. Человек начал писать в узкую строчку — и
+    // она на его глазах вырастает в переписку, вместо того чтобы экран
+    // моргнул и сверху легло чужое окно. Момент перехода — единственное
+    // место, где видно, что это одно и то же поле, а не два разных.
+    //
+    // Геометрия анимируется напрямую (left/top/width/height), а не
+    // transform: масштабирование окна 430×760 до строки 340×48 сплющило бы
+    // вместе с рамкой и весь текст внутри. Это одна фиксированная коробка,
+    // и раскладку браузер пересчитывает только для неё.
+    var MORPH_MS = 480;
+    function _morphFrom(box) {
+        if (!_panel || !box || !box.width) return;
+        var el = _panel;
+        // Конечная геометрия — та, что задаёт CSS: читаем её уже открытой.
+        var to = el.getBoundingClientRect();
+        if (!to.width) return;
+        var put = function (r, radius) {
+            el.style.left = r.left + 'px';
+            el.style.top = r.top + 'px';
+            el.style.width = r.width + 'px';
+            el.style.height = r.height + 'px';
+            el.style.right = 'auto';
+            el.style.bottom = 'auto';
+            if (radius !== undefined) el.style.borderRadius = radius;
+        };
+        el.classList.add('is-morphing');
+        put(box, '16px');
+        // Отражение раскладки: без него браузер склеит оба состояния в одно
+        // и перехода не будет вовсе.
+        void el.offsetHeight;
+        put(to, '');
+        setTimeout(function () {
+            el.classList.remove('is-morphing');
+            el.style.left = el.style.top = el.style.width = el.style.height =
+                el.style.right = el.style.bottom = el.style.borderRadius = '';
+        }, MORPH_MS + 40);
+    }
+
     function open(source) {
         _build();
         if (_open) { _scrollDown(); return; }
+        // Коробку поля снимаем ДО переноса: после него поле уже в окне.
+        var from = null;
+        if (source === 'typing' || source === 'message') {
+            var comp = document.querySelector('.dash-composer');
+            if (comp) {
+                var r = comp.getBoundingClientRect();
+                if (r.width) from = { left: r.left, top: r.top, width: r.width, height: r.height };
+            }
+        }
         var body = document.getElementById('talkBody');
         var foot = document.getElementById('talkFoot');
         // Порядок в подвале окна тот же, что на дашборде: сначала кнопка
@@ -275,6 +322,7 @@
         var stream0 = document.getElementById('dashChatStream');
         if (stream0) stream0.hidden = false;
         _panel.classList.add('is-open');
+        if (from) _morphFrom(from);
         if (_back) _back.hidden = false;
         _pill.hidden = true;
         _open = true;
@@ -376,14 +424,26 @@
         input.addEventListener('input', function () {
             if (_open || _userCollapsed) return;
             if (!input.value) return;
-            var pos = input.selectionStart;
+            // Каретку запоминаем расстоянием от КОНЦА строки, а не позицией
+            // от начала: пока окно собирается, человек успевает дописать
+            // ещё несколько букв, и позиция от начала уводит каретку в
+            // середину набранного — получалось «ме тревожнон».
+            var tail = input.value.length - input.selectionStart;
             open('typing');
-            setTimeout(function () {
+            // Фокус возвращаем СИНХРОННО, в том же обработчике: через
+            // setTimeout уже поздно — перенос узла снимает фокус, и всё,
+            // что человек набирает до следующего кадра, уходит в никуда.
+            // На быстром наборе от «меня накрывает» оставалась одна «м».
+            var refocus = function () {
                 var el = document.getElementById('dashComposerInput');
-                if (!el) return;
+                if (!el || document.activeElement === el) return;  // фокус цел — каретку не трогаем
                 el.focus();
-                try { el.setSelectionRange(pos, pos); } catch (e) {}
-            }, 0);
+                var at = Math.max(0, el.value.length - tail);
+                try { el.setSelectionRange(at, at); } catch (e) {}
+            };
+            refocus();
+            // Страховка на случай, если раскладка окна собьёт фокус ещё раз.
+            setTimeout(refocus, 0);
         });
     }
 

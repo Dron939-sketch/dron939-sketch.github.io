@@ -2761,6 +2761,27 @@ input, textarea, select, button { box-sizing: border-box; }
 }
 .talk-panel.is-open { display: flex; }
 @keyframes talkIn { from { opacity: 0; transform: translateY(18px) scale(.985); } }
+/* Превращение поля ввода в окно. Человек начал писать в узкую строчку —
+   и она на его глазах вырастает в переписку, а не сменяется чужим окном
+   поверх экрана. Геометрия едет напрямую: transform сплющил бы вместе с
+   рамкой и текст внутри. Пока окно растёт, шапка и лента проявляются —
+   иначе в первом кадре они лежали бы смятыми в высоту строки. Подвал не
+   трогаем: это и есть то самое поле, оно должно оставаться на месте. */
+.talk-panel.is-morphing {
+    animation: none;
+    transition: left var(--talk-morph, .48s) cubic-bezier(.22,.7,.24,1),
+                top var(--talk-morph, .48s) cubic-bezier(.22,.7,.24,1),
+                width var(--talk-morph, .48s) cubic-bezier(.22,.7,.24,1),
+                height var(--talk-morph, .48s) cubic-bezier(.22,.7,.24,1),
+                border-radius var(--talk-morph, .48s) ease;
+}
+.talk-panel.is-morphing .talk-head,
+.talk-panel.is-morphing .talk-body { animation: talkFadeIn .34s .16s both; }
+@keyframes talkFadeIn { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+    .talk-panel, .talk-panel.is-morphing { animation: none; transition: none; }
+    .talk-panel.is-morphing .talk-head, .talk-panel.is-morphing .talk-body { animation: none; }
+}
 [data-theme="light"] .talk-panel {
     background: #fff; border-color: rgba(0, 0, 0, 0.10);
     box-shadow: 0 24px 70px rgba(31, 41, 55, 0.18);

@@ -306,6 +306,14 @@
         catch (e) { return 1; }
     }
     function _authed() { return !!window.IS_AUTHENTICATED; }
+    // Пройден ли тест. Код профиля — единственный признак, доступный на
+    // клиенте: «···» означает, что профиля нет.
+    function _hasProfile() {
+        try {
+            var code = window.CONFIG && window.CONFIG.PROFILE_CODE;
+            return !!(code && code !== '···');
+        } catch (e) { return false; }
+    }
     function _newcomer() { return !_authed() && _visits() <= 1; }
     // Разговор состоялся — три и больше сообщений за сессию. Предложение
     // в середине живого разговора читается как «уберём помеху», а на
@@ -1647,25 +1655,44 @@
             var overlay = document.createElement('div');
             overlay.className = 'meter-overlay';
             overlay.id = 'meterDoorOverlay';
+            // Регистрация из этой карточки убрана (решение владельца
+            // 15.09.2026). Почту человек и так оставит на оплате пробы, и
+            // тогда предложение завести аккаунт для него уже норма. Звать
+            // регистрироваться раньше — отвлекать на шаг, который ничего
+            // ему не открывает: он остаётся в той же бесплатной версии.
+            //
+            // Вместо этого карточка называет ровно то, во что он упрётся:
+            // без теста Фреди отвечает вслепую, время кончится сегодня, а
+            // завтра разговор начнётся с нуля. Числа минут — из статуса
+            // счётчика, руками не вписываются.
+            var mins = (_lastCheck && (_lastCheck.daily_limit_minutes ||
+                        (gain && gain.small))) || null;
+            var noTest = !_hasProfile();
+            var lines = [];
+            if (noTest) {
+                lines.push('<b>Тест вы не проходили.</b> Фреди отвечает вслепую: ' +
+                           'он не знает ни ваших опор, ни того, откуда у трудности корни.');
+            }
+            lines.push('<b>Времени' + (mins ? ' — ' + mins + ' минут в день' : ' в обрез') +
+                       '.</b> Кончится — продолжение завтра.');
+            lines.push('<b>Разговор не сохраняется.</b> Завтра Фреди начнёт с чистого ' +
+                       'листа, и всё придётся рассказывать заново.');
             overlay.innerHTML =
                 '<div class="meter-modal">' +
-                    '<div class="meter-emoji">📩</div>' +
+                    '<div class="meter-emoji">🔓</div>' +
                     '<div class="meter-title">Вы в бесплатной версии</div>' +
                     '<div class="meter-text">' + (who ? _esc(who) + ', разговор пошёл. ' : 'Разговор пошёл. ') +
-                        'Но этот разговор не сохраняется: завтра Фреди начнёт с чистого листа, и всё придётся рассказывать заново. ' +
-                        'Сохранить его — аккаунт, почта и четыре цифры, бесплатно.' +
-                        (gain ? ' ' + _gainPhrase(gain, false) : '') +
-                        ' Чтобы Фреди помнил вас и продолжал завтра с того же места — подписка, первые три дня 99 ₽.' +
-                    '</div>' +
-                    '<button class="meter-btn meter-btn-primary" id="meterDoorReg">📩 Сохранить разговор — аккаунт</button>' +
-                    '<button class="meter-btn meter-btn-secondary" id="meterDoorSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                        'Дальше он упрётся в ' + (noTest ? 'три' : 'две') + ' вещи.</div>' +
+                    '<div class="meter-text" style="text-align:left;border-left:3px solid #3b82ff;padding-left:11px;margin:0 0 15px">' +
+                        lines.join('<br><br>') + '</div>' +
+                    '<div class="meter-text">Три дня за 99 ₽ снимают это разом: ' +
+                        (noTest ? 'тест с разбором, ' : '') +
+                        'память о каждом разговоре, время без счётчика, голос и все режимы. ' +
+                        'Понравится — дальше 990 ₽ в месяц, отключить можно в один клик.</div>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 99 ₽</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
-            document.getElementById('meterDoorReg').onclick = function () {
-                overlay.remove();
-                _openRegister('door_' + (source || ''));
-            };
             document.getElementById('meterDoorSub').onclick = function () {
                 _track('meter_subscribe_clicked', { source: 'door_' + (source || '') });
                 overlay.remove();
