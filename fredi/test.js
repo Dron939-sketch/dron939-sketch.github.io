@@ -1810,21 +1810,63 @@ const Test = {
     // прислал бы человеку второе такое же письмо.
     _emailPdf() {
         if (this._pdfMailed || !this.userId) return;
+        // Запрос уходит ВСЕГДА, даже когда почты в контексте нет: адрес
+        // разрешает сервер — тело, потом контекст, потом аккаунт. Раньше
+        // здесь стоял ранний выход, и всякий, кто проходил знакомство
+        // до появления вопроса про почту (то есть все прежние
+        // пользователи), не получал письма вообще — хотя почта лежала
+        // у него в аккаунте. Нет адреса нигде — сервер честно ответит
+        // no_email, и это ничего не стоит.
         var email = (this.context && this.context.email) || '';
-        if (!email) return;
         this._pdfMailed = true;
         try {
             fetch(TEST_API_BASE_URL + '/api/test/email-pdf', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: parseInt(this.userId), email: email }),
+                body: JSON.stringify({ user_id: parseInt(this.userId), email: email || null }),
             }).then(function (r) { return r.json(); }).then(function (d) {
                 try {
                     if (window.FrediTracker && window.FrediTracker.track)
-                        window.FrediTracker.track('test_pdf_emailed', { sent: !!(d && d.success) });
+                        window.FrediTracker.track('test_pdf_emailed', {
+                            sent: !!(d && d.success), reason: (d && d.error) || '' });
                 } catch (e) {}
+                // Адреса нет нигде — спрашиваем здесь, и только здесь.
+                // Раньше знакомство проходили один раз навсегда, и всякий,
+                // кто прошёл его до появления вопроса про почту, письма
+                // не получал и не мог получить.
+                if (d && d.error === 'no_email') Test._askEmailForPdf();
             }).catch(function () {});
         } catch (e) {}
+    },
+
+    // Одна строка на экране результата вместо второго знакомства. Спрашиваем
+    // ровно тогда, когда прислать некуда: у кого адрес есть в аккаунте или
+    // в контексте, тот ничего не видит.
+    _askEmailForPdf() {
+        if (this._emailAsked) return;
+        this._emailAsked = true;
+        this.addInputMessage('📄 Прислать разбор на почту? Придёт файлом — останется у вас, даже если закроете вкладку.\n\nМожно пропустить: нажмите ↑ с пустым полем.', {
+            placeholder: 'your@email.com',
+            type: 'email',
+            validate: v => (!v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
+                ? null : 'Проверьте адрес — похоже, в нём опечатка',
+            onSubmit: v => {
+                if (!v) return;
+                this.context.email = v;
+                this.saveProgress();
+                fetch(TEST_API_BASE_URL + '/api/test/email-pdf', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: parseInt(this.userId), email: v }),
+                }).then(function (r) { return r.json(); }).then(function (d) {
+                    Test.addBotMessage(d && d.success
+                        ? '📨 Отправил на ' + v + '. Если письма нет через пару минут — загляните в «Промоакции» и «Спам».'
+                        : '📭 Письмо не ушло — почта сейчас недоступна. Разбор остаётся здесь, на экране.', true);
+                }).catch(function () {
+                    Test.addBotMessage('📭 Письмо не ушло — связь прервалась. Разбор остаётся здесь, на экране.', true);
+                });
+            }
+        });
     },
 
     _meterProtect(on) {
@@ -2928,11 +2970,18 @@ ${this.getStage3Interpretation()}
         // написать ему /start и вернуться — половина людей отваливалась на
         // середине. Механизм цел: sendPortraitToMax и ручка на бэкенде
         // остались, их можно повесить туда, где мессенджер уже привязан.
+        // «Скачать этот разбор» и «Мысли психолога» убраны 15.09.2026
+        // (решение владельца): экран результата и без них длинный, а
+        // разбор теперь уходит письмом с PDF — скачивать руками незачем.
+        // Мысли психолога при этом не теряются: их кладёт в тот же PDF
+        // _build_test_pdf_for_user на бэкенде.
+        //
+        // downloadReport и showPsychologistThought остались в файле и
+        // сейчас ниоткуда не вызываются. Удалять их не стали: печать
+        // отчёта и текст мыслей понадобятся, когда решится, куда их
+        // повесить, — а собирать это заново дороже, чем держать.
         nextButtons.push(
-            { text: '⬇️ СКАЧАТЬ ЭТОТ РАЗБОР', keepEnabled: true,
-              callback: () => this.downloadReport(p, deep, { sbD, tfD, ubD, cvD }) },
-            { text: '🧠 МЫСЛИ ПСИХОЛОГА',    callback: () => this.showPsychologistThought() },
-            { text: '🏠 НА ГЛАВНУЮ',         callback: () => this.goToDashboard() }
+            { text: '🏠 НА ГЛАВНУЮ', callback: () => this.goToDashboard() }
         );
         const whatNext = isAuthed
             ? '👇 **ЧТО ДАЛЬШЕ?**'

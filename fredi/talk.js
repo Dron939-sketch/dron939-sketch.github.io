@@ -32,6 +32,7 @@
     var _open = false;
     var _userCollapsed = false;   // человек свернул окно сам
     var _autoWatch = null;
+    var _screenTimer = null;
 
     function _api() {
         return (window.CONFIG && window.CONFIG.API_BASE_URL) || '';
@@ -167,8 +168,15 @@
     }
 
     function _give(rec) {
-        if (!rec || !rec.slot || !rec.slot.parentNode) return;
-        rec.slot.parentNode.replaceChild(rec.node, rec.slot);
+        if (!rec) return;
+        if (rec.slot && rec.slot.parentNode) {
+            rec.slot.parentNode.replaceChild(rec.node, rec.slot);
+            return;
+        }
+        // Метки нет: экран перерисовали, пока узел лежал у окна. Возвращать
+        // некуда, а держать в окне нельзя — на следующем открытии там
+        // оказалась бы мёртвая лента прошлого экрана поверх живой.
+        try { if (rec.node && rec.node.parentNode) rec.node.parentNode.removeChild(rec.node); } catch (e) {}
     }
 
     // ---- история -----------------------------------------------------
@@ -470,11 +478,44 @@
         _pill.hidden = true;
     }
 
+    // Смена экрана. Обёртка над window.renderDashboard этого не ловит, и на
+    // то две причины сразу: сама renderDashboard при каждом вызове пишет
+    // window.renderDashboard = renderDashboard и тем стирает обёртку, а
+    // test.js зовёт функцию по имени, то есть мимо window вообще. Из-за
+    // этого после возврата из теста набор текста на дашборде переставал
+    // открывать окно — наблюдатели остались висеть на узлах прошлой
+    // отрисовки. Поэтому слушаем сам экран, а не того, кто его рисует.
+    function _onScreenChange() {
+        // Окно держит узлы прошлого экрана — отпускаем, пока они не
+        // всплыли поверх новых.
+        if (_open) {
+            var held = document.querySelector('.talk-panel #dashChatStream');
+            if (!held || !document.getElementById('screenContainer').contains(
+                    document.querySelector('.dash-composer'))) {
+                collapse(true);
+            }
+        }
+        // Вернулись на дашборд — это новый заход, и прошлое «свернул сам»
+        // его не касается: человек ушёл в тест и пришёл обратно.
+        if (_dashboardOnScreen()) {
+            _userCollapsed = false;
+            _historyLoaded = false;
+            if (_autoWatch) { _autoWatch.disconnect(); _autoWatch = null; }
+            _autoOpenOnFirstMessage();
+            _openOnTyping();
+        }
+        _syncPill();
+    }
+
     function _watchScreen() {
         var host = document.getElementById('screenContainer');
         if (!host || !window.MutationObserver) return;
-        new MutationObserver(function () { _syncPill(); })
-            .observe(host, { childList: true, subtree: false });
+        new MutationObserver(function () {
+            // Перерисовка идёт одним innerHTML — ждём конца кадра, чтобы
+            // не цепляться к узлам на середине сборки.
+            clearTimeout(_screenTimer);
+            _screenTimer = setTimeout(_onScreenChange, 60);
+        }).observe(host, { childList: true, subtree: false });
     }
 
     function _init() {
