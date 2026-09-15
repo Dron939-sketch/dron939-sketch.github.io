@@ -2585,7 +2585,10 @@ input, textarea, select, button { box-sizing: border-box; }
    мимо размытия — браузер размывает пиксели, а не текст. */
 .dash-live-who {
     flex: 0 0 auto; font-size: 11.5px; color: var(--text-secondary);
-    filter: blur(3.2px); opacity: .85;
+    /* Размытие слабое: при 3,2 пикселя подпись превращалась в серое пятно,
+       и человек не понимал, что там вообще надпись. Нужно, чтобы читалось
+       «здесь имя», но не читалось само имя. */
+    filter: blur(1.8px); opacity: .95;
     user-select: none; -webkit-user-select: none; pointer-events: none;
 }
 .dash-live-list li:first-child .dash-live-q { opacity: .45; }

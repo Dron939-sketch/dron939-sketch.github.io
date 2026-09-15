@@ -1645,6 +1645,9 @@
         showAccountDoor: showAccountDoor,
         gameLocked: gameLocked,
         gameLockedPeek: gameLockedPeek,
+        // Наружу — модулям, которые запирают не себя целиком, а отдельные
+        // свои части (skill_choice.js: часть навыков по подписке).
+        isPremium: _isPremiumNow,
         showGameLock: showGameLock,
         premiumGames: PREMIUM_GAMES,
         premiumTools: PREMIUM_TOOLS,
