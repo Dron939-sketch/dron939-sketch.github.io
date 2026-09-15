@@ -60,6 +60,7 @@
                 '<span class="talk-ava">🧠<i class="talk-dot"></i></span>' +
                 '<span class="talk-title">Разговор с Фреди</span>' +
                 '<span class="talk-sub" id="talkSub"></span>' +
+                '<button type="button" class="talk-icon talk-mute" id="talkMute"></button>' +
                 '<button type="button" class="talk-icon" id="talkCollapse" ' +
                         'title="Свернуть" aria-label="Свернуть">—</button>' +
             '</div>' +
@@ -87,12 +88,58 @@
         _back.addEventListener('click', collapse);
 
         _panel.querySelector('#talkCollapse').addEventListener('click', collapse);
+        _wireMute();
         _pill.addEventListener('click', function () { open('pill'); });
         // Esc сворачивает — окно поверх экрана, и выход должен быть под рукой.
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && _open) collapse();
         });
         return _panel;
+    }
+
+    // ---- звук --------------------------------------------------------
+    //
+    // Выключенный звук превращает окно в обычную переписку: Фреди отвечает
+    // текстом и молчит, на синтез ничего не уходит (sound.js). Это не
+    // настройка «для аккуратных», а выход из тупика: голос из динамика в
+    // метро или в открытом офисе — неуместный формат, и человек закрывает
+    // вкладку, а не ищет, где его убавить (замечание владельца 15.09.2026).
+    // Поэтому кнопка стоит не в настройках, а прямо в шапке разговора.
+
+    function _soundOff() {
+        return !!(window.FrediSound && window.FrediSound.isOff());
+    }
+
+    function _paintMute() {
+        var btn = _panel && _panel.querySelector('#talkMute');
+        if (!btn) return;
+        var off = _soundOff();
+        btn.textContent = off ? '🔇' : '🔊';
+        btn.classList.toggle('is-off', off);
+        btn.setAttribute('aria-pressed', off ? 'true' : 'false');
+        btn.title = off ? 'Включить голос Фреди' : 'Выключить голос — Фреди будет отвечать текстом';
+        btn.setAttribute('aria-label', btn.title);
+        if (_panel) _panel.classList.toggle('is-muted', off);
+        var sub = document.getElementById('talkSub');
+        // Подпись живёт под заголовком и занята загрузкой истории — не
+        // затираем её, показываем только в спокойном состоянии.
+        if (sub && (!sub.textContent || sub.dataset.mute === '1')) {
+            sub.textContent = off ? 'без звука' : '';
+            sub.dataset.mute = off ? '1' : '';
+        }
+    }
+
+    function _wireMute() {
+        var btn = _panel && _panel.querySelector('#talkMute');
+        if (!btn || btn._wired) return;
+        btn._wired = true;
+        btn.addEventListener('click', function () {
+            if (window.FrediSound) window.FrediSound.toggle();
+            _paintMute();
+            _track('talk_sound_toggled', { off: _soundOff() });
+        });
+        document.addEventListener('fredi:sound', _paintMute);
+        _paintMute();
     }
 
     // ---- перенос узлов туда и обратно --------------------------------
@@ -143,13 +190,13 @@
         var uid = _uid();
         if (!uid) return Promise.resolve();
         var sub = document.getElementById('talkSub');
-        if (sub) sub.textContent = 'загружаю…';
+        if (sub) { sub.textContent = 'загружаю…'; sub.dataset.mute = ''; }
         return fetch(_api() + '/api/chat/history/' + uid + '?limit=' + HISTORY_LIMIT)
             .then(function (r) { return r.json(); })
             .then(function (d) {
                 var msgs = (d && d.messages) || [];
                 var inner = _streamInner();
-                if (sub) sub.textContent = '';
+                if (sub) { sub.textContent = ''; _paintMute(); }
                 if (!inner || !msgs.length) return;
                 // Хвост истории — это те же реплики, что уже висят в ленте
                 // текущего захода. Сверяем по тексту и не повторяем.
@@ -178,7 +225,7 @@
                 if (stream) stream.classList.add('has-messages');
                 _track('talk_history_shown', { n: shown });
             })
-            .catch(function () { if (sub) sub.textContent = ''; });
+            .catch(function () { if (sub) { sub.textContent = ''; _paintMute(); } });
     }
 
     // Внутри окна прокручивается .talk-body, а лента лежит в ней во всю

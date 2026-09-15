@@ -2170,7 +2170,10 @@ async function initVoice() {
         const btn = document.getElementById('mainVoiceBtn');
         if (btn && (btn._voiceStatus === 'thinking' || btn._voiceStatus === 'processing')
             && voiceManager.onStatusChange) {
-            voiceManager.onStatusChange('tts_loading');
+            // В беззвучном режиме ждать нечего: текст ответа уже на экране,
+            // а «ждём озвучку» повисло бы на кнопке до конца стрима.
+            const muted = window.FrediSound && window.FrediSound.isOff();
+            voiceManager.onStatusChange(muted ? 'idle' : 'tts_loading');
         }
     };
 
@@ -3518,6 +3521,10 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (e) { return; }
 
     setTimeout(function() {
+        // Беззвучный режим (sound.js): приветствие не проигрываем. Оно
+        // звучит один раз после регистрации — ровно тот момент, когда
+        // неожиданный голос из динамика дороже всего стоит.
+        if (window.FrediSound && window.FrediSound.isOff()) return;
         var audio = new Audio('/fredi/sounds/welcome.mp3');
         audio.volume = 0.85;
         var toast = document.getElementById('toastMessage');
