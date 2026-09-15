@@ -1708,10 +1708,27 @@
                         (noTest ? 'тест с разбором, ' : '') +
                         'память о каждом разговоре, время без счётчика, голос и все режимы. ' +
                         'Понравится — дальше 990 ₽ в месяц, отключить можно в один клик.</div>' +
+                    (noTest
+                        ? '<button class="meter-btn meter-btn-secondary" id="meterDoorTest">🧭 Пройти тест — бесплатно</button>'
+                        : '') +
                     '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 99 ₽</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
+            // Тест — первой кнопкой и только тому, кто его не проходил
+            // (решение владельца 15.09.2026). Он бесплатный и снимает
+            // первый из трёх названных выше упоров, поэтому стоять рядом
+            // с ценой ему не стыдно: человек либо платит, либо делает шаг,
+            // после которого Фреди перестаёт отвечать вслепую.
+            var doorTest = document.getElementById('meterDoorTest');
+            if (doorTest) doorTest.onclick = function () {
+                _track('meter_account_door_test', { source: source || '' });
+                overlay.remove();
+                try {
+                    if (typeof window.startTest === 'function') window.startTest();
+                    else window.location.href = '/fredi/?m=test';
+                } catch (e) { window.location.href = '/fredi/?m=test'; }
+            };
             document.getElementById('meterDoorSub').onclick = function () {
                 _track('meter_subscribe_clicked', { source: 'door_' + (source || '') });
                 overlay.remove();
