@@ -1243,6 +1243,38 @@ function showFullContentScreen(title, content, contentType) {
 // ============================================
 
 // Короткое «чем отличается режим» — показывается под селектором на дашборде
+/* Вопросы в ленте под полем ввода.
+ *
+ * Зачем. Человек доходит до дашборда и упирается в пустое поле: 69%
+ * разговоров за неделю 09–15.09.2026 — одна реплика и уход, медиана
+ * разговора равна единице. Пустая строка не подсказывает, о чём вообще
+ * с этим можно говорить, и половина тем (секс, деньги, злость на
+ * близких) человеку и в голову не приходит — он думает, что сюда
+ * «с таким не ходят».
+ *
+ * Строки не кликаются и ничего не подставляют: вопрос человек
+ * формулирует сам. Готовый чужой вопрос в поле — это тот же автовопрос
+ * из объявления, а такие разговоры продолжаются в 12% случаев против
+ * 56% у начатых самостоятельно.
+ *
+ * Темы совпадают с реальным распределением обращений: «нет сил» —
+ * каждый пятый разговор, отношения — каждый десятый, дальше тревога,
+ * сон, родители, деньги, злость, одиночество.
+ */
+const DASH_QUESTIONS = [
+    'Я представляю другого. Это уже измена?',
+    'Полгода без секса, и оба делаем вид, что так и надо',
+    'Иногда я радуюсь чужим неудачам. Что со мной?',
+    'В три часа ночи я точно знаю, что всё зря. Утром — нет',
+    'Постоянное мысленное возвращение в ситуацию стыда',
+    'Я не скучаю по маме. Со мной что-то не так?',
+    'Я срываюсь только на тех, кто точно не уйдёт',
+    'Получил повышение — и впервые захотел уволиться',
+    'Мне легче с чужими, чем с близкими',
+    'Я жду, когда он оступится, чтобы наконец уйти'
+];
+
+
 const MODE_DESCS = {
     basic: 'Выберите стиль общения — или просто начните говорить',
     coach: 'Коуч помогает сформулировать цель и найти свои решения — без советов сверху',
@@ -2232,6 +2264,19 @@ function renderDashboard() {
                 </div>
             </div>
 
+            <!-- Лента вопросов: что вообще сюда можно принести. -->
+            <div class="dash-live" id="dashLive">
+                <div class="dash-live-head">
+                    <span class="dash-live-title">О чём спрашивают Фреди</span>
+                    <span class="dash-live-now" id="dashLiveNow" hidden>
+                        <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
+                    </span>
+                </div>
+                <div class="dash-live-view">
+                    <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
+                </div>
+            </div>
+
             <div class="mode-selector">
                 <button class="mode-btn ${currentMode === 'coach' ? 'active' : ''}" data-mode="coach">🔮 КОУЧ</button>
                 <button class="mode-btn ${currentMode === 'psychologist' ? 'active' : ''}" data-mode="psychologist">🧠 ПСИХОЛОГ</button>
@@ -2401,6 +2446,100 @@ function renderDashboard() {
             }
         } catch {}
     });
+
+    // ===== Лента вопросов =====
+    // Клик кладёт вопрос в поле и отдаёт человеку последний шаг: разговоры,
+    // начатые автоотправкой, продолжаются в 12% случаев, начатые самим
+    // человеком — в 56% (выгрузка 542 диалогов за 09–15.09.2026).
+    // Вопросы приходят по одному, как сообщения в чате: новый снизу, старые
+    // уезжают вверх. Бегущая строка читается как реклама и проскакивает
+    // мимо; появление по одному человек дочитывает — и попадает на тот
+    // вопрос, который про него.
+    (function dashLiveChat() {
+        const list = document.getElementById('dashLiveList');
+        if (!list) return;
+        const calm = window.matchMedia
+            && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Не кнопка, а строка. Решение владельца 15.09.2026: подставлять
+        // чужой вопрос в поле не надо — человек должен сформулировать свой.
+        // Лента здесь затем, чтобы он увидел, что сюда ходят и с таким,
+        // а не чтобы выбрал готовое из списка.
+        const row = (q) => {
+            const li = document.createElement('li');
+            const div = document.createElement('div');
+            div.className = 'dash-live-q';
+            div.textContent = q;
+            li.appendChild(div);
+            return li;
+        };
+
+        // Человеку, который не хочет движения, показываем всё сразу списком.
+        if (calm) {
+            DASH_QUESTIONS.forEach(q => list.appendChild(row(q)));
+            return;
+        }
+
+        const MAX = 4;            // сколько строк держим в ленте
+        let i = 0;
+        // Стартуем с трёх, чтобы лента не выглядела пустой в первую секунду.
+        for (; i < 3; i++) list.appendChild(row(DASH_QUESTIONS[i]));
+
+        const push = () => {
+            const li = row(DASH_QUESTIONS[i % DASH_QUESTIONS.length]);
+            i++;
+            li.classList.add('is-new');
+            list.appendChild(li);
+            while (list.children.length > MAX) list.removeChild(list.firstElementChild);
+            // Класс снимаем после проигрыша — иначе анимация не повторится.
+            setTimeout(() => li.classList.remove('is-new'), 700);
+        };
+
+        let timer = null;
+        const tick = () => {
+            push();
+            timer = setTimeout(tick, 1000 + Math.random() * 2000);  // 1–3 секунды
+        };
+        timer = setTimeout(tick, 1600);
+
+        // Наведение и фокус останавливают поток: человек читает строку, а
+        // она уезжает из-под курсора.
+        const view = list.closest('.dash-live-view');
+        if (view) {
+            const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
+            const go = () => { if (!timer) timer = setTimeout(tick, 1200); };
+            view.addEventListener('mouseenter', stop);
+            view.addEventListener('mouseleave', go);
+            view.addEventListener('focusin', stop);
+            view.addEventListener('focusout', go);
+        }
+    })();
+
+    // Счётчик «сколько человек здесь сейчас» — настоящее число визитов на
+    // /fredi/ и /virtual-psychologist/ за последние минуты, из Метрики через
+    // бэкенд. Если число недоступно, блок просто не показывается: выдумывать
+    // его внутри приложения нельзя, человек здесь уже за реальным.
+    (function dashLiveCounter() {
+        const wrap = document.getElementById('dashLiveNow');
+        const out = document.getElementById('dashLiveCount');
+        if (!wrap || !out) return;
+        const plural = n => {
+            const d10 = n % 10, d100 = n % 100;
+            if (d100 >= 11 && d100 <= 14) return 'человек';
+            if (d10 === 1) return 'человек';
+            if (d10 >= 2 && d10 <= 4) return 'человека';
+            return 'человек';
+        };
+        fetch((CONFIG.API_BASE_URL || '') + '/api/metrika/online?section=fredi')
+            .then(r => r.json())
+            .then(d => {
+                if (!d || !d.enabled || typeof d.online !== 'number' || d.online < 2) return;
+                out.textContent = d.online + ' ' + plural(d.online) +
+                    (d.window === 'hour' ? ' здесь за час' : ' сейчас здесь');
+                wrap.hidden = false;
+            })
+            .catch(() => {});
+    })();
 
     document.getElementById('profileBadge')?.addEventListener('click', async () => {
         try {
