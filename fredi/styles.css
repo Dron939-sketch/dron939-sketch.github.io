@@ -2709,3 +2709,131 @@ input, textarea, select, button { box-sizing: border-box; }
     .dash-live-list li:nth-child(2) .dash-live-q { opacity: 1; }
     .dash-live-dot { animation: none; }
 }
+
+/* ===== Окно разговора (talk.js) =====
+   Кнопка «Продолжить» в шапке открывает не просто поле ввода, а переписку:
+   человек видит, на чём остановились, и пишет дальше — как в мессенджере
+   с живым психологом. Своей ленты и своего композера у окна нет: оно
+   переносит к себе настоящие узлы дашборда, поэтому отправка, лимиты,
+   голос и потоковый ответ работают без единой копии логики. */
+.talk-panel {
+    position: fixed; z-index: 1200; right: 24px; bottom: 24px;
+    width: 430px; max-width: calc(100vw - 32px);
+    height: min(76vh, 760px);
+    display: none; flex-direction: column; overflow: hidden;
+    background: var(--black-matte);
+    border: 1px solid rgba(224, 224, 224, 0.14);
+    border-radius: 22px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+    animation: talkIn .22s cubic-bezier(.2,.7,.3,1) both;
+}
+.talk-panel.is-open { display: flex; }
+@keyframes talkIn { from { opacity: 0; transform: translateY(18px) scale(.985); } }
+[data-theme="light"] .talk-panel {
+    background: #fff; border-color: rgba(0, 0, 0, 0.10);
+    box-shadow: 0 24px 70px rgba(31, 41, 55, 0.18);
+}
+/* Шапка окна — как карточка специалиста: лицо, имя, статус. */
+.talk-head {
+    display: flex; align-items: center; gap: 11px; flex: 0 0 auto;
+    padding: 13px 14px; border-bottom: 1px solid rgba(224, 224, 224, 0.09);
+    background: linear-gradient(180deg, rgba(224,224,224,0.05), transparent);
+}
+[data-theme="light"] .talk-head { border-bottom-color: rgba(0,0,0,0.07); }
+.talk-ava {
+    position: relative; flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 19px;
+    background: linear-gradient(135deg, rgba(59,130,255,0.25), rgba(120,160,210,0.12));
+}
+.talk-dot {
+    position: absolute; right: 0; bottom: 0; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--success); border: 2px solid var(--black-matte);
+}
+[data-theme="light"] .talk-dot { border-color: #fff; }
+.talk-title { font-size: 14.5px; font-weight: 700; color: var(--text-primary); }
+.talk-title::after {
+    content: 'психолог · на связи'; display: block;
+    font-size: 11px; font-weight: 400; color: var(--text-secondary); margin-top: 1px;
+}
+.talk-sub { margin-left: auto; font-size: 11px; color: var(--text-secondary); }
+.talk-icon {
+    flex: 0 0 auto; width: 30px; height: 30px; margin-left: 8px; border-radius: 50%;
+    font: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+    color: var(--text-secondary); background: rgba(224, 224, 224, 0.07);
+    border: 1px solid rgba(224, 224, 224, 0.12);
+    transition: background .15s, color .15s;
+}
+.talk-icon:hover { background: rgba(224, 224, 224, 0.14); color: var(--text-primary); }
+/* Лента переписки. Переносится сюда целиком, поэтому высоту задаём телу. */
+.talk-body {
+    flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 14px;
+    background: rgba(224, 224, 224, 0.015);
+}
+[data-theme="light"] .talk-body { background: #f7f8fa; }
+.talk-body #dashChatStream { max-height: none; height: auto; overflow: visible; }
+.talk-body .chat-messages { display: flex; flex-direction: column; gap: 9px; padding: 0; }
+.talk-body .message { max-width: 86%; font-size: 14px; }
+/* В окне реплики человека синие, а не оранжевые: оранжевый на дашборде
+   спорит с самим собой рядом с кнопкой подписки, а здесь переписка должна
+   читаться спокойно. */
+.talk-body .message.user {
+    background: linear-gradient(135deg, #3b82ff, #2f6ddb); color: #fff;
+}
+.talk-body .message.history { opacity: .78; }
+/* Разделитель «Раньше» / «Сейчас» — чипом посередине, как дата в мессенджере. */
+.talk-sep {
+    align-self: center; font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--text-secondary); background: rgba(224, 224, 224, 0.07);
+    border-radius: 20px; padding: 3px 11px; margin: 4px 0;
+}
+[data-theme="light"] .talk-sep { background: rgba(0, 0, 0, 0.05); }
+.talk-sep--now { background: rgba(59, 130, 255, 0.12); color: #8ab4ff; }
+/* Низ: поле ввода и микрофон — те же узлы, что на дашборде. */
+.talk-foot {
+    flex: 0 0 auto; padding: 11px 13px calc(11px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid rgba(224, 224, 224, 0.09);
+    background: var(--black-matte);
+}
+[data-theme="light"] .talk-foot { background: #fff; border-top-color: rgba(0,0,0,0.07); }
+.talk-foot .dash-composer { margin: 0 0 8px; }
+.talk-foot .dash-composer-or { display: none; }
+.talk-foot .voice-card { margin: 0; }
+.talk-foot .voice-record-btn-premium { padding: 13px 18px; font-size: 14px; }
+.talk-foot .voice-card > div { font-size: 10.5px; margin-top: 5px; }
+/* Свёрнутое окно — язычок внизу справа. Узлы при этом возвращаются на
+   дашборд, поэтому под язычком он целый и рабочий. */
+.talk-pill {
+    position: fixed; z-index: 1199; right: 24px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 30px; cursor: pointer;
+    font: inherit; font-size: 13px; font-weight: 600; color: var(--text-primary);
+    background: var(--black-matte); border: 1px solid rgba(224, 224, 224, 0.16);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+[data-theme="light"] .talk-pill { background: #fff; border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(31,41,55,0.14); }
+.talk-pill[hidden] { display: none; }
+.talk-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+.talk-pill b { color: var(--text-secondary); font-weight: 400; }
+@media (max-width: 700px) {
+    /* На телефоне это лист снизу во весь экран: разговор — главное, что
+       сейчас на экране, и половинчатое окно только мешает. */
+    .talk-panel {
+        right: 0; left: 0; bottom: 0; width: auto; max-width: none;
+        height: 92vh; height: 92dvh; border-radius: 22px 22px 0 0;
+    }
+    .talk-pill { right: 16px; }
+    .talk-body .message { max-width: 90%; }
+}
+/* Затемнение под окном разговора: на широком экране оно перекрывало правую
+   колонку, и под ним оставалось что-то живое, до чего не дотянуться. */
+.talk-backdrop {
+    position: fixed; inset: 0; z-index: 1198;
+    background: rgba(0, 0, 0, 0.45);
+    -webkit-backdrop-filter: blur(1.5px); backdrop-filter: blur(1.5px);
+    animation: talkBackIn .18s ease both;
+}
+@keyframes talkBackIn { from { opacity: 0; } }
+.talk-backdrop[hidden] { display: none; }
+[data-theme="light"] .talk-backdrop { background: rgba(31, 41, 55, 0.28); }
