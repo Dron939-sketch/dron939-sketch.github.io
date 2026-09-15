@@ -1503,6 +1503,12 @@ function showReimprintingScreen() {
 // ============================================
 
 async function showAnchorsScreen() {
+    // Со второго захода — по подписке (список в meter.js, решение владельца
+    // 15.09.2026).
+    if (window.FrediMeter?.gameLocked?.('showAnchorsScreen')) {
+        window.FrediMeter.showGameLock('showAnchorsScreen', 'tool');
+        return;
+    }
     try { window.FrediTracker?.openFeature?.('anchors'); } catch (e) {}
     _anInjectStyles();
     await loadUserAnchors();

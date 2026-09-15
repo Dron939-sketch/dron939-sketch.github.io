@@ -364,7 +364,10 @@
         em.insertAdjacentElement('afterend', b);
       }
       btn.setAttribute('onclick', "KONTUR.launch('" + fn + "')");
-      if (M.gameLocked(fn)) locked = true;
+      // Именно peek: отрисовка списка не должна тратить бесплатный заход.
+      // Пока здесь стоял gameLocked, одно открытие хаба помечало все
+      // премиум-игры открытыми — и дальше человек упирался в замок в каждой.
+      if ((M.gameLockedPeek || M.gameLocked).call(M, fn)) locked = true;
     });
     if (locked) track('games_hub_locked_shown', {});
   }

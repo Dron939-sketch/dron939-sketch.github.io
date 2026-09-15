@@ -1631,6 +1631,12 @@ function _renderBrand() {
 // ТОЧКА ВХОДА
 // ============================================
 async function showPersonalBrandScreen() {
+    // Со второго захода — по подписке (список в meter.js, решение владельца
+    // 15.09.2026).
+    if (window.FrediMeter?.gameLocked?.('showPersonalBrandScreen')) {
+        window.FrediMeter.showGameLock('showPersonalBrandScreen', 'tool');
+        return;
+    }
     _brandInjectStyles();
     const container = document.getElementById('screenContainer');
     if (!container) return;

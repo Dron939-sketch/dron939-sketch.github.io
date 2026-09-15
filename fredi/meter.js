@@ -88,6 +88,8 @@
             var data = await r.json();
             _lastCheck = data;
             _lastCheckTime = now;
+            // Статус приехал — значки премиума в меню приводим в соответствие.
+            try { _markPremiumNav(); } catch (e) {}
             return data;
         } catch (e) {
             return { can_send: true };
@@ -1270,6 +1272,7 @@
     function _applyPatches() {
         _patchFetch();
         _initBadge();
+        _markPremiumNav();
         if (window.apiCall) { _patchApiCall(); }
         else {
             setTimeout(function() { if (window.apiCall) _patchApiCall(); }, 2000);
@@ -1401,6 +1404,33 @@
         showSobesGame: 'Собеседование',
         showPodrostokGame: 'Разговор с подростком',
     };
+    // Сильные инструменты — по той же схеме, что и игры (решение владельца
+    // 15.09.2026: «самые сильные вывести в премиум»). Отбор не по размеру
+    // файла, а по тому, что человек уносит с собой: сеанс внушения под свой
+    // тип восприятия, 21-дневный план с трекером, библиотека состояний,
+    // план личного бренда, разбор отношений через «зеркала». Всё это либо
+    // повторяют неделями, либо сохраняют — за такое платят.
+    //
+    // Бесплатными остаются входные и ежедневные: дневник, сны, сказки,
+    // эзотерика, привычки, роли и игры по Берну, КПТ-практики, «Мне плохо
+    // сейчас» и сам тест. Запирать то, с чего человек начинает знакомство,
+    // значит запирать вход. «Супервизор» заперт жёстче остальных — без
+    // бесплатного первого захода, это его собственная логика в supervizor.js.
+    var PREMIUM_TOOLS = {
+        showHypnosisScreen: 'Самогипноз',
+        showSkillChoiceScreen: 'Навыки: 21-дневный план',
+        showAnchorsScreen: 'Якоря: библиотека состояний',
+        showPersonalBrandScreen: 'Мой бренд',
+        showMirrorsScreen: 'Зеркала',
+    };
+    // Один список для проверки: и роутер, и хаб игр, и сами модули зовут
+    // gameLocked() с именем функции запуска.
+    var PREMIUM_ALL = {};
+    (function () {
+        var k;
+        for (k in PREMIUM_GAMES) if (PREMIUM_GAMES.hasOwnProperty(k)) PREMIUM_ALL[k] = PREMIUM_GAMES[k];
+        for (k in PREMIUM_TOOLS) if (PREMIUM_TOOLS.hasOwnProperty(k)) PREMIUM_ALL[k] = PREMIUM_TOOLS[k];
+    })();
     function _isPremiumNow() {
         if (window.IS_PREMIUM === true) return true;
         return !!(_lastCheck && (_lastCheck.is_premium || _lastCheck.has_subscription));
@@ -1410,20 +1440,80 @@
     // (решение владельца 12.09.2026). Замок на входе давал 5–14 секунд
     // на экран и уход; один раунд показывает, за что платить.
     function _gameSeenKey(fn) { return 'fredi_game_seen_' + fn; }
-    function gameLocked(fn) {
-        if (!fn || !PREMIUM_GAMES.hasOwnProperty(fn)) return false;
+    // Бесплатный заход, выданный в этой загрузке страницы. Без него один
+    // запуск съедал его дважды: роутер ?m=<игра> спрашивал gameLocked перед
+    // загрузкой модуля, модуль — ещё раз у себя, и на втором вопросе заход
+    // уже числился израсходованным. Человек по ссылке из статьи видел замок
+    // вместо игры, ни разу её не открыв.
+    var _freeGranted = {};
+    // Вопрос без последствий: заперто ли сейчас. Этим рисуются значки
+    // «💎 Premium» в списке игр — раньше там звался gameLocked, и одна
+    // отрисовка хаба помечала израсходованными все два десятка игр разом.
+    function gameLockedPeek(fn) {
+        if (!fn || !PREMIUM_ALL.hasOwnProperty(fn)) return false;
         if (_isPremiumNow()) return false;
+        if (_freeGranted[fn]) return false;
+        var seen = '';
+        try { seen = localStorage.getItem(_gameSeenKey(fn)) || ''; } catch (e) {}
+        return !!seen;
+    }
+    // Вопрос на входе: заперто ли — и если нет, первый заход считается
+    // израсходованным.
+    function gameLocked(fn) {
+        if (!fn || !PREMIUM_ALL.hasOwnProperty(fn)) return false;
+        if (_isPremiumNow()) return false;
+        if (_freeGranted[fn]) return false;
         var seen = '';
         try { seen = localStorage.getItem(_gameSeenKey(fn)) || ''; } catch (e) {}
         if (!seen) {
             try { localStorage.setItem(_gameSeenKey(fn), new Date().toISOString().slice(0, 10)); } catch (e) {}
+            _freeGranted[fn] = true;
             _track('game_first_open_free', { game: fn });
             return false;
         }
         return true;
     }
+    // Значок «Premium» у пунктов левого меню, которые заперты со второго
+    // захода. Без него человек нажимает «Гипноз» и упирается в стену, ничем
+    // не предупреждённый, — а это ровно та неожиданность, после которой
+    // закрывают вкладку. Премиуму значки не нужны, ему всё открыто.
+    var NAV_BY_TOOL = {
+        showMirrorsScreen: 'mirrors',
+        showHypnosisScreen: 'hypnosis',
+        showAnchorsScreen: 'anchors',
+        showPersonalBrandScreen: 'brand',
+    };
+    function _markPremiumNav() {
+        try {
+            // Статус подписки приезжает асинхронно и в момент первого вызова
+            // ещё не известен, поэтому функция и снимает значки тоже: когда
+            // ответ придёт, платящий их не увидит.
+            if (_isPremiumNow()) {
+                document.querySelectorAll('.nav-prem').forEach(function (b) { b.remove(); });
+                return;
+            }
+            var st = document.getElementById('meterNavPremStyle');
+            if (!st) {
+                st = document.createElement('style');
+                st.id = 'meterNavPremStyle';
+                st.textContent = '.nav-prem{margin-left:auto;font-size:10px;opacity:.75;flex:0 0 auto}';
+                document.head.appendChild(st);
+            }
+            Object.keys(NAV_BY_TOOL).forEach(function (fn) {
+                var el = document.querySelector('.chat-item[data-chat="' + NAV_BY_TOOL[fn] + '"]');
+                if (!el || el.querySelector('.nav-prem')) return;
+                var b = document.createElement('span');
+                b.className = 'nav-prem';
+                b.textContent = '💎';
+                b.title = 'Первый заход бесплатно, дальше — по подписке';
+                el.appendChild(b);
+            });
+        } catch (e) {}
+    }
+
     function showGameLock(fn, source) {
-        var name = PREMIUM_GAMES[fn] || 'эта игра';
+        var isTool = PREMIUM_TOOLS.hasOwnProperty(fn);
+        var name = PREMIUM_ALL[fn] || (isTool ? 'этот инструмент' : 'эта игра');
         // Пришёл из блока «Практика к курсу» (from=lektorij-<курс>) —
         // стена должна говорить о курсе, а не о «сильных играх» вообще:
         // студент курса иначе решает, что попал не туда (фокус-группа 12.09.2026).
@@ -1444,8 +1534,12 @@
                     ? 'Это тренажёр из курса, который вы читали: те же ситуации, но на живых сценах и с разбором Фреди. ' +
                       'Лекции и курс бесплатны, тренажёр входит в подписку вместе с голосом и памятью о каждом разговоре.'
                     : 'Первый заход в «' + _esc(name) + '» был бесплатным — вы уже видели, как это работает. ' +
-                      'Дальше игра открывается с подпиской вместе с голосом, всеми режимами ' +
-                      'и памятью Фреди о каждом разговоре. Короткие тренажёры остаются бесплатными.') + '</div>' +
+                      'Дальше ' + (isTool ? 'инструмент открывается' : 'игра открывается') +
+                      ' с подпиской вместе с голосом, всеми режимами ' +
+                      'и памятью Фреди о каждом разговоре. ' +
+                      (isTool
+                        ? 'Разговор с Фреди, дневник, сны, сказки и эзотерика остаются бесплатными.'
+                        : 'Короткие тренажёры остаются бесплатными.')) + '</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать неделю — 290 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 7 дней, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
@@ -1550,8 +1644,10 @@
         showPeakOffer: showPeakOffer,
         showAccountDoor: showAccountDoor,
         gameLocked: gameLocked,
+        gameLockedPeek: gameLockedPeek,
         showGameLock: showGameLock,
         premiumGames: PREMIUM_GAMES,
+        premiumTools: PREMIUM_TOOLS,
         recordUsage: recordUsage,
         recordUsageQuiet: recordUsageQuiet,
         recordExchange: recordExchange,
