@@ -175,11 +175,13 @@
               '<div class="fa-err" id="faErrName"></div></div>'
             : '';
 
-        var passCheckField = isRegister
-            ? '<div class="fa-field"><label class="fa-label" for="faPass2">Повторите пин-код</label>' +
-              '<input id="faPass2" class="fa-input" type="password" autocomplete="new-password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" />' +
-              '<div class="fa-err" id="faErrPass2"></div></div>'
-            : '';
+        // Поле «повторите пин-код» убрано 15.09.2026. Это стена, на
+        // которой теряется большинство: за неделю аккаунт попросили 101
+        // раз, завели 13. Каждое лишнее поле здесь стоит людей, а
+        // подтверждение пина ничего не страхует — цифр всего четыре, они
+        // на виду при вводе, и восстановление по почте уже работает
+        // («Забыли пин-код»). Опечатка стоит одного письма, а не аккаунта.
+        var passCheckField = '';
 
         var primaryLabel = isRegister ? 'Создать аккаунт' : 'Войти';
         // Решение владельца от 31.08.2026: Фреди платный, инкогнито нет —
@@ -270,9 +272,7 @@
 
         if (mode === 'register') {
             var name = (document.getElementById('faName').value || '').trim();
-            var pass2 = document.getElementById('faPass2').value || '';
             if (!name) { _setErr('faErrName', 'Введите имя'); ok = false; errs.push('name'); }
-            if (pass2 !== password) { _setErr('faErrPass2', 'Пин-коды не совпадают'); ok = false; errs.push('pass2_mismatch'); }
             if (!ok) {
                 _track('auth_validation_error', { mode: mode, source: _lastSource, fields: errs.join(',') });
                 return;
