@@ -2587,9 +2587,9 @@ input, textarea, select, button { box-sizing: border-box; }
     flex: 0 0 auto; font-size: 11.5px; color: var(--text-secondary);
     /* Размытие слабое: при 3,2 пикселя подпись превращалась в серое пятно,
        и человек не понимал, что там вообще надпись. Нужно, чтобы читалось
-       «здесь имя»; владелец выбрал 1,2 пикселя — имя почти разбирается,
+       «здесь имя»; владелец выбрал 1,4 пикселя — имя почти разбирается,
        и это его решение, а не недосмотр. */
-    filter: blur(1.2px); opacity: .95;
+    filter: blur(1.4px); opacity: .95;
     user-select: none; -webkit-user-select: none; pointer-events: none;
 }
 .dash-live-list li:first-child .dash-live-q { opacity: .45; }
@@ -2604,7 +2604,13 @@ input, textarea, select, button { box-sizing: border-box; }
     .dash-live { margin: 0 0 8px; }
     .dash-live-head { margin-bottom: 5px; }
     .dash-live-title { font-size: 10.5px; }
-    .dash-live-view { height: 92px; }
+    /* Вопросы бывают длинные — «Муж „чинит машину“ в гараже по три часа…»
+       занимает на телефоне три строки. При высоте в две строки такой вопрос
+       занимал окно целиком, и лента переставала быть лентой: человек видел
+       одну реплику без намёка, что за ней идут другие. */
+    .dash-live-q { font-size: 12.5px; padding: 9px 12px; gap: 8px; }
+    .dash-live-who { font-size: 10.5px; }
+    .dash-live-view { height: 104px; }
 }
 /* Движение выключено — лента становится обычным списком с прокруткой. */
 @media (prefers-reduced-motion: reduce) {
