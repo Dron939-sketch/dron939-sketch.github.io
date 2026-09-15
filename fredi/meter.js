@@ -1665,8 +1665,11 @@
             // без теста Фреди отвечает вслепую, время кончится сегодня, а
             // завтра разговор начнётся с нуля. Числа минут — из статуса
             // счётчика, руками не вписываются.
-            var mins = (_lastCheck && (_lastCheck.daily_limit_minutes ||
-                        (gain && gain.small))) || null;
+            // Поле статуса называется limit_minutes — это сегодняшний лимит
+            // человека. daily_limit_minutes бэкенд не отдаёт вовсе, и строка
+            // про минуты молча уходила бы в «времени в обрез».
+            var mins = (_lastCheck && _lastCheck.limit_minutes) ||
+                       (gain && gain.small) || null;
             var noTest = !_hasProfile();
             var lines = [];
             if (noTest) {
