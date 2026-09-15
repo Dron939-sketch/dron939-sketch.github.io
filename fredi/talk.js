@@ -363,7 +363,8 @@
         if (_watch) { _watch.disconnect(); _watch = null; }
         _panel.classList.remove('is-open');
         if (_back) _back.hidden = true;
-        _pill.hidden = (silent === true);
+        // Вне дашборда язычку возвращать некуда — там его и не показываем.
+        _pill.hidden = (silent === true) || !_dashboardOnScreen();
         _open = false;
         document.body.classList.remove('talk-open');
         _track('talk_collapsed', {});
@@ -447,10 +448,41 @@
         });
     }
 
+    // Язычок — дверь обратно в разговор на дашборде, и смысл он имеет
+    // только пока дашборд на экране. Во время теста человек отвечает на
+    // сорок вопросов, а в правом нижнем углу висит «Разговор с Фреди ▲» и
+    // тянет на себя (замечание владельца 15.09.2026). То же самое верно
+    // для любого другого экрана: тренажёра, разбора, настроек.
+    //
+    // Признак дашборда — .dashboard-container в #screenContainer. Ловим
+    // не переход в тест, а саму смену экрана: экранов десятки, и
+    // перечислять их по одному значит забыть половину.
+    function _dashboardOnScreen() {
+        return !!document.querySelector('.dashboard-container');
+    }
+
+    function _syncPill() {
+        if (!_pill) return;
+        if (_dashboardOnScreen()) return;   // на дашборде решает collapse/open
+        // Дашборда нет: язычок прячем, а открытое окно молча сворачиваем —
+        // иначе оно держит узлы экрана, которого больше нет.
+        if (_open) collapse(true);
+        _pill.hidden = true;
+    }
+
+    function _watchScreen() {
+        var host = document.getElementById('screenContainer');
+        if (!host || !window.MutationObserver) return;
+        new MutationObserver(function () { _syncPill(); })
+            .observe(host, { childList: true, subtree: false });
+    }
+
     function _init() {
         _guardRerender();
         _autoOpenOnFirstMessage();
         _openOnTyping();
+        _watchScreen();
+        _syncPill();
     }
     if (document.readyState === 'loading')
         document.addEventListener('DOMContentLoaded', function () { setTimeout(_init, 300); });

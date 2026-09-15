@@ -1656,11 +1656,15 @@ const Test = {
         if (opts.type === 'number') { input.min = '1'; input.max = '120'; }
         input.style.cssText = 'flex:1;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,255,255,0.15);background:rgba(0,0,0,0.2);color:inherit;font-size:15px;outline:none;';
 
+        // Подтверждение — стрелка вверх, как в поле ввода на дашборде.
+        // Ромбик ✦ не называет действия: он читается как украшение, и на
+        // первом же вопросе человек ищет, куда нажать (замечание владельца
+        // 15.09.2026). Стрелку в этом месте узнают все мессенджеры.
         const btn = document.createElement('button');
-        btn.textContent = '✦';
-        btn.className = 'test-context-submit';
-        btn.style.cssText = 'padding:10px 18px;border-radius:14px;cursor:pointer;';
+        btn.textContent = '↑';
+        btn.className = 'test-context-submit test-context-submit--icon';
         btn.setAttribute('aria-label', 'Отправить');
+        btn.setAttribute('title', 'Отправить');
 
         const submit = () => {
             const v = (input.value || '').trim();
@@ -2497,7 +2501,7 @@ ${this.getStage3Interpretation()}
 
         const text = `🧠 ЭТАП 5: ГЛУБИННЫЕ ПАТТЕРНЫ\n\n${body}${crossBlock}\n\n✅ Тест завершён! Собираю воедино результаты 5 этапов...`;
         this.addBotMessage(text, true);
-        this._showAILoader('AI составляет ваш психологический портрет', 'Анализ 5 этапов, подбор инсайтов и формирование рекомендаций. 20-40 секунд.');
+        this._showAILoader('Meyster AI составляет ваш психологический портрет', 'Анализ 5 этапов, подбор инсайтов и формирование рекомендаций. 20-40 секунд.');
         this.sendTestResultsToServer();
     },
 
@@ -2507,7 +2511,7 @@ ${this.getStage3Interpretation()}
         if (el) {
             const t = el.querySelector('.test-ai-loader-title');
             const s = el.querySelector('.test-ai-loader-sub');
-            if (t) t.textContent = '🧠 ' + (title || 'AI составляет ваш профиль');
+            if (t) t.textContent = '🧠 ' + (title || 'Meyster AI составляет ваш профиль');
             if (s) s.textContent = subtitle || 'Это может занять 20-40 секунд. Не закрывайте страницу.';
             el.style.display = 'flex';
             return;
@@ -2518,7 +2522,7 @@ ${this.getStage3Interpretation()}
         el.innerHTML = `
             <div class="test-ai-loader-box">
                 <div class="test-ai-loader-spinner"></div>
-                <div class="test-ai-loader-title">🧠 ${(title || 'AI составляет ваш профиль').replace(/</g,'&lt;')}</div>
+                <div class="test-ai-loader-title">🧠 ${(title || 'Meyster AI составляет ваш профиль').replace(/</g,'&lt;')}</div>
                 <div class="test-ai-loader-sub">${(subtitle || 'Это может занять 20-40 секунд. Не закрывайте страницу.').replace(/</g,'&lt;')}</div>
                 <div class="test-ai-loader-dots"><span></span><span></span><span></span></div>
             </div>
@@ -2710,8 +2714,8 @@ ${this.getStage3Interpretation()}
         if (!this.userId) { this.showFinalProfileButtons(); return; }
 
         if (this._aiProfileRetries === 0) {
-            this.addBotMessage('🧠 Генерирую ваш персональный AI-профиль...\n\n⏳ Это займёт 15-30 секунд. Анализирую ответы всех 5 этапов...', true);
-            this._showAILoader('AI составляет ваш психологический портрет', 'Анализ 5 этапов, подбор инсайтов и формирование рекомендаций. 20-40 секунд.');
+            this.addBotMessage('🧠 Собираю ваш портрет — Meyster AI...\n\n⏳ Это займёт 15-30 секунд. Анализирую ответы всех 5 этапов...', true);
+            this._showAILoader('Meyster AI составляет ваш психологический портрет', 'Анализ 5 этапов, подбор инсайтов и формирование рекомендаций. 20-40 секунд.');
         }
 
         try {
@@ -2881,6 +2885,15 @@ ${this.getStage3Interpretation()}
                     // Экран теста живёт в screenContainer; сначала возвращаем
                     // дашборд с полем ввода, потом отправляем — как goToDashboard.
                     this.goToDashboard();
+                    // И сразу открываем окно разговора (решение владельца
+                    // 15.09.2026). Раньше человека высаживало на главный
+                    // экран, а ответ Фреди приходил куда-то вниз ленты: он
+                    // только что прочитал про себя целый разбор и хотел
+                    // говорить, а получал дашборд с плитками. Окно ждёт
+                    // отрисовки дашборда — до неё переносить нечего.
+                    setTimeout(function () {
+                        try { if (window.FrediTalk) window.FrediTalk.open('bigtest'); } catch (e) {}
+                    }, 90);
                     try { window.FrediAsk(ask, 'bigtest'); } catch (e) { console.warn('FrediAsk failed:', e); }
                 }
             });
