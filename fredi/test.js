@@ -1772,6 +1772,18 @@ const Test = {
         }, 15000);
     },
 
+    // Защита отрезка: включается на старте теста, снимается, когда
+    // результат уже на экране. Счётчик в meter.js парный, поэтому свой
+    // флаг обязателен — иначе повторный вызов уронил бы счётчик в минус
+    // или, наоборот, оставил защиту навсегда.
+    _meterProtect(on) {
+        try {
+            if (!window.FrediMeter || typeof window.FrediMeter.protect !== 'function') return;
+            if (on && !this._meterProtected) { this._meterProtected = true; window.FrediMeter.protect(true); }
+            else if (!on && this._meterProtected) { this._meterProtected = false; window.FrediMeter.protect(false); }
+        } catch (e) {}
+    },
+
     _meterTick(sec) {
         try {
             if (window.FrediMeter && typeof window.FrediMeter.recordUsageQuiet === 'function') {
@@ -1788,6 +1800,9 @@ const Test = {
      * прохождений это уже заметная разница.
      */
     _stopTestMeter() {
+        // Защиту снимаем здесь же: счёт останавливается ровно тогда, когда
+        // тест закончен, — значит и отложенная стена может выходить.
+        this._meterProtect(false);
         if (this._testMeterTimer) {
             clearInterval(this._testMeterTimer);
             this._testMeterTimer = null;
@@ -1806,6 +1821,12 @@ const Test = {
         this.reset(); this.saveProgress();
         this.showTestScreen();
         this._startTestMeter();
+        // Начатое доводится до конца (правило владельца 15.09.2026): тест
+        // идёт пятнадцать минут и сам тратит минуты, поэтому лимит чаще
+        // всего кончается ровно посреди него. Стена в этот момент отнимает
+        // не разговор, а сорок отвеченных вопросов. Она не пропадает —
+        // meter.js покажет её сразу после результата, в пиковый момент.
+        this._meterProtect(true);
         // Инструментирование воронки теста. В дампе аналитики:
         // 7 screen_view test, 5 feature_open, средняя 21 сек —
         // люди открывают и сразу уходят. Нам нужно знать ГДЕ.

@@ -149,6 +149,9 @@ const MODES = {
         emoji: '💬',
         color: '#6E6E73',
         greeting: 'Я Фреди — ваш виртуальный психолог и собеседник.',
+        // Короткая строка для шапки-полосы: длинное приветствие писалось
+        // для экрана во всю ширину и в полосе резалось на «Я Фред…».
+        heroLine: 'Я Фреди — ваш собеседник',
         voicePrompt: 'О чём поговорим?'
     },
     coach: {
@@ -157,6 +160,7 @@ const MODES = {
         emoji: '🔮',
         color: '#3b82ff',
         greeting: 'Я твой коуч. Давай найдём ответы внутри тебя.',
+        heroLine: 'Я Фреди — ваш коуч',
         voicePrompt: 'Задайте вопрос — помогу найти решение',
         premium: true
     },
@@ -166,6 +170,7 @@ const MODES = {
         emoji: '🧠',
         color: '#ff6b3b',
         greeting: 'Я здесь, чтобы помочь разобраться в глубинных паттернах.',
+        heroLine: 'Я Фреди — ваш психолог',
         voicePrompt: 'Расскажите, что вас беспокоит',
         premium: true
     },
@@ -175,6 +180,7 @@ const MODES = {
         emoji: '⚡',
         color: '#ff3b3b',
         greeting: 'Давай достигать целей вместе!',
+        heroLine: 'Я Фреди — ваш тренер',
         voicePrompt: 'Сформулируйте задачу — дам чёткий план',
         premium: true
     }
@@ -808,6 +814,9 @@ function setupDashComposer() {
         busy = true;
         input.value = '';
         if (sendBtn) sendBtn.disabled = true;
+        // Формат вопроса задаёт формат ответа (sound.js): набранный вопрос
+        // не должен возвращаться голосом из динамика.
+        try { window.FrediSound && window.FrediSound.noteAsk('text'); } catch (e) {}
         const userBubble = addMessage(text, 'user');
         _showThinkingBubble('Фреди печатает…');
 
@@ -2285,14 +2294,22 @@ function renderDashboard() {
     // Имя-обращение вставляем ПЕРЕД финальной .!?… приветствия — иначе
     // выходит «…что для вас важно., Андрей» (точка + запятая). Без имени —
     // приветствие остаётся как есть.
-    const _hg = (modeConfig.greeting || '');
-    const _hgM = _hg.match(/^([\s\S]*?)\s*([.!?…]+)\s*$/);
-    const _hgBody = _hgM ? _hgM[1] : _hg;
-    const _hgPunct = _hgM ? _hgM[2] : '';
-    const _hgName = (CONFIG.USER_NAME || '').trim();
+    // В полосе стоит короткая строка режима (heroLine), а не приветствие:
+    // приветствие писалось для прежнего блока во всю ширину, и на телефоне
+    // полоса резала его на «Я Фред…». Обрезанное имя не читается, а лишние
+    // две строки съедали треть первого экрана — ради чего полосу и заводили.
+    // Имя ставится впереди: «Андрей, я Фреди — ваш психолог» читается, а
+    // «Я Фреди, ваш психолог, Андрей» — нет.
+    const _hgLine = (modeConfig.heroLine || modeConfig.greeting || '')
+        .replace(/\s*[.!?…]+\s*$/, '');
+    // «друг» и «Гость» — заглушки на месте неизвестного имени. Обращение
+    // «друг, я Фреди» звучит как рассылка, а не как разговор.
+    const _hgRaw = (CONFIG.USER_NAME || '').trim();
+    const _hgName = /^(друг|гость|user|аноним)$/i.test(_hgRaw) ? '' : _hgRaw;
     const heroGreetingHtml = _hgName
-        ? `${_hgBody}, <span class="hero-name">${_hgName}</span>${_hgPunct}`
-        : `${_hgBody}${_hgPunct}`;
+        ? `<span class="hero-name">${_hgName}</span>, ` +
+          _hgLine.replace(/^Я\s/, 'я ')
+        : _hgLine;
 
     // Пункты меню, которые анониму без теста показывают только замок или
     // пустой экран («Практики» 14 секунд, «Супервизор» 5, «Мой бренд» 4 —
