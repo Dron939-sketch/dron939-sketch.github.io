@@ -2623,14 +2623,14 @@ function renderDashboard() {
                             window.FrediTracker.track('hero_resume_clicked', { days_ago: days });
                         }
                     } catch (e) {}
-                    // Отправляем это как реплику человека: он сам нажал
-                    // «Продолжить», и Фреди должен ответить по прошлой теме,
-                    // а не ждать, пока человек перескажет её заново.
-                    const text = 'Давайте вернёмся к тому, о чём говорили: ' + d.topic;
-                    if (typeof window.FrediAsk === 'function') window.FrediAsk(text, 'hero_resume');
+                    // Открываем окно переписки, а не отправляем реплику за
+                    // человека: возвращаться в разговор, которого не видно,
+                    // странно — сначала он видит, на чём остановились
+                    // (решение владельца 15.09.2026).
+                    if (window.FrediTalk) window.FrediTalk.open('hero_resume');
                     else {
                         const input = document.getElementById('dashComposerInput');
-                        if (input) { input.value = text; input.focus(); }
+                        if (input) input.focus();
                     }
                 }, 'topic');
                 const hide = document.getElementById('heroResumeHide');
