@@ -1,4 +1,5 @@
-// openers.js — три готовых первых вопроса под знаком вопроса у поля ввода.
+// openers.js — вопросы по теме, с которой человек пришёл, плюс первое
+// сообщение из адреса (?ask=, ?draft=) и представление Фреди.
 //
 // Зачем. За неделю 29 человек открыли Фреди и отправили 20 сообщений на
 // всех: две трети не написали ни одного. Их встречает пустое поле
@@ -6,12 +7,13 @@
 // программе трудно, даже когда есть о чём спросить.
 //
 // Почти все приходят с лекции Лектория, то есть минуту назад читали
-// вполне конкретный текст. По рефереру узнаём курс и показываем три
-// вопроса ровно по нему — из блоков «Частые вопросы» его же лекций.
+// вполне конкретный текст. По рефереру узнаём курс и достаём три вопроса
+// ровно по нему — из блоков «Частые вопросы» его же лекций.
 //
-// Вопросы свёрнуты под знак вопроса у поля ввода: открытым списком они
-// добавляли на первый экран ещё три ярких прямоугольника поверх голосовой
-// кнопки, режимов, модулей и быстрых действий. Опора осталась, шум ушёл.
+// Своей разметки у этих вопросов больше нет. С 15.09.2026 они уходят
+// первыми строками в ленту вопросов над полем ввода (app.js, dashLiveChat):
+// собственная панель стояла там же и говорила ровно то же самое, так что
+// над одной кнопкой оказывалось два текста об одном.
 //
 // И это примеры, а не кнопки. Кнопка обещает действие и совершает его сама:
 // человек нажимает, не дочитав, и уходит в разговор не о том, с чем пришёл.
@@ -19,7 +21,7 @@
 // свой он будет сам, и это уже его вопрос, а не наш.
 //
 // Данные: openers.json, собирается tools/build_chat_openers.py.
-// Ничего не показываем, если разговор уже начат: подсказка нужна тому,
+// Ничего не подкладываем, если разговор уже начат: опора нужна тому,
 // кто ещё не сказал ни слова.
 
 (function () {
@@ -96,143 +98,16 @@
 
     // ---- разметка -------------------------------------------------------
 
-    function _style() {
-        if (document.getElementById('openersStyle')) return;
-        var st = document.createElement('style');
-        st.id = 'openersStyle';
-        // Цвета — через переменные темы плюс полупрозрачный акцент:
-        // читается и на тёмной, и на светлой.
-        st.textContent =
-            '.op-wrap{margin:0 0 10px}' +
-            // Строка со знаком вопроса. Прижата вправо и занимает 26 px:
-            // человек, который знает, что писать, её просто не замечает.
-            '.op-bar{display:flex;justify-content:flex-end;align-items:center;gap:8px}' +
-            '.op-ask{width:26px;height:26px;flex:0 0 auto;border-radius:50%;cursor:pointer;' +
-            'font-family:inherit;font-size:14px;font-weight:600;line-height:1;color:var(--text-secondary);' +
-            'background:transparent;border:1px solid var(--border-color,rgba(128,128,128,.35));' +
-            'display:flex;align-items:center;justify-content:center;' +
-            'transition:background .18s,border-color .18s,color .18s}' +
-            '.op-ask:hover{background:rgba(59,130,255,.12);border-color:rgba(59,130,255,.5);color:var(--text-primary)}' +
-            '.op-ask[aria-expanded="true"]{background:rgba(59,130,255,.16);border-color:rgba(59,130,255,.55);color:var(--text-primary)}' +
-            '.op-hint{font-size:11px;color:var(--text-secondary);opacity:.75}' +
-            '.op-panel{margin-top:8px}' +
-            '.op-head{font-size:11px;color:var(--text-secondary);opacity:.8;margin-bottom:7px}' +
-            // Список примеров, а не ряд кнопок: ничего не подсвечивается, не
-            // наводится и не нажимается — читается и закрывается.
-            '.op-list{list-style:none;margin:0;padding:0 0 0 2px;' +
-            'display:flex;flex-direction:column;gap:5px}' +
-            '.op-list li{position:relative;padding-left:14px;' +
-            'font-size:13px;line-height:1.4;color:var(--text-secondary)}' +
-            '.op-list li::before{content:"—";position:absolute;left:0;' +
-            'color:rgba(59,130,255,.6)}' +
-            // Подпись остаётся и на телефоне: одинокий знак вопроса в углу
-            // ничего не обещает, и его просто не нажимают. Одиннадцать
-            // пикселей серого текста — не тот шум, ради которого всё затевалось.
-            '@media(max-width:600px){.op-list li{font-size:12.5px}.op-hint{font-size:10.5px}}';
-        document.head.appendChild(st);
-    }
-
-    // Раньше три вопроса лежали открытым списком прямо над полем ввода.
-    // Вместе с голосовой кнопкой, выбором режима, четырьмя модулями и восемью
-    // быстрыми действиями это давало на первом экране полтора десятка ярких
-    // мишеней — глазу не за что зацепиться. Теперь подсказки сложены под знак
-    // вопроса: кто знает, о чём писать, их не видит, кому нужна опора —
-    // раскрывает одним касанием.
-    function _render(host, course) {
-        _style();
-        // Человек пришёл из статьи, курса или теста — его тема важнее
-        // общего приглашения «Узнайте свой психотип» (фокус-группа 12.09.2026).
-        if (course && course.slug) {
-            try { var _b = document.getElementById('ctaTestBanner'); if (_b) _b.style.display = 'none'; } catch (e) {}
-        }
-        var wrap = document.createElement('div');
-        wrap.className = 'op-wrap';
-        wrap.id = 'openersWrap';
-
-        var panel = document.createElement('div');
-        panel.className = 'op-panel';
-        panel.id = 'openersPanel';
-
-        var bar = document.createElement('div');
-        bar.className = 'op-bar';
-
-        var hint = document.createElement('span');
-        hint.className = 'op-hint';
-        hint.textContent = 'не знаете, с чего начать?';
-        bar.appendChild(hint);
-
-        var ask = document.createElement('button');
-        ask.type = 'button';
-        ask.className = 'op-ask';
-        ask.id = 'openersAsk';
-        ask.textContent = '?';
-        ask.setAttribute('aria-controls', 'openersPanel');
-        ask.setAttribute('aria-label', 'О чём можно спросить');
-        ask.title = 'О чём можно спросить';
-
-        // Свёрнутыми вопросы лежат для того, кто пришёл сам и ещё не знает,
-        // о чём тут говорят. Пришедший по ?from= — другой случай: он минуту
-        // назад разбирал своё расставание или получил свои баллы по шкале и
-        // уже внутри темы. Ему опора нужна сразу, а не за одно касание.
-        // 4 сентября это узкое место стало видно в цифрах: 9 переходов в
-        // приложение против 2 первых сообщений — люди доходят и не пишут.
-        // Всем прочим ничего не меняется, панель по-прежнему свёрнута.
-        var openByDefault = !!course.slug;
-        panel.hidden = !openByDefault;
-        ask.setAttribute('aria-expanded', openByDefault ? 'true' : 'false');
-        if (openByDefault) {
-            _track('opener_shown', { course: course.slug, kind: course.kind || '',
-                                     n: course.q.length, auto: true });
-        }
-        ask.addEventListener('click', function () {
-            var open = panel.hidden;
-            panel.hidden = !open;
-            ask.setAttribute('aria-expanded', open ? 'true' : 'false');
-            if (open) _track('opener_shown', { course: course.slug || '', kind: course.kind || '', n: course.q.length });
-        });
-        bar.appendChild(ask);
-        wrap.appendChild(bar);
-
-        var head = document.createElement('div');
-        head.className = 'op-head';
-        // «Читали» — про лекцию, «разбирали» — про посадочную: там человек
-        // не читал, а сам жал карточки, и назвать это чтением значит
-        // промахнуться мимо того, что он только что делал.
-        var verb = course.kind === 'test' ? 'Вы проходили «'
-                 : course.kind === 'landing' ? 'Вы разбирали «'
-                 : 'Вы читали «';   // курсы Лектория и страницы-описания
-        head.textContent = course.t ? verb + course.t + '». Можно спросить:'
-                                    : 'Можно спросить:';
-        panel.appendChild(head);
-
-        // Примеры, а не кнопки. Кнопка обещает действие и сама его совершает —
-        // человек нажимает, не дочитав, и уходит в разговор не о том. Здесь
-        // задача другая: показать, какого рода вопросы тут уместны, и вернуть
-        // человека к своему собственному. Формулировать он будет сам.
-        var list = document.createElement('ul');
-        list.className = 'op-list';
-        course.q.forEach(function (q) {
-            var li = document.createElement('li');
-            // textContent, а не innerHTML: вопросы приходят из JSON, и
-            // подставлять их как разметку незачем.
-            li.textContent = q;
-            list.appendChild(li);
-        });
-        panel.appendChild(list);
-        wrap.appendChild(panel);
-
-        host.insertBefore(wrap, host.firstChild);
-        _shown = true;
-        // Раньше это событие означало «человек увидел вопросы». Теперь показ и
-        // раскрытие — разные вещи, иначе воронка «увидел → нажал» превратится
-        // в неправду: opener_available считает доступность, opener_shown —
-        // тех, кто действительно раскрыл список.
-        _track('opener_available', { course: course.slug || '', kind: course.kind || '', n: course.q.length });
-    }
-
+    // Разговор начался — ленты вопросов над полем больше быть не должно:
+    // пока человек ждёт ответ на своё, чужие вопросы уезжают вверх прямо
+    // над его репликой. Раньше здесь снималась панель подсказок, теперь
+    // гасится лента; смысл тот же — первое своё слово сказано, опора
+    // больше не нужна.
     function _hide() {
-        var w = document.getElementById('openersWrap');
-        if (w && w.parentNode) w.parentNode.removeChild(w);
+        try {
+            if (window.FrediLive && typeof window.FrediLive.stop === 'function')
+                window.FrediLive.stop();
+        } catch (e) {}
     }
 
     // ---- запуск ---------------------------------------------------------
@@ -264,8 +139,38 @@
                 : { slug: '', kind: '', t: '', q: _data.default };
         }
         if (!course.q || !course.q.length) return true;
-        _render(host, course);
+        // Набор «по умолчанию» ленте не отдаём. Он написан как опора для
+        // растерявшегося («У меня нет сил и ничего не хочется — почему?») и,
+        // попав в ленту, вытесняет из неё те вопросы, ради которых она и
+        // сделана: с неудобными темами, которые человеку самому в голову
+        // не приходят. Лента показывает их сама, без чьей-либо помощи.
+        if (!course.slug) return true;
+        // Панели подсказок над полем больше нет (решение владельца
+        // 15.09.2026): над кнопкой «О чём поговорим?» стояли два текста об
+        // одном и том же — свёрнутый список «Можно спросить» и лента
+        // вопросов. Осталась лента; вопросы по курсу отдаём ей, чтобы не
+        // потерять главное, ради чего этот файл писался, — человек, минуту
+        // назад читавший лекцию, видит вопросы по своей теме, а не общие.
+        _seed(course);
         return true;
+    }
+
+    // Лента живёт в app.js и к этому моменту может быть ещё не построена —
+    // пробуем несколько раз и сдаёмся молча: без подсказок экран работает.
+    function _seed(course) {
+        var tries = 0;
+        (function go() {
+            if (window.FrediLive && typeof window.FrediLive.lead === 'function') {
+                window.FrediLive.lead(course.q);
+                _shown = true;
+                _track('opener_available', { course: course.slug || '',
+                                             kind: course.kind || '',
+                                             n: course.q.length, place: 'live' });
+                return;
+            }
+            if (++tries > 10) return;
+            setTimeout(go, 300);
+        })();
     }
 
     // ---- первое сообщение без пустого поля ------------------------------

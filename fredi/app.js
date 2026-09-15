@@ -1260,18 +1260,31 @@ function showFullContentScreen(title, content, contentType) {
  * Темы совпадают с реальным распределением обращений: «нет сил» —
  * каждый пятый разговор, отношения — каждый десятый, дальше тревога,
  * сон, родители, деньги, злость, одиночество.
+ *
+ * Каждая из десяти тем сверена с годовой выгрузкой (1194 разговора,
+ * 15.09.2026), и у каждой есть реальные обращения: одиночество 109,
+ * мать и родители 84, развод и «уйти» 69, работа 68, измена и мысли
+ * о другом 34, срывы на близких 10, секса нет 11, ночь 8, стыд 8,
+ * зависть 3. Формулировки написаны нами: переписи чужих сообщений
+ * на экране быть не может, выгрузка не обезличена.
+ *
+ * Подпись у строки — имя и возраст под размытием. Имена придуманы и
+ * ничьи: настоящие имена из выгрузки на сайт не выносятся никогда,
+ * даже размытыми. Размытие — не защита чьей-то тайны, а знак, что
+ * вопрос принесён человеком; возраст взят из реального распределения
+ * (медиана 34 года, примерно семь женщин на трёх мужчин).
  */
 const DASH_QUESTIONS = [
-    'Я представляю другого. Это уже измена?',
-    'Полгода без секса, и оба делаем вид, что так и надо',
-    'Иногда я радуюсь чужим неудачам. Что со мной?',
-    'В три часа ночи я точно знаю, что всё зря. Утром — нет',
-    'Постоянное мысленное возвращение в ситуацию стыда',
-    'Я не скучаю по маме. Со мной что-то не так?',
-    'Я срываюсь только на тех, кто точно не уйдёт',
-    'Получил повышение — и впервые захотел уволиться',
-    'Мне легче с чужими, чем с близкими',
-    'Я жду, когда он оступится, чтобы наконец уйти'
+    { q: 'Я представляю другого. Это уже измена?',                 who: 'Марина, 34' },
+    { q: 'Полгода без секса, и оба делаем вид, что так и надо',    who: 'Ольга, 41' },
+    { q: 'Иногда я радуюсь чужим неудачам. Что со мной?',          who: 'Кирилл, 29' },
+    { q: 'В три часа ночи я точно знаю, что всё зря. Утром — нет', who: 'Анна, 27' },
+    { q: 'Постоянное мысленное возвращение в ситуацию стыда',      who: 'Юлия, 33' },
+    { q: 'Я не скучаю по маме. Со мной что-то не так?',            who: 'Дарья, 38' },
+    { q: 'Я срываюсь только на тех, кто точно не уйдёт',           who: 'Егор, 36' },
+    { q: 'Получил повышение — и впервые захотел уволиться',        who: 'Антон, 44' },
+    { q: 'Мне легче с чужими, чем с близкими',                     who: 'Светлана, 31' },
+    { q: 'Я жду, когда он оступится, чтобы наконец уйти',          who: 'Ирина, 48' }
 ];
 
 
@@ -2203,9 +2216,16 @@ function renderDashboard() {
                     <h2 class="hero-title">${heroGreetingHtml}</h2>
                     <p class="hero-sub">Слушает, поддерживает, помогает разобраться — скажите голосом, напишите или выберите действие</p>
                 </div>
-                <div class="profile-badge" id="profileBadge">
-                    <div class="profile-code" id="profileCode">${CONFIG.PROFILE_CODE || '···'}</div>
-                    <div class="profile-status" id="profileStatus">загрузка...</div>
+                <!-- Архетип и дверь в разбор — одной строкой. Раньше это были
+                     две вещи в разных местах экрана: бейдж с архетипом здесь и
+                     широкая карточка «Ваш разбор» ниже. Обе вели в один и тот
+                     же разбор и занимали два блока подряд. -->
+                <div class="profile-line">
+                    <div class="profile-badge" id="profileBadge">
+                        <div class="profile-code" id="profileCode">${CONFIG.PROFILE_CODE || '···'}</div>
+                        <div class="profile-status" id="profileStatus">загрузка...</div>
+                    </div>
+                    <button type="button" class="profile-open" id="profileOpenBtn" hidden>Ваш разбор →</button>
                 </div>
             </div>
 
@@ -2222,26 +2242,33 @@ function renderDashboard() {
                 <div style="flex-shrink:0;background:linear-gradient(135deg,rgba(168,196,224,0.25),rgba(120,160,210,0.15));border:1px solid rgba(168,196,224,0.5);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:700;color:rgba(168,196,224,0.95);white-space:nowrap">Начать →</div>
             </div>
 
-            <!-- Дверь обратно в разбор для тех, кто тест уже прошёл. Разбор
-                 длинный, за один заход его не дочитывают, а вернуться было
-                 некуда: экран жил только в памяти текущего прохождения, и
-                 единственным способом увидеть его снова было пройти тест
-                 заново. -->
-            <div id="ctaResultBanner" style="display:none;background:linear-gradient(135deg,rgba(168,196,224,0.12),rgba(120,160,210,0.06));border:1px solid rgba(168,196,224,0.3);border-radius:20px;padding:18px 20px;margin-bottom:20px;align-items:center;gap:16px;cursor:pointer">
-                <div style="font-size:36px;flex-shrink:0">🧠</div>
-                <div style="flex:1">
-                    <div style="font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px">Ваш разбор</div>
-                    <div style="font-size:12px;color:var(--text-secondary);line-height:1.5">Профиль, интерпретация и рекомендации — открыть и дочитать.</div>
-                </div>
-                <div style="flex-shrink:0;background:linear-gradient(135deg,rgba(168,196,224,0.25),rgba(120,160,210,0.15));border:1px solid rgba(168,196,224,0.5);border-radius:30px;padding:9px 16px;font-size:12px;font-weight:700;color:rgba(168,196,224,0.95);white-space:nowrap">Открыть →</div>
-            </div>
-
             <div class="dash-cols">
             <div class="dash-main">
             <!-- Сначала голосовая кнопка (главное действие — говорить с Фреди),
                  потом селектор стиля общения. Раньше было наоборот, и юзер
                  уходил, не дойдя до микрофона. -->
             <div class="voice-section">
+                <!-- Лента вопросов стоит над полем ввода: на её месте лежал
+                     свёрнутый список подсказок из openers.js, и над одной
+                     кнопкой оказывалось два текста об одном и том же.
+                     Подсказки убраны, место отдано ленте — она говорит то же
+                     самое («с таким сюда ходят»), но живёт и не требует
+                     раскрытия.
+                     Внутри .voice-section, потому что на телефоне та липнет к
+                     низу экрана: снаружи лента оказывалась за ней и человек
+                     видел только обрезанный заголовок. На узком экране она
+                     ужимается до двух строк без заголовка. -->
+                <div class="dash-live" id="dashLive">
+                    <div class="dash-live-head">
+                        <span class="dash-live-title">О чём спрашивают Фреди</span>
+                        <span class="dash-live-now" id="dashLiveNow" hidden>
+                            <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
+                        </span>
+                    </div>
+                    <div class="dash-live-view">
+                        <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
+                    </div>
+                </div>
                 <!-- Сначала текст, потом голос (фокус-группа 12.09.2026): ночью,
                      в офисе и в 58 лет вслух не говорят; из 1304 сообщений за
                      неделю своих было 96. Поле — главное действие, микрофон —
@@ -2261,19 +2288,6 @@ function renderDashboard() {
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
                     </button>
                     <div style="text-align:center;font-size:11px;color:var(--text-secondary);margin-top:8px">🎙️ Нажмите и удерживайте для записи</div>
-                </div>
-            </div>
-
-            <!-- Лента вопросов: что вообще сюда можно принести. -->
-            <div class="dash-live" id="dashLive">
-                <div class="dash-live-head">
-                    <span class="dash-live-title">О чём спрашивают Фреди</span>
-                    <span class="dash-live-now" id="dashLiveNow" hidden>
-                        <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
-                    </span>
-                </div>
-                <div class="dash-live-view">
-                    <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
                 </div>
             </div>
 
@@ -2378,17 +2392,24 @@ function renderDashboard() {
                 const archetype = _computeArchetype(data?.profile?.perception_type, status.profile_code);
                 if (archetype) {
                     if (codeEl) {
-                        codeEl.textContent = archetype;
+                        // Без эмодзи (решение владельца 15.09.2026): рядом
+                        // стоит кнопка, и два ярких значка в одной строке
+                        // перетягивают взгляд друг у друга.
+                        codeEl.textContent = archetype.replace(/^\s*[^\p{L}\d]+\s*/u, '');
                         codeEl.title = status.profile_code;
                         codeEl.style.fontSize = '15px';
                     }
                     if (statusEl) statusEl.textContent = 'ваш архетип';
                 }
             }).catch(() => {});
-            // Тест пройден — показываем дверь обратно в разбор.
-            const resBanner = document.getElementById('ctaResultBanner');
+            // Тест пройден — рядом с архетипом появляется дверь обратно в
+            // разбор. Разбор длинный, за один заход его не дочитывают, а
+            // вернуться было некуда: экран жил только в памяти текущего
+            // прохождения, и увидеть его снова можно было, лишь пройдя тест
+            // заново.
+            const resBanner = document.getElementById('profileOpenBtn');
             if (resBanner) {
-                resBanner.style.display = 'flex';
+                resBanner.hidden = false;
                 resBanner.onclick = async () => {
                     try {
                         if (window.FrediTracker?.track) {
@@ -2465,18 +2486,48 @@ function renderDashboard() {
         // чужой вопрос в поле не надо — человек должен сформулировать свой.
         // Лента здесь затем, чтобы он увидел, что сюда ходят и с таким,
         // а не чтобы выбрал готовое из списка.
-        const row = (q) => {
+        const row = (item) => {
             const li = document.createElement('li');
             const div = document.createElement('div');
             div.className = 'dash-live-q';
-            div.textContent = q;
+            const t = document.createElement('span');
+            t.className = 'dash-live-text';
+            t.textContent = item.q;
+            div.appendChild(t);
+            if (item.who) {
+                const who = document.createElement('span');
+                who.className = 'dash-live-who';
+                who.textContent = item.who;
+                // Читалке отдавать нечего: подпись размыта и ничего не
+                // сообщает — ни адреса, ни действия. Озвученная вслух, она
+                // стала бы утверждением о конкретном человеке.
+                who.setAttribute('aria-hidden', 'true');
+                div.appendChild(who);
+            }
             li.appendChild(div);
             return li;
+        };
+
+        const hideBox = () => {
+            const box = document.getElementById('dashLive');
+            if (box) box.hidden = true;
         };
 
         // Человеку, который не хочет движения, показываем всё сразу списком.
         if (calm) {
             DASH_QUESTIONS.forEach(q => list.appendChild(row(q)));
+            // Окно наружу нужно и здесь: без него openers.js ждёт ленту
+            // впустую, а начатый разговор не гасит список.
+            window.FrediLive = {
+                lead: (items) => {
+                    if (!Array.isArray(items)) return;
+                    items.slice(0, 3).reverse().forEach(q => {
+                        if (typeof q === 'string' && q.trim())
+                            list.insertBefore(row({ q: q.trim() }), list.firstChild);
+                    });
+                },
+                stop: hideBox
+            };
             return;
         }
 
@@ -2485,9 +2536,30 @@ function renderDashboard() {
         // Стартуем с трёх, чтобы лента не выглядела пустой в первую секунду.
         for (; i < 3; i++) list.appendChild(row(DASH_QUESTIONS[i]));
 
+        // Очередь вне ротации: вопросы по курсу, с лекции которого человек
+        // пришёл (openers.js). Они идут первыми и без подписи — это вопросы
+        // из «Частых вопросов» лекции, а не чьи-то принесённые.
+        const lead = [];
+        window.FrediLive = {
+            lead: (items) => {
+                if (!Array.isArray(items)) return;
+                items.slice(0, 3).forEach(q => {
+                    if (typeof q === 'string' && q.trim()) lead.push({ q: q.trim() });
+                });
+            },
+            // Разговор начался — лента гаснет: чужие вопросы, уезжающие
+            // вверх над собственной репликой, мешают её ждать.
+            stop: () => {
+                if (timer) { clearTimeout(timer); timer = null; }
+                hideBox();
+            }
+        };
+
         const push = () => {
-            const li = row(DASH_QUESTIONS[i % DASH_QUESTIONS.length]);
-            i++;
+            let item;
+            if (lead.length) item = lead.shift();
+            else item = DASH_QUESTIONS[i++ % DASH_QUESTIONS.length];
+            const li = row(item);
             li.classList.add('is-new');
             list.appendChild(li);
             while (list.children.length > MAX) list.removeChild(list.firstElementChild);

@@ -556,6 +556,26 @@ img.emoji {
 }
 
 /* Профиль-бейдж */
+/* Архетип и кнопка «Ваш разбор» стоят в одну строку: две двери в один и
+   тот же разбор занимали два блока экрана подряд. На узком экране строка
+   переносится, кнопка уходит под бейдж. */
+.profile-line {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 8px;
+}
+.profile-open {
+    font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap;
+    color: rgba(168, 196, 224, 0.95); cursor: pointer;
+    background: linear-gradient(135deg, rgba(168,196,224,0.25), rgba(120,160,210,0.15));
+    border: 1px solid rgba(168, 196, 224, 0.5); border-radius: 30px;
+    padding: 9px 16px; transition: background .2s, border-color .2s;
+}
+.profile-open:hover {
+    background: linear-gradient(135deg, rgba(168,196,224,0.35), rgba(120,160,210,0.22));
+    border-color: rgba(168, 196, 224, 0.7);
+}
+/* Класс с display перебивает атрибут hidden — как у .dash-live-now. */
+.profile-open[hidden] { display: none; }
 .profile-badge {
     display: inline-flex;
     flex-direction: column;
@@ -2345,9 +2365,12 @@ img.emoji {
 
     .voice-card { margin-bottom: 6px; }
     .voice-record-btn-premium { padding: 18px 20px; font-size: 16px; }
-    /* Запас под sticky .voice-section: она теперь выше (кнопка голоса +
-       текстовое поле), иначе низ контента уезжает под панель. */
-    .dashboard-container { padding-bottom: max(210px, calc(env(safe-area-inset-bottom, 0px) + 190px)); }
+    /* Лента на телефоне ужимается — сами правила лежат ниже, рядом с её
+       разметкой: здешние оказались бы раньше базовых и проиграли бы им
+       по порядку следования. */
+    /* Запас под sticky .voice-section: она теперь выше (лента + кнопка
+       голоса + текстовое поле), иначе низ контента уезжает под панель. */
+    .dashboard-container { padding-bottom: max(300px, calc(env(safe-area-inset-bottom, 0px) + 280px)); }
 
     .screen-container {
         padding: 16px;
@@ -2500,11 +2523,14 @@ input, textarea, select, button { box-sizing: border-box; }
     border-color: rgba(0, 0, 0, 0.1);
 }
 
-/* ===== Лента вопросов под полем ввода =====
+/* ===== Лента вопросов над полем ввода =====
    Человек упирается в пустое поле и уходит: 69% разговоров за неделю —
    одна реплика. Лента показывает, о чём сюда вообще ходят, включая то,
-   с чем «неудобно». Строка подставляется в поле, отправляет человек. */
-.dash-live { margin: 14px 0 18px; }
+   с чем «неудобно». Строки не нажимаются: вопрос человек формулирует сам. */
+.dash-live { margin: 2px 0 14px; }
+/* Разговор начался — блок гасится атрибутом hidden. Строка нужна затем же,
+   зачем такая же у .dash-live-now: класс с display перебивает hidden. */
+.dash-live[hidden] { display: none; }
 .dash-live-head {
     display: flex; align-items: baseline; justify-content: space-between;
     gap: 10px; margin-bottom: 8px; padding: 0 2px;
@@ -2547,17 +2573,35 @@ input, textarea, select, button { box-sizing: border-box; }
     to   { opacity: 1; transform: translateY(0); }
 }
 .dash-live-q {
-    display: block; width: 100%; text-align: left; font: inherit; font-size: 13.5px;
+    display: flex; align-items: baseline; gap: 10px;
+    width: 100%; text-align: left; font: inherit; font-size: 13.5px;
     line-height: 1.45; color: var(--text-primary); background: none; border: 0;
     border-bottom: 1px solid rgba(224,224,224,0.06);
-    padding: 11px 14px; cursor: pointer; transition: background .15s;
+    padding: 11px 14px;
 }
-.dash-live-q:hover, .dash-live-q:focus { background: rgba(59,130,255,0.14); outline: none; }
+.dash-live-text { flex: 1 1 auto; min-width: 0; }
+/* Подпись размыта намеренно и не проявляется ни по наведению, ни выделением:
+   имена придуманы, читать там нечего. Без user-select строку копировали бы
+   мимо размытия — браузер размывает пиксели, а не текст. */
+.dash-live-who {
+    flex: 0 0 auto; font-size: 11.5px; color: var(--text-secondary);
+    filter: blur(3.2px); opacity: .85;
+    user-select: none; -webkit-user-select: none; pointer-events: none;
+}
 .dash-live-list li:first-child .dash-live-q { opacity: .45; }
 .dash-live-list li:nth-child(2) .dash-live-q { opacity: .75; }
 .dash-live-foot { font-size: 11px; color: var(--text-secondary);
     text-align: center; margin-top: 7px; opacity: .8; }
-@media (max-width: 520px) { .dash-live-view { height: 116px; } }
+/* На телефоне лента едет вместе с липкой панелью ввода, поэтому ужимается до
+   двух строк вместо четырёх: иначе панель съедала бы треть экрана. Заголовок
+   остаётся — без него над полем ввода висят две чужие фразы непонятно чьи, —
+   но становится мельче. Порог тот же, на котором .voice-section липнет. */
+@media (max-width: 768px) {
+    .dash-live { margin: 0 0 8px; }
+    .dash-live-head { margin-bottom: 5px; }
+    .dash-live-title { font-size: 10.5px; }
+    .dash-live-view { height: 92px; }
+}
 /* Движение выключено — лента становится обычным списком с прокруткой. */
 @media (prefers-reduced-motion: reduce) {
     .dash-live-list { animation: none; }
