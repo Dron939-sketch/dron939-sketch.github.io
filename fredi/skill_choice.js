@@ -468,6 +468,15 @@ function _scIsPremiumUser() {
 function _scSkillLocked(id) {
     return !!SC_PREMIUM_SKILLS[id] && !_scIsPremiumUser();
 }
+// Значок в списке рисуется по принадлежности к премиуму, а не по замку:
+// подписчику он говорит, что входит в оплаченное, а не «сюда нельзя».
+// Плюс снимается гонка: статус подписки приезжает асинхронно, и пока он
+// неизвестен, замок считается снятым — значок бы тогда не появился вовсе.
+function _scPremiumBadge(id) {
+    return SC_PREMIUM_SKILLS[id]
+        ? '<span class="sc-skill-prem" title="Входит в подписку Premium">💎 Premium</span>'
+        : '';
+}
 function _scShowSkillLock(id) {
     const name = SC_PREMIUM_SKILLS[id] || 'Этот навык';
     try {
@@ -1033,7 +1042,7 @@ function _scRenderSelect() {
                     return `<div class="sc-skill-card" data-id="${skill.id}">
                         <div class="sc-skill-icon">${skill.icon||'🎯'}</div>
                         <div class="sc-skill-body">
-                            <div class="sc-skill-name">${skill.name}${_scSkillLocked(skill.id)?'<span class="sc-skill-prem">💎 Premium</span>':''}</div>
+                            <div class="sc-skill-name">${skill.name}${_scPremiumBadge(skill.id)}</div>
                             <div class="sc-skill-sub">${skill.desc}</div>
                             <div class="sc-skill-bar-wrap"><div class="sc-skill-bar-fill" style="width:${pct}%"></div></div>
                             <div class="sc-skill-hint">Узнать подробнее →</div>
@@ -1051,7 +1060,7 @@ function _scRenderSelect() {
         <div class="sc-skill-card" data-id="${sk.id}">
             <div class="sc-skill-icon">${sk.icon||'🎯'}</div>
             <div class="sc-skill-body">
-                <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}${_scSkillLocked(sk.id)?'<span class="sc-skill-prem">💎 Premium</span>':''}</div>
+                <div class="sc-skill-name">${sk.name}${sk.isNew?'<span class="sc-skill-new">NEW</span>':''}${_scPremiumBadge(sk.id)}</div>
                 <div class="sc-skill-sub">${sk.desc}</div>
                 <div class="sc-skill-hint">Узнать подробнее →</div>
             </div>

@@ -2587,8 +2587,9 @@ input, textarea, select, button { box-sizing: border-box; }
     flex: 0 0 auto; font-size: 11.5px; color: var(--text-secondary);
     /* Размытие слабое: при 3,2 пикселя подпись превращалась в серое пятно,
        и человек не понимал, что там вообще надпись. Нужно, чтобы читалось
-       «здесь имя», но не читалось само имя. */
-    filter: blur(1.8px); opacity: .95;
+       «здесь имя»; владелец выбрал 1,2 пикселя — имя почти разбирается,
+       и это его решение, а не недосмотр. */
+    filter: blur(1.2px); opacity: .95;
     user-select: none; -webkit-user-select: none; pointer-events: none;
 }
 .dash-live-list li:first-child .dash-live-q { opacity: .45; }
