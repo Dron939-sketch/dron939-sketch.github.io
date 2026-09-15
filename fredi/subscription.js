@@ -349,6 +349,14 @@
     // здесь и так вводит для чека, поэтому имя и пин-код рядом стоят
     // дешевле, чем отдельный шаг регистрации до оплаты: тот уводил с
     // экрана оплаты и ничего человеку не открывал.
+    // Цели Метрики шлём в оба счётчика: кампании Директа привязаны к обоим,
+    // и цель должна дойти до каждого — как в tracker.js.
+    function _subGoal(name) {
+        if (!name || typeof ym !== 'function') return;
+        try { ym(108965607, 'reachGoal', name); } catch (e) {}
+        try { ym(108138656, 'reachGoal', name); } catch (e) {}
+    }
+
     function _needsAccount() {
         try {
             if (window.IS_AUTHENTICATED) return false;
@@ -584,6 +592,16 @@
                         });
                         const d = await r.json();
                         if (d && d.success !== false) {
+                            // Отключение автопродления — главный сигнал оттока,
+                            // и до 15.09.2026 он не фиксировался нигде: ни
+                            // события, ни цели. Человек уходил молча, а узнать
+                            // об этом можно было только заглянув в таблицу
+                            // подписок руками. Теперь видно в тот же час.
+                            _payStep(turningOff ? 'auto_renew_off' : 'auto_renew_on', {
+                                plan: (sub && sub.plan) || '',
+                                days_left: (sub && sub.days_left != null) ? sub.days_left : null,
+                            });
+                            _subGoal(turningOff ? 'sub_auto_renew_off' : 'sub_auto_renew_on');
                             _toast(turningOff
                                 ? 'Автопродление отключено. Доступ до конца оплаченного месяца'
                                 : 'Автопродление включено', 'info');
