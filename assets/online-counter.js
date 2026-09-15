@@ -1,4 +1,5 @@
-/* Счётчик «сейчас на курсах» для хаба Лектория.
+/* Счётчик «сколько человек здесь сейчас». Общий для Лектория и Фреди:
+ * раздел задаётся атрибутом data-section на элементе (lektorij | fredi).
  *
  * Число настоящее: его отдаёт Фреди из Яндекс.Метрики — визиты на страницы
  * Лектория и лекции за последние минуты. Токен Метрики даёт доступ ко всей
@@ -29,6 +30,13 @@
   var el = document.getElementById('online-now');
   if (!el) return;
 
+  // Раздел и высота пика читаются из разметки: счётчик обслуживает и
+  // Лекторий, и Фреди. Значения по умолчанию — прежние, лекторийные,
+  // чтобы старая страница работала без правок.
+  var SECTION = el.getAttribute('data-section') || 'lektorij';
+  var CAPTION_NOW = el.getAttribute('data-caption-now') || 'сейчас на курсах';
+  var CAPTION_HOUR = el.getAttribute('data-caption-hour') || 'на курсах за час';
+
   // Кривая суток: доля от дневного максимума по часам, 0—23.
   // Провал под утро, подъём к обеду, пик в девять вечера.
   var SHAPE = [
@@ -36,7 +44,7 @@
     0.38, 0.48, 0.55, 0.60, 0.62, 0.60, 0.58, 0.60,
     0.66, 0.74, 0.82, 0.90, 0.97, 1.00, 0.78, 0.45
   ];
-  var PEAK = 47;   // сколько человек в вечерний пик
+  var PEAK = parseInt(el.getAttribute('data-peak'), 10) || 47;  // человек в вечерний пик
   var FLOOR = 3;   // ниже этого не опускаемся: «0 человек» выглядит поломкой
 
   // Псевдослучайное, но воспроизводимое дрожание: одинаковое у всех,
@@ -99,14 +107,14 @@
   }
 
   function pull() {
-    fetch(API + '/api/metrika/online')
+    fetch(API + '/api/metrika/online?section=' + encodeURIComponent(SECTION))
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (!d || !d.enabled || typeof d.online !== 'number') return;
         // ноль на экране читается как поломка счётчика, а не как «никого»
         live = Math.max(FLOOR, d.online);
         liveAt = Date.now();
-        setCaption(d.window === 'hour' ? 'на курсах за час' : 'сейчас на курсах');
+        setCaption(d.window === 'hour' ? CAPTION_HOUR : CAPTION_NOW);
         render(live);
       })
       .catch(function () {});

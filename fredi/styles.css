@@ -2499,3 +2499,71 @@ input, textarea, select, button { box-sizing: border-box; }
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.1);
 }
+
+/* ===== Лента вопросов под полем ввода =====
+   Человек упирается в пустое поле и уходит: 69% разговоров за неделю —
+   одна реплика. Лента показывает, о чём сюда вообще ходят, включая то,
+   с чем «неудобно». Строка подставляется в поле, отправляет человек. */
+.dash-live { margin: 14px 0 18px; }
+.dash-live-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; margin-bottom: 8px; padding: 0 2px;
+}
+.dash-live-title { font-size: 12px; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--text-secondary); }
+.dash-live-now { display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-secondary); }
+/* display у класса перебивает атрибут hidden — без этой строки при
+   недоступном счётчике в углу висела одинокая зелёная точка без числа. */
+.dash-live-now[hidden] { display: none; }
+.dash-live-now b { font-weight: 700; color: var(--text-primary); }
+.dash-live-dot { width: 7px; height: 7px; border-radius: 50%; background: #35d07f;
+    box-shadow: 0 0 0 0 rgba(53,208,127,.6); animation: dashLivePulse 2.4s ease-out infinite; }
+@keyframes dashLivePulse { 70% { box-shadow: 0 0 0 8px rgba(53,208,127,0); }
+                           100% { box-shadow: 0 0 0 0 rgba(53,208,127,0); } }
+.dash-live-view {
+    position: relative; height: 132px; overflow: hidden;
+    border: 1px solid rgba(224,224,224,0.10); border-radius: 14px;
+    background: rgba(224,224,224,0.035);
+}
+.dash-live-view::before, .dash-live-view::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 34px;
+    z-index: 2; pointer-events: none;
+}
+.dash-live-view::before { top: 0;
+    background: linear-gradient(to bottom, var(--black-obsidian), transparent); }
+.dash-live-view::after { bottom: 0;
+    background: linear-gradient(to top, var(--black-obsidian), transparent); }
+/* Лента ведёт себя как чат: строки наполняет JS по одной, новая приходит
+   снизу, старые выдавливаются вверх. Прижимаем список к низу — иначе при
+   трёх строках он висит вверху и подпирает пустотой. */
+.dash-live-list { list-style: none; margin: 0; padding: 0;
+    position: absolute; left: 0; right: 0; bottom: 0; }
+.dash-live-list li { transform-origin: bottom; }
+/* Новая строка въезжает снизу; те, что выше, сдвигает сам поток. */
+.dash-live-list li.is-new { animation: dashLiveIn .42s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes dashLiveIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.dash-live-q {
+    display: block; width: 100%; text-align: left; font: inherit; font-size: 13.5px;
+    line-height: 1.45; color: var(--text-primary); background: none; border: 0;
+    border-bottom: 1px solid rgba(224,224,224,0.06);
+    padding: 11px 14px; cursor: pointer; transition: background .15s;
+}
+.dash-live-q:hover, .dash-live-q:focus { background: rgba(59,130,255,0.14); outline: none; }
+.dash-live-list li:first-child .dash-live-q { opacity: .45; }
+.dash-live-list li:nth-child(2) .dash-live-q { opacity: .75; }
+.dash-live-foot { font-size: 11px; color: var(--text-secondary);
+    text-align: center; margin-top: 7px; opacity: .8; }
+@media (max-width: 520px) { .dash-live-view { height: 116px; } }
+/* Движение выключено — лента становится обычным списком с прокруткой. */
+@media (prefers-reduced-motion: reduce) {
+    .dash-live-list { animation: none; }
+    .dash-live-view { height: auto; max-height: 200px; overflow-y: auto; }
+    .dash-live-list { position: static; }
+    .dash-live-list li:first-child .dash-live-q,
+    .dash-live-list li:nth-child(2) .dash-live-q { opacity: 1; }
+    .dash-live-dot { animation: none; }
+}

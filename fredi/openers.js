@@ -618,6 +618,59 @@
         FrediAsk(pending, 'url:' + _sourcePath(), true);
     }
 
+    // ?draft=<текст> — подставить фразу в поле ввода и НЕ отправлять.
+    //
+    // Отличие от ?ask= принципиальное, и оно измерено. В выгрузке 542
+    // диалогов за 09–15.09.2026 разговоры, начатые автоотправкой из
+    // объявления, продолжались в 12% случаев; те, где человек написал
+    // первую реплику сам, — в 56%. Автовопрос делает вид, что разговор
+    // начался, но человек в нём не участвовал. Поэтому лента тем на
+    // посадочной кладёт фразу в поле и оставляет последний шаг ему:
+    // нажать «отправить» — это уже его решение, а не наше.
+    var DRAFT_KEY = 'fredi_pending_draft';
+
+    function _fillDraft(text) {
+        var input = document.getElementById('dashComposerInput');
+        if (!input) return false;
+        input.value = text;
+        // Подсказки и автовысота слушают input — сообщаем как о наборе.
+        try { input.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) {}
+        try { input.focus(); } catch (e) {}
+        try {
+            input.setSelectionRange(input.value.length, input.value.length);
+        } catch (e) {}
+        _track('draft_filled', { len: text.length });
+        return true;
+    }
+
+    function _draftFromUrl() {
+        var draft = '';
+        try {
+            var sp = new URLSearchParams(location.search);
+            draft = sp.get('draft') || '';
+        } catch (e) {}
+        if (draft) {
+            draft = String(draft).trim().slice(0, ASK_MAX);
+            try {
+                var u = new URL(location.href);
+                u.searchParams.delete('draft');
+                history.replaceState(null, '', u.pathname + (u.search || '') + (u.hash || ''));
+            } catch (e) {}
+            // Переживает перезагрузку приложения так же, как ?ask=.
+            try { sessionStorage.setItem(DRAFT_KEY, draft); } catch (e) {}
+        }
+        var pending = '';
+        try { pending = sessionStorage.getItem(DRAFT_KEY) || ''; } catch (e) { pending = draft; }
+        if (!pending) return;
+        var tries = 0;
+        var iv = setInterval(function () {
+            if (_fillDraft(pending) || ++tries > 40) {
+                clearInterval(iv);
+                try { sessionStorage.removeItem(DRAFT_KEY); } catch (e) {}
+            }
+        }, 300);
+    }
+
     function _start() {
         // Дашборд рисуется не сразу и может перерисоваться — ждём поле.
         var tries = 0;
@@ -652,6 +705,7 @@
         // Вопрос из адреса не зависит от openers.json — если файл не
         // приехал, разговор всё равно должен начаться.
         _askFromUrl();
+        _draftFromUrl();
         fetch(SRC, { cache: 'force-cache' })
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (d) {
