@@ -1338,6 +1338,21 @@ const DASH_QUESTIONS = [
 // поддержит»), и человек читал справку о продукте вместо обещания
 // собеседника. У коуча и тренера вдобавок было «ты» — на одном экране
 // с «Расскажите, что вас беспокоит».
+// Персоны для вопросов, подставленных с курса (openers.js): у них своего
+// имени нет, а строка без подписи в ленте выглядит сбоем — соседние-то
+// подписаны. Берутся по кругу, из того же списка владельца, что и
+// основные, — здесь остались неиспользованные.
+const DASH_LEAD_WHO = [
+    { who: 'Александр, 28', city: 'Москва' },
+    { who: 'Андрей, 30',    city: 'Ижевск' },
+    { who: 'Никита, 26',    city: 'Кемерово' },
+    { who: 'Давид, 33',     city: 'Саратов' },
+    { who: 'Леон, 39',      city: 'Оренбург' },
+    { who: 'Макс, 29',      city: 'Махачкала' },
+    { who: 'Джон, 41',      city: 'Екатеринбург' },
+    { who: 'Роберт, 48',    city: 'Иркутск' }
+];
+
 const MODE_DESCS = {
     basic: 'Выберите стиль общения — или просто начните говорить',
     coach: 'Помогу сформулировать цель и найти своё решение — без советов сверху',
@@ -2624,9 +2639,11 @@ function renderDashboard() {
             window.FrediLive = {
                 lead: (items) => {
                     if (!Array.isArray(items)) return;
-                    items.slice(0, 3).reverse().forEach(q => {
+                    items.slice(0, 3).reverse().forEach((q, n) => {
                         if (typeof q === 'string' && q.trim())
-                            list.insertBefore(row({ q: q.trim() }), list.firstChild);
+                            list.insertBefore(row(Object.assign(
+                                { q: q.trim() },
+                                DASH_LEAD_WHO[n % DASH_LEAD_WHO.length])), list.firstChild);
                     });
                 },
                 stop: hideBox
@@ -2643,12 +2660,17 @@ function renderDashboard() {
         // пришёл (openers.js). Они идут первыми и без подписи — это вопросы
         // из «Частых вопросов» лекции, а не чьи-то принесённые.
         const lead = [];
+        let _leadSeen = 0;
         window.FrediLive = {
             lead: (items) => {
                 if (!Array.isArray(items)) return;
-                items.slice(0, 3).forEach(q => {
-                    if (typeof q === 'string' && q.trim()) lead.push({ q: q.trim() });
+                items.slice(0, 3).forEach((q, n) => {
+                    if (typeof q === 'string' && q.trim())
+                        lead.push(Object.assign(
+                            { q: q.trim() },
+                            DASH_LEAD_WHO[(_leadSeen + n) % DASH_LEAD_WHO.length]));
                 });
+                _leadSeen += items.length;
             },
             // Разговор начался — лента гаснет: чужие вопросы, уезжающие
             // вверх над собственной репликой, мешают её ждать.
@@ -2670,10 +2692,17 @@ function renderDashboard() {
             setTimeout(() => li.classList.remove('is-new'), 700);
         };
 
+        // Пауза между строками — ровно одна, две или три секунды, вразнобой
+        // (решение владельца 15.09.2026). Непрерывный случай из промежутка
+        // давал дробные 1,4 и 2,7 с: глаз этого не читает как «кто-то пишет»,
+        // он видит ровное мельтешение. Целые секунды разной длины слышны как
+        // ритм чужого набора — то быстро, то с заминкой.
+        const PAUSES = [1000, 2000, 3000];
+        const nextPause = () => PAUSES[Math.floor(Math.random() * PAUSES.length)];
         let timer = null;
         const tick = () => {
             push();
-            timer = setTimeout(tick, 1000 + Math.random() * 2000);  // 1–3 секунды
+            timer = setTimeout(tick, nextPause());
         };
         timer = setTimeout(tick, 1600);
 
@@ -2682,7 +2711,7 @@ function renderDashboard() {
         const view = list.closest('.dash-live-view');
         if (view) {
             const stop = () => { if (timer) { clearTimeout(timer); timer = null; } };
-            const go = () => { if (!timer) timer = setTimeout(tick, 1200); };
+            const go = () => { if (!timer) timer = setTimeout(tick, nextPause()); };
             view.addEventListener('mouseenter', stop);
             view.addEventListener('mouseleave', go);
             view.addEventListener('focusin', stop);
