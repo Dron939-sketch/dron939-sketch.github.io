@@ -914,23 +914,29 @@ function setupDashComposer() {
             }
         } catch (e) {}
 
-        // Ранняя дверь аккаунта: после второго сообщения сессии, когда Фреди
-        // ответил. Автовопрос из объявления считается первым — человек,
-        // написавший после него сам, уже в разговоре. Стена по счётчику
-        // приходит на десятой минуте, а 96 из 99 разговоров 06.09 до неё
-        // не дожили. Показывает meter.js, он же знает, аноним ли это.
+        // Карточка бесплатной версии: после ЧЕТВЁРТОГО сообщения сессии,
+        // когда Фреди ответил (решение владельца 15.09.2026; до этого было
+        // второе). Автовопрос из объявления считается первым. Стена по
+        // счётчику приходит на десятой минуте, а 96 из 99 разговоров 06.09
+        // до неё не дожили, — поэтому карточка и стоит раньше стены. Но на
+        // втором сообщении разговор ещё не разговор: предложение читается
+        // как турникет на входе, а на четвёртом — как «уберём помеху»
+        // посреди уже начатого. Показывает meter.js, он же знает, аноним
+        // ли это.
+        var DOOR_AFTER_MESSAGES = 4;
         try {
             _dashMsgCount++;
-            if (answer && _dashMsgCount === 2 && window.FrediMeter) {
+            if (answer && _dashMsgCount === DOOR_AFTER_MESSAGES && window.FrediMeter) {
                 var _authedNow = !!(window.FrediAuth && typeof window.FrediAuth.isAuthed === 'function' && window.FrediAuth.isAuthed());
                 if (!_authedNow && typeof window.FrediMeter.showAccountDoor === 'function') {
-                    setTimeout(function () { window.FrediMeter.showAccountDoor('second_message'); }, 1500);
+                    setTimeout(function () { window.FrediMeter.showAccountDoor('msg' + DOOR_AFTER_MESSAGES); }, 1500);
                 } else if (_authedNow && typeof window.FrediMeter.showPeakOffer === 'function') {
-                    // У человека с аккаунтом дверь аккаунта не нужна — а
-                    // разговор на втором своём сообщении уже пошёл. Это
-                    // пиковый момент «сохранить и продолжать» (12.09.2026);
-                    // meter.js сам не покажет его подписчику и чаще раза в день.
-                    setTimeout(function () { window.FrediMeter.showPeakOffer('second_message'); }, 1500);
+                    // У человека с аккаунтом карточка бесплатной версии не
+                    // нужна — а разговор к четвёртому своему сообщению уже
+                    // пошёл. Это пиковый момент «сохранить и продолжать»
+                    // (12.09.2026); meter.js сам не покажет его подписчику
+                    // и чаще раза в день.
+                    setTimeout(function () { window.FrediMeter.showPeakOffer('msg' + DOOR_AFTER_MESSAGES); }, 1500);
                 }
             }
         } catch (e) {}
