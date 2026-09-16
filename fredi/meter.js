@@ -591,6 +591,32 @@
         try { sessionStorage.setItem('meterPaywallClosedAt', String(_paywallClosedAt)); } catch (e) {}
     }
 
+    // Сколько минут до местной полуночи. Нужно потому, что бэкенд отдаёт
+    // minutes_until_reset = 0 для анонима без аккаунта — он не считает
+    // время до сброса. Раньше при нуле стена не рисовала таймер вовсе и
+    // говорила «Следующие бесплатные минуты придут в полночь». В ночь на
+    // 17.09.2026 человек прочитал это в 00:55 по Москве: ждать было
+    // четыре минуты, а он понял «приходите завтра», перезагрузил страницу
+    // трижды и ушёл. Считаем сами — текст стены и так обещает полночь.
+    function _minutesUntilMidnight() {
+        var now = new Date();
+        var next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0);
+        return Math.max(1, Math.ceil((next - now) / 60000));
+    }
+
+    // Когда жёсткая стена была ПОКАЗАНА. Отдельно от «закрыта»: закрыть её
+    // нельзя, а тишина всё равно нужна — иначе каждая перезагрузка рисует
+    // её заново. За 20 секунд 16.09.2026 один человек увидел её три раза.
+    function _wallShownAgo() {
+        try {
+            var t = parseInt(sessionStorage.getItem('meterWallShownAt') || '0', 10);
+            return t ? (Date.now() - t) / 1000 : Infinity;
+        } catch (e) { return Infinity; }
+    }
+    function _rememberWallShown() {
+        try { sessionStorage.setItem('meterWallShownAt', String(Date.now())); } catch (e) {}
+    }
+
     // ===== Дневная стена =====
     //
     // Решение владельца 16.09.2026: когда дневное время вышло, на экране
@@ -612,7 +638,9 @@
         var old = document.getElementById('meterOverlay');
         if (old) old.remove();
 
+        // Ноль от бэкенда — не «ждать нечего», а «не посчитано»: считаем сами.
         var minutes = data.minutes_until_reset || 0;
+        if (minutes <= 0) minutes = _minutesUntilMidnight();
         // Сколько минут вернётся. Числа не вписываем руками: у первого дня
         // это десять минут, дальше пять, и на анониме limit_minutes равен
         // нулю — тогда берём тот лимит, который будет с аккаунтом.
@@ -622,6 +650,7 @@
         var resetAt = new Date(Date.now() + minutes * 60000);
         var resetHhMm = ('0' + resetAt.getHours()).slice(-2) + ':' +
                         ('0' + resetAt.getMinutes()).slice(-2);
+        _rememberWallShown();
         _track('meter_blocked_shown', {
             limit_minutes: limit,
             minutes_until_reset: minutes,
@@ -635,13 +664,10 @@
         overlay.innerHTML =
             '<div class="meter-wall-box">' +
                 '<div class="meter-wall-title">На сегодня время вышло</div>' +
-                (minutes > 0
-                    ? '<div class="meter-wall-lead">Следующие ' + limit +
-                          ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
-                      '<div class="meter-wall-clock" id="meterTimer">' +
-                          _formatResetCountdown(minutes) + ':00</div>'
-                    : '<div class="meter-wall-lead">Следующие бесплатные минуты ' +
-                          'придут в полночь.</div>') +
+                '<div class="meter-wall-lead">Следующие ' + limit +
+                    ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
+                '<div class="meter-wall-clock" id="meterTimer">' +
+                    _formatResetCountdown(minutes) + ':00</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
                     'Купить пробный период — 99 ₽</button>' +
                 '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
@@ -661,7 +687,7 @@
             else if (typeof showSettingsScreen === 'function') showSettingsScreen();
         };
 
-        if (minutes > 0) {
+        {
             var el = document.getElementById('meterTimer');
             var left = minutes * 60;
             var iv = setInterval(function () {
@@ -692,22 +718,28 @@
         // Внутри защищённого отрезка стена откладывается до его конца.
         if (_protect > 0) { _pendingWall = data; return; }
         data = data || {};
+        var hard = (!data.block_reason || data.block_reason === 'daily'
+                    || data.block_reason === 'auth');
+        // Тишина теперь распространяется и на жёсткую стену. Раньше эта
+        // проверка стояла НИЖЕ — после раннего выхода, — и жёсткая стена
+        // её проскакивала: за 20 секунд один человек получал её трижды,
+        // перезагружая страницу, и уходил. Мягкие стены были защищены,
+        // неотменяемая — нет.
+        if (_dismissedAgo() < PAYWALL_QUIET_SEC
+            || (hard && _wallShownAgo() < PAYWALL_QUIET_SEC)) {
+            _track('meter_blocked_suppressed', {
+                block_reason: (data && data.block_reason) || '',
+                since_dismiss_sec: Math.round(Math.min(_dismissedAgo(), _wallShownAgo())),
+                hard: hard,
+            });
+            try { _toast('⏱ Минуты вернутся в полночь — Premium снимает счётчик', 'info'); } catch (e) {}
+            return;
+        }
         // Дневное время вышло — короткая стена с таймером и оплатой.
         // Случай без аккаунта ('auth') приходит сюда же: на пустом лимите
         // зовём покупать, а не регистрироваться.
-        if (!data.block_reason || data.block_reason === 'daily' || data.block_reason === 'auth') {
+        if (hard) {
             _showDailyWall(data);
-            return;
-        }
-        // Только что закрыли — не показываем стену заново. Человек уже
-        // прочитал её; вместо повтора напоминаем строкой, чтобы попытка
-        // отправить сообщение не осталась без ответа.
-        if (_dismissedAgo() < PAYWALL_QUIET_SEC) {
-            _track('meter_blocked_suppressed', {
-                block_reason: (data && data.block_reason) || '',
-                since_dismiss_sec: Math.round(_dismissedAgo()),
-            });
-            try { _toast('⏱ Лимит исчерпан — Premium снимает ограничение', 'info'); } catch (e) {}
             return;
         }
         _injectMeterStyles();

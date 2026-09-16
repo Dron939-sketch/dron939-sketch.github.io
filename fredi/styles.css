@@ -365,6 +365,48 @@ body::after {
     }
 }
 
+/* Кнопка меню в шапке. Она одалживала класс .mode-btn — тот сделан для
+   полосы выбора ролей внизу дашборда: flex:1, шрифт 12px, overflow:hidden.
+   В шапке это давало глиф в 12 пикселей серым по белому, и на широком
+   экране владелец 17.09.2026 прочитал это как «три точки пропали». Кнопка
+   была на месте — просто не читалась. Здесь у неё свой размер и свой вес;
+   селектор по id, поэтому .mode-btn в полосе ролей не задет. */
+#menuBtn.mode-btn {
+    flex: 0 0 auto;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--text-primary);
+    opacity: 0.75;
+    background: rgba(127, 127, 140, 0.10);
+    transition: opacity 0.15s, background 0.15s, transform 0.1s;
+}
+#menuBtn.mode-btn:hover {
+    opacity: 1;
+    background: rgba(127, 127, 140, 0.18);
+}
+#menuBtn.mode-btn:active { transform: scale(0.93); }
+
+/* На телефоне кнопка заметнее, чем была: тот же круг, но плотнее фон и
+   выше непрозрачность — палец должен находить её без прицеливания. */
+@media (max-width: 600px) {
+    #menuBtn.mode-btn {
+        width: 38px;
+        min-width: 38px;
+        height: 38px;
+        min-height: 38px;
+        font-size: 22px;
+        opacity: 0.9;
+        background: rgba(127, 127, 140, 0.16);
+    }
+}
+
 .chat-header-left {
     display: flex;
     align-items: center;
