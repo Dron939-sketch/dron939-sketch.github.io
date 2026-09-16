@@ -262,6 +262,23 @@ const VoiceConfig = {
     }
 };
 
+// Телеметрия голоса. До 16.09.2026 её не было ни одной строки: на жалобу
+// «микрофон работает не у всех» ответить было нечем — ни сколько их, ни на
+// каких устройствах, ни почему. Теперь каждый запуск записи оставляет след
+// с типом устройства и именем ошибки браузера.
+function _vtrack(ev, data) {
+    try {
+        if (!window.FrediTracker || !window.FrediTracker.track) return;
+        var d = VoiceConfig.diagnostics;
+        window.FrediTracker.track(ev, Object.assign({
+            ios: d.isIOS, android: d.isAndroid,
+            gum: d.getUserMediaSupported,
+            actx: d.audioContextSupported,
+            worklet: !!(window.AudioWorkletNode),
+        }, data || {}));
+    } catch (e) {}
+}
+
 // ============================================
 // РЕКОРДЕР
 // ============================================
@@ -288,6 +305,31 @@ class VoiceRecorder {
         this.onVolumeChange   = null;
         this.onSpeechDetected = null;
         this.onError          = null;
+    }
+
+    // Вызывается СИНХРОННО из обработчика нажатия — до всяких таймеров и
+    // await. Причина: кнопка голоса держит паузу 400 мс против случайных
+    // касаний, и к моменту старта записи жест уже кончился. AudioContext,
+    // созданный вне жеста, на iOS остаётся suspended, а resume() вне жеста
+    // Safari игнорирует: микрофон «работает», но пишет тишину. Здесь
+    // контекст создаётся и будится ровно в тот миг, когда палец коснулся
+    // экрана, а _setupAudioPipeline потом его переиспользует.
+    primeAudio() {
+        try {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (!Ctx) return null;
+            if (!this._primedCtx || this._primedCtx.state === 'closed') {
+                try { this._primedCtx = new Ctx({ sampleRate: this.config.sampleRate }); }
+                catch (e) { this._primedCtx = new Ctx(); }
+            }
+            if (this._primedCtx.state === 'suspended') {
+                this._primedCtx.resume().catch(() => {});
+            }
+            return this._primedCtx;
+        } catch (e) {
+            console.warn('primeAudio failed:', e && e.message);
+            return null;
+        }
     }
 
     async start() {
@@ -317,6 +359,11 @@ class VoiceRecorder {
             await this._setupAudioPipeline(stream);
 
             this.stopTimer = setTimeout(() => this.stop(), this.config.maxDuration);
+            _vtrack('voice_start_ok', {
+                rate: this._actualSampleRate || 0,
+                primed: !!this._primedCtx,
+                state: this.audioCtx ? this.audioCtx.state : '?',
+            });
             if (this.onRecordingStart) this.onRecordingStart();
             return true;
         } catch (err) {
@@ -327,6 +374,7 @@ class VoiceRecorder {
                 NotFoundError:    'Микрофон не найден',
                 NotReadableError: 'Микрофон занят другим приложением'
             };
+            _vtrack('voice_start_fail', { err: (err && err.name) || 'unknown' });
             if (this.onError) this.onError(msgs[err.name] || 'Не удалось запустить микрофон');
             return false;
         }
@@ -354,11 +402,16 @@ class VoiceRecorder {
         // Создаём AudioContext (та же логика что была: iOS не даёт жёстко
         // задать sampleRate, fallback на дефолт).
         const Ctx = window.AudioContext || window.webkitAudioContext;
-        try {
-            this.audioCtx = new Ctx({ sampleRate: this.config.sampleRate });
-        } catch (e) {
-            console.warn('AudioContext: fallback to default sampleRate', e?.message);
-            this.audioCtx = new Ctx();
+        // Разбуженный в жесте контекст в приоритете — см. primeAudio().
+        if (this._primedCtx && this._primedCtx.state !== 'closed') {
+            this.audioCtx = this._primedCtx;
+        } else {
+            try {
+                this.audioCtx = new Ctx({ sampleRate: this.config.sampleRate });
+            } catch (e) {
+                console.warn('AudioContext: fallback to default sampleRate', e?.message);
+                this.audioCtx = new Ctx();
+            }
         }
         if (this.audioCtx.state === 'suspended') {
             try { await this.audioCtx.resume(); } catch (e) { console.warn('audioCtx.resume failed:', e); }
@@ -481,13 +534,17 @@ class VoiceRecorder {
         if (this.stopTimer) { clearTimeout(this.stopTimer); this.stopTimer = null; }
         if (this.rafId) { cancelAnimationFrame(this.rafId); this.rafId = null; }
         if (this.processor) { try { this.processor.disconnect(); } catch {} this.processor = null; }
-        if (this.audioCtx)  { this.audioCtx.close().catch(() => {}); this.audioCtx = null; }
+        if (this.audioCtx)  {
+            if (this._primedCtx === this.audioCtx) this._primedCtx = null;
+            this.audioCtx.close().catch(() => {}); this.audioCtx = null;
+        }
         if (this._volCtx)   { this._volCtx.close().catch(() => {}); this._volCtx = null; }
         this._stopStream();
 
         // Проверка длительности — единственный надёжный критерий "слишком короткое"
         if (durationMs < this.config.minDuration) {
             console.warn(`🎤 Recording too short: ${durationMs}ms < ${this.config.minDuration}ms`);
+            _vtrack('voice_too_short', { ms: durationMs });
             if (this.onError) this.onError('Говорите немного дольше');
             if (this.onRecordingStop) this.onRecordingStop(null);
             return;
@@ -499,6 +556,7 @@ class VoiceRecorder {
             this._finish(blob);
         } else {
             console.warn('🎤 No audio data captured');
+            _vtrack('voice_empty', { ms: this._lastDurationMs || 0 });
             if (this.onError) this.onError('Не удалось получить аудио');
             if (this.onRecordingStop) this.onRecordingStop(null);
         }
@@ -1517,11 +1575,19 @@ class VoiceManager {
 
     _status(s) { if (this.onStatusChange) this.onStatusChange(s); }
 
+    // Разбудить звук внутри жеста. Кнопка голоса держит паузу 400 мс против
+    // случайных касаний, поэтому startRecording() приходит уже ВНЕ жеста —
+    // комментарий ниже когда-то был верен, а потом перестал. Этот метод
+    // зовётся синхронно по touchstart/mousedown, до всякой паузы.
+    primeAudio() {
+        try { this._player.primeForPlayback(); } catch (e) {}
+        try { return this._rec.primeAudio(); } catch (e) { return null; }
+    }
+
     startRecording() {
         // Человек говорит вслух — значит и ответ ему можно вслух (sound.js).
         try { window.FrediSound && window.FrediSound.noteAsk('voice'); } catch (e) {}
-        // Unlock плеера прямо здесь — это вызывается из обработчика
-        // нажатия кнопки, т.е. внутри user gesture (критично для iOS)
+        // Плеер уже разбужен в primeAudio() по касанию; повтор безвреден.
         this._player.primeForPlayback();
         if (this.isAISpeaking) {
             this._player.stop();
