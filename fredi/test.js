@@ -111,6 +111,172 @@ const Test = {
     // ============================================
     // УТОЧНЯЮЩИЕ ВОПРОСЫ
     // ============================================
+    // ============================================
+    // УТОЧНЕНИЕ ПОРТРЕТА («не попадает» → где именно)
+    // ============================================
+    // Решение владельца 16.09.2026: если портрет не попал, тест не идёт
+    // дальше с чужим описанием, а спрашивает, в какой области мимо,
+    // задаёт вопросы по ней, пересчитывает векторы и показывает портрет
+    // заново — и так до тех пор, пока человек не скажет «да, попадает».
+    //
+    // До этого цикл существовал наполовину: ответы на уточняющие вопросы
+    // складывались в clarifyingAnswers и НИКУДА не шли — ни один расчёт
+    // их не читал. Человек отвечал, а портрет возвращался слово в слово
+    // тот же. Здесь у каждого варианта есть вектор и уровень, и ответ
+    // прямо двигает шкалу: уровень попадает в behavioralLevels, среднее
+    // по которым и есть СБ/ТФ/УБ/ЧВ в calculateFinalProfile().
+    REFINE_AREAS: [
+        { key:'money',     label:'💰 Деньги' },
+        { key:'work',      label:'💼 Работа' },
+        { key:'family',    label:'👨‍👩‍👧 Семья и родители' },
+        { key:'relations', label:'❤️ Отношения' },
+        { key:'people',    label:'🎭 Люди вокруг' },
+        { key:'pressure',  label:'🛡 Давление и конфликты' },
+        { key:'thinking',  label:'🧠 Как я думаю' },
+        { key:'self',      label:'🪞 Я сам' }
+    ],
+    // Вопросы: по три на область, варианты несут вектор и уровень.
+    // Уровни те же, что в основном тесте (1–9), поэтому ответ работает
+    // наравне с ответами этапов, а не как отдельная приписка.
+    REFINE_BANK: {
+        money: [
+            { id:'m1', text:'Деньги. Что ближе к вашему сегодня?', v:'ТФ', opts:[
+                ['Их регулярно не хватает на обычные нужды',1],
+                ['Хватает, но отложить не выходит',3],
+                ['Хватает и остаётся, но дохода одного вида',4],
+                ['Доход из нескольких источников, я их строю',6]]},
+            { id:'m2', text:'Когда нужны деньги срочно — что делаете первым?', v:'ТФ', opts:[
+                ['Прошу у близких',1],
+                ['Ищу подработку',3],
+                ['Беру из накоплений',5],
+                ['Смотрю, какой актив продать или заложить',6]]},
+            { id:'m3', text:'Разговор о деньгах с близкими — это для вас…', v:'ТФ', opts:[
+                ['Ссора, стараюсь не поднимать',2],
+                ['Неудобно, но говорю',3],
+                ['Обычный рабочий разговор',5],
+                ['Мы планируем вместе, по числам',6]]}
+        ],
+        work: [
+            { id:'w1', text:'Работа. Что вернее?', v:'ТФ', opts:[
+                ['Держусь за место, выбора особо нет',2],
+                ['Работаю хорошо, но решают за меня',3],
+                ['Могу выбирать задачи и людей',5],
+                ['Сам создаю то, чем занимаюсь',6]]},
+            { id:'w2', text:'Когда на работе давят сроком или требованием:', v:'СБ', opts:[
+                ['Соглашаюсь и тяну молча',2],
+                ['Внешне спокоен, внутри кипит',4],
+                ['Говорю прямо, что успею, а что нет',5],
+                ['Переставляю условия под себя',6]]},
+            { id:'w3', text:'Ваше слово на встрече обычно:', v:'ЧВ', opts:[
+                ['Молчу, потом жалею',2],
+                ['Говорю, если спросят',3],
+                ['Говорю сам, меня слышат',5],
+                ['Часто именно я задаю рамку',6]]}
+        ],
+        family: [
+            { id:'f1', text:'Родители и ваши решения:', v:'ЧВ', opts:[
+                ['Оглядываюсь на них почти всегда',2],
+                ['Оглядываюсь, но делаю по-своему',3],
+                ['Советуюсь как со взрослыми',5],
+                ['Решаю сам, их мнение — одно из',6]]},
+            { id:'f2', text:'Когда в семье вас задевают словом:', v:'СБ', opts:[
+                ['Замолкаю и ухожу в себя',2],
+                ['Соглашаюсь, чтобы не спорить',3],
+                ['Говорю, что мне это неприятно',5],
+                ['Называю границу и держу её',6]]},
+            { id:'f3', text:'Просьба близкого, на которую нет сил:', v:'ЧВ', opts:[
+                ['Сделаю, отказать не могу',2],
+                ['Сделаю и буду злиться',3],
+                ['Скажу «не сегодня»',5],
+                ['Предложу другой вариант помощи',6]]}
+        ],
+        relations: [
+            { id:'r1', text:'В близких отношениях вы чаще:', v:'ЧВ', opts:[
+                ['Боюсь потерять и подстраиваюсь',2],
+                ['Хочу нравиться, много отдаю',3],
+                ['Держу равновесие, говорю о своём',5],
+                ['Мы строим общее, каждый остаётся собой',6]]},
+            { id:'r2', text:'Когда партнёр отдаляется:', v:'ЧВ', opts:[
+                ['Накрывает тревогой, ищу подтверждений',2],
+                ['Замыкаюсь в ответ',3],
+                ['Спрашиваю прямо, что происходит',5],
+                ['Даю время и говорю о своих потребностях',6]]},
+            { id:'r3', text:'Ссора. Ваш обычный ход:', v:'СБ', opts:[
+                ['Замираю, слова не идут',1],
+                ['Ухожу от разговора',2],
+                ['Говорю, но потом извиняюсь за тон',4],
+                ['Говорю спокойно и по делу',5]]}
+        ],
+        people: [
+            { id:'p1', text:'Чужое мнение о вас:', v:'ЧВ', opts:[
+                ['Определяет настроение на день',2],
+                ['Задевает, но переживу',3],
+                ['Слышу, но решаю сам',5],
+                ['Интересно как информация, не как приговор',6]]},
+            { id:'p2', text:'В новой компании вы:', v:'ЧВ', opts:[
+                ['Стараюсь понравиться',3],
+                ['Наблюдаю и молчу',2],
+                ['Легко завожу разговор',5],
+                ['Быстро вижу, кто на что влияет',6]]},
+            { id:'p3', text:'Когда при вас говорят неправду:', v:'СБ', opts:[
+                ['Промолчу',2],
+                ['Скажу потом, наедине',4],
+                ['Скажу сразу, мягко',5],
+                ['Скажу сразу и прямо',6]]}
+        ],
+        pressure: [
+            { id:'d1', text:'Прямое давление — начальник, продавец, родственник:', v:'СБ', opts:[
+                ['Теряюсь, соглашаюсь',1],
+                ['Соглашаюсь внешне, злюсь внутри',3],
+                ['Держу паузу и отвечаю',5],
+                ['Ставлю условие сам',6]]},
+            { id:'d2', text:'Чужая агрессия рядом:', v:'СБ', opts:[
+                ['Уйду, не буду связываться',2],
+                ['Останусь, но промолчу',3],
+                ['Скажу, что это не по адресу',5],
+                ['Переведу в переговоры',6]]},
+            { id:'d3', text:'Просьба, которую считаете несправедливой:', v:'СБ', opts:[
+                ['Сделаю',2],
+                ['Сделаю и запомню',3],
+                ['Спрошу, почему я',5],
+                ['Откажу без объяснений',6]]}
+        ],
+        thinking: [
+            { id:'t1', text:'Когда происходит что-то непонятное, вы:', v:'УБ', opts:[
+                ['Стараюсь не думать',1],
+                ['Ищу знак или совпадение',2],
+                ['Спрашиваю у того, кто разбирается',3],
+                ['Разбираю факты сам',5]]},
+            { id:'t2', text:'Новость, которая всех напугала:', v:'УБ', opts:[
+                ['Верю тому, что сказали',3],
+                ['Ищу, кому это выгодно',4],
+                ['Проверяю источники',5],
+                ['Смотрю, как это устроено в системе',6]]},
+            { id:'t3', text:'Своя ошибка. Первая мысль:', v:'УБ', opts:[
+                ['Мне не везёт',2],
+                ['В этот раз промахнулся',4],
+                ['У меня повторяется этот сценарий',6],
+                ['Это про мои убеждения, а не про случай',7]]}
+        ],
+        self: [
+            { id:'s1', text:'Когда вы одни и никто не оценивает:', v:'ЧВ', opts:[
+                ['Становится тревожно, нужен кто-то рядом',2],
+                ['Скучно, ищу занятие',3],
+                ['Спокойно, это мой ресурс',5],
+                ['Это лучшая часть дня',6]]},
+            { id:'s2', text:'Похвала в ваш адрес:', v:'ЧВ', opts:[
+                ['Не верю, ищу подвох',2],
+                ['Смущаюсь, но приятно',3],
+                ['Принимаю спокойно',5],
+                ['Сверяю с тем, что сам думаю о работе',6]]},
+            { id:'s3', text:'Критика в ваш адрес:', v:'СБ', opts:[
+                ['Выбивает надолго',2],
+                ['Обижаюсь, но переживу',3],
+                ['Разбираю, есть ли по делу',5],
+                ['Беру полезное, остальное оставляю',6]]}
+        ]
+    },
+
     clarifyingQuestionsDB: {
         "СБ": [
             { level:1, text:"Ты сказал, что замираешь под давлением. Что происходит в этот момент?", options:{"1":"Пустота в голове, слова не идут","2":"Хочется убежать, спрятаться","3":"Внутри всё кипит, но не могу сказать","4":"Просто жду, когда всё закончится"} },
@@ -2443,10 +2609,15 @@ ${this.getStage3Interpretation()}
             + '👇 ЭТО ПОХОЖЕ НА ВАС?';
 
         this.addMessageWithButtons(text, [
-            {text:'✅ ДА',callback:()=>this.profileConfirm()},
-            {text:'❓ ЕСТЬ СОМНЕНИЯ',callback:()=>this.profileDoubt()},
+            {text:'✅ ДА, ПОХОЖЕ',callback:()=>this.profileConfirm()},
+            {text:'❓ ЧАСТИЧНО',callback:()=>this.profileDoubt('doubt')},
+            {text:'🔄 НЕ ПОПАДАЕТ',callback:()=>this.profileDoubt('no')},
             {text:'◀️ НАЗАД',callback:()=>this.goToPreviousStage()}
         ]);
+    },
+
+    _track(event, data) {
+        try { if (window.FrediTracker?.track) window.FrediTracker.track(event, data || {}); } catch (e) {}
     },
 
     profileConfirm() {
@@ -2457,46 +2628,109 @@ ${this.getStage3Interpretation()}
         setTimeout(()=>this.goToNextStage(), 1500);
     },
 
-    profileDoubt() {
-        this.logTestFeedback('doubt');
-        this.addMessageWithButtons('🔍 ДАВАЙ УТОЧНИМ\n\nЧто именно вам не подходит?\n\n👇 Выберите и нажмите ДАЛЬШЕ', [
-            {text:'🎭 Про людей',callback:()=>this.toggleDiscrepancy('people')},
-            {text:'💰 Про деньги',callback:()=>this.toggleDiscrepancy('money')},
-            {text:'🔍 Про знаки',callback:()=>this.toggleDiscrepancy('signs')},
-            {text:'🤝 Про отношения',callback:()=>this.toggleDiscrepancy('relations')},
-            {text:'🛡 Про давление',callback:()=>this.toggleDiscrepancy('sb')},
-            {text:'➡️ ДАЛЬШЕ',callback:()=>this.clarifyNext()}
-        ]);
+    // Портрет не попал. Спрашиваем, где именно, — и дальше по кругу:
+    // вопросы по выбранным областям → пересчёт векторов → тот же экран
+    // портрета. Выход из круга один — «да, похоже» (решение владельца
+    // 16.09.2026). Слово «сомнения» заменено на «частично»: человек
+    // отвечает не о своей уверенности, а о том, попал ли текст.
+    profileDoubt(kind) {
+        this.logTestFeedback(kind === 'no' ? 'no' : 'doubt');
+        this._track('test_refine_opened', { kind: kind || 'doubt',
+                                            round: this.clarificationIteration || 0 });
+        this.discrepancies = [];
+        this.renderRefineAreas();
+    },
+
+    renderRefineAreas() {
+        const chosen = this.discrepancies || [];
+        const btns = this.REFINE_AREAS.map(a => ({
+            text: (chosen.includes(a.key) ? '✅ ' : '') + a.label,
+            callback: () => { this.toggleDiscrepancy(a.key); this.renderRefineAreas(); }
+        }));
+        btns.push({ text: '➡️ ДАЛЬШЕ', callback: () => this.clarifyNext() });
+        const head = chosen.length
+            ? '🔍 ОТМЕЧЕНО: ' + chosen.length + '\n\nМожно добавить ещё или нажать «Дальше».'
+            : '🔍 ГДЕ НЕ СХОДИТСЯ?\n\nОтметьте области, в которых портрет промахнулся, — '
+              + 'по ним я задам несколько вопросов и пересчитаю.\n\n👇 Можно выбрать несколько';
+        this.addMessageWithButtons(head, btns);
     },
 
     toggleDiscrepancy(type) {
-        if (this.discrepancies.includes(type)) this.discrepancies=this.discrepancies.filter(d=>d!==type);
+        if (this.discrepancies.includes(type)) this.discrepancies = this.discrepancies.filter(d => d !== type);
         else this.discrepancies.push(type);
         this.saveProgress();
     },
 
+    // Вопросы берём только те, что человек ещё не видел: иначе второй
+    // круг повторяет первый слово в слово и выглядит издёвкой.
     clarifyNext() {
-        if (!this.discrepancies.length) { this.addBotMessage('⚠️ Выберите хотя бы одно расхождение!', true); return; }
-        const lvls = {};
-        for (const v of ['СБ','ТФ','УБ','ЧВ']) { const a=this.behavioralLevels[v]||[]; lvls[v]=a.length?a.reduce((a,b)=>a+b,0)/a.length:3; }
-        const questions = this.getClarifyingQuestions(this.discrepancies, lvls);
-        if (!questions.length) { this.addBotMessage('⚠️ Нет уточняющих вопросов', true); return; }
-        this.clarifyingQuestions=questions; this.clarifyingCurrent=0;
+        if (!this.discrepancies.length) {
+            this.addBotMessage('⚠️ Отметьте хотя бы одну область — иначе пересчитывать нечего.', true);
+            this.renderRefineAreas();
+            return;
+        }
+        this._refineAsked = this._refineAsked || [];
+        const pool = [];
+        for (const area of this.discrepancies) {
+            for (const q of (this.REFINE_BANK[area] || [])) {
+                if (this._refineAsked.indexOf(q.id) === -1) pool.push(Object.assign({ area }, q));
+            }
+        }
+        if (!pool.length) {
+            // Банк по выбранным областям исчерпан. Врать, что «сейчас
+            // пересчитаю», нечем — говорим прямо и предлагаем выход.
+            this._track('test_refine_exhausted', { areas: this.discrepancies.join(',') });
+            this.addMessageWithButtons(
+                '🤷 По этим областям я уже спросил всё, что умею.\n\n'
+                + 'Дальше портрет точнее сделает разговор: расскажете своими словами, '
+                + 'что в нём мимо, — и Фреди разберёт это уже без анкеты.',
+                [
+                    { text:'🔍 ОТМЕТИТЬ ДРУГИЕ ОБЛАСТИ', callback:()=>{ this.discrepancies=[]; this.renderRefineAreas(); } },
+                    { text:'✅ ОСТАВИТЬ КАК ЕСТЬ', callback:()=>this.profileConfirm() }
+                ]);
+            return;
+        }
+        this.clarifyingQuestions = pool.slice(0, 5);
+        this.clarifyingCurrent = 0;
         this.askClarifyingQuestion();
     },
 
     askClarifyingQuestion() {
-        if (this.clarifyingCurrent>=this.clarifyingQuestions.length) {
-            this.clarificationIteration++; this.saveProgress(); this.showStage4Result(); return;
+        if (this.clarifyingCurrent >= this.clarifyingQuestions.length) {
+            this.clarificationIteration = (this.clarificationIteration || 0) + 1;
+            this.profileData = this.calculateFinalProfile();
+            this.saveProgress();
+            this._track('test_refine_round', { round: this.clarificationIteration,
+                                               areas: (this.discrepancies || []).join(',') });
+            this.addBotMessage('🔄 Пересчитал по вашим ответам. Вот что вышло теперь:', true);
+            setTimeout(() => this.showStage4Result(), 900);
+            return;
         }
         const q = this.clarifyingQuestions[this.clarifyingCurrent];
-        const options = Object.entries(q.options).map(([key,value])=>({
-            text:value,
-            callback:()=>{ this.clarifyingAnswers.push({question:q.text,answer:value,key,vector:q.vector,type:q.type}); this.clarifyingCurrent++; this.askClarifyingQuestion(); }
+        const options = q.opts.map(pair => ({
+            text: pair[0],
+            callback: () => {
+                // Ответ двигает шкалу по-настоящему: уровень падает в
+                // behavioralLevels, среднее по которым и есть вектор.
+                (this.behavioralLevels[q.v] = this.behavioralLevels[q.v] || []).push(pair[1]);
+                this.answers.push({ stage:'refine', question:q.text, answer:pair[0],
+                                    level:pair[1], vector:q.v, area:q.area });
+                this.clarifyingAnswers.push({ question:q.text, answer:pair[0],
+                                              vector:q.v, level:pair[1], area:q.area });
+                this._refineAsked.push(q.id);
+                this.clarifyingCurrent++;
+                this.askClarifyingQuestion();
+            }
         }));
-        options.push({text:'⏭ ПРОПУСТИТЬ',callback:()=>{ this.clarifyingCurrent++; this.askClarifyingQuestion(); }});
-        this.addMessageWithButtons('🔍 УТОЧНЯЮЩИЙ ВОПРОС '+(this.clarifyingCurrent+1)+'/'+this.clarifyingQuestions.length+'\n\n'+q.text, options);
+        options.push({ text:'⏭ ПРОПУСТИТЬ', callback: () => {
+            this._refineAsked.push(q.id);
+            this.clarifyingCurrent++;
+            this.askClarifyingQuestion();
+        }});
+        this.addMessageWithButtons('🔍 УТОЧНЯЮЩИЙ ВОПРОС ' + (this.clarifyingCurrent + 1)
+            + '/' + this.clarifyingQuestions.length + '\n\n' + q.text, options);
     },
+
 
     restartTest() { this.start(); },
 
