@@ -2322,32 +2322,14 @@ function renderDashboard() {
     // MAX-banner: показываем юзеру, который не привязал MAX, мягкое
     // приглашение — для второго канала reengagement-сообщений (MAX
     // доходит мгновенно и виднее, чем email). Dismiss кешируется на
-    // 7 дней в localStorage. Показываем только если: авторизован,
-    // has_max=false, не dismissed в последние 7 дней.
+    // Баннер «Привязать MAX» убран по просьбе владельца 17.09.2026:
+    // «убери сообщение вверху — привязать макс, не надо ничего лишнего».
+    // Он висел первой строкой над выбором роли у каждого авторизованного
+    // без привязанного мессенджера и показывался при КАЖДОМ открытии
+    // дашборда — в аналитике max_banner_shown шёл рядом с dashboard_viewed.
+    // Первое, что человек видел, открыв приложение, было предложение
+    // подключить сторонний мессенджер.
     var maxBannerHtml = '';
-    try {
-        var dismissedAt = parseInt(localStorage.getItem('max_banner_dismissed_at') || '0', 10);
-        var daysSinceDismiss = (Date.now() - dismissedAt) / 86400000;
-        // HAS_MAX !== true ловит и явный false, и undefined — последнее
-        // случается, если auth.js ещё не сходил на /me к моменту первого
-        // рендера. Так у нового авторизованного юзера банер появится
-        // даже при холодном старте.
-        if (window.IS_AUTHENTICATED && window.HAS_MAX !== true && daysSinceDismiss > 7) {
-            var uid = window.USER_ID || window.CONFIG?.USER_ID || '';
-            var maxBotLink = 'https://max.ru/id502238728185_1_bot';
-            var deeplink = maxBotLink + '?start=web_' + encodeURIComponent(uid);
-            maxBannerHtml = ''
-                + '<div class="max-banner" id="maxBanner" style="background:linear-gradient(135deg,rgba(252,206,40,0.12),rgba(252,206,40,0.04));border:1px solid rgba(252,206,40,0.3);border-radius:14px;padding:14px 16px;margin:12px 16px 0;display:flex;align-items:center;gap:12px">'
-                + '  <div style="font-size:24px;flex-shrink:0">💬</div>'
-                + '  <div style="flex:1;min-width:0">'
-                + '    <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px">Привязать MAX</div>'
-                + '    <div style="font-size:11px;color:var(--text-secondary);line-height:1.4">Чтобы важное приходило в мессенджер, а не только в email</div>'
-                + '  </div>'
-                + '  <a href="' + deeplink + '" target="_blank" rel="noopener" id="maxBannerOpen" style="background:#1c1c1e;color:#fff;text-decoration:none;padding:8px 14px;border-radius:10px;font-size:12px;font-weight:600;flex-shrink:0">Открыть</a>'
-                + '  <button id="maxBannerDismiss" aria-label="Закрыть" style="background:none;border:none;color:var(--text-secondary);cursor:pointer;font-size:18px;padding:4px 6px;line-height:1">✕</button>'
-                + '</div>';
-        }
-    } catch (e) {}
 
     // Баннер-анонс модуля «Ритуал» убран по просьбе: на дашборде больше не
     // рекламируется. Сам модуль остаётся доступен в разделе «Эзотерика».
@@ -3118,31 +3100,6 @@ function renderDashboard() {
 
     setupDashComposer();
 
-    // MAX-banner handlers
-    var maxBan = document.getElementById('maxBanner');
-    if (maxBan) {
-        try {
-            if (window.FrediTracker?.track) {
-                window.FrediTracker.track('max_banner_shown', {});
-            }
-        } catch {}
-        document.getElementById('maxBannerOpen')?.addEventListener('click', function () {
-            try {
-                if (window.FrediTracker?.track) {
-                    window.FrediTracker.track('max_banner_clicked', {});
-                }
-            } catch {}
-        });
-        document.getElementById('maxBannerDismiss')?.addEventListener('click', function () {
-            try { localStorage.setItem('max_banner_dismissed_at', String(Date.now())); } catch (e) {}
-            try {
-                if (window.FrediTracker?.track) {
-                    window.FrediTracker.track('max_banner_dismissed', {});
-                }
-            } catch {}
-            maxBan.style.display = 'none';
-        });
-    }
 
     // === Анонс модуля «Ритуал» ===
     // NEW-бейдж на пункте меню «Эзотерика» — пока пользователь не открыл
