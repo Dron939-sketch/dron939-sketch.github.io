@@ -2048,6 +2048,13 @@ function setupVoiceButton(buttonElement) {
     const onPressStart = (e) => {
         e.preventDefault();
         if (pressTimer || _recording) return;
+        // Звук будим ЗДЕСЬ, синхронно, пока мы внутри жеста. Ниже стоит
+        // пауза 400 мс против случайных касаний, и всё, что после неё, —
+        // уже не жест. AudioContext, созданный вне жеста, на iOS остаётся
+        // suspended, resume() Safari игнорирует, и микрофон пишет тишину:
+        // кнопка «работает», а расшифровки нет. Так это и выглядело у
+        // людей — «микрофон не у всех работает» (16.09.2026).
+        try { voiceManager.primeAudio && voiceManager.primeAudio(); } catch (err) {}
         _activeTouchId = e.touches ? e.touches[0].identifier : -1;
         buttonElement.style.transform = 'scale(0.97)';
         buttonElement.style.opacity   = '0.75';
