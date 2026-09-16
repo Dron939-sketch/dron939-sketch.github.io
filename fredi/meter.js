@@ -67,7 +67,18 @@
             '.meter-btn{display:block;width:100%;padding:14px;border:none;border-radius:14px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;text-align:center;margin-bottom:10px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform 0.15s}',
             '.meter-btn:active{transform:scale(0.98)}',
             '.meter-btn-primary{background:linear-gradient(135deg,#3b82ff 0%,#6366f1 100%);color:#fff}',
-            '.meter-btn-secondary{background:rgba(224,224,224,0.07);border:1px solid rgba(224,224,224,0.18);color:var(--text-secondary)}'
+            '.meter-btn-secondary{background:rgba(224,224,224,0.07);border:1px solid rgba(224,224,224,0.18);color:var(--text-secondary)}',
+            // Дневная стена: экран притемняется, но остаётся виден — человек
+            // должен понимать, что приложение на месте и вернётся, а не
+            // сломалось. Отсюда мягкая заливка и лёгкое размытие вместо
+            // глухого чёрного, каким закрывалась прежняя модалка.
+            '.meter-wall{background:rgba(6,8,14,0.30);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}',
+            '.meter-wall-box{max-width:340px;width:100%;text-align:center;color:#fff;background:rgba(12,15,22,0.84);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:26px 22px;box-shadow:0 18px 50px rgba(0,0,0,0.35)}',
+            '.meter-wall-title{font-size:17px;font-weight:700;margin-bottom:14px}',
+            '.meter-wall-clock{font-size:44px;font-weight:800;letter-spacing:1px;line-height:1.05;color:#fff;font-variant-numeric:tabular-nums;margin:0 0 22px}',
+            '.meter-wall-lead{font-size:13.5px;color:rgba(255,255,255,0.82);margin-bottom:12px;line-height:1.5}',
+            '.meter-wall-note{font-size:13px;color:rgba(255,255,255,0.78);margin-bottom:24px;line-height:1.45}',
+            '.meter-wall-fine{font-size:11.5px;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:2px}'
         ].join('\n');
         document.head.appendChild(s);
     }
@@ -580,19 +591,112 @@
         try { sessionStorage.setItem('meterPaywallClosedAt', String(_paywallClosedAt)); } catch (e) {}
     }
 
+    // ===== Дневная стена =====
+    //
+    // Решение владельца 16.09.2026: когда дневное время вышло, на экране
+    // остаётся ровно две вещи — сколько ждать до возобновления и кнопка
+    // оплаты. Ни списка возможностей Premium, ни «что вы теряете», ни
+    // кнопки «понятно, до завтра», ни закрытия по клику мимо: экран
+    // темнеет, и до утра или до оплаты дальше хода нет.
+    //
+    // Прежняя стена была длинной модалкой с тремя кнопками и опросом
+    // после закрытия. Она закрывалась — и человек оставался в приложении,
+    // где всё равно ничего не работало.
+    //
+    // Сюда сведён и случай без аккаунта (block_reason='auth'): по решению
+    // владельца 15.09.2026 на исчерпанном лимите мы зовём не заводить
+    // аккаунт, а покупать пробные три дня — аккаунт создаётся самой
+    // покупкой (subscription.js, _ensureAccount).
+    function _showDailyWall(data) {
+        _injectMeterStyles();
+        var old = document.getElementById('meterOverlay');
+        if (old) old.remove();
+
+        var minutes = data.minutes_until_reset || 0;
+        // Сколько минут вернётся. Числа не вписываем руками: у первого дня
+        // это десять минут, дальше пять, и на анониме limit_minutes равен
+        // нулю — тогда берём тот лимит, который будет с аккаунтом.
+        var limit = data.limit_minutes || data.registered_limit_minutes || 5;
+        // Час, в который лимит обновится: человек должен видеть не только
+        // «через сколько», но и «когда» — со сна это разные вопросы.
+        var resetAt = new Date(Date.now() + minutes * 60000);
+        var resetHhMm = ('0' + resetAt.getHours()).slice(-2) + ':' +
+                        ('0' + resetAt.getMinutes()).slice(-2);
+        _track('meter_blocked_shown', {
+            limit_minutes: limit,
+            minutes_until_reset: minutes,
+            block_reason: data.block_reason || 'daily',
+            wall_v: 'timer_only',
+        });
+
+        var overlay = document.createElement('div');
+        overlay.className = 'meter-overlay meter-wall';
+        overlay.id = 'meterOverlay';
+        overlay.innerHTML =
+            '<div class="meter-wall-box">' +
+                '<div class="meter-wall-title">На сегодня время вышло</div>' +
+                (minutes > 0
+                    ? '<div class="meter-wall-lead">Следующие ' + limit +
+                          ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
+                      '<div class="meter-wall-clock" id="meterTimer">' +
+                          _formatResetCountdown(minutes) + ':00</div>'
+                    : '<div class="meter-wall-lead">Следующие бесплатные минуты ' +
+                          'придут в полночь.</div>') +
+                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
+                    'Купить пробный период — 99 ₽</button>' +
+                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
+                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>' +
+            '</div>';
+        document.body.appendChild(overlay);
+        // Ни клик мимо, ни Esc стену не убирают: закрывать её нечем — за
+        // ней всё равно ничего не работает.
+        overlay.addEventListener('click', function (e) { e.stopPropagation(); }, true);
+        try { document.body.style.overflow = 'hidden'; } catch (e) {}
+
+        document.getElementById('meterSubscribeBtn').onclick = function () {
+            _track('meter_subscribe_clicked', { wall_v: 'timer_only' });
+            _rememberDismiss();
+            _closeDailyWall(overlay);
+            if (typeof window.openCheckout === 'function') window.openCheckout('paywall');
+            else if (typeof showSettingsScreen === 'function') showSettingsScreen();
+        };
+
+        if (minutes > 0) {
+            var el = document.getElementById('meterTimer');
+            var left = minutes * 60;
+            var iv = setInterval(function () {
+                left--;
+                if (left <= 0) {
+                    clearInterval(iv);
+                    _closeDailyWall(overlay);
+                    _lastCheck = null;
+                    _toast('Минуты вернулись — можно продолжать.', 'success');
+                    return;
+                }
+                var h = Math.floor(left / 3600), m = Math.floor((left % 3600) / 60), s = left % 60;
+                if (el) el.textContent = (h < 10 ? '0' : '') + h + ':' +
+                                         (m < 10 ? '0' : '') + m + ':' +
+                                         (s < 10 ? '0' : '') + s;
+            }, 1000);
+            overlay.dataset.iv = String(iv);
+        }
+    }
+
+    function _closeDailyWall(overlay) {
+        try { document.body.style.overflow = ''; } catch (e) {}
+        if (overlay && overlay.dataset.iv) clearInterval(+overlay.dataset.iv);
+        if (overlay) overlay.remove();
+    }
+
     function showFatigueModal(data) {
         // Внутри защищённого отрезка стена откладывается до его конца.
         if (_protect > 0) { _pendingWall = data; return; }
         data = data || {};
-        // Нет аккаунта — это не пейволл, а дверь в регистрацию: с
-        // платной моделью сервер отвечает block_reason='auth' всем без
-        // почты. Основной гейт стоит в login.js на входе; сюда попадают
-        // только гонки (сообщение ушло до модалки) и прямые вызовы API.
-        if (data.block_reason === 'auth') {
-            _track('meter_auth_gate', {});
-            if (window.FrediAuth && typeof window.FrediAuth.openRegister === 'function') {
-                window.FrediAuth.openRegister({ source: 'meter_auth', mandatory: true });
-            }
+        // Дневное время вышло — короткая стена с таймером и оплатой.
+        // Случай без аккаунта ('auth') приходит сюда же: на пустом лимите
+        // зовём покупать, а не регистрироваться.
+        if (!data.block_reason || data.block_reason === 'daily' || data.block_reason === 'auth') {
+            _showDailyWall(data);
             return;
         }
         // Только что закрыли — не показываем стену заново. Человек уже
