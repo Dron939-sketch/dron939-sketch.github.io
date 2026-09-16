@@ -16,7 +16,7 @@ const _ls = {
 
 // --- Состояние модуля ---
 const state = {
-    activeTab: 'horoscope',
+    activeTab: 'natal',   // гороскоп убран 16.09.2026 — открываем натальной картой
     activeSuit: 'major',
     question: '',
     userSign: null,
@@ -2400,10 +2400,12 @@ function render() {
     if (!container) return;
     
     const tabsHtml = `
+        <!-- Гороскоп и Таро убраны по решению владельца 16.09.2026.
+             Код рендера (renderHoroscope, renderTarot) оставлен на месте:
+             он ничего не стоит, пока на него нет вкладки, и вернуть раздел
+             будет одной строкой, а не восстановлением из истории. -->
         <div class="es-tabs">
-            <button class="es-tab ${state.activeTab === 'horoscope' ? 'active' : ''}" data-tab="horoscope">✨ Гороскоп</button>
             <button class="es-tab ${state.activeTab === 'natal' ? 'active' : ''}" data-tab="natal">🌟 Натальная карта</button>
-            <button class="es-tab ${state.activeTab === 'tarot' ? 'active' : ''}" data-tab="tarot">🔮 Таро</button>
             <button class="es-tab ${state.activeTab === 'ritual' ? 'active' : ''}" data-tab="ritual">🪬 Ритуал</button>
         </div>
     `;
@@ -2420,7 +2422,7 @@ function render() {
             <div class="content-header">
                 <div class="content-emoji">🔮</div>
                 <h1 class="content-title">Эзотерика</h1>
-                <p style="font-size:12px;color:var(--text-secondary)">Таро · Гороскопы · Натальная карта</p>
+                <p style="font-size:12px;color:var(--text-secondary)">Натальная карта · Ритуал</p>
             </div>
             ${tabsHtml}
             <div id="esContent">${content}</div>
