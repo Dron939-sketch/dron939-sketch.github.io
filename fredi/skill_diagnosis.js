@@ -229,13 +229,20 @@ function _sdInjectStyles() {
             .sd-sphere-desc { font-size: 11px; }
         }
 
-        /* Узкий мобайл — один столбец, иконка слева, текст справа. */
+        /* Узкий мобайл — один столбец, иконка слева, текст справа.
+           Явные колонки обязательны: в карточке три ребёнка (иконка, имя,
+           описание), а колонок две. Без указания описание сваливалось
+           автопотоком в первую колонку шириной 36 пикселей и печаталось
+           по слогам — «Увере / нность, / дисци / плина». Иконка занимает
+           обе строки, имя и описание идут во второй колонке. */
         @media (max-width: 420px) {
             .sd-sphere-grid { grid-template-columns: 1fr; gap: 8px; }
-            .sd-sphere-card { padding: 12px 14px; text-align: left; display: grid; grid-template-columns: 36px 1fr; align-items: center; gap: 12px; }
-            .sd-sphere-icon { font-size: 28px; margin-bottom: 0; }
-            .sd-sphere-name { font-size: 13px; margin-bottom: 2px; }
-            .sd-sphere-desc { font-size: 11px; white-space: normal; }
+            .sd-sphere-card { padding: 12px 14px; text-align: left; display: grid;
+                grid-template-columns: 36px 1fr; align-items: center; gap: 4px 12px; }
+            .sd-sphere-icon { font-size: 28px; margin-bottom: 0;
+                grid-column: 1; grid-row: 1 / span 2; align-self: center; }
+            .sd-sphere-name { font-size: 13px; margin-bottom: 0; grid-column: 2; grid-row: 1; }
+            .sd-sphere-desc { font-size: 11px; white-space: normal; grid-column: 2; grid-row: 2; }
         }
 
         @media (max-width: 480px) {
