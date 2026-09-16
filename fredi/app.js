@@ -1368,6 +1368,47 @@ const DASH_LEAD_WHO = [
     { who: 'Роберт, 48',    city: 'Иркутск' }
 ];
 
+// Вкладка дашборда — это набор инструментов, а не режим ответа Фреди.
+// Режим («базовый», «психолог», «коуч», «тренер») с 16.09.2026 живёт в
+// настройках: его выбирают один раз, а не заново при каждом заходе на
+// главную. Раньше три кнопки режима стояли посреди дашборда и их трогали
+// почти никогда: за 365 дней из 1194 диалогов 98 % не выходили за пределы
+// базового, а «тренер» выбрали дважды. У людей с аккаунтом при этом 31 %,
+// поэтому кнопки не убраны совсем, а переехали туда, где их ищут осознанно.
+const DASH_TABS = [
+    { key: 'coach', icon: '🔮', label: 'Коуч',
+      lede: 'Помогу сформулировать цель и найти своё решение — без советов сверху.' },
+    { key: 'psychologist', icon: '🧠', label: 'Психолог',
+      lede: 'Расскажите, что происходит — своими словами. Выслушаю и мягко разберу, что с вами.' },
+    { key: 'trainer', icon: '⚡', label: 'Тренер',
+      lede: 'Дам конкретные задания и буду держать вас в графике.' }
+];
+
+// Восемь плиток «быстрых действий» лежали одной кучей под карточками и
+// конкурировали с ними за глаз. Теперь каждая приписана к своей вкладке и
+// стоит строкой: строка занимает втрое меньше места, чем плитка, и читается
+// быстрее. data-action оставлен прежним — обработчики те же.
+const DASH_ROWS = {
+    psychologist: [
+        { a: 'sos', i: '🆘', t: 'Мне плохо прямо сейчас', sos: true },
+        { a: 'thoughts', i: '💭', t: 'Мысли психолога о вас' },
+        { a: 'diary', i: '📔', t: 'Дневник эмоций' },
+        { a: 'dreams', i: '🌙', t: 'Толкование снов', fold: true },
+        { a: 'tales', i: '🧿', t: 'Терапевтические сказки', fold: true },
+        { a: 'hormones', i: '🧬', t: 'Гормоны', fold: true }
+    ],
+    coach: [
+        { a: 'interests', i: '🎯', t: 'Интересы — чем заняться всерьёз' },
+        { a: 'weekend', i: '🎨', t: 'Идеи на выходные' },
+        { a: 'brand', i: '🏆', t: 'Мой бренд' }
+    ],
+    trainer: [
+        { a: 'practices', i: '🧘', t: 'Практики КПТ' },
+        { a: 'hypnosis', i: '🌀', t: 'Самогипноз' },
+        { a: 'anchors', i: '⚓', t: 'Якоря' }
+    ]
+};
+
 const MODE_DESCS = {
     basic: 'Выберите стиль общения — или просто начните говорить',
     coach: 'Помогу сформулировать цель и найти своё решение — без советов сверху',
@@ -1376,6 +1417,7 @@ const MODE_DESCS = {
 };
 
 function updateModeUI() {
+    window.currentMode = currentMode;
     const config = MODES[currentMode];
     const label = document.getElementById('modeLabel');
     const indicator = document.getElementById('modeIndicator');
@@ -1454,13 +1496,19 @@ function showPremiumLockPopup(modeName, opts) {
     });
 }
 
-async function switchMode(mode) {
+// opts.silent — не перерисовывать дашборд. Нужно настройкам: с 16.09.2026
+// режим диалога выбирают там, а renderDashboard() затёр бы открытый экран
+// настроек прямо под пальцем.
+async function switchMode(mode, opts) {
     if (mode === currentMode) return;
     const config = MODES[mode];
     if (!config) return;
 
     // Клик меняет визуальный выбор (active-кнопка, приветствие в hero) даже без подписки.
     currentMode = mode;
+    // Зеркало на window: currentMode объявлен через let и свойством window не
+    // становится, а настройки живут в отдельном файле и читают именно его.
+    window.currentMode = mode;
     updateModeUI();
 
     if (IS_PREMIUM === true) {
@@ -1479,8 +1527,9 @@ async function switchMode(mode) {
         // покажет paywall в нужный момент.
         if (voiceManager && voiceManager.setMode) voiceManager.setMode('basic');
     }
-    renderDashboard();
+    if (!opts || !opts.silent) renderDashboard();
 }
+window.switchMode = switchMode;
 
 // ============================================
 // ОБРАБОТЧИКИ БЫСТРЫХ ДЕЙСТВИЙ
@@ -2345,7 +2394,35 @@ function renderDashboard() {
                  фоне — она сливалась с блоками под собой и не читалась как
                  шапка. Оттуда же убрана строка «В прошлый раз: …»: в полосе
                  сходилось слишком много разом. -->
-            <div class="hero-strip" id="heroStrip">
+            <!-- Три экрана вместо одного длинного (решение владельца
+                 16.09.2026). На прежней главной сходилось больше двадцати
+                 целей разом: шапка, лента, голос, поле ввода, три кнопки
+                 режима, строка-описание, строка про подписку, четыре карточки
+                 и восемь плиток быстрых действий. Теперь каждая роль — свой
+                 экран, переключение вкладкой или свайпом.
+
+                 Разговор живёт только на экране «Психолог»: за 30 дней 755
+                 первых сообщений из 885 открытий написаны там, а коуч и
+                 тренер — это инструменты, а не беседа. Поэтому поле ввода и
+                 голос стоят внутри одной вкладки, а не над всеми тремя.
+
+                 Все три экрана лежат в разметке сразу и прячутся атрибутом
+                 hidden: так обвязка шапки (бейдж профиля, минуты, приглашение
+                 на тест) продолжает находить свои узлы на любой вкладке. -->
+            <div class="dash-tabs" id="dashTabs" role="tablist" aria-label="Разделы Фреди">
+                ${DASH_TABS.map(t => `
+                <button type="button" class="dash-tab${t.key === 'psychologist' ? ' dash-tab--on' : ''}"
+                        data-pane="${t.key}" role="tab"
+                        aria-selected="${t.key === 'psychologist'}">
+                    <i aria-hidden="true">${t.icon}</i>${t.label}
+                </button>`).join('')}
+            </div>
+
+            <div class="dash-panes" id="dashPanes">
+                ${DASH_TABS.map(t => `
+                <section class="dash-pane${t.key === 'psychologist' ? ' dash-pane--on' : ''}"
+                         data-pane="${t.key}" role="tabpanel"${t.key === 'psychologist' ? '' : ' hidden'}>
+                    ${t.key === 'psychologist' ? `<div class="hero-strip" id="heroStrip">
                 <div class="hero-row">
                     <div class="hero-ava">${modeConfig.emoji}<i class="hero-dot"></i></div>
                     <div class="hero-who">
@@ -2371,57 +2448,45 @@ function renderDashboard() {
                     <span class="hero-cta-q" id="heroCtaQ"></span>
                     <span class="hero-cta-go" id="heroCtaGo">Пройти →</span>
                 </button>
-            </div>
-
-            <!-- Виджет «Сегодня»: стрик + один рекомендованный шаг (segodnya.js) -->
-            <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <div id="todayMount"></div> -->
-
-            <div class="dash-cols">
-            <div class="dash-main">
-            <!-- Сначала голосовая кнопка (главное действие — говорить с Фреди),
-                 потом селектор стиля общения. Раньше было наоборот, и юзер
-                 уходил, не дойдя до микрофона. -->
-            <div class="voice-section">
-                <!-- Лента вопросов стоит над полем ввода: на её месте лежал
-                     свёрнутый список подсказок из openers.js, и над одной
-                     кнопкой оказывалось два текста об одном и том же.
-                     Подсказки убраны, место отдано ленте — она говорит то же
-                     самое («с таким сюда ходят»), но живёт и не требует
-                     раскрытия.
-                     Внутри .voice-section, потому что на телефоне та липнет к
-                     низу экрана: снаружи лента оказывалась за ней и человек
-                     видел только обрезанный заголовок. На узком экране она
-                     ужимается до двух строк без заголовка. -->
-                <!-- Лента свёрнута и открывается нажатием (решение владельца
-                     16.09.2026). Раньше она стояла раскрытой и занимала треть
-                     первого экрана чужими вопросами — на месте, где человек
-                     должен писать свой. Теперь это одна строка со знаком
-                     вопроса: кому нужно — раскроет, остальным она не мешает.
-                     Строка — button, а не div: иначе её не открыть с
-                     клавиатуры и не озвучить читалкой. -->
-                <div class="dash-live" id="dashLive">
-                    <button type="button" class="dash-live-head" id="dashLiveToggle"
-                            aria-expanded="false" aria-controls="dashLiveBody">
-                        <span class="dash-live-mark" aria-hidden="true">?</span>
-                        <span class="dash-live-title">О чём спрашивают Фреди</span>
-                        <span class="dash-live-now" id="dashLiveNow" hidden>
-                            <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
+            </div>` : ''}
+                    <p class="dash-pane-lede">${t.lede}</p>
+                    ${t.key === 'trainer' ? `
+                    <button type="button" class="quick-action dash-feature" data-action="kontur">
+                        <span class="dash-feature-i">🎮</span>
+                        <span class="dash-feature-b">
+                            <b>Тренажёры</b>
+                            <span>Скажи нет · Опора · Собеседование — по пять минут</span>
                         </span>
-                        <span class="dash-live-chev" aria-hidden="true">⌄</span>
-                    </button>
-                    <div class="dash-live-view" id="dashLiveBody" hidden>
-                        <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
+                        <span class="dash-feature-go">Играть →</span>
+                    </button>` : ''}
+                    <div class="modules-grid">
+                        ${(MODULES[t.key] || []).map(m => `
+                        <div class="module-card" data-module="${m.id}">
+                            <div class="module-icon">${m.icon}</div>
+                            <div class="module-name">${m.name}</div>
+                            <div class="module-desc">${m.desc}</div>
+                        </div>`).join('')}
                     </div>
-                </div>
-                <!-- Сначала голос, потом текст (решение владельца 15.09.2026).
-                     С 12.09 порядок был обратным — по фокус-группе: ночью, в
-                     офисе и в 58 лет вслух не говорят, и за неделю из 1304
-                     сообщений своих было 96. Порядок перевёрнут назад; если
-                     доля голосовых не вырастет, вернуть прежний — одна правка
-                     здесь и подпись-разделитель ниже.
-                     Оба внутри .voice-section, чтобы на мобильном остаться в
-                     липком низу экрана. -->
-                <div class="voice-card">
+                    <div class="dash-sec">Ещё у ${{coach: 'коуча', psychologist: 'психолога', trainer: 'тренера'}[t.key]}</div>
+                    <div class="dash-rows">
+                        ${(DASH_ROWS[t.key] || []).map(r => `
+                        <button type="button" class="quick-action dash-row${r.sos ? ' dash-row--sos' : ''}${r.fold ? ' dash-row--fold' : ''}"
+                                data-action="${r.a}"${r.fold ? ' hidden' : ''}>
+                            <span class="dash-row-i" aria-hidden="true">${r.i}</span>
+                            <span class="dash-row-t">${r.t}</span>
+                            <span class="dash-row-go" aria-hidden="true">›</span>
+                        </button>`).join('')}
+                        ${(DASH_ROWS[t.key] || []).some(r => r.fold) ? `
+                        <button type="button" class="dash-row dash-row--more" data-fold="${t.key}">
+                            <span class="dash-row-i" aria-hidden="true">⌄</span>
+                            <span class="dash-row-t">Ещё три: сны, сказки, гормоны</span>
+                        </button>` : ''}
+                    </div>
+                    <!-- «Вы на этом остановились» — заполняется из того, что
+                         человек уже начал (план навыка, цели, привычки). Пусто
+                         — блок не показывается: выдумывать здесь нечего. -->
+                    <div class="dash-cont" data-cont="${t.key}" hidden></div>
+                    ${t.key === 'psychologist' ? `<div class="voice-card">
                     <button class="voice-record-btn-premium" id="mainVoiceBtn">
                         <span class="voice-icon">🎤</span>
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
@@ -2437,58 +2502,12 @@ function renderDashboard() {
                                placeholder="Напишите, что беспокоит…" maxlength="2000" autocomplete="off">
                         <button type="submit" class="dash-composer-send" id="dashComposerSend" aria-label="Отправить">↑</button>
                     </form>
-                </div>
-            </div>
-
-            <div class="mode-selector">
-                <button class="mode-btn ${currentMode === 'coach' ? 'active' : ''}" data-mode="coach">🔮 КОУЧ</button>
-                <button class="mode-btn ${currentMode === 'psychologist' ? 'active' : ''}" data-mode="psychologist">🧠 ПСИХОЛОГ</button>
-                <button class="mode-btn ${currentMode === 'trainer' ? 'active' : ''}" data-mode="trainer">⚡ ТРЕНЕР</button>
-            </div>
-            <div class="mode-desc" id="modeDesc">${MODE_DESCS[currentMode] || ''}</div>
-            ${IS_PREMIUM !== true ? `
-            <div class="mode-hint" style="text-align:center;font-size:11px;color:var(--text-secondary);margin:-6px 0 16px;line-height:1.5;opacity:0.85">
-                Роли работают, пока идут бесплатные минуты. Дальше —
-                <a href="#" id="modeUpgradeLink" style="color:#3b82ff;text-decoration:none;font-weight:600">с подпиской</a>.
-            </div>` : ''}
-
-            <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): <button class="sos-strip" id="sosStrip">🆘 <b>Мне плохо прямо сейчас</b><span> — дыхание и первая помощь, 2 минуты</span></button> -->
-
-            <div class="modules-grid">
-                ${modules.map(m => `
-                    <div class="module-card" data-module="${m.id}">
-                        <div class="module-icon">${m.icon}</div>
-                        <div class="module-name">${m.name}</div>
-                        <div class="module-desc">${m.desc}</div>
-                    </div>`).join('')}
-            </div>
-            </div>
-
-            <div class="dash-side">
-            <div class="quick-actions">
-                <div class="quick-actions-title">⚡ Быстрые действия</div>
-                <div class="qa-group-title">Развлечься с пользой</div>
-                <div class="quick-actions-grid">
-                    <div class="quick-action featured" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
-                    <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Терапевтические сказки</div></div>
-                    <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
-                    <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
-                </div>
-                <div class="qa-group-title">Разобраться в себе</div>
-                <div class="quick-actions-grid">
-                    <div class="quick-action" data-action="profile"><div class="action-icon">🧠</div><div class="action-name">Мой портрет</div></div>
-                    <div class="quick-action" data-action="thoughts"><div class="action-icon">💭</div><div class="action-name">Мысли психолога</div></div>
-                    <div class="quick-action" data-action="interests"><div class="action-icon">🎯</div><div class="action-name">Интересы</div></div>
-                    <div class="quick-action" data-action="hormones"><div class="action-icon">🧬</div><div class="action-name">Гормоны</div></div>
-                </div>
-                <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): группа «Инструменты»
-                <div class="qa-group-title">Инструменты</div>
-                <div class="quick-actions-grid">
-                    <div class="quick-action" data-action="brand"><div class="action-icon">🏆</div><div class="action-name">Мой бренд</div></div>
-                    <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
-                </div>
-                -->
-            </div>
+                </div>` : `
+                    <button type="button" class="dash-tochat" data-goto="psychologist">
+                        <span aria-hidden="true">💬</span>Поговорить с Фреди
+                        <span class="dash-tochat-go">на экране «Психолог» →</span>
+                    </button>`}
+                </section>`).join('')}
             </div>
 
             <!-- Скроллящийся поток сообщений диалога. -->
@@ -2873,21 +2892,135 @@ function renderDashboard() {
         else handleShowProfile();
     });
 
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (btn.dataset.mode) {
-                try {
-                    if (window.FrediTracker?.track) {
-                        window.FrediTracker.track('dashboard_cta_clicked', {
-                            cta: 'mode_btn',
-                            mode: btn.dataset.mode
-                        });
-                    }
-                } catch {}
-                switchMode(btn.dataset.mode);
-            }
+    // Вкладки: переключают набор инструментов, а не режим ответа Фреди.
+    // Режим выбирается в настройках — здесь его не трогаем.
+    (function dashTabs() {
+        const tabs = document.querySelectorAll('.dash-tab[data-pane]');
+        const panes = document.querySelectorAll('.dash-pane[data-pane]');
+        if (!tabs.length || !panes.length) return;
+        const KEYS = ['coach', 'psychologist', 'trainer'];
+
+        const show = (key, how) => {
+            if (KEYS.indexOf(key) === -1) return;
+            tabs.forEach(t => {
+                const on = t.dataset.pane === key;
+                t.classList.toggle('dash-tab--on', on);
+                t.setAttribute('aria-selected', String(on));
+            });
+            panes.forEach(pn => {
+                const on = pn.dataset.pane === key;
+                pn.classList.toggle('dash-pane--on', on);
+                pn.hidden = !on;
+            });
+            try { sessionStorage.setItem('fredi_dash_pane', key); } catch (e) {}
+            try { window.FrediTracker?.track('dash_pane_opened', { pane: key, how: how || 'tab' }); } catch (e) {}
+        };
+
+        tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.pane, 'tab')));
+        document.querySelectorAll('[data-goto]').forEach(b =>
+            b.addEventListener('click', () => show(b.dataset.goto, 'button')));
+
+        // Свайп по горизонтали. Порог 60 пикселей и требование, чтобы
+        // горизонталь была вдвое длиннее вертикали: иначе обычная прокрутка
+        // пальцем по диагонали перелистывала бы экран.
+        const box = document.getElementById('dashPanes');
+        if (box) {
+            let x0 = 0, y0 = 0, live = false;
+            box.addEventListener('touchstart', e => {
+                if (e.touches.length !== 1) { live = false; return; }
+                x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; live = true;
+            }, { passive: true });
+            box.addEventListener('touchend', e => {
+                if (!live) return;
+                live = false;
+                const t = e.changedTouches && e.changedTouches[0];
+                if (!t) return;
+                const dx = t.clientX - x0, dy = t.clientY - y0;
+                if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 2) return;
+                const cur = KEYS.indexOf(document.querySelector('.dash-pane--on')?.dataset.pane || 'psychologist');
+                const next = dx < 0 ? cur + 1 : cur - 1;
+                if (next < 0 || next >= KEYS.length) return;
+                show(KEYS[next], 'swipe');
+            }, { passive: true });
+        }
+
+        // Раскрытие свёрнутого хвоста списка.
+        document.querySelectorAll('.dash-row--more[data-fold]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const pane = document.querySelector('.dash-pane[data-pane="' + btn.dataset.fold + '"]');
+                if (!pane) return;
+                pane.querySelectorAll('.dash-row--fold').forEach(r => { r.hidden = false; });
+                btn.remove();
+            });
         });
-    });
+
+        // Вкладка держится в пределах сессии: человек, ушедший в тренажёр и
+        // вернувшийся назад, попадает туда же, откуда уходил.
+        let saved = null;
+        try { saved = sessionStorage.getItem('fredi_dash_pane'); } catch (e) {}
+        if (saved && saved !== 'psychologist') show(saved, 'restore');
+    })();
+
+    // «Вы на этом остановились» — из того, что человек уже начал. Ничего не
+    // начато — блок молчит: пустая карточка-приглашение здесь была бы просто
+    // ещё одним баннером.
+    (function dashContinue() {
+        const uid = window.USER_ID || window.CONFIG?.USER_ID || '';
+        const read = (k) => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
+        const fill = (key, html) => {
+            const box = document.querySelector('.dash-cont[data-cont="' + key + '"]');
+            if (!box || !html) return;
+            box.innerHTML = html;
+            box.hidden = false;
+        };
+        const card = (title, icon, line, go, pct, cap) =>
+            '<div class="dash-cont-h">Вы на этом остановились</div>'
+            + '<div class="dash-cont-line"><span class="dash-cont-i" aria-hidden="true">' + icon + '</span>'
+            + '<span class="dash-cont-t">' + line + '</span>'
+            + '<span class="dash-cont-go">' + go + ' →</span></div>'
+            + (pct ? '<div class="dash-cont-bar"><span style="width:' + pct + '%"></span></div>' : '')
+            + (cap ? '<div class="dash-cont-cap">' + cap + '</div>' : '');
+
+        const plan = read('sc_plan_' + uid) || read('trainer_skill_' + uid);
+        if (plan && plan.skillName) {
+            const done = (plan.daysDone || []).length;
+            const total = (plan.plan && plan.plan.length) || 21;
+            fill('trainer', card('skill', '🎯', 'Навык: ' + plan.skillName, 'Продолжить',
+                Math.min(100, Math.round(100 * done / total)),
+                done + ' ' + (done === 1 ? 'день' : 'дней') + ' из ' + total));
+        }
+
+        const goals = read('saved_goals') || [];
+        const habits = read('hab_habits_' + uid) || [];
+        if (goals.length) {
+            const g = goals[goals.length - 1];
+            fill('coach', card('goal', '🎯', 'Цель: «' + (g.name || 'без названия') + '»', 'Продолжить', 0, ''));
+        } else if (habits.length) {
+            fill('coach', card('habit', '🔄', 'Привычка: «' + (habits[0].name || 'без названия') + '»', 'Продолжить', 0, ''));
+        }
+
+        document.querySelectorAll('.dash-cont').forEach(box => {
+            box.addEventListener('click', () => {
+                const key = box.dataset.cont;
+                if (key === 'trainer') {
+                    if (typeof showSkillChoiceScreen === 'function') showSkillChoiceScreen();
+                    else { const sc = document.createElement('script'); sc.src = 'skill_choice.js';
+                           sc.onload = () => { if (typeof showSkillChoiceScreen === 'function') showSkillChoiceScreen(); };
+                           document.head.appendChild(sc); }
+                } else if (goals.length) {
+                    if (typeof showGoalsScreen === 'function') showGoalsScreen();
+                    else { const sc = document.createElement('script'); sc.src = 'goals.js';
+                           sc.onload = () => { if (typeof showGoalsScreen === 'function') showGoalsScreen(); };
+                           document.head.appendChild(sc); }
+                } else {
+                    if (typeof showHabitsScreen === 'function') showHabitsScreen();
+                    else { const sc = document.createElement('script'); sc.src = 'habits.js';
+                           sc.onload = () => { if (typeof showHabitsScreen === 'function') showHabitsScreen(); };
+                           document.head.appendChild(sc); }
+                }
+            });
+        });
+    })();
 
     document.getElementById('sosStrip')?.addEventListener('click', () => {
         try { window.FrediTracker?.track('dashboard_cta_clicked', { cta: 'sos' }); } catch {}
@@ -2895,18 +3028,6 @@ function renderDashboard() {
         const s = document.createElement('script');
         s.src = 'sos.js';
         s.onload = () => { if (typeof window.showSosScreen === 'function') window.showSosScreen(); };
-        document.head.appendChild(s);
-    });
-
-    document.getElementById('modeUpgradeLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (typeof showSettingsScreen === 'function') {
-            try { showSettingsScreen(); return; } catch {}
-        }
-        const s = document.createElement('script');
-        s.src = 'settings.js';
-        s.onload = () => { if (typeof showSettingsScreen === 'function') showSettingsScreen(); };
-        s.onerror = () => { showToast('Не удалось открыть настройки', 'error'); };
         document.head.appendChild(s);
     });
 
@@ -2973,7 +3094,13 @@ function renderDashboard() {
                 esoterica: () => { if (typeof showEsotericaScreen==='function') showEsotericaScreen(); else { const s=document.createElement('script');s.src='esoterica.js';s.onload=()=>{if(typeof showEsotericaScreen==='function')showEsotericaScreen();};s.onerror=()=>{showToast('Не удалось загрузить модуль','error');};document.head.appendChild(s); } },
                 habits: () => { if (typeof showHabitsScreen === 'function') showHabitsScreen(); else { showToast('🔄 Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'habits.js'; s.onload = () => { if (typeof showHabitsScreen === 'function') showHabitsScreen(); }; document.head.appendChild(s); } },
                 motivation: () => { if (typeof showMotivationScreen === 'function') showMotivationScreen(); else { showToast('🔥 Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'motivation.js'; s.onload = () => { if (typeof showMotivationScreen === 'function') showMotivationScreen(); }; document.head.appendChild(s); } },
-                strategy: () => { if (typeof showStrategyScreen === 'function') showStrategyScreen(); else { showToast('🗺️ Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'strategy.js'; s.onload = () => { if (typeof showStrategyScreen === 'function') showStrategyScreen(); }; document.head.appendChild(s); } }
+                strategy: () => { if (typeof showStrategyScreen === 'function') showStrategyScreen(); else { showToast('🗺️ Загрузка...', 'info'); const s = document.createElement('script'); s.src = 'strategy.js'; s.onload = () => { if (typeof showStrategyScreen === 'function') showStrategyScreen(); }; document.head.appendChild(s); } },
+                // Строки новых экранов: раньше эти входы были только в левом меню.
+                sos: () => { if (typeof window.showSosScreen === 'function') window.showSosScreen(); else { const s = document.createElement('script'); s.src = 'sos.js'; s.onload = () => { if (typeof window.showSosScreen === 'function') window.showSosScreen(); }; document.head.appendChild(s); } },
+                diary: () => { if (typeof showDiaryScreen === 'function') showDiaryScreen(); else { const s = document.createElement('script'); s.src = 'diary.js'; s.onload = () => { if (typeof showDiaryScreen === 'function') showDiaryScreen(); }; s.onerror = () => { showToast('Не удалось загрузить модуль', 'error'); }; document.head.appendChild(s); } },
+                practices: () => { if (typeof showPracticesScreen === 'function') showPracticesScreen(); else { const s = document.createElement('script'); s.src = 'practices.js'; s.onload = () => { if (typeof showPracticesScreen === 'function') showPracticesScreen(); }; s.onerror = () => { showToast('Не удалось загрузить модуль', 'error'); }; document.head.appendChild(s); } },
+                hypnosis: () => { if (typeof showHypnosisScreen === 'function') showHypnosisScreen(); else { const s = document.createElement('script'); s.src = 'hypnosis.js'; s.onload = () => { if (typeof showHypnosisScreen === 'function') showHypnosisScreen(); }; s.onerror = () => { showToast('Не удалось загрузить модуль', 'error'); }; document.head.appendChild(s); } },
+                anchors: () => { if (typeof showAnchorsScreen === 'function') showAnchorsScreen(); else { const s = document.createElement('script'); s.src = 'anchors.js'; s.onload = () => { if (typeof showAnchorsScreen === 'function') showAnchorsScreen(); }; s.onerror = () => { showToast('Не удалось загрузить модуль', 'error'); }; document.head.appendChild(s); } }
             };
             if (handlers[type]) await handlers[type]();
         });

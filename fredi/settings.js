@@ -19,6 +19,19 @@
         s.id = 'st3-styles';
         s.textContent = `
             .st-section{margin-bottom:8px}
+            .st-modes{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+            .st-mode{display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;
+                background:var(--black-matte,rgba(255,255,255,0.04));
+                border:1px solid var(--carbon-fiber,rgba(255,255,255,0.08));
+                border-radius:14px;padding:12px 13px;font-family:inherit;cursor:pointer;
+                color:var(--text-primary);transition:border-color .16s ease,background .16s ease}
+            .st-mode:hover{border-color:rgba(147,197,253,0.4)}
+            .st-mode--on{border-color:rgba(147,197,253,0.65);background:rgba(59,130,255,0.1)}
+            .st-mode-i{font-size:20px;flex:0 0 auto;line-height:1.2}
+            .st-mode-b{min-width:0}
+            .st-mode-b b{display:block;font-size:13.5px;margin-bottom:3px}
+            .st-mode-b span{display:block;font-size:11.5px;line-height:1.45;color:var(--text-secondary)}
+            .st-mode-tick{margin-left:auto;flex:0 0 auto;font-size:15px;color:#3b82ff;font-weight:800}
             .st-acc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(224,224,224,0.03);border:1px solid rgba(224,224,224,0.08);border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background 0.15s;margin-bottom:2px}
             .st-acc-header:hover{background:rgba(224,224,224,0.06)}
             .st-acc-header.open{border-radius:14px 14px 0 0;border-bottom:none}
@@ -255,6 +268,7 @@
             '<h1 class="content-title">Настройки</h1>' +
             '<p style="font-size:12px;color:var(--text-secondary);margin-top:4px">Управление Фреди</p></div>' +
             _accordion('account', '🔑', 'Аккаунт') +
+            _accordion('dialogmode', '🗣️', 'Режим диалога') +
             _accordion('subscription', '💎', 'Подписка') +
             _accordion('payment', '💳', 'Платёжные данные') +
             _accordion('tasks', '📋', 'Активные задачи') +
@@ -369,6 +383,62 @@
     function _renderSection(id) {
         var el = document.getElementById('stAcc_' + id);
         if (!el) return;
+
+        // Режим диалога. До 16.09.2026 три кнопки стояли посреди дашборда и
+        // почти никем не трогались: за 365 дней из 1194 диалогов 98 % не
+        // выходили за пределы базового, «тренера» выбрали дважды. При этом у
+        // людей с аккаунтом роль трогает каждый третий — то есть вещь нужная,
+        // но не первому встречному. Владелец решил убрать её с главной сюда:
+        // выбирают один раз и осознанно, а не мимоходом.
+        if (id === 'dialogmode') {
+            var MODES_UI = [
+                { k: 'basic', i: '💬', n: 'Базовый',
+                  d: 'Обычный разговор. Фреди слушает и отвечает без выбранной роли.' },
+                { k: 'psychologist', i: '🧠', n: 'Психолог',
+                  d: 'Выслушает, поддержит и мягко разберёт, что с вами происходит.' },
+                { k: 'coach', i: '🔮', n: 'Коуч',
+                  d: 'Поможет сформулировать цель и найти своё решение — без советов сверху.' },
+                { k: 'trainer', i: '⚡', n: 'Тренер',
+                  d: 'Даёт конкретные задания и держит вас в графике.' }
+            ];
+            var cur = window.currentMode || 'basic';
+            el.innerHTML =
+                '<div class="st-hint">Как Фреди разговаривает с вами. Выбор сохраняется и '
+                + 'действует во всех разговорах, пока вы его не смените.</div>'
+                + '<div class="st-modes">'
+                + MODES_UI.map(function (m) {
+                    return '<button type="button" class="st-mode' + (m.k === cur ? ' st-mode--on' : '') + '" '
+                        + 'data-mode="' + m.k + '">'
+                        + '<span class="st-mode-i">' + m.i + '</span>'
+                        + '<span class="st-mode-b"><b>' + m.n + '</b><span>' + m.d + '</span></span>'
+                        + '<span class="st-mode-tick">' + (m.k === cur ? '✓' : '') + '</span>'
+                        + '</button>';
+                  }).join('')
+                + '</div>'
+                + (window.IS_PREMIUM === true ? ''
+                    : '<div class="st-hint" style="margin-top:12px">Роли работают, пока идут бесплатные '
+                      + 'минуты. Дальше разговор продолжается в базовом режиме — или с подпиской.</div>');
+
+            el.querySelectorAll('.st-mode').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var mode = b.dataset.mode;
+                    if (!mode || mode === (window.currentMode || 'basic')) return;
+                    try {
+                        if (window.FrediTracker && window.FrediTracker.track)
+                            window.FrediTracker.track('dialog_mode_set', { mode: mode, from: 'settings' });
+                    } catch (e) {}
+                    if (typeof window.switchMode === 'function') {
+                        // silent: иначе switchMode перерисует дашборд поверх
+                        // открытых настроек.
+                        window.switchMode(mode, { silent: true });
+                    } else {
+                        window.currentMode = mode;
+                    }
+                    _renderSection('dialogmode');
+                });
+            });
+            return;
+        }
 
         if (id === 'account') {
             var authed = !!window.IS_AUTHENTICATED;
