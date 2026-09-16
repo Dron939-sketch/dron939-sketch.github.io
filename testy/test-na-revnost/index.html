@@ -434,6 +434,18 @@ a{color:#3A86FF}
               }).join(', ') + '. Что это значит и с чего мне начать?'
       });
     }
+    // Письмо с результатом: страницу человек закроет, письмо останется.
+    // Ключ полосы — TYPES[lead].key, он же ключ в каталоге
+    // backend/short_test_mail.py; при переименовании править обе стороны.
+    if (window.TestMail) {
+      window.TestMail.mount({
+        host: document.getElementById('result'),
+        test: 'revnost',
+        band: TYPES[lead].key,
+        score: scores[lead],
+        goal: 'revnost_mail'
+      });
+    }
     drawRadar(scores);
     var rows = '';
     for (var i = 0; i < 6; i++) {
@@ -467,5 +479,6 @@ a{color:#3A86FF}
 </script>
 <!-- /fredi-track -->
 <script src="/testy/razbor.js" defer></script>
+<script src="/testy/test-mail.js" defer></script>
 </body>
 </html>
