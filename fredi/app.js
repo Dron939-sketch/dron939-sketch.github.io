@@ -2337,10 +2337,14 @@ function renderDashboard() {
                  50 новых и 16 вернувшихся, но новые сидели 349 секунд, а
                  вернувшиеся 935.
                  Теперь в первой строке — кто перед человеком и его архетип, во
-                 второй — его собственная незакрытая тема с кнопкой «Продолжить»
-                 (/api/chat/last-topic). Новичку вместо темы предлагается тест:
-                 прежний широкий баннер «Узнайте свой психотип» отсюда и уехал,
-                 он дублировал бейдж. -->
+                 второй — приглашение пройти тест тем, у кого его нет: прежний
+                 широкий баннер «Узнайте свой психотип» отсюда и уехал, он
+                 дублировал бейдж.
+                 Полоса выделена цветом (решение владельца 16.09.2026, вариант
+                 «тёмная визитка»): в прежнем виде — светлая карточка на светлом
+                 фоне — она сливалась с блоками под собой и не читалась как
+                 шапка. Оттуда же убрана строка «В прошлый раз: …»: в полосе
+                 сходилось слишком много разом. -->
             <div class="hero-strip" id="heroStrip">
                 <div class="hero-row">
                     <div class="hero-ava">${modeConfig.emoji}<i class="hero-dot"></i></div>
@@ -2356,23 +2360,17 @@ function renderDashboard() {
                     </div>
                     <button type="button" class="profile-open" id="profileOpenBtn" hidden>Ваш разбор →</button>
                 </div>
-                <!-- Строка возврата. Скрыта, пока не известно, к чему
-                     возвращать: показывать пустую рамку хуже, чем не
-                     показывать ничего. -->
-                <div class="hero-resume-wrap">
-                    <button type="button" class="hero-resume" id="heroResume" hidden>
-                        <span class="hero-resume-was" id="heroResumeWas">В прошлый раз:</span>
-                        <span class="hero-resume-q" id="heroResumeQ"></span>
-                        <span class="hero-resume-go" id="heroResumeGo">Продолжить →</span>
-                    </button>
-                    <!-- Тема разговора на общем телефоне окажется на виду у
-                         чужих глаз, поэтому её можно убрать одним касанием —
-                         выбор запоминается. Кнопка лежит рядом со строкой, а не
-                         внутри: кнопка внутри кнопки — невалидная разметка, и
-                         клик по ней уходил бы заодно в «Продолжить». -->
-                    <button type="button" class="hero-resume-hide" id="heroResumeHide" hidden
-                            title="Не показывать тему прошлого разговора">скрыть</button>
-                </div>
+                <!-- Строка приглашения: тем, кто ещё не проходил тест.
+                     Скрыта, пока не известно, что предлагать. Здесь же
+                     до 16.09.2026 стояла тема прошлого разговора
+                     («В прошлый раз: …»): владелец убрал её — в шапке
+                     сходилось слишком много, и она переставала читаться
+                     как шапка. -->
+                <button type="button" class="hero-cta" id="heroCta" hidden>
+                    <span class="hero-cta-was" id="heroCtaWas"></span>
+                    <span class="hero-cta-q" id="heroCtaQ"></span>
+                    <span class="hero-cta-go" id="heroCtaGo">Пройти →</span>
+                </button>
             </div>
 
             <!-- Виджет «Сегодня»: стрик + один рекомендованный шаг (segodnya.js) -->
@@ -2581,11 +2579,11 @@ function renderDashboard() {
             // занимает приглашение пройти тест: раньше это был широкий
             // баннер под шапкой, теперь строка внутри полосы.
             if (badge) badge.hidden = true;
-            _heroInvite('Узнать свой психотип',
-                        '15 минут — и Фреди отвечает под вас',
-                        'Пройти →',
-                        () => { try { startTest(); } catch (e) {} },
-                        'test');
+            _heroCta('Узнать свой психотип',
+                     '15 минут — и Фреди отвечает под вас',
+                     'Пройти →',
+                     () => { try { startTest(); } catch (e) {} },
+                     'test');
             // Сетка модулей и быстрые действия приглушены, чтобы взгляд
             // анонима шёл на тест, а не на пёструю сетку.
             const modulesGrid = document.querySelector('.modules-grid');
@@ -2598,19 +2596,18 @@ function renderDashboard() {
         if (statusEl) statusEl.textContent = 'нет профиля';
     });
 
-    // ===== Шапка-полоса: возврат в свой прошлый разговор =====
+    // ===== Шапка-полоса: строка приглашения =====
     //
-    // Вернувшегося встречало то же приветствие, что и новичка. Здесь на его
-    // месте — тема, с которой он приходил в прошлый раз, и кнопка обратно
-    // в неё. Тему отдаёт /api/chat/last-topic (Frederick): первая реплика
-    // последнего захода, обрезанная по границе слова.
-    const HERO_HIDE_KEY = 'fredi_hero_resume_off';
-
-    function _heroSetResume(was, text, go, onClick, kind) {
-        const box = document.getElementById('heroResume');
-        const wasEl = document.getElementById('heroResumeWas');
-        const qEl = document.getElementById('heroResumeQ');
-        const goEl = document.getElementById('heroResumeGo');
+    // До 16.09.2026 здесь же стояла тема прошлого разговора
+    // (/api/chat/last-topic) с кнопкой «Продолжить». Владелец убрал её:
+    // в полосе сходилось имя, архетип, минуты и чужая строка разом, и
+    // шапка переставала читаться как шапка. Вернуться в разговор можно
+    // из окна переписки — оно помнит, на чём остановились.
+    function _heroCta(was, text, go, onClick, kind) {
+        const box = document.getElementById('heroCta');
+        const wasEl = document.getElementById('heroCtaWas');
+        const qEl = document.getElementById('heroCtaQ');
+        const goEl = document.getElementById('heroCtaGo');
         if (!box || !qEl) return;
         wasEl.textContent = was;
         qEl.textContent = text;
@@ -2620,67 +2617,10 @@ function renderDashboard() {
         box.onclick = onClick;
         try {
             if (window.FrediTracker?.track) {
-                window.FrediTracker.track('hero_resume_shown', { kind: kind || '' });
+                window.FrediTracker.track('hero_cta_shown', { kind: kind || '' });
             }
         } catch (e) {}
     }
-
-    // Приглашение новичку — та же строка, только зовёт не назад, а вперёд.
-    function _heroInvite(was, text, go, onClick, kind) {
-        _heroSetResume(was, text, go, onClick, kind);
-        const hide = document.getElementById('heroResumeHide');
-        if (hide) hide.hidden = true;   // прятать приглашение незачем
-    }
-
-    (function heroResume() {
-        const uid = CONFIG.USER_ID;
-        if (!uid) return;
-        let off = false;
-        try { off = localStorage.getItem(HERO_HIDE_KEY) === '1'; } catch (e) {}
-        if (off) return;
-        fetch(`${CONFIG.API_BASE_URL}/api/chat/last-topic/${uid}`)
-            .then(r => r.json())
-            .then(d => {
-                if (!d || !d.topic) return;
-                // Приглашение новичку уже могло встать в эту строку — своя
-                // тема важнее: она про него, а не про продукт.
-                const days = d.days_ago;
-                const was = days === 0 ? 'Сегодня говорили:'
-                          : days === 1 ? 'Вчера говорили:'
-                          : 'В прошлый раз:';
-                _heroSetResume(was, '«' + d.topic + '»', 'Продолжить →', () => {
-                    try {
-                        if (window.FrediTracker?.track) {
-                            window.FrediTracker.track('hero_resume_clicked', { days_ago: days });
-                        }
-                    } catch (e) {}
-                    // Открываем окно переписки, а не отправляем реплику за
-                    // человека: возвращаться в разговор, которого не видно,
-                    // странно — сначала он видит, на чём остановились
-                    // (решение владельца 15.09.2026).
-                    if (window.FrediTalk) window.FrediTalk.open('hero_resume');
-                    else {
-                        const input = document.getElementById('dashComposerInput');
-                        if (input) input.focus();
-                    }
-                }, 'topic');
-                const hide = document.getElementById('heroResumeHide');
-                if (hide) {
-                    hide.hidden = false;
-                    hide.onclick = (e) => {
-                        e.stopPropagation();
-                        try { localStorage.setItem(HERO_HIDE_KEY, '1'); } catch (er) {}
-                        const box = document.getElementById('heroResume');
-                        if (box) box.hidden = true;
-                        hide.hidden = true;
-                        try {
-                            if (window.FrediTracker?.track) window.FrediTracker.track('hero_resume_hidden', {});
-                        } catch (er) {}
-                    };
-                }
-            })
-            .catch(() => {});
-    })();
 
     // Остаток бесплатных минут — в той же строке, где имя. Человек должен
     // видеть, сколько у него есть, до того как упрётся в стену: раньше он
