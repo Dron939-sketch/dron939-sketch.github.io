@@ -135,6 +135,68 @@ const Test = {
         { key:'thinking',  label:'🧠 Как я думаю' },
         { key:'self',      label:'🪞 Я сам' }
     ],
+    // Вопрос о рычаге — по одному на область, первым в круге уточнения.
+    //
+    // Без него уточнение двигало только четыре строки векторов, а самое
+    // читаемое в портрете — «Ваша точка роста», распределение по Дилтсу и
+    // уверенность — оставалось прежним: они считаются из diltsCounts, куда
+    // попадают ответы одного лишь четвёртого этапа. Человек трижды говорил
+    // «не попадает» и трижды видел ту же точку роста.
+    //
+    // Выводить уровень Дилтса из ответов про деньги или семью нельзя: те
+    // вопросы меряют вектор, а не то, где человек ищет причину. Поэтому
+    // спрашиваем прямо и ровно так же, как на четвёртом этапе, — пять
+    // вариантов с явным dilts, но про ту область, в которой портрет промахнулся.
+    REFINE_LEVER: {
+        money: { id:'money-d', text:'Деньги. Если менять — с чего начинать?', opts:[
+            ['🌍 Со среды: город, работа, круг людей','ENVIRONMENT'],
+            ['🛠️ С действий: считать, откладывать, просить больше','BEHAVIOR'],
+            ['📚 С навыков: научиться тому, за что платят','CAPABILITIES'],
+            ['💎 С отношения к деньгам — оно у меня кривое','VALUES'],
+            ['🧠 С себя: я не тот человек, который зарабатывает','IDENTITY']]},
+        work: { id:'work-d', text:'Работа. Где тут настоящая причина?', opts:[
+            ['🌍 В месте и людях — не туда попал','ENVIRONMENT'],
+            ['🛠️ В том, как я работаю','BEHAVIOR'],
+            ['📚 В нехватке квалификации','CAPABILITIES'],
+            ['💎 В том, что мне это не важно','VALUES'],
+            ['🧠 В том, что это вообще не моё дело','IDENTITY']]},
+        family: { id:'family-d', text:'Семья. Что изменило бы больше всего?', opts:[
+            ['🌍 Разъехаться, видеться реже','ENVIRONMENT'],
+            ['🛠️ Говорить и вести себя иначе','BEHAVIOR'],
+            ['📚 Уметь разговаривать на трудные темы','CAPABILITIES'],
+            ['💎 Пересобрать, что я им должен, а что нет','VALUES'],
+            ['🧠 Перестать быть для них ребёнком','IDENTITY']]},
+        relations: { id:'relations-d', text:'Отношения. На что опереться, чтобы стало лучше?', opts:[
+            ['🌍 На другого человека рядом','ENVIRONMENT'],
+            ['🛠️ На свои привычки в паре','BEHAVIOR'],
+            ['📚 На умение говорить о своём','CAPABILITIES'],
+            ['💎 На понимание, что мне вообще нужно','VALUES'],
+            ['🧠 На то, кем я себя в них чувствую','IDENTITY']]},
+        people: { id:'people-d', text:'Люди вокруг. Где корень?', opts:[
+            ['🌍 Окружение такое подобралось','ENVIRONMENT'],
+            ['🛠️ В том, как я себя веду с людьми','BEHAVIOR'],
+            ['📚 Не хватает навыка общения','CAPABILITIES'],
+            ['💎 В том, что для меня важно в людях','VALUES'],
+            ['🧠 В том, кем я себя среди них считаю','IDENTITY']]},
+        pressure: { id:'pressure-d', text:'Давление. Что менять в первую очередь?', opts:[
+            ['🌍 Убрать из жизни тех, кто давит','ENVIRONMENT'],
+            ['🛠️ Свою реакцию в момент','BEHAVIOR'],
+            ['📚 Научиться держать границу словами','CAPABILITIES'],
+            ['💎 Разобраться, почему уступаю','VALUES'],
+            ['🧠 Перестать чувствовать себя слабее','IDENTITY']]},
+        thinking: { id:'thinking-d', text:'Когда что-то не выходит, вы обычно думаете:', opts:[
+            ['🌍 «Условия были такие»','ENVIRONMENT'],
+            ['🛠️ «Я сделал не то»','BEHAVIOR'],
+            ['📚 «Я этого не умею»','CAPABILITIES'],
+            ['💎 «Мне это на самом деле не нужно»','VALUES'],
+            ['🧠 «Я такой человек»','IDENTITY']]},
+        self: { id:'self-d', text:'Если бы вы менялись — с какого места?', opts:[
+            ['🌍 Со смены обстановки','ENVIRONMENT'],
+            ['🛠️ С ежедневных действий','BEHAVIOR'],
+            ['📚 С новых умений','CAPABILITIES'],
+            ['💎 С того, во что я верю','VALUES'],
+            ['🧠 С ответа «кто я»','IDENTITY']]}
+    },
     // Вопросы: по три на область, варианты несут вектор и уровень.
     // Уровни те же, что в основном тесте (1–9), поэтому ответ работает
     // наравне с ответами этапов, а не как отдельная приписка.
@@ -2652,7 +2714,12 @@ ${this.getStage3Interpretation()}
             ? '🔍 ОТМЕЧЕНО: ' + chosen.length + '\n\nМожно добавить ещё или нажать «Дальше».'
             : '🔍 ГДЕ НЕ СХОДИТСЯ?\n\nОтметьте области, в которых портрет промахнулся, — '
               + 'по ним я задам несколько вопросов и пересчитаю.\n\n👇 Можно выбрать несколько';
-        this.addMessageWithButtons(head, btns);
+        // Список перерисовывается на каждую галочку. Старую копию убираем:
+        // иначе после двух отметок в переписке висят три одинаковых списка
+        // из восьми кнопок, и человек листает свои же нажатия.
+        if (this._refineAreasNode && this._refineAreasNode.parentNode)
+            this._refineAreasNode.parentNode.removeChild(this._refineAreasNode);
+        this._refineAreasNode = this.addMessageWithButtons(head, btns);
     },
 
     toggleDiscrepancy(type) {
@@ -2671,11 +2738,22 @@ ${this.getStage3Interpretation()}
         }
         this._refineAsked = this._refineAsked || [];
         const pool = [];
+        // Вопрос о рычаге идёт первым: он один двигает точку роста и
+        // распределение по Дилтсу — то, что человек в портрете читает
+        // раньше четырёх строк с векторами.
+        for (const area of this.discrepancies) {
+            const lever = this.REFINE_LEVER[area];
+            if (lever && this._refineAsked.indexOf(lever.id) === -1)
+                pool.push(Object.assign({ area, lever: true }, lever));
+        }
         for (const area of this.discrepancies) {
             for (const q of (this.REFINE_BANK[area] || [])) {
                 if (this._refineAsked.indexOf(q.id) === -1) pool.push(Object.assign({ area }, q));
             }
         }
+        // Дальше список областей уже история: ссылку отпускаем, чтобы
+        // следующий круг не стёр её задним числом.
+        this._refineAreasNode = null;
         if (!pool.length) {
             // Банк по выбранным областям исчерпан. Врать, что «сейчас
             // пересчитаю», нечем — говорим прямо и предлагаем выход.
@@ -2712,11 +2790,22 @@ ${this.getStage3Interpretation()}
             callback: () => {
                 // Ответ двигает шкалу по-настоящему: уровень падает в
                 // behavioralLevels, среднее по которым и есть вектор.
-                (this.behavioralLevels[q.v] = this.behavioralLevels[q.v] || []).push(pair[1]);
+                // У вопроса о рычаге вместо уровня — ключ Дилтса, и он
+                // идёт в diltsCounts, откуда считаются точка роста,
+                // распределение и уверенность портрета.
+                if (q.lever) {
+                    this.diltsCounts[pair[1]] = (this.diltsCounts[pair[1]] || 0) + 1;
+                } else {
+                    (this.behavioralLevels[q.v] = this.behavioralLevels[q.v] || []).push(pair[1]);
+                }
                 this.answers.push({ stage:'refine', question:q.text, answer:pair[0],
-                                    level:pair[1], vector:q.v, area:q.area });
+                                    level:q.lever ? null : pair[1],
+                                    dilts:q.lever ? pair[1] : null,
+                                    vector:q.v || null, area:q.area });
                 this.clarifyingAnswers.push({ question:q.text, answer:pair[0],
-                                              vector:q.v, level:pair[1], area:q.area });
+                                              vector:q.v || null,
+                                              level:q.lever ? null : pair[1],
+                                              dilts:q.lever ? pair[1] : null, area:q.area });
                 this._refineAsked.push(q.id);
                 this.clarifyingCurrent++;
                 this.askClarifyingQuestion();
