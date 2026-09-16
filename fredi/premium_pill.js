@@ -65,21 +65,39 @@
         var s = document.createElement('style');
         s.id = MODE_STYLE_ID;
         s.textContent =
-            '.mode-selector { position: relative; gap: 6px !important; margin-top: 44px !important; margin-bottom: 18px !important; }' +
+            // Подпись опущена ближе к кнопкам (решение владельца
+            // 16.09.2026): на 390 пикселях она стояла в десяти пикселях
+            // над селектором и накрывала строку «или напишите» вместе с
+            // краем поля ввода. Отступ сверху уменьшен на столько же —
+            // иначе между полем и ролями остаётся дыра.
+            '.mode-selector { position: relative; gap: 6px !important; margin-top: 72px !important; margin-bottom: 18px !important; }' +
             '.mode-selector::before {' +
             '  content: "🎭 Выбери режим";' +
-            '  position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);' +
+            '  position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(-50%);' +
             '  font-size: 12px; font-weight: 700; letter-spacing: 0.2px;' +
             '  color: var(--text-primary);' +
-            '  background: rgba(99,102,241,0.14);' +
-            '  border: 1px solid rgba(99,102,241,0.32);' +
+            // Плашка стоит над селектором, но с воздухом с обеих сторон:
+            // прижатая к кнопкам она на них налезала, поднятая выше —
+            // накрывала строку «или напишите» под полем ввода. Отступ
+            // селектора сверху увеличен ровно настолько, чтобы её место
+            // не отнимало ни у поля, ни у ролей.
+            // Фон непрозрачный (--black-matte: тёмная #111, светлая #fff),
+            // иначе сквозь неё просвечивает рамка селектора.
+            '  background: var(--black-matte, #14171f);' +
+            '  border: 1px solid rgba(99,102,241,0.45);' +
+            '  z-index: 1;' +
             '  padding: 4px 12px; border-radius: 14px;' +
             '  white-space: nowrap; pointer-events: none;' +
             '}' +
+            // Кнопки ролей — граница между главным и второстепенным
+            // (решение владельца 16.09.2026: «всё, что над ними, главное»).
+            // Подсказку, что это кнопки, оставляем — ради неё блок и
+            // делался, — но яркость сбавлена: раньше неактивные роли
+            // спорили с полем ввода над ними.
             '.mode-btn {' +
-            '  background: rgba(255,255,255,0.09) !important;' +
-            '  border: 1px solid rgba(147,197,253,0.28) !important;' +
-            '  color: var(--text-primary) !important;' +
+            '  background: rgba(255,255,255,0.05) !important;' +
+            '  border: 1px solid rgba(147,197,253,0.18) !important;' +
+            '  color: var(--text-secondary) !important;' +
             '  transition: background 0.2s, color 0.2s, transform 0.12s, border-color 0.2s, box-shadow 0.2s !important;' +
             '}' +
             '.mode-btn:hover {' +

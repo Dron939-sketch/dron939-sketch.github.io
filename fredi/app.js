@@ -2392,14 +2392,24 @@ function renderDashboard() {
                      низу экрана: снаружи лента оказывалась за ней и человек
                      видел только обрезанный заголовок. На узком экране она
                      ужимается до двух строк без заголовка. -->
+                <!-- Лента свёрнута и открывается нажатием (решение владельца
+                     16.09.2026). Раньше она стояла раскрытой и занимала треть
+                     первого экрана чужими вопросами — на месте, где человек
+                     должен писать свой. Теперь это одна строка со знаком
+                     вопроса: кому нужно — раскроет, остальным она не мешает.
+                     Строка — button, а не div: иначе её не открыть с
+                     клавиатуры и не озвучить читалкой. -->
                 <div class="dash-live" id="dashLive">
-                    <div class="dash-live-head">
+                    <button type="button" class="dash-live-head" id="dashLiveToggle"
+                            aria-expanded="false" aria-controls="dashLiveBody">
+                        <span class="dash-live-mark" aria-hidden="true">?</span>
                         <span class="dash-live-title">О чём спрашивают Фреди</span>
                         <span class="dash-live-now" id="dashLiveNow" hidden>
                             <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
                         </span>
-                    </div>
-                    <div class="dash-live-view">
+                        <span class="dash-live-chev" aria-hidden="true">⌄</span>
+                    </button>
+                    <div class="dash-live-view" id="dashLiveBody" hidden>
                         <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
                     </div>
                 </div>
@@ -2474,9 +2484,7 @@ function renderDashboard() {
                 <!-- ВРЕМЕННО СКРЫТО (разгрузка главной): группа «Инструменты»
                 <div class="qa-group-title">Инструменты</div>
                 <div class="quick-actions-grid">
-                    <div class="quick-action" data-action="prompter"><div class="action-icon">🎙️</div><div class="action-name">ИИ Суфлёр</div></div>
                     <div class="quick-action" data-action="brand"><div class="action-icon">🏆</div><div class="action-name">Мой бренд</div></div>
-                    <div class="quick-action" data-action="doubles"><div class="action-icon">👥</div><div class="action-name">Двойники</div></div>
                     <div class="quick-action" data-action="esoterica"><div class="action-icon">🔮</div><div class="action-name">Эзотерика</div></div>
                 </div>
                 -->
@@ -2584,12 +2592,10 @@ function renderDashboard() {
                      'Пройти →',
                      () => { try { startTest(); } catch (e) {} },
                      'test');
-            // Сетка модулей и быстрые действия приглушены, чтобы взгляд
-            // анонима шёл на тест, а не на пёструю сетку.
-            const modulesGrid = document.querySelector('.modules-grid');
-            if (modulesGrid) modulesGrid.style.opacity = '0.62';
-            const quickActions = document.querySelector('.quick-actions');
-            if (quickActions) quickActions.style.opacity = '0.62';
+            // Приглушение сетки модулей и быстрых действий переехало в
+            // styles.css: с 16.09.2026 низ экрана тише верха у всех, а не
+            // только у анонима (цветовая иерархия дашборда). Инлайновая
+            // прозрачность 0.62 поверх неё давала уже нечитаемый серый.
         }
     }).catch(() => {
         const statusEl = document.getElementById('profileStatus');
@@ -2656,6 +2662,33 @@ function renderDashboard() {
     // уезжают вверх. Бегущая строка читается как реклама и проскакивает
     // мимо; появление по одному человек дочитывает — и попадает на тот
     // вопрос, который про него.
+    // Раскрытие ленты по нажатию на строку со знаком вопроса. Свёрнутая
+    // лента — решение владельца 16.09.2026: раскрытой она занимала треть
+    // первого экрана чужими вопросами ровно там, где человек должен
+    // написать свой. Выбор запоминается на сессию: открывший её один раз
+    // не должен открывать на каждом возврате к дашборду.
+    (function dashLiveFold() {
+        const btn = document.getElementById('dashLiveToggle');
+        const body = document.getElementById('dashLiveBody');
+        if (!btn || !body) return;
+        let open = false;
+        try { open = sessionStorage.getItem('fredi_live_open') === '1'; } catch (e) {}
+        const paint = () => {
+            body.hidden = !open;
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            btn.classList.toggle('dash-live-head--open', open);
+        };
+        btn.addEventListener('click', () => {
+            open = !open;
+            try { sessionStorage.setItem('fredi_live_open', open ? '1' : '0'); } catch (e) {}
+            paint();
+            try {
+                if (open && window.FrediTracker?.track) window.FrediTracker.track('dash_live_opened', {});
+            } catch (e) {}
+        });
+        paint();
+    })();
+
     (function dashLiveChat() {
         const list = document.getElementById('dashLiveList');
         if (!list) return;

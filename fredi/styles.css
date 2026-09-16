@@ -11,7 +11,12 @@
 }
 
 :root {
-    --black-obsidian: #0a0a0a;
+    /* Фон приложения в тёмной теме — тон шапки, а не чёрный (решение
+       владельца 16.09.2026: «фон везде сделаем как на шапке»). Через
+       переменную, а не через body: из неё же берутся градиенты-затухания
+       над лентой и под липкой строкой ввода, и при правке одного лишь
+       body у них остались бы чёрные края. */
+    --black-obsidian: #151922;
     --black-matte: #111111;
     --carbon-fiber: #1a1a1a;
     --chrome: #e0e0e0;
@@ -843,8 +848,12 @@ img.emoji {
        проваливалось — на экране его находили по подсказке, а не по форме.
        Решение владельца 16.09.2026: приподнять, чтобы главное действие
        читалось первым. */
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    /* Оттенок шапки, только светлее: поле и визитка читаются как одна
+       пара «кто с вами говорит» — «что сказать» (решение владельца
+       16.09.2026). До этого подложка была rgba(10,10,10,0.55), темнее
+       самой страницы, и поле проваливалось. */
+    background: rgba(94, 132, 200, 0.16);
+    border: 1px solid rgba(146, 180, 240, 0.30);
     border-radius: 24px;
     padding: 12px 16px;
     color: var(--text-primary);
@@ -876,10 +885,11 @@ img.emoji {
 .dash-composer-send:active { transform: scale(0.94); }
 .dash-composer-send:disabled { opacity: 0.45; cursor: default; transform: none; }
 
-/* В светлой теме тёмная подложка поля смотрелась чужеродной пломбой. */
+/* В светлой теме поле берёт тот же голубой, что и шапка, но светлее её:
+   так видно, что это одно смысловое место экрана. */
 [data-theme="light"] .dash-composer-input {
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(0, 0, 0, 0.16);
+    background: #f4f8ff;
+    border-color: #c5d8f7;
 }
 [data-theme="light"] .dash-composer-or::before,
 [data-theme="light"] .dash-composer-or::after {
@@ -2603,6 +2613,43 @@ input, textarea, select, button { box-sizing: border-box; }
 }
 .hero-strip .profile-status,
 [data-theme="light"] .hero-strip .profile-status { color: #9aa1af; }
+
+/* Светлая тема: шапка голубая, а не тёмная (решение владельца
+   16.09.2026). Тёмная визитка хорошо отделяла шапку на чёрном фоне, но
+   на белом экране читалась как чужая пломба. Голубая заливка делает то
+   же самое — отделяет, — и остаётся светлой темой.
+   Селекторы с .dashboard-container: theme-light.css грузится после
+   styles.css, и с равным весом он перебил бы эти правила. */
+[data-theme="light"] .dashboard-container .hero-strip {
+    background: linear-gradient(115deg, #e8f1ff 0%, #dde9ff 55%, #eef3ff 100%);
+    border: 1px solid #c5d8f7;
+    box-shadow: 0 8px 22px rgba(29, 78, 216, 0.10);
+    color: #16202f;
+}
+[data-theme="light"] .dashboard-container .hero-strip .hero-name-line { color: #16202f; }
+[data-theme="light"] .dashboard-container .hero-strip .hero-sub,
+[data-theme="light"] .dashboard-container .hero-strip .hero-mins { color: #566276; }
+[data-theme="light"] .dashboard-container .hero-strip .hero-mins--prem { color: #1d4ed8; }
+[data-theme="light"] .dashboard-container .hero-strip .hero-ava {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(29, 78, 216, 0.16);
+}
+[data-theme="light"] .dashboard-container .hero-strip .hero-dot { border-color: #ffffff; }
+[data-theme="light"] .dashboard-container .hero-strip .profile-badge {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: #c5d8f7;
+}
+[data-theme="light"] .dashboard-container .hero-strip .profile-code { color: #16202f; }
+[data-theme="light"] .dashboard-container .hero-strip .profile-status { color: #566276; }
+[data-theme="light"] .dashboard-container .hero-cta {
+    background: #ffffff;
+    border-color: #c5d8f7;
+    color: #16202f;
+    box-shadow: 0 2px 8px rgba(29, 78, 216, 0.08);
+}
+[data-theme="light"] .dashboard-container .hero-cta-was { color: #16202f; }
+[data-theme="light"] .dashboard-container .hero-cta-q { color: #566276; }
+[data-theme="light"] .dashboard-container .hero-cta-go { color: #1d4ed8; }
 .hero-row { display: flex; align-items: center; gap: 12px; }
 .hero-gap { flex: 1 1 auto; }
 .hero-ava {
@@ -2691,6 +2738,103 @@ input, textarea, select, button { box-sizing: border-box; }
     .hero-row .profile-open { flex: 0 0 auto; }
 }
 
+/* Лента «О чём спрашивают Фреди» — выделена формой, а не яркостью
+   (решение владельца 16.09.2026): «как бы выделилось, но без акцента,
+   оно не главное». Своя подложка и рамка отделяют её от разговора, но
+   текст остаётся приглушённым, чтобы чужие вопросы не спорили с полем
+   ввода и голосовой кнопкой. */
+/* Селектор тяжелее базового: исходное правило .dash-live-view стоит в
+   файле ниже и с равным весом перебило бы эти цвета. */
+.dash-live .dash-live-view {
+    /* Единственный блок, который не сливается с новым фоном: он темнее
+       полотна, а не светлее. Так лента остаётся отдельной, оставаясь
+       тихой. */
+    background: rgba(0, 0, 0, 0.28);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+.dash-live .dash-live-q { color: rgba(255, 255, 255, 0.72); }
+.dash-live .dash-live-title { color: rgba(167, 173, 186, 0.75); }
+[data-theme="light"] .dash-live .dash-live-view {
+    background: rgba(0, 0, 0, 0.028);
+    border-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="light"] .dash-live .dash-live-q { color: rgba(28, 28, 30, 0.7); }
+[data-theme="light"] .dash-live .dash-live-title { color: rgba(60, 60, 67, 0.7); }
+
+/* ===== Цветовая иерархия дашборда =====
+   Решение владельца 16.09.2026: блоки не двигать и не убирать, а
+   развести цветом — «всё, что над кнопками Коуч · Психолог · Тренер»,
+   работает как главное, сами кнопки и всё ниже — как второстепенное.
+   До этого все блоки были одной яркости: лента чужих вопросов, поле
+   ввода, селектор ролей, четыре модуля и восемь быстрых действий
+   соревновались за внимание, и первый экран читался как витрина.
+
+   Приём один — насыщенность. Верх сохраняет белый текст и синие
+   акценты, низ уходит в приглушённую подложку и серый текст. Размеры,
+   порядок и состав блоков не тронуты. */
+
+/* Верх: поле ввода и кнопка отправки — главное действие экрана. */
+.dash-composer-row .dash-composer-send {
+    background: linear-gradient(135deg, #3b82ff, #1d4ed8);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(29, 78, 216, 0.35);
+}
+.dash-composer-row .dash-composer-send:hover {
+    background: linear-gradient(135deg, #4b8dff, #2454d8);
+}
+
+/* Низ: селектор ролей. Активная роль остаётся читаемой, но вся полоса
+   перестаёт спорить с полем ввода над ней. */
+.mode-selector {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.10);
+}
+.mode-btn { color: rgba(167, 173, 186, 0.85); font-weight: 500; }
+.mode-btn.active {
+    background: rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+}
+
+/* Низ: модули и быстрые действия. Эмодзи приглушены — цветные иконки
+   тянули взгляд сильнее, чем синяя кнопка разговора. */
+.module-card, .quick-action {
+    background: rgba(255, 255, 255, 0.032);
+    border-color: rgba(255, 255, 255, 0.06);
+}
+.module-icon, .action-icon { opacity: 0.62; }
+.module-name { color: rgba(255, 255, 255, 0.82); }
+.module-desc, .action-name { color: rgba(167, 173, 186, 0.75); }
+.quick-actions-title, .qa-group-title { color: rgba(167, 173, 186, 0.8); }
+/* Выделенная плитка (например, «Игры») остаётся яркой: она акцент по
+   замыслу, а не фон. */
+.quick-action--accent .action-icon { opacity: 1; }
+
+/* В светлой теме приглушение делается чернилами, а не белым. Селекторы
+   тяжелее, чем в theme-light.css: тот файл грузится после этого и с
+   равным весом перебил бы всё написанное здесь — на этом уже один раз
+   пропала подпись в шапке. */
+[data-theme="light"] .dash-cols .mode-selector {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+}
+[data-theme="light"] .mode-selector .mode-btn { color: rgba(60, 60, 67, 0.72); }
+[data-theme="light"] .mode-selector .mode-btn.active {
+    background: rgba(0, 0, 0, 0.08);
+    color: #1c1c1e;
+}
+[data-theme="light"] .modules-grid .module-card,
+[data-theme="light"] .quick-actions-grid .quick-action {
+    background: rgba(0, 0, 0, 0.035);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .module-card .module-name { color: rgba(28, 28, 30, 0.88); }
+[data-theme="light"] .module-card .module-desc,
+[data-theme="light"] .quick-action .action-name,
+[data-theme="light"] .quick-actions .quick-actions-title,
+[data-theme="light"] .quick-actions .qa-group-title { color: rgba(60, 60, 67, 0.7); }
+
 /* ===== Лента вопросов над полем ввода =====
    Человек упирается в пустое поле и уходит: 69% разговоров за неделю —
    одна реплика. Лента показывает, о чём сюда вообще ходят, включая то,
@@ -2699,10 +2843,37 @@ input, textarea, select, button { box-sizing: border-box; }
 /* Разговор начался — блок гасится атрибутом hidden. Строка нужна затем же,
    зачем такая же у .dash-live-now: класс с display перебивает hidden. */
 .dash-live[hidden] { display: none; }
+/* Строка-переключатель: знак вопроса, заголовок, счётчик и шеврон.
+   Это button (иначе не открыть с клавиатуры), поэтому сбрасываем
+   браузерные поля и выравниваем содержимое по центру строки. */
 .dash-live-head {
-    display: flex; align-items: baseline; justify-content: space-between;
-    gap: 10px; margin-bottom: 8px; padding: 0 2px;
+    display: flex; align-items: center; justify-content: flex-start;
+    gap: 9px; width: 100%; margin-bottom: 8px; padding: 9px 12px;
+    font: inherit; text-align: left; cursor: pointer;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    transition: background .18s, border-color .18s;
 }
+.dash-live-head:hover { background: rgba(255, 255, 255, 0.055); }
+.dash-live-mark {
+    flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; line-height: 1;
+    color: #9dc0ff; background: rgba(59, 130, 255, 0.16);
+    border: 1px solid rgba(59, 130, 255, 0.32);
+}
+.dash-live-chev {
+    margin-left: auto; font-size: 14px; line-height: 1; color: var(--text-secondary);
+    transition: transform .18s;
+}
+.dash-live-head--open .dash-live-chev { transform: rotate(180deg); }
+.dash-live-view[hidden] { display: none; }
+[data-theme="light"] .dash-live .dash-live-head {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.07);
+}
+[data-theme="light"] .dash-live .dash-live-head:hover { background: rgba(0, 0, 0, 0.05); }
 .dash-live-title { font-size: 12px; font-weight: 700; letter-spacing: .04em;
     text-transform: uppercase; color: var(--text-secondary); }
 .dash-live-now { display: inline-flex; align-items: center; gap: 6px;
