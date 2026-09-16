@@ -2470,7 +2470,7 @@ function renderDashboard() {
                 <div class="qa-group-title">Развлечься с пользой</div>
                 <div class="quick-actions-grid">
                     <div class="quick-action featured" data-action="kontur"><div class="action-icon">🎮</div><div class="action-name">Игры</div></div>
-                    <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Сказки-катарсис</div></div>
+                    <div class="quick-action" data-action="tales"><div class="action-icon">🧿</div><div class="action-name">Терапевтические сказки</div></div>
                     <div class="quick-action" data-action="dreams"><div class="action-icon">🌙</div><div class="action-name">Толкование снов</div></div>
                     <div class="quick-action" data-action="weekend"><div class="action-icon">🎨</div><div class="action-name">Идеи на выходные</div></div>
                 </div>
@@ -3719,7 +3719,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dreams: { fn: 'showDreamsScreen', src: 'dreams.js', chat: 'fredi' }, // толкование снов
             hypnosis: { fn: 'showHypnosisScreen', src: 'hypnosis.js', chat: 'hypnosis' }, // самогипноз
             practices: { fn: 'showPracticesScreen', src: 'practices.js', chat: 'practices' }, // КПТ-практики
-            tales: { fn: 'showTalesScreen', src: 'tales.js', chat: 'fredi' }, // сказки-катарсис
+            tales: { fn: 'showTalesScreen', src: 'tales.js', chat: 'fredi' }, // терапевтические сказки
             anchors: { fn: 'showAnchorsScreen', src: 'anchors.js', chat: 'anchors' }, // якоря
             mirrors: { fn: 'showMirrorsScreen', src: 'mirrors.js', chat: 'mirrors' }, // зеркала
             berne: { fn: 'showBerneScreen', src: 'berne.js', chat: 'berne' }, // роли и игры, транзактный анализ

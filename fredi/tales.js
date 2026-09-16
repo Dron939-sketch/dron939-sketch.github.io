@@ -1,5 +1,5 @@
 // ============================================
-// tales.js — Сказки-катарсис
+// tales.js — Терапевтические сказки
 // Версия 1.0 — Пирамида Дилтса + AI генерация
 // ============================================
 
@@ -504,7 +504,7 @@ function _tlRender() {
             <button class="back-btn" id="tlBack">◀️ НАЗАД</button>
             <div class="content-header">
                 <div class="content-emoji">🧿</div>
-                <h1 class="content-title">Сказки-катарсис</h1>
+                <h1 class="content-title">Терапевтические сказки</h1>
                 <p style="font-size:12px;color:var(--text-secondary);margin-top:4px">Одна сказка — одна задача</p>
             </div>
             <div id="tlBody">${body}</div>
