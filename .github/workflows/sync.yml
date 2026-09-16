@@ -14,34 +14,26 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 20, а не 10. 16.09.2026 сборка трёх экранов (#1669) шла 15 минут и была
+    # убита таймаутом: GitHub помечает такой прогон как «cancelled», зелёных
+    # и красных отметок нет — со стороны выглядит, будто деплой прошёл. Прод
+    # при этом остался на состоянии трёхчасовой давности, и заметили это
+    # только по маркерам в файлах на живом сайте.
+    timeout-minutes: 20
     steps:
       - name: Checkout (full history)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # Зеркало GitVerse вторично: его сбой (напр. HTTP 413 на большом паке)
-      # не должен блокировать деплой на Amvera — потому continue-on-error.
-      # http.postBuffer вынуждает git слать пак одним запросом с Content-Length
-      # вместо chunked-encoding, который nginx GitVerse отклоняет как 413.
-      - name: Push to GitVerse (mirror main)
-        continue-on-error: true
-        env:
-          GV_USER: ${{ secrets.GITVERSE_USER }}
-          GV_PASS: ${{ secrets.GITVERSE_PASSWORD }}
-          GV_PATH: ${{ secrets.GITVERSE_PATH }}
-        run: |
-          if [ -z "$GV_PATH" ]; then
-            echo "GITVERSE_PATH not set — skipping GitVerse push"
-            exit 0
-          fi
-          git -c http.postBuffer=524288000 \
-            push "https://${GV_USER}:${GV_PASS}@gitverse.ru/${GV_PATH}.git" \
-            "refs/heads/main:refs/heads/main" --force
-
+      # Amvera идёт ПЕРВОЙ. Раньше первым стоял зеркальный GitVerse, и хотя
+      # у него continue-on-error, минуты он ест из общего бюджета job'а:
+      # зависшее зеркало доедало десять минут, job убивали по таймауту, и до
+      # шага деплоя очередь не доходила вовсе — `if: always()` спасает от
+      # ошибки предыдущего шага, но не от смерти всего job'а. Порядок
+      # переставлен: сначала то, что видят люди, потом зеркало.
       - name: Deploy to Amvera (push main to master)
-        if: always()
+        timeout-minutes: 8
         env:
           AM_USER: ${{ secrets.AMVERA_USER }}
           AM_PASS: ${{ secrets.AMVERA_PASSWORD }}
@@ -54,3 +46,27 @@ jobs:
           git -c http.postBuffer=524288000 \
             push "https://${AM_USER}:${AM_PASS}@git.msk0.amvera.ru/${AM_PATH}" \
             "refs/heads/main:refs/heads/master" --force
+
+      # Зеркало GitVerse вторично: его сбой (напр. HTTP 413 на большом паке)
+      # не должен блокировать деплой на Amvera — потому continue-on-error.
+      # Свой timeout-minutes тут обязателен: без него зеркало снова съест
+      # весь бюджет, и хотя деплой к этому моменту уже прошёл, прогон снова
+      # будет помечен «cancelled» и замаскирует настоящие поломки.
+      # http.postBuffer вынуждает git слать пак одним запросом с Content-Length
+      # вместо chunked-encoding, который nginx GitVerse отклоняет как 413.
+      - name: Push to GitVerse (mirror main)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 8
+        env:
+          GV_USER: ${{ secrets.GITVERSE_USER }}
+          GV_PASS: ${{ secrets.GITVERSE_PASSWORD }}
+          GV_PATH: ${{ secrets.GITVERSE_PATH }}
+        run: |
+          if [ -z "$GV_PATH" ]; then
+            echo "GITVERSE_PATH not set — skipping GitVerse push"
+            exit 0
+          fi
+          git -c http.postBuffer=524288000 \
+            push "https://${GV_USER}:${GV_PASS}@gitverse.ru/${GV_PATH}.git" \
+            "refs/heads/main:refs/heads/main" --force
