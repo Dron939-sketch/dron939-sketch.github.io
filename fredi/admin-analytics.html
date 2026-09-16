@@ -2760,6 +2760,23 @@ POV: ты на семейном ужине, и мама такая «как у �
         return '<span style="display:inline-block;padding:1px 7px;border-radius:8px;background:'+m.color+';border:1px solid '+m.border+';font-size:10px;font-weight:600;margin-left:4px;white-space:nowrap;vertical-align:middle">'+m.icon+' '+_esc(m.label)+'</span>';
     }
 
+    // Голосом или текстом. Флаг voice пишется бэкендом в metadata каждой
+    // реплики, но в списке он был одним эмодзи после user_id — терялся и
+    // ничего не говорил о том, СКОЛЬКО человек наговорил. Теперь это
+    // читаемый бейдж: «голосом», «текстом» или «голосом 2 из 5», когда
+    // человек переключался. Замечание владельца 17.09.2026.
+    function _voiceBadge(voiceCount, total){
+        if (!total) return '';
+        var b = function(color, border, text){
+            return '<span style="display:inline-block;padding:1px 7px;border-radius:8px;background:'+color
+                + ';border:1px solid '+border+';font-size:10px;font-weight:600;margin-left:4px;'
+                + 'white-space:nowrap;vertical-align:middle">'+text+'</span>';
+        };
+        if (voiceCount === 0)     return b('rgba(180,180,200,0.14)','rgba(180,180,200,0.4)','\u2328\uFE0F текстом');
+        if (voiceCount === total) return b('rgba(16,185,129,0.16)','rgba(16,185,129,0.5)','\uD83C\uDFA4 голосом');
+        return b('rgba(16,185,129,0.12)','rgba(16,185,129,0.38)','\uD83C\uDFA4 голосом '+voiceCount+' из '+total);
+    }
+
     function _genderIcon(g){
         if (!g) return '';
         var s = String(g).toLowerCase();
@@ -2855,13 +2872,13 @@ POV: ты на семейном ужине, и мама такая «как у �
             userLabel += _demoSuffix(s);
 
             var modes = {};
-            var voice = false;
+            var voiceCount = 0;
             s.messages.forEach(function(m){
                 if (m.metadata && m.metadata.mode) modes[m.metadata.mode] = 1;
-                if (m.metadata && m.metadata.voice) voice = true;
+                if (m.metadata && m.metadata.voice) voiceCount++;
             });
             var modeHtml = Object.keys(modes).map(_modeBadge).join('');
-            var voiceMark = voice ? ' 🎤' : '';
+            var voiceMark = _voiceBadge(voiceCount, s.messages.length);
 
             var preview = _esc(String(first.content || '').slice(0, 160));
             if ((first.content || '').length > 160) preview += '…';
@@ -2948,7 +2965,12 @@ POV: ты на семейном ужине, и мама такая «как у �
             var border = isUser ? 'rgba(59,130,255,0.25)' : 'rgba(16,185,129,0.25)';
             var align = isUser ? 'flex-end' : 'flex-start';
             var roleLabel = isUser ? 'ТЫ' : (m.role === 'system' ? 'SYSTEM' : 'ФРЕДИ');
-            var voiceMark = m.metadata && m.metadata.voice ? ' 🎤' : '';
+            var voiceMark = m.metadata && m.metadata.voice
+                ? '<span style="display:inline-block;padding:1px 6px;border-radius:7px;'
+                  + 'background:rgba(16,185,129,0.16);border:1px solid rgba(16,185,129,0.5);'
+                  + 'font-size:9px;font-weight:700;margin-left:5px;vertical-align:middle">'
+                  + '\uD83C\uDFA4 голосом</span>'
+                : '';
             var modeHtml = m.metadata && m.metadata.mode ? _modeBadge(m.metadata.mode) : '';
             var text = _esc(String(m.content || '')).replace(/\n/g, '<br>');
             return '<div style="display:flex;justify-content:'+align+';margin-bottom:10px">' +
