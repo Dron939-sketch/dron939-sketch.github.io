@@ -472,7 +472,7 @@
           keys: ['opora', 'mysl', 'skazhinet', 'spiral', 'parus', 'perehod'] },
         { icon: '\uD83D\uDCD3', text: 'Дневник эмоций, зеркало, разбор переписки и роли по Берну',
           keys: ['diary', 'mirrors', 'berne', 'kontur', 'messages', 'doubles'] },
-        { icon: '\uD83C\uDF00', text: 'Гипноз, практики, якоря, толкование снов, сказки-катарсис',
+        { icon: '\uD83C\uDF00', text: 'Гипноз, практики, якоря, толкование снов, терапевтические сказки',
           keys: ['hypnosis', 'dreams', 'tales'] },
         { icon: '\uD83D\uDD2E', text: 'Таро, натальная карта, супервизор для психологов, «Мой бренд»',
           keys: ['esoterica', 'brand'] }
