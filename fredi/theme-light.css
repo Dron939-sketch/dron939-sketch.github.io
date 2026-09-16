@@ -355,3 +355,43 @@ body, .app, .chats-panel, .chat-panel, .chat-header,
         box-shadow: 5px 0 30px rgba(0, 0, 0, 0.10);
     }
 }
+
+/* --- Три экрана дашборда (16.09.2026) --- */
+[data-theme="light"] .dash-tabs {
+    background: #eef2f8;
+    border-color: #d7e0ee;
+}
+[data-theme="light"] .dash-tab { color: #6c7382; }
+[data-theme="light"] .dash-tab--on {
+    background: #ffffff;
+    color: #17233a;
+    box-shadow: 0 2px 8px rgba(30, 60, 120, 0.12), inset 0 0 0 1px #c5d8f7;
+}
+[data-theme="light"] .dash-feature {
+    background: linear-gradient(120deg, #e8f1ff, #f4f8ff);
+    border-color: #c5d8f7;
+}
+[data-theme="light"] .dash-feature-go,
+[data-theme="light"] .dash-cont-go,
+[data-theme="light"] .dash-tochat-go { color: #2563eb; }
+[data-theme="light"] .dash-row {
+    background: #ffffff;
+    border-color: #e3e7ee;
+}
+[data-theme="light"] .dash-row:hover { background: #f4f6fa; }
+[data-theme="light"] .dash-row--sos {
+    background: #fdeeee;
+    border-color: #f3c8c8;
+    color: #9c2b2b;
+}
+[data-theme="light"] .dash-row--sos:hover { background: #fbe3e3; }
+[data-theme="light"] .dash-cont {
+    background: #eef4ff;
+    border-color: #c5d8f7;
+}
+[data-theme="light"] .dash-cont-h { color: #3b6bb5; }
+[data-theme="light"] .dash-cont-bar { background: #d6e2f5; }
+[data-theme="light"] .dash-tochat {
+    background: #e8f1ff;
+    border-color: #c5d8f7;
+}
