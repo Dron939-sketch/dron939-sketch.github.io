@@ -12172,6 +12172,34 @@
    "rubric": "dengi",
    "level": "n",
    "mins": 10
+  },
+  {
+   "slug": "passivnyj-dohod-pochemu-eto-rabota",
+   "title": "Пассивный доход: почему он почти всегда оказывается работой",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "ustal-ot-biznesa",
+   "title": "Устал от бизнеса: что делать, когда дело работает, а вы — нет",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "kak-nanyat-upravlyayushchego",
+   "title": "Как нанять управляющего и не потерять дело",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 11
+  },
+  {
+   "slug": "chto-delat-kogda-vsego-dobilsya",
+   "title": "Что делать, когда всего добился: пустота на вершине",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
   }
  ]
 }
