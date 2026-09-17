@@ -42,7 +42,14 @@
             '.meter-badge-day{font-size:10px;font-weight:600;color:#9b9b9d;letter-spacing:0.3px;border-left:1px solid rgba(224,224,224,0.18);padding-left:8px;margin-left:2px}',
             '.meter-badge.warn{border-color:rgba(252,206,40,0.45);background:rgba(70,55,15,0.7)}',
             '.meter-badge.danger{border-color:rgba(239,68,68,0.55);background:rgba(70,20,20,0.78);color:#ffcccc}',
-            '@media (max-width:480px){.meter-badge{font-size:11px;padding:6px 10px}.meter-badge-day{font-size:9px}}'
+            // Кнопка «три точки» (мастерская и ярлык на экран) стоит в
+            // правом верхнем углу шапки. Бейдж висит position:fixed с
+            // z-index 9000 — и на телефоне ложился прямо на неё: замерено
+            // на 360×800, бейдж 180–346, кнопка 306–344, перекрытие 38 px.
+            // То есть кнопка была не просто закрыта, а недоступна нажатию.
+            // Сдвигаем бейдж левее ровно на ширину кнопки с зазором.
+            '@media (max-width:600px){.meter-badge{right:62px}}',
+            '@media (max-width:480px){.meter-badge{font-size:11px;padding:6px 10px;right:58px}.meter-badge-day{font-size:9px}}'
         ].join('\n');
         document.head.appendChild(s);
     }
