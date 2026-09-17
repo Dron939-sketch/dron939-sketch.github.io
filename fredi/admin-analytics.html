@@ -426,6 +426,34 @@ body{overflow-wrap:break-word}</style>
         <div id="reengList" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
             <div style="padding:14px;color:var(--text-dim);font-size:13px">Нажмите «Обновить», чтобы загрузить кандидатов.</div>
         </div>
+
+        <!-- ── Письма тем, у кого кончились минуты ──────────────────────
+             Кнопка на каждый день. Сначала всегда вхолостую: рассылка
+             живым людям не должна уходить с одного нажатия. Настоящая
+             отправка открывается только после списка и требует второго
+             нажатия. -->
+        <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin:28px 0 14px">✉️ Кончились минуты — позвать обратно</h3>
+        <p style="font-size:12px;color:var(--text-dim);margin:0 0 14px;line-height:1.6">
+            Пишем тем, кто прошёл тест, оставил почту и упёрся в лимит. Три варианта письма,
+            вариант закреплён за адресом навсегда — при повторном запуске человек получит
+            то же самое, иначе замер превращается в кашу. Возвраты считаются по метке
+            <code>?from=mail_limit&amp;v=a|b|c</code>.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">
+            <button id="mailDry" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-weight:600;cursor:pointer">🧪 Посмотреть, кому уйдёт</button>
+            <button id="mailSend" disabled style="padding:10px 16px;border-radius:10px;border:none;background:#10b981;color:#fff;font:inherit;font-weight:700;cursor:pointer;opacity:0.4">✉️ Отправить</button>
+            <button id="mailReport" style="padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer">📊 Кто вернулся</button>
+            <label style="font-size:12px;color:var(--text-dim);margin-left:4px">не больше
+                <input id="mailLimit" type="number" value="50" min="1" max="500"
+                       style="width:64px;padding:6px 8px;background:rgba(0,0,0,0.03);border:1px solid var(--border);border-radius:8px;color:var(--text);font:inherit">
+                писем</label>
+            <span id="mailStatus" style="font-size:12px;color:var(--text-dim);align-self:center;margin-left:6px"></span>
+        </div>
+
+        <div id="mailOut" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+            <div style="padding:14px;color:var(--text-dim);font-size:13px">Нажмите «Посмотреть, кому уйдёт» — ничего не отправится.</div>
+        </div>
     </section>
 
     <!-- 🔊 TTS Озвучка -->
@@ -3347,6 +3375,134 @@ POV: ты на семейном ужине, и мама такая «как у �
             if (btn) btn.disabled = false;
         }
     }
+
+    // ── Письма тем, у кого кончились минуты ──────────────────────────
+    // Две кнопки, а не одна: живая рассылка не должна уходить с первого
+    // нажатия. «Отправить» разблокируется только после того, как показан
+    // список, и снова блокируется после отправки — чтобы повторное
+    // нажатие не ушло в пустоту вслепую.
+    var MAIL_READY = false;
+
+    function _mailStatus(msg, kind) {
+        var el = document.getElementById('mailStatus');
+        if (!el) return;
+        el.textContent = msg || '';
+        el.style.color = kind === 'err' ? '#ef4444'
+                       : kind === 'ok' ? '#10b981' : 'var(--text-dim)';
+    }
+
+    function _mailBox(html) {
+        var el = document.getElementById('mailOut');
+        if (el) el.innerHTML = html;
+    }
+
+    function _esc(v) {
+        return String(v == null ? '' : v).replace(/[&<>"]/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+        });
+    }
+
+    function _mailLimit() {
+        var n = parseInt((document.getElementById('mailLimit') || {}).value, 10);
+        return (n > 0 && n <= 500) ? n : 50;
+    }
+
+    async function mailRun(dry) {
+        var btn = document.getElementById(dry ? 'mailDry' : 'mailSend');
+        var send = document.getElementById('mailSend');
+        if (btn) btn.disabled = true;
+        _mailStatus(dry ? 'Смотрим…' : 'Отправляем…');
+        try {
+            // В этой области видимости живут API и token из главного
+            // скрипта админки — _apiBase/_token принадлежат другому блоку
+            // (рассылка ВК) и отсюда не видны.
+            var res = await fetch(API + '/api/admin/followup/limit', {
+                method: 'POST',
+                headers: { 'X-Admin-Token': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ dry_run: !!dry, limit: _mailLimit() })
+            });
+            var d = await res.json().catch(function () { return {}; });
+            if (!res.ok) {
+                throw new Error((d && d.detail && (d.detail.message || d.detail.error))
+                                || ('HTTP ' + res.status));
+            }
+            var rows = d.recipients || d.items || [];
+            if (!rows.length) {
+                _mailBox('<div style="padding:14px;color:var(--text-dim);font-size:13px">'
+                         + 'Писать некому: все, кто упёрся в лимит за последние две недели, '
+                         + 'уже получили письмо.</div>');
+                MAIL_READY = false;
+            } else {
+                var head = '<div style="padding:12px 14px;border-bottom:1px solid var(--border);'
+                         + 'font-size:12px;color:var(--text-dim)">'
+                         + (dry ? 'Уйдёт писем: ' : 'Отправлено писем: ')
+                         + '<b style="color:var(--text)">' + rows.length + '</b></div>';
+                var body = rows.map(function (r) {
+                    return '<div style="padding:10px 14px;border-bottom:1px solid var(--border);'
+                         + 'font-size:12.5px;display:flex;gap:10px;flex-wrap:wrap">'
+                         + '<span style="min-width:190px">' + _esc(r.email) + '</span>'
+                         + '<span style="color:var(--text-dim)">вариант <b>'
+                         + _esc((r.variant || '?').toUpperCase()) + '</b></span>'
+                         + (r.test ? '<span style="color:var(--text-dim)">тест: '
+                                     + _esc(r.test) + '</span>' : '')
+                         + (r.subject ? '<span style="color:var(--text-dim)">«'
+                                        + _esc(r.subject) + '»</span>' : '')
+                         + '</div>';
+                }).join('');
+                _mailBox(head + body);
+                MAIL_READY = dry;
+            }
+            _mailStatus(dry ? ('Пока ничего не отправлено — ' + rows.length + ' в очереди')
+                            : ('Готово: ' + (d.sent != null ? d.sent : rows.length)
+                               + (d.failed ? (', не доставлено ' + d.failed) : '')), 'ok');
+        } catch (e) {
+            _mailStatus(e.message || 'Ошибка', 'err');
+            MAIL_READY = false;
+        } finally {
+            if (btn) btn.disabled = false;
+            if (send) {
+                send.disabled = !MAIL_READY;
+                send.style.opacity = MAIL_READY ? '1' : '0.4';
+            }
+        }
+    }
+
+    async function mailReport() {
+        _mailStatus('Считаем возвраты…');
+        try {
+            var d = await _fetch('/api/admin/followup/limit/report');
+            var vs = d.variants || d.by_variant || [];
+            if (!vs.length) {
+                _mailBox('<div style="padding:14px;color:var(--text-dim);font-size:13px">'
+                         + 'Пока нечего считать: ни одно письмо не отправлено.</div>');
+                _mailStatus('', 'ok');
+                return;
+            }
+            var rows = vs.map(function (v) {
+                var sent = v.sent || 0, back = v.returned || v.clicked || 0;
+                var pct = sent ? Math.round(back * 100 / sent) : 0;
+                return '<div style="padding:12px 14px;border-bottom:1px solid var(--border);'
+                     + 'font-size:13px;display:flex;gap:14px;align-items:center">'
+                     + '<b style="font-size:15px">' + _esc((v.variant || '?').toUpperCase()) + '</b>'
+                     + '<span style="color:var(--text-dim)">отправлено ' + sent + '</span>'
+                     + '<span>вернулось <b>' + back + '</b></span>'
+                     + '<span style="color:' + (pct ? '#10b981' : 'var(--text-dim)')
+                     + '">' + pct + '%</span></div>';
+            }).join('');
+            _mailBox(rows);
+            _mailStatus('', 'ok');
+        } catch (e) {
+            _mailStatus(e.message || 'Ошибка', 'err');
+        }
+    }
+
+    document.getElementById('mailDry').addEventListener('click', function () { mailRun(true); });
+    document.getElementById('mailSend').addEventListener('click', function () {
+        if (!MAIL_READY) return;
+        if (!confirm('Отправить письма живым людям? Список выше.')) return;
+        mailRun(false);
+    });
+    document.getElementById('mailReport').addEventListener('click', mailReport);
 
     document.getElementById('reengReload').addEventListener('click', reengReload);
     document.getElementById('reengSendAll').addEventListener('click', function () { reengSend(false); });
