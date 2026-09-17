@@ -2475,7 +2475,30 @@ function renderDashboard() {
                          человек уже начал (план навыка, цели, привычки). Пусто
                          — блок не показывается: выдумывать здесь нечего. -->
                     <div class="dash-cont" data-cont="${t.key}" hidden></div>
-                    ${t.key === 'psychologist' ? `<div class="voice-card">
+                    ${t.key === 'psychologist' ? `<!-- Лента «О чём спрашивают Фреди» стоит НАД кнопкой голоса.
+                     Её убрали вместе с разведением на три экрана (#1669), и
+                     17.09.2026 владелец связал это с падением доли «открыл →
+                     написал»: у кампании fredi_ai_exact она упала с 51 % до
+                     12 % за сутки. Человек, пришедший с рекламы, не знает, о
+                     чём вообще говорить, — чужие вопросы дают ему пример и
+                     разрешение. Лента свёрнута в одну строку: кому нужно —
+                     раскроет, остальным не мешает. Строка — button, а не div,
+                     иначе её не открыть с клавиатуры и не озвучить читалкой. -->
+                <div class="dash-live" id="dashLive">
+                    <button type="button" class="dash-live-head" id="dashLiveToggle"
+                            aria-expanded="false" aria-controls="dashLiveBody">
+                        <span class="dash-live-mark" aria-hidden="true">?</span>
+                        <span class="dash-live-title">О чём поговорим</span>
+                        <span class="dash-live-now" id="dashLiveNow" hidden>
+                            <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
+                        </span>
+                        <span class="dash-live-chev" aria-hidden="true">⌄</span>
+                    </button>
+                    <div class="dash-live-view" id="dashLiveBody" hidden>
+                        <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
+                    </div>
+                </div>
+                <div class="voice-card">
                     <button class="voice-record-btn-premium" id="mainVoiceBtn">
                         <span class="voice-icon">🎤</span>
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
