@@ -1,5 +1,5 @@
 // service_worker.js — Фреди PWA
-// Версия 1.2 — относительные пути для меуstern-NLP-deployment под /fredi/
+// Версия 1.2 — относительные пути для meystern-NLP-deployment под /fredi/
 
 // Относительные пути (без ведущего /) — SW резолвит их относительно своей
 // собственной локации. SW зарегистрирован как /fredi/service_worker.js,
@@ -7,7 +7,10 @@
 // которые на meysternlp.ru уходили в КОРЕНЬ домена → 404 в nginx-логах:
 //   open() "/usr/share/nginx/html/styles.css" failed (No such file or directory)
 // Service Worker install падал тихо, кэш был неполный.
-const CACHE_NAME = 'fredi-v17';
+// v18 — липкое поле ввода в .dash-composer-row. styles.css лежит в
+// precache, и без смены имени кэша вернувшийся человек остался бы со
+// старой вёрсткой, где поле уезжает за экран.
+const CACHE_NAME = 'fredi-v18';
 // ВАЖНО: app.js / kontur.js НЕ кэшируем в precache — они часто меняются
 // (новые модули, фичи). Иначе на мобиле застревает старый код, и новые
 // пункты меню («Игры») «не открываются».
