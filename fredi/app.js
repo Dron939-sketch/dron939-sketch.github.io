@@ -2488,7 +2488,7 @@ function renderDashboard() {
                     <button type="button" class="dash-live-head dash-live-head--open" id="dashLiveToggle"
                             aria-expanded="true" aria-controls="dashLiveBody">
                         <span class="dash-live-mark" aria-hidden="true">?</span>
-                        <span class="dash-live-title">О чём поговорим</span>
+                        <span class="dash-live-title">О чём говорят с Фреди сейчас</span>
                         <span class="dash-live-now" id="dashLiveNow" hidden>
                             <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
                         </span>
