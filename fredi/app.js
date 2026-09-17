@@ -2439,6 +2439,17 @@ function renderDashboard() {
                 </button>
             </div>` : ''}
                     <p class="dash-pane-lede">${t.lede}</p>
+                    ${t.key === 'psychologist' ? `<!-- Подсказка, где писать. Замер 17.09.2026 на проде: при высоте
+                     экрана 844 поле ввода начинается на 1089-м пикселе, а кнопка
+                     голоса на 964-м — обе за краем. Человек с рекламы приходит с
+                     готовым вопросом, видит витрину и уходит, не найдя, куда
+                     писать: доля «открыл → написал» у fredi_ai_exact упала с 47 %
+                     до 18 %. Строка не просто указывает вниз — она кнопка:
+                     нажатие прокручивает к полю и ставит в него курсор. -->
+                    <button type="button" class="dash-lede-hint" id="dashLedeHint">
+                        Поле для сообщения — внизу экрана
+                        <span class="dash-lede-hint-arrow" aria-hidden="true">↓</span>
+                    </button>` : ''}
                     ${t.key === 'trainer' ? `
                     <button type="button" class="quick-action dash-feature" data-action="kontur">
                         <span class="dash-feature-i">🎮</span>
@@ -2698,6 +2709,36 @@ function renderDashboard() {
     // первого экрана чужими вопросами ровно там, где человек должен
     // написать свой. Выбор запоминается на сессию: открывший её один раз
     // не должен открывать на каждом возврате к дашборду.
+    // Подсказка «поле внизу» — прокрутка к полю и фокус. Скрывается, когда
+    // поле и так видно: на широком экране и после того, как человек доехал
+    // до низа, она превращается в шум.
+    (function dashLedeHint() {
+        const hint = document.getElementById('dashLedeHint');
+        const input = document.getElementById('dashComposerInput');
+        if (!hint || !input) return;
+        // Поле видно — подсказка не нужна.
+        const sync = () => {
+            const b = input.getBoundingClientRect();
+            hint.hidden = b.top > 0 && b.bottom < window.innerHeight;
+        };
+        hint.addEventListener('click', () => {
+            try {
+                if (window.FrediTracker?.track) window.FrediTracker.track('lede_hint_clicked', {});
+            } catch (e) {}
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                try { input.focus({ preventScroll: true }); } catch (e) {}
+                // Плавная прокрутка кончается позже последнего события scroll,
+                // и без этого вызова подсказка оставалась висеть над уже
+                // видимым полем.
+                sync();
+            }, 420);
+        });
+        sync();
+        window.addEventListener('scroll', sync, { passive: true });
+        window.addEventListener('resize', sync, { passive: true });
+    })();
+
     (function dashLiveFold() {
         const btn = document.getElementById('dashLiveToggle');
         const body = document.getElementById('dashLiveBody');

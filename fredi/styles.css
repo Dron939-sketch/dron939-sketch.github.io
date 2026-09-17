@@ -407,6 +407,44 @@ body::after {
     }
 }
 
+/* Подсказка «поле для сообщения — внизу экрана». Не декор, а замена
+   отсутствующей на первом экране кнопки: поле ввода лежит ниже края
+   (замер 17.09.2026 — 1089-й пиксель при высоте 844), и без указателя
+   человек не знает, что писать вообще есть куда. Стрелка покачивается,
+   чтобы её заметили боковым зрением; при prefers-reduced-motion стоит. */
+.dash-lede-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 2px 0 14px;
+    padding: 7px 14px;
+    border: 1px solid rgba(58, 134, 255, 0.35);
+    border-radius: 30px;
+    background: rgba(58, 134, 255, 0.08);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.dash-lede-hint:hover { background: rgba(58, 134, 255, 0.14); }
+.dash-lede-hint:active { transform: scale(0.97); }
+.dash-lede-hint[hidden] { display: none; }
+
+.dash-lede-hint-arrow {
+    font-size: 15px;
+    line-height: 1;
+    animation: ledeHintNudge 1.8s ease-in-out infinite;
+}
+@keyframes ledeHintNudge {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .dash-lede-hint-arrow { animation: none; }
+}
+
 .chat-header-left {
     display: flex;
     align-items: center;
