@@ -2475,7 +2475,30 @@ function renderDashboard() {
                          человек уже начал (план навыка, цели, привычки). Пусто
                          — блок не показывается: выдумывать здесь нечего. -->
                     <div class="dash-cont" data-cont="${t.key}" hidden></div>
-                    ${t.key === 'psychologist' ? `<div class="voice-card">
+                    ${t.key === 'psychologist' ? `<!-- Лента «О чём спрашивают Фреди» стоит НАД кнопкой голоса.
+                     Её убрали вместе с разведением на три экрана (#1669), и
+                     17.09.2026 владелец связал это с падением доли «открыл →
+                     написал»: у кампании fredi_ai_exact она упала с 51 % до
+                     12 % за сутки. Человек, пришедший с рекламы, не знает, о
+                     чём вообще говорить, — чужие вопросы дают ему пример и
+                     разрешение. Лента свёрнута в одну строку: кому нужно —
+                     раскроет, остальным не мешает. Строка — button, а не div,
+                     иначе её не открыть с клавиатуры и не озвучить читалкой. -->
+                <div class="dash-live" id="dashLive">
+                    <button type="button" class="dash-live-head dash-live-head--open" id="dashLiveToggle"
+                            aria-expanded="true" aria-controls="dashLiveBody">
+                        <span class="dash-live-mark" aria-hidden="true">?</span>
+                        <span class="dash-live-title">О чём поговорим</span>
+                        <span class="dash-live-now" id="dashLiveNow" hidden>
+                            <i class="dash-live-dot"></i><b id="dashLiveCount"></b>
+                        </span>
+                        <span class="dash-live-chev" aria-hidden="true">⌄</span>
+                    </button>
+                    <div class="dash-live-view" id="dashLiveBody">
+                        <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
+                    </div>
+                </div>
+                <div class="voice-card">
                     <button class="voice-record-btn-premium" id="mainVoiceBtn">
                         <span class="voice-icon">🎤</span>
                         <span class="voice-text">${modeConfig.voicePrompt}</span>
@@ -2679,8 +2702,18 @@ function renderDashboard() {
         const btn = document.getElementById('dashLiveToggle');
         const body = document.getElementById('dashLiveBody');
         if (!btn || !body) return;
-        let open = false;
-        try { open = sessionStorage.getItem('fredi_live_open') === '1'; } catch (e) {}
+        // По умолчанию РАСКРЫТА (решение владельца 17.09.2026). Свёрнутой
+        // она была с 16.09 — тогда лента занимала треть экрана, — но за
+        // сутки без неё доля «открыл → написал» у fredi_ai_exact упала с
+        // 51 % до 12 %: человек с рекламы не знает, о чём говорить, и
+        // пустое поле его останавливает. Свернуть по-прежнему можно, и
+        // выбор запоминается на сессию: закрывший однажды не увидит её
+        // снова до конца визита.
+        let open = true;
+        try {
+            const saved = sessionStorage.getItem('fredi_live_open');
+            if (saved !== null) open = saved === '1';
+        } catch (e) {}
         const paint = () => {
             body.hidden = !open;
             btn.setAttribute('aria-expanded', open ? 'true' : 'false');
