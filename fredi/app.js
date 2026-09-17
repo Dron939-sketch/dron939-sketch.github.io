@@ -2485,8 +2485,8 @@ function renderDashboard() {
                      раскроет, остальным не мешает. Строка — button, а не div,
                      иначе её не открыть с клавиатуры и не озвучить читалкой. -->
                 <div class="dash-live" id="dashLive">
-                    <button type="button" class="dash-live-head" id="dashLiveToggle"
-                            aria-expanded="false" aria-controls="dashLiveBody">
+                    <button type="button" class="dash-live-head dash-live-head--open" id="dashLiveToggle"
+                            aria-expanded="true" aria-controls="dashLiveBody">
                         <span class="dash-live-mark" aria-hidden="true">?</span>
                         <span class="dash-live-title">О чём поговорим</span>
                         <span class="dash-live-now" id="dashLiveNow" hidden>
@@ -2494,7 +2494,7 @@ function renderDashboard() {
                         </span>
                         <span class="dash-live-chev" aria-hidden="true">⌄</span>
                     </button>
-                    <div class="dash-live-view" id="dashLiveBody" hidden>
+                    <div class="dash-live-view" id="dashLiveBody">
                         <ul class="dash-live-list" id="dashLiveList" aria-live="off"></ul>
                     </div>
                 </div>
@@ -2702,8 +2702,18 @@ function renderDashboard() {
         const btn = document.getElementById('dashLiveToggle');
         const body = document.getElementById('dashLiveBody');
         if (!btn || !body) return;
-        let open = false;
-        try { open = sessionStorage.getItem('fredi_live_open') === '1'; } catch (e) {}
+        // По умолчанию РАСКРЫТА (решение владельца 17.09.2026). Свёрнутой
+        // она была с 16.09 — тогда лента занимала треть экрана, — но за
+        // сутки без неё доля «открыл → написал» у fredi_ai_exact упала с
+        // 51 % до 12 %: человек с рекламы не знает, о чём говорить, и
+        // пустое поле его останавливает. Свернуть по-прежнему можно, и
+        // выбор запоминается на сессию: закрывший однажды не увидит её
+        // снова до конца визита.
+        let open = true;
+        try {
+            const saved = sessionStorage.getItem('fredi_live_open');
+            if (saved !== null) open = saved === '1';
+        } catch (e) {}
         const paint = () => {
             body.hidden = !open;
             btn.setAttribute('aria-expanded', open ? 'true' : 'false');
