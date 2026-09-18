@@ -723,6 +723,11 @@ async function _chatStreamRequest(text, getBubble) {
                 full = ev.full_text;
                 if (bubble) bubble.set(full);
             }
+            // Сервер говорит, что ответ пришёл из-под замка коуча/тренера
+            // (premium_lock). До 18.09.2026 это поле никто не читал: замок
+            // приходил обычным пузырём без единой кнопки, и человек
+            // писал «ничего не поняла... что мне делать» — трижды подряд.
+            _lastStreamDone = { premium_lock: !!ev.premium_lock, mode_used: ev.mode_used || '' };
         } else if (ev.type === 'error') {
             failed = ev.message || 'stream error';
         }
@@ -767,6 +772,10 @@ async function _chatStreamRequest(text, getBubble) {
     if (bubble) bubble.done();
     return full;
 }
+
+// Служебные поля последнего события done из /api/chat/stream (premium_lock,
+// mode_used). Заполняет _chatStreamRequest, читает отправка из композера.
+let _lastStreamDone = null;
 
 // Глобальный флаг против двойных нажатий
 let _isLoading = false;
@@ -888,6 +897,20 @@ function setupDashComposer() {
             }
         } else {
             _hideThinkingBubble();
+            // Ответ пришёл из-под замка коуча/тренера: сервер уже ответил
+            // по делу (обычным Фреди), а здесь — кнопка, которой раньше не
+            // было. Текст замка без кнопки продавал в никуда.
+            try {
+                if (_lastStreamDone && _lastStreamDone.premium_lock
+                    && typeof showPremiumLockPopup === 'function') {
+                    const _m = (_lastStreamDone.mode_used || currentMode || '').toLowerCase();
+                    const _title = _m === 'trainer' ? 'Тренер' : 'Коуч';
+                    setTimeout(function () {
+                        showPremiumLockPopup(_title, { source: 'chat_lock_' + (_m || 'coach') });
+                    }, 900);
+                }
+            } catch (e) {}
+            _lastStreamDone = null;
         }
 
         // Расход НЕ пишем здесь. Его пишет единственный слой — патч fetch
