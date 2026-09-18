@@ -385,60 +385,45 @@
                     'style="' + _FIELD_CSS + '" autocomplete="email" />' +
             '</div>';
         if (!_needsAccount()) return '<div style="margin-bottom:14px">' + email + '</div>';
+        // Анониму — одна почта. До 18.09.2026 здесь стояли три поля (имя,
+        // почта, пин-код) плюс регистрация плюс ЮKassa — в один шаг, в
+        // момент, когда человек только что дописал самое трудное. По
+        // выгрузке 11–17.09 все 28 обрывов на 8–11 минуте (стена по
+        // минутам) — без аккаунта; из 179 увидевших стену нажали 13.
+        // Пин-код теперь придумывает сервер и присылает на почту вместе
+        // со ссылкой «задать свой»; имя Фреди спросит сам в разговоре.
         return '' +
             '<div style="margin-bottom:14px">' +
                 '<div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;' +
                      'border-left:3px solid #3b82ff;padding-left:10px;text-align:left">' +
-                    'Подписка встаёт на аккаунт — заведём его прямо здесь, одним шагом. ' +
-                    'Пин-код нужен, чтобы вернуться к своим разговорам с другого устройства.' +
-                '</div>' +
-                '<div style="margin-bottom:12px">' +
-                    '<label style="' + _LABEL_CSS + '">Как к вам обращаться</label>' +
-                    '<input type="text" id="subNameInput" placeholder="Имя" value="' + _knownName() + '" ' +
-                        'style="' + _FIELD_CSS + '" autocomplete="given-name" maxlength="100" />' +
+                    'Подписка встаёт на аккаунт — заведём его по этой почте. ' +
+                    'Пин-код для входа с другого устройства пришлём письмом.' +
                 '</div>' +
                 email +
-                '<div>' +
-                    '<label style="' + _LABEL_CSS + '">Пин-код — четыре цифры</label>' +
-                    '<input type="tel" id="subPinInput" placeholder="0000" inputmode="numeric" ' +
-                        'maxlength="4" pattern="[0-9]*" autocomplete="new-password" ' +
-                        'style="' + _FIELD_CSS + ';letter-spacing:6px;text-align:center" />' +
-                '</div>' +
             '</div>';
     }
 
     // Регистрация перед оплатой. Возвращает true, если можно платить.
     async function _ensureAccount(email) {
         if (!_needsAccount()) return true;
-        var nameEl = document.getElementById('subNameInput');
-        var pinEl = document.getElementById('subPinInput');
-        var name = nameEl ? nameEl.value.trim() : '';
-        var pin = pinEl ? pinEl.value.trim() : '';
-        if (!name) {
-            _toast('Напишите, как к вам обращаться', 'error');
-            if (nameEl) nameEl.focus();
-            return false;
-        }
-        if (!/^\d{4}$/.test(pin)) {
-            _payStep('pin_invalid', { empty: !pin });
-            _toast('Пин-код — ровно четыре цифры', 'error');
-            if (pinEl) pinEl.focus();
-            return false;
-        }
-        _payStep('register_before_pay');
+        // Одна почта (18.09.2026). Имя и пин-код с этой формы убраны:
+        // пин придумывает сервер и присылает письмом вместе со ссылкой
+        // «задать свой», имя Фреди спросит в разговоре. Три поля и
+        // регистрация в момент, когда человек только что дописал самое
+        // трудное, — ровно там терялись 166 из 179 увидевших стену.
+        _payStep('register_before_pay', { flow: 'email_only' });
         try {
-            var r = await fetch(_api() + '/api/auth/register', {
+            var r = await fetch(_api() + '/api/auth/register-email', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({ name: name, email: email, password: pin, remember: true }),
+                body: JSON.stringify({ email: email, remember: true }),
             });
             if (r.ok) {
                 window.IS_AUTHENTICATED = true;
                 window.CURRENT_USER_EMAIL = email;
                 try { localStorage.setItem('fredi_last_email', email); } catch (e) {}
-                try { if (window.CONFIG) window.CONFIG.USER_NAME = name; } catch (e) {}
-                _payStep('registered_before_pay');
+                _payStep('registered_before_pay', { flow: 'email_only' });
                 return true;
             }
             var data = await r.json().catch(function () { return {}; });

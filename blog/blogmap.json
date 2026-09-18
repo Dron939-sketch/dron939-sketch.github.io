@@ -12200,6 +12200,90 @@
    "rubric": "dengi",
    "level": "m",
    "mins": 10
+  },
+  {
+   "slug": "uverennost-v-sebe-dlya-muzhchiny",
+   "title": "Уверенность в себе для мужчины: почему на работе она есть, а вне работы нет",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "kak-nauchitsya-govorit-uverenno",
+   "title": "Как научиться говорить уверенно: шесть шагов за три недели",
+   "rubric": "gipnoz",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "rukovoditel-ne-spit",
+   "title": "Руководитель не спит: почему мозг не выходит из смены и что сделать сегодня",
+   "rubric": "telo",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "zhestkij-rukovoditel",
+   "title": "Жёсткий руководитель: где жёсткость работает и чем за неё платят",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "pochemu-ot-menya-uhodyat-lyudi",
+   "title": "Почему от меня уходят люди: четыре причины, которые не видно изнутри",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "pochemu-vse-uvolnyayutsya",
+   "title": "Почему все увольняются: три числа, которые покажут причину за неделю",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "strogij-no-spravedlivyj",
+   "title": "Строгий, но справедливый: как устанавливать правила, которые соблюдают без вас",
+   "rubric": "dengi",
+   "level": "p",
+   "mins": 9
+  },
+  {
+   "slug": "vse-ot-menya-chego-to-hotyat",
+   "title": "Все от меня чего-то хотят: почему так вышло и как вернуть себе право сортировать",
+   "rubric": "otnosheniya",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "kak-vybirat-okruzhenie",
+   "title": "Как выбирать окружение: ревизия за неделю и шесть шагов без резких движений",
+   "rubric": "otnosheniya",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "kak-vdohnovlyat-lyudej",
+   "title": "Как вдохновлять людей: шесть шагов, которые работают дольше одной речи",
+   "rubric": "gipnoz",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "kak-stat-nastavnikom",
+   "title": "Как стать наставником: с чего это начинается и шесть шагов, пока опыт не пропал",
+   "rubric": "dengi",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "chto-ostavit-posle-sebya",
+   "title": "Что оставить после себя: почему вопрос приходит в пятьдесят и что на него отвечает",
+   "rubric": "emocii",
+   "level": "p",
+   "mins": 9
   }
  ]
 }

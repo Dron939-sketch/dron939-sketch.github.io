@@ -584,12 +584,12 @@ async function openAnalysisScreen() {
         const tData = await tRes.json();
         _analysis.thought = tData.success ? tData.thought : '';
 
-        // Полный разбор — часть подписки (12.09.2026). Без неё экран
-        // показывает, что внутри, и первый шаг — бесплатно; сервер на
-        // не-подписчика отвечает premium_required и ничего не генерирует.
-        if (!_isPremium()) { _goHome(); _showLockModal(); return; }
-
-        // Сохранённый анализ из БД
+        // Полный разбор — часть подписки (12.09.2026) или подарок тому,
+        // у кого разбора не было ни разу (18.09.2026). Решает сервер: он
+        // один знает, сколько разборов было у человека. Здесь стояла
+        // проверка `if (!_isPremium())` — она рубила экран ДО запроса и
+        // показала бы замок ровно тому, кому мы на стене только что
+        // пообещали подарок.
         const sRes  = await fetch(`${api}/api/deep-analysis/${userId}`);
         const sData = await sRes.json();
         if (sData && sData.premium_required) { _goHome(); _showLockModal(); return; }
@@ -601,7 +601,7 @@ async function openAnalysisScreen() {
             _renderScreen();
         } else {
             console.log('🆕 Анализа нет, генерируем...');
-            await generateDeepAnalysis();
+            await generateDeepAnalysis(sData && sData.gift_available === true);
         }
 
     } catch (err) {
@@ -615,9 +615,22 @@ async function openAnalysisScreen() {
 // ============================================
 // ГЕНЕРАЦИЯ АНАЛИЗА
 // ============================================
-async function generateDeepAnalysis() {
-    _showLoader('Провожу глубинный анализ...', 'Обычно это занимает 20–40 секунд');
+async function generateDeepAnalysis(isGift) {
+    // Человек должен понять, что получил подарок, а не просто подождал.
+    // Молча выданный подарок не работает: он не отличим от того, что
+    // «всё и так было бесплатно», и ровно это мы и хотели опровергнуть.
+    _showLoader(
+        isGift ? '🎁 Собираю ваш разбор — в подарок' : 'Провожу глубинный анализ...',
+        isGift ? 'Шесть разделов, обычно 20–40 секунд' : 'Обычно это занимает 20–40 секунд');
     _removeFooter();
+    if (isGift) {
+        try {
+            if (window.FrediTracker && window.FrediTracker.track) {
+                window.FrediTracker.track('deep_gift_opened', {});
+            }
+            if (typeof ym === 'function') ym(108965607, 'reachGoal', 'deep_gift_opened');
+        } catch (e) {}
+    }
     const timer = _startTimer();
 
     try {
@@ -820,13 +833,12 @@ function _tabThought() {
 // ============================================
 // ЗАМОК: что внутри разбора и первый шаг — без подписки
 // ============================================
-function _isPremium() {
-    if (window.IS_PREMIUM === true) return true;
-    try {
-        const s = window.FrediMeter && window.FrediMeter.lastCheck;
-        return !!(s && (s.is_premium || s.has_subscription));
-    } catch (e) { return false; }
-}
+// Здесь была функция _isPremium(): клиентская догадка о подписке по
+// window.IS_PREMIUM и последней проверке счётчика. Убрана 18.09.2026
+// вместе с подарочным разбором. Право на разбор теперь складывается из
+// подписки И из того, был ли у человека разбор хоть раз, — второго
+// клиент не знает и знать не должен. Замок показывается только по
+// ответу сервера premium_required.
 
 // Первый шаг на сегодня считает meter.js (он загружен всегда):
 // window.frediFirstStepFor(displayName).
