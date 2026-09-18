@@ -172,7 +172,16 @@
         var nameField = isRegister
             ? '<div class="fa-field"><label class="fa-label" for="faName">Имя</label>' +
               '<input id="faName" class="fa-input" type="text" autocomplete="name" maxlength="100" />' +
-              '<div class="fa-err" id="faErrName"></div></div>'
+              '<div class="fa-err" id="faErrName"></div></div>' +
+              // Возраст (18.09.2026). Выгрузка 11–17.09: из 60 человек с
+              // известным возрастом 16 младше 18, среди них 12-летняя с
+              // аккаунтом и мыслями о смерти. По возрасту сервер решает,
+              // показывать ли цену (ребёнку подписку не продаём) и какой
+              // телефон доверия называть. Поле короткое, одно число.
+              '<div class="fa-field"><label class="fa-label" for="faAge">Сколько вам лет</label>' +
+              '<input id="faAge" class="fa-input" type="number" inputmode="numeric" min="6" max="120" ' +
+              'autocomplete="off" style="max-width:120px" />' +
+              '<div class="fa-err" id="faErrAge"></div></div>'
             : '';
 
         // Поле «повторите пин-код» убрано 15.09.2026. Это стена, на
@@ -273,6 +282,11 @@
         if (mode === 'register') {
             var name = (document.getElementById('faName').value || '').trim();
             if (!name) { _setErr('faErrName', 'Введите имя'); ok = false; errs.push('name'); }
+            var ageEl = document.getElementById('faAge');
+            var age = ageEl ? parseInt(ageEl.value, 10) : NaN;
+            if (ageEl && (!(age >= 6 && age <= 120))) {
+                _setErr('faErrAge', 'Возраст — число от 6 до 120'); ok = false; errs.push('age');
+            }
             if (!ok) {
                 _track('auth_validation_error', { mode: mode, source: _lastSource, fields: errs.join(',') });
                 return;
@@ -283,7 +297,7 @@
             var optInEl = document.getElementById('faOptIn');
             var optIn = optInEl ? !!optInEl.checked : true;
             _track('auth_register_started', { source: _lastSource, opt_in: optIn });
-            await _doRegister(name, email, password, remember, optIn);
+            await _doRegister(name, email, password, remember, optIn, age);
         } else {
             if (!ok) {
                 _track('auth_validation_error', { mode: mode, source: _lastSource, fields: errs.join(',') });
@@ -294,7 +308,7 @@
         }
     }
 
-    async function _doRegister(name, email, password, remember, optIn) {
+    async function _doRegister(name, email, password, remember, optIn, age) {
         var btn = document.getElementById('faSubmit');
         if (btn) { btn.disabled = true; btn.textContent = 'Создаём...'; }
         // Захватываем anon user_id ДО перезаписи. Возвращающийся anon
@@ -315,7 +329,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     name: name, email: email, password: password,
-                    remember: remember, email_opted_in: optIn !== false
+                    remember: remember, email_opted_in: optIn !== false,
+                    age: (age >= 6 && age <= 120) ? age : null
                 })
             }, 15000);
             var data = null;

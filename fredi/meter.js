@@ -27,6 +27,19 @@
     }
     function _toast(msg, type) { if (window.showToast) window.showToast(msg, type || 'info'); }
 
+    // Ребёнок (18.09.2026). Сервер отдаёт is_minor по возрасту из
+    // регистрации; выгрузка 11–17.09 — 16 из 60 с известным возрастом
+    // младше 18. Подписку ребёнку не продаём: на стенах вместо цены —
+    // честное «минуты вернутся завтра», опрос «что остановило» не задаём.
+    function _minor(check) {
+        try {
+            if (check && check.is_minor === true) return true;
+            return !!(_lastCheck && _lastCheck.is_minor === true);
+        } catch (e) { return false; }
+    }
+    var MINOR_NOTE = '<div class="meter-text" style="font-size:12px;opacity:.75;margin:6px 0 10px">' +
+        'Подписка — для взрослых. Бесплатные минуты вернутся завтра, разговор никуда не денется.</div>';
+
     function _injectBadgeStyles() {
         if (document.getElementById('meter-badge-styles')) return;
         var s = document.createElement('style');
@@ -823,10 +836,11 @@
                     ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
                 '<div class="meter-wall-clock" id="meterTimer">' +
                     _formatResetCountdown(minutes) + ':00</div>' +
+                (_minor(data) ? MINOR_NOTE :
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
                     'Купить пробный период — 99 ₽</button>' +
                 '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>' +
+                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>') +
             '</div>';
         document.body.appendChild(overlay);
         _attachGift(overlay, 'daily_wall');
@@ -835,7 +849,8 @@
         overlay.addEventListener('click', function (e) { e.stopPropagation(); }, true);
         try { document.body.style.overflow = 'hidden'; } catch (e) {}
 
-        document.getElementById('meterSubscribeBtn').onclick = function () {
+        var _sbDaily = document.getElementById('meterSubscribeBtn');
+        if (_sbDaily) _sbDaily.onclick = function () {
             _track('meter_subscribe_clicked', { wall_v: 'timer_only' });
             _rememberDismiss();
             _closeDailyWall(overlay);
@@ -1061,12 +1076,13 @@
                     ? '<button class="meter-btn meter-btn-primary" id="meterRegBtn">\uD83D\uDCE9 \u0417\u0430\u0432\u0435\u0441\u0442\u0438 \u0430\u043A\u043A\u0430\u0443\u043D\u0442 \u2014 ' +
                       gain.big + ' \u043C\u0438\u043D\u0443\u0442 \u0432 \u0434\u0435\u043D\u044C</button>'
                     : '') +
+                (_minor(data) ? MINOR_NOTE :
                 '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     // «Попробовать» ставит человека перед покупкой, «продолжить» —
                     // перед продолжением того, что он уже делает. Кнопка на стене
                     // должна называть действие, ради которого он сюда пришёл.
                     '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 99 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
                 // стояло «Понятно, до завтра», и вернувшийся с аккаунтом
@@ -1100,7 +1116,8 @@
                 overlay.remove();
             }
         };
-        document.getElementById('meterSubscribeBtn').onclick = function() {
+        var _sbWall = document.getElementById('meterSubscribeBtn');
+        if (_sbWall) _sbWall.onclick = function() {
             _track('meter_subscribe_clicked', { wall_v: 'what_breaks' });
             // Иначе фоновая проверка накрывает стеной открывшийся чекаут.
             _rememberDismiss();
@@ -1196,9 +1213,10 @@
                     ? '<button class="meter-btn meter-btn-primary" id="meterUpsellReg">📩 Завести аккаунт — ' +
                       upGain.big + ' минут в день</button>'
                     : '') +
+                (_minor(check) ? MINOR_NOTE :
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterUpsellSub">✨ Попробовать 3 дня — 99 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
@@ -1218,7 +1236,8 @@
         overlay.onclick = function(e) {
             if (e.target === overlay) { _track('meter_upsell_dismissed', { reason: 'outside' }); overlay.remove(); }
         };
-        document.getElementById('meterUpsellSub').onclick = function() {
+        var _sbUp = document.getElementById('meterUpsellSub');
+        if (_sbUp) _sbUp.onclick = function() {
             _track('meter_subscribe_clicked', { source: 'upsell_critical' });
             overlay.remove();
             if (typeof window.openCheckout === 'function') {
@@ -1337,6 +1356,9 @@
     function askWhyNot(source) {
         try {
             if (_lastCheck && _lastCheck.is_premium) return;
+            // Ребёнку опрос «что остановило от подписки» не задаём: ему
+            // подписку и не предлагали.
+            if (_minor(_lastCheck)) return;
             var today = new Date().toISOString().slice(0, 10);
             var shown = '';
             try { shown = localStorage.getItem(WHY_KEY) || ''; } catch (e) {}
