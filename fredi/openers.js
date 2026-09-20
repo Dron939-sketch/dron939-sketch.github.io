@@ -527,8 +527,120 @@
         var pending = '';
         try { pending = sessionStorage.getItem(PENDING_KEY) || ''; } catch (e) { pending = ask; }
         if (!pending) return;
+        // Зашитая фраза из статьи не отправляется — см. _articleDoor.
+        var art = pending.match(ARTICLE_RX);
+        if (art) {
+            _takePending();
+            _articleDoor(art[1]);
+            return;
+        }
+        // Вход с результатом теста: разговор начинается с содержания, и
+        // карточка бесплатной версии приходит на третьем сообщении, а не
+        // на четвёртом (app.js, DOOR_AFTER_MESSAGES).
+        if (TEST_RX.test(pending) || /^\/testy\//.test(_sourcePath())) window.__frediDoorEntry = true;
         window.__frediAskBusy = true;
         FrediAsk(pending, 'url:' + _sourcePath(), true);
+    }
+
+    // ---- дверь из статьи: первое слово — за человеком ---------------------
+    //
+    // Ссылка «Поговорить с Фреди» в статьях блога (tools/ask_doors.py,
+    // tools/mid_offer.py) несёт готовое первое сообщение: «Я прочитал статью
+    // «…». Помогите примерить это на мой случай». До 20.09.2026 оно уходило
+    // само, как автовопрос из объявления.
+    //
+    // Выгрузка диалогов 13–20.09: таких входов 77 из 370, каждый пятый.
+    // Продолжили 8. После правки промпта 17.09 (#668 в Frederick) Фреди на
+    // этот старт отвечает коротко и спрашивает про случай человека — и с
+    // 18.09 так ответил всем 15, но не ответил ни один из 15. Вопрос,
+    // который человек не писал, не делает его собеседником: на «как вас
+    // зовут, что у вас происходит» отвечать ему не с чего.
+    //
+    // Поэтому фраза из ссылки больше не отправляется. Вместо неё над полем
+    // ввода — одна строка: откуда человек пришёл и о чём написать, — а поле
+    // в фокусе. Первое сообщение он пишет сам; к нему дописывается строка
+    // про статью, чтобы Фреди знал контекст (бэкенд принимает только текст
+    // сообщения, отдельного поля для источника нет). Мера та же, что у
+    // ?draft=: своя первая реплика продолжалась в 56 % против 12 % у
+    // автоотправки.
+    var ARTICLE_RX = /^Я (?:прочитал[а]?|только что из)\s+(?:статью|статьи|лекцию|лекции)\s*«([^»]{3,160})»/;
+    var TEST_RX = /^(?:Мой результат по|Фреди, я прош[её]л|Прош[её]л тест|Мой результат теста)/;
+    var ARTICLE_KEY = 'fredi_article_ctx';
+    var _articleSubmitWired = false;
+
+    function _articleTitle() {
+        try { return sessionStorage.getItem(ARTICLE_KEY) || ''; } catch (e) { return ''; }
+    }
+
+    function _hideArticleHint() {
+        var h = document.getElementById('dashArticleHint');
+        if (h && h.parentNode) h.parentNode.removeChild(h);
+    }
+
+    function _articleDoor(title) {
+        title = String(title || '').trim();
+        if (!title) return;
+        try { sessionStorage.setItem(ARTICLE_KEY, title); } catch (e) {}
+        window.__frediDoorEntry = true;
+        _wireArticleSubmit();
+        var tries = 0;
+        var iv = setInterval(function () {
+            if (_showArticleHint(title) || ++tries > 40) clearInterval(iv);
+        }, 300);
+    }
+
+    function _showArticleHint(title) {
+        var composer = document.querySelector('.dash-composer');
+        var input = document.getElementById('dashComposerInput');
+        if (!composer || !input) return false;
+        if (!_chatEmpty()) return true;
+        if (document.getElementById('dashArticleHint')) return true;
+        var hint = document.createElement('div');
+        hint.id = 'dashArticleHint';
+        hint.className = 'dash-article-hint';
+        hint.setAttribute('style',
+            'margin:0 0 8px;padding:9px 12px;border-radius:12px;font-size:13.5px;line-height:1.45;' +
+            'background:rgba(58,134,255,.09);border:1px solid rgba(58,134,255,.28)');
+        var t = document.createElement('div');
+        t.textContent = 'Вы из статьи «' + title + '». Напишите в двух строках, что у вас происходит, ' +
+            'и Фреди ответит про вас, а не про статью.';
+        hint.appendChild(t);
+        composer.insertBefore(hint, composer.firstChild);
+        try { input.focus(); } catch (e) {}
+        _track('article_door_hint', { len: title.length });
+        _goal('fredi_article_hint');
+        return true;
+    }
+
+    // Дописываем строку про статью в момент отправки, а не заранее в поле:
+    // в поле она мешала бы печатать, а человек мог бы её стереть или
+    // отправить одну. Слушаем документ в фазе перехвата — раньше send()
+    // из app.js, которая читает поле ровно при submit.
+    function _wireArticleSubmit() {
+        if (_articleSubmitWired) return;
+        _articleSubmitWired = true;
+        document.addEventListener('submit', function (e) {
+            try {
+                var form = e.target;
+                if (!form || form.id !== 'dashComposerForm') return;
+                var title = _articleTitle();
+                if (!title) return;
+                var input = document.getElementById('dashComposerInput');
+                var own = (input && input.value || '').trim();
+                if (!own) return;
+                try { sessionStorage.removeItem(ARTICLE_KEY); } catch (e2) {}
+                _hideArticleHint();
+                if (!/статьи «/.test(own)) input.value = own + '\n\n(пришёл со статьи «' + title + '»)';
+                _track('article_door_own', { len: own.length });
+            } catch (e3) {}
+        }, true);
+    }
+
+    // Перезагрузка страницы до первого слова (login.js после подтверждения
+    // личности) — подсказка возвращается из хранилища, как ?ask= и ?draft=.
+    function _articleFromStorage() {
+        var title = _articleTitle();
+        if (title) _articleDoor(title);
     }
 
     // ?draft=<текст> — подставить фразу в поле ввода и НЕ отправлять.
@@ -595,6 +707,7 @@
             var ev = e && e.detail && e.detail.event;
             if (ev === 'message_sent') {
                 _hide();
+                _hideArticleHint();
                 // Первый message_sent после автоотправки — это она сама, и
                 // продолжения ещё впереди: их место под ответом на неё.
                 if (_autoAskPending) {
@@ -638,6 +751,7 @@
         // приехал, разговор всё равно должен начаться.
         _askFromUrl();
         _draftFromUrl();
+        _articleFromStorage();
         fetch(SRC, { cache: 'force-cache' })
             .then(function (r) { return r.ok ? r.json() : null; })
             .then(function (d) {
