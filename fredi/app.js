@@ -946,7 +946,11 @@ function setupDashComposer() {
         // как турникет на входе, а на четвёртом — как «уберём помеху»
         // посреди уже начатого. Показывает meter.js, он же знает, аноним
         // ли это.
-        var DOOR_AFTER_MESSAGES = 4;
+        // 20.09.2026: тому, кто пришёл из статьи или с результатом теста
+        // (openers.js ставит __frediDoorEntry), карточка приходит на
+        // третьем сообщении. Такой человек начал с содержания, а не с
+        // «привет», и к третьей реплике разговор уже про него.
+        var DOOR_AFTER_MESSAGES = window.__frediDoorEntry ? 3 : 4;
         try {
             _dashMsgCount++;
             if (answer && _dashMsgCount === DOOR_AFTER_MESSAGES && window.FrediMeter) {
@@ -1471,6 +1475,13 @@ function showPremiumLockPopup(modeName, opts) {
     const text = o.text || (isMode
         ? 'Диалог сейчас идёт в базовом режиме. С подпиской Фреди начнёт говорить как психолог, коуч или тренер — на ваш выбор.'
         : 'Открывается с подпиской вместе с голосом, всеми режимами и памятью Фреди о каждом разговоре. Три дня полного Premium — 99 ₽, дальше 990 ₽ в месяц, отключается в один клик.');
+    // Замок пришёл из чата коуча/тренера: сервер уже ответил обычным Фреди,
+    // но режим в приложении остался «коуч», и каждое следующее сообщение
+    // снова начиналось бы со строки про подписку. В выгрузке 13–20.09 шесть
+    // человек упёрлись в замок, и с аккаунтом среди них: «ничего не
+    // поняла... что мне делать». Кнопка возвращает базовый режим — один
+    // тап вместо похода в настройки.
+    const fromChatLock = String(o.source || '').indexOf('chat_lock_') === 0;
     // Удаляем предыдущее окно, если есть
     document.getElementById('premiumLockPopup')?.remove();
 
@@ -1486,6 +1497,7 @@ function showPremiumLockPopup(modeName, opts) {
             <div class="plp-text">${text}</div>
             <div class="plp-actions">
                 <button class="plp-btn plp-btn-primary" data-action="upgrade">Открыть Premium</button>
+                ${fromChatLock ? '<button class="plp-btn plp-btn-secondary" data-action="basic">Продолжить с обычным Фреди</button>' : ''}
                 <button class="plp-btn plp-btn-secondary" data-action="close">Понятно</button>
             </div>
         </div>
@@ -1496,6 +1508,16 @@ function showPremiumLockPopup(modeName, opts) {
     popup.querySelector('.plp-close')?.addEventListener('click', close);
     popup.querySelector('.plp-backdrop')?.addEventListener('click', close);
     popup.querySelector('[data-action="close"]')?.addEventListener('click', close);
+    popup.querySelector('[data-action="basic"]')?.addEventListener('click', () => {
+        close();
+        try {
+            if (window.FrediTracker?.track) {
+                window.FrediTracker.track('premium_lock_to_basic', { source: o.source || '' });
+            }
+        } catch {}
+        try { switchMode('basic', { silent: true }); } catch (e) { console.warn('switchMode basic failed:', e); }
+        try { showToast('Дальше отвечает обычный Фреди', 'success'); } catch {}
+    });
     popup.querySelector('[data-action="upgrade"]')?.addEventListener('click', () => {
         close();
         // Прямой чекаут, если он есть: настройки — это ещё два экрана до
