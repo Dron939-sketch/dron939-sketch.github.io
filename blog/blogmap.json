@@ -12340,6 +12340,69 @@
    "rubric": "roditeli",
    "level": "n",
    "mins": 9
+  },
+  {
+   "slug": "rebenok-ne-slushaetsya-stimulnyj-kontrol",
+   "title": "Ребёнок не останавливается после «нельзя»: почему слово не работает и как его включить",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-stimul-1-slovo-za-kotorym-nichego-net",
+   "title": "Слово, за которым ничего нет — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-stimul-2-odno-slovo-odno-dejstvie",
+   "title": "Одно слово — одно действие — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "lekciya-stimul-3-pochemu-krik-rabotaet-vse-huzhe",
+   "title": "Почему крик работает всё хуже — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "lekciya-stimul-4-delaj-podkreplenie-popytki",
+   "title": "«Делай»: подкрепление попытки — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-5-ne-poluchilos-a-kak-eshche",
+   "title": "«Не получилось» — а как ещё? — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-6-hochu-a-etogo-net",
+   "title": "«Хочу, а этого нет»: индексация ресурсов — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-7-perenos-tri-konteksta",
+   "title": "Перенос: три контекста и снятие опор — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-8-avtopilot-i-zamer",
+   "title": "Автопилот и замер на выходе — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 9
   }
  ]
 }
