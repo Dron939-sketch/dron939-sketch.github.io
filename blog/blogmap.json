@@ -12284,6 +12284,62 @@
    "rubric": "emocii",
    "level": "p",
    "mins": 9
+  },
+  {
+   "slug": "ne-mogu-postoyat-za-sebya",
+   "title": "Не могу постоять за себя: почему вы замираете и что с этим делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "kak-nauchitsya-davat-otpor",
+   "title": "Как научиться давать отпор: семь шагов и программа на месяц",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "nechem-platit-kredit-chto-delat",
+   "title": "Нечем платить кредит: что делать, если нечем и страшно открыть письмо",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "kak-prinyat-diagnoz",
+   "title": "Как принять диагноз: что происходит с вами в первые недели и что помогает",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "sindrom-opustevshego-gnezda",
+   "title": "Синдром опустевшего гнезда: почему после отъезда детей так пусто и что делать",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "vzroslye-deti-ne-hotyat-obshchatsya",
+   "title": "Взрослые дети не хотят общаться: почему это происходит и что делать",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "chto-delat-v-50-let-zhenshchine",
+   "title": "Что делать в 50 лет женщине: четыре вещи по порядку, а не «новая жизнь»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 8
+  },
+  {
+   "slug": "kak-vospityvat-vnukov",
+   "title": "Как воспитывать внуков и не поссориться с их родителями: семь правил бабушки",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 9
   }
  ]
 }
