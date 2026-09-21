@@ -12284,6 +12284,125 @@
    "rubric": "emocii",
    "level": "p",
    "mins": 9
+  },
+  {
+   "slug": "ne-mogu-postoyat-za-sebya",
+   "title": "Не могу постоять за себя: почему вы замираете и что с этим делать",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "kak-nauchitsya-davat-otpor",
+   "title": "Как научиться давать отпор: семь шагов и программа на месяц",
+   "rubric": "emocii",
+   "level": "m",
+   "mins": 9
+  },
+  {
+   "slug": "nechem-platit-kredit-chto-delat",
+   "title": "Нечем платить кредит: что делать, если нечем и страшно открыть письмо",
+   "rubric": "dengi",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "kak-prinyat-diagnoz",
+   "title": "Как принять диагноз: что происходит с вами в первые недели и что помогает",
+   "rubric": "telo",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "sindrom-opustevshego-gnezda",
+   "title": "Синдром опустевшего гнезда: почему после отъезда детей так пусто и что делать",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "vzroslye-deti-ne-hotyat-obshchatsya",
+   "title": "Взрослые дети не хотят общаться: почему это происходит и что делать",
+   "rubric": "roditeli",
+   "level": "m",
+   "mins": 10
+  },
+  {
+   "slug": "chto-delat-v-50-let-zhenshchine",
+   "title": "Что делать в 50 лет женщине: четыре вещи по порядку, а не «новая жизнь»",
+   "rubric": "emocii",
+   "level": "n",
+   "mins": 8
+  },
+  {
+   "slug": "kak-vospityvat-vnukov",
+   "title": "Как воспитывать внуков и не поссориться с их родителями: семь правил бабушки",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 9
+  },
+  {
+   "slug": "rebenok-ne-slushaetsya-stimulnyj-kontrol",
+   "title": "Ребёнок не останавливается после «нельзя»: почему слово не работает и как его включить",
+   "rubric": "roditeli",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-stimul-1-slovo-za-kotorym-nichego-net",
+   "title": "Слово, за которым ничего нет — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-stimul-2-odno-slovo-odno-dejstvie",
+   "title": "Одно слово — одно действие — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "lekciya-stimul-3-pochemu-krik-rabotaet-vse-huzhe",
+   "title": "Почему крик работает всё хуже — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "lekciya-stimul-4-delaj-podkreplenie-popytki",
+   "title": "«Делай»: подкрепление попытки — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-5-ne-poluchilos-a-kak-eshche",
+   "title": "«Не получилось» — а как ещё? — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-6-hochu-a-etogo-net",
+   "title": "«Хочу, а этого нет»: индексация ресурсов — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-7-perenos-tri-konteksta",
+   "title": "Перенос: три контекста и снятие опор — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-stimul-8-avtopilot-i-zamer",
+   "title": "Автопилот и замер на выходе — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 9
   }
  ]
 }

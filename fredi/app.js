@@ -3973,6 +3973,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lestnica: { fn: 'showLestnicaGame', src: 'lestnica.js', chat: 'kontur' }, // «Лестница» — конструктор экспозиции (курс «Страхи и фобии»)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' }, // «Мне плохо сейчас» — протокол стабилизации
             alfavit: { fn: 'showAlfavitGame', src: 'alfavit.js', chat: 'kontur' },
+            avtopilot: { fn: 'showAvtopilotGame', src: 'avtopilot.js', chat: 'kontur' }, // «Автопилот» — мыслительный навык на триггер (курс «Стимульный контроль»)
             // Семь платных тренажёров были в списке премиума (meter.js), но
             // не в этой таблице: попасть в них можно было только из списка
             // игр внутри приложения. Ни статья, ни письмо, ни объявление не
