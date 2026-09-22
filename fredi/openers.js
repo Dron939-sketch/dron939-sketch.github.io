@@ -447,6 +447,10 @@
         // перезагружать ради обновления service worker — ответ оборвётся.
         window.__frediAskBusy = true;
         _autoAskPending = true;
+        // 22.09.2026: app.js считает сообщения до карточки бесплатной
+        // версии только те, что человек набрал сам; автовопрос — не в
+        // счёт. Флаг снимает send() в момент отправки.
+        window.__frediAutoMsgPending = true;
         _track('auto_ask', { source: source || '', len: text.length });
         // Через submit формы, а не прямым вызовом: send() в app.js закрыта
         // в замыкании, и только так срабатывают её проверки — лимит,
@@ -534,9 +538,11 @@
             _articleDoor(art[1]);
             return;
         }
-        // Вход с результатом теста: разговор начинается с содержания, и
-        // карточка бесплатной версии приходит на третьем сообщении, а не
-        // на четвёртом (app.js, DOOR_AFTER_MESSAGES).
+        // Вход с результатом теста: разговор начинается с содержания.
+        // До 22.09.2026 карточка бесплатной версии приходила такому
+        // человеку на третьем сообщении; теперь для всех — после
+        // четвёртого своего (app.js, DOOR_AFTER_MESSAGES), флаг остаётся
+        // для аналитики входа.
         if (TEST_RX.test(pending) || /^\/testy\//.test(_sourcePath())) window.__frediDoorEntry = true;
         window.__frediAskBusy = true;
         FrediAsk(pending, 'url:' + _sourcePath(), true);
