@@ -1081,7 +1081,7 @@ function _showLockModal() {
                 <li><b>Прогноз</b> — что будет через полгода, если ничего не менять, и если менять</li>
                 <li><b>Персональные ключи</b> — что говорить себе в момент срыва</li>
             </ul>
-            <button class="alock-btn alock-btn-primary" id="alockSub">✨ Открыть разбор — 3 дня 99 ₽</button>
+            <button class="alock-btn alock-btn-primary" id="alockSub">✨ Открыть разбор — 3 дня 69 ₽</button>
             <button class="alock-btn" id="alockLater">Позже</button>
             <div class="alock-note">Потом 990 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
         </div>`;
@@ -1157,7 +1157,7 @@ function _renderLocked() {
                 </ul>
                 <div style="font-size:13px;opacity:.75;margin-top:10px">Плюс коуч и тренер без лимита, голос и память Фреди о каждом разговоре.</div>
                 <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
-                    <button class="back-btn" id="analysisLockSub" style="background:#3b82ff;color:#fff;border-color:#3b82ff">✨ Открыть разбор — 3 дня 99 ₽</button>
+                    <button class="back-btn" id="analysisLockSub" style="background:#3b82ff;color:#fff;border-color:#3b82ff">✨ Открыть разбор — 3 дня 69 ₽</button>
                     <button class="back-btn" id="analysisLockHome">🏠 На главную</button>
                 </div>
                 <div style="font-size:12px;opacity:.65;margin-top:8px">Потом 990 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>

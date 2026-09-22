@@ -362,7 +362,7 @@
         // почту — будет больше» стало неправдой; но дело не только в
         // числах. Регистрация сама по себе человеку ничего не открывает —
         // он остаётся в той же бесплатной версии, — а место на стене
-        // занимает ровно то, ради чего стена и стоит: пробу за 99 ₽.
+        // занимает ровно то, ради чего стена и стоит: пробу за 69 ₽.
         // Почта приходит там, где человек и так её оставляет: на разборе
         // теста в PDF и на оплате. Возврат пустого выигрыша схлопывает
         // все ветки «Завести аккаунт — N минут» разом, поэтому сами ветки
@@ -839,7 +839,7 @@
                     _formatResetCountdown(minutes) + ':00</div>' +
                 (_minor(data) ? MINOR_NOTE :
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
-                    'Купить пробный период — 99 ₽</button>' +
+                    'Купить пробный период — 69 ₽</button>' +
                 '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
                     'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>') +
             '</div>';
@@ -1082,7 +1082,7 @@
                     // «Попробовать» ставит человека перед покупкой, «продолжить» —
                     // перед продолжением того, что он уже делает. Кнопка на стене
                     // должна называть действие, ради которого он сюда пришёл.
-                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 99 ₽</button>' +
+                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
@@ -1216,7 +1216,7 @@
                     : '') +
                 (_minor(check) ? MINOR_NOTE :
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    '" id="meterUpsellSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                    '" id="meterUpsellSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
@@ -1294,7 +1294,7 @@
                         'Дальше — работа с Фреди, который помнит вас и не считает минуты.</div>' +
                     _premiumFeatures() +
                     AUTHOR_NOTE +
-                    '<button class="meter-btn meter-btn-primary" id="meterSiteSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterSiteSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                     '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 990 ₽ в месяц; отключить можно в один клик в разделе «Подписка». Оплата картой любого российского банка через ЮKassa.</div>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterSiteFree">Сначала поговорить бесплатно</button>' +
                 '</div>';
@@ -1741,7 +1741,7 @@
                         body +
                         (anon ? '<br><br>Сейчас этот разговор завтра не вспомнится: бесплатная версия его не хранит.' : '') +
                     '</div>' +
-                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                     '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, память о каждом разговоре. Потом 990 ₽ в месяц; отключить можно в один клик.</div>' +
                     // «Сначала завести аккаунт» отсюда убрано 15.09.2026:
                     // аккаунт заводится самой покупкой, отдельным шагом он
@@ -1943,7 +1943,7 @@
                       (isTool
                         ? 'Разговор с Фреди, дневник, сны, сказки и эзотерика остаются бесплатными.'
                         : 'Короткие тренажёры остаются бесплатными.')) + '</div>' +
-                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
             '</div>';
@@ -2022,14 +2022,14 @@
                         'Дальше он упрётся в ' + (noTest ? 'три' : 'две') + ' вещи.</div>' +
                     '<div class="meter-text" style="text-align:left;border-left:3px solid #3b82ff;padding-left:11px;margin:0 0 15px">' +
                         lines.join('<br><br>') + '</div>' +
-                    '<div class="meter-text">Три дня за 99 ₽ снимают это разом: ' +
+                    '<div class="meter-text">Три дня за 69 ₽ снимают это разом: ' +
                         (noTest ? 'тест с разбором, ' : '') +
                         'память о каждом разговоре, время без счётчика, голос и все режимы. ' +
                         'Понравится — дальше 990 ₽ в месяц, отключить можно в один клик.</div>' +
                     (noTest
                         ? '<button class="meter-btn meter-btn-secondary" id="meterDoorTest">🧭 Пройти тест — бесплатно</button>'
                         : '') +
-                    '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 99 ₽</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 69 ₽</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
