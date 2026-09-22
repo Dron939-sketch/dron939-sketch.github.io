@@ -533,150 +533,6 @@
         'style="color:#3b82ff">Андрей Мейстер</a> — двадцать лет практики, ' +
         'Лекторий и блог о том же самом.</div>';
 
-    // ── Подарок: первый разбор теста ──────────────────────────────────
-    //
-    // Замер 01–17.09: стену увидел 171 человек, кликнули по подписке 13.
-    // В опросе «что остановило» из 18 ответов семь «попробую потом», семь
-    // «дорого» и НОЛЬ «не понял, что даёт». Люди понимают, что мы
-    // продаём; им нечем проверить, зачем это им. На стене восемь строк
-    // обещаний и ни одного доказательства.
-    //
-    // Дарим то, что действительно закрыто подпиской: шесть разделов
-    // разбора. Тест бесплатен и всегда был — дарить его было бы
-    // подарком на словах, а это человек проверяет одним кликом. Ровно на
-    // этом мы уже обожглись с «Весь Лекторий»: он открыт всем, и после
-    // проверки переставали верить и остальным строкам витрины.
-    //
-    // Право на подарок считает сервер (у него одного есть история
-    // разборов), ручка /gift дешёвая и не генерирует ничего.
-    var _giftState = null;   // {gift_available, has_profile, is_premium}
-    var _giftTs = 0;
-    var GIFT_TTL_MS = 5 * 60 * 1000;
-
-    function _loadGift(cb) {
-        var uid = _uid();
-        // Без аккаунта подарок некуда положить: разбор привязан к
-        // человеку. Такому стена и так предлагает сначала завести
-        // аккаунт — обещать ему подарок значило бы обещать за два шага
-        // вперёд, а до второго шага он не дойдёт.
-        if (!uid) { cb(null); return; }
-        if (_giftState && (Date.now() - _giftTs) < GIFT_TTL_MS) { cb(_giftState); return; }
-        try {
-            fetch(_api() + '/api/deep-analysis/' + uid + '/gift')
-                .then(function (r) { return r.json(); })
-                .then(function (d) {
-                    if (!d || d.success !== true) { cb(null); return; }
-                    _giftState = d; _giftTs = Date.now();
-                    cb(d);
-                })
-                .catch(function () { cb(null); });
-        } catch (e) { cb(null); }
-    }
-
-    // Подарок выдан — кэш недействителен: второй раз его не положено.
-    function _giftForget() { _giftState = null; _giftTs = 0; }
-
-    // analysis.js грузится лениво (app.js, moduleHandlers.analysis), и со
-    // стены window.openAnalysisScreen обычно ещё не существует. Прямой
-    // вызов молча ничего не делал бы — человек нажал бы «Открыть разбор»
-    // и остался на пустом экране.
-    function _openAnalysis() {
-        if (typeof window.openAnalysisScreen === 'function') {
-            window.openAnalysisScreen();
-            return;
-        }
-        try {
-            var s = document.createElement('script');
-            s.src = 'analysis.js';
-            s.onload = function () {
-                if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
-            };
-            // Уводить на ?m=analysis нельзя: такого ключа в ROUTES нет
-            // (app.js), ссылка молча открыла бы общий экран, и человек
-            // решил бы, что подарок — пустое обещание. Лучше сказать.
-            s.onerror = function () {
-                _toast('Не получилось открыть разбор. Попробуйте ещё раз', 'error');
-            };
-            document.head.appendChild(s);
-        } catch (e) {
-            _toast('Не получилось открыть разбор. Попробуйте ещё раз', 'error');
-        }
-    }
-
-    function _openTest() {
-        try {
-            if (typeof window.startTest === 'function') window.startTest();
-            else window.location.href = '/fredi/?m=test';
-        } catch (e) { window.location.href = '/fredi/?m=test'; }
-    }
-
-    function _giftBlock(g) {
-        if (!g || g.gift_available !== true) return '';
-        var title = g.has_profile
-            ? 'Полный разбор вашего теста — в подарок'
-            : 'Пройдите тест — полный разбор в подарок';
-        var text = g.has_profile
-            ? 'Шесть разделов: глубинный портрет, системные петли, скрытые ' +
-              'механизмы, точки роста, прогноз и персональные ключи. Обычно ' +
-              'это часть подписки. Первый — бесплатно, он останется у вас.'
-            : 'Сам тест бесплатный, минут пятнадцать. А разбор по нему — ' +
-              'шесть разделов, которые обычно открываются с подпиской, — ' +
-              'первый раз отдаём бесплатно.';
-        var btn = g.has_profile ? '🎁 Открыть разбор' : '🎁 Пройти тест';
-        return '<div class="meter-gift" id="meterGift" style="text-align:left;' +
-            'border:1px solid rgba(255,184,0,.45);background:rgba(255,184,0,.08);' +
-            'border-radius:14px;padding:14px 16px;margin:0 0 14px">' +
-            '<div style="font-weight:600;margin-bottom:6px">🎁 ' + title + '</div>' +
-            '<div style="font-size:13px;opacity:.85;margin-bottom:10px">' + text + '</div>' +
-            '<button class="meter-btn meter-btn-primary" id="meterGiftBtn" ' +
-            'style="margin:0">' + btn + '</button></div>';
-    }
-
-    // Подарок приезжает асинхронно и вставляется в уже показанную стену:
-    // ждать сеть перед показом нельзя — стена рисуется в момент, когда
-    // человек уже упёрся, и лишняя секунда пустого экрана дороже.
-    function _attachGift(overlay, source) {
-        _loadGift(function (g) {
-            var html = _giftBlock(g);
-            if (!html || !overlay || !overlay.parentNode) return;
-            // Три стены — две разные разметки: у дневной .meter-wall-box
-            // с таймером и без витрины, у остальных .meter-modal. Якорь
-            // ищем по смыслу, а не по вёрстке: подарок должен стоять
-            // ВЫШЕ цены, иначе он читается как утешение после отказа.
-            var modal = overlay.querySelector('.meter-modal, .meter-wall-box');
-            if (!modal) return;
-            var anchor = modal.querySelector('.meter-features-title')
-                || modal.querySelector('#meterSubscribeBtn')
-                || modal.querySelector('#meterUpsellSub');
-            var box = document.createElement('div');
-            box.innerHTML = html;
-            var node = box.firstChild;
-            if (anchor) modal.insertBefore(node, anchor);
-            else modal.appendChild(node);
-
-            // «Глубинный разбор вашего теста» из витрины Premium убираем:
-            // он стоит строкой ниже подарка, и стена получалась бы
-            // противоречивой — дарим и тут же продаём то же самое.
-            try {
-                var dup = modal.querySelector('.meter-features li[data-keys~="analysis"]');
-                if (dup && dup.parentNode) dup.parentNode.removeChild(dup);
-            } catch (e) {}
-
-            _track('deep_gift_shown', { source: source || '', has_profile: !!g.has_profile });
-            _whyGoal('deep_gift_shown');
-            var b = document.getElementById('meterGiftBtn');
-            if (b) b.onclick = function () {
-                _track('deep_gift_clicked', { source: source || '', has_profile: !!g.has_profile });
-                _whyGoal('deep_gift_clicked');
-                _giftForget();
-                _rememberDismiss();
-                try { overlay.remove(); } catch (e) {}
-                if (g.has_profile) _openAnalysis();
-                else _openTest();
-            };
-        });
-    }
-
     // Первая строка стены: имя, что человек только что делал, и почему
     // разговор прервался именно сейчас.
     function _personalLead(kind) {
@@ -844,7 +700,6 @@
                     'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>') +
             '</div>';
         document.body.appendChild(overlay);
-        _attachGift(overlay, 'daily_wall');
         // Ни клик мимо, ни Esc стену не убирают: закрывать её нечем — за
         // ней всё равно ничего не работает.
         overlay.addEventListener('click', function (e) { e.stopPropagation(); }, true);
@@ -1095,7 +950,6 @@
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
             '</div>';
         document.body.appendChild(overlay);
-        _attachGift(overlay, data.block_reason || (trialExhausted ? 'trial' : 'daily'));
 
         if (gain) {
             document.getElementById('meterRegBtn').onclick = function () {
@@ -1221,7 +1075,6 @@
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
-        _attachGift(overlay, 'upsell_' + (kind || ''));
 
         if (upGain) {
             document.getElementById('meterUpsellReg').onclick = function () {
