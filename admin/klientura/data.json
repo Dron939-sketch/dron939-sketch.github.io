@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-10 22:02",
+ "generated": "2026-09-22 19:19",
  "counter": 108138656,
  "cells": [
   {
@@ -39,7 +39,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 4,
+    "visits": 5,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -220,17 +220,17 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 8,
-    "open": 2,
-    "msg": 0,
-    "own": 0
+    "visits": 88,
+    "open": 6,
+    "msg": 3,
+    "own": 3
    },
    "segments": [
     {
      "sex": "ж",
      "age": "до 18",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -240,41 +240,8 @@
     {
      "sex": "ж",
      "age": "18–24",
-     "share": 0.1909,
-     "src": "оценка",
-     "demand": 384,
-     "visits": 0,
-     "open": 0,
-     "msg": 0,
-     "own": 0
-    },
-    {
-     "sex": "ж",
-     "age": "25–34",
-     "share": 0.2518,
-     "src": "оценка",
-     "demand": 506,
-     "visits": 0,
-     "open": 0,
-     "msg": 0,
-     "own": 0
-    },
-    {
-     "sex": "ж",
-     "age": "35–44",
-     "share": 0.0449,
-     "src": "оценка",
-     "demand": 90,
-     "visits": 0,
-     "open": 0,
-     "msg": 0,
-     "own": 0
-    },
-    {
-     "sex": "ж",
-     "age": "45–54",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -283,9 +250,42 @@
     },
     {
      "sex": "ж",
+     "age": "25–34",
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
+     "visits": 0,
+     "open": 0,
+     "msg": 0,
+     "own": 0
+    },
+    {
+     "sex": "ж",
+     "age": "35–44",
+     "share": 0.3721,
+     "src": "измерено",
+     "demand": 748,
+     "visits": 16,
+     "open": 1,
+     "msg": 1,
+     "own": 1
+    },
+    {
+     "sex": "ж",
+     "age": "45–54",
+     "share": 0.6279,
+     "src": "измерено",
+     "demand": 1262,
+     "visits": 27,
+     "open": 1,
+     "msg": 1,
+     "own": 1
+    },
+    {
+     "sex": "ж",
      "age": "55+",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -296,7 +296,7 @@
      "sex": "м",
      "age": "до 18",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -306,9 +306,9 @@
     {
      "sex": "м",
      "age": "18–24",
-     "share": 0.1584,
-     "src": "оценка",
-     "demand": 318,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -317,9 +317,9 @@
     {
      "sex": "м",
      "age": "25–34",
-     "share": 0.2803,
-     "src": "оценка",
-     "demand": 563,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -328,9 +328,9 @@
     {
      "sex": "м",
      "age": "35–44",
-     "share": 0.0737,
-     "src": "оценка",
-     "demand": 148,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -340,7 +340,7 @@
      "sex": "м",
      "age": "45–54",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -351,7 +351,7 @@
      "sex": "м",
      "age": "55+",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -401,7 +401,7 @@
    ],
    "comes_instead": "мать подростка",
    "metrika": {
-    "visits": 4,
+    "visits": 11,
     "open": 1,
     "msg": 0,
     "own": 0
@@ -569,7 +569,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 0,
+    "visits": 1,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -750,7 +750,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 2,
+    "visits": 7,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -1719,7 +1719,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 0,
+    "visits": 4,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -1891,7 +1891,7 @@
    ],
    "comes_instead": "жена вахтовика",
    "metrika": {
-    "visits": 7,
+    "visits": 11,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -2069,7 +2069,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 0,
+    "visits": 8,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -2242,9 +2242,9 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 1,
-    "open": 0,
-    "msg": 0,
+    "visits": 24,
+    "open": 1,
+    "msg": 1,
     "own": 0
    },
    "segments": [
@@ -2309,9 +2309,9 @@
      "share": 0.0,
      "src": "оценка",
      "demand": 0,
-     "visits": 0,
-     "open": 0,
-     "msg": 0,
+     "visits": 10,
+     "open": 1,
+     "msg": 1,
      "own": 0
     },
     {
@@ -3762,7 +3762,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 4,
+    "visits": 26,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -3935,7 +3935,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 1,
+    "visits": 4,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -4742,7 +4742,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 1,
+    "visits": 4,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -5241,7 +5241,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 3,
+    "visits": 96,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -5251,7 +5251,7 @@
      "sex": "ж",
      "age": "до 18",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -5262,7 +5262,7 @@
      "sex": "ж",
      "age": "18–24",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -5272,9 +5272,9 @@
     {
      "sex": "ж",
      "age": "25–34",
-     "share": 0.2713,
-     "src": "оценка",
-     "demand": 326,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -5283,9 +5283,9 @@
     {
      "sex": "ж",
      "age": "35–44",
-     "share": 0.4835,
-     "src": "оценка",
-     "demand": 581,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -5294,9 +5294,9 @@
     {
      "sex": "ж",
      "age": "45–54",
-     "share": 0.0442,
-     "src": "оценка",
-     "demand": 53,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -5305,10 +5305,10 @@
     {
      "sex": "ж",
      "age": "55+",
-     "share": 0.0,
-     "src": "оценка",
-     "demand": 0,
-     "visits": 0,
+     "share": 0.45,
+     "src": "измерено",
+     "demand": 541,
+     "visits": 27,
      "open": 0,
      "msg": 0,
      "own": 0
@@ -5317,7 +5317,7 @@
      "sex": "м",
      "age": "до 18",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -5328,7 +5328,7 @@
      "sex": "м",
      "age": "18–24",
      "share": 0.0,
-     "src": "оценка",
+     "src": "измерено",
      "demand": 0,
      "visits": 0,
      "open": 0,
@@ -5338,9 +5338,9 @@
     {
      "sex": "м",
      "age": "25–34",
-     "share": 0.0533,
-     "src": "оценка",
-     "demand": 64,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -5349,9 +5349,9 @@
     {
      "sex": "м",
      "age": "35–44",
-     "share": 0.1402,
-     "src": "оценка",
-     "demand": 168,
+     "share": 0.0,
+     "src": "измерено",
+     "demand": 0,
      "visits": 0,
      "open": 0,
      "msg": 0,
@@ -5360,10 +5360,10 @@
     {
      "sex": "м",
      "age": "45–54",
-     "share": 0.0076,
-     "src": "оценка",
-     "demand": 9,
-     "visits": 0,
+     "share": 0.2,
+     "src": "измерено",
+     "demand": 240,
+     "visits": 12,
      "open": 0,
      "msg": 0,
      "own": 0
@@ -5371,10 +5371,10 @@
     {
      "sex": "м",
      "age": "55+",
-     "share": 0.0,
-     "src": "оценка",
-     "demand": 0,
-     "visits": 0,
+     "share": 0.35,
+     "src": "измерено",
+     "demand": 421,
+     "visits": 21,
      "open": 0,
      "msg": 0,
      "own": 0
@@ -5413,7 +5413,7 @@
    ],
    "comes_instead": "",
    "metrika": {
-    "visits": 0,
+    "visits": 48,
     "open": 0,
     "msg": 0,
     "own": 0
@@ -5546,7 +5546,7 @@
      "share": 0.0,
      "src": "оценка",
      "demand": 0,
-     "visits": 0,
+     "visits": 17,
      "open": 0,
      "msg": 0,
      "own": 0

@@ -249,6 +249,14 @@
         meter_blocked_shown: 'fredi_paywall_shown',
         meter_subscribe_clicked: 'fredi_subscribe_clicked',
         checkout_opened: 'fredi_checkout_opened',
+        // Мест, где мы предлагаем купить, пять, а измерено до 23.09.2026
+        // было одно — стена. За 17–23.09 стена дала 1 клик на 131 показ,
+        // а оплату в приложении открывали 3 раза: два открытия пришли
+        // откуда-то из неизмеренного, и откуда — сказать было нечем.
+        meter_peak_offer_shown: 'fredi_peak_offer_shown',
+        meter_upsell_shown: 'fredi_upsell_shown',
+        meter_site_offer_shown: 'fredi_site_offer_shown',
+        analysis_lock_shown: 'fredi_analysis_lock_shown',
         // Раунд, доведённый до конца, — единственный имеющийся признак,
         // что тренажёром действительно пользовались, а не открыли и
         // закрыли. Не дедуплицируется намеренно: повторный раунд — это
@@ -299,8 +307,40 @@
         }
     }
 
+    // Откуда пришёл клик по подписке. Цель в Метрике — это имя без
+    // параметров, поэтому одного fredi_subscribe_clicked мало: пять мест
+    // продажи сливались в одно число, и понять, какое из них работает,
+    // было нельзя. Уходит вторая цель, рядом с общей.
+    function _subClickGoal(data) {
+        var src = (data && data.source) || '';
+        if (src.indexOf('peak_') === 0) return 'fredi_sub_click_peak';
+        if (src.indexOf('site_') === 0) return 'fredi_sub_click_site';
+        if (src === 'upsell_critical') return 'fredi_sub_click_upsell';
+        if (src === 'analysis_lock') return 'fredi_sub_click_analysis';
+        // Стена шлёт не source, а wall_v — по нему её и узнаём.
+        if (data && data.wall_v) return 'fredi_sub_click_wall';
+        return '';
+    }
+
+    // A/B дневной стены (meter.js, начат 23.09.2026): порядок «часы сверху»
+    // против «предложение сверху». Общая цель на стену обе ветки сливает,
+    // поэтому у каждой своя пара «показана» / «клик».
+    var WALL_AB = {
+        timer_only: ['fredi_wall_timer_shown', 'fredi_wall_timer_click'],
+        offer_first: ['fredi_wall_offer_shown', 'fredi_wall_offer_click'],
+    };
+
     function _mirrorToMetrika(event, data) {
         try {
+            var ab = WALL_AB[(data && data.wall_v) || ''];
+            if (ab) {
+                if (event === 'meter_blocked_shown') _reachGoal(ab[0]);
+                if (event === 'meter_subscribe_clicked') _reachGoal(ab[1]);
+            }
+            if (event === 'meter_subscribe_clicked') {
+                var src = _subClickGoal(data);
+                if (src) _reachGoal(src);
+            }
             var goal = METRIKA_GOALS[event];
             if (goal) { _reachGoal(goal); return; }
             if (event === 'message_sent') { _maybeFirstMessageGoal(); return; }

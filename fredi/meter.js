@@ -98,7 +98,11 @@
             '.meter-wall-clock{font-size:44px;font-weight:800;letter-spacing:1px;line-height:1.05;color:#fff;font-variant-numeric:tabular-nums;margin:0 0 22px}',
             '.meter-wall-lead{font-size:13.5px;color:rgba(255,255,255,0.82);margin-bottom:12px;line-height:1.5}',
             '.meter-wall-note{font-size:13px;color:rgba(255,255,255,0.78);margin-bottom:24px;line-height:1.45}',
-            '.meter-wall-fine{font-size:11.5px;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:2px}'
+            '.meter-wall-fine{font-size:11.5px;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:2px}',
+            // Вариант Б: часы уходят в строку ожидания и перестают быть
+            // самым крупным, что есть на экране.
+            '.meter-wall-wait{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}',
+            '.meter-wall-wait b{font-weight:700;color:rgba(255,255,255,0.75);font-variant-numeric:tabular-nums}'
         ].join('\n');
         document.head.appendChild(s);
     }
@@ -362,7 +366,7 @@
         // почту — будет больше» стало неправдой; но дело не только в
         // числах. Регистрация сама по себе человеку ничего не открывает —
         // он остаётся в той же бесплатной версии, — а место на стене
-        // занимает ровно то, ради чего стена и стоит: пробу за 99 ₽.
+        // занимает ровно то, ради чего стена и стоит: пробу за 69 ₽.
         // Почта приходит там, где человек и так её оставляет: на разборе
         // теста в PDF и на оплате. Возврат пустого выигрыша схлопывает
         // все ветки «Завести аккаунт — N минут» разом, поэтому сами ветки
@@ -533,150 +537,6 @@
         'style="color:#3b82ff">Андрей Мейстер</a> — двадцать лет практики, ' +
         'Лекторий и блог о том же самом.</div>';
 
-    // ── Подарок: первый разбор теста ──────────────────────────────────
-    //
-    // Замер 01–17.09: стену увидел 171 человек, кликнули по подписке 13.
-    // В опросе «что остановило» из 18 ответов семь «попробую потом», семь
-    // «дорого» и НОЛЬ «не понял, что даёт». Люди понимают, что мы
-    // продаём; им нечем проверить, зачем это им. На стене восемь строк
-    // обещаний и ни одного доказательства.
-    //
-    // Дарим то, что действительно закрыто подпиской: шесть разделов
-    // разбора. Тест бесплатен и всегда был — дарить его было бы
-    // подарком на словах, а это человек проверяет одним кликом. Ровно на
-    // этом мы уже обожглись с «Весь Лекторий»: он открыт всем, и после
-    // проверки переставали верить и остальным строкам витрины.
-    //
-    // Право на подарок считает сервер (у него одного есть история
-    // разборов), ручка /gift дешёвая и не генерирует ничего.
-    var _giftState = null;   // {gift_available, has_profile, is_premium}
-    var _giftTs = 0;
-    var GIFT_TTL_MS = 5 * 60 * 1000;
-
-    function _loadGift(cb) {
-        var uid = _uid();
-        // Без аккаунта подарок некуда положить: разбор привязан к
-        // человеку. Такому стена и так предлагает сначала завести
-        // аккаунт — обещать ему подарок значило бы обещать за два шага
-        // вперёд, а до второго шага он не дойдёт.
-        if (!uid) { cb(null); return; }
-        if (_giftState && (Date.now() - _giftTs) < GIFT_TTL_MS) { cb(_giftState); return; }
-        try {
-            fetch(_api() + '/api/deep-analysis/' + uid + '/gift')
-                .then(function (r) { return r.json(); })
-                .then(function (d) {
-                    if (!d || d.success !== true) { cb(null); return; }
-                    _giftState = d; _giftTs = Date.now();
-                    cb(d);
-                })
-                .catch(function () { cb(null); });
-        } catch (e) { cb(null); }
-    }
-
-    // Подарок выдан — кэш недействителен: второй раз его не положено.
-    function _giftForget() { _giftState = null; _giftTs = 0; }
-
-    // analysis.js грузится лениво (app.js, moduleHandlers.analysis), и со
-    // стены window.openAnalysisScreen обычно ещё не существует. Прямой
-    // вызов молча ничего не делал бы — человек нажал бы «Открыть разбор»
-    // и остался на пустом экране.
-    function _openAnalysis() {
-        if (typeof window.openAnalysisScreen === 'function') {
-            window.openAnalysisScreen();
-            return;
-        }
-        try {
-            var s = document.createElement('script');
-            s.src = 'analysis.js';
-            s.onload = function () {
-                if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
-            };
-            // Уводить на ?m=analysis нельзя: такого ключа в ROUTES нет
-            // (app.js), ссылка молча открыла бы общий экран, и человек
-            // решил бы, что подарок — пустое обещание. Лучше сказать.
-            s.onerror = function () {
-                _toast('Не получилось открыть разбор. Попробуйте ещё раз', 'error');
-            };
-            document.head.appendChild(s);
-        } catch (e) {
-            _toast('Не получилось открыть разбор. Попробуйте ещё раз', 'error');
-        }
-    }
-
-    function _openTest() {
-        try {
-            if (typeof window.startTest === 'function') window.startTest();
-            else window.location.href = '/fredi/?m=test';
-        } catch (e) { window.location.href = '/fredi/?m=test'; }
-    }
-
-    function _giftBlock(g) {
-        if (!g || g.gift_available !== true) return '';
-        var title = g.has_profile
-            ? 'Полный разбор вашего теста — в подарок'
-            : 'Пройдите тест — полный разбор в подарок';
-        var text = g.has_profile
-            ? 'Шесть разделов: глубинный портрет, системные петли, скрытые ' +
-              'механизмы, точки роста, прогноз и персональные ключи. Обычно ' +
-              'это часть подписки. Первый — бесплатно, он останется у вас.'
-            : 'Сам тест бесплатный, минут пятнадцать. А разбор по нему — ' +
-              'шесть разделов, которые обычно открываются с подпиской, — ' +
-              'первый раз отдаём бесплатно.';
-        var btn = g.has_profile ? '🎁 Открыть разбор' : '🎁 Пройти тест';
-        return '<div class="meter-gift" id="meterGift" style="text-align:left;' +
-            'border:1px solid rgba(255,184,0,.45);background:rgba(255,184,0,.08);' +
-            'border-radius:14px;padding:14px 16px;margin:0 0 14px">' +
-            '<div style="font-weight:600;margin-bottom:6px">🎁 ' + title + '</div>' +
-            '<div style="font-size:13px;opacity:.85;margin-bottom:10px">' + text + '</div>' +
-            '<button class="meter-btn meter-btn-primary" id="meterGiftBtn" ' +
-            'style="margin:0">' + btn + '</button></div>';
-    }
-
-    // Подарок приезжает асинхронно и вставляется в уже показанную стену:
-    // ждать сеть перед показом нельзя — стена рисуется в момент, когда
-    // человек уже упёрся, и лишняя секунда пустого экрана дороже.
-    function _attachGift(overlay, source) {
-        _loadGift(function (g) {
-            var html = _giftBlock(g);
-            if (!html || !overlay || !overlay.parentNode) return;
-            // Три стены — две разные разметки: у дневной .meter-wall-box
-            // с таймером и без витрины, у остальных .meter-modal. Якорь
-            // ищем по смыслу, а не по вёрстке: подарок должен стоять
-            // ВЫШЕ цены, иначе он читается как утешение после отказа.
-            var modal = overlay.querySelector('.meter-modal, .meter-wall-box');
-            if (!modal) return;
-            var anchor = modal.querySelector('.meter-features-title')
-                || modal.querySelector('#meterSubscribeBtn')
-                || modal.querySelector('#meterUpsellSub');
-            var box = document.createElement('div');
-            box.innerHTML = html;
-            var node = box.firstChild;
-            if (anchor) modal.insertBefore(node, anchor);
-            else modal.appendChild(node);
-
-            // «Глубинный разбор вашего теста» из витрины Premium убираем:
-            // он стоит строкой ниже подарка, и стена получалась бы
-            // противоречивой — дарим и тут же продаём то же самое.
-            try {
-                var dup = modal.querySelector('.meter-features li[data-keys~="analysis"]');
-                if (dup && dup.parentNode) dup.parentNode.removeChild(dup);
-            } catch (e) {}
-
-            _track('deep_gift_shown', { source: source || '', has_profile: !!g.has_profile });
-            _whyGoal('deep_gift_shown');
-            var b = document.getElementById('meterGiftBtn');
-            if (b) b.onclick = function () {
-                _track('deep_gift_clicked', { source: source || '', has_profile: !!g.has_profile });
-                _whyGoal('deep_gift_clicked');
-                _giftForget();
-                _rememberDismiss();
-                try { overlay.remove(); } catch (e) {}
-                if (g.has_profile) _openAnalysis();
-                else _openTest();
-            };
-        });
-    }
-
     // Первая строка стены: имя, что человек только что делал, и почему
     // разговор прервался именно сейчас.
     function _personalLead(kind) {
@@ -802,6 +662,39 @@
     // владельца 15.09.2026 на исчерпанном лимите мы зовём не заводить
     // аккаунт, а покупать пробные три дня — аккаунт создаётся самой
     // покупкой (subscription.js, _ensureAccount).
+    // A/B дневной стены, начат 23.09.2026.
+    //
+    // Повод: 01–16.09 стену увидели 140 человек, кликнули по подписке 13
+    // (9,3%), оплатили 4. С 17.09, после перехода на эту стену, 131 показ
+    // и 1 клик (0,8%). Фишер, односторонний: p = 0,001. Цена ни при чём —
+    // 22.09 проба упала с 99 до 69 ₽, и это ничего не изменило.
+    //
+    // Гипотеза: самое крупное на экране — обратный отсчёт до бесплатных
+    // минут, то есть мы сами рядом с кнопкой за 69 ₽ набрали бесплатную
+    // альтернативу вчетверо большим кеглем. Вариант Б переставляет
+    // порядок: сначала чем закончился разговор и кнопка, потом мелкой
+    // строкой, сколько ждать. Жёсткость стены (не закрывается, хода
+    // дальше нет) в обоих вариантах одинакова — проверяется порядок, а
+    // не строгость.
+    //
+    // Корзина липкая: человек, попавший в Б, видит Б и завтра, иначе он
+    // попадает в обе выборки сразу и различие размывается.
+    var LS_WALL_AB = 'fredi_wall_ab';
+    function _wallVariant() {
+        try {
+            var v = localStorage.getItem(LS_WALL_AB);
+            if (v === 'timer_only' || v === 'offer_first') return v;
+            v = Math.random() < 0.5 ? 'timer_only' : 'offer_first';
+            localStorage.setItem(LS_WALL_AB, v);
+            return v;
+        } catch (e) {
+            // Приватный режим: корзину не запомнить. Человек увидит
+            // случайный вариант — в замер он всё равно попадёт честно,
+            // просто без склейки между заходами.
+            return Math.random() < 0.5 ? 'timer_only' : 'offer_first';
+        }
+    }
+
     function _showDailyWall(data) {
         _injectMeterStyles();
         var old = document.getElementById('meterOverlay');
@@ -819,32 +712,52 @@
         var resetAt = new Date(Date.now() + minutes * 60000);
         var resetHhMm = ('0' + resetAt.getHours()).slice(-2) + ':' +
                         ('0' + resetAt.getMinutes()).slice(-2);
+        var variant = _wallVariant();
+        // Ребёнку цену не показываем ни в одном варианте — тогда и
+        // вариантов нет: экран одинаковый, и в замер он не идёт.
+        if (_minor(data)) variant = 'timer_only';
         _rememberWallShown();
         _track('meter_blocked_shown', {
             limit_minutes: limit,
             minutes_until_reset: minutes,
             block_reason: data.block_reason || 'daily',
-            wall_v: 'timer_only',
+            wall_v: variant,
         });
+
+        var clock = _formatResetCountdown(minutes) + ':00';
+        var did = _whatYouDid();
+        var body;
+        if (variant === 'offer_first') {
+            body =
+                '<div class="meter-wall-title">' +
+                    (did ? 'Вы только что ' + did : 'На сегодня время вышло') + '</div>' +
+                '<div class="meter-wall-lead">' +
+                    (did ? 'Бесплатное время на сегодня вышло. Продолжить можно прямо сейчас.'
+                         : 'Продолжить можно прямо сейчас.') + '</div>' +
+                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
+                    '▶️ Продолжить сейчас — 3 дня за 69 ₽</button>' +
+                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
+                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>' +
+                '<div class="meter-wall-wait">Или подождать до ' + resetHhMm + ' — вернутся ' +
+                    limit + ' бесплатных минут. Осталось <b id="meterTimer">' + clock + '</b></div>';
+        } else {
+            body =
+                '<div class="meter-wall-title">На сегодня время вышло</div>' +
+                '<div class="meter-wall-lead">Следующие ' + limit +
+                    ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
+                '<div class="meter-wall-clock" id="meterTimer">' + clock + '</div>' +
+                (_minor(data) ? MINOR_NOTE :
+                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
+                    'Купить пробный период — 69 ₽</button>' +
+                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
+                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>');
+        }
 
         var overlay = document.createElement('div');
         overlay.className = 'meter-overlay meter-wall';
         overlay.id = 'meterOverlay';
-        overlay.innerHTML =
-            '<div class="meter-wall-box">' +
-                '<div class="meter-wall-title">На сегодня время вышло</div>' +
-                '<div class="meter-wall-lead">Следующие ' + limit +
-                    ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
-                '<div class="meter-wall-clock" id="meterTimer">' +
-                    _formatResetCountdown(minutes) + ':00</div>' +
-                (_minor(data) ? MINOR_NOTE :
-                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
-                    'Купить пробный период — 99 ₽</button>' +
-                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>') +
-            '</div>';
+        overlay.innerHTML = '<div class="meter-wall-box">' + body + '</div>';
         document.body.appendChild(overlay);
-        _attachGift(overlay, 'daily_wall');
         // Ни клик мимо, ни Esc стену не убирают: закрывать её нечем — за
         // ней всё равно ничего не работает.
         overlay.addEventListener('click', function (e) { e.stopPropagation(); }, true);
@@ -852,7 +765,7 @@
 
         var _sbDaily = document.getElementById('meterSubscribeBtn');
         if (_sbDaily) _sbDaily.onclick = function () {
-            _track('meter_subscribe_clicked', { wall_v: 'timer_only' });
+            _track('meter_subscribe_clicked', { wall_v: variant });
             _rememberDismiss();
             _closeDailyWall(overlay);
             if (typeof window.openCheckout === 'function') window.openCheckout('paywall');
@@ -1082,7 +995,7 @@
                     // «Попробовать» ставит человека перед покупкой, «продолжить» —
                     // перед продолжением того, что он уже делает. Кнопка на стене
                     // должна называть действие, ради которого он сюда пришёл.
-                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 99 ₽</button>' +
+                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
@@ -1095,7 +1008,6 @@
                     : '<button class="meter-btn meter-btn-secondary" id="meterCloseBtn">\u041F\u043E\u043D\u044F\u0442\u043D\u043E, \u0434\u043E \u0437\u0430\u0432\u0442\u0440\u0430</button>') +
             '</div>';
         document.body.appendChild(overlay);
-        _attachGift(overlay, data.block_reason || (trialExhausted ? 'trial' : 'daily'));
 
         if (gain) {
             document.getElementById('meterRegBtn').onclick = function () {
@@ -1216,12 +1128,11 @@
                     : '') +
                 (_minor(check) ? MINOR_NOTE :
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    '" id="meterUpsellSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                    '" id="meterUpsellSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
-        _attachGift(overlay, 'upsell_' + (kind || ''));
 
         if (upGain) {
             document.getElementById('meterUpsellReg').onclick = function () {
@@ -1294,7 +1205,7 @@
                         'Дальше — работа с Фреди, который помнит вас и не считает минуты.</div>' +
                     _premiumFeatures() +
                     AUTHOR_NOTE +
-                    '<button class="meter-btn meter-btn-primary" id="meterSiteSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterSiteSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                     '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 990 ₽ в месяц; отключить можно в один клик в разделе «Подписка». Оплата картой любого российского банка через ЮKassa.</div>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterSiteFree">Сначала поговорить бесплатно</button>' +
                 '</div>';
@@ -1741,7 +1652,7 @@
                         body +
                         (anon ? '<br><br>Сейчас этот разговор завтра не вспомнится: бесплатная версия его не хранит.' : '') +
                     '</div>' +
-                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                     '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, память о каждом разговоре. Потом 990 ₽ в месяц; отключить можно в один клик.</div>' +
                     // «Сначала завести аккаунт» отсюда убрано 15.09.2026:
                     // аккаунт заводится самой покупкой, отдельным шагом он
@@ -1943,7 +1854,7 @@
                       (isTool
                         ? 'Разговор с Фреди, дневник, сны, сказки и эзотерика остаются бесплатными.'
                         : 'Короткие тренажёры остаются бесплатными.')) + '</div>' +
-                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать 3 дня — 99 ₽</button>' +
+                '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
             '</div>';
@@ -2022,14 +1933,14 @@
                         'Дальше он упрётся в ' + (noTest ? 'три' : 'две') + ' вещи.</div>' +
                     '<div class="meter-text" style="text-align:left;border-left:3px solid #3b82ff;padding-left:11px;margin:0 0 15px">' +
                         lines.join('<br><br>') + '</div>' +
-                    '<div class="meter-text">Три дня за 99 ₽ снимают это разом: ' +
+                    '<div class="meter-text">Три дня за 69 ₽ снимают это разом: ' +
                         (noTest ? 'тест с разбором, ' : '') +
                         'память о каждом разговоре, время без счётчика, голос и все режимы. ' +
                         'Понравится — дальше 990 ₽ в месяц, отключить можно в один клик.</div>' +
                     (noTest
                         ? '<button class="meter-btn meter-btn-secondary" id="meterDoorTest">🧭 Пройти тест — бесплатно</button>'
                         : '') +
-                    '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 99 ₽</button>' +
+                    '<button class="meter-btn meter-btn-primary" id="meterDoorSub">✨ Открыть всё — 3 дня за 69 ₽</button>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterDoorLater">Позже</button>' +
                 '</div>';
             document.body.appendChild(overlay);
