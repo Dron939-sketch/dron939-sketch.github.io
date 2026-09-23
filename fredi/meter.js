@@ -98,7 +98,11 @@
             '.meter-wall-clock{font-size:44px;font-weight:800;letter-spacing:1px;line-height:1.05;color:#fff;font-variant-numeric:tabular-nums;margin:0 0 22px}',
             '.meter-wall-lead{font-size:13.5px;color:rgba(255,255,255,0.82);margin-bottom:12px;line-height:1.5}',
             '.meter-wall-note{font-size:13px;color:rgba(255,255,255,0.78);margin-bottom:24px;line-height:1.45}',
-            '.meter-wall-fine{font-size:11.5px;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:2px}'
+            '.meter-wall-fine{font-size:11.5px;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:2px}',
+            // Вариант Б: часы уходят в строку ожидания и перестают быть
+            // самым крупным, что есть на экране.
+            '.meter-wall-wait{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}',
+            '.meter-wall-wait b{font-weight:700;color:rgba(255,255,255,0.75);font-variant-numeric:tabular-nums}'
         ].join('\n');
         document.head.appendChild(s);
     }
@@ -658,6 +662,39 @@
     // владельца 15.09.2026 на исчерпанном лимите мы зовём не заводить
     // аккаунт, а покупать пробные три дня — аккаунт создаётся самой
     // покупкой (subscription.js, _ensureAccount).
+    // A/B дневной стены, начат 23.09.2026.
+    //
+    // Повод: 01–16.09 стену увидели 140 человек, кликнули по подписке 13
+    // (9,3%), оплатили 4. С 17.09, после перехода на эту стену, 131 показ
+    // и 1 клик (0,8%). Фишер, односторонний: p = 0,001. Цена ни при чём —
+    // 22.09 проба упала с 99 до 69 ₽, и это ничего не изменило.
+    //
+    // Гипотеза: самое крупное на экране — обратный отсчёт до бесплатных
+    // минут, то есть мы сами рядом с кнопкой за 69 ₽ набрали бесплатную
+    // альтернативу вчетверо большим кеглем. Вариант Б переставляет
+    // порядок: сначала чем закончился разговор и кнопка, потом мелкой
+    // строкой, сколько ждать. Жёсткость стены (не закрывается, хода
+    // дальше нет) в обоих вариантах одинакова — проверяется порядок, а
+    // не строгость.
+    //
+    // Корзина липкая: человек, попавший в Б, видит Б и завтра, иначе он
+    // попадает в обе выборки сразу и различие размывается.
+    var LS_WALL_AB = 'fredi_wall_ab';
+    function _wallVariant() {
+        try {
+            var v = localStorage.getItem(LS_WALL_AB);
+            if (v === 'timer_only' || v === 'offer_first') return v;
+            v = Math.random() < 0.5 ? 'timer_only' : 'offer_first';
+            localStorage.setItem(LS_WALL_AB, v);
+            return v;
+        } catch (e) {
+            // Приватный режим: корзину не запомнить. Человек увидит
+            // случайный вариант — в замер он всё равно попадёт честно,
+            // просто без склейки между заходами.
+            return Math.random() < 0.5 ? 'timer_only' : 'offer_first';
+        }
+    }
+
     function _showDailyWall(data) {
         _injectMeterStyles();
         var old = document.getElementById('meterOverlay');
@@ -675,30 +712,51 @@
         var resetAt = new Date(Date.now() + minutes * 60000);
         var resetHhMm = ('0' + resetAt.getHours()).slice(-2) + ':' +
                         ('0' + resetAt.getMinutes()).slice(-2);
+        var variant = _wallVariant();
+        // Ребёнку цену не показываем ни в одном варианте — тогда и
+        // вариантов нет: экран одинаковый, и в замер он не идёт.
+        if (_minor(data)) variant = 'timer_only';
         _rememberWallShown();
         _track('meter_blocked_shown', {
             limit_minutes: limit,
             minutes_until_reset: minutes,
             block_reason: data.block_reason || 'daily',
-            wall_v: 'timer_only',
+            wall_v: variant,
         });
 
-        var overlay = document.createElement('div');
-        overlay.className = 'meter-overlay meter-wall';
-        overlay.id = 'meterOverlay';
-        overlay.innerHTML =
-            '<div class="meter-wall-box">' +
+        var clock = _formatResetCountdown(minutes) + ':00';
+        var did = _whatYouDid();
+        var body;
+        if (variant === 'offer_first') {
+            body =
+                '<div class="meter-wall-title">' +
+                    (did ? 'Вы только что ' + did : 'На сегодня время вышло') + '</div>' +
+                '<div class="meter-wall-lead">' +
+                    (did ? 'Бесплатное время на сегодня вышло. Продолжить можно прямо сейчас.'
+                         : 'Продолжить можно прямо сейчас.') + '</div>' +
+                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
+                    '▶️ Продолжить сейчас — 3 дня за 69 ₽</button>' +
+                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
+                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>' +
+                '<div class="meter-wall-wait">Или подождать до ' + resetHhMm + ' — вернутся ' +
+                    limit + ' бесплатных минут. Осталось <b id="meterTimer">' + clock + '</b></div>';
+        } else {
+            body =
                 '<div class="meter-wall-title">На сегодня время вышло</div>' +
                 '<div class="meter-wall-lead">Следующие ' + limit +
                     ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
-                '<div class="meter-wall-clock" id="meterTimer">' +
-                    _formatResetCountdown(minutes) + ':00</div>' +
+                '<div class="meter-wall-clock" id="meterTimer">' + clock + '</div>' +
                 (_minor(data) ? MINOR_NOTE :
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
                     'Купить пробный период — 69 ₽</button>' +
                 '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>') +
-            '</div>';
+                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>');
+        }
+
+        var overlay = document.createElement('div');
+        overlay.className = 'meter-overlay meter-wall';
+        overlay.id = 'meterOverlay';
+        overlay.innerHTML = '<div class="meter-wall-box">' + body + '</div>';
         document.body.appendChild(overlay);
         // Ни клик мимо, ни Esc стену не убирают: закрывать её нечем — за
         // ней всё равно ничего не работает.
@@ -707,7 +765,7 @@
 
         var _sbDaily = document.getElementById('meterSubscribeBtn');
         if (_sbDaily) _sbDaily.onclick = function () {
-            _track('meter_subscribe_clicked', { wall_v: 'timer_only' });
+            _track('meter_subscribe_clicked', { wall_v: variant });
             _rememberDismiss();
             _closeDailyWall(overlay);
             if (typeof window.openCheckout === 'function') window.openCheckout('paywall');
