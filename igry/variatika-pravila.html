@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="robots" content="index, follow">
+  <meta name="format-detection" content="telephone=no">
+  
+  <!-- ОСНОВНЫЕ SEO ТЕГИ -->
+  <title>Как играть в «Вариатику»: правила, состав и все 28 карт — Андрей Мейстер</title>
+  <meta name="description" content="Полные правила дидактической игры «Вариатика — Basic»: состав, цель, ход игры для троих и для команд, раунд на отвлечение, четыре масти «Колоды Мейстера», четыре ступени иерархии и описание всех 28 карт с примерами.">
+  <meta name="keywords" content="дидактическая игра, вариатика, basic, анализ поведения, прогнозирование, системное мышление, нарратив">
+  <meta name="author" content="Андрей Мейстер">
+  
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="Как играть в «Вариатику»: правила и все 28 карт">
+  <meta property="og:description" content="Полные правила дидактической игры «Вариатика — Basic»: состав, цель, ход игры для троих и для команд, раунд на отвлечение, четыре масти «Колоды Мейстера», четыре ступени иерархии и описание всех 28 карт с примерами.">
+  <meta property="og:image" content="https://meysternlp.ru/%D0%91%D0%B0%D1%81%D0%B8%D0%BA.webp">
+  <meta property="og:url" content="https://meysternlp.ru/igry/variatika-pravila.html">
+  <meta property="og:type" content="website">
+  
+  <!-- КАНОНИЧЕСКАЯ ССЫЛКА -->
+  <link rel="canonical" href="https://meysternlp.ru/igry/variatika-pravila.html">
+  
+  <!-- Подключаем Inter -->
+<style>/* Inter локально: с fonts.googleapis.com шрифт грузился блокирующе и на мобильной сети держал белый экран */
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic-ext.woff2) format('woff2');unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+</style>
+  
+  <!-- Font Awesome для иконок -->
+  
+  <style>
+    /* ===== СБРОС И БАЗОВЫЕ НАСТРОЙКИ ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0C0C0C;
+      color: #F0F0F0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* ===== ХЕДЕР ===== */
+    .main-header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(58, 134, 255, 0.2);
+      background-color: rgba(12, 12, 12, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .logo {
+      color: #FFFFFF;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo span {
+      color: #3A86FF;
+    }
+
+    /* Бургер-меню */
+    .burger {
+      display: none;
+      cursor: pointer;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 1001;
+      background: transparent;
+      border: none;
+    }
+/* Полоски бургера занимают 30×20 px, а пальцу нужно 44. Невидимая
+   накладка расширяет область нажатия, не трогая сам рисунок и не
+   раздвигая шапку. */
+.burger{position:relative}
+.burger::after{content:'';position:absolute;inset:-12px}
+
+
+    .burger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 9px; }
+    .burger span:nth-child(3) { top: 18px; }
+
+    .burger.active span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    /* Оверлей для меню */
+    .nav-overlay {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 998;
+    }
+
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #F0F0F0;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3A86FF;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3A86FF;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: #3A86FF;
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .psychologist-btn {
+      padding: 8px 20px;
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      color: white !important;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .psychologist-btn::after {
+      display: none;
+    }
+
+    .psychologist-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+      color: white !important;
+    }
+
+    .psychologist-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== ТИПОГРАФИКА ===== */
+    h1, h2, h3 {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      font-weight: 200;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
+      font-weight: 300;
+      margin: 50px 0 25px;
+      color: #3A86FF;
+      letter-spacing: 0.15em;
+    }
+
+    h3 {
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      margin: 30px 0 15px;
+      color: #FFFFFF;
+    }
+
+    p {
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      font-weight: 300;
+      color: #CCCCCC;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ===== ССЫЛКИ И КНОПКИ ===== */
+    a {
+      color: #3A86FF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #FFFFFF;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 3.5vw, 14px) clamp(24px, 5vw, 32px);
+      border: 1px solid #3A86FF;
+      background: transparent;
+      color: #FFFFFF;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      text-align: center;
+      min-height: 48px;
+      min-width: 200px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: #3A86FF;
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      color: #0C0C0C;
+      border-color: #3A86FF;
+      box-shadow: 0 0 20px #3A86FF;
+      transform: translateY(-2px);
+    }
+
+    .btn:hover::before {
+      left: 0;
+    }
+
+    .btn-large {
+      padding: clamp(14px, 4vw, 16px) clamp(32px, 6vw, 40px);
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      min-width: 240px;
+    }
+
+    .btn-ozon {
+      background: linear-gradient(135deg, #00A8E8, #3A86FF);
+      border: none;
+      box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .btn-ozon::before {
+      background: linear-gradient(135deg, #3A86FF, #00A8E8);
+    }
+
+    .btn-ozon:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(58, 134, 255, 0.5);
+      color: white;
+    }
+
+    /* ===== ХЛЕБНЫЕ КРОШКИ ===== */
+    .breadcrumbs {
+      display: flex;
+      gap: 8px;
+      margin: 20px 0 15px;
+      font-size: clamp(0.75rem, 3vw, 0.9rem);
+      color: #666;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumbs a {
+      color: #666;
+    }
+
+    .breadcrumbs a:hover {
+      color: #3A86FF;
+    }
+
+    /* ===== ГЕРОЙ ПРОДУКТА ===== */
+    .product-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(30px, 5vw, 60px);
+      margin: 30px 0 50px;
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .product-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(58, 134, 255, 0.2);
+      color: #3A86FF;
+      border-radius: 30px;
+      font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+      align-self: flex-start;
+    }
+
+    .product-title {
+      font-size: clamp(1.8rem, 7vw, 2.5rem);
+      font-weight: 200;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .product-subtitle {
+      color: #3A86FF;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      margin-bottom: 25px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .product-description {
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      color: #CCCCCC;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .product-description p {
+      margin-bottom: 15px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    /* ===== ФОТО ПРОДУКТА ===== */
+    .product-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .product-image img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    }
+
+    .product-image img:hover {
+      transform: scale(1.02);
+      filter: drop-shadow(0 15px 30px rgba(58, 134, 255, 0.3));
+    }
+
+    /* ===== БЛОК ПРЕИМУЩЕСТВ ===== */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(58, 134, 255, 0.2);
+      padding: clamp(20px, 4vw, 25px);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .benefit-item:hover {
+      border-color: #3A86FF;
+      transform: translateY(-3px);
+    }
+
+    .benefit-title {
+      color: #3A86FF;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .benefit-text {
+      color: #CCCCCC;
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== СПИСОК СПЕЦИАЛИСТОВ ===== */
+    .specialists-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+      margin: 30px 0;
+    }
+
+    .specialist-item {
+      color: #CCCCCC;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .specialist-item::before {
+      content: "•";
+      color: #3A86FF;
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+    }
+
+    /* ===== БЛОК ФИЛОСОФИИ ===== */
+    .philosophy-block {
+      margin: 50px 0;
+      padding: clamp(25px, 5vw, 40px);
+      border-left: 3px solid #3A86FF;
+      background: rgba(58, 134, 255, 0.02);
+      border-radius: 0 12px 12px 0;
+    }
+
+    .philosophy-block p {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      color: #FFFFFF;
+      margin-bottom: 15px;
+    }
+
+    .system-list {
+      list-style: none;
+      margin-top: 25px;
+    }
+
+    .system-list li {
+      color: #CCCCCC;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      margin-bottom: 10px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .system-list li::before {
+      content: "—";
+      color: #3A86FF;
+      position: absolute;
+      left: 0;
+    }
+
+    /* ===== ЦИТАТА ===== */
+    .quote-block {
+      margin: 50px 0;
+      padding: clamp(25px, 5vw, 40px);
+      border-left: 3px solid #3A86FF;
+      background: rgba(58, 134, 255, 0.02);
+      border-radius: 0 12px 12px 0;
+    }
+
+    .quote-block p {
+      font-size: clamp(1.1rem, 4.5vw, 1.3rem);
+      font-style: italic;
+      color: #FFFFFF;
+      margin: 0;
+    }
+
+    /* ===== БЛОК РАЗРАБОТЧИК ===== */
+    .developer-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(30px, 5vw, 40px);
+      margin: 50px 0;
+      align-items: center;
+    }
+
+    .developer-section h2 {
+      margin-top: 0;
+    }
+
+    /* ===== ПОДВАЛ ===== */
+    .footer {
+      padding: 50px 0 30px;
+      border-top: 1px solid rgba(58, 134, 255, 0.2);
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      letter-spacing: 0.3em;
+    }
+
+    .social-links {
+      display: flex;
+      gap: clamp(20px, 5vw, 30px);
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #F0F0F0;
+      font-size: clamp(0.8rem, 3vw, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+      /* Ссылка высотой 20 px мимо пальца: 44 px — минимум, в который
+         человек попадает не глядя. Отступы поднимают область нажатия,
+         начертание не меняется. */
+      padding: 9px 4px 6px;
+    }
+
+    .social-links a:hover {
+      color: #3A86FF;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 35px;
+      font-size: clamp(0.75rem, 2.5vw, 0.8rem);
+      opacity: 0.5;
+      color: #666;
+    }
+
+    .text-blue { color: #3A86FF; }
+
+    /* ===== АДАПТИВНОСТЬ ===== */
+    @media (max-width: 992px) {
+      .product-hero {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .product-badge {
+        align-self: center;
+      }
+      
+      .product-info {
+        text-align: center;
+      }
+      
+      .product-actions {
+        justify-content: center;
+      }
+      
+      .developer-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      
+      .header-container {
+        padding: 0 16px;
+      }
+
+      .burger {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        left: 0;
+      }
+
+      .nav-links a {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .psychologist-btn {
+        margin-top: 15px;
+        text-align: center;
+      }
+      
+      .product-hero {
+        margin: 20px 0 40px;
+      }
+      
+      .product-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn, .btn-large {
+        width: 100%;
+        max-width: 320px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 1050px) {
+    /* Полное меню с кнопкой «Виртуальный психолог» требует 1016 px и
+       не помещалось нигде между 769 и 1050: на планшете и на ноутбуке
+       с масштабом кнопка уезжала за правый край экрана вместе со всей
+       страницей. Бургер включается на 1050, а не на 768. */
+      .burger {display: block;}
+      .nav-links {position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: calc(100vh - 70px);
+        background-color: #0C0C0C;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+        transition: left 0.3s ease;
+        z-index: 999;
+        padding: 20px;
+        border-right: 1px solid rgba(58, 134, 255, 0.2);
+        overflow-y: auto;}
+      .nav-links.active {left: 0;}
+      .nav-links a {font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(58, 134, 255, 0.1);}
+      .nav-links a::after {display: none;}
+      .nav-links a:hover {background-color: rgba(58, 134, 255, 0.1);
+        border-radius: 8px;}
+      .psychologist-btn {margin-top: 15px;
+        text-align: center;}
+    }
+
+
+    @media (max-width: 480px) {
+      .logo {
+        letter-spacing: 0.2em;
+      }
+      
+      .burger {
+        width: 25px;
+        height: 18px;
+      }
+      
+      .burger.active span:nth-child(1),
+      .burger.active span:nth-child(3) {
+        top: 8px;
+      }
+      
+      .benefit-item {
+        padding: 20px;
+      }
+      
+      .philosophy-block, .quote-block {
+        padding: 20px;
+      }
+      
+      .product-image img {
+        max-width: 280px;
+      }
+    }
+
+    /* Landscape режим */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .nav-links {
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+      }
+      
+      .nav-links a {
+        padding: 8px 0;
+      }
+      
+      .product-hero {
+        gap: 20px;
+      }
+      
+      h2 {
+        margin: 30px 0 20px;
+      }
+    }
+
+    /* Улучшенный таргет для тач-устройств */
+    @media (hover: none) and (pointer: coarse) {
+      .btn, .btn-large, .benefit-item, .burger {
+        cursor: pointer;
+      }
+      
+      .btn:active, .btn-large:active {
+        transform: scale(0.98);
+      }
+      
+      .burger:active {
+        transform: scale(0.95);
+      }
+      
+      .benefit-item:active {
+        transform: scale(0.98);
+      }
+    }
+
+    /* Анимация появления */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .product-hero, .benefits-grid, .philosophy-block, .specialists-list, .quote-block, .developer-section {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .benefits-grid {
+      animation-delay: 0.1s;
+    }
+    
+    .philosophy-block {
+      animation-delay: 0.2s;
+    }
+    
+    .specialists-list {
+      animation-delay: 0.3s;
+    }
+  </style>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Дидактическая игра «Вариатика — Basic» — Андрей Мейстер">
+  <meta name="twitter:description" content="Инструмент для анализа чужих нарративов. Развитие навыка анализа и прогнозирования поведения людей через игру.">
+  <meta name="twitter:image" content="https://meysternlp.ru/og-image.jpg">
+  <link rel="alternate" type="application/rss+xml" title="Блог Андрея Мейстера" href="/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Вариатика",
+  "description": "Инструмент для анализа чужих нарративов. Развитие навыка анализа и прогнозирования поведения людей через игру.",
+  "inLanguage": "ru-RU",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://meysternlp.ru/igry/variatika-basic.html"
+  },
+  "author": {
+    "@type": "Person",
+    "@id": "https://meysternlp.ru/#person",
+    "name": "Андрей Мейстер",
+    "jobTitle": "Психолог, методолог",
+    "url": "https://meysternlp.ru/obo-mne/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://meysternlp.ru/#organization",
+    "name": "Андрей Мейстер",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://meysternlp.ru/logo.png"
+    }
+  },
+  "image": "https://meysternlp.ru/%D0%91%D0%B0%D1%81%D0%B8%D0%BA.webp",
+  "datePublished": "2026-07-19",
+  "dateModified": "2026-07-19"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://meysternlp.ru/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Вариатика",
+      "item": "https://meysternlp.ru/igry/variatika-basic.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Вариатика Basic",
+  "description": "Дидактическая игра — инструмент для анализа чужих нарративов.",
+  "brand": {
+    "@type": "Brand",
+    "name": "Андрей Мейстер"
+  },
+  "category": "Дидактические игры",
+  "url": "https://meysternlp.ru/igry/variatika-basic.html",
+  "image": "https://meysternlp.ru/%D0%91%D0%B0%D1%81%D0%B8%D0%BA.webp",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "RUB",
+    "url": "https://www.ozon.ru/product/variatika-basic-chernyy-lebed-1263096092/",
+    "availability": "https://schema.org/InStock"
+  }
+}
+</script>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+<script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<style>/* Эмодзи новее Unicode 8.0 (🧠, 🧩, 🧭, 🪞) отсутствуют в Segoe UI Emoji
+   ранних сборок Windows: браузер рисует пустой квадрат — в том числе в главной
+   кнопке шапки. Лицо объявлено под именем Inter и сужено по unicode-range,
+   поэтому подхватывается без правки единой строки font-family и скачивается
+   только на страницах, где такой символ действительно есть. */
+@font-face{font-family:'Inter';font-weight:100 900;src:url('/fonts/noto-emoji-subset.woff2') format('woff2');unicode-range:U+2600-26FF,U+1F0CF,U+1F300-1F5FF,U+1F600-1F6FF,U+1F7E0-1F7EB,U+1F900-1FAFF;font-display:swap}
+/* Длинные слова — «высокочувствительный», «стрессоустойчивость» — не
+   переносились и распирали заголовок шире экрана телефона, утаскивая
+   за собой всю страницу. Перенос включается только там, где слово
+   иначе не помещается. */
+body{overflow-wrap:break-word}</style>
+</head>
+<body>
+
+<!-- ХЕДЕР (встроенный) -->
+<header class="main-header">
+  <div class="header-container">
+    <a href="/" class="logo"><span>А</span>МЕЙСТЕР</a>
+    <button class="burger" id="burgerBtn" aria-label="Меню" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="/knigi/">Книги</a>
+      <a href="/igry/" class="active">Игры</a>
+      <a href="/treningi/">Тренинги</a>
+      <a href="/blog/">Блог</a>
+      <a href="/blog/lektorij/">Лекторий</a>
+      <a href="/istorii/">Истории</a>
+      <a href="/sobytiya/">Архив</a>
+      <a href="/virtual-psychologist/" class="psychologist-btn">🧠 Виртуальный психолог</a>
+    </div>
+  </div>
+</header>
+
+<!-- ХЛЕБНЫЕ КРОШКИ -->
+<div class="container">
+  <div class="breadcrumbs">
+    <a href="/">Главная</a> / 
+    <a href="/igry/">Игры</a> / 
+    <span>Как играть</span>
+  </div>
+</div>
+
+
+<style>
+  .vr { max-width: 820px; margin: 0 auto; }
+  .vr h2 { font-size: 26px; margin: 40px 0 14px; line-height: 1.25; }
+  .vr h3 { font-size: 19px; margin: 26px 0 10px; }
+  .vr p { margin: 0 0 14px; line-height: 1.65; }
+  .vr ul, .vr ol { margin: 0 0 16px 22px; line-height: 1.65; }
+  .vr li { margin-bottom: 7px; }
+  .vr-lead { font-size: 17px; line-height: 1.6; }
+  .vr-box { border: 1px solid rgba(127,127,127,.28); border-radius: 12px;
+            padding: 16px 18px; margin: 18px 0; }
+  .vr-box h3 { margin-top: 0; }
+  .vr-roles { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); margin: 16px 0; }
+  .vr-role { border: 1px solid rgba(127,127,127,.28); border-radius: 12px; padding: 14px; }
+  .vr-role b { display: block; margin-bottom: 6px; }
+  .vr-table { width: 100%; border-collapse: collapse; margin: 12px 0 22px; font-size: 15px; }
+  .vr-table th, .vr-table td { border: 1px solid rgba(127,127,127,.25);
+                               padding: 9px 11px; text-align: left; vertical-align: top; }
+  .vr-mast-table th { width: 34%; font-weight: 600; }
+  .vr-cards thead th { font-weight: 600; }
+  .vr-cards .vr-card { width: 78px; font-weight: 700; white-space: nowrap; }
+  .vr-cards .vr-ex { width: 26%; }
+  .vr-sign { font-size: 22px; vertical-align: -1px; }
+  .vr-step { margin-bottom: 8px; }
+  .vr-toc { border: 1px solid rgba(127,127,127,.28); border-radius: 12px; padding: 16px 18px; margin: 22px 0; }
+  .vr-toc ol { margin-bottom: 0; }
+  .vr-note { font-size: 14.5px; opacity: .82; }
+  @media (max-width: 720px) {
+    .vr-roles { grid-template-columns: 1fr; }
+    .vr-table { font-size: 14px; }
+  }
+  /* На телефоне таблица карт в три колонки сжимается до трёх слов в строку
+     и читается как столбик обрывков. Разворачиваем каждую карту в карточку:
+     номер сверху, поведение абзацем, пример отдельной строкой. */
+  @media (max-width: 620px) {
+    .vr-cards thead { position: absolute; left: -9999px; }
+    .vr-cards, .vr-cards tbody, .vr-cards tr, .vr-cards td { display: block; width: auto; }
+    .vr-cards tr { border: 1px solid rgba(127,127,127,.25); border-radius: 12px;
+                   padding: 12px 14px; margin-bottom: 10px; }
+    .vr-cards td { border: 0; padding: 0; }
+    .vr-cards .vr-card { width: auto; font-size: 16px; margin-bottom: 6px;
+                         color: inherit; opacity: .92; }
+    /* width:auto обязателен: десктопное правило .vr-cards .vr-ex задаёт 26%,
+       и по специфичности оно перебивает .vr-cards td — колонка оставалась
+       узкой, а «Учительница» переносилась посреди слова. */
+    .vr-cards .vr-ex { width: auto; margin-top: 8px; font-size: 14px; opacity: .8; }
+    .vr-cards .vr-ex::before { content: "Пример: "; opacity: .65; }
+    .vr-mast-table th, .vr-mast-table td { display: block; width: auto; border: 0;
+                                           padding: 2px 0; }
+    .vr-mast-table tr { display: block; border: 0;
+                        border-bottom: 1px solid rgba(127,127,127,.2);
+                        padding: 9px 0; }
+    .vr-mast-table th { font-size: 13px; opacity: .7; }
+  }
+</style>
+
+<div class="container">
+<article class="vr">
+
+<h1>Как играть в «Вариатику»</h1>
+
+<p class="vr-lead">Правила дидактической игры «Вариатика — Basic»: что в коробке,
+как идёт партия втроём и командой, что значит каждая из 28 карт. Если у вас
+Progressive или Intensive — состав и задания другие, а масти, иерархия и
+принцип разбора те же.</p>
+
+<div class="vr-toc">
+  <b>На этой странице</b>
+  <ol>
+    <li><a href="#sostav">Состав игры</a></li>
+    <li><a href="#cel">Цель</a></li>
+    <li><a href="#hod">Ход игры втроём</a></li>
+    <li><a href="#komandy">Командный вариант</a></li>
+    <li><a href="#otvlechenie">Раунд на отвлечение</a></li>
+    <li><a href="#model">Откуда взялись масти: две оси</a></li>
+    <li><a href="#masti">Четыре масти</a></li>
+    <li><a href="#ierarhiya">Четыре ступени иерархии</a></li>
+    <li><a href="#karty">Все 28 карт Basic</a></li>
+    <li><a href="#transformaciya">Трансформация и джокеры</a></li>
+  </ol>
+</div>
+
+<h2 id="sostav">Состав игры</h2>
+<ol>
+  <li><b>«Колода Мейстера» — 38 карт.</b> Для «Вариатики — Basic» понадобятся 28:
+      откладываем королей, тузов и джокеров. Остаются 6, 7, 8, 9, 10, валет и дама
+      в каждой из четырёх мастей.</li>
+  <li><b>Блокнот с заданиями.</b></li>
+</ol>
+<p class="vr-note">Короли и тузы в Basic не участвуют не случайно: они описаны
+в разделе о трансформации и нужны на следующих уровнях.</p>
+
+<h2 id="cel">Цель</h2>
+<p>Развитие навыка выстраивания тактики взаимодействия с другими людьми
+на основе определения их архетипов.</p>
+
+<h2 id="hod">Ход игры втроём</h2>
+<div class="vr-roles">
+  <div class="vr-role"><b>Ведущий</b>Читает задание из блокнота.</div>
+  <div class="vr-role"><b>Генератор гипотез</b>Представляет ситуацию и отвечает на вопрос.</div>
+  <div class="vr-role"><b>Судья</b>Проверяет гипотезу на живом человеке.</div>
+</div>
+
+<p>Перед первой партией все трое смотрят
+<a href="https://disk.yandex.ru/i/iP6ikhMZooToGQ" target="_blank" rel="noopener">видеогайд</a> или читают
+печатную инструкцию. Дальше ведущий читает задание, генератор гипотез отвечает.</p>
+
+<p><b>Задания идут по нарастанию сложности и делятся на три блока:</b></p>
+<ol>
+  <li><b>Разминочный.</b> Определить масть, к которой принадлежит персонаж.</li>
+  <li><b>Разминочный.</b> Выявить место персонажа в иерархии мастей; в некоторых
+      вариантах — спрогнозировать поведение по заранее заданному архетипу.</li>
+  <li><b>Основной.</b> Определить персонажа сразу по двум параметрам — масть
+      и иерархия; в некоторых вариантах — спрогнозировать поведение
+      по заранее заданному архетипу.</li>
+</ol>
+<p>Есть и дополнительные задачи: войти в роль и предсказать указанные события.</p>
+
+<div class="vr-box">
+  <h3>Как проверяется гипотеза</h3>
+  <p>Это самое необычное место в правилах. Судья вспоминает человека
+  из своего окружения, который подходит под описание карты с персонажем,
+  <b>звонит ему или пишет</b> и уточняет, как бы тот повёл себя в такой
+  ситуации. Задание засчитывается как верное, если гипотеза второго игрока
+  подтвердилась.</p>
+</div>
+
+<h2 id="komandy">Командный вариант</h2>
+<p>Первая команда — ведущие и судьи, вторая — генераторы гипотез.</p>
+<p>Участник из первой команды читает второй команде задание из блокнота.
+Вторая команда проводит мозговой штурм, выбирает самую удачную гипотезу
+и озвучивает её.</p>
+<p>Участники первой команды вспоминают человека из своего окружения,
+подходящего под описание карты, звонят или пишут ему и уточняют, как бы он
+поступил. Задание засчитывается, если гипотеза второй команды подтвердилась.</p>
+
+<h2 id="otvlechenie">Раунд на отвлечение</h2>
+<p>Чтобы легче переключаться между ситуациями, после каждого задания
+из третьего блока стоит проводить короткий раунд на отвлечение.</p>
+<p>Один игрок набирает 5 карт и выкладывает их для себя в какой-то
+определённой логической последовательности, не показывая остальным. Затем
+поочерёдно открывает другим четыре карты. Задача участников — понять
+закономерность и предположить, какой будет последняя. Раунд носит
+развлекательный характер.</p>
+
+<h2 id="model">Откуда взялись масти: две оси</h2>
+<p>В «Колоде Мейстера» нет случайных мастей, чисел и изображений. Всё
+подчиняется одной закономерности. Персонажа определяют две характеристики —
+<b>воображение</b> и <b>ограничения</b>.</p>
+<ul>
+  <li><b>Горизонтальная ось — воображение.</b> От совсем бедного, когда человек
+      в силу разных причин не способен что-то придумывать, до безудержно
+      богатого, когда он не отличает реальность от фантазий.</li>
+  <li><b>Вертикальная ось — страхи и ограничения.</b> Ниже нуля ограничения
+      фактические: забор, полиция, кулаки соседа, сила тяжести. Выше нуля —
+      умозрительные: правила, мораль, установки, привычки, опасения, суеверия
+      и прочие «знания».</li>
+</ul>
+<p>На пересечении осей получаются четыре квадрата. Они и легли в основу
+четырёх мастей.</p>
+
+<h2 id="masti">Четыре масти</h2>
+
+<div class="vr-mast" id="mast-уб">
+  <h3><span class="vr-sign">♦</span> УБ — Умный и бедный</h3>
+  <p>У этой масти очень сильно развита фантазия и много умозрительных ограничений. Фактически у её представителей есть всё, чтобы добиться желаемого, но они постоянно надумывают себе такое, что в принципе не может случиться, пытаются перестраховаться и тем самым тормозят процесс. Умный и бедный всегда стремится чему-то соответствовать: моде, правилам, пожеланиям, ожиданиям, нормам и традициям, напрягая фантазию для того, чтобы оказаться хоть и «лучшим из», но всё же «одним из».</p>
+  <table class="vr-table vr-mast-table">
+    <tr><th>Главный параметр</th><td>Глубина мышления</td></tr>
+    <tr><th>Действия</th><td>Погружение в суть вещей, проверка гипотез</td></tr>
+    <tr><th>Атрибут</th><td>Учёные степени и дипломы</td></tr>
+    <tr><th>Триггер</th><td>Непонимание, загадка, ответа на которую у него нет</td></tr>
+    <tr><th>Стоп-триггер</th><td>Найден ответ или есть интеллектуальная ясность</td></tr>
+    <tr><th>Вопрос масти</th><td><b>Почему?</b></td></tr>
+  </table>
+</div>
+
+<div class="vr-mast" id="mast-тф">
+  <h3><span class="vr-sign">♥</span> ТФ — Трудяга-Фермер</h3>
+  <p>Такой персонаж стремится к честности и понятности. Умозрительных ограничений у него много, а вот воображение бедное. Мелкого собственника не увлечёшь высокой идеей, ему работать надо. Ум его крестьянский: крепкий, без высоколобых заморочек, прямой и очень фактический. У фермера есть мораль-совесть. Простая и понятная: «Не убей, не укради», «Око за око, зуб за зуб», «За добро надо платить, за зло — бить».</p>
+  <table class="vr-table vr-mast-table">
+    <tr><th>Главный параметр</th><td>Выносливость</td></tr>
+    <tr><th>Действия</th><td>Труд, направленный на увеличение материальной базы</td></tr>
+    <tr><th>Атрибут</th><td>Деньги, предметы роскоши</td></tr>
+    <tr><th>Триггер</th><td>Материальные блага, которые у кого-то есть, а у него нет</td></tr>
+    <tr><th>Стоп-триггер</th><td>У меня есть такие блага, которых ни у кого нет. Я впереди всех</td></tr>
+    <tr><th>Вопрос масти</th><td><b>Как?</b></td></tr>
+  </table>
+</div>
+
+<div class="vr-mast" id="mast-сб">
+  <h3><span class="vr-sign">♠</span> СБ — Силовик-Беспредельщик</h3>
+  <p>Воображения у такого персонажа мало, а моральных ограничений нет вовсе. Его «Я хочу» и «Это моё» могут ограничить лишь фактические, материальные барьеры: кулак, пуля, решётка, забор. Беспредельщики не работают в обычном смысле этого слова. Если они и напрягаются, то для того, чтобы отнять, отобрать, наложить дань. И речь идёт не только о бандитах — вожаки, короли, сотрудники силовых структур тоже относятся к этому типажу. Чем больше у беспредельщика силы, тем безудержнее и опаснее он становится.</p>
+  <table class="vr-table vr-mast-table">
+    <tr><th>Главный параметр</th><td>Сила</td></tr>
+    <tr><th>Действия</th><td>Доказательство своего превосходства</td></tr>
+    <tr><th>Атрибут</th><td>Всё, что помогает продемонстрировать другим наличие силы — бита, бицепсы, пистолет</td></tr>
+    <tr><th>Триггер</th><td>Ощущение себя сильным</td></tr>
+    <tr><th>Стоп-триггер</th><td>Ощущение себя слабым</td></tr>
+    <tr><th>Вопрос масти</th><td><b>Кто?</b></td></tr>
+  </table>
+</div>
+
+<div class="vr-mast" id="mast-чв">
+  <h3><span class="vr-sign">♣</span> ЧВ — Человек Возможностей</h3>
+  <p>Богатое воображение такого персонажа направлено не на возведение умозрительных ограничений, а на обход фактических. Человек Возможностей не склонен строить. Он любит не сооружения, а пути. Присвоить, а не создать — это роднит Человека Возможностей с Беспредельщиком. Но, в отличие от Беспредельщика, он не склонен отбирать с использованием грубой силы. Обыграть, объегорить, обхитрить — вот его стихия.</p>
+  <table class="vr-table vr-mast-table">
+    <tr><th>Главный параметр</th><td>Интеллектуальное зрение</td></tr>
+    <tr><th>Действия</th><td>Детальный анализ объектов, элементов, процессов и явлений в поле наблюдения, то есть в воображаемой копии реального мира</td></tr>
+    <tr><th>Атрибут</th><td>Полезные связи, знакомства, возможности</td></tr>
+    <tr><th>Триггер</th><td>Фактические ограничения</td></tr>
+    <tr><th>Стоп-триггер</th><td>Нашёл системную брешь — реализовал своё «Хочу»</td></tr>
+    <tr><th>Вопрос масти</th><td><b>Зачем?</b></td></tr>
+  </table>
+</div>
+<p class="vr-note">Чистые типы встречаются только в теории. Ближе к центру схемы
+у персонажа есть всего понемногу: морали, хитрости, полёта фантазии
+и приземлённого прагматизма. Как раз это и образует иерархию внутри масти.
+Масть служит основой, от неё никак не избавиться, но вырасти в иерархии
+можно.</p>
+
+<h2 id="ierarhiya">Четыре ступени иерархии</h2>
+<p>Формально в колоде есть 6, 7, 8, 9, 10, валет, дама, король, туз и джокер,
+но строгая иерархия внутри масти имеет всего четыре ступени — по
+самоорганизации и организаторским способностям.</p>
+
+<div class="vr-step">
+  <h3>1. Бесперспективные</h3>
+  <ul>
+    <li>Не включаются в игру «стань королём» по правилам масти, избегают общения с другими персонажами и предпочитают быть в одиночестве. Изгои, аутсайдеры.</li>
+    <li>Уверены в своей слабости — в какой именно, зависит от масти.</li>
+    <li>Придерживаются позиции, что у них есть морально-нравственный долг перед кем-то, кто демонстрирует уверенность в их масти.</li>
+    <li>Не имеют своей цели или личного стремления. Они пытаются только выжить.</li>
+    <li>Угрозой считают всё, что представляется им силой в их масти.</li>
+  </ul>
+</div>
+
+<div class="vr-step">
+  <h3>2. Низшая иерархия</h3>
+  <ul>
+    <li>Не демонстрируют стремления расти по иерархии, но стремятся примкнуть к тем, кто, по их мнению, сильнее их в масти. Это своеобразный способ защиты от угрозы.</li>
+    <li>Имеют заурядные для их масти способности: всё, о чём они способны думать, — сохранение стабильности, если она, по их мнению, безопасна.</li>
+    <li>Не склонны предпринимать какие-либо действия самостоятельно.</li>
+    <li>Если подавать им информацию как пищу для размышления, они найдут причину избежать действий. Но если последует приказ от сильного — выполнят его беспрекословно.</li>
+    <li>В основном предлагают себя в роли помощников: организуй меня, скажи что делать, желательно по шагам.</li>
+    <li>Суетятся, судорожно предлагая себя всем. Их цель — попасть на глаза большим в ранге иерархии.</li>
+  </ul>
+</div>
+
+<div class="vr-step">
+  <h3>3. Ровная иерархия</h3>
+  <ul>
+    <li>Ко всем окружающим относятся ровно, ни под кого не подстраиваются. Демонстрируют, что предпочитают со всеми дружить и не хотят быть кому-то обязанными.</li>
+    <li>Предлагают друзьям свои безвозмездные возможности и возможности своих друзей.</li>
+    <li>Презирают одиночество и хотят дружить.</li>
+    <li>В индивидуальном контакте осторожно узнают, чем они и собеседник могут быть ненавязчиво полезны друг другу.</li>
+  </ul>
+</div>
+
+<div class="vr-step">
+  <h3>4. Высшая иерархия</h3>
+  <ul>
+    <li>Не демонстрируют дружелюбие или равные отношения, но показывают отличную технику по масти, высокую осведомлённость или профессиональное владение каким-либо параметром.</li>
+    <li>Считают, что никакими мелочами их не обязать: ресурс, которым они обладают, даёт им право вести себя с низшими рангами без церемоний. Иногда демонстрируют поведение благодетеля.</li>
+    <li>Никого не ищут. Руководствуются фразой «Кто захочет — напишет, кому надо — позвонит».</li>
+  </ul>
+</div>
+
+<h2 id="karty">Все 28 карт Basic</h2>
+<p>В заданиях нет прямых указаний на персонажей — только названия карт.
+Чтобы моделировать ситуации и выдвигать гипотезы, нужно понимать, какой
+архетип скрывается за картой.</p>
+<p>Общий принцип: иерархия в каждой масти выстраивается по главному параметру,
+но <b>реально обладают им только карты-картинки</b> — 10, валет, дама, король,
+туз. Карты с 6 по 9 называются «безликими» и в разы слабее картинок.</p>
+
+<h3><span class="vr-sign">♦</span> УБ — Умный и бедный</h3>
+<table class="vr-table vr-cards">
+  <thead><tr><th>Карта</th><th>Как себя ведёт</th><th>Пример</th></tr></thead>
+  <tbody>
+<tr><td class='vr-card'>6</td><td>Может брать в расчёт только то, что наблюдается непосредственно: верит только в то, что «видит, слышит и чувствует»</td><td class='vr-ex'>Зритель, киноман</td></tr>
+<tr><td class='vr-card'>7</td><td>Может определить источник наблюдаемых явлений</td><td class='vr-ex'>Читающий</td></tr>
+<tr><td class='vr-card'>8</td><td>Способен определить причину появления источника наблюдаемых явлений</td><td class='vr-ex'>Юзер</td></tr>
+<tr><td class='vr-card'>9</td><td>Может определять ненаблюдаемую, скрытую причину, которая повлияла на появление наблюдаемых явлений</td><td class='vr-ex'>Психолог</td></tr>
+<tr><td class='vr-card'>10</td><td>Обладает умением выявлять скрытые причины, однако этот процесс требует значительных временных и энергетических затрат. Такой персонаж предпочитает использовать уже имеющиеся наработки предшественников и применять найденные ими ответы</td><td class='vr-ex'>Врач</td></tr>
+<tr><td class='vr-card'>Валет</td><td>Обладает знанием в определении закономерностей между результатами поиска причин и методами их поиска. Знает, как и где искать</td><td class='vr-ex'>Лаборант, младший научный сотрудник</td></tr>
+<tr><td class='vr-card'>Дама</td><td>Этот персонаж уверенно использует проверенные временем шаблоны мыслительного поиска и обладает способностью вербально демонстрировать этот процесс</td><td class='vr-ex'>Учительница</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="vr-sign">♥</span> ТФ — Трудяга-Фермер</h3>
+<table class="vr-table vr-cards">
+  <thead><tr><th>Карта</th><th>Как себя ведёт</th><th>Пример</th></tr></thead>
+  <tbody>
+<tr><td class='vr-card'>6</td><td>Такой персонаж всеми правдами и неправдами избегает труда</td><td class='vr-ex'>Лентяй-попрошайка</td></tr>
+<tr><td class='vr-card'>7</td><td>Этот персонаж вроде присутствует в процессе, но при этом не понимает своих задач. Результатов его труда не видно</td><td class='vr-ex'>Грузчик</td></tr>
+<tr><td class='vr-card'>8</td><td>Представители этой карты постоянно ищут тех, кто будет что-то делать по их просьбе</td><td class='vr-ex'>Продавец</td></tr>
+<tr><td class='vr-card'>9</td><td>Подчиняется чётким и понятным для него инструкциям и знает, как должен выглядеть результат его действий. Умеет проводить оценку своих сил</td><td class='vr-ex'>Монтажник</td></tr>
+<tr><td class='vr-card'>10</td><td>Этот персонаж отличается высоким профессионализмом и способностью достигать конкретный результат в труде. Он осознаёт, что выносливость играет важную роль, но также пришёл к осознанию, что силы и время конечны. У персонажа есть страх потерять силы раньше, чем закончится время. Чтобы экономить личную энергию, он научился организовывать работу новичков</td><td class='vr-ex'>Прораб, бригадир</td></tr>
+<tr><td class='vr-card'>Валет</td><td>Персонаж чётко понимает конечность сил, и его не устраивает конверсия затраченной энергии в стоимость конечного результата труда. Поэтому он предпочитает накапливать материальные ценности через продажу товаров, а не предоставление услуг. Достигает результатов через сделки «купи — продай», быстро оборачивая вложенные средства</td><td class='vr-ex'>Оптовик</td></tr>
+<tr><td class='vr-card'>Дама</td><td>Эта женщина предпочитает сохранять свои деньги, избегая рисков, но в то же время оставаться рядом с теми, кто готов рисковать, чтобы быть включённой в процесс. Она стремится зарабатывать там, где для других есть потенциальная возможность потерять</td><td class='vr-ex'>Бухгалтер, юрист</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="vr-sign">♠</span> СБ — Силовик-Беспредельщик</h3>
+<table class="vr-table vr-cards">
+  <thead><tr><th>Карта</th><th>Как себя ведёт</th><th>Пример</th></tr></thead>
+  <tbody>
+<tr><td class='vr-card'>6</td><td>Слабые персонажи, которые при встрече с источником силы испытывают неподдельный страх. Их реакция — бегство от людей</td><td class='vr-ex'>Кладбищенский смотритель</td></tr>
+<tr><td class='vr-card'>7</td><td>Реакция этого персонажа — «притворись мёртвым» или «замри». Такая привычка реагировать на страх приводит к игнорированию окружающих и формированию своего пространства, из которого они, как зрители, наблюдают за жизнью других</td><td class='vr-ex'>Охранник</td></tr>
+<tr><td class='vr-card'>8</td><td>Этот персонаж заискивает перед силой, то есть пытается подружиться с носителем силы, которая для него представляет опасность. Чтобы сработал триггер, им нужна демонстрация силы</td><td class='vr-ex'>Спортивный тренер</td></tr>
+<tr><td class='vr-card'>9</td><td>Персонаж, который беспрекословно подчиняется сильным и не вступает с ними в конфронтацию. В сложных для себя ситуациях предпочитает сдаться, а не бороться</td><td class='vr-ex'>Сотрудник ППС</td></tr>
+<tr><td class='vr-card'>10</td><td>Реакция этого персонажа на силу — встречная агрессия, то есть «Бей!»</td><td class='vr-ex'>Спортсмен</td></tr>
+<tr><td class='vr-card'>Валет</td><td>Умеет подавлять в себе страх, переключаясь на тактику или визуализацию своих будущих действий</td><td class='vr-ex'>Боец спецназа</td></tr>
+<tr><td class='vr-card'>Дама</td><td>Представительница женского пола. Её «оружие» — красота</td><td class='vr-ex'>Инстаграмщица</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="vr-sign">♣</span> ЧВ — Человек Возможностей</h3>
+<table class="vr-table vr-cards">
+  <thead><tr><th>Карта</th><th>Как себя ведёт</th><th>Пример</th></tr></thead>
+  <tbody>
+<tr><td class='vr-card'>6</td><td>У такого персонажа отсутствует интеллектуальное зрение. Он использует предметное мышление и потому не может учитывать перспективу</td><td class='vr-ex'>Клептоман</td></tr>
+<tr><td class='vr-card'>7</td><td>Персонаж из этой категории способен переносить объекты, которые он увидел, в поле наблюдения — ментальное пространство, куда помещаются копии из мира</td><td class='vr-ex'>Актёр, пародист</td></tr>
+<tr><td class='vr-card'>8</td><td>Такой персонаж может в любое время вернуться к полю наблюдения, если он поместил в него объект, и применять зумирование с выделением необходимых частей, то есть разбить целое на части</td><td class='vr-ex'>Поддельщик, фальсификатор, копиист</td></tr>
+<tr><td class='vr-card'>9</td><td>Может применить ретроспективу к объекту, помещённому в поле наблюдения, и определить причины поведения объекта — с целью последующего воспроизведения или предотвращения этих причин в реальном мире</td><td class='vr-ex'>Мошенник, аферист</td></tr>
+<tr><td class='vr-card'>10</td><td>Соединяет части в целое, то есть замечает закономерности и видит связь в системе, руководствуясь данными, которые поместил в поле наблюдения</td><td class='vr-ex'>Посредник, риелтор</td></tr>
+<tr><td class='vr-card'>Валет</td><td>Способен отследить причины, которые формируют закономерности, и обладает знаниями, необходимыми для их успешного усиления</td><td class='vr-ex'>Депутат</td></tr>
+<tr><td class='vr-card'>Дама</td><td>Этот персонаж видит закономерности в системах и может создать условия для необходимых ему изменений. Он знает, куда и как приложить усилия, чтобы наблюдаемая система поменялась до нужных ему значений</td><td class='vr-ex'>Журналист</td></tr>
+  </tbody>
+</table>
+
+<h2 id="transformaciya">Трансформация и джокеры</h2>
+<p>Принадлежность к квадрату — это в первую очередь мыслительные привычки.
+Их можно изменить, поработав с воображением или с ограничениями. Так что
+у «Умных и бедных» есть шансы стать богатыми: путь в «Фермеры» лежит через
+отказ от ненужных фантазий и сосредоточение на прозе жизни, а пронырливая
+хитрость даётся систематическим подтачиванием внутренних стен и барьеров.</p>
+<p><b>Рост в иерархии возможен только через трансформацию с другой мастью.</b>
+Для этого нужен прямой контакт с её представителем или с джокером —
+он переносчик паттернов масти. У ТФ не получится вырасти до вселенских
+масштабов, не трансформировав себя с СБ, УБ или ЧВ. Поэтому тузы, короли,
+дамы, валеты и десятки хоть и имеют масть, но это формальная принадлежность:
+они не могли бы оказаться там, где они есть, если бы не трансформировались.</p>
+<p><b>Что заставляет расти:</b> дефицит или отсутствие чего-либо — комфорт и быт,
+здоровье и выживание, социальные и имиджевые параметры, денежный приход,
+удовольствие.</p>
+<p><b>Король</b> — тот, кто сосредоточил в руках как можно больше ресурсов,
+доступных для его масти. <b>Туз</b> — предшественник короля, но у него есть
+ресурс, которого у действующего короля нет: чтобы его получить, нужно было
+трансформироваться, а это само по себе ведёт к потере авторитета внутри масти.
+Туз может делиться этим ресурсом или разрешать королю им пользоваться.</p>
+<p><b>Джокер</b> не имеет масти, только цвет. <b>Красный</b> формирует ось
+ограничений: создаёт структуру и надсистему, правила, заборы, границы,
+а дальше обслуживает созданное. <b>Чёрный</b> формирует ось воображения:
+создаёт цели, желания, смысл — ведёт по коридорам, которые построил красный.</p>
+
+<div class="vr-box">
+  <h3>Не хватает третьего игрока?</h3>
+  <p>Механика тренируется и в одиночку. Определите свою масть коротким тестом
+  на <a href="/variatika/">странице «Вариатики»</a>, а потом разберите три
+  ситуации в <a href="/predskazat-povedenie/">тренажёре «Предсказать
+  поведение»</a> — это то же самое ядро: по поведению понять мотив
+  и предсказать следующий шаг.</p>
+</div>
+
+<p class="vr-note">Правила набраны с вкладыша из коробки. Если у вас издание
+с другим составом заданий — напишите, поправим.</p>
+
+</article>
+</div>
+<!-- ПОДВАЛ (встроенный) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
+      <div class="social-links">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
+        <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
+      </div>
+    </div>
+    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:0 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">В разработке</a></nav>
+    <div class="copyright">© Андрей Мейстер · 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Бургер-меню с оверлеем
+  document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('burgerBtn');
+    const nav = document.getElementById('navLinks');
+    
+    if (burger && nav) {
+      // Создать оверлей
+      const overlay = document.createElement('div');
+      overlay.className = 'nav-overlay';
+      document.body.appendChild(overlay);
+      
+      function toggleMenu() {
+        const isActive = burger.classList.contains('active');
+        burger.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burger.setAttribute('aria-expanded', !isActive);
+        document.body.style.overflow = !isActive ? 'hidden' : '';
+      }
+      
+      function closeMenu() {
+        burger.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+      
+      burger.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+      
+      nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && burger.classList.contains('active')) {
+          closeMenu();
+        }
+      });
+    }
+  });
+</script>
+
+<!-- tovar-goals -->
+<script>
+/* Уход на Ozon — единственное действие, которое эта страница может дать.
+   Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
+(function(){var C=108138656;
+function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
+document.addEventListener('click',function(e){
+var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
+if(a){g('tovar_ozon');g('tovar_ozon_igra_basic');}},true);})();
+</script>
+<!-- /tovar-goals -->
+</body>
+</html>
