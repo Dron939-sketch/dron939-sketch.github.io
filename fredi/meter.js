@@ -737,7 +737,7 @@
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
                     '▶️ Продолжить сейчас — 3 дня за 69 ₽</button>' +
                 '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>' +
+                    'без счётчика. Потом 690 ₽ в месяц, отключается в один клик.</div>' +
                 '<div class="meter-wall-wait">Или подождать до ' + resetHhMm + ' — вернутся ' +
                     limit + ' бесплатных минут. Осталось <b id="meterTimer">' + clock + '</b></div>';
         } else {
@@ -750,7 +750,7 @@
                 '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
                     'Купить пробный период — 69 ₽</button>' +
                 '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 990 ₽ в месяц, отключается в один клик.</div>');
+                    'без счётчика. Потом 690 ₽ в месяц, отключается в один клик.</div>');
         }
 
         var overlay = document.createElement('div');
@@ -915,7 +915,7 @@
         var daysUsed = data.free_days_used || 0;
         var trialLimit = data.trial_limit_minutes || 15;
         // Человеку без аккаунта дневная стена предлагает сначала аккаунт, и
-        // только потом цену: между «ничего» и 990 ₽ должна быть ступенька,
+        // только потом цену: между «ничего» и месячной ценой должна быть ступенька,
         // которая ничего не стоит и что-то даёт. На стене общего запаса
         // ступеньки нет — минуты там уже не про аккаунт.
         var gain = (data.block_reason === 'trial' || data.block_reason === 'voice')
@@ -996,7 +996,7 @@
                     // перед продолжением того, что он уже делает. Кнопка на стене
                     // должна называть действие, ради которого он сюда пришёл.
                     '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 69 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 690 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
                 // стояло «Понятно, до завтра», и вернувшийся с аккаунтом
@@ -1129,7 +1129,7 @@
                 (_minor(check) ? MINOR_NOTE :
                 '<button class="meter-btn ' + (upGain ? 'meter-btn-secondary' : 'meter-btn-primary') +
                     '" id="meterUpsellSub">✨ Попробовать 3 дня — 69 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 690 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
                 '<button class="meter-btn meter-btn-secondary" id="meterUpsellClose">Ещё немного</button>' +
             '</div>';
         document.body.appendChild(overlay);
@@ -1206,7 +1206,7 @@
                     _premiumFeatures() +
                     AUTHOR_NOTE +
                     '<button class="meter-btn meter-btn-primary" id="meterSiteSub">✨ Попробовать 3 дня — 69 ₽</button>' +
-                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 990 ₽ в месяц; отключить можно в один клик в разделе «Подписка». Оплата картой любого российского банка через ЮKassa.</div>' +
+                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 690 ₽ в месяц; отключить можно в один клик в разделе «Подписка». Оплата картой любого российского банка через ЮKassa.</div>' +
                     '<button class="meter-btn meter-btn-secondary" id="meterSiteFree">Сначала поговорить бесплатно</button>' +
                 '</div>';
             document.body.appendChild(overlay);
@@ -1653,7 +1653,7 @@
                         (anon ? '<br><br>Сейчас этот разговор завтра не вспомнится: бесплатная версия его не хранит.' : '') +
                     '</div>' +
                     '<button class="meter-btn meter-btn-primary" id="meterPeakSub">✨ Попробовать 3 дня — 69 ₽</button>' +
-                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, память о каждом разговоре. Потом 990 ₽ в месяц; отключить можно в один клик.</div>' +
+                    '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, память о каждом разговоре. Потом 690 ₽ в месяц; отключить можно в один клик.</div>' +
                     // «Сначала завести аккаунт» отсюда убрано 15.09.2026:
                     // аккаунт заводится самой покупкой, отдельным шагом он
                     // только уводит человека с оплаты.
@@ -1855,7 +1855,7 @@
                         ? 'Разговор с Фреди, дневник, сны, сказки и эзотерика остаются бесплатными.'
                         : 'Короткие тренажёры остаются бесплатными.')) + '</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать 3 дня — 69 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 990 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
+                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 690 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
             '</div>';
         document.body.appendChild(overlay);
@@ -1936,7 +1936,7 @@
                     '<div class="meter-text">Три дня за 69 ₽ снимают это разом: ' +
                         (noTest ? 'тест с разбором, ' : '') +
                         'память о каждом разговоре, время без счётчика, голос и все режимы. ' +
-                        'Понравится — дальше 990 ₽ в месяц, отключить можно в один клик.</div>' +
+                        'Понравится — дальше 690 ₽ в месяц, отключить можно в один клик.</div>' +
                     (noTest
                         ? '<button class="meter-btn meter-btn-secondary" id="meterDoorTest">🧭 Пройти тест — бесплатно</button>'
                         : '') +

@@ -1083,7 +1083,7 @@ function _showLockModal() {
             </ul>
             <button class="alock-btn alock-btn-primary" id="alockSub">✨ Открыть разбор — 3 дня 69 ₽</button>
             <button class="alock-btn" id="alockLater">Позже</button>
-            <div class="alock-note">Потом 990 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
+            <div class="alock-note">Потом 690 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
         </div>`;
     document.body.appendChild(o);
 
@@ -1160,7 +1160,7 @@ function _renderLocked() {
                     <button class="back-btn" id="analysisLockSub" style="background:#3b82ff;color:#fff;border-color:#3b82ff">✨ Открыть разбор — 3 дня 69 ₽</button>
                     <button class="back-btn" id="analysisLockHome">🏠 На главную</button>
                 </div>
-                <div style="font-size:12px;opacity:.65;margin-top:8px">Потом 990 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
+                <div style="font-size:12px;opacity:.65;margin-top:8px">Потом 690 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
             </div>
         </div>`;
     document.getElementById('analysisBackBtn').onclick = () => _goHome();
