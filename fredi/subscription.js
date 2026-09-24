@@ -455,6 +455,25 @@
     }
 
 
+    // Строка о прошедшем списании (24.09.2026). До неё экран показывал
+    // только дату СЛЕДУЮЩЕГО списания, и человек, у которого деньги уже
+    // ушли, не находил на сайте ни следа этого: строка выглядела как
+    // вчера, просто с другой датой. 23.09 из-за этого пришло обращение
+    // «пришёл чек в банке, а продления на сайте не произошло» — подписка
+    // при этом могла быть уже продлена.
+    //
+    // Автопродление называем автопродлением: разовую оплату человек
+    // помнит сам, а списание с сохранённой карты для него — новость.
+    function _lastPaymentRow(sub) {
+        const p = sub && sub.last_payment;
+        if (!p || !p.at) return '';
+        const label = p.is_renewal ? 'Продлена' : 'Оплачена';
+        const sum = (p.amount !== null && p.amount !== undefined)
+            ? ' &middot; ' + Math.round(p.amount) + ' &#8381;' : '';
+        return `<div class="sub-info-row"><span class="sub-info-label">${label}</span>` +
+               `<span class="sub-info-value">${_formatDate(p.at)}${sum}</span></div>`;
+    }
+
     function _renderActiveSubscription(sub) {
         const days = _daysLeft(sub.expires_at);
         const trial = sub.plan === 'trial_week';
@@ -463,9 +482,10 @@
                 <div class="sub-badge sub-badge-active">&#x2713; Активна</div>
                 <div class="sub-title">${trial ? 'Пробные три дня Фреди Premium' : 'Подписка Фреди Premium'}</div>
                 <div class="sub-desc">Полный доступ ко всем возможностям</div>
-                <div class="sub-info-row"><span class="sub-info-label">${trial ? 'Неделя до' : 'Следующее списание'}</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
+                ${_lastPaymentRow(sub)}
+                <div class="sub-info-row"><span class="sub-info-label">${trial ? 'Доступ до' : 'Следующее списание'}</span><span class="sub-info-value">${_formatDate(sub.expires_at)}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
-                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">${trial ? '99 &#8381; за три дня, дальше 990 &#8381;/мес' : '990 &#8381;/мес'}</span></div>
+                <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">${trial ? PLAN_PRICE.trial_week + ' &#8381; за три дня, дальше ' + PLAN_PRICE.monthly + ' &#8381;/мес' : PLAN_PRICE.monthly + ' &#8381;/мес'}</span></div>
                 <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew === false ? 'Отключено' : 'Включено'}</span></div>
                 <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:12px 0 14px">
                     ${sub.auto_renew === false
@@ -502,14 +522,14 @@
         const trial = !(sub && sub.trial_available === false);
         if (!trial) _selectedPlan = 'monthly';
         const priceHtml = trial
-            ? `<div class="sub-price">99 &#8381; <span style="font-size:14px;font-weight:400;color:var(--text-secondary)">за первые три дня</span></div>
-                <div class="sub-price-period">Полный доступ на 3 дня, с голосом и без счётчика. Потом 990 &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца оплаченного срока. Оплата картой любого российского банка через ЮKassa.</div>`
-            : `<div class="sub-price">990 &#8381;</div>
+            ? `<div class="sub-price">${PLAN_PRICE.trial_week} &#8381; <span style="font-size:14px;font-weight:400;color:var(--text-secondary)">за первые три дня</span></div>
+                <div class="sub-price-period">Полный доступ на 3 дня, с голосом и без счётчика. Потом ${PLAN_PRICE.monthly} &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца оплаченного срока. Оплата картой любого российского банка через ЮKassa.</div>`
+            : `<div class="sub-price">${PLAN_PRICE.monthly} &#8381;</div>
                 <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>`;
         const buttonsHtml = trial
-            ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать 3 дня — 99 &#8381;</button>
-                <button class="sub-btn sub-btn-secondary" id="subPayMonthBtn" style="margin-top:8px">Сразу месяц — 990 &#8381;</button>`
-            : `<button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — 990 &#8381;</button>`;
+            ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать 3 дня — ${PLAN_PRICE.trial_week} &#8381;</button>
+                <button class="sub-btn sub-btn-secondary" id="subPayMonthBtn" style="margin-top:8px">Сразу месяц — ${PLAN_PRICE.monthly} &#8381;</button>`
+            : `<button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — ${PLAN_PRICE.monthly} &#8381;</button>`;
         return `
             <div class="sub-card">
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
