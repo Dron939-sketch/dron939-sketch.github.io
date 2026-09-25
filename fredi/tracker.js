@@ -264,7 +264,11 @@
         game_round_finish: 'fredi_game_round',
         // Вход в один тап (25.09.2026): Telegram, Яндекс ID, VK ID.
         // Аккаунт заводили 2% — это число и должно сдвинуться.
-        social_login_success: 'fredi_social_login'
+        social_login_success: 'fredi_social_login',
+        // «Напомнить завтра» (25.09.2026): человек дал канал возврата —
+        // push или Telegram — и человек вернулся по напоминанию.
+        return_channel_chosen: 'fredi_return_channel',
+        reengagement_return_open: 'fredi_return_open'
     };
     // Открытие тренажёра или инструмента. В Метрике этого не было вовсе:
     // 121 цель на сайте, и ни одной про тренажёры, хотя они закрыты

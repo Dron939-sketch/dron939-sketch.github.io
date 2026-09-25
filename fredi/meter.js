@@ -1992,12 +1992,120 @@
     }
     window.frediFirstStepFor = _firstStepFor;
 
+    // ---------- «Напомнить завтра, на чём остановились?» (25.09.2026) ----------
+    // Замер по выгрузке 264 разговоров: писали больше чем в один день трое.
+    // Подписка покупается на второй-третий день, а второго дня не бывает,
+    // потому что вернуться человека ничто не зовёт: письма «как прошло?»
+    // уходят только на почту, почта есть у 2%. Здесь — одна строка в чате
+    // после третьего своего сообщения, без модалки: разрешить push или
+    // открыть бота в Telegram. Бэкенд назавтра пришлёт туда тему разговора
+    // (services/return_nudge.py).
+    var RETURN_KEY = 'fredi_return_prompt_at';
+    var RETURN_CH_KEY = 'fredi_return_channel';
+
+    function _tgBot() {
+        return (window.CONFIG && window.CONFIG.TG_BOT_USERNAME) || 'Frederick777bot';
+    }
+
+    function _injectReturnStyles() {
+        if (document.getElementById('meter-return-styles')) return;
+        var s = document.createElement('style');
+        s.id = 'meter-return-styles';
+        s.textContent = [
+            '.meter-return{max-width:92%}',
+            '.meter-return-text{font-size:14px;line-height:1.4}',
+            '.meter-return-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}',
+            '.meter-return-btn{padding:8px 14px;border-radius:999px;border:1px solid rgba(127,127,127,.35);',
+            'background:rgba(127,127,127,.12);color:inherit;font:inherit;font-size:13px;font-weight:600;cursor:pointer}',
+            '.meter-return-btn:hover{background:rgba(127,127,127,.22)}',
+            '.meter-return-btn.meter-return-no{font-weight:400;opacity:.7}'
+        ].join('');
+        document.head.appendChild(s);
+    }
+
+    function showReturnPrompt(source) {
+        try {
+            var uid = _uid();
+            if (!uid) return;
+            try { if (localStorage.getItem(RETURN_CH_KEY)) return; } catch (e) {}
+            try {
+                var last = parseInt(localStorage.getItem(RETURN_KEY) || '0', 10);
+                if (last && (Date.now() - last) < 7 * 24 * 60 * 60 * 1000) return;
+            } catch (e) {}
+            // Push уже разрешён — канал есть, спрашивать не о чем.
+            if (('Notification' in window) && Notification.permission === 'granted') {
+                try { localStorage.setItem(RETURN_CH_KEY, 'push'); } catch (e) {}
+                return;
+            }
+            var box = document.getElementById('dashChatStream');
+            var inner = box && box.querySelector('.chat-messages');
+            if (!inner || document.getElementById('meterReturnPrompt')) return;
+            _injectReturnStyles();
+            try { localStorage.setItem(RETURN_KEY, String(Date.now())); } catch (e) {}
+            var canPush = ('Notification' in window) && Notification.permission !== 'denied'
+                && !!(window.PushManager_Fredi && window.PushManager_Fredi.request);
+            var el = document.createElement('div');
+            el.id = 'meterReturnPrompt';
+            el.className = 'message bot meter-return';
+            el.innerHTML =
+                '<div class="meter-return-text">Напомнить завтра, на чём остановились?</div>' +
+                '<div class="meter-return-btns">' +
+                    '<button type="button" class="meter-return-btn" data-ch="telegram">В Telegram</button>' +
+                    (canPush ? '<button type="button" class="meter-return-btn" data-ch="push">В браузере</button>' : '') +
+                    '<button type="button" class="meter-return-btn meter-return-no" data-ch="no">Не надо</button>' +
+                '</div>';
+            inner.appendChild(el);
+            try { box.scrollTop = box.scrollHeight; } catch (e) {}
+            _track('return_prompt_shown', { source: source || '', can_push: canPush });
+            el.querySelectorAll('.meter-return-btn').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    _returnChoice(b.getAttribute('data-ch'), el, uid, source || '');
+                });
+            });
+        } catch (e) {}
+    }
+
+    async function _returnChoice(ch, el, uid, source) {
+        var textEl = el.querySelector('.meter-return-text');
+        var btns = el.querySelector('.meter-return-btns');
+        if (ch === 'no') {
+            _track('return_prompt_declined', { source: source });
+            try { el.remove(); } catch (e) {}
+            return;
+        }
+        if (ch === 'telegram') {
+            _track('return_channel_chosen', { channel: 'telegram', source: source });
+            try { localStorage.setItem(RETURN_CH_KEY, 'telegram'); } catch (e) {}
+            // Бот по /start web_<id> привязывает чат к этому же user_id —
+            // анонимному тоже: строка в fredi_users у него уже есть.
+            try { window.open('https://t.me/' + _tgBot() + '?start=web_' + uid, '_blank', 'noopener'); } catch (e) {}
+            if (textEl) textEl.textContent = 'Откройте бота и нажмите «Старт» — завтра Фреди напишет туда.';
+            if (btns) btns.remove();
+            return;
+        }
+        if (ch === 'push') {
+            var ok = false;
+            try { ok = await window.PushManager_Fredi.request(uid); } catch (e) {}
+            _track(ok ? 'return_channel_chosen' : 'return_channel_failed', { channel: 'push', source: source });
+            if (ok) {
+                try { localStorage.setItem(RETURN_CH_KEY, 'push'); } catch (e) {}
+                if (textEl) textEl.textContent = 'Хорошо — завтра напомню.';
+                if (btns) btns.remove();
+            } else {
+                if (textEl) textEl.textContent = 'Браузер не дал разрешения. Можно в Telegram:';
+                var pb = el.querySelector('[data-ch="push"]');
+                if (pb) pb.remove();
+            }
+        }
+    }
+
     window.FrediMeter = {
         checkCanSend: checkCanSend,
         protect: protect,
         isProtected: isProtected,
         showPeakOffer: showPeakOffer,
         showAccountDoor: showAccountDoor,
+        showReturnPrompt: showReturnPrompt,
         gameLocked: gameLocked,
         gameLockedPeek: gameLockedPeek,
         // Наружу — модулям, которые запирают не себя целиком, а отдельные

@@ -961,6 +961,15 @@ function setupDashComposer() {
         var DOOR_AFTER_MESSAGES = 4;
         try {
             if (!_autoMsg) _dashMsgCount++;
+            // «Напомнить завтра, на чём остановились?» — одна строка в чате
+            // после ТРЕТЬЕГО своего сообщения (25.09.2026). Не модалка:
+            // человек уже в разговоре, и просьба про завтра читается как
+            // забота, а не как турникет. meter.js сам не покажет второй раз
+            // и тому, у кого канал уже есть.
+            if (answer && !_autoMsg && _dashMsgCount === 3 && window.FrediMeter
+                && typeof window.FrediMeter.showReturnPrompt === 'function') {
+                setTimeout(function () { window.FrediMeter.showReturnPrompt('msg3'); }, 1200);
+            }
             if (answer && !_autoMsg && _dashMsgCount === DOOR_AFTER_MESSAGES && window.FrediMeter) {
                 var _authedNow = !!(window.FrediAuth && typeof window.FrediAuth.isAuthed === 'function' && window.FrediAuth.isAuthed());
                 if (!_authedNow && typeof window.FrediMeter.showAccountDoor === 'function') {
