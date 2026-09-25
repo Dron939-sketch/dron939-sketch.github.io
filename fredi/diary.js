@@ -258,6 +258,107 @@ function _dyRender() {
     _dyBindHandlers();
 }
 
+// ===== ВОПРОС ДНЯ =====
+// Дневник открывали 16 раз в неделю и держали 20 секунд: пустое поле с
+// «что происходит?» — это экран, на котором нечего делать. Теперь сверху
+// один вопрос от Фреди на сегодня и три ответа в один тап; «своими
+// словами» кладёт вопрос в поле. Если идёт «семь дней по теме» — вопрос
+// про сегодняшний шаг. Вопросы конкретные, про день читателя, а не
+// «как вы себя чувствуете».
+const DY_QUESTIONS = [
+    { q: 'Что сегодня отняло больше всего сил?', a: ['Разговор', 'Работа', 'Собственные мысли'] },
+    { q: 'Кому вы сегодня сказали «да», хотя хотели «нет»?', a: ['Никому', 'Родным', 'На работе'] },
+    { q: 'Что сегодня получилось лучше, чем вы ждали?', a: ['Разговор', 'Дело', 'Сдержаться'] },
+    { q: 'О чём вы думали вчера, когда не могли уснуть?', a: ['О разговоре', 'О деньгах', 'О завтрашнем дне'] },
+    { q: 'Что вы сегодня отложили — и почему?', a: ['Страшно', 'Не хотелось', 'Было не до того'] },
+    { q: 'Какая фраза сегодня зацепила?', a: ['Чужая', 'Своя', 'Из книги или лекции'] },
+    { q: 'Где вы сегодня были собой, а где играли роль?', a: ['Дома — собой', 'На работе — роль', 'Весь день роль'] },
+    { q: 'Что бы вы сказали себе утром, зная, как пройдёт день?', a: ['Не спеши', 'Скажи прямо', 'Отдохни'] },
+    { q: 'Чего вам сегодня не хватило?', a: ['Сна', 'Тишины', 'Разговора'] },
+    { q: 'Кто сегодня был к вам добр?', a: ['Никто', 'Близкий человек', 'Незнакомый'] },
+    { q: 'Что вы сегодня сделали для себя?', a: ['Ничего', 'Немного', 'Достаточно'] },
+    { q: 'Какой момент дня хотелось бы переиграть?', a: ['Утро', 'Один разговор', 'Вечер'] },
+    { q: 'Что сегодня вызвало раздражение — и что стояло за ним?', a: ['Усталость', 'Обида', 'Страх'] },
+    { q: 'Что вы поняли сегодня о человеке рядом?', a: ['Он устал', 'Он не слышит', 'Он старается'] }
+];
+function _dyQuestionOfDay() {
+    const d = new Date();
+    const start = new Date(d.getFullYear(), 0, 0);
+    const doy = Math.floor((d - start) / 86400000);
+    return DY_QUESTIONS[doy % DY_QUESTIONS.length];
+}
+function _dyEsc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+function _dyQodHtml(qod, kicker) {
+    if (!document.getElementById('dyQodStyles')) {
+        const s = document.createElement('style');
+        s.id = 'dyQodStyles';
+        s.textContent = [
+            '.dy-qod{border:1px solid rgba(127,127,127,.25);border-radius:14px;padding:12px 14px;margin-bottom:14px}',
+            '.dy-qod-label{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:4px}',
+            '.dy-qod-q{font-size:15px;line-height:1.4;margin-bottom:10px}',
+            '.dy-qod-chips{display:flex;flex-wrap:wrap;gap:8px}',
+            '.dy-chip{border:1px solid rgba(127,127,127,.35);background:transparent;color:inherit;border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer}',
+            '.dy-chip-own{opacity:.75}',
+            '.dy-qod-done{font-size:13px;color:var(--text-secondary)}'
+        ].join('');
+        document.head.appendChild(s);
+    }
+    return `
+        <div class="dy-qod" id="dyQod" data-q="${_dyEsc(qod.q)}">
+            <div class="dy-qod-label">${kicker || 'Вопрос дня от Фреди'}</div>
+            <div class="dy-qod-q">${_dyEsc(qod.q)}</div>
+            <div class="dy-qod-chips">
+                ${qod.a.map(x => `<button type="button" class="dy-chip" data-qod-chip="${_dyEsc(x)}">${_dyEsc(x)}</button>`).join('')}
+                <button type="button" class="dy-chip dy-chip-own" data-qod-own="1">Своими словами</button>
+            </div>
+        </div>`;
+}
+function _dyBindQod(skipPlan) {
+    const box = document.getElementById('dyQod');
+    if (!box) return;
+    const q = box.dataset.q || '';
+    try { window.FrediTracker?.track('diary_question_shown', { q: q.slice(0, 60) }); } catch (e) {}
+    box.querySelectorAll('[data-qod-chip]').forEach(b => {
+        b.addEventListener('click', () => {
+            const entries = _dyLoadEntries();
+            entries.unshift({ date: new Date().toISOString(), text: q + ' — ' + b.dataset.qodChip });
+            _dySaveEntries(entries);
+            if ([3, 5, 10, 15, 20].includes(entries.length)) _dySaveInsight(null);
+            try { window.FrediTracker?.track('diary_quick_entry', { answer: b.dataset.qodChip }); } catch (e) {}
+            _dyToast('Записано', 'success');
+            box.innerHTML = '<div class="dy-qod-done">Записано: «' + _dyEsc(b.dataset.qodChip) + '». Хотите добавить — поле ниже.</div>';
+            const c = document.getElementById('dyCounter');
+            if (c) c.textContent = '0 символов';
+        });
+    });
+    box.querySelector('[data-qod-own]')?.addEventListener('click', () => {
+        const input = document.getElementById('dyInput');
+        if (!input) return;
+        if (!input.value.trim()) input.value = q + '\n';
+        input.focus();
+        try { input.setSelectionRange(input.value.length, input.value.length); } catch (e) {}
+        try { window.FrediTracker?.track('diary_quick_entry', { answer: 'own' }); } catch (e) {}
+    });
+    // Идёт «семь дней по теме» — вопрос про сегодняшний шаг, а не общий.
+    // Один раз: после подмены блок привязывается заново без этой проверки.
+    if (skipPlan) return;
+    try {
+        if (window.FrediWeekPlan && typeof window.FrediWeekPlan.fetchState === 'function') {
+            window.FrediWeekPlan.fetchState().then(v => {
+                if (!v || !v.active || v.finished || !v.today || !document.getElementById('dyQod')) return;
+                const done = (v.done_days || []).indexOf(v.day) >= 0;
+                const qod = done
+                    ? { q: 'Шаг «' + v.today.title + '» сделан. Что было труднее всего?', a: ['Начать', 'Не отступить', 'Ничего, легко'] }
+                    : { q: 'Сегодняшний шаг — «' + v.today.title + '». Получилось?', a: ['Да', 'Наполовину', 'Не сегодня'] };
+                document.getElementById('dyQod').outerHTML = _dyQodHtml(qod, 'День ' + v.day + ' из ' + v.days_total);
+                _dyBindQod(true);
+            }).catch(() => {});
+        }
+    } catch (e) {}
+}
+
 // ===== ЗАПИСЬ =====
 function _dyWrite() {
     const entries = _dyLoadEntries();
@@ -272,6 +373,7 @@ function _dyWrite() {
         : '');
 
     return `
+        ${_dyQodHtml(_dyQuestionOfDay())}
         <div class="dy-form">
             <div class="dy-form-label">Что происходит? Что чувствуете? Что думаете?</div>
             <div class="dy-input-wrap">
@@ -411,6 +513,7 @@ function _dyBindHandlers() {
     }
 
     _dyInitVoiceButton();
+    _dyBindQod();
 
     // Сохранить запись
     document.getElementById('dySaveBtn')?.addEventListener('click', () => {
