@@ -86,11 +86,18 @@
     // значит ломать и то, и другое ради названия.
     // Проба — один раз на аккаунт (бэкенд отдаёт trial_available), после неё
     // обычные 690 ₽ в месяц автопродлением, отключается в один клик.
-    const PLAN_PRICE = { trial_week: 69, monthly: 690 };
+    // Три месяца (25.09.2026): якорь рядом с месяцем. Одна цена сравнивать
+    // не с чем; 1490 за 90 дней — это 497 ₽ в месяц против 690, честная
+    // выгода без зачёркнутых цен. Числа «в месяц» и «выгоднее на N%»
+    // считаются отсюда, руками не вписываются.
+    const PLAN_PRICE = { trial_week: 69, monthly: 690, quarter: 1490 };
+    const PLAN_KEYS = ['trial_week', 'monthly', 'quarter'];
+    const QUARTER_PER_MONTH = Math.round(PLAN_PRICE.quarter / 3);
+    const QUARTER_SAVE_PCT = Math.round((1 - PLAN_PRICE.quarter / (PLAN_PRICE.monthly * 3)) * 100);
     let _selectedPlan = 'trial_week';
     try {
         const _pl = new URLSearchParams(window.location.search).get('plan');
-        if (_pl === 'monthly' || _pl === 'trial_week') _selectedPlan = _pl;
+        if (PLAN_KEYS.indexOf(_pl) >= 0) _selectedPlan = _pl;
     } catch (e) {}
     // Возврат со страницы ЮKassa кнопкой «назад» восстанавливает страницу
     // из bfcache вместе с выставленным флагом — и «Оформить» умирает
@@ -110,7 +117,7 @@
 
         const uid = _uid();
         if (!uid) return;
-        if (plan === 'monthly' || plan === 'trial_week') _selectedPlan = plan;
+        if (PLAN_KEYS.indexOf(plan) >= 0) _selectedPlan = plan;
 
         const emailInput = document.getElementById('subEmailInput');
         const email = emailInput ? emailInput.value.trim() : '';
@@ -126,8 +133,8 @@
         // идентификаторе устройства и теряется вместе с браузером.
         if (!(await _ensureAccount(email))) return;
 
-        const payBtn = document.getElementById(_selectedPlan === 'monthly' ? 'subPayMonthBtn' : 'subPayBtn')
-            || document.getElementById('subPayBtn');
+        const _btnId = { trial_week: 'subPayBtn', monthly: 'subPayMonthBtn', quarter: 'subPayQuarterBtn' }[_selectedPlan] || 'subPayBtn';
+        const payBtn = document.getElementById(_btnId) || document.getElementById('subPayBtn');
         const otherBtn = document.getElementById(_selectedPlan === 'monthly' ? 'subPayBtn' : 'subPayMonthBtn');
         if (otherBtn) otherBtn.disabled = true;
         const prevBtnText = payBtn ? payBtn.innerHTML : '';
@@ -531,10 +538,20 @@
                 <div class="sub-price-period">Полный доступ на 3 дня, с голосом и без счётчика. Потом ${PLAN_PRICE.monthly} &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца оплаченного срока. Оплата картой любого российского банка через ЮKassa.</div>`
             : `<div class="sub-price">${PLAN_PRICE.monthly} &#8381;</div>
                 <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>`;
+        // Три месяца — третьей кнопкой под месяцем (25.09.2026): якорь,
+        // рядом с которым месяц читается как цена, а не как единственный
+        // вариант. Продлевается тремя же месяцами.
+        const quarterBtn =
+            `<button class="sub-btn sub-btn-secondary" id="subPayQuarterBtn" style="margin-top:8px">` +
+                `3 месяца — ${PLAN_PRICE.quarter} &#8381; ` +
+                `<span style="font-weight:400;opacity:.8">· ${QUARTER_PER_MONTH} &#8381;/мес, выгоднее на ${QUARTER_SAVE_PCT}%</span>` +
+            `</button>`;
         const buttonsHtml = trial
             ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать 3 дня — ${PLAN_PRICE.trial_week} &#8381;</button>
-                <button class="sub-btn sub-btn-secondary" id="subPayMonthBtn" style="margin-top:8px">Сразу месяц — ${PLAN_PRICE.monthly} &#8381;</button>`
-            : `<button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — ${PLAN_PRICE.monthly} &#8381;</button>`;
+                <button class="sub-btn sub-btn-secondary" id="subPayMonthBtn" style="margin-top:8px">Сразу месяц — ${PLAN_PRICE.monthly} &#8381;</button>
+                ${quarterBtn}`
+            : `<button class="sub-btn sub-btn-primary" id="subPayBtn">Оформить подписку — ${PLAN_PRICE.monthly} &#8381;</button>
+                ${quarterBtn}`;
         return `
             <div class="sub-card">
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
@@ -657,6 +674,8 @@
                 });
             }
             if (monthBtn) { monthBtn.addEventListener('click', function () { _createPayment('monthly'); }); }
+            const quarterBtnEl = document.getElementById('subPayQuarterBtn');
+            if (quarterBtnEl) { quarterBtnEl.addEventListener('click', function () { _createPayment('quarter'); }); }
             const restartBtn = document.getElementById('subRestartPaymentBtn');
             if (restartBtn) {
                 restartBtn.addEventListener('click', async () => {
@@ -700,7 +719,7 @@
     // без ухода в экран настроек, где подписка теряется среди прочего.
     function openCheckout(source, plan) {
         try {
-            if (plan === 'monthly' || plan === 'trial_week') _selectedPlan = plan;
+            if (PLAN_KEYS.indexOf(plan) >= 0) _selectedPlan = plan;
             var existing = document.getElementById('fredCheckoutOverlay');
             if (existing) existing.remove();
 
