@@ -53,6 +53,22 @@
             '.fa-close:hover{background:rgba(224,224,224,0.06);color:#fff}',
             '.fa-modal-inner{position:relative}',
             '.fa-info{font-size:11px;color:#8a8a8e;text-align:center;margin-top:10px;line-height:1.45}',
+            // Вход в один тап (25.09.2026). Кнопки провайдеров стоят выше
+            // почты: аккаунт заводили 2%, и почти все терялись на полях.
+            '.fa-social{display:none;flex-direction:column;gap:8px;margin:0 0 14px}',
+            '.fa-social.on{display:flex}',
+            '.fa-social-hint{font-size:12px;color:#8a8a8e;margin-bottom:2px}',
+            '.fa-social-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;padding:11px 12px;border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;border:1px solid transparent;color:#fff;transition:opacity .15s}',
+            '.fa-social-btn:hover{opacity:.9}',
+            '.fa-social-btn svg{width:20px;height:20px;flex:none}',
+            '.fa-social-yandex{background:#fc3f1d}',
+            '.fa-social-vk{background:#0077ff}',
+            '.fa-social-tg{min-height:44px;display:flex;justify-content:center;align-items:center}',
+            '.fa-social-tg iframe{max-width:100%}',
+            '.fa-or{display:flex;align-items:center;gap:10px;font-size:11px;color:#8a8a8e;margin:0 0 12px;text-transform:uppercase;letter-spacing:.4px}',
+            '.fa-or:before,.fa-or:after{content:"";flex:1;height:1px;background:rgba(224,224,224,0.12)}',
+            '[data-theme="light"] .fa-or:before,[data-theme="light"] .fa-or:after{background:rgba(0,0,0,0.1)}',
+            '[data-theme="light"] .fa-or,[data-theme="light"] .fa-social-hint{color:#6c6c70}',
             // Light-theme overrides.
             '[data-theme="light"] .fa-modal{background:#ffffff;color:#1c1c1e;border-color:rgba(0,0,0,0.08);box-shadow:0 20px 60px rgba(0,0,0,0.15)}',
             '[data-theme="light"] .fa-subtitle{color:#6c6c70}',
@@ -210,6 +226,10 @@
                 closeBtnHtml +
                 '<div class="fa-title">' + title + '</div>' +
                 '<div class="fa-subtitle">' + subtitle + '</div>' +
+                // Провайдеры дорисовываются после вставки в DOM: виджет
+                // Telegram — это <script>, из innerHTML он не выполняется.
+                '<div class="fa-social" id="faSocial"></div>' +
+                '<div class="fa-or" id="faOr" hidden>или по почте</div>' +
                 '<div class="fa-tabs">' +
                   '<div class="fa-tab ' + (isRegister ? '' : 'active') + '" data-tab="login">Вход</div>' +
                   '<div class="fa-tab ' + (isRegister ? 'active' : '') + '" data-tab="register">Регистрация</div>' +
@@ -566,6 +586,7 @@
         var wrap = document.createElement('div');
         wrap.innerHTML = _buildHtml(mode);
         document.body.appendChild(wrap.firstChild);
+        _renderSocial(document.getElementById('faSocial'), { source: _lastSource, orEl: document.getElementById('faOr') });
 
         var isMandatory = _lastMandatory;
 
@@ -853,6 +874,165 @@
     }
     _checkResetParam();
 
+    // ---------- Вход в один тап: Telegram, Яндекс ID, VK ID (25.09.2026) ----------
+    // За сентябрь аккаунт завели 31 человек из 1569 — 2%. Форма с почтой
+    // и пин-кодом стоит там, где человек дописал самое трудное, и он
+    // уходит. Кнопки провайдеров рисуются над почтой; список берётся с
+    // бэкенда (/api/auth/providers): провайдер без ключей не показывается,
+    // и обещать «войти через VK», когда VK не настроен, страница не может.
+    var _providersPromise = null;
+    var _socialSource = '';
+    var _socialOnSuccess = null;
+
+    function _loadProviders() {
+        if (_providersPromise) return _providersPromise;
+        _providersPromise = _fetchWithTimeout(API_BASE + '/api/auth/providers', { credentials: 'include' }, 8000)
+            .then(function (r) { return r.ok ? r.json() : { providers: {} }; })
+            .then(function (j) { return (j && j.providers) || {}; })
+            .catch(function () { _providersPromise = null; return {}; });
+        return _providersPromise;
+    }
+
+    function _oauthButton(provider, label, opts) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'fa-social-btn fa-social-' + provider;
+        b.innerHTML = '<span style="font-weight:800;font-size:15px">' + (provider === 'yandex' ? 'Я' : 'VK') + '</span>' +
+                      '<span>' + label + '</span>';
+        b.addEventListener('click', function () {
+            _track('social_login_started', { provider: provider, source: opts.source || '' });
+            // Уходим на бэкенд, он уводит к провайдеру и возвращает сюда же
+            // с ?auth=ok (или ?auth_error=…) уже с cookie сессии.
+            window.location.href = API_BASE + '/api/auth/oauth/' + provider + '/start' +
+                '?ret=' + encodeURIComponent(window.location.href) +
+                '&source=' + encodeURIComponent(opts.source || '');
+        });
+        return b;
+    }
+
+    function _renderSocial(el, opts) {
+        if (!el) return;
+        opts = opts || {};
+        _loadProviders().then(function (p) {
+            var keys = Object.keys(p || {});
+            if (!keys.length || !document.body.contains(el)) return;
+            el.innerHTML = '';
+            var hint = document.createElement('div');
+            hint.className = 'fa-social-hint';
+            hint.textContent = 'Быстрее всего — в один тап:';
+            el.appendChild(hint);
+            if (p.telegram && p.telegram.bot) {
+                // Виджет Telegram — <script>, который сам рисует кнопку-iframe
+                // рядом с собой. Через innerHTML не выполняется, поэтому DOM.
+                var tg = document.createElement('div');
+                tg.className = 'fa-social-tg';
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://telegram.org/js/telegram-widget.js?22';
+                s.setAttribute('data-telegram-login', p.telegram.bot);
+                s.setAttribute('data-size', 'large');
+                s.setAttribute('data-userpic', 'false');
+                s.setAttribute('data-radius', '10');
+                s.setAttribute('data-lang', 'ru');
+                // Право писать от имени бота: так вход даёт и канал возврата.
+                s.setAttribute('data-request-access', 'write');
+                s.setAttribute('data-onauth', 'FrediTelegramAuth(user)');
+                tg.appendChild(s);
+                el.appendChild(tg);
+                // Скрипт виджета не дошёл (блокировщик, сеть) — убираем
+                // пустое место, а не держим дыру над кнопками.
+                setTimeout(function () {
+                    if (!tg.querySelector('iframe')) {
+                        tg.style.display = 'none';
+                        _track('social_widget_missing', { provider: 'telegram' });
+                    }
+                }, 6000);
+            }
+            if (p.yandex) el.appendChild(_oauthButton('yandex', 'Войти через Яндекс', opts));
+            if (p.vk) el.appendChild(_oauthButton('vk', 'Войти через VK', opts));
+            el.classList.add('on');
+            if (opts.orEl) opts.orEl.hidden = false;
+            _socialSource = opts.source || '';
+            _socialOnSuccess = opts.onSuccess || null;
+            _track('social_buttons_shown', { providers: keys.join(','), source: _socialSource });
+        });
+    }
+
+    async function _socialSuccess(data, provider) {
+        try { localStorage.setItem('fredi_user_id', data.user_id); } catch (e) {}
+        try { localStorage.removeItem('fredi_auth_dismissed_at'); } catch (e) {}
+        if (data.email) _safeSet(LS_LAST_EMAIL, data.email);
+        _track('social_login_success', { provider: provider, flow: data.flow || '', source: _socialSource });
+        _toast('Добро пожаловать' + (data.name ? ', ' + data.name : '') + '!', 'success');
+        _closeModal();
+        if (typeof window.refreshAuth === 'function') { try { await window.refreshAuth(); } catch (e) {} }
+        if (typeof _socialOnSuccess === 'function') {
+            try { _socialOnSuccess(data); return; } catch (e) {}
+        }
+        _reloadApp();
+    }
+
+    // Колбэк виджета Telegram: имя функции стоит в data-onauth, поэтому
+    // она глобальная. Подпись данных проверяет бэкенд.
+    window.FrediTelegramAuth = async function (user) {
+        _track('social_login_started', { provider: 'telegram', source: _socialSource });
+        try {
+            var res = await _fetchWithTimeout(API_BASE + '/api/auth/telegram', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Object.assign({}, user, { source: _socialSource }))
+            }, 15000);
+            var data = null;
+            try { data = await res.json(); } catch (e) {}
+            if (!res.ok || !data || !data.success) {
+                _track('social_login_failed', { provider: 'telegram', status: res.status });
+                _toast('Не получилось войти через Telegram. Попробуйте почтой.', 'error');
+                return;
+            }
+            await _socialSuccess(data, 'telegram');
+        } catch (e) {
+            _track('social_login_failed', { provider: 'telegram', reason: _isTimeoutErr(e) ? 'timeout' : 'network' });
+            _toast('Сервер не отвечает. Попробуйте ещё раз.', 'error');
+        }
+    };
+
+    // Возврат от Яндекса или VK: бэкенд уже поставил cookie сессии и
+    // вернул человека сюда с ?auth=ok&provider=… либо ?auth_error=….
+    // auth.js на старте сходит на /api/auth/me и поднимет сессию сам —
+    // здесь только чистим адрес, считаем событие и говорим «вы вошли».
+    (function () {
+        try {
+            var p = new URLSearchParams(window.location.search);
+            var ok = p.get('auth'), err = p.get('auth_error'), prov = p.get('provider') || '';
+            if (!ok && !err) return;
+            p.delete('auth'); p.delete('auth_error'); p.delete('provider');
+            var q = p.toString();
+            var clean = window.location.pathname + (q ? '?' + q : '') + window.location.hash;
+            try { window.history.replaceState({}, '', clean); } catch (e) {}
+            var after = function () {
+                try {
+                    if (err) {
+                        _track('social_login_failed', { provider: prov, reason: String(err).slice(0, 40) });
+                        _toast('Не получилось войти через ' + (prov === 'vk' ? 'VK' : 'Яндекс') + '. Попробуйте почтой.', 'error');
+                        return;
+                    }
+                    if (!window.IS_AUTHENTICATED) {
+                        _track('social_login_failed', { provider: prov, reason: 'no_session_after_return' });
+                        return;
+                    }
+                    _track('social_login_success', { provider: prov, flow: 'redirect', source: 'oauth_return' });
+                    _toast('Вы вошли' + (window.CURRENT_USER_NAME ? ', ' + window.CURRENT_USER_NAME : '') + '!', 'success');
+                } catch (e) {}
+            };
+            if (window.authReady && typeof window.authReady.then === 'function') {
+                window.authReady.then(after).catch(after);
+            } else {
+                setTimeout(after, 400);
+            }
+        } catch (e) {}
+    })();
+
     window.FrediAuth = {
         // openLogin/openRegister теперь принимают opts: { prefillName,
         // prefillEmail, source }. Старые вызовы без аргументов работают
@@ -862,7 +1042,10 @@
         openForgot: function () { _openForgot(); },
         openReset: function (token) { _openReset(token); },
         logout: _logout,
-        isAuthed: function () { return !!window.IS_AUTHENTICATED; }
+        isAuthed: function () { return !!window.IS_AUTHENTICATED; },
+        // Кнопки провайдеров в чужой контейнер — стена оплаты рисует их
+        // над полем почты. opts: { source, onSuccess }.
+        renderSocialButtons: function (el, opts) { _injectStyles(); _renderSocial(el, opts || {}); }
     };
 
     // Авто-показ при входе. Раньше регистрация была размазана: post-test
