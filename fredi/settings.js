@@ -482,11 +482,28 @@
                 };
             } else {
                 el.innerHTML =
-                    '<div class="st-hint">Зарегистрируйтесь, чтобы не потерять дневник, тесты и сны при смене устройства или очистке браузера. Email станет вашим логином.</div>' +
+                    '<div class="st-hint">Без аккаунта разговоры помнятся неделю и только на этом устройстве. Зарегистрируйтесь, чтобы не потерять дневник, тесты и сны при смене устройства или очистке браузера. Email станет вашим логином.</div>' +
                     '<div style="display:flex;flex-direction:column;gap:8px">' +
                       '<button class="st-prof-btn primary" id="acLogin" style="padding:12px;border-radius:10px;font-size:14px;font-weight:600">Войти или зарегистрироваться</button>' +
+                      // Чужой или общий телефон: память на семь дней (25.09.2026)
+                      // должна сниматься одним нажатием. Новый анонимный id —
+                      // прежние разговоры с этого устройства недостижимы.
+                      '<button class="st-link-btn danger" id="acForget">Начать с чистого листа</button>' +
                     '</div>' +
                     inboxBlock;
+                var fg = document.getElementById('acForget');
+                if (fg) fg.onclick = function () {
+                    if (!window.confirm('Забыть разговоры на этом устройстве? Фреди начнёт с чистого листа, вернуть их будет нельзя.')) return;
+                    try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('anon_forget', {}); } catch (e) {}
+                    // id живёт в четырёх местах (app.js getUserId): два
+                    // хранилища, «постоянный» ключ и cookie. Не снять любое —
+                    // и app.js восстановит прежний id из него.
+                    try { localStorage.removeItem('fredi_user_id'); localStorage.removeItem('fredi_permanent_user_id'); } catch (e) {}
+                    try { sessionStorage.removeItem('fredi_user_id'); } catch (e) {}
+                    try { document.cookie = 'fredi_uid=;path=/;max-age=0;SameSite=Lax'; } catch (e) {}
+                    try { window.USER_ID = null; window.PERMANENT_USER_ID = null; } catch (e) {}
+                    setTimeout(function () { window.location.href = '/fredi/'; }, 150);
+                };
                 var li = document.getElementById('acLogin');
                 if (li) li.onclick = function () {
                     if (window.FrediAuth) window.FrediAuth.openLogin();
