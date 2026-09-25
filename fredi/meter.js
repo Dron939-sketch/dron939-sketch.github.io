@@ -760,7 +760,18 @@
         document.body.appendChild(overlay);
         // Ни клик мимо, ни Esc стену не убирают: закрывать её нечем — за
         // ней всё равно ничего не работает.
-        overlay.addEventListener('click', function (e) { e.stopPropagation(); }, true);
+        //
+        // С 16.09 по 25.09.2026 здесь стоял перехватчик в фазе захвата
+        // (третий аргумент true) со stopPropagation на любой клик. В фазе
+        // захвата событие идёт сверху вниз, и остановленное на оверлее
+        // оно НЕ ДОХОДИЛО до кнопки: девять дней клик по «69 ₽» на стене
+        // не делал ничего — ни трека, ни чекаута. Клики упали с 9,3% до
+        // 0,8% за день, и это было принято за проблему порядка на экране,
+        // под неё запущен A/B. Владелец увидел в Вебвизоре человека,
+        // который жмёт и ничего не получает. Глушим только клик по фону.
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) e.stopPropagation();
+        });
         try { document.body.style.overflow = 'hidden'; } catch (e) {}
 
         var _sbDaily = document.getElementById('meterSubscribeBtn');
