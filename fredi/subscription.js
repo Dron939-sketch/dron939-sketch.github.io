@@ -393,8 +393,12 @@
         // минутам) — без аккаунта; из 179 увидевших стену нажали 13.
         // Пин-код теперь придумывает сервер и присылает на почту вместе
         // со ссылкой «задать свой»; имя Фреди спросит сам в разговоре.
+        // Над почтой — вход в один тап (25.09.2026): контейнер пустой,
+        // кнопки дорисует login.js после вставки в DOM, и только для
+        // провайдеров, у которых на бэкенде есть ключи.
         return '' +
             '<div style="margin-bottom:14px">' +
+                '<div class="fa-social" id="subSocial" style="text-align:left"></div>' +
                 '<div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;' +
                      'border-left:3px solid #3b82ff;padding-left:10px;text-align:left">' +
                     'Подписка встаёт на аккаунт — заведём его по этой почте. ' +
@@ -624,6 +628,18 @@
             const pendingPid = _readPendingPaymentId();
             const pendingBanner = pendingPid ? _renderPendingBanner() : '';
             container.innerHTML = pendingBanner + _renderNoSubscription(sub);
+            // Вход в один тап над полем почты. После входа через Telegram
+            // страница не перезагружается — перерисовываем карточку: почта
+            // становится «для чека», а не «для аккаунта».
+            try {
+                var soc = document.getElementById('subSocial');
+                if (soc && window.FrediAuth && typeof window.FrediAuth.renderSocialButtons === 'function') {
+                    window.FrediAuth.renderSocialButtons(soc, {
+                        source: 'wall_pay',
+                        onSuccess: function () { renderSubscriptionSection(container); }
+                    });
+                }
+            } catch (e) {}
             // За неделю: один meter_subscribe_clicked и ноль checkout_step.
             // Между «кликнул Premium» и «нажал Оформить» события не было —
             // не отличить «форма не открылась» от «открылась, человек ушёл».
