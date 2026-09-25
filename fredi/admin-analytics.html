@@ -339,6 +339,18 @@ body{overflow-wrap:break-word}</style>
             <button id="exportDialogsBtn" style="padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer">⬇️ Выгрузить файлом</button>
             <span id="exportDialogsStatus"></span>
         </div>
+        <!-- Подарок подписчикам: сборники «Три пути» двумя PDF на почту
+             (25.09.2026). Ручка /api/analytics/gift/tri-puti: GET — сколько
+             получателей, POST ?test_to= — пробное письмо себе, POST —
+             отправка всем, кто ещё не получал. Повтор никого не побеспокоит:
+             лог на сервере. -->
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--text-dim)">
+            <span>🎁 «Три пути» подписчикам:</span>
+            <button id="giftPreviewBtn" style="padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer">Сколько получателей</button>
+            <button id="giftTestBtn" style="padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer">Письмо себе</button>
+            <button id="giftSendBtn" style="padding:8px 14px;border-radius:8px;border:1px solid #3b82ff;background:#3b82ff;color:#fff;font:inherit;cursor:pointer">Отправить всем</button>
+            <span id="giftStatus"></span>
+        </div>
         <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin-bottom:8px">Последние разговоры</h3>
         <div id="messagesList"></div>
     </section>
@@ -3039,6 +3051,55 @@ POV: ты на семейном ужине, и мама такая «как у �
             st.textContent = 'Ошибка: ' + (e.message || e);
         } finally { btn.disabled = false; }
     });
+
+    // Подарок «Три пути»: три кнопки, одна ручка. Отправка всем — только
+    // после подтверждения с числом получателей на экране.
+    (function(){
+        var st = document.getElementById('giftStatus');
+        var GIFT = API + '/api/analytics/gift/tri-puti';
+        function busy(btn, on){ btn.disabled = on; }
+        async function preview(){
+            var res = await fetch(GIFT, { headers: { 'X-Admin-Token': token } });
+            if (res.status === 401) throw new Error('Неверный ADMIN_TOKEN');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        }
+        document.getElementById('giftPreviewBtn').addEventListener('click', async function(){
+            busy(this, true); st.textContent = 'Считаю…';
+            try {
+                var d = await preview();
+                st.textContent = 'получателей: ' + d.count + (d.sample.length ? ' (' + d.sample.join(', ') + (d.count > d.sample.length ? '…' : '') + ')' : '')
+                    + ' · почта ' + (d.email_enabled ? 'включена' : 'ВЫКЛЮЧЕНА') + ' · вложений ' + d.attachments.length;
+            } catch (e) { st.textContent = 'Ошибка: ' + (e.message || e); }
+            finally { busy(this, false); }
+        });
+        document.getElementById('giftTestBtn').addEventListener('click', async function(){
+            var to = prompt('На какую почту прислать пробное письмо?');
+            if (!to) return;
+            busy(this, true); st.textContent = 'Отправляю пробное…';
+            try {
+                var res = await fetch(GIFT + '?test_to=' + encodeURIComponent(to.trim()), { method: 'POST', headers: { 'X-Admin-Token': token } });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                var d = await res.json();
+                st.textContent = d.ok ? ('пробное письмо ушло на ' + d.to) : 'почта не приняла письмо';
+            } catch (e) { st.textContent = 'Ошибка: ' + (e.message || e); }
+            finally { busy(this, false); }
+        });
+        document.getElementById('giftSendBtn').addEventListener('click', async function(){
+            busy(this, true); st.textContent = 'Считаю получателей…';
+            try {
+                var d = await preview();
+                if (!d.count) { st.textContent = 'Отправлять некому: все уже получили или подписчиков с почтой нет'; return; }
+                if (!confirm('Отправить сборники «Три пути» ' + d.count + ' подписчикам? Каждому — один раз.')) { st.textContent = 'Отменено'; return; }
+                st.textContent = 'Отправляю ' + d.count + '…';
+                var res = await fetch(GIFT, { method: 'POST', headers: { 'X-Admin-Token': token } });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                var r = await res.json();
+                st.textContent = 'ушло ' + r.sent + ' из ' + r.candidates + (r.failed ? ', не ушло ' + r.failed : '');
+            } catch (e) { st.textContent = 'Ошибка: ' + (e.message || e); }
+            finally { busy(this, false); }
+        });
+    })();
 
     document.getElementById('dialogClose').addEventListener('click', function(){
         document.getElementById('dialogOverlay').style.display = 'none';
