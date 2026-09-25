@@ -257,6 +257,10 @@
         meter_upsell_shown: 'fredi_upsell_shown',
         meter_site_offer_shown: 'fredi_site_offer_shown',
         analysis_lock_shown: 'fredi_analysis_lock_shown',
+        // Размытый разбор (25.09.2026): начало портрета читается, пять
+        // разделов под блюром с кнопкой — на экране разбора и в ленте
+        // результата теста. Замок текстом до этого показывался 0 раз в неделю.
+        analysis_preview_shown: 'fredi_analysis_preview_shown',
         // Раунд, доведённый до конца, — единственный имеющийся признак,
         // что тренажёром действительно пользовались, а не открыли и
         // закрыли. Не дедуплицируется намеренно: повторный раунд — это
@@ -264,7 +268,11 @@
         game_round_finish: 'fredi_game_round',
         // Вход в один тап (25.09.2026): Telegram, Яндекс ID, VK ID.
         // Аккаунт заводили 2% — это число и должно сдвинуться.
-        social_login_success: 'fredi_social_login'
+        social_login_success: 'fredi_social_login',
+        // «Напомнить завтра» (25.09.2026): человек дал канал возврата —
+        // push или Telegram — и человек вернулся по напоминанию.
+        return_channel_chosen: 'fredi_return_channel',
+        reengagement_return_open: 'fredi_return_open'
     };
     // Открытие тренажёра или инструмента. В Метрике этого не было вовсе:
     // 121 цель на сайте, и ни одной про тренажёры, хотя они закрыты
@@ -320,6 +328,7 @@
         if (src.indexOf('site_') === 0) return 'fredi_sub_click_site';
         if (src === 'upsell_critical') return 'fredi_sub_click_upsell';
         if (src === 'analysis_lock') return 'fredi_sub_click_analysis';
+        if (src === 'analysis_preview') return 'fredi_sub_click_preview';
         // Стена шлёт не source, а wall_v — по нему её и узнаём.
         if (data && data.wall_v) return 'fredi_sub_click_wall';
         return '';

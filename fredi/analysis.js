@@ -584,15 +584,17 @@ async function openAnalysisScreen() {
         const tData = await tRes.json();
         _analysis.thought = tData.success ? tData.thought : '';
 
-        // Полный разбор — часть подписки (12.09.2026) или подарок тому,
-        // у кого разбора не было ни разу (18.09.2026). Решает сервер: он
-        // один знает, сколько разборов было у человека. Здесь стояла
-        // проверка `if (!_isPremium())` — она рубила экран ДО запроса и
-        // показала бы замок ровно тому, кому мы на стене только что
-        // пообещали подарок.
+        // Полный разбор — часть подписки (12.09.2026). Решает сервер: без
+        // подписки он отдаёт не разбор, а превью — начало портрета и
+        // объём остальных разделов (25.09.2026), и здесь оно рисуется
+        // размытым с кнопкой. Клиентской проверки подписки ДО запроса
+        // нет намеренно: она рубила экран раньше сервера.
         const sRes  = await fetch(`${api}/api/deep-analysis/${userId}`);
         const sData = await sRes.json();
-        if (sData && sData.premium_required) { _goHome(); _showLockModal(); return; }
+        if (sData && sData.premium_required) {
+            if (sData.preview) { _renderPreviewScreen(sData.preview, 'screen'); return; }
+            _goHome(); _showLockModal(); return;
+        }
 
         if (sData.success && sData.analysis) {
             console.log('📦 Загружен сохранённый анализ от', sData.created_at);
@@ -601,7 +603,7 @@ async function openAnalysisScreen() {
             _renderScreen();
         } else {
             console.log('🆕 Анализа нет, генерируем...');
-            await generateDeepAnalysis(sData && sData.gift_available === true);
+            await generateDeepAnalysis();
         }
 
     } catch (err) {
@@ -615,22 +617,9 @@ async function openAnalysisScreen() {
 // ============================================
 // ГЕНЕРАЦИЯ АНАЛИЗА
 // ============================================
-async function generateDeepAnalysis(isGift) {
-    // Человек должен понять, что получил подарок, а не просто подождал.
-    // Молча выданный подарок не работает: он не отличим от того, что
-    // «всё и так было бесплатно», и ровно это мы и хотели опровергнуть.
-    _showLoader(
-        isGift ? '🎁 Собираю ваш разбор — в подарок' : 'Провожу глубинный анализ...',
-        isGift ? 'Шесть разделов, обычно 20–40 секунд' : 'Обычно это занимает 20–40 секунд');
+async function generateDeepAnalysis() {
+    _showLoader('Провожу глубинный анализ...', 'Шесть разделов, обычно 20–40 секунд');
     _removeFooter();
-    if (isGift) {
-        try {
-            if (window.FrediTracker && window.FrediTracker.track) {
-                window.FrediTracker.track('deep_gift_opened', {});
-            }
-            if (typeof ym === 'function') ym(108965607, 'reachGoal', 'deep_gift_opened');
-        } catch (e) {}
-    }
     const timer = _startTimer();
 
     try {
@@ -645,7 +634,10 @@ async function generateDeepAnalysis(isGift) {
         });
         const data = await res.json();
         clearInterval(timer);
-        if (data && data.premium_required) { _goHome(); _showLockModal(); return; }
+        if (data && data.premium_required) {
+            if (data.preview) { _renderPreviewScreen(data.preview, 'screen'); return; }
+            _goHome(); _showLockModal(); return;
+        }
 
         if (data.success && data.analysis) {
             _analysis = { ..._analysis, ...data.analysis };
@@ -1070,8 +1062,8 @@ function _showLockModal() {
         <div class="alock-modal" role="dialog" aria-modal="true" aria-label="Глубинный разбор доступен с подпиской">
             <button class="alock-close" id="alockClose" aria-label="Закрыть">✕</button>
             <div class="alock-emoji">🔒</div>
-            <div class="alock-title">Глубинный разбор — с подпиской</div>
-            <div class="alock-text">Портрет и первый шаг у вас уже есть, они бесплатны. Шесть разделов разбора открываются с подпиской.</div>
+            <div class="alock-title">Новый разбор — с подпиской</div>
+            <div class="alock-text">Ваш прежний разбор остаётся открытым. Новый, по свежему тесту, собирается с подпиской.</div>
             <div class="alock-step"><b>✅ Первый шаг на сегодня — бесплатно</b><br>${step}</div>
             <ul class="alock-list">
                 <li><b>Глубинный портрет</b> — как устроены ваши реакции, а не только их названия</li>
@@ -1127,50 +1119,187 @@ function _injectLockStyles() {
     document.head.appendChild(st);
 }
 
-function _renderLocked() {
+// ============================================
+// ПРЕВЬЮ: начало читается, остальное под блюром
+// ============================================
+// Замена текстовому замку (25.09.2026, план «размытый разбор»). Сервер
+// без подписки отдаёт не разбор, а превью: начало портрета целиком и
+// для каждого раздела — заголовок и объём в знаках. Здесь по объёму
+// рисуется заглушка той же длины и размывается. Скрытого текста в
+// странице НЕТ: блюр поверх настоящих слов снимается одной галочкой в
+// инспекторе. Что человек видит — существующий, уже написанный про него
+// разбор, у которого читается первая мысль. Что покупает — остальное.
+//
+// Один рендер на два места: экран разбора и лента результата теста
+// (test.js). Наполнитель — нейтральные фразы про то, что в разделах
+// бывает; они не выдают себя за текст, если кто-то снимет блюр руками.
+const _FILLER = [
+    'здесь Фреди разбирает, как устроена именно ваша реакция и откуда она берётся',
+    'что запускает круг, где у него вход и на каком шаге его можно разомкнуть',
+    'зачем психика держится за привычное и что она этим защищает',
+    'какие три места дают больше всего изменения при наименьшем усилии',
+    'что будет через полгода, если ничего не менять, и если менять одно',
+    'какие слова говорить себе в момент срыва, чтобы не провалиться в старое'
+];
+
+function _filler(chars, seed) {
+    let out = '';
+    let i = seed || 0;
+    while (out.length < chars) {
+        const s = _FILLER[i % _FILLER.length];
+        out += (out ? '. ' : '') + s.charAt(0).toUpperCase() + s.slice(1);
+        i++;
+    }
+    return out.slice(0, Math.max(0, chars)).replace(/\s+\S*$/, '') + '.';
+}
+
+function _injectPreviewStyles() {
+    if (document.getElementById('analysis-preview-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'analysis-preview-styles';
+    st.textContent = `
+        .apv{position:relative;font-family:inherit}
+        .apv-open{font-size:15px;line-height:1.75;color:var(--text-primary,#e6e6e6);margin:0 0 6px}
+        .apv-lock{position:relative}
+        .apv-blur{filter:blur(6px);-webkit-filter:blur(6px);user-select:none;-webkit-user-select:none;
+            pointer-events:none;opacity:.55;font-size:14px;line-height:1.7;color:var(--text-secondary,#b9b9b9)}
+        .apv-blur h4{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin:18px 0 8px;
+            color:var(--chrome,#cfcfcf)}
+        .apv-blur p{margin:0 0 8px}
+        .apv-fade{position:absolute;left:0;right:0;top:0;bottom:0;
+            background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(23,24,28,.35) 35%,rgba(23,24,28,.85) 100%)}
+        .apv-cta{position:absolute;left:0;right:0;top:64px;display:flex;flex-direction:column;align-items:center;
+            gap:10px;padding:0 10px;text-align:center}
+        .apv-cta-card{max-width:400px;width:100%;background:#17181c;border:1px solid rgba(224,224,224,.18);
+            border-radius:18px;padding:18px 16px 14px;color:#e6e6e6;box-shadow:0 14px 40px rgba(0,0,0,.45)}
+        .apv-cta-title{font-size:16px;font-weight:700;margin-bottom:6px}
+        .apv-cta-text{font-size:13.5px;line-height:1.55;color:#b9b9b9;margin-bottom:12px}
+        .apv-btn{display:block;width:100%;padding:13px 10px;border-radius:14px;border:1px solid #3b82ff;
+            background:#3b82ff;color:#fff;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap}
+        .apv-note{font-size:12px;color:#8f8f8f;margin-top:8px;line-height:1.45}
+        [data-theme="light"] .apv-fade{background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.4) 35%,rgba(255,255,255,.92) 100%)}
+        [data-theme="light"] .apv-open{color:#1f2430}
+        [data-theme="light"] .apv-blur{color:#4b5566}
+        [data-theme="light"] .apv-blur h4{color:#374151}`;
+    document.head.appendChild(st);
+}
+
+/**
+ * Нарисовать превью в контейнер.
+ *
+ * opts.source — откуда показ ('screen' — экран разбора, 'bigtest' —
+ * лента теста): уходит в аналитику и в источник клика по подписке.
+ * opts.onOpen — вместо оплаты (когда разбор уже открыт — не сюда).
+ */
+function renderAnalysisPreview(container, preview, opts) {
+    opts = opts || {};
+    if (!container || !preview) return;
+    _injectPreviewStyles();
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const open = (preview.open && preview.open.text) || '';
+    const sections = Array.isArray(preview.sections) ? preview.sections : [];
+    const total = sections.reduce((a, s) => a + (s.chars || 0), 0);
+    const openKey = (preview.open && preview.open.key) || '';
+
+    let hidden = '';
+    sections.forEach((s, i) => {
+        const n = Math.max(0, s.hidden_chars != null ? s.hidden_chars : s.chars || 0);
+        if (!n) return;
+        // Размытый текст ограничен: объём виден и по двум-трём абзацам, а
+        // полная длина тянула бы ленту на пять экранов блюра.
+        const shown = Math.min(n, i < 2 ? 420 : 150);
+        hidden += (s.key === openKey ? '' : `<h4>${esc(s.title)}</h4>`) + `<p>${esc(_filler(shown, i))}</p>`;
+    });
+    const words = Math.round(total / 6.5);
+    const rest = sections.filter(s => s.key !== openKey).map(s => s.title.toLowerCase());
+    const restText = rest.length ? rest.slice(0, -1).join(', ') + (rest.length > 1 ? ' и ' : '') + rest[rest.length - 1] : '';
+
+    container.innerHTML = `
+        <div class="apv">
+            <div class="apv-open">${esc(open).replace(/\n/g, '<br>')}</div>
+            <div class="apv-lock">
+                <div class="apv-blur" aria-hidden="true">${hidden}</div>
+                <div class="apv-fade"></div>
+                <div class="apv-cta">
+                    <div class="apv-cta-card">
+                        <div class="apv-cta-title">Дальше — ещё ${words ? '~' + words + ' слов' : 'пять разделов'} про вас</div>
+                        <div class="apv-cta-text">Разбор уже написан по вашему профилю: ${esc(restText || 'петли, механизмы, точки роста, прогноз и ключи')}. Подписка открывает его целиком.</div>
+                        <button class="apv-btn" type="button">✨ Открыть разбор — 3 дня 69 ₽</button>
+                        <div class="apv-note">Потом 690 ₽ в месяц, отключается в один клик. Плюс коуч и тренер без лимита, голос и память Фреди о каждом разговоре.</div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    // Высота размытой части — под карточку: карточка стоит абсолютно, и
+    // без этого она бы вылезала за низ короткого раздела.
+    const lock = container.querySelector('.apv-lock');
+    const card = container.querySelector('.apv-cta-card');
+    requestAnimationFrame(() => {
+        try {
+            const need = 64 + card.offsetHeight + 24;
+            if (lock.offsetHeight < need) lock.style.minHeight = need + 'px';
+        } catch (e) {}
+    });
+    const src = opts.source || 'screen';
+    try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('analysis_preview_shown', { source: src, chars: total }); } catch (e) {}
+    container.querySelector('.apv-btn').onclick = () => {
+        try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'analysis_preview', from: src }); } catch (e) {}
+        if (typeof window.openCheckout === 'function') window.openCheckout('analysis_preview');
+    };
+}
+
+/**
+ * Что показывать на месте разбора: {full, analysis} | {preview} | {locked} | {error}.
+ * Одна логика для экрана и для ленты теста: сначала сохранённый, потом
+ * генерация. Сервер сам решает, разбор это или превью.
+ */
+async function fetchAnalysisPreview() {
+    const api    = window.CONFIG?.API_BASE_URL || '';
+    const userId = window.CONFIG?.USER_ID;
+    if (!userId) return { error: 'no user' };
+    const map = d => {
+        if (!d) return { error: 'empty' };
+        if (d.premium_required) return d.preview ? { preview: d.preview } : { locked: true };
+        if (d.success && d.analysis) return { full: true, analysis: d.analysis };
+        return null;
+    };
+    try {
+        const r = await fetch(`${api}/api/deep-analysis/${userId}`);
+        const got = map(await r.json());
+        if (got) return got;
+        const mode = window.currentMode || 'psychologist';
+        const p = await fetch(`${api}/api/deep-analysis`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, message: '', mode, platform: 'web' })
+        });
+        const pd = await p.json();
+        return map(pd) || { error: (pd && pd.error) || 'empty' };
+    } catch (e) {
+        return { error: String(e && e.message || e) };
+    }
+}
+
+function _renderPreviewScreen(preview, source) {
     _injectStyles();
     const c = document.getElementById('screenContainer');
     if (!c) return;
-    const code = (_profile && (_profile.profile_data || {}).display_name) || '';
-    const step = firstStepFor(code);
-    try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('analysis_lock_shown', {}); } catch (e) {}
     c.innerHTML = `
         <div class="analysis-page">
             <button class="back-btn" id="analysisBackBtn">◀️ НАЗАД</button>
             <div class="analysis-heading">
                 <h1>🧠 Глубинный разбор</h1>
-                <p>Портрет и первый шаг — бесплатно. Шесть разделов разбора — с подпиской.</p>
+                <p>Шесть разделов по вашему тесту. Начало открыто, остальное — по подписке.</p>
             </div>
-            <div class="analysis-card" style="margin-bottom:14px">
-                <div class="analysis-card-title">✅ Первый шаг на сегодня — бесплатно</div>
-                <div class="analysis-card-text">${step}</div>
-            </div>
-            <div class="analysis-card" style="opacity:.92">
-                <div class="analysis-card-title">🔒 Что откроется с подпиской</div>
-                <ul style="margin:8px 0 0;padding-left:20px;line-height:1.6">
-                    <li><b>Глубинный портрет</b> — как устроены ваши реакции, а не только их названия</li>
-                    <li><b>Системные петли</b> — что вас изматывает по кругу и где у петли вход</li>
-                    <li><b>Скрытые механизмы</b> — зачем психика держится за привычное</li>
-                    <li><b>Точки роста</b> — три места, где изменение даёт больше всего</li>
-                    <li><b>Прогноз</b> — что будет через полгода, если ничего не менять, и если менять</li>
-                    <li><b>Персональные ключи</b> — что говорить себе в момент срыва</li>
-                </ul>
-                <div style="font-size:13px;opacity:.75;margin-top:10px">Плюс коуч и тренер без лимита, голос и память Фреди о каждом разговоре.</div>
-                <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
-                    <button class="back-btn" id="analysisLockSub" style="background:#3b82ff;color:#fff;border-color:#3b82ff">✨ Открыть разбор — 3 дня 69 ₽</button>
-                    <button class="back-btn" id="analysisLockHome">🏠 На главную</button>
-                </div>
-                <div style="font-size:12px;opacity:.65;margin-top:8px">Потом 690 ₽ в месяц, отключается в один клик в разделе «Подписка».</div>
-            </div>
+            <div class="analysis-section-title">📊 Глубинный портрет</div>
+            <div id="analysisPreviewBody"></div>
         </div>`;
     document.getElementById('analysisBackBtn').onclick = () => _goHome();
-    document.getElementById('analysisLockHome').onclick = () => _goHome();
-    document.getElementById('analysisLockSub').onclick = () => {
-        try { if (window.FrediTracker && window.FrediTracker.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'analysis_lock' }); } catch (e) {}
-        if (typeof window.openCheckout === 'function') window.openCheckout('analysis_lock');
-    };
+    renderAnalysisPreview(document.getElementById('analysisPreviewBody'), preview, { source: source || 'screen' });
     _removeFooter();
+    _scrollToTop();
 }
+
+window.FrediAnalysisPreview = { fetch: fetchAnalysisPreview, render: renderAnalysisPreview };
 
 function _renderFallback() {
     _injectStyles();

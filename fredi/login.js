@@ -1064,10 +1064,16 @@
     (function () {
         try {
             var p = new URLSearchParams(window.location.search);
-            if (p.get('ref') === 'reeng') {
+            var ref = p.get('ref') || '';
+            // reeng, reeng-d1, reeng-trial — письма; push-d1 — напоминание
+            // по push или в мессенджер (25.09.2026). Кампания — из utm,
+            // а не по прежней жёсткой «d3_first»: она была верна только
+            // для первого письма.
+            if (ref === 'reeng' || ref.indexOf('reeng-') === 0 || ref.indexOf('push-') === 0) {
                 _track('reengagement_return_open', {
                     cid: (p.get('cid') || '').slice(0, 32),
-                    campaign: 'd3_first'
+                    campaign: p.get('utm_campaign') || (ref === 'reeng' ? 'd3_first' : ref),
+                    ref: ref
                 });
                 // Чистим query, чтобы reload не дублировал событие.
                 try {
