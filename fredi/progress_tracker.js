@@ -420,7 +420,7 @@ function _ptProgress(plan) {
     return `
         <div class="pt-skill-card">
             <div class="pt-skill-name">🎯 ${plan.skillName}</div>
-            <div class="pt-skill-meta">День ${day} из 21 · выполнено ${done.length} упражнений</div>
+            <div class="pt-skill-meta">День ${day} из ${(plan.plan && plan.plan.days_total) || 21} · выполнено ${done.length} упражнений</div>
             <div class="pt-progress-bar">
                 <div class="pt-progress-fill" style="width:${pct}%"></div>
             </div>

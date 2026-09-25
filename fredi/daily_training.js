@@ -502,7 +502,7 @@ async function _dtRender() {
             <div class="dt-main-card">
                 <div class="dt-skill-label">Текущий навык</div>
                 <div class="dt-skill-name">${plan.skillName}</div>
-                <div class="dt-day-badge">📅 День ${day} из 21 · ${daysDone.length} выполнено</div>
+                <div class="dt-day-badge">📅 День ${day} из ${(plan.plan && plan.plan.days_total) || 21} · ${daysDone.length} выполнено</div>
                 <div class="dt-progress-wrap">
                     <div class="dt-progress-fill" style="width:${pct}%"></div>
                 </div>

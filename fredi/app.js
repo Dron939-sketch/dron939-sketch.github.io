@@ -931,6 +931,17 @@ function setupDashComposer() {
                 setTimeout(function () { window.FrediMeter.showPeakOffer('closing'); }, 1500);
             }
         } catch (e) {}
+        // «Семь дней по теме» (25.09.2026): после того же ритуала завершения —
+        // строка в чате «собрать план на неделю?». Это и есть причина
+        // вернуться завтра; weekplan.js сам не покажет второй раз за неделю
+        // и тому, у кого план уже идёт. Если ритуал не распознан по тексту —
+        // после шестого своего сообщения.
+        try {
+            if (answer && !_autoMsg && window.FrediWeekPlan
+                && (/завтра спрошу|продолжим завтра/i.test(answer) || _dashMsgCount === 5)) {
+                setTimeout(function () { window.FrediWeekPlan.offer(_dashMsgCount === 5 ? 'msg6' : 'closing'); }, 2500);
+            }
+        } catch (e) {}
         // Момент пользы: человек сообщил о сделанном шаге — «попробовала»,
         // «получилось», «сказала ему», «доклеила». Не раньше третьего своего
         // сообщения, чтобы не поймать «получилось» из первой жалобы.
@@ -3124,9 +3135,14 @@ function renderDashboard() {
             fill('coach', card('habit', '🔄', 'Привычка: «' + (habits[0].name || 'без названия') + '»', 'Продолжить', 0, ''));
         }
 
+        // Вкладка «Психолог»: карточку «семь дней по теме» рисует и
+        // обслуживает weekplan.js (кнопка «Сделал», ссылка на лекцию).
+        try { window.FrediWeekPlan && window.FrediWeekPlan.refreshCard(); } catch (e) {}
+
         document.querySelectorAll('.dash-cont').forEach(box => {
             box.addEventListener('click', () => {
                 const key = box.dataset.cont;
+                if (key === 'psychologist' || box.dataset.wk) return;
                 if (key === 'trainer') {
                     if (typeof showSkillChoiceScreen === 'function') showSkillChoiceScreen();
                     else { const sc = document.createElement('script'); sc.src = 'skill_choice.js';
