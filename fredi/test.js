@@ -3418,7 +3418,7 @@ ${this.getStage3Interpretation()}
             ['steps',    '3', 'С чего начать',     'три шага под ваш результат'],
             ['deep',     '4', 'Глубинный разбор',  premium
                 ? 'шесть разделов — открыть'
-                : 'шесть разделов — по подписке']
+                : 'начало открыто, шесть разделов — по подписке']
         ];
 
         const msgDiv = document.createElement('div');
@@ -3430,7 +3430,7 @@ ${this.getStage3Interpretation()}
         head.className = 'test-message-text';
         head.innerHTML = '<strong>✅ ТЕСТ ПРОЙДЕН. ВАШ РАЗБОР ГОТОВ</strong><br><br>'
             + 'Части 1–3 ниже — они бесплатные и целиком ваши. '
-            + 'Часть 4 — отдельный экран.<br>'
+            + (premium ? 'Часть 4 — отдельный экран.<br>' : 'Часть 4 собирается ниже: начало открыто.<br>')
             + '<span style="opacity:.7;font-size:13px">Нажмите на часть, чтобы перейти к ней.</span>';
         bubble.appendChild(head);
 
@@ -3447,6 +3447,10 @@ ${this.getStage3Interpretation()}
             row.addEventListener('click', () => {
                 try { if (window.FrediTracker?.track) window.FrediTracker.track('test_toc_click', { part: key }); } catch {}
                 if (key === 'deep') {
+                    // Без подписки часть 4 лежит прямо в ленте (превью с
+                    // открытым началом) — к ней и прокручиваем.
+                    const inline = !premium && this._resultAnchors && this._resultAnchors.deep;
+                    if (inline && document.body.contains(inline)) { this.scrollMessageToTop(inline); return; }
                     this.goToDashboard();
                     if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
                     else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
@@ -3498,26 +3502,71 @@ ${this.getStage3Interpretation()}
         const step = (typeof window.frediFirstStepFor === 'function')
             ? window.frediFirstStepFor(p && p.displayName)
             : 'Сегодня вспомните одну ситуацию, где промолчали, и запишите одним предложением, что хотели сказать.';
-        let html = '✅ **ПЕРВЫЙ ШАГ НА СЕГОДНЯ — БЕСПЛАТНО**\n\n' + esc(step) + '\n\n'
-            + (premium ? '🔓 **ГЛУБИННЫЙ РАЗБОР ГОТОВ К ОТКРЫТИЮ**' : '🔒 **ЧТО ОТКРОЕТСЯ С ПОДПИСКОЙ**') + '\n\n'
-            + '• Глубинный разбор именно вашего профиля: портрет, системные петли, скрытые механизмы\n'
-            + '• Точки роста, прогноз на полгода и персональные ключи на момент срыва\n'
-            + '• Коуч и тренер без лимита (без подписки — три ответа)\n'
-            + '• Голос, все тренажёры и память Фреди о каждом разговоре';
         try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_shown', { premium: premium }); } catch {}
-        this.addBotMessage(html, true);
-        const btn = premium
-            ? { text: '🔍 ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР', callback: () => {
-                    try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_clicked', { premium: true }); } catch {}
-                    this.goToDashboard();
-                    if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
-                    else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
-                } }
-            : { text: '✨ ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР — 3 ДНЯ 69 ₽', callback: () => {
-                    try { if (window.FrediTracker?.track) window.FrediTracker.track('meter_subscribe_clicked', { source: 'bigtest_teaser' }); } catch {}
-                    if (typeof window.openCheckout === 'function') window.openCheckout('bigtest_teaser');
-                } };
-        this.addMessageWithButtons('', [btn]);
+        this.addBotMessage('✅ **ПЕРВЫЙ ШАГ НА СЕГОДНЯ — БЕСПЛАТНО**\n\n' + esc(step), true);
+        const openScreen = () => {
+            this.goToDashboard();
+            if (typeof window.navigateTo === 'function') window.navigateTo('analysis');
+            else if (typeof window.openAnalysisScreen === 'function') window.openAnalysisScreen();
+        };
+        if (premium) {
+            this.addBotMessage('🔓 **ЧАСТЬ 4. ГЛУБИННЫЙ РАЗБОР ГОТОВ К ОТКРЫТИЮ**\n\n'
+                + 'Портрет, системные петли, скрытые механизмы, точки роста, прогноз и персональные ключи — на отдельном экране.', true);
+            this.addMessageWithButtons('', [{ text: '🔍 ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР', callback: () => {
+                try { if (window.FrediTracker?.track) window.FrediTracker.track('test_premium_teaser_clicked', { premium: true }); } catch {}
+                openScreen();
+            } }]);
+            return;
+        }
+        this._renderDeepPreview(openScreen);
+    },
+
+    /**
+     * Часть 4 без подписки — не список «что откроется», а сам разбор:
+     * начало портрета читается, пять разделов под блюром с кнопкой
+     * (25.09.2026). До этого здесь стояли четыре строки текста и кнопка
+     * «открыть за 69 ₽»; за неделю кнопку нажали ноль раз. Человек не
+     * покупает описание — он покупает то, начало чего уже прочёл о себе.
+     *
+     * Разбор генерирует сервер (20–40 секунд) и отдаёт только превью:
+     * скрытого текста на странице нет. Если разбор уже открыт (подписка
+     * была или выдан раньше) — кнопка на экран, без блюра.
+     */
+    async _renderDeepPreview(openScreen) {
+        const msg = this.addBotMessage('🧠 **ЧАСТЬ 4. ГЛУБИННЫЙ РАЗБОР**\n\n'
+            + 'Собираю шесть разделов по вашему профилю — обычно 20–40 секунд. Начало будет открыто.', true);
+        this._resultAnchors = this._resultAnchors || {};
+        this._resultAnchors.deep = msg;
+        const api = window.FrediAnalysisPreview;
+        if (!api || typeof api.fetch !== 'function') return;
+        let got = null;
+        try { got = await api.fetch(); } catch (e) { got = { error: String(e) }; }
+        const bubble = msg && msg.querySelector('.test-message-bubble');
+        const text = msg && msg.querySelector('.test-message-text');
+        if (!bubble || !text) return;
+        if (got && got.preview) {
+            text.innerHTML = '<strong>🧠 ЧАСТЬ 4. ГЛУБИННЫЙ РАЗБОР</strong><br>'
+                + '<span style="opacity:.7;font-size:13px">Начало открыто, остальное — по подписке.</span>';
+            const holder = document.createElement('div');
+            holder.style.cssText = 'margin-top:12px';
+            bubble.insertBefore(holder, text.nextSibling);
+            api.render(holder, got.preview, { source: 'bigtest' });
+            return;
+        }
+        if (got && got.full) {
+            text.innerHTML = '<strong>🔓 ЧАСТЬ 4. ГЛУБИННЫЙ РАЗБОР ГОТОВ</strong><br><br>'
+                + 'Шесть разделов по вашему профилю — на отдельном экране.';
+            this.addMessageWithButtons('', [{ text: '🔍 ОТКРЫТЬ ГЛУБИННЫЙ РАЗБОР', callback: openScreen }]);
+            return;
+        }
+        // Не собрался — та же кнопка-повтор, что у частей 2 и 3.
+        try { if (window.FrediTracker?.track) window.FrediTracker.track('test_deep_preview_failed', { reason: (got && got.error) || '' }); } catch (e) {}
+        try { msg.remove(); } catch (e) {}
+        this._resultAnchors.deep = this._retryBlock(
+            'deep',
+            '🧠 <strong>ЧАСТЬ 4. ГЛУБИННЫЙ РАЗБОР</strong><br><br>Разбор не собрался с первого раза. Это чинится одним нажатием.',
+            '🔄 Собрать разбор',
+            async () => { await this._renderDeepPreview(openScreen); return true; });
     },
 
     // Текст первого сообщения по итогам теста: портрет от первого лица плюс
