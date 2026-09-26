@@ -12403,6 +12403,76 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 9
+  },
+  {
+   "slug": "lekciya-delo-zhizni-1-chto-ostanetsya-cherez-desyat-let",
+   "title": "Что останется через десять лет — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-delo-zhizni-2-liniya-kotoraya-uzhe-est",
+   "title": "Линия, которая уже есть — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-delo-zhizni-3-razvedka-gde-kopat",
+   "title": "Разведка: где копать — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-delo-zhizni-4-tretij-god-plato",
+   "title": "Третий год: плато, на котором бросают — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-delo-zhizni-5-kormyashchaya-rabota-i-delo",
+   "title": "Кормящая работа и дело в одной жизни — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 12
+  },
+  {
+   "slug": "lekciya-delo-zhizni-6-komu-eto-nuzhno",
+   "title": "Кому это нужно — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-delo-zhizni-7-dogovor-na-srok",
+   "title": "Договор на срок: как перестать пробовать — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-delo-zhizni-8-forma-menyaetsya-delo-ostaetsya",
+   "title": "Форма меняется, дело остаётся — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 11
+  },
+  {
+   "slug": "lekciya-delo-zhizni-9-mera-prodvizheniya",
+   "title": "Мера продвижения: как знать, что растёт — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
+  },
+  {
+   "slug": "lekciya-delo-zhizni-10-zamer-i-ekzamen",
+   "title": "Замер на выходе и экзамен — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 10
   }
  ]
 }
