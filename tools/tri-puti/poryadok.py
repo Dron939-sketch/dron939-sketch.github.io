@@ -246,6 +246,41 @@ E0 = [
 ]
 assert len(E0) == 10
 
+# Математическая запись для листа курсанта: дробь с чертой, корень над всем
+# подкоренным, степень и модуль — MathML, Chromium рисует его сам. Словесные
+# задачи (0-05, 0-06, 0-07) остаются текстом. В ключах инструктора — строка.
+def _m(inner):
+    return f'<math display="inline">{inner}</math>'
+
+
+def _sqrt(inner):
+    return f'<msqrt><mrow>{inner}</mrow></msqrt>'
+
+
+def _frac(a, b):
+    return f'<mfrac><mrow>{a}</mrow><mrow>{b}</mrow></mfrac>'
+
+
+def _n(v):
+    return f'<mn>{v}</mn>'
+
+
+X = '<mi>x</mi>'
+MINUS, PLUS, EQ, DOT, LP, RP, BAR = ('<mo>−</mo>', '<mo>+</mo>', '<mo>=</mo>', '<mo>·</mo>',
+                                     '<mo stretchy="false">(</mo>', '<mo stretchy="false">)</mo>', '<mo>|</mo>')
+MATH = {
+ 0: _m(_frac(_n(12), _n(11) + MINUS + _sqrt(_n(56) + MINUS + X)) + EQ + _n(3)),
+ 1: _m(_n(3) + DOT + LP + X + PLUS + _n(4) + RP + MINUS + _n(5) + EQ + _n(16)),
+ 2: _m(_frac(_n(40), _n(2) + PLUS + _frac(_n(18), X + MINUS + _n(1))) + EQ + _n(5)),
+ 3: _m(_sqrt(_n(3) + PLUS + _sqrt(X + PLUS + _n(2))) + EQ + _n(2)),
+ 7: _m(f'<msup><mrow>{LP}{X}{MINUS}{_n(3)}{RP}</mrow><mn style="font-size:65%">2</mn></msup>' + PLUS + _n(7) + EQ + _n(23)),
+ 8: _m('<mo lspace="0" rspace="0">|</mo>' + _n(2) + X + MINUS + _n(6) + '<mo lspace="0" rspace="0">|</mo>' + PLUS + _n(1) + EQ + _n(5)),
+ 9: _m(_sqrt(X) + PLUS + _n(5) + EQ + _n(2)),
+}
+for _i, _t in enumerate(E0):
+    if _i in MATH:
+        _t["math"] = MATH[_i]
+
 LNE = ('<p class="ln">Цепочка вперёд: x → ______ → ______ → ______ → ______ → ответ</p>'
        '<p class="ln">Раскрутка назад: ______ → ______ → ______ → ______ → x = ______</p>'
        '<p class="ln">Проверка подстановкой: ______________________ &nbsp; Ветвится / нет прообраза: ______________</p>'
@@ -257,7 +292,7 @@ def sE():
     for i, t in enumerate(E0, 1):
         if i == 1:
             rows.append(f'<div class="task sample"><span class="tn">Задание 0-01</span> {BADGE}'
-                        f'<p><b>Решить:</b> {e(t["eq"])}</p>'
+                        f'<p class="eq"><b>Решить:</b> {t.get("math") or e(t["eq"])}</p>'
                         f'<p class="vv">Вводная инструктора: {e(t["vv"])}.</p>'
                         f'<p class="ln">Цепочка вперёд: {F(t["fwd"])}</p>'
                         f'<p class="ln">Раскрутка назад: {F(t["back"])}</p>'
@@ -268,7 +303,7 @@ def sE():
                         f'пересчитан один шаг, остальное стоит. {SNOTE}</p></div>')
             continue
         rows.append(f'<div class="task"><span class="tn">Задание 0-{i:02d}</span> <span class="lvl">норматив 60 с</span>'
-                    f'<p><b>Решить:</b> {e(t["eq"])}</p>{LNE}</div>')
+                    f'<p class="eq"><b>Решить:</b> {t.get("math") or e(t["eq"])}</p>{LNE}</div>')
         keys.append(f'<div class="task key"><span class="tn">0-{i:02d}</span> {e(t["eq"])} <b>Вперёд:</b> {e(t["fwd"])}. '
                     f'<b>Назад:</b> {e(t["back"])}. <b>Ответ:</b> {e(t["x"])}. <b>Проверка:</b> {e(t["check"])}. '
                     f'<b>Ветвление:</b> {e(t["branch"])}.'
@@ -1130,6 +1165,7 @@ CSS += ('<style>@page{size:A4;margin:12mm 14mm 14mm}.page{padding:0;min-height:0
         '.sample .ln{color:#111;white-space:normal;line-height:1.5}'
         '.vv{font-size:7.6pt;color:#7A1F1A;margin-top:2px}'
         '.snote{font-size:7pt;color:#444;border-top:.5px solid #B9C4DF;margin-top:3px;padding-top:2px;line-height:1.35}'
+        '.eq{margin:3px 0 4px}.eq math{font-size:1.35em;font-family:"Latin Modern Math","STIX Two Math","DejaVu Serif",serif;vertical-align:middle;padding:0 2px}'
         '.kmap.sample svg{margin-top:0}.gen p{font-size:8.1pt;margin:1px 0 3px}.gen ol li{font-size:8.1pt;margin:1px 0}.gen .norm{font-size:7.8pt}.gen .norm td,.gen .norm th{padding:1px 5px}.s4 .task{font-size:7.9pt;padding:2px 0}.s4 .task p{line-height:1.26}.s4 .ln{font-size:6.9pt}.s4 .note{font-size:8.1pt}.s4 .sample{padding:3px 5px 2px;margin:1px 0 4px}.sample .ln{line-height:1.42}</style>')
 
 HTML = (f'<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><title>Сборник «Порядок»</title>{CSS}</head><body>'
