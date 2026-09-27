@@ -19,6 +19,11 @@
   VII «Длинная цель». Берёт легенду из `kursant2.py` и карты из `karta.py`,
   этап «Числовое поле» генерирует сам (`random.seed(11)`, ключи считаются
   кодом). Пишет `poryadok.html`, рендер — `poryadok_pdf.js` → `poryadok-kursant.pdf`.
+- `traektoriya.py` — сборник «Траектория» (тема 7): навык видеть, куда ведёт
+  линия — правило по точкам, тип хода, порог и дата, звено поворота, коридор.
+  Восемь этапов от рядов (6, 9, …) до десяти лет и журнала прогнозов; графики
+  этапа II рисуются SVG. Спецификация — `TRAEKTORIYA-SPEC.md`. Пишет
+  `traektoriya.html`, рендер — `traektoriya_pdf.js` → `traektoriya-kursant.pdf`.
 - `*_pdf.js` — рендер HTML в PDF через Playwright (Chromium из `/opt/pw-browsers`).
 
 Сборка одной редакции:
