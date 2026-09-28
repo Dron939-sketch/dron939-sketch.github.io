@@ -4,6 +4,7 @@
 
     blog/lektorij/courses.json   слаг → название курса
     blog/lektorij/waves.json     слаг → номер лекции в курсе (волна)
+    blog/lektorij/cards.json     название курса → адрес, первая лекция, число лекций
 
 Зачем. В админке список озвучки показывает лекции по одной: заголовок и слаг.
 Курса в нём нет, и найти «все лекции „Перехода“» можно только если помнишь, что
@@ -31,6 +32,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEKTORIJ = os.path.join(ROOT, "blog", "lektorij")
 OUT = os.path.join(LEKTORIJ, "courses.json")
 OUT_WAVES = os.path.join(LEKTORIJ, "waves.json")
+OUT_CARDS = os.path.join(LEKTORIJ, "cards.json")
 
 
 def _course_lectures(course_dir):
@@ -73,6 +75,33 @@ def build() -> dict:
     return courses
 
 
+def build_cards() -> list:
+    """Карточки курсов для Фреди: когда он называет курс в разговоре, под
+    ответом встаёт ссылка на первую лекцию (fredi/app.js, 28.09.2026).
+    Раньше Фреди говорил «найди в Лектории по названию» — и не шёл никто."""
+    cards = []
+    for d in sorted(os.listdir(LEKTORIJ)):
+        cdir = os.path.join(LEKTORIJ, d)
+        hub = os.path.join(cdir, "index.html")
+        if not os.path.exists(hub):
+            continue
+        s = io.open(hub, encoding="utf-8").read()
+        m = re.search(r"<h1[^>]*>(.*?)</h1>", s, re.S)
+        if not m:
+            continue
+        name = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", m.group(1))).strip()
+        lectures = _course_lectures(cdir)
+        if not lectures:
+            continue
+        cards.append({
+            "name": name,
+            "url": "/blog/lektorij/%s/" % d,
+            "first": "/blog/%s.html" % lectures[0][1],
+            "n": len(lectures),
+        })
+    return cards
+
+
 def main():
     dry = "--dry-run" in sys.argv
     courses = build()
@@ -84,7 +113,9 @@ def main():
     if dry:
         print("Это пробный прогон, файлы не тронуты.")
         return
-    for path, data in ((OUT, courses), (OUT_WAVES, waves)):
+    cards = build_cards()
+    print("карточек курсов для Фреди: %d" % len(cards))
+    for path, data in ((OUT, courses), (OUT_WAVES, waves), (OUT_CARDS, cards)):
         io.open(path, "w", encoding="utf-8").write(
             json.dumps(data, ensure_ascii=False, separators=(",", ":"), sort_keys=True))
         print("записано: %s (%.1f КБ)"
