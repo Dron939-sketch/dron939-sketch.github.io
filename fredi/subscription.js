@@ -749,7 +749,13 @@
             document.body.appendChild(overlay);
 
             var _closeReason = 'close_btn';
-            function _onActivated() { _closeReason = 'activated'; _close(); }
+            function _onActivated(ev) {
+                // Сигнал «подписка обновлена» приходит и после возврата с
+                // кассы с неоплаченным платежом — тогда окно оплаты должно
+                // остаться открытым, чтобы человек мог довести оплату.
+                if (!(ev && ev.detail && ev.detail.activated)) return;
+                _closeReason = 'activated'; _close();
+            }
             function _close() {
                 _payStep('checkout_closed', { reason: _closeReason });
                 overlay.remove();
@@ -800,13 +806,18 @@
                 const hasMarker = sp.get('subscription') === 'success' || sp.get('payment_id');
                 const hasPending = !!_readPendingPaymentId();
                 if (!hasMarker && !hasPending) return;
-                await _autoVerifyOnReturn(null);
+                const activated = await _autoVerifyOnReturn(null);
                 const subContainer = _findSubContainer();
                 if (subContainer) {
                     try { await renderSubscriptionSection(subContainer); } catch (e) {}
                 }
                 try {
-                    window.dispatchEvent(new CustomEvent('fredi:subscription-updated'));
+                    // activated — признак для окна оплаты: закрывать его
+                    // только когда деньги дошли. 28.09.2026 человек вернулся
+                    // с кассы с неоплаченным платежом, открыл оплату снова,
+                    // и окно само закрылось через 5 секунд с причиной
+                    // «activated», хотя подписка не включилась; так дважды.
+                    window.dispatchEvent(new CustomEvent('fredi:subscription-updated', { detail: { activated: !!activated } }));
                 } catch (e) {}
                 try {
                     if (typeof window.loadPremiumStatus === 'function') {
