@@ -916,6 +916,109 @@ function _injectVoiceInviteStyles() {
     document.head.appendChild(s);
 }
 
+// ---------- Карточка курса под ответом (28.09.2026) ----------
+// Фреди называет курсы Лектория («курс „Личные границы“ в Лектории»),
+// но без ссылки — «найди по названию». Не шёл никто: из 200 человек в
+// день, открывающих Фреди, до Лектория доходят единицы. Теперь, если в
+// ответе стоит название курса из каталога (blog/lektorij/cards.json,
+// собирает tools/gen_lektorij_courses.py), под ответом встаёт карточка
+// с первой лекцией. Один раз за разговор: вторая карточка — уже витрина.
+const COURSE_CARD_SESSION = 'fredi_course_card_shown';
+let _courseCards = null;
+
+function _normCourse(s) {
+    return String(s || '').toLowerCase().replace(/ё/g, 'е')
+        .replace(/[^а-яa-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+async function _loadCourseCards() {
+    if (_courseCards) return _courseCards;
+    try {
+        const r = await fetch('/blog/lektorij/cards.json', { cache: 'no-cache' });
+        const list = await r.json();
+        const map = {};
+        (list || []).forEach(c => { if (c && c.name) map[_normCourse(c.name)] = c; });
+        _courseCards = map;
+    } catch (e) {
+        _courseCards = {};
+    }
+    return _courseCards;
+}
+
+async function _maybeCourseCard(answer) {
+    try {
+        const text = String(answer || '');
+        if (!/курс|лектори/i.test(text)) return;
+        try { if (sessionStorage.getItem(COURSE_CARD_SESSION)) return; } catch (e) {}
+        const cards = await _loadCourseCards();
+        let card = null;
+        // Внутренние кавычки не входят в имя: из «курс „Личные границы“ в
+        // Лектории» поиск перезапускается с „ и берёт само название.
+        const re = /[«„"]([^«»„“"]{3,80})[»“"]/g;
+        let m;
+        while ((m = re.exec(text))) {
+            const c = cards[_normCourse(m[1])];
+            if (c) { card = c; break; }
+        }
+        if (!card) return;
+        const stream = document.getElementById('dashChatStream');
+        const inner = stream && stream.querySelector('.chat-messages');
+        if (!inner) return;
+        try { sessionStorage.setItem(COURSE_CARD_SESSION, card.url); } catch (e) {}
+        _injectCourseCardStyles();
+        const utm = 'utm_source=fredi&utm_medium=chat&utm_campaign=course_card';
+        const slug = card.url.replace(/^\/blog\/lektorij\/|\/$/g, '');
+        const track = (ev, d) => {
+            try { window.FrediTracker && window.FrediTracker.track(ev, Object.assign({ course: slug }, d || {})); } catch (e) {}
+        };
+        const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+        const el = document.createElement('div');
+        el.className = 'message bot course-card';
+        el.innerHTML =
+            '<div class="course-card-kicker">Лекторий · бесплатно, без регистрации</div>' +
+            '<div class="course-card-title">' + esc(card.name) + '</div>' +
+            '<div class="course-card-meta">' + card.n + ' ' + _lectureWord(card.n) + '</div>' +
+            '<div class="course-card-btns">' +
+                '<a class="course-card-btn course-card-main" target="_blank" rel="noopener" data-act="first" href="' +
+                    esc(card.first + '?' + utm) + '">▶ Первая лекция</a>' +
+                '<a class="course-card-btn" target="_blank" rel="noopener" data-act="course" href="' +
+                    esc(card.url + '?' + utm) + '">Все лекции</a>' +
+            '</div>';
+        inner.appendChild(el);
+        try { stream.scrollTop = stream.scrollHeight; } catch (e) {}
+        track('course_card_shown', {});
+        el.querySelectorAll('.course-card-btn').forEach(a => a.addEventListener('click', () => {
+            track('course_card_click', { act: a.getAttribute('data-act') });
+        }));
+    } catch (e) {}
+}
+
+function _lectureWord(n) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return 'лекция';
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'лекции';
+    return 'лекций';
+}
+
+function _injectCourseCardStyles() {
+    if (document.getElementById('course-card-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'course-card-styles';
+    s.textContent = [
+        '.course-card{max-width:92%;border-left:3px solid #3b82ff}',
+        '.course-card-kicker{font-size:12px;opacity:.7}',
+        '.course-card-title{font-size:15px;font-weight:700;margin-top:2px}',
+        '.course-card-meta{font-size:13px;opacity:.8;margin-top:2px}',
+        '.course-card-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}',
+        '.course-card-btn{padding:8px 14px;border-radius:999px;border:1px solid rgba(127,127,127,.35);',
+        'background:rgba(127,127,127,.12);color:inherit;font-size:13px;font-weight:600;text-decoration:none}',
+        '.course-card-btn:hover{background:rgba(127,127,127,.22)}',
+        '.course-card-main{background:#3b82ff;border-color:#3b82ff;color:#fff}',
+        '.course-card-main:hover{background:#2f6fe0}'
+    ].join('');
+    document.head.appendChild(s);
+}
+
 // Текстовая отправка с главного экрана — альтернатива голосу.
 // Голос идёт через voiceManager (/api/voice/process_stream), текст — прямо
 // в /api/chat. Ответ падает в тот же #dashChatStream, что и голосовой,
@@ -1117,6 +1220,8 @@ function setupDashComposer() {
                     setTimeout(function () { window.FrediMeter.showPeakOffer('msg' + DOOR_AFTER_MESSAGES); }, 1500);
                 }
             }
+            // Назвал курс Лектория — под ответом карточка с первой лекцией.
+            if (answer) _maybeCourseCard(answer);
             // Приглашение перейти на голос — после четвёртой своей реплики
             // (или пятой, если четвёртая была «ок»). См. _maybeVoiceInvite.
             if (answer && !_autoMsg && (_dashMsgCount === 4 || _dashMsgCount === 5)) {
@@ -2439,6 +2544,7 @@ async function initVoice() {
         } else {
             addMessage(answer, 'bot');
         }
+        _maybeCourseCard(answer);
         const btn = document.getElementById('mainVoiceBtn');
         if (btn && (btn._voiceStatus === 'thinking' || btn._voiceStatus === 'processing')
             && voiceManager.onStatusChange) {
