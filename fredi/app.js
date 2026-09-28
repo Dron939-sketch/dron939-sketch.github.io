@@ -793,6 +793,129 @@ function _isProgressReport(text) {
     return /\b(попробовал[аи]?|получилось|сработало|помогло|стало легче|полегчало|сделал[аи]?\b|написал[аи]?\s+(ему|ей|им|письмо)|сказал[аи]?\s+(ему|ей|им|вслух)|доклеил|дописал[аи]?|записал[аи]?|выписал[аи]?|позвонил[аи]?|поговорил[аи]?|справил[ас]я|выдержал[аи]?|отказал[аи]?)\b/.test(t);
 }
 
+// ---------- Приглашение на голос (28.09.2026, решение владельца) ----------
+// Выгрузка 21–28.09: 24 человека, хоть раз заговорившие голосом, дали
+// медиану 7 реплик и 29% разговоров до десяти и дальше; 237 писавших —
+// 4 реплики и 15%. Из четырёх оплат две у первых. Медиана разговора —
+// 4 реплики, поэтому приглашение стоит ровно там, где уходит половина.
+// Строкой в чате, а не модалкой: на четвёртой реплике модалку уже
+// показывает карточка бесплатной версии. Голос предлагаем дать услышать,
+// а не хвалим его словами, и оставляем выход тем, кому говорить вслух
+// сейчас негде: все оплатившие пришли из «Анонимного чата».
+// A/B: половина устройств приглашения не видит — сравниваем глубину.
+const VOICE_INVITE_KEY = 'fredi_voice_invite_at';
+const VOICE_INVITE_AB = 'fredi_voice_invite_ab';
+const _CRISIS_RE = /(не хочу жить|жить не хочу|покончить с собой|покончу с собой|суицид|самоубий|убить себя|убью себя|порезать себя|режу себя|вскрыть вены|умереть хочу|хочу умереть)/i;
+const _CRISIS_REPLY_RE = /(\b112\b|8[\s\-‑]?800|телефон доверия)/i;
+
+function _voiceInviteArm() {
+    try {
+        let v = localStorage.getItem(VOICE_INVITE_AB);
+        if (v === 'invite' || v === 'control') return v;
+        v = Math.random() < 0.5 ? 'invite' : 'control';
+        localStorage.setItem(VOICE_INVITE_AB, v);
+        return v;
+    } catch (e) {
+        return null;   // корзину не запомнить — в замер не берём
+    }
+}
+
+async function _maybeVoiceInvite(answer, text) {
+    try {
+        if (localStorage.getItem(VOICE_INVITE_KEY)) return;
+        if (localStorage.getItem('fredi_voice_used')) return;
+    } catch (e) { return; }
+    // Четвёртая реплика «ок» — не момент; подождём пятой.
+    if (String(text || '').trim().length < 8 && _dashMsgCount === 4) return;
+    if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) return;
+    if (!voiceManager || !document.getElementById('mainVoiceBtn')) return;
+    // Разговор о жизни и смерти — не место предлагать сменить формат.
+    const stream = document.getElementById('dashChatStream');
+    const seen = stream ? (stream.textContent || '') : '';
+    if (_CRISIS_RE.test(text) || _CRISIS_RE.test(seen) || _CRISIS_REPLY_RE.test(seen)
+        || _CRISIS_REPLY_RE.test(answer)) return;
+    // Голосовые минуты знакомства кончились — звать некуда.
+    try {
+        const st = window.FrediMeter && window.FrediMeter.checkCanSend
+            ? await window.FrediMeter.checkCanSend() : null;
+        if (st && st.voice_allowed === false) return;
+        if (st && !st.is_premium && typeof st.remaining_trial_minutes === 'number'
+            && st.remaining_trial_minutes < 2) return;
+    } catch (e) {}
+    const arm = _voiceInviteArm();
+    if (!arm) return;
+    try { localStorage.setItem(VOICE_INVITE_KEY, String(Date.now())); } catch (e) {}
+    const track = (ev, d) => {
+        try { window.FrediTracker && window.FrediTracker.track(ev, Object.assign({ arm }, d || {})); } catch (e) {}
+    };
+    track('voice_invite_arm', { msg: _dashMsgCount });
+    if (arm !== 'invite') return;
+
+    const inner = stream && stream.querySelector('.chat-messages');
+    if (!inner || document.getElementById('voiceInvite')) return;
+    _injectVoiceInviteStyles();
+    const canListen = !(window.FrediSound && window.FrediSound.isOff());
+    const el = document.createElement('div');
+    el.id = 'voiceInvite';
+    el.className = 'message bot voice-invite';
+    el.innerHTML =
+        '<div class="voice-invite-text">Если удобно — можно не печатать. Нажмите и держите ' +
+        'микрофон и просто расскажите, я отвечу голосом. Длинную историю так рассказывать ' +
+        'легче. А если рядом люди — пишите, как пишете.</div>' +
+        '<div class="voice-invite-btns">' +
+            (canListen ? '<button type="button" class="voice-invite-btn" data-act="listen">▶ Послушать мой ответ</button>' : '') +
+            '<button type="button" class="voice-invite-btn" data-act="mic">🎤 Сказать голосом</button>' +
+            '<button type="button" class="voice-invite-btn voice-invite-no" data-act="no">Буду писать</button>' +
+        '</div>';
+    setTimeout(() => {
+        inner.appendChild(el);
+        try { stream.scrollTop = stream.scrollHeight; } catch (e) {}
+        track('voice_invite_shown', {});
+    }, 800);
+    el.querySelectorAll('.voice-invite-btn').forEach(b => b.addEventListener('click', async () => {
+        const act = b.getAttribute('data-act');
+        track('voice_invite_' + act, {});
+        if (act === 'no') { try { el.remove(); } catch (e) {} return; }
+        if (act === 'listen') {
+            b.disabled = true;
+            b.textContent = '… включаю';
+            try { await voiceManager.textToSpeech(answer, currentMode); } catch (e) {}
+            b.remove();
+            return;
+        }
+        // 'mic': человек сам нажмёт и будет держать — показываем, где.
+        const mic = document.getElementById('mainVoiceBtn');
+        if (!mic) return;
+        try { mic.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+        mic.classList.add('voice-invite-pulse');
+        setTimeout(() => mic.classList.remove('voice-invite-pulse'), 6000);
+        const t = el.querySelector('.voice-invite-text');
+        if (t) t.textContent = 'Нажмите на микрофон и держите, пока говорите. Отпустите — и я отвечу.';
+        const btns = el.querySelector('.voice-invite-btns');
+        if (btns) btns.remove();
+    }));
+}
+
+function _injectVoiceInviteStyles() {
+    if (document.getElementById('voice-invite-styles')) return;
+    const s = document.createElement('style');
+    s.id = 'voice-invite-styles';
+    s.textContent = [
+        '.voice-invite{max-width:92%}',
+        '.voice-invite-text{font-size:14px;line-height:1.4}',
+        '.voice-invite-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}',
+        '.voice-invite-btn{padding:8px 14px;border-radius:999px;border:1px solid rgba(127,127,127,.35);',
+        'background:rgba(127,127,127,.12);color:inherit;font:inherit;font-size:13px;font-weight:600;cursor:pointer}',
+        '.voice-invite-btn:hover{background:rgba(127,127,127,.22)}',
+        '.voice-invite-btn:disabled{opacity:.6;cursor:default}',
+        '.voice-invite-btn.voice-invite-no{font-weight:400;opacity:.7}',
+        '@keyframes voiceInvitePulse{0%{box-shadow:0 0 0 0 rgba(59,130,255,.55)}',
+        '70%{box-shadow:0 0 0 16px rgba(59,130,255,0)}100%{box-shadow:0 0 0 0 rgba(59,130,255,0)}}',
+        '.voice-invite-pulse{animation:voiceInvitePulse 1.5s ease-out 4}'
+    ].join('');
+    document.head.appendChild(s);
+}
+
 // Текстовая отправка с главного экрана — альтернатива голосу.
 // Голос идёт через voiceManager (/api/voice/process_stream), текст — прямо
 // в /api/chat. Ответ падает в тот же #dashChatStream, что и голосовой,
@@ -993,6 +1116,11 @@ function setupDashComposer() {
                     // и чаще раза в день.
                     setTimeout(function () { window.FrediMeter.showPeakOffer('msg' + DOOR_AFTER_MESSAGES); }, 1500);
                 }
+            }
+            // Приглашение перейти на голос — после четвёртой своей реплики
+            // (или пятой, если четвёртая была «ок»). См. _maybeVoiceInvite.
+            if (answer && !_autoMsg && (_dashMsgCount === 4 || _dashMsgCount === 5)) {
+                _maybeVoiceInvite(answer, text);
             }
         } catch (e) {}
 

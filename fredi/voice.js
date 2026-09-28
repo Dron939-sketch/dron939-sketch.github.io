@@ -620,6 +620,8 @@ class VoiceRecorder {
             // След каждой отправленной записи: если сервер ответит «не
             // расслышал», будет видно — пришла тишина (peak около нуля,
             // speech=false) или речь, которую не разобрал распознаватель.
+            // Человек говорил голосом — приглашение на голос (app.js) ему уже ни к чему.
+            try { localStorage.setItem('fredi_voice_used', String(Date.now())); } catch (e) {}
             _vtrack('voice_sent', {
                 ms: durationMs,
                 kb: Math.round(blob.size / 1024),
