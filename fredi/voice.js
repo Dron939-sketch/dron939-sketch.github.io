@@ -332,14 +332,29 @@ class VoiceRecorder {
         }
     }
 
+    // Запуск записи — два ожидания подряд: getUserMedia и сборка звукового
+    // тракта. На iPhone первое тянется сотни миллисекунд, а при первом
+    // нажатии Safari ещё и спрашивает разрешение на микрофон — палец к этому
+    // времени уже отпущен. До 28.09.2026 отпускание в этом окне ломало
+    // запись двумя способами: stop() до getUserMedia был пустым, и микрофон
+    // включался «сиротой» — писал до следующего нажатия и уходил на
+    // распознавание обрывком (у платившей это кончилось 400 «не расслышал»);
+    // stop() во время сборки тракта обнулял audioCtx, и start() падал
+    // с TypeError → «Не удалось запустить микрофон» (6 раз на iPhone
+    // за неделю). Теперь отпускание в этом окне — отмена: микрофон
+    // выключается, контекст закрывается, человеку — подсказка, а не ошибка.
     async start() {
-        if (this.recording) return false;
+        if (this.recording || this._starting) return false;
+        this._starting = true;
+        this._cancelStart = false;
+        const t0 = Date.now();
+        let stream = null;
         try {
             // На iOS Safari MediaRecorder выдаёт fragmented MP4, который часто
             // невалиден для STT (см. WebKit Bug #216832 и issues с DeepGram/Whisper).
             // Поэтому ВЕЗДЕ используем ScriptProcessor → WAV — это работает на 100%
             // на всех браузерах, формат гарантированно валиден для бэкенда.
-            const stream = await navigator.mediaDevices.getUserMedia({
+            stream = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     echoCancellation: true,
                     noiseSuppression: true,
@@ -347,26 +362,40 @@ class VoiceRecorder {
                     channelCount: 1,
                 }
             });
+            const gumMs = Date.now() - t0;
+            if (this._cancelStart) return this._abortStart(stream, gumMs);
             this.mediaStream = stream;
             this.wavData = [];
             this.mrChunks = [];
             this.speechSeen = false;
             this.silenceStart = null;
-            this.recording = true;
-            this._recordingStartTs = Date.now();
+            this._peakVol = 0;
             this._actualSampleRate = null;
 
             await this._setupAudioPipeline(stream);
+            if (this._cancelStart) return this._abortStart(stream, gumMs);
 
+            this.recording = true;
+            this._recordingStartTs = Date.now();
+            // Индикатор громкости — только теперь: его цикл живёт, пока
+            // recording, а до этой строки он бы остановился на первом кадре.
+            this._startVolumeRaf();
             this.stopTimer = setTimeout(() => this.stop(), this.config.maxDuration);
             _vtrack('voice_start_ok', {
                 rate: this._actualSampleRate || 0,
                 primed: !!this._primedCtx,
                 state: this.audioCtx ? this.audioCtx.state : '?',
+                gum_ms: gumMs,
             });
             if (this.onRecordingStart) this.onRecordingStart();
             return true;
         } catch (err) {
+            // Отмена — только если микрофон успел включиться: отказ в
+            // разрешении или его отсутствие человек должен увидеть как есть.
+            if (this._cancelStart && stream) return this._abortStart(stream, Date.now() - t0);
+            this._teardownAudio();
+            if (stream) { stream.getTracks().forEach(t => { try { t.stop(); } catch {} }); }
+            if (this.mediaStream === stream) this.mediaStream = null;
             this.recording = false;
             console.error('VoiceRecorder.start error:', err);
             const msgs = {
@@ -374,9 +403,44 @@ class VoiceRecorder {
                 NotFoundError:    'Микрофон не найден',
                 NotReadableError: 'Микрофон занят другим приложением'
             };
-            _vtrack('voice_start_fail', { err: (err && err.name) || 'unknown' });
-            if (this.onError) this.onError(msgs[err.name] || 'Не удалось запустить микрофон');
+            _vtrack('voice_start_fail', {
+                err: (err && err.name) || 'unknown',
+                msg: String((err && err.message) || '').slice(0, 80),
+            });
+            if (this.onError) this.onError(msgs[err && err.name] || 'Не удалось запустить микрофон');
             return false;
+        } finally {
+            this._starting = false;
+        }
+    }
+
+    // Отмена запуска: палец отпущен, пока микрофон включался. Всё, что
+    // успело подняться, гасим. Долгий getUserMedia — почти всегда окно
+    // разрешения на микрофон: тогда подсказываем, что теперь можно
+    // говорить, иначе — что кнопку надо держать.
+    _abortStart(stream, gumMs) {
+        this._teardownAudio();
+        if (stream) { stream.getTracks().forEach(t => { try { t.stop(); } catch {} }); }
+        if (this.mediaStream === stream) this.mediaStream = null;
+        this.recording = false;
+        this.wavData = [];
+        _vtrack('voice_start_cancelled', { gum_ms: gumMs || 0 });
+        if (this.onError) {
+            this.onError(gumMs > 1000
+                ? 'Микрофон включён. Нажмите и держите кнопку, пока говорите'
+                : 'Держите кнопку, пока говорите');
+        }
+        if (this.onRecordingStop) this.onRecordingStop(null);
+        return false;
+    }
+
+    _teardownAudio() {
+        if (this.rafId) { cancelAnimationFrame(this.rafId); this.rafId = null; }
+        if (this.processor) { try { this.processor.disconnect(); } catch {} this.processor = null; }
+        this.analyser = null;
+        if (this.audioCtx) {
+            if (this._primedCtx === this.audioCtx) this._primedCtx = null;
+            this.audioCtx.close().catch(() => {}); this.audioCtx = null;
         }
     }
 
@@ -388,6 +452,7 @@ class VoiceRecorder {
         this.wavData.push(int16);
         const n = int16.length || 1;
         const vol = Math.min(100, (sumAbs / n / 32768) * 100);
+        if (vol > (this._peakVol || 0)) this._peakVol = vol;
         if (this.onVolumeChange) this.onVolumeChange(vol);
         const isSpeech = vol > VoiceConfig.ui.minVolumeToConsiderSpeech;
         if (isSpeech) {
@@ -433,7 +498,6 @@ class VoiceRecorder {
             try {
                 await this._setupWorklet(src);
                 console.log(`🎤 AudioWorklet sampleRate: ${this._actualSampleRate}`);
-                this._startVolumeRaf();
                 return;
             } catch (e) {
                 console.warn('AudioWorklet setup failed, fallback to ScriptProcessor:', e);
@@ -441,7 +505,6 @@ class VoiceRecorder {
         }
         this._setupScriptProcessor(src);
         console.log(`🎤 ScriptProcessor sampleRate: ${this._actualSampleRate}`);
-        this._startVolumeRaf();
     }
 
     async _setupWorklet(src) {
@@ -524,20 +587,21 @@ class VoiceRecorder {
     }
 
     stop() {
-        if (!this.recording) return;
+        if (!this.recording) {
+            // Запуск ещё идёт (ждём микрофон или разрешение) — это отмена,
+            // start() сам всё погасит, см. _abortStart().
+            if (this._starting) this._cancelStart = true;
+            return;
+        }
         this.recording = false;
         this.silenceStart = null;
+        const heardSpeech = this.speechSeen;
         this.speechSeen = false;
         const durationMs = this._recordingStartTs ? (Date.now() - this._recordingStartTs) : 0;
         this._lastDurationMs = durationMs;
 
         if (this.stopTimer) { clearTimeout(this.stopTimer); this.stopTimer = null; }
-        if (this.rafId) { cancelAnimationFrame(this.rafId); this.rafId = null; }
-        if (this.processor) { try { this.processor.disconnect(); } catch {} this.processor = null; }
-        if (this.audioCtx)  {
-            if (this._primedCtx === this.audioCtx) this._primedCtx = null;
-            this.audioCtx.close().catch(() => {}); this.audioCtx = null;
-        }
+        this._teardownAudio();
         if (this._volCtx)   { this._volCtx.close().catch(() => {}); this._volCtx = null; }
         this._stopStream();
 
@@ -553,6 +617,16 @@ class VoiceRecorder {
         if (this.wavData.length > 0) {
             const blob = this._buildWav();
             console.log(`🎤 Recording finished: ${durationMs}ms, ${blob.size}b WAV @${this._actualSampleRate}Hz`);
+            // След каждой отправленной записи: если сервер ответит «не
+            // расслышал», будет видно — пришла тишина (peak около нуля,
+            // speech=false) или речь, которую не разобрал распознаватель.
+            _vtrack('voice_sent', {
+                ms: durationMs,
+                kb: Math.round(blob.size / 1024),
+                rate: this._actualSampleRate || 0,
+                peak: Math.round((this._peakVol || 0) * 10) / 10,
+                speech: heardSpeech,
+            });
             this._finish(blob);
         } else {
             console.warn('🎤 No audio data captured');
@@ -1254,6 +1328,10 @@ class VoiceTransport {
                 const data = await resp.json().catch(() => ({}));
                 let msg = data && data.error;
                 if (!msg) msg = 'Не удалось распознать речь';
+                _vtrack('voice_rejected', {
+                    reason: /коротк/i.test(msg) ? 'short' : (/распознать/i.test(msg) ? 'no_speech' : 'other'),
+                    kb: Math.round(audioBlob.size / 1024),
+                });
                 if (/коротк/i.test(msg))     msg = 'Слишком короткая запись — удерживай кнопку дольше';
                 if (/распознать/i.test(msg)) msg = 'Не расслышал. Скажи громче и чётче, пожалуйста';
                 if (this.onError) this.onError(msg);
