@@ -1981,7 +1981,12 @@
             document.getElementById('meterDoorLater').onclick = function () {
                 _track('meter_account_door_dismissed', { source: source || '', reason: 'later' });
                 overlay.remove();
-                setTimeout(function () { askWhyNot('door'); }, 400);
+                // Опрос «что остановило?» здесь больше не задаём (29.09.2026).
+                // Карточка стоит на четвёртой реплике, посреди разговора, и
+                // опрос был вторым барьером подряд: за неделю 95 из 105 его
+                // показов — отсюда, 64 из 103 ответов — «Не отвечать», а 28
+                // человек ушли сразу после него. После стены он остаётся:
+                // там разговор уже остановлен.
             };
             overlay.onclick = function (e) {
                 if (e.target === overlay) { _track('meter_account_door_dismissed', { source: source || '', reason: 'outside' }); overlay.remove(); }
