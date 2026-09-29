@@ -21,16 +21,89 @@
     // ===== Режим 1: серверная озвучка (Yandex SpeechKit, mp3 с кэшем) =====
     // Генерируется один раз, дальше отдаётся файл. Если бэкенд недоступен
     // или ключ не настроен — тихо падаем в режим 2 (голос браузера).
-    function tryServerAudio() {
-        return fetch(API + '/api/tts/blog/' + slug + '/status')
-            .then(function (r) { return r.json(); })
+    //
+    // 29.09.2026: раньше одна неудачная попытка (сервер перезапускается
+    // после выкладки, связь на телефоне моргнула) сразу уводила в голос
+    // браузера, а там, где русского голоса нет — встроенные браузеры
+    // Telegram и VK, часть Android, — плеер прятался целиком: «плеер
+    // пропал из лекций». Теперь: три попытки с паузой; «озвучка выключена»
+    // от сервера по-прежнему уводит в голос браузера, а «сервер не
+    // ответил» — в плеер, который по ▶ пробует снова.
+    // Результат: true — плеер нарисован; false — сервер сказал, что
+    // озвучки нет; 'offline' — сервер не ответил.
+    function fetchStatus() {
+        var ctrl = ('AbortController' in window) ? new AbortController() : null;
+        var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 10000) : null;
+        return fetch(API + '/api/tts/blog/' + slug + '/status', ctrl ? { signal: ctrl.signal } : {})
+            .then(function (r) {
+                if (t) clearTimeout(t);
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            });
+    }
+
+    function tryServerAudio(attempt) {
+        attempt = attempt || 0;
+        return fetchStatus()
             .then(function (d) {
                 if (!d || !d.enabled) return false;
                 cssServer();
                 renderServer(d.ready, d.v || 0, d.url || '');
                 return true;
             })
-            .catch(function () { return false; });
+            .catch(function () {
+                if (attempt >= 2) return 'offline';
+                return new Promise(function (res) { setTimeout(res, attempt ? 4000 : 1500); })
+                    .then(function () { return tryServerAudio(attempt + 1); });
+            });
+    }
+
+    // Серверный голос не сработал посреди дела (генерация не дождалась,
+    // сеть оборвалась). Голос браузера — только если в нём есть русский;
+    // иначе раньше плеер исчезал, теперь остаётся с кнопкой «ещё раз».
+    function hasRuVoice() {
+        try {
+            return ('speechSynthesis' in window) && typeof SpeechSynthesisUtterance !== 'undefined'
+                && speechSynthesis.getVoices().some(function (v) { return /^ru/i.test(v.lang); });
+        } catch (e) { return false; }
+    }
+    function fallBack() {
+        if (hasRuVoice()) { box.innerHTML = ''; initBrowserTTS(); }
+        else renderOffline();
+    }
+
+    // Сервер озвучки не ответил: плеер всё равно на месте, ▶ пробует снова.
+    function renderOffline() {
+        cssServer();
+        box.style.display = '';
+        box.innerHTML =
+            '<div class="lsn2-row">' +
+            '<button class="lsn2-play" id="lsn2Retry" aria-label="Слушать">▶</button>' +
+            '<div class="lsn2-txt">' +
+            '<span class="lsn2-badge">🎧 Аудиоверсия</span>' +
+            '<div class="lsn2-t">' + (slug.indexOf('lekciya-') === 0 ? 'Лекцию читает Фреди' : 'Слушайте статью голосом Фреди') + '</div>' +
+            '<div class="lsn2-sub" id="lsn2Sub">Озвучка не отвечает — нажмите ▶, попробую ещё раз</div>' +
+            '</div></div>';
+        document.getElementById('lsn2Retry').addEventListener('click', function () {
+            var btn = this;
+            btn.disabled = true;
+            btn.classList.add('busy');
+            btn.textContent = '';
+            tryServerAudio(2).then(function (ok) {
+                if (ok === true) {
+                    // Плеер нарисован заново — сразу запускаем то, что просили.
+                    var go = document.getElementById('lsn2Go');
+                    if (go) go.click();
+                } else if (ok === false) {
+                    box.innerHTML = '';
+                    initBrowserTTS();
+                } else {
+                    renderOffline();
+                    var sub = document.getElementById('lsn2Sub');
+                    if (sub) sub.textContent = 'Пока не отвечает. Попробуйте через минуту';
+                }
+            });
+        });
     }
 
     function cssServer() {
@@ -227,8 +300,7 @@
                     // До первого звука ошибка означает «сервер не смог» —
                     // тогда браузерный голос честнее молчания.
                     if (!started) {
-                        box.innerHTML = '';
-                        initBrowserTTS();
+                        fallBack();
                         return;
                     }
                     recover();
@@ -274,17 +346,17 @@
                 if (r.status === 200) { play(v); return; }
                 var tries = 0;
                 var t = setInterval(function () {
-                    if (++tries > 75) { clearInterval(t); box.innerHTML = ''; initBrowserTTS(); return; }
+                    if (++tries > 75) { clearInterval(t); fallBack(); return; }
                     fetch(API + '/api/tts/blog/' + slug + '/status')
                         .then(function (rr) { return rr.json(); })
                         .then(function (d) {
-                            if (d && d.error) { clearInterval(t); box.innerHTML = ''; initBrowserTTS(); return; }
+                            if (d && d.error) { clearInterval(t); fallBack(); return; }
                             // подпись берём свежую: пока шла генерация, окно могло смениться
                             if (d && d.ready) { clearInterval(t); play(d.v || v, d.url); }
                         })
                         .catch(function () {});
                 }, 8000);
-            }).catch(function () { box.innerHTML = ''; initBrowserTTS(); });
+            }).catch(function () { fallBack(); });
         });
     }
 
@@ -297,7 +369,10 @@
         legacyInit();
     }
 
-    tryServerAudio().then(function (ok) { if (!ok) initBrowserTTS(); });
+    tryServerAudio().then(function (ok) {
+        if (ok === 'offline') renderOffline();
+        else if (!ok) initBrowserTTS();
+    });
 
     function legacyInit() {
 
