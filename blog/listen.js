@@ -9,13 +9,15 @@
     var box = document.getElementById('listenBox');
     if (!box) return;
 
-    var API = 'https://ffred-ddd989.amvera.io';
-    // Соединение с сервером озвучки — заранее, пока рисуется плеер.
-    try {
-        var pc = document.createElement('link');
-        pc.rel = 'preconnect'; pc.href = API; pc.crossOrigin = 'anonymous';
-        document.head.appendChild(pc);
-    } catch (e) {}
+    // Озвучка — через адрес самого сайта: nginx meysternlp.ru проксирует
+    // /api/ на сервер Фреди (так же ходит и приложение). До 29.09.2026
+    // плеер стучался прямо на ffred-ddd989.amvera.io — сторонний адрес,
+    // который режут защита браузера (Яндекс.Браузер), блокировщики и
+    // корпоративные сети: у владельца плеер висел на «подключаю» и ▶ не
+    // играла, хотя из песочницы тот же сервер отвечал за секунду.
+    // Страница, открытая не с сайта (копия в кэше поисковика), идёт
+    // по прямому адресу, как раньше.
+    var API = /(^|\.)meysternlp\.ru$/.test(location.hostname) ? '' : 'https://ffred-ddd989.amvera.io';
     var slug = location.pathname.split('/').pop().replace('.html', '');
 
     // Скорости чтения, общие для серверного плеера и браузерного голоса.
@@ -39,7 +41,7 @@
     // озвучки нет; 'offline' — сервер не ответил.
     function fetchStatus() {
         var ctrl = ('AbortController' in window) ? new AbortController() : null;
-        var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 10000) : null;
+        var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 8000) : null;
         return fetch(API + '/api/tts/blog/' + slug + '/status', ctrl ? { signal: ctrl.signal } : {})
             .then(function (r) {
                 if (t) clearTimeout(t);
@@ -415,6 +417,7 @@
                 if (go) go.click();
             }
         } else if (ok === 'offline') {
+            goal('listen_status_fail');
             renderOffline();
         } else {
             box.innerHTML = '';
