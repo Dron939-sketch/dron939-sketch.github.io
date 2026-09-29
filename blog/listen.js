@@ -10,6 +10,12 @@
     if (!box) return;
 
     var API = 'https://ffred-ddd989.amvera.io';
+    // Соединение с сервером озвучки — заранее, пока рисуется плеер.
+    try {
+        var pc = document.createElement('link');
+        pc.rel = 'preconnect'; pc.href = API; pc.crossOrigin = 'anonymous';
+        document.head.appendChild(pc);
+    } catch (e) {}
     var slug = location.pathname.split('/').pop().replace('.html', '');
 
     // Скорости чтения, общие для серверного плеера и браузерного голоса.
@@ -369,9 +375,51 @@
         legacyInit();
     }
 
+    // Плеер рисуется СРАЗУ, до ответа сервера (29.09.2026, владелец: «он
+    // сразу должен появляться, а не спустя время»). Раньше #listenBox
+    // стоял пустым, пока не вернётся статус озвучки — на лекции это
+    // секунда и больше, а при повторных попытках — несколько секунд:
+    // человек видел заголовок, пустоту и текст и не знал, что лекцию
+    // можно слушать. Теперь ответ сервера только подменяет готовый плеер
+    // рабочим; ▶, нажатая раньше ответа, запускает лекцию, как только он
+    // придёт.
+    var pendingPlay = false;
+    function renderPending() {
+        cssServer();
+        var isLecture = slug.indexOf('lekciya-') === 0;
+        box.innerHTML =
+            '<div class="lsn2-row">' +
+            '<button class="lsn2-play" id="lsn2Wait" aria-label="Слушать">▶</button>' +
+            '<div class="lsn2-txt">' +
+            '<span class="lsn2-badge">🎧 Аудиоверсия</span>' +
+            '<div class="lsn2-t">' + (isLecture ? 'Лекцию читает Фреди' : 'Слушайте статью голосом Фреди') + '</div>' +
+            '<div class="lsn2-sub" id="lsn2Sub">Нажмите ▶ — слушайте как подкаст, хоть в дороге</div>' +
+            '</div>' +
+            '<div class="lsn2-eq" aria-hidden="true"><i style="height:10px"></i><i style="height:20px"></i><i style="height:8px"></i><i style="height:24px"></i><i style="height:14px"></i></div>' +
+            '</div>';
+        document.getElementById('lsn2Wait').addEventListener('click', function () {
+            pendingPlay = true;
+            this.disabled = true;
+            this.classList.add('busy');
+            this.textContent = '';
+            var sub = document.getElementById('lsn2Sub');
+            if (sub) sub.textContent = 'Подключаю голос Фреди…';
+        });
+    }
+
+    renderPending();
     tryServerAudio().then(function (ok) {
-        if (ok === 'offline') renderOffline();
-        else if (!ok) initBrowserTTS();
+        if (ok === true) {
+            if (pendingPlay) {
+                var go = document.getElementById('lsn2Go');
+                if (go) go.click();
+            }
+        } else if (ok === 'offline') {
+            renderOffline();
+        } else {
+            box.innerHTML = '';
+            initBrowserTTS();
+        }
     });
 
     function legacyInit() {
