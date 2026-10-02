@@ -783,6 +783,30 @@ let _isLoading = false;
 // Живёт вне setupDashComposer: дашборд перерисовывается, а счёт нет.
 let _dashMsgCount = 0;
 
+// Карточки поверх разговора — не больше одной на три своих реплики
+// (02.10.2026, слово владельца). До этого на третьей реплике шло
+// «Напомнить завтра», на четвёртой в ту же секунду — карточка аккаунта и
+// приглашение на голос. В выгрузке 25.09–02.10 четвёртая реплика — самый
+// большой обрыв: на ней кончились 111 разговоров из 455; карточку
+// аккаунта закрыли 170 раз из 251. Учёт по событиям трекера, поэтому
+// сюда попадают и карточки, которые рисуют meter.js и weekplan.js.
+// Стена лимита сюда не входит: она не карточка, а конец бесплатного.
+const _CARD_EVENTS = {
+    return_prompt_shown: 1, voice_invite_shown: 1, meter_account_door_shown: 1,
+    meter_peak_offer_shown: 1, week_plan_offer_shown: 1, course_card_shown: 1,
+};
+let _lastCardMsg = -99;
+let _doorDone = false;
+let _idleReturnTimer = null;
+window.addEventListener('fredi:track', function (e) {
+    try { if (_CARD_EVENTS[e.detail.event]) _lastCardMsg = _dashMsgCount; } catch (err) {}
+});
+function _cardFree() { return _dashMsgCount - _lastCardMsg >= 3; }
+// Проверка в момент показа, а не в момент решения: две карточки одного
+// ответа (итог разговора: предложение и «Семь дней») идут с разницей в
+// секунду, и вторая должна увидеть первую.
+function _cardLater(fn, ms) { setTimeout(function () { if (_cardFree()) fn(); }, ms); }
+
 // Сообщение о сделанном шаге. Прошедшее время первого лица плюс глагол
 // действия или результата; отрицание рядом («не получилось», «не смогла»)
 // снимает совпадение — там не момент пользы, а момент поддержки.
@@ -825,8 +849,9 @@ async function _maybeVoiceInvite(answer, text) {
         if (localStorage.getItem(VOICE_INVITE_KEY)) return;
         if (localStorage.getItem('fredi_voice_used')) return;
     } catch (e) { return; }
-    // Четвёртая реплика «ок» — не момент; подождём пятой.
-    if (String(text || '').trim().length < 8 && _dashMsgCount === 4) return;
+    // Реплика «ок» — не момент; подождём следующей.
+    if (String(text || '').trim().length < 8 && _dashMsgCount < 9) return;
+    if (!_cardFree()) return;
     if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) return;
     if (!voiceManager || !document.getElementById('mainVoiceBtn')) return;
     // Разговор о жизни и смерти — не место предлагать сменить формат.
@@ -1042,6 +1067,8 @@ function setupDashComposer() {
         // не идёт. Флаг снимаем сразу, чтобы следующая реплика была своей.
         const _autoMsg = !!window.__frediAutoMsgPending;
         window.__frediAutoMsgPending = false;
+        // Человек пишет дальше — разговор не кончился, «Напомнить завтра» ждёт.
+        if (_idleReturnTimer) { clearTimeout(_idleReturnTimer); _idleReturnTimer = null; }
 
         // Защёлка и вся видимая реакция — СИНХРОННО, до первого await.
         // Раньше busy и disabled ставились после проверки лимита, а она
@@ -1154,7 +1181,7 @@ function setupDashComposer() {
         try {
             if (answer && /завтра спрошу|продолжим завтра/i.test(answer)
                 && window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
-                setTimeout(function () { window.FrediMeter.showPeakOffer('closing'); }, 1500);
+                _cardLater(function () { window.FrediMeter.showPeakOffer('closing'); }, 1500);
             }
         } catch (e) {}
         // «Семь дней по теме» (25.09.2026): после того же ритуала завершения —
@@ -1165,7 +1192,8 @@ function setupDashComposer() {
         try {
             if (answer && !_autoMsg && window.FrediWeekPlan
                 && (/завтра спрошу|продолжим завтра/i.test(answer) || _dashMsgCount === 5)) {
-                setTimeout(function () { window.FrediWeekPlan.offer(_dashMsgCount === 5 ? 'msg6' : 'closing'); }, 2500);
+                var _wpSource = _dashMsgCount === 5 ? 'msg6' : 'closing';
+                _cardLater(function () { window.FrediWeekPlan.offer(_wpSource); }, 2500);
             }
         } catch (e) {}
         // Момент пользы: человек сообщил о сделанном шаге — «попробовала»,
@@ -1175,7 +1203,7 @@ function setupDashComposer() {
         try {
             if (answer && _dashMsgCount >= 3 && _isProgressReport(text)
                 && window.FrediMeter && typeof window.FrediMeter.showPeakOffer === 'function') {
-                setTimeout(function () { window.FrediMeter.showPeakOffer('progress'); }, 2500);
+                _cardLater(function () { window.FrediMeter.showPeakOffer('progress'); }, 2500);
             }
         } catch (e) {}
 
@@ -1195,36 +1223,52 @@ function setupDashComposer() {
         // результата теста в счёт не идут (флаг из openers.js): раньше
         // они считались первым, и тот, кто пришёл с рекламы, видел
         // карточку после третьей своей реплики.
-        var DOOR_AFTER_MESSAGES = 4;
+        // 02.10.2026 владелец согласился сдвинуть её на ДЕСЯТУЮ реплику:
+        // на четвёртой она стояла в ту же секунду, что приглашение на
+        // голос, сразу после «Напомнить завтра», и четвёртая реплика стала
+        // самым большим обрывом разговора. Если на десятой занято другой
+        // карточкой — на первой свободной после неё, один раз за сессию.
+        var DOOR_AFTER_MESSAGES = 10;
         try {
             if (!_autoMsg) _dashMsgCount++;
             // «Напомнить завтра, на чём остановились?» — одна строка в чате
-            // после ТРЕТЬЕГО своего сообщения (25.09.2026). Не модалка:
-            // человек уже в разговоре, и просьба про завтра читается как
+            // (25.09.2026). Не модалка: просьба про завтра читается как
             // забота, а не как турникет. meter.js сам не покажет второй раз
             // и тому, у кого канал уже есть.
-            if (answer && !_autoMsg && _dashMsgCount === 3 && window.FrediMeter
+            // 02.10.2026 — не на третьей реплике, а когда разговор затих:
+            // полторы минуты после ответа Фреди нет новой реплики (от трёх
+            // своих сообщений). Посреди разговора она была третьей помехой
+            // за две реплики; в конце — ровно то, о чём спрашивает.
+            if (answer && !_autoMsg && _dashMsgCount >= 3 && window.FrediMeter
                 && typeof window.FrediMeter.showReturnPrompt === 'function') {
-                setTimeout(function () { window.FrediMeter.showReturnPrompt('msg3'); }, 1200);
+                if (_idleReturnTimer) clearTimeout(_idleReturnTimer);
+                _idleReturnTimer = setTimeout(function () {
+                    _idleReturnTimer = null;
+                    if ((input.value || '').trim() || !_cardFree()) return;
+                    window.FrediMeter.showReturnPrompt('idle');
+                }, 90000);
             }
-            if (answer && !_autoMsg && _dashMsgCount === DOOR_AFTER_MESSAGES && window.FrediMeter) {
+            if (answer && !_autoMsg && !_doorDone && _dashMsgCount >= DOOR_AFTER_MESSAGES
+                && window.FrediMeter && _cardFree()) {
+                _doorDone = true;
                 var _authedNow = !!(window.FrediAuth && typeof window.FrediAuth.isAuthed === 'function' && window.FrediAuth.isAuthed());
                 if (!_authedNow && typeof window.FrediMeter.showAccountDoor === 'function') {
-                    setTimeout(function () { window.FrediMeter.showAccountDoor('msg' + DOOR_AFTER_MESSAGES); }, 1500);
+                    _cardLater(function () { window.FrediMeter.showAccountDoor('msg' + DOOR_AFTER_MESSAGES); }, 1500);
                 } else if (_authedNow && typeof window.FrediMeter.showPeakOffer === 'function') {
                     // У человека с аккаунтом карточка бесплатной версии не
-                    // нужна — а разговор к четвёртому своему сообщению уже
+                    // нужна — а разговор к десятому своему сообщению уже
                     // пошёл. Это пиковый момент «сохранить и продолжать»
                     // (12.09.2026); meter.js сам не покажет его подписчику
                     // и чаще раза в день.
-                    setTimeout(function () { window.FrediMeter.showPeakOffer('msg' + DOOR_AFTER_MESSAGES); }, 1500);
+                    _cardLater(function () { window.FrediMeter.showPeakOffer('msg' + DOOR_AFTER_MESSAGES); }, 1500);
                 }
             }
             // Назвал курс Лектория — под ответом карточка с первой лекцией.
             if (answer) _maybeCourseCard(answer);
-            // Приглашение перейти на голос — после четвёртой своей реплики
-            // (или пятой, если четвёртая была «ок»). См. _maybeVoiceInvite.
-            if (answer && !_autoMsg && (_dashMsgCount === 4 || _dashMsgCount === 5)) {
+            // Приглашение перейти на голос — с седьмой своей реплики до
+            // девятой (02.10.2026; было четвёртая-пятая): первая, где нет
+            // другой карточки рядом и реплика не «ок». См. _maybeVoiceInvite.
+            if (answer && !_autoMsg && _dashMsgCount >= 7 && _dashMsgCount <= 9) {
                 _maybeVoiceInvite(answer, text);
             }
         } catch (e) {}
