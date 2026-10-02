@@ -650,6 +650,41 @@
         try { sessionStorage.setItem('meterWallShownAt', String(Date.now())); } catch (e) {}
     }
 
+    // Полоса внизу экрана после перезагрузки с жёсткой стены (02.10.2026).
+    // Одна на экран; чат за ней всё равно не работает, так что закрывать
+    // её нечем — кроме покупки или ожидания.
+    function _showQuietBar(data) {
+        try {
+            if (document.getElementById('meterQuietBar') || document.getElementById('meterOverlay')) return;
+            var minutes = (data && data.minutes_until_reset) || 0;
+            if (minutes <= 0) minutes = _minutesUntilMidnight();
+            var resetAt = new Date(Date.now() + minutes * 60000);
+            var hhmm = ('0' + resetAt.getHours()).slice(-2) + ':' + ('0' + resetAt.getMinutes()).slice(-2);
+            var bar = document.createElement('div');
+            bar.id = 'meterQuietBar';
+            bar.setAttribute('style',
+                'position:fixed;left:0;right:0;bottom:0;z-index:99998;padding:12px 16px calc(12px + env(safe-area-inset-bottom));' +
+                'background:#1c1c1e;color:#fff;box-shadow:0 -8px 30px rgba(0,0,0,0.35);font-size:14px;line-height:1.4;' +
+                'display:flex;align-items:center;gap:12px;flex-wrap:wrap');
+            bar.innerHTML =
+                '<div style="flex:1 1 200px">Бесплатные минуты на сегодня вышли, вернутся в <b>' + hhmm + '</b>. ' +
+                    'Продолжить разговор можно сейчас — по методу психолога Андрея Мейстера.</div>' +
+                '<button type="button" id="meterQuietBarBtn" style="flex:0 0 auto;min-height:40px;padding:0 16px;border:none;border-radius:12px;' +
+                    'background:linear-gradient(135deg,#3b82ff,#8b5cf6);color:#fff;font-weight:700;font-size:14px;cursor:pointer">' +
+                    '3 дня за 69 ₽</button>';
+            document.body.appendChild(bar);
+            _track('meter_blocked_shown', { wall_v: 'quiet_bar', block_reason: (data && data.block_reason) || 'daily',
+                                           limit_minutes: (data && data.limit_minutes) || 0, minutes_until_reset: minutes });
+            document.getElementById('meterQuietBarBtn').onclick = function () {
+                _track('meter_subscribe_clicked', { wall_v: 'quiet_bar' });
+                _rememberDismiss();
+                try { bar.remove(); } catch (e) {}
+                if (typeof window.openCheckout === 'function') window.openCheckout('paywall');
+                else if (typeof showSettingsScreen === 'function') showSettingsScreen();
+            };
+        } catch (e) {}
+    }
+
     // ===== Дневная стена =====
     //
     // Решение владельца 16.09.2026: когда дневное время вышло, на экране
@@ -855,6 +890,12 @@
                 since_dismiss_sec: Math.round(Math.min(_dismissedAgo(), _wallShownAgo())),
                 hard: hard,
             });
+            // Жёсткую стену не закрыть, и человек перезагружает страницу:
+            // 02.10.2026 так сделали 5 из 19, кто её увидел, — и ушли,
+            // потому что после перезагрузки их встречал тост и мёртвый
+            // чат. Вместо тоста — полоса с тем же предложением и кнопкой:
+            // вторая попытка продать там, где раньше был тупик.
+            if (hard && !_minor(data)) { _showQuietBar(data); return; }
             try { _toast('⏱ Минуты вернутся в полночь — Premium снимает счётчик', 'info'); } catch (e) {}
             return;
         }
