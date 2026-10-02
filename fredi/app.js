@@ -2767,7 +2767,11 @@ function renderDashboard() {
                     <div class="hero-ava">${modeConfig.emoji}<i class="hero-dot"></i></div>
                     <div class="hero-who">
                         <div class="hero-name-line" id="heroNameLine">${heroGreetingHtml}</div>
-                        <div class="hero-sub" id="heroSub">Слушаю, помогаю разобраться</div>
+                        <!-- 02.10.2026, решение владельца: в подзаголовке — чей это
+                             метод, а не что Фреди делает. «Слушаю, помогаю разобраться»
+                             говорил любой чат-бот; имя психолога с первой секунды
+                             отвечает на вопрос, кому здесь верить. -->
+                        <div class="hero-sub" id="heroSub">По методу психолога Андрея Мейстера</div>
                     </div>
                     <span class="hero-gap"></span>
                     <span class="hero-mins" id="heroMins" hidden></span>

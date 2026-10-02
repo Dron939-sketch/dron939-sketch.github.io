@@ -684,18 +684,25 @@
     // Корзина липкая: человек, попавший в Б, видит Б и завтра, иначе он
     // попадает в обе выборки сразу и различие размывается.
     var LS_WALL_AB = 'fredi_wall_ab';
+    // Третье плечо с 02.10.2026 (решение владельца): «метод» — та же
+    // стена, что «предложение сверху», но вместо списка функций в ней
+    // сказано, кто за Фреди. Прежние два плеча за неделю не различились
+    // (43/6 против 48/7), а оба продавали тариф: «голос, все режимы, без
+    // счётчика». Человек после двадцати минут разговора о своём платит
+    // не за режимы, а за того, кому поверил.
+    var WALL_VARIANTS = ['timer_only', 'offer_first', 'method'];
     function _wallVariant() {
         try {
             var v = localStorage.getItem(LS_WALL_AB);
-            if (v === 'timer_only' || v === 'offer_first') return v;
-            v = Math.random() < 0.5 ? 'timer_only' : 'offer_first';
+            if (WALL_VARIANTS.indexOf(v) >= 0) return v;
+            v = WALL_VARIANTS[Math.floor(Math.random() * WALL_VARIANTS.length)];
             localStorage.setItem(LS_WALL_AB, v);
             return v;
         } catch (e) {
             // Приватный режим: корзину не запомнить. Человек увидит
             // случайный вариант — в замер он всё равно попадёт честно,
             // просто без склейки между заходами.
-            return Math.random() < 0.5 ? 'timer_only' : 'offer_first';
+            return WALL_VARIANTS[Math.floor(Math.random() * WALL_VARIANTS.length)];
         }
     }
 
@@ -731,7 +738,23 @@
         var clock = _formatResetCountdown(minutes) + ':00';
         var did = _whatYouDid();
         var body;
-        if (variant === 'offer_first') {
+        if (variant === 'method') {
+            // Факты — только проверяемые: страница «Обо мне» и внешние
+            // профили (кандидат наук, «Теория манипуляции», «Вариатика»).
+            body =
+                '<div class="meter-wall-title">' +
+                    (did ? 'Вы только что ' + did : 'На сегодня время вышло') + '</div>' +
+                '<div class="meter-wall-lead">Это не просто ИИ. Фреди ведёт разговор по методу ' +
+                    'психолога Андрея Мейстера — кандидата психологических наук, автора ' +
+                    '«Теории манипуляции» и «Вариатики». То, что вы сейчас услышали, — его ' +
+                    'способ работать с людьми. Продолжить можно прямо сейчас.</div>' +
+                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
+                    '▶️ Продолжить сейчас — 3 дня за 69 ₽</button>' +
+                '<div class="meter-wall-fine">Потом 690 ₽ в месяц, отключается в один клик. ' +
+                    'Голос, все режимы, без счётчика.</div>' +
+                '<div class="meter-wall-wait">Или подождать до ' + resetHhMm + ' — вернутся ' +
+                    limit + ' бесплатных минут. Осталось <b id="meterTimer">' + clock + '</b></div>';
+        } else if (variant === 'offer_first') {
             body =
                 '<div class="meter-wall-title">' +
                     (did ? 'Вы только что ' + did : 'На сегодня время вышло') + '</div>' +

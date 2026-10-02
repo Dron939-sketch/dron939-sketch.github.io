@@ -640,7 +640,7 @@
             <div class="sub-card">
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
                 <div class="sub-title">Фреди Premium</div>
-                <div class="sub-desc">Что открывается с подпиской</div>
+                <div class="sub-desc">Разговор по методу психолога Андрея Мейстера, кандидата психологических наук. Что открывается с подпиской:</div>
                 ${priceHtml}
                 <ul class="sub-features">
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Фреди помнит каждый разговор и продолжает с того же места</li>

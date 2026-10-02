@@ -340,6 +340,8 @@
     var WALL_AB = {
         timer_only: ['fredi_wall_timer_shown', 'fredi_wall_timer_click'],
         offer_first: ['fredi_wall_offer_shown', 'fredi_wall_offer_click'],
+        // Плечо «метод» (02.10.2026): целей в Метрике под него нет, счёт
+        // идёт по бэкенду — /api/analytics/daily?…&by=wall_v.
     };
 
     function _mirrorToMetrika(event, data) {
