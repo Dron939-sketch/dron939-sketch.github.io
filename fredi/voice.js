@@ -793,9 +793,13 @@ class VoiceTransport {
                 // мёртвый запрос и юзер увидит «ошибку». Показываем пейволл
                 // (дедуп: если meter_blocked-сообщение уже показало — повтора нет).
                 if (e.code === 4002) {
+                    const hadPending = !!this._pendingAudioBlob;
                     this._pendingAudioBlob = null;
                     this._clearWsResponseTimer();
-                    this._showMeterPaywall({ trial_exhausted: true });
+                    // Закрытие сразу после подключения, без отправки, —
+                    // стена ждёт нажатия на микрофон (см. 'meter_blocked').
+                    if (hadPending) this._showMeterPaywall({ trial_exhausted: true });
+                    else if (!this._voiceBlockedPayload) this._voiceBlockedPayload = { trial_exhausted: true };
                     if (this.onStatusChange) this.onStatusChange('idle');
                     return;
                 }
@@ -989,6 +993,19 @@ class VoiceTransport {
                     // Сервер следом закроет WS кодом 4002; HTTP-фоллбэк и
                     // реконнект подавляются в onclose (см. ветку e.code===4002).
                     this._clearWsResponseTimer();
+                    // Сокет открывается при загрузке страницы, и сервер
+                    // проверяет счётчик прямо на подключении. Вернувшемуся
+                    // без минут (аноним на второй день) или с выговоренным
+                    // голосовым окном стена оплаты вылетала с порога — до
+                    // того, как он что-то написал или нажал (02.10.2026:
+                    // все три стены за полтора часа такие, все трое ушли).
+                    // Без отправки в полёте стену не рисуем: запоминаем и
+                    // показываем, когда человек сам нажмёт микрофон.
+                    if (!this._pendingAudioBlob) {
+                        this._voiceBlockedPayload = msg;
+                        if (this.onStatusChange) this.onStatusChange('idle');
+                        break;
+                    }
                     this._pendingAudioBlob = null;
                     this._showMeterPaywall(msg);
                     if (this.onStatusChange) this.onStatusChange('idle');
@@ -1144,6 +1161,13 @@ class VoiceTransport {
                 }
             }
         } catch (e) { /* предчек необязателен — упадём на серверную проверку */ }
+        // Сервер уже отказал голосу на подключении — стена показывается
+        // здесь, по нажатию, а не при загрузке страницы.
+        if (this._voiceBlockedPayload) {
+            this._showMeterPaywall(this._voiceBlockedPayload);
+            if (this.onStatusChange) this.onStatusChange('idle');
+            return false;
+        }
 
         // Как и в текстовом чате: пока сервер не подтвердил, кто это,
         // реплику отправлять нельзя — она уйдёт на временный id.
