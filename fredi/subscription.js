@@ -288,7 +288,22 @@
         } finally { _autoVerifyActive = false; }
     }
 
+    // Чем кончилась последняя проверка после возврата с кассы: статус
+    // платежа и тариф. По ним _bootstrapAutoVerify решает, предлагать ли
+    // оплатить ещё раз.
+    let _returnOutcome = null;
+
+    function _readPendingPlan() {
+        try {
+            const uid = _uid();
+            const raw = uid ? localStorage.getItem(_pendingKey(uid)) : null;
+            const obj = raw ? JSON.parse(raw) : null;
+            return (obj && PLAN_KEYS.indexOf(obj.plan) >= 0) ? obj.plan : null;
+        } catch (e) { return null; }
+    }
+
     async function _autoVerifyLoop(container, paymentId) {
+        _returnOutcome = { paymentId: paymentId, plan: _readPendingPlan(), status: null };
 
         if (container) {
             container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Проверяю оплату...</div></div>';
@@ -310,7 +325,7 @@
             }
             if (lastResult && lastResult.status === 'canceled') {
                 _clearPendingPayment();
-                _toast('Оплата отменена', 'error');
+                _returnOutcome.status = 'canceled';
                 return false;
             }
             // 5 секунд между проверками; после 429 — пауза длиннее,
@@ -321,8 +336,77 @@
         if (lastResult && lastResult.status && lastResult.status !== 'pending' && lastResult.status !== 'waiting_for_capture') {
             _clearPendingPayment();
         }
-        _toast('Платёж в обработке, статус обновится автоматически', 'info');
+        _returnOutcome.status = (lastResult && lastResult.status) || null;
+        // «pending» через полминуты после возврата — это почти всегда
+        // закрытая страница банка, а не медленный банк: 30.09–01.10 все
+        // три таких платежа ЮKassa потом отменила (expired_on_confirmation).
+        // Тост «в обработке» говорил им, что всё идёт как надо; теперь
+        // вместо него — карточка с повтором (см. _offerPaymentRetry).
+        if (_returnOutcome.status !== 'pending') {
+            _toast('Платёж в обработке, статус обновится автоматически', 'info');
+        }
         return false;
+    }
+
+    // Вернулся с кассы, а деньги не дошли — предложить оплатить ещё раз
+    // одной кнопкой (02.10.2026). С 29.09 по 01.10 до ЮKassa дошли три
+    // человека, все трое вернулись в приложение без оплаты и больше не
+    // пробовали. Повтор в течение 10 минут ЮKassa отдаёт тем же платежом
+    // (Idempotence-Key на бэкенде), позже — новым; двойного списания нет.
+    // Одна карточка на платёж: перезагрузка страницы её не повторяет.
+    const RETRY_SHOWN_KEY = 'fredi_pay_retry_shown';
+    function _offerPaymentRetry(outcome) {
+        try {
+            if (!outcome || (outcome.status !== 'pending' && outcome.status !== 'canceled')) return;
+            try {
+                if (localStorage.getItem(RETRY_SHOWN_KEY) === outcome.paymentId) return;
+                localStorage.setItem(RETRY_SHOWN_KEY, outcome.paymentId);
+            } catch (e) {}
+            if (document.getElementById('fredPayRetry')) return;
+            const track = (ev, d) => {
+                try {
+                    window.FrediTracker && window.FrediTracker.track(ev,
+                        Object.assign({ status: outcome.status, plan: outcome.plan || '' }, d || {}));
+                } catch (e) {}
+            };
+            const el = document.createElement('div');
+            el.id = 'fredPayRetry';
+            el.setAttribute('role', 'dialog');
+            el.setAttribute('style',
+                'position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:99999;' +
+                'width:calc(100% - 32px);max-width:440px;box-sizing:border-box;padding:18px 18px 14px;' +
+                'border-radius:18px;background:#1c1c1e;color:#fff;' +
+                'border:1px solid rgba(224,224,224,0.18);box-shadow:0 12px 40px rgba(0,0,0,0.45);' +
+                'font-size:15px;line-height:1.45');
+            const lead = outcome.status === 'canceled'
+                ? 'Платёж отменён, деньги не списаны.'
+                : 'Платёж не подтверждён, деньги не списаны.';
+            el.innerHTML =
+                '<div style="font-weight:700;font-size:16px;margin-bottom:6px">Оплата не прошла</div>' +
+                '<div style="color:rgba(255,255,255,0.78);margin-bottom:14px">' + lead +
+                    ' Обычно так бывает, если страница банка закрылась до кода из СМС. Можно попробовать ещё раз — это минута.</div>' +
+                '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+                    '<button type="button" data-act="retry" style="flex:1 1 auto;min-height:44px;border:none;border-radius:12px;' +
+                        'background:linear-gradient(135deg,#ff6b3b,#ffb73b);color:#fff;font-weight:700;font-size:15px;cursor:pointer">Оплатить ещё раз</button>' +
+                    '<button type="button" data-act="later" style="flex:0 1 auto;min-height:44px;padding:0 16px;border-radius:12px;' +
+                        'border:1px solid rgba(255,255,255,0.3);background:transparent;color:#fff;font-size:15px;cursor:pointer">Не сейчас</button>' +
+                '</div>';
+            document.body.appendChild(el);
+            track('checkout_retry_shown');
+            el.querySelector('[data-act="retry"]').onclick = function () {
+                track('checkout_retry_clicked');
+                el.remove();
+                // Без этого окно оплаты узнаёт старый платёж и показывает
+                // «Платёж в обработке» с ещё одной кнопкой «Начать заново» —
+                // лишний шаг ровно там, где человек уже раз сорвался.
+                _clearPendingPayment();
+                openCheckout('retry_return', outcome.plan || undefined);
+            };
+            el.querySelector('[data-act="later"]').onclick = function () {
+                track('checkout_retry_dismissed');
+                el.remove();
+            };
+        } catch (e) { console.warn('payment retry offer failed:', e); }
     }
 
 
@@ -807,6 +891,7 @@
                 const hasPending = !!_readPendingPaymentId();
                 if (!hasMarker && !hasPending) return;
                 const activated = await _autoVerifyOnReturn(null);
+                if (!activated) _offerPaymentRetry(_returnOutcome);
                 const subContainer = _findSubContainer();
                 if (subContainer) {
                     try { await renderSubscriptionSection(subContainer); } catch (e) {}
