@@ -8,6 +8,29 @@
   <meta name="googlebot" content="index, follow">
   <meta name="format-detection" content="telephone=no">
 
+  <!-- A/B для рекламы «Анонимный чат» (03.10.2026, решение владельца):
+       половина пришедших из кампании fredi_ai_exact уходит прямо в
+       приложение, где поле ввода и первая фраза Фреди уже на экране.
+       Из 580 визитов с рекламы в день до приложения доходили 190 (33%),
+       и только дошедшие писали. Корзина липкая (localStorage), чтобы
+       человек не попадал в обе выборки. Стоит ДО счётчика Метрики: у
+       плеча «приложение» первый просмотр — /fredi/, и в Метрике плечи
+       различаются по ym:s:startURL. Поисковый трафик и остальные
+       кампании страницу видят как прежде. -->
+  <script>
+  (function(){try{
+    var q=location.search||'';
+    if(!/[?&]utm_source=direct\b/.test(q)||!/[?&]utm_campaign=fredi_ai_exact\b/.test(q))return;
+    if(/bot|spider|crawl|headless|lighthouse|yandex\.com\/bots/i.test(navigator.userAgent||''))return;
+    var K='fredi_ad_ab',v=null;
+    try{v=localStorage.getItem(K);}catch(e){}
+    if(v!=='app'&&v!=='landing'){v=Math.random()<0.5?'app':'landing';try{localStorage.setItem(K,v);}catch(e){}}
+    if(v!=='app')return;
+    var sp=new URLSearchParams(q);sp.set('from','/virtual-psychologist/');sp.set('ab','app');
+    location.replace('/fredi/?'+sp.toString());
+  }catch(e){}})();
+  </script>
+
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
     (function(m,e,t,r,i,k,a){

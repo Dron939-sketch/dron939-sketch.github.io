@@ -370,9 +370,16 @@
         } catch (e) {}
     }
 
+    // Плечо A/B рекламы «Анонимный чат» (03.10.2026): посадочная кладёт
+    // в localStorage «app» (ушёл сразу в приложение) или «landing». Пишем
+    // в data каждого события, чтобы /api/analytics/daily?by=ad_ab делил
+    // по плечам и сообщения, и стену, и оплаты.
+    var _adAb='';
+    try{ _adAb=localStorage.getItem('fredi_ad_ab')||''; }catch(e){}
     function track(event,data){
         if (_isInternal()) return;
         if (_shouldDedupeError(event, data)) return;
+        if (_adAb && (_adAb==='app'||_adAb==='landing')) { data=Object.assign({}, data||{}, {ad_ab:_adAb}); }
         event=_markGameOpen(event,data);
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,
