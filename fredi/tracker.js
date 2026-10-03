@@ -376,10 +376,24 @@
     // по плечам и сообщения, и стену, и оплаты.
     var _adAb='';
     try{ _adAb=localStorage.getItem('fredi_ad_ab')||''; }catch(e){}
+    // Плечо A/B входа (03.10.2026, решение владельца: «тест, чтобы одним
+    // открывалось сразу диалоговое окно, а другим дашборд»). Жребий здесь,
+    // а не в app.js: session_start уходит раньше, чем app.js успевает
+    // что-то решить, и без плеча в первом же событии плечи не сравнить.
+    // app.js читает тот же ключ и по «dialog» открывает окно разговора.
+    var _entryAb='';
+    try{
+        _entryAb=localStorage.getItem('fredi_entry_ab')||'';
+        if(_entryAb!=='dialog'&&_entryAb!=='dashboard'){
+            _entryAb=Math.random()<0.5?'dialog':'dashboard';
+            localStorage.setItem('fredi_entry_ab',_entryAb);
+        }
+    }catch(e){ _entryAb=''; }
     function track(event,data){
         if (_isInternal()) return;
         if (_shouldDedupeError(event, data)) return;
         if (_adAb && (_adAb==='app'||_adAb==='landing')) { data=Object.assign({}, data||{}, {ad_ab:_adAb}); }
+        if (_entryAb) { data=Object.assign({}, data||{}, {entry_ab:_entryAb}); }
         event=_markGameOpen(event,data);
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,

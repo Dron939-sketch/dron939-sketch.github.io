@@ -3951,6 +3951,7 @@ async function init() {
         if (avatarEl) avatarEl.textContent = userName.charAt(0).toUpperCase();
     }
     renderDashboard();
+    try { _entryDialog(); } catch (e) { console.warn('[Fredi] entry dialog', e); }
 
     // Обработчики пунктов меню
     document.querySelectorAll('.chat-item').forEach(item => {
@@ -4019,6 +4020,83 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ============================================
+// A/B ВХОДА: окно разговора против дашборда.
+//
+// 03.10.2026, решение владельца: «тест, чтобы одним открывалось сразу
+// диалоговое окно, а другим дашборд, посмотрим, как будет лучше».
+// Плечо тянет жребием tracker.js (fredi_entry_ab) и пишет его в data
+// каждого события, так что /api/analytics/daily?by=entry_ab делит по
+// плечам первые сообщения, стену, клики и оплаты. Здесь — само плечо
+// «dialog»: после отрисовки дашборда сразу открывается окно разговора
+// (talk.js) с первой репликой Фреди. Окно не заводит ничего своего, оно
+// переносит к себе ленту, поле ввода и микрофон дашборда, поэтому
+// отправка, лимиты, стены и подсказка «вы из статьи» работают как
+// обычно, а под свёрнутым окном дашборд остаётся целым: кнопка «—» в
+// шапке окна и есть путь ко всем возможностям.
+//
+// Первая реплика — не .message: по пустой ленте openers.js решает,
+// показывать ли подсказку про статью, а talk.js по появлению .message
+// открывает окно сам. Это отдельный узел .talk-opening, оформленный как
+// пузырь Фреди; история прошлых разговоров ложится выше него.
+//
+// Глубокие ссылки на игру (?m=), тариф (?sub=) и оплату (?checkout=1,
+// #subscribe) плечо не трогает: там человек шёл не разговаривать.
+// ============================================
+function entryArm() {
+    try {
+        var v = localStorage.getItem('fredi_entry_ab');
+        return (v === 'dialog' || v === 'dashboard') ? v : '';
+    } catch (e) { return ''; }
+}
+
+function _entryOpening() {
+    var inner = _getMessagesContainer();
+    if (!inner || inner.querySelector('.talk-opening')) return;
+    var name = (CONFIG.USER_NAME || '').trim();
+    if (/^(друг|гость|user|аноним)$/i.test(name)) name = '';
+    var el = document.createElement('div');
+    el.className = 'talk-opening';
+    el.textContent = (name ? name + ', я' : 'Я') + ' Фреди, психолог по методу Андрея Мейстера. ' +
+        'Расскажите, что происходит, своими словами: с чего началось и что сейчас беспокоит сильнее всего. ' +
+        'Выслушаю и помогу разобраться.';
+    inner.appendChild(el);
+}
+
+function _entryDialog() {
+    if (entryArm() !== 'dialog') return;
+    try {
+        var sp = new URLSearchParams(location.search);
+        if (sp.get('m') || sp.get('sub') || sp.get('checkout') === '1') return;
+    } catch (e) {}
+    if (location.hash === '#subscribe') return;
+    var go = function () {
+        var tries = 0;
+        var iv = setInterval(function () {
+            tries++;
+            var ready = window.FrediTalk && typeof window.FrediTalk.open === 'function'
+                && document.getElementById('dashChatStream') && document.querySelector('.dash-composer');
+            if (!ready) { if (tries > 40) clearInterval(iv); return; }
+            clearInterval(iv);
+            // Ушли с дашборда (тест, игра) или окно уже открыто — не лезем.
+            if (!document.querySelector('.dashboard-container')) return;
+            if (window.FrediTalk.isOpen()) return;
+            _entryOpening();
+            window.FrediTalk.open('entry');
+            try {
+                if (window.FrediTracker && window.FrediTracker.track) {
+                    window.FrediTracker.track('entry_dialog_opened', {});
+                }
+            } catch (e) {}
+        }, 150);
+    };
+    if (window.authReady && typeof window.authReady.then === 'function') {
+        window.authReady.then(go).catch(go);
+    } else {
+        setTimeout(go, 600);
+    }
+}
 
 
 // ============================================================

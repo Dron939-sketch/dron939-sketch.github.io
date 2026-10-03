@@ -3247,6 +3247,17 @@ input, textarea, select, button { box-sizing: border-box; }
     background: linear-gradient(135deg, #3b82ff, #2f6ddb); color: #fff;
 }
 .talk-body .message.history { opacity: .78; }
+/* Первая реплика Фреди в плече «dialog» A/B входа (app.js, _entryDialog).
+   Выглядит как пузырь Фреди, но классом .message не является: по пустой
+   ленте openers.js решает, показывать ли подсказку про статью. */
+.talk-opening {
+    align-self: flex-start; max-width: 86%;
+    padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px;
+    font-size: 14px; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word;
+    background: rgba(224, 224, 224, 0.08); border: 1px solid rgba(224, 224, 224, 0.15);
+    color: var(--text-primary);
+}
+[data-theme="light"] .talk-opening { background: #fff; border-color: rgba(0, 0, 0, 0.08); }
 /* Разделитель «Раньше» / «Сейчас» — чипом посередине, как дата в мессенджере. */
 .talk-sep {
     align-self: center; font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase;
