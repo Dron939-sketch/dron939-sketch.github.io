@@ -515,7 +515,9 @@
         if (id === 'subscription') {
             el.innerHTML = '<div class="st-hint">Управление подпиской Фреди Premium. С подпиской Фреди работает без ограничений по времени и с премиум-функциями.</div><div id="subscriptionSection"></div>';
             var sub = document.getElementById('subscriptionSection');
-            if (sub && typeof window.renderSubscriptionSection === 'function') window.renderSubscriptionSection(sub);
+            // inSettings: здесь кнопка отключения автопродления остаётся
+            // всегда, в окне оплаты её нет (subscription.js, 04.10.2026).
+            if (sub && typeof window.renderSubscriptionSection === 'function') window.renderSubscriptionSection(sub, { inSettings: true });
         }
 
         if (id === 'payment') {

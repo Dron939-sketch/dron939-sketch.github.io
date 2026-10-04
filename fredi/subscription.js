@@ -570,7 +570,52 @@
                `<span class="sub-info-value">${_formatDate(p.at)}${sum}</span></div>`;
     }
 
-    function _renderActiveSubscription(sub) {
+    // Сколько часов прошло с оплаты. null — когда бэкенд не прислал ни
+    // last_payment, ни started_at.
+    function _hoursSincePayment(sub) {
+        try {
+            const at = (sub && sub.last_payment && sub.last_payment.at) || (sub && sub.started_at);
+            if (!at) return null;
+            const t = new Date(String(at).replace(' ', 'T')).getTime();
+            if (!isFinite(t)) return null;
+            return Math.max(0, (Date.now() - t) / 3600000);
+        } catch (e) { return null; }
+    }
+    const FRESH_PAYMENT_HOURS = 24;
+
+    // Кнопка «Отключить автопродление» убрана с экрана после оплаты
+    // (04.10.2026). Из четырёх последних проб двое выключили продление
+    // сразу: один через две минуты после оплаты, второй утром следующего
+    // дня, и оба продолжали разговаривать с Фреди — это не отказ, а
+    // страховка «чтобы не списали». Красная кнопка стояла первой строкой
+    // сразу после «Подписка активирована», и рука тянулась к ней сама.
+    //
+    // Теперь: в окне оплаты кнопки нет вовсе — только строка, где её
+    // найти. В настройках она есть всегда, как обещает посадочная, но в
+    // первые сутки после оплаты это тихая текстовая ссылка, а не красная
+    // кнопка во всю ширину.
+    function _renderRenewControl(sub, trial, opts) {
+        const off = sub.auto_renew === false;
+        const inSettings = !!(opts && opts.inSettings);
+        const h = _hoursSincePayment(sub);
+        const fresh = !off && h !== null && h < FRESH_PAYMENT_HOURS;
+        const hint = off
+            ? 'Списаний больше не будет. Доступ работает до ' + _formatDate(sub.expires_at) + '.'
+            : (trial
+                ? 'Когда три дня закончатся, подписка продолжится за ' + PLAN_PRICE.monthly + ' ₽ в месяц. Отключить можно в любой момент в настройках — доступ останется до конца оплаченного срока.'
+                : 'Отключить можно в любой момент в настройках — доступ останется до конца оплаченного месяца.');
+        let control;
+        if (!inSettings && !off) {
+            control = `<button class="sub-btn sub-btn-secondary" id="subOpenSettingsBtn">Настройки подписки</button>`;
+        } else if (fresh && inSettings) {
+            control = `<div style="text-align:center;margin-top:4px"><a href="#" id="subRenewToggleBtn" style="font-size:13px;color:var(--text-secondary);text-decoration:underline">Отключить автопродление</a></div>`;
+        } else {
+            control = `<button class="sub-btn ${off ? 'sub-btn-secondary' : 'sub-btn-danger'}" id="subRenewToggleBtn">${off ? 'Включить автопродление' : 'Отключить автопродление'}</button>`;
+        }
+        return `<div style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:12px 0 14px">${hint}</div>${control}`;
+    }
+
+    function _renderActiveSubscription(sub, opts) {
         const days = _daysLeft(sub.expires_at);
         const trial = sub.plan === 'trial_week';
         return `
@@ -583,16 +628,7 @@
                 <div class="sub-info-row"><span class="sub-info-label">Осталось дней</span><span class="sub-info-value">${days}</span></div>
                 <div class="sub-info-row"><span class="sub-info-label">Стоимость</span><span class="sub-info-value">${trial ? PLAN_PRICE.trial_week + ' &#8381; за три дня, дальше ' + PLAN_PRICE.monthly + ' &#8381;/мес' : PLAN_PRICE.monthly + ' &#8381;/мес'}</span></div>
                 <div class="sub-info-row" style="border-bottom:none"><span class="sub-info-label">Автопродление</span><span class="sub-info-value">${sub.auto_renew === false ? 'Отключено' : 'Включено'}</span></div>
-                <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:12px 0 14px">
-                    ${sub.auto_renew === false
-                        ? 'Списаний больше не будет. Доступ работает до ' + _formatDate(sub.expires_at) + '.'
-                        : (trial
-                            ? 'Когда три дня закончатся, подписка продолжится за 690 ₽ в месяц. Отключить можно прямо сейчас — доступ останется до конца оплаченного срока.'
-                            : 'Отключить можно прямо сейчас — доступ останется до конца оплаченного месяца.')}
-                </div>
-                <button class="sub-btn ${sub.auto_renew === false ? 'sub-btn-secondary' : 'sub-btn-danger'}" id="subRenewToggleBtn">
-                    ${sub.auto_renew === false ? 'Включить автопродление' : 'Отключить автопродление'}
-                </button>
+                ${_renderRenewControl(sub, trial, opts)}
             </div>`;
     }
 
@@ -619,9 +655,9 @@
         if (!trial) _selectedPlan = 'monthly';
         const priceHtml = trial
             ? `<div class="sub-price">${PLAN_PRICE.trial_week} &#8381; <span style="font-size:14px;font-weight:400;color:var(--text-secondary)">за первые три дня</span></div>
-                <div class="sub-price-period">Полный доступ на 3 дня, с голосом и без счётчика. Потом ${PLAN_PRICE.monthly} &#8381; в месяц автопродлением; отключить можно в один клик в этом же разделе, доступ останется до конца оплаченного срока. Оплата картой любого российского банка через ЮKassa.</div>`
+                <div class="sub-price-period">Полный доступ на 3 дня, с голосом и без счётчика. Потом ${PLAN_PRICE.monthly} &#8381; в месяц автопродлением; отключить можно в один клик в настройках подписки, доступ останется до конца оплаченного срока. Оплата картой любого российского банка через ЮKassa.</div>`
             : `<div class="sub-price">${PLAN_PRICE.monthly} &#8381;</div>
-                <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в этом же разделе</div>`;
+                <div class="sub-price-period">в месяц. Списывается сегодня, следующее — через 30 дней; отключить можно в один клик в настройках подписки</div>`;
         // Три месяца — третьей кнопкой под месяцем (25.09.2026): якорь,
         // рядом с которым месяц читается как цена, а не как единственный
         // вариант. Продлевается тремя же месяцами.
@@ -671,7 +707,14 @@
         } catch (e) {}
     }
 
-    async function renderSubscriptionSection(container) {
+    // opts.inSettings — карточку рисуют Настройки → Подписка: там кнопка
+    // отключения остаётся, см. _renderRenewControl.
+    async function renderSubscriptionSection(container, opts) {
+        // #subscriptionSection есть только у Настроек; перерисовки по
+        // событию fredi:subscription-updated приходят без opts.
+        opts = Object.assign({}, opts || {}, {
+            inSettings: !!((opts && opts.inSettings) || (container && container.id === 'subscriptionSection')),
+        });
         _injectSubscriptionStyles();
         container.innerHTML = '<div class="sub-loading"><div class="sub-loading-spinner">&#x2B50;</div><div>Загрузка...</div></div>';
         // Проверку незавершённого платежа гоним фоном. Раньше здесь стояло
@@ -683,7 +726,26 @@
         _autoVerifyOnReturn(container);
         const sub = await _loadSubscriptionStatus();
         if (sub && sub.has_subscription) {
-            container.innerHTML = _renderActiveSubscription(sub);
+            container.innerHTML = _renderActiveSubscription(sub, opts);
+            // Из окна оплаты — в настройки, где и живёт управление
+            // автопродлением. Окно закрываем, иначе настройки откроются
+            // под ним.
+            const settingsBtn = document.getElementById('subOpenSettingsBtn');
+            if (settingsBtn) {
+                settingsBtn.addEventListener('click', () => {
+                    _payStep('renew_settings_opened', { plan: (sub && sub.plan) || '' });
+                    try { const ov = document.getElementById('fredCheckoutOverlay'); if (ov) ov.remove(); } catch (e) {}
+                    if (typeof window.showSettingsScreen === 'function') {
+                        try { window.showSettingsScreen(); return; } catch (e) {}
+                    }
+                    try {
+                        const s = document.createElement('script');
+                        s.src = 'settings.js';
+                        s.onload = () => { if (typeof window.showSettingsScreen === 'function') window.showSettingsScreen(); };
+                        document.head.appendChild(s);
+                    } catch (e) {}
+                });
+            }
             // Кнопка отмены. До этого её не было вовсе: посадочная обещала
             // «отключается в один клик», а в настройках стояли три строки
             // без единой кнопки. Люди ищут отмену ДО оплаты — не найдя,
@@ -691,7 +753,8 @@
             // идут в банк за возвратом.
             const renewBtn = document.getElementById('subRenewToggleBtn');
             if (renewBtn) {
-                renewBtn.addEventListener('click', async () => {
+                renewBtn.addEventListener('click', async (ev) => {
+                    if (ev && ev.preventDefault) ev.preventDefault();
                     const turningOff = sub.auto_renew !== false;
                     renewBtn.disabled = true;
                     renewBtn.textContent = 'Сохраняю…';
@@ -708,13 +771,18 @@
                             // события, ни цели. Человек уходил молча, а узнать
                             // об этом можно было только заглянув в таблицу
                             // подписок руками. Теперь видно в тот же час.
+                            // since_pay_h — через сколько часов после оплаты
+                            // человек выключил продление: по нему видно,
+                            // страховка это в момент оплаты или решение потом.
+                            const sinceH = _hoursSincePayment(sub);
                             _payStep(turningOff ? 'auto_renew_off' : 'auto_renew_on', {
                                 plan: (sub && sub.plan) || '',
                                 days_left: (sub && sub.days_left != null) ? sub.days_left : null,
+                                since_pay_h: sinceH === null ? null : Math.round(sinceH * 10) / 10,
                             });
                             _subGoal(turningOff ? 'sub_auto_renew_off' : 'sub_auto_renew_on');
                             _toast(turningOff
-                                ? 'Автопродление отключено. Доступ до конца оплаченного месяца'
+                                ? 'Автопродление отключено. Доступ до конца оплаченного срока'
                                 : 'Автопродление включено', 'info');
                         } else {
                             _toast((d && d.error) || 'Не получилось изменить автопродление', 'error');
@@ -722,7 +790,7 @@
                     } catch (e) {
                         _toast('Не получилось связаться с сервером', 'error');
                     }
-                    await renderSubscriptionSection(container);
+                    await renderSubscriptionSection(container, opts);
                 });
             }
         } else {
@@ -737,7 +805,7 @@
                 if (soc && window.FrediAuth && typeof window.FrediAuth.renderSocialButtons === 'function') {
                     window.FrediAuth.renderSocialButtons(soc, {
                         source: 'wall_pay',
-                        onSuccess: function () { renderSubscriptionSection(container); }
+                        onSuccess: function () { renderSubscriptionSection(container, opts); }
                     });
                 }
             } catch (e) {}
@@ -766,7 +834,7 @@
                     _payStep('payment_restarted');
                     _clearPendingPayment();
                     _isCreatingPayment = false;
-                    await renderSubscriptionSection(container);
+                    await renderSubscriptionSection(container, opts);
                 });
             }
             const refreshBtn = document.getElementById('subRefreshPendingBtn');
@@ -777,7 +845,7 @@
                     if (pendingPid) {
                         await _verifyPayment(pendingPid);
                     }
-                    await renderSubscriptionSection(container);
+                    await renderSubscriptionSection(container, opts);
                 });
             }
             if (pendingPid) {
@@ -790,7 +858,7 @@
                     const r = await _verifyPayment(pendingPid);
                     if (r && (r.activated || r.status === 'canceled')) {
                         clearInterval(window._fredSubPollTimer);
-                        await renderSubscriptionSection(container);
+                        await renderSubscriptionSection(container, opts);
                     }
                 }, 15000);
             }
@@ -858,7 +926,7 @@
                 }
             } catch (e) {}
 
-            renderSubscriptionSection(container);
+            renderSubscriptionSection(container, { inSettings: false });
         } catch (e) { console.error('openCheckout error:', e); }
     }
     window.openCheckout = openCheckout;
