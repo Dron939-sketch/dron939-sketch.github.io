@@ -398,6 +398,10 @@
         // делит воронку приглашённых. Читаем на каждом событии: флаг ставится
         // после загрузки, когда ссылка проверена сервером.
         try { if (localStorage.getItem('fredi_invited')==='1') { data=Object.assign({}, data||{}, {invited:'1'}); } } catch(e){}
+        // Чётность user_id — плечо серверных тестов, которые делят людей по
+        // id (04.10.2026: «как говорит Андрей Мейстер» получают чётные).
+        // /api/analytics/daily?by=uidp сравнивает плечи.
+        try { var _u=Number(UID()); if (_u>0) { data=Object.assign({}, data||{}, {uidp:String(_u%2)}); } } catch(e){}
         event=_markGameOpen(event,data);
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,
