@@ -659,7 +659,7 @@ function _beginBotStream() {
     let acc = '';
     // Служебная метка приглашения [[INVITE:кто]] (invite.js) приходит в
     // конце ответа; на экран её хвост не выводим даже на полпути.
-    const _shown = (s) => s.replace(/\s*\[\[[^\]]{0,40}(\]\]?)?\s*$/, '');
+    const _shown = (s) => s.replace(/\s*\[\[[^\]]{0,48}(\]\]?)?[.,;:!\s]*$/, '');
     return {
         push(chunk) {
             acc += chunk;
@@ -1194,7 +1194,9 @@ function setupDashComposer() {
         // метка [[SCN:ключ]] в конце ответа, где Фреди выбрал сценарий.
         // С экрана снимаем, в аналитику — какой сценарий сработал.
         try {
-            var _scnRx = /\s*\[\[\s*SCN\s*:\s*([a-z_.]{2,40})\s*\]\]\s*/i;
+            // Модель пишет метку неровно: «[[SCN: partner. conflict]].» —
+            // пробелы внутри и точка после; всё это снимаем, ключ сжимаем.
+            var _scnRx = /\s*\[\[\s*SCN\s*:\s*([a-z_.\s]{2,48}?)\s*\]\][.,;:!]*\s*/i;
             var _scnM = answer && answer.match(_scnRx);
             if (_scnM) {
                 answer = answer.replace(_scnRx, ' ').trim();
@@ -1205,7 +1207,7 @@ function setupDashComposer() {
                     }
                 }
                 if (window.FrediTracker && window.FrediTracker.track) {
-                    window.FrediTracker.track('scenario_picked', { scenario: _scnM[1].toLowerCase() });
+                    window.FrediTracker.track('scenario_picked', { scenario: _scnM[1].replace(/\s+/g, '').toLowerCase() });
                 }
             }
         } catch (e) {}
