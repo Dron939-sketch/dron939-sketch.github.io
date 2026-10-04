@@ -394,6 +394,10 @@
         if (_shouldDedupeError(event, data)) return;
         if (_adAb && (_adAb==='app'||_adAb==='landing')) { data=Object.assign({}, data||{}, {ad_ab:_adAb}); }
         if (_entryAb) { data=Object.assign({}, data||{}, {entry_ab:_entryAb}); }
+        // Пришёл по приглашению близкого (invite.js): /api/analytics/daily?by=invited
+        // делит воронку приглашённых. Читаем на каждом событии: флаг ставится
+        // после загрузки, когда ссылка проверена сервером.
+        try { if (localStorage.getItem('fredi_invited')==='1') { data=Object.assign({}, data||{}, {invited:'1'}); } } catch(e){}
         event=_markGameOpen(event,data);
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,

@@ -657,18 +657,22 @@ function _beginBotStream() {
     _scrollMessagesToBottom(messagesContainer);
 
     let acc = '';
+    // Служебная метка приглашения [[INVITE:кто]] (invite.js) приходит в
+    // конце ответа; на экран её хвост не выводим даже на полпути.
+    const _shown = (s) => s.replace(/\s*\[\[[^\]]{0,40}(\]\]?)?\s*$/, '');
     return {
         push(chunk) {
             acc += chunk;
-            textSpan.textContent = acc;
+            textSpan.textContent = _shown(acc);
             _scrollMessagesToBottom(messagesContainer);
         },
         set(full) {
             acc = full || acc;
-            textSpan.textContent = acc;
+            textSpan.textContent = _shown(acc);
             _scrollMessagesToBottom(messagesContainer);
         },
         text() { return acc; },
+        el() { return messageDiv; },
         done() { messageDiv.classList.remove('streaming'); },
         remove() { try { messageDiv.remove(); } catch (e) {} }
     };
@@ -1120,8 +1124,15 @@ function setupDashComposer() {
         // (старый бэкенд, прокси схлопнул стрим, пустой ответ) — тихо
         // уходим на обычный /api/chat, человек разницы не заметит.
         let answer = '';
+        // Пузырь последнего ответа — invite.js ставит под ним карточку со
+        // ссылкой, если Фреди предложил позвать второго человека.
+        let _lastBotEl = null;
         try {
-            answer = (await _chatStreamRequest(text, _beginBotStream)) || '';
+            answer = (await _chatStreamRequest(text, function () {
+                const b = _beginBotStream();
+                try { _lastBotEl = b && b.el ? b.el() : null; } catch (e) {}
+                return b;
+            })) || '';
         } catch (err) {
             console.warn('stream chat failed, fallback to /api/chat:', err);
             answer = '';
@@ -1139,8 +1150,8 @@ function setupDashComposer() {
                 });
                 answer = (data && data.response) || '';
                 _hideThinkingBubble();
-                addMessage(answer || 'Не получилось ответить. Попробуйте ещё раз.',
-                           answer ? 'bot' : 'system');
+                _lastBotEl = addMessage(answer || 'Не получилось ответить. Попробуйте ещё раз.',
+                           answer ? 'bot' : 'system') || null;
             } catch (err) {
                 console.error('❌ dash composer send failed:', err);
                 _hideThinkingBubble();
@@ -1170,6 +1181,15 @@ function setupDashComposer() {
             } catch (e) {}
             _lastStreamDone = null;
         }
+
+        // Приглашение второго человека (invite.js, 04.10.2026): метка
+        // [[INVITE:кто]] в конце ответа снимается с экрана, под ответом —
+        // карточка со ссылкой. Дальше по коду answer уже без метки.
+        try {
+            if (answer && window.FrediInvite && typeof window.FrediInvite.handleAnswer === 'function') {
+                answer = window.FrediInvite.handleAnswer(answer, _lastBotEl) || answer;
+            }
+        } catch (e) {}
 
         // Расход НЕ пишем здесь. Его пишет единственный слой — патч fetch
         // в meter.js: /api/chat/stream попадает под его регулярку, и вызов
