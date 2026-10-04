@@ -3247,6 +3247,32 @@ input, textarea, select, button { box-sizing: border-box; }
     background: linear-gradient(135deg, #3b82ff, #2f6ddb); color: #fff;
 }
 .talk-body .message.history { opacity: .78; }
+/* Карточка «ссылка для него» под ответом Фреди (invite.js, 04.10.2026). */
+.invite-card {
+    align-self: stretch; margin: 6px 0 2px; padding: 14px 16px; border-radius: 16px;
+    background: rgba(59, 130, 255, 0.10); border: 1px solid rgba(59, 130, 255, 0.32);
+    color: var(--text-primary); font-size: 14px; line-height: 1.5;
+}
+.invite-card-t { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+.invite-card-d { color: var(--text-secondary); margin-bottom: 10px; }
+.invite-card-url {
+    font-size: 12.5px; word-break: break-all; padding: 8px 10px; border-radius: 10px;
+    background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(224, 224, 224, 0.12); margin-bottom: 10px;
+    user-select: all; -webkit-user-select: all;
+}
+.invite-card-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.invite-btn {
+    flex: 1 1 auto; min-height: 42px; border-radius: 12px; font-size: 14.5px; font-weight: 600;
+    font-family: inherit; cursor: pointer; border: 1px solid rgba(224, 224, 224, 0.3);
+    background: transparent; color: var(--text-primary);
+}
+.invite-btn--main { border: none; background: linear-gradient(135deg, #3b82ff, #2f6ddb); color: #fff; }
+.invite-card-ok { margin-top: 8px; font-size: 12.5px; color: var(--success); }
+.invite-card-ok[hidden] { display: none; }
+[data-theme="light"] .invite-card { background: #eef4ff; border-color: #bfdbfe; }
+[data-theme="light"] .invite-card-url { background: #fff; border-color: rgba(0, 0, 0, 0.1); }
+[data-theme="light"] .invite-btn { border-color: rgba(0, 0, 0, 0.18); }
+
 /* Первая реплика Фреди в плече «dialog» A/B входа (app.js, _entryDialog).
    Выглядит как пузырь Фреди, но классом .message не является: по пустой
    ленте openers.js решает, показывать ли подсказку про статью. */
