@@ -1190,6 +1190,25 @@ function setupDashComposer() {
                 answer = window.FrediInvite.handleAnswer(answer, _lastBotEl) || answer;
             }
         } catch (e) {}
+        // Сценарий по проблеме (04.10.2026, Frederick prompts/scenarios.py):
+        // метка [[SCN:ключ]] в конце ответа, где Фреди выбрал сценарий.
+        // С экрана снимаем, в аналитику — какой сценарий сработал.
+        try {
+            var _scnRx = /\s*\[\[\s*SCN\s*:\s*([a-z_.]{2,40})\s*\]\]\s*/i;
+            var _scnM = answer && answer.match(_scnRx);
+            if (_scnM) {
+                answer = answer.replace(_scnRx, ' ').trim();
+                if (_lastBotEl) {
+                    var _ts = _lastBotEl.querySelector('div') || _lastBotEl;
+                    if (_ts && typeof _ts.textContent === 'string' && _scnRx.test(_ts.textContent)) {
+                        _ts.textContent = _ts.textContent.replace(_scnRx, ' ').trim();
+                    }
+                }
+                if (window.FrediTracker && window.FrediTracker.track) {
+                    window.FrediTracker.track('scenario_picked', { scenario: _scnM[1].toLowerCase() });
+                }
+            }
+        } catch (e) {}
 
         // Расход НЕ пишем здесь. Его пишет единственный слой — патч fetch
         // в meter.js: /api/chat/stream попадает под его регулярку, и вызов

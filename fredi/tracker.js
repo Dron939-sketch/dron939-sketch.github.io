@@ -402,6 +402,10 @@
         // id (04.10.2026: «как говорит Андрей Мейстер» получают чётные).
         // /api/analytics/daily?by=uidp сравнивает плечи.
         try { var _u=Number(UID()); if (_u>0) { data=Object.assign({}, data||{}, {uidp:String(_u%2)}); } } catch(e){}
+        // scn — плечо сценариев по проблеме (04.10.2026): «1» получают
+        // сценарии, «0» — как раньше. Делим по (id // 2) % 2, независимо
+        // от чётности. /api/analytics/daily?by=scn.
+        try { var _u2=Number(UID()); if (_u2>0) { data=Object.assign({}, data||{}, {scn:(Math.floor(_u2/2)%2===0)?'1':'0'}); } } catch(e){}
         event=_markGameOpen(event,data);
         // Единая точка для внешних слушателей (напр. отложенный onboarding в
         // login.js ждёт первого «действия ценности»). Дешёвый CustomEvent,
