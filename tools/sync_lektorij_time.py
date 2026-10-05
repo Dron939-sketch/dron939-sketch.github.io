@@ -100,6 +100,13 @@ def _drop_skip_blocks(body: str) -> str:
 
 def lecture_minutes(path: str) -> float:
     html = io.open(path, encoding="utf-8").read()
+    # Лекции за замком (blog/lock.js): тело лежит в Frederick и на странице
+    # его нет — подставляем, иначе хронометраж посчитается по врезу и FAQ.
+    mg = re.search(r'<div id="lockGate" data-slug="([a-z0-9-]+)"[^>]*></div>', html)
+    if mg:
+        frag = os.path.join(ROOT, "..", "Frederick", "backend", "data", "lektorij_locked", mg.group(1) + ".html")
+        if os.path.exists(frag):
+            html = html.replace(mg.group(0), io.open(frag, encoding="utf-8").read(), 1)
     # Закрывающего </div> перед блоком-призывом в лекциях чаще всего нет —
     # там стоит </p>, и жёсткий шаблон молча не срабатывал на 979 страницах
     # из 1026, подставляя вместо тела всю страницу. На числах это не

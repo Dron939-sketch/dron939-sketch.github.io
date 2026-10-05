@@ -20,6 +20,30 @@
     var API = /(^|\.)meysternlp\.ru$/.test(location.hostname) ? '' : 'https://ffred-ddd989.amvera.io';
     var slug = location.pathname.split('/').pop().replace('.html', '');
 
+    // Кто слушает: вошедший в Фреди узнаётся по localStorage (один домен).
+    // Нужно замку Лектория (lock.js): лекции 2–10 новых курсов озвучиваются
+    // только по подписке, и /status без подписки не выдаёт адрес mp3.
+    function uid() {
+        try {
+            var v = localStorage.getItem('fredi_user_id');
+            if (v && /^\d{1,19}$/.test(v)) return v;
+        } catch (e) {}
+        return '';
+    }
+    function statusUrl() { return API + '/api/tts/blog/' + slug + '/status?uid=' + encodeURIComponent(uid()); }
+
+    // Прослушивания считаем в аналитике Фреди: цели Метрики исчерпаны
+    // (лимит 200), и до 05.10.2026 старты озвучки не считались нигде.
+    function track(name, data) {
+        try {
+            var ev = { event: name, screen: 'blog', data: data || {}, user_id: uid() || null };
+            fetch(API + '/api/analytics/events', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ events: [ev] }), keepalive: true, credentials: 'omit', mode: 'cors'
+            }).catch(function () {});
+        } catch (e) {}
+    }
+
     // Скорости чтения, общие для серверного плеера и браузерного голоса.
     // 1,1 — самая ходовая: чуть бодрее обычной, а голос ещё не «частит».
     // 1,5 убрана: на ней лекция перестаёт слушаться и начинает проматываться.
@@ -42,7 +66,7 @@
     function fetchStatus() {
         var ctrl = ('AbortController' in window) ? new AbortController() : null;
         var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 8000) : null;
-        return fetch(API + '/api/tts/blog/' + slug + '/status', ctrl ? { signal: ctrl.signal } : {})
+        return fetch(statusUrl(), ctrl ? { signal: ctrl.signal } : {})
             .then(function (r) {
                 if (t) clearTimeout(t);
                 if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -55,6 +79,7 @@
         return fetchStatus()
             .then(function (d) {
                 if (!d || !d.enabled) return false;
+                if (d.locked) { renderLocked(); return true; }
                 cssServer();
                 renderServer(d.ready, d.v || 0, d.url || '');
                 return true;
@@ -148,6 +173,17 @@
 
     function goal(name) {
         try { if (typeof ym === 'function') ym(108138656, 'reachGoal', name, { slug: slug }); } catch (e) {}
+        if (name === 'listen_tts_play' || name === 'listen_start') track('lecture_listen', { slug: slug, how: name });
+    }
+
+    // Лекция за замком (lock.js): вместо плеера — короткая заметка. Текст
+    // лекции на той же странице открывает lock.js, озвучка откроется вместе
+    // с ним после входа в Фреди с подпиской.
+    function renderLocked() {
+        box.innerHTML =
+            '<div style="margin:18px 0 6px;padding:14px 18px;background:#F7F9FF;border:1px solid #E3EAFF;border-radius:12px;color:#4A5563;font-size:.95rem">' +
+            '<span aria-hidden="true">🔒</span> Озвучка этой лекции голосом Фреди входит в подписку. ' +
+            '<a href="/fredi/?from=lock-' + encodeURIComponent(slug) + '" style="color:#3A86FF">Войти или оформить</a></div>';
     }
 
     // Адрес mp3 больше не собирается на клиенте: сервер выдаёт его подписанным
@@ -286,7 +322,7 @@
                     retries++;
                     var at = heard;
                     goal('listen_tts_resume');
-                    fetch(API + '/api/tts/blog/' + slug + '/status')
+                    fetch(statusUrl())
                         .then(function (r) { return r.json(); })
                         .then(function (d) {
                             if (!d || !d.ready) throw new Error('not ready');
@@ -355,7 +391,7 @@
                 var tries = 0;
                 var t = setInterval(function () {
                     if (++tries > 75) { clearInterval(t); fallBack(); return; }
-                    fetch(API + '/api/tts/blog/' + slug + '/status')
+                    fetch(statusUrl())
                         .then(function (rr) { return rr.json(); })
                         .then(function (d) {
                             if (d && d.error) { clearInterval(t); fallBack(); return; }
