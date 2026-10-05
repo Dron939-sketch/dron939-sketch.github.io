@@ -75,11 +75,17 @@
 Cell 1: a vintage sealed envelope, never posted, edges yellowed and
 slightly curled, a small dark red wax seal on the flap, lying flat on a
 black glossy surface. Envelope only, no stamps, no handwriting, no text.
+
+Cell 2: an antique brass hand mirror lying face down on a black glossy
+surface, its back engraved and slightly worn, a small folded paper bill
+tucked under the handle. Mirror and bill only, no reflection of a face,
+no text.
 ```
 
 | ячейка | файл | курс |
 |---|---|---|
 | 1 | `obida.webp` | Обида |
+| 2 | `vina-i-styd.webp` | Вина и стыд |
 
 ### Лист В — нужен сейчас
 
