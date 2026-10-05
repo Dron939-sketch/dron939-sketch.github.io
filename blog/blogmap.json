@@ -12543,6 +12543,76 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-1-dogovor-kotorogo-nikto-ne-chital",
+   "title": "Что считается изменой: договор, которого никто не читал — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-2-pervye-dni",
+   "title": "Первые дни: что делать и чего не делать — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-3-pochemu-izmenyayut",
+   "title": "Почему изменяют: восемь причин и одна, которая важна — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-izmena-4-razvilka",
+   "title": "Развилка: остаться, уйти или не решать на срок — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-5-doverie-zanovo",
+   "title": "Доверие заново: почему проверка его не возвращает — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-6-obraz-kotoryj-ne-uhodit",
+   "title": "Образ, который не уходит: картинки, триггеры и прошлое партнёра — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-7-revnost-bez-dokazatelstv",
+   "title": "Ревность без доказательств: подозрение, проверка, контроль — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-izmena-8-esli-izmenili-vy",
+   "title": "Если изменили вы: вина, признание, что дальше — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-izmena-9-dogovor-vsluh",
+   "title": "Договор вслух: что считать изменой у вас — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-izmena-10-zamer-i-ekzamen",
+   "title": "Замер на выходе: три числа и чужой случай — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
   }
  ]
 }
