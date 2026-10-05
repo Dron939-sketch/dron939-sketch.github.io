@@ -77,6 +77,13 @@ def analyse(course_dir):
 
     for idx, path in enumerate(lecs):
         html = io.open(path, encoding="utf-8").read()
+        # Лекции за замком (tools/lock_lektorij.py): тело лежит в Frederick,
+        # без него задания и паузы не посчитаются.
+        mg = re.search(r'<div id="lockGate" data-slug="([a-z0-9-]+)"[^>]*></div>', html)
+        if mg:
+            frag = os.path.join(ROOT, "..", "Frederick", "backend", "data", "lektorij_locked", mg.group(1) + ".html")
+            if os.path.exists(frag):
+                html = html.replace(mg.group(0), io.open(frag, encoding="utf-8").read(), 1)
         txt = text_of(html)
         chars.append(len(txt))
         concepts += len(re.findall(r'class="concept-block"', html))
