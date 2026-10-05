@@ -12473,6 +12473,76 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 10
+  },
+  {
+   "slug": "lekciya-obida-1-schet-kotoryj-ne-predyavili",
+   "title": "Счёт, который не предъявили — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-obida-2-chego-vy-zhdali",
+   "title": "Чего вы ждали: ожидание, о котором не сказали — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-obida-3-prokrutka",
+   "title": "Прокрутка: что обида делает с телом и временем — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-obida-4-komu-huzhe-tri-dorogi",
+   "title": "Кому хуже: расчёт и три дороги — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-obida-5-predyavit-schet",
+   "title": "Предъявить счёт: разговор, после которого обида уходит — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-obida-6-spisat-dolg",
+   "title": "Списать долг: прощение без примирения — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-obida-7-zakryt-dver",
+   "title": "Закрыть дверь: когда не прощать — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-obida-8-starye-scheta-roditeli",
+   "title": "Старые счета: родители, бывшие и те, кого нет — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-obida-9-obidchivost",
+   "title": "Обидчивость: когда счета выписываются по мелочам — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-obida-10-zamer-i-ekzamen",
+   "title": "Три числа на выходе и экзамен — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
   }
  ]
 }
