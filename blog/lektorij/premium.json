@@ -1,0 +1,11 @@
+{
+  "_": "Премиум-курсы Лектория (решение владельца 05.10.2026): первая лекция открыта, лекции 2–10 по подписке Фреди. Правило отбора: курс про собственное состояние или собственные отношения, то, с чем приходят к Фреди. Знания о мире, мышление, философия и ремесло общения остаются открытыми: они приводят людей из поиска. Применяет tools/lock_lektorij.py.",
+  "premium": [
+    "gore", "rasstavanie", "depressiya-i-apatiya", "trevoga", "strahi-i-fobii", "travma", "zavisimosti", "snova-zhivoj", "odinochestvo", "obida",
+    "zhizn-v-seti", "gnev-i-agressiya", "samogipnoz", "son", "privychki", "stress-menedzhment", "psihologiya-edy", "nauka-o-schaste", "dvigatel-len-ambicii",
+    "stimulnyj-kontrol", "roditelstvo", "separaciya", "druzhba", "konflikty", "privyazannost-i-otnosheniya", "izmena-i-revnost",
+    "delo-zhizni", "pochemu-ne-kopitsya", "dengi-i-psihologiya", "prokrastinaciya-i-motivaciya", "psihologiya-peregruzok", "rabota-i-karera",
+    "samoocenka", "lichnye-granicy", "emocionalnyj-intellekt", "kpt-samostoyatelno", "vysokaya-chuvstvitelnost", "vozrastnye-krizisy", "pereproshivka", "samoregulyaciya", "osoznannost",
+    "vina-i-styd"
+  ]
+}
