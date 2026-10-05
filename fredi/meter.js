@@ -666,12 +666,16 @@
                 'position:fixed;left:0;right:0;bottom:0;z-index:99998;padding:12px 16px calc(12px + env(safe-area-inset-bottom));' +
                 'background:#1c1c1e;color:#fff;box-shadow:0 -8px 30px rgba(0,0,0,0.35);font-size:14px;line-height:1.4;' +
                 'display:flex;align-items:center;gap:12px;flex-wrap:wrap');
+            var expiredBar = data && data.block_reason === 'expired';
             bar.innerHTML =
-                '<div style="flex:1 1 200px">Бесплатные минуты на сегодня вышли, вернутся в <b>' + hhmm + '</b>. ' +
-                    'Продолжить разговор можно сейчас — по методу психолога Андрея Мейстера.</div>' +
+                '<div style="flex:1 1 200px">' +
+                    (expiredBar
+                        ? 'Пробные дни закончились. Продолжить разговор можно по подписке — по методу психолога Андрея Мейстера.'
+                        : 'Бесплатные минуты на сегодня вышли, вернутся в <b>' + hhmm + '</b>. ' +
+                          'Продолжить разговор можно сейчас — по методу психолога Андрея Мейстера.') + '</div>' +
                 '<button type="button" id="meterQuietBarBtn" style="flex:0 0 auto;min-height:40px;padding:0 16px;border:none;border-radius:12px;' +
                     'background:linear-gradient(135deg,#3b82ff,#8b5cf6);color:#fff;font-weight:700;font-size:14px;cursor:pointer">' +
-                    '3 дня за 69 ₽</button>';
+                    (expiredBar ? '690 ₽ в месяц' : '3 дня за 69 ₽') + '</button>';
             document.body.appendChild(bar);
             _track('meter_blocked_shown', { wall_v: 'quiet_bar', block_reason: (data && data.block_reason) || 'daily',
                                            limit_minutes: (data && data.limit_minutes) || 0, minutes_until_reset: minutes });
@@ -762,6 +766,12 @@
         // Ребёнку цену не показываем ни в одном варианте — тогда и
         // вариантов нет: экран одинаковый, и в замер он не идёт.
         if (_minor(data)) variant = 'timer_only';
+        // Подписка была и кончилась (05.10.2026): проба один раз, дальше
+        // только месяц. Ни таймера, ни «вернутся минуты», ни 69 ₽ — одна
+        // дорога, и она в кассу с месячным тарифом (бэкенд пробу уже не
+        // отдаст: trial_available ложно).
+        var expired = data.block_reason === 'expired';
+        if (expired) variant = 'expired';
         _rememberWallShown();
         _track('meter_blocked_shown', {
             limit_minutes: limit,
@@ -773,7 +783,19 @@
         var clock = _formatResetCountdown(minutes) + ':00';
         var did = _whatYouDid();
         var body;
-        if (variant === 'method') {
+        if (expired) {
+            body =
+                '<div class="meter-wall-title">' +
+                    (did ? 'Вы только что ' + did : 'Пробные дни закончились') + '</div>' +
+                '<div class="meter-wall-lead">Пробный доступ был один раз, и он закончился. ' +
+                    'Разговор сохранён: Фреди продолжит с того же места по подписке — ' +
+                    'голос, все режимы, без счётчика.</div>' +
+                (_minor(data) ? MINOR_NOTE :
+                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
+                    '▶️ Продолжить — 690 ₽ в месяц</button>' +
+                '<div class="meter-wall-fine">Списывается сегодня, следующее через 30 дней. ' +
+                    'Отключается в один клик в настройках подписки.</div>');
+        } else if (variant === 'method') {
             // Факты — только проверяемые: страница «Обо мне» и внешние
             // профили (кандидат наук, «Теория манипуляции», «Вариатика»).
             body =
@@ -845,7 +867,7 @@
             else if (typeof showSettingsScreen === 'function') showSettingsScreen();
         };
 
-        {
+        if (!expired) {
             var el = document.getElementById('meterTimer');
             var left = minutes * 60;
             var iv = setInterval(function () {
@@ -877,7 +899,7 @@
         if (_protect > 0) { _pendingWall = data; return; }
         data = data || {};
         var hard = (!data.block_reason || data.block_reason === 'daily'
-                    || data.block_reason === 'auth');
+                    || data.block_reason === 'auth' || data.block_reason === 'expired');
         // Тишина теперь распространяется и на жёсткую стену. Раньше эта
         // проверка стояла НИЖЕ — после раннего выхода, — и жёсткая стена
         // её проскакивала: за 20 секунд один человек получал её трижды,
