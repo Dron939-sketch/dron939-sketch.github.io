@@ -12613,6 +12613,76 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 13
+  },
+  {
+   "slug": "lekciya-vina-1-dva-raznyh-signala",
+   "title": "Вина и стыд: два разных сигнала — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-vina-2-chej-eto-schet",
+   "title": "Чей это счёт: четыре вида вины — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-vina-3-samonakazanie",
+   "title": "Самонаказание: почему казнь не оплата — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-vina-4-kak-oplachivayut-vinu",
+   "title": "Как оплачивают вину: признание, возмещение, изменение — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-vina-5-chuzhoj-schet",
+   "title": "Чужой счёт: навязанная и выученная вина — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-vina-6-styd-i-zritel",
+   "title": "Стыд и зритель: чьими глазами вы на себя смотрите — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-vina-7-styd-za-sebya",
+   "title": "Стыд за себя: тело, слёзы, «не справлюсь» — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-vina-8-styd-za-svoih",
+   "title": "Стыд за своих и стыд перед людьми — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-vina-9-prostit-sebya",
+   "title": "Простить себя: списание счёта, который выписан вам вами — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-vina-10-tri-chisla-i-chuzhoj-schet",
+   "title": "Три числа на выходе и чужой счёт — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 16
   }
  ]
 }
