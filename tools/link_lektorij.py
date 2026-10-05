@@ -141,6 +141,10 @@ RULES = [
     # ловим её до общего правила про развод.
     (r"реб[её]н\w*[- ]после[- ]развод|rebenok-posle-razvoda|дет\w*[- ]после[- ]развод",
      "roditelstvo"),
+    # «Обида» — счёт, прощение, прокрутка; до правила про расставание, чтобы
+    # «как простить» не уходило в rasstavanie.
+    (r"(?s)^(?!.*(?:расста|rasstat|подростк|podrostk))"
+     r".*(?:обид|obid|прости|prostit|прощен|proshchen)", "obida"),
     (r"расстава|rasstava|расстать|rasstatsya|прощальн|proshchaln|развод|razvod|разрыв|razryv|бывш", "rasstavanie"),
     (r"одиночеств|odinochestv", "odinochestvo"),
     (r"стресс|stress", "stress-menedzhment"),
