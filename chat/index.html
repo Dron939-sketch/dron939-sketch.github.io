@@ -5,54 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cut, interactive-widget=resizes-content">
 <!-- Чат с личностями (09.10.2026, решение владельца): самостоятельный
      продукт под Яндекс Директ на движке Фреди. Выбор собеседника, чат,
-     озвучка, токены вместо минут. Личности и промпты — на сервере
+     голос, токены вместо минут. Личности и промпты — на сервере
      (Frederick/backend/personas.py), аватары — tools/build_chat_avatars.py.
      Ссылка /chat/?p=<id> открывает нужную личность сразу — для объявлений
-     под разные аудитории. Из поиска сюда не ведём. -->
+     под разные аудитории. Из поиска сюда не ведём.
+
+     10.10.2026 — раскладка по образцу frendi.ai: слева собеседники и
+     разделы сайта (со страницы было некуда уйти), справа карточка
+     собеседника и лента «С чем приходят». Фразы ленты написаны нами по
+     темам настоящих обращений, без имён: на посадочной из рекламы
+     выдуманные «люди прямо сейчас» — недостоверная реклама. Настоящее в
+     ленте — только счётчик «сейчас здесь» из Метрики. -->
 <meta name="robots" content="noindex, follow">
 <link rel="canonical" href="https://meysternlp.ru/virtual-psychologist/">
 <title>Поговорить с ИИ-собеседником — Фреди и его команда</title>
-<meta name="description" content="Выберите собеседника под свою ситуацию: отношения, дети, тревога, работа, одиночество. 50 сообщений бесплатно, без регистрации.">
+<meta name="description" content="Выберите собеседника под свою ситуацию: отношения, дети, тревога, работа, одиночество. 25 сообщений бесплатно, без регистрации. Можно голосом.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico">
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-:root{--bg:#fff;--soft:#F5F6FA;--bubble:#F1F2F7;--mine:#3A86FF;--text:#1D1D1F;--muted:#6E6E73;--faint:#9A9AA0;--line:#E6E7EE;--accent:#3A86FF}
+:root{--bg:#fff;--side:#FAFAFC;--soft:#F3F4F8;--bubble:#F1F2F7;--mine:#3A86FF;--text:#1D1D1F;--muted:#6E6E73;--faint:#9A9AA0;--line:#E8E9EF;--accent:#3A86FF;--accent2:#6C4DFF;--ok:#22B573}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
-button{font:inherit;cursor:pointer}
-.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:820px;margin:0 auto}
-.top{flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
-.top .back{width:40px;height:40px;border:0;border-radius:50%;background:var(--soft);font-size:20px;display:none}
-.top .who{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
-.top .who img{width:40px;height:40px;border-radius:50%;flex:none}
-.top .who b{display:block;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.top .who span{display:block;font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.brand{font-weight:700;font-size:1.05rem}
-.brand small{display:block;font-weight:400;font-size:.8rem;color:var(--muted)}
-.chip{flex:none;border:0;border-radius:20px;background:var(--soft);padding:9px 14px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:6px}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;cursor:pointer;color:inherit}
+a{color:inherit}
+.shell{display:grid;grid-template-columns:1fr;height:100vh;height:100dvh}
+
+/* ---------- левая колонка ---------- */
+.side{display:none;flex-direction:column;background:var(--side);border-right:1px solid var(--line);min-height:0}
+.side-head{display:flex;align-items:center;gap:10px;padding:18px 18px 14px;text-decoration:none}
+.side-head img{width:38px;height:38px;border-radius:50%}
+.side-head b{display:block;font-size:1.02rem}
+.side-head small{display:block;font-size:.78rem;color:var(--muted)}
+.all{margin:0 14px 10px;border:0;border-radius:14px;padding:12px 14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:600;display:flex;align-items:center;gap:8px;justify-content:center}
+.side-cap{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);padding:10px 18px 6px}
+.plist{flex:1;overflow-y:auto;padding:0 8px 8px}
+.pi{display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;border-radius:12px;padding:8px 10px;text-align:left}
+.pi:hover{background:var(--soft)}
+.pi.on{background:#EAF1FF}
+.pi img{width:38px;height:38px;border-radius:50%;flex:none}
+.pi div{min-width:0;flex:1}
+.pi b{display:block;font-size:.9rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi span{display:block;font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi time{flex:none;font-size:.7rem;color:var(--faint);align-self:flex-start;margin-top:3px}
+.nav{border-top:1px solid var(--line);padding:10px 8px 6px}
+.nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;text-decoration:none;font-size:.88rem;color:#3C3C43}
+.nav a:hover{background:var(--soft)}
+.nav a i{font-style:normal;width:20px;text-align:center}
+.soc{display:flex;gap:8px;padding:6px 18px 16px}
+.soc a{width:34px;height:34px;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.72rem;font-weight:700;color:#3C3C43}
+
+/* ---------- центр ---------- */
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{flex:none;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);min-height:62px}
+.icon{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:var(--soft);font-size:18px;display:flex;align-items:center;justify-content:center}
+.burger{display:flex}
+.back{display:none}
+.who{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
+.who img{width:40px;height:40px;border-radius:50%;flex:none}
+.who b{display:block;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{display:block;font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand b{font-size:1.02rem}.brand span{font-size:.78rem}
+.chip{flex:none;border:0;border-radius:20px;background:var(--soft);padding:9px 13px;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.chip em{font-style:normal;font-weight:400;color:var(--muted);font-size:.8rem}
 .chip.low{background:#FFF1E6;color:#B4541A}
 .view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+
 /* выбор */
-.pick{padding:18px 16px 28px}
-.pick h1{font-size:1.45rem;line-height:1.25;margin-bottom:6px}
-.pick p.lead{color:var(--muted);margin-bottom:18px;font-size:.98rem;line-height:1.45}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;text-align:left;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,border-color .15s}
-.card:hover{border-color:#C7D8FF;box-shadow:0 6px 20px rgba(58,134,255,.12)}
-.card img{width:64px;height:64px;border-radius:50%}
-.card b{font-size:1rem}
-.card span{font-size:.86rem;color:var(--muted);line-height:1.4}
-.card.def{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;background:linear-gradient(135deg,#F2F7FF,#F7F2FF);border-color:#D6E2FF}
+.pick{padding:20px 16px 28px;max-width:860px;margin:0 auto}
+.pick h1{font-size:1.5rem;line-height:1.25;margin-bottom:6px}
+.pick p.lead{color:var(--muted);margin-bottom:16px;font-size:.98rem;line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;text-align:left;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,border-color .15s,transform .15s}
+.card:hover{border-color:#C7D8FF;box-shadow:0 8px 24px rgba(58,134,255,.12);transform:translateY(-1px)}
+.card img{width:60px;height:60px;border-radius:50%}
+.card b{font-size:.98rem;line-height:1.25}
+.card span{font-size:.84rem;color:var(--muted);line-height:1.4}
+.card.def,.card.wide{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;background:linear-gradient(135deg,#F2F7FF,#F7F2FF);border-color:#D6E2FF}
 .card.def img{width:72px;height:72px}
-.free{margin-top:18px;font-size:.85rem;color:var(--muted);text-align:center}
+.card.wide{background:linear-gradient(135deg,#F1F0FA,#EEF0FB);border-color:#DCDDF0}
+.card.wide img{width:60px;height:60px}
+.card.def em{display:inline-block;margin-top:6px;font-style:normal;font-size:.76rem;font-weight:600;color:var(--accent);background:#fff;border-radius:10px;padding:3px 8px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center;margin-top:16px;font-size:.84rem;color:var(--muted)}
+.facts span{white-space:nowrap}
+
+/* лента «С чем приходят» */
+.live{border:1px solid var(--line);border-radius:18px;padding:12px 14px 4px;background:#fff}
+.live-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2px 10px;margin-bottom:6px}
+.live-h b{font-size:.86rem}
+.now{display:none;align-items:center;gap:6px;font-size:.76rem;color:var(--muted);white-space:nowrap}
+.now.on{display:inline-flex}
+.now i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(34,181,115,.5);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,181,115,.45)}70%{box-shadow:0 0 0 7px rgba(34,181,115,0)}100%{box-shadow:0 0 0 0 rgba(34,181,115,0)}}
+.feed{position:relative;height:150px;overflow:hidden}
+.feed::before{content:'';position:absolute;left:0;right:0;top:0;height:34px;background:linear-gradient(#fff,rgba(255,255,255,0));z-index:1;pointer-events:none}
+.feed ul{list-style:none;position:absolute;left:0;right:0;bottom:0}
+.feed li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer}
+.feed li img{width:24px;height:24px;border-radius:50%;flex:none;margin-top:1px}
+.feed li p{font-size:.86rem;line-height:1.38;color:#3C3C43}
+.feed li:hover p{color:var(--accent)}
+.feed li.new{animation:rise .45s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.live-f{font-size:.72rem;color:var(--faint);padding:4px 0 8px}
+.pick .live{margin-bottom:16px}
+.pick .feed{height:104px}
+
 /* чат */
-.msgs{padding:14px 16px 10px;display:flex;flex-direction:column;gap:12px}
-.b{max-width:86%;padding:13px 15px;border-radius:20px;font-size:1rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.msgs{padding:16px 16px 10px;display:flex;flex-direction:column;gap:12px;max-width:820px;margin:0 auto}
+.b{max-width:86%;padding:12px 15px;border-radius:20px;font-size:1rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
 .b.bot{align-self:flex-start;background:var(--bubble);border-bottom-left-radius:6px}
 .b.me{align-self:flex-end;background:var(--mine);color:#fff;border-bottom-right-radius:6px}
+.b.me.vo::before{content:'🎙 ';opacity:.85}
 .say{display:inline-flex;align-items:center;gap:6px;margin-top:8px;border:0;background:#fff;border-radius:14px;padding:6px 10px;font-size:.8rem;color:var(--accent)}
 .say[disabled]{opacity:.6}
 .sep{align-self:center;font-size:.78rem;color:var(--faint)}
@@ -62,17 +127,43 @@ button{font:inherit;cursor:pointer}
 @keyframes t{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 .out{align-self:stretch;border:1px solid #C7D8FF;background:linear-gradient(135deg,#F2F7FF,#FAF5FF);border-radius:20px;padding:18px}
 .out h3{font-size:1.05rem;margin-bottom:6px}.out p{font-size:.95rem;color:#3C3C43;margin-bottom:12px}
-.foot{flex:none;padding:8px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:none}
-.bar{display:flex;align-items:flex-end;gap:8px;background:var(--soft);border-radius:28px;padding:8px 8px 8px 18px}
-.bar textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:1rem;line-height:1.4;max-height:140px;padding:8px 0;outline:none;color:var(--text)}
-.bar .send{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:var(--accent);color:#fff;font-size:20px}
+.foot{flex:none;padding:8px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:none}
+.foot-in{max-width:820px;margin:0 auto}
+.bar{display:flex;align-items:flex-end;gap:6px;background:var(--soft);border-radius:28px;padding:6px 6px 6px 18px}
+.bar textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:1rem;line-height:1.4;max-height:140px;padding:9px 0;outline:none;color:var(--text);min-width:0}
+.bar .mic,.bar .send{flex:none;width:44px;height:44px;border:0;border-radius:50%;font-size:19px;display:flex;align-items:center;justify-content:center}
+.bar .mic{background:#fff;color:var(--accent)}
+.bar .mic.rec{background:#FF3B30;color:#fff;animation:recp 1.4s infinite}
+.bar .mic.wait{opacity:.6}
+@keyframes recp{0%{box-shadow:0 0 0 0 rgba(255,59,48,.45)}70%{box-shadow:0 0 0 10px rgba(255,59,48,0)}100%{box-shadow:0 0 0 0 rgba(255,59,48,0)}}
+.bar .send{background:var(--accent);color:#fff}
 .bar .send:disabled{background:#C9CBD6;cursor:default}
 .note{font-size:.74rem;color:var(--faint);text-align:center;margin-top:7px}
+
+/* ---------- правая колонка ---------- */
+.aside{display:none;flex-direction:column;gap:14px;border-left:1px solid var(--line);padding:18px 16px;overflow-y:auto;min-height:0}
+.pc{text-align:center;padding:6px 4px 2px}
+.pc img{width:104px;height:104px;border-radius:50%;box-shadow:0 10px 30px rgba(58,134,255,.15)}
+.pc b{display:block;font-size:1.1rem;margin-top:10px}
+.pc span{display:block;font-size:.86rem;color:var(--muted);margin-top:4px;line-height:1.4}
+.how{border:1px solid var(--line);border-radius:18px;padding:12px 14px}
+.how b{display:block;font-size:.86rem;margin-bottom:8px}
+.how p{display:flex;gap:10px;font-size:.84rem;color:#3C3C43;line-height:1.4;padding:4px 0}
+.how p i{font-style:normal;flex:none;width:20px;text-align:center}
+.app-cta{display:block;text-decoration:none;border-radius:18px;padding:14px;background:linear-gradient(135deg,#F2F7FF,#F7F2FF);border:1px solid #D6E2FF}
+.app-cta b{display:block;font-size:.9rem}
+.app-cta span{display:block;font-size:.8rem;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* ---------- мобильное меню ---------- */
+.dim{position:fixed;inset:0;background:rgba(15,20,35,.4);z-index:40;display:none}
+.drawer-on .dim{display:block}
+.drawer-on .side{display:flex;position:fixed;left:0;top:0;bottom:0;width:min(86vw,320px);z-index:41;box-shadow:12px 0 40px rgba(0,0,0,.15)}
+
 /* покупка */
 .sheet{position:fixed;inset:0;z-index:50;background:rgba(15,20,35,.45);display:none;align-items:flex-end;justify-content:center}
 .sheet.on{display:flex}
 .panel{background:#fff;width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:22px 18px calc(18px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
-.panel h2{font-size:1.2rem;margin-bottom:4px}.panel .sub{color:var(--muted);font-size:.92rem;margin-bottom:14px}
+.panel h2{font-size:1.2rem;margin-bottom:4px}.panel .sub{color:var(--muted);font-size:.92rem;margin-bottom:14px;line-height:1.45}
 .pack{display:flex;align-items:center;justify-content:space-between;width:100%;border:2px solid var(--line);border-radius:16px;background:#fff;padding:14px 16px;margin-bottom:10px;text-align:left}
 .pack.sel{border-color:var(--accent);background:#F4F8FF}
 .pack b{font-size:1.02rem}.pack span{font-size:.85rem;color:var(--muted)}.pack i{font-style:normal;font-weight:700;font-size:1.05rem}
@@ -82,8 +173,21 @@ button{font:inherit;cursor:pointer}
 .fine{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.45}
 .fine a{color:var(--muted)}
 .x{float:right;border:0;background:var(--soft);width:36px;height:36px;border-radius:50%;font-size:20px}
-.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1D1D1F;color:#fff;padding:10px 16px;border-radius:14px;font-size:.9rem;z-index:60;display:none;max-width:90%}
-@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr}.sheet{align-items:center}.panel{border-radius:22px}}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#1D1D1F;color:#fff;padding:10px 16px;border-radius:14px;font-size:.9rem;z-index:60;display:none;max-width:90%;text-align:center}
+
+@media(max-width:420px){.chip em{display:none}}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr}.sheet{align-items:center}.panel{border-radius:22px}.pick{padding:26px 24px 32px}}
+@media(min-width:900px){
+ .shell{grid-template-columns:268px 1fr}
+ .side{display:flex}.burger{display:none}
+ .drawer-on .side{position:static;width:auto;box-shadow:none}.drawer-on .dim{display:none}
+}
+@media(min-width:1240px){
+ .shell{grid-template-columns:280px 1fr 320px}
+ .aside{display:flex}
+ .pick .live{display:none}
+}
+@media(prefers-reduced-motion:reduce){.feed li.new,.now i,.bar .mic.rec{animation:none}.feed{height:auto!important;overflow:visible}.feed ul{position:static}.feed::before{display:none}}
 </style>
 <script>
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
@@ -93,37 +197,74 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 </head>
 <body>
 <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
-<div class="app">
- <header class="top">
-  <button class="back" id="back" aria-label="К выбору собеседника">←</button>
-  <div class="who" id="who"><div class="brand">Фреди<small>и команда ИИ-собеседников</small></div></div>
-  <button class="chip" id="chip" aria-label="Баланс токенов">💬 <span id="bal">…</span></button>
- </header>
+<div class="shell" id="shell">
 
- <main class="view" id="view">
-  <section class="pick" id="pick">
-   <h1>С кем поговорить?</h1>
-   <p class="lead">Выберите собеседника под свою ситуацию — у каждого свой характер и манера. Писать можно как есть, одной фразой.</p>
-   <div class="grid" id="grid"></div>
-   <p class="free">50 сообщений бесплатно, без регистрации · 1 сообщение = 1 токен</p>
-  </section>
-  <section class="msgs" id="msgs" hidden aria-live="polite"></section>
- </main>
+ <aside class="side" id="side" aria-label="Собеседники и разделы">
+  <a class="side-head" href="/chat/"><img src="/chat/ava/fredi.webp" alt="" width="38" height="38"><div><b>Фреди</b><small>и команда ИИ-собеседников</small></div></a>
+  <button class="all" id="all" type="button">＋ Выбрать собеседника</button>
+  <div class="side-cap">Собеседники</div>
+  <nav class="plist" id="plist" aria-label="Собеседники"></nav>
+  <nav class="nav" aria-label="Разделы сайта">
+   <a href="/fredi/"><i>🧠</i>Приложение Фреди: тесты, игры, дневник</a>
+   <a href="/blog/lektorij/"><i>🎓</i>Лекторий</a>
+   <a href="/blog/"><i>📖</i>Блог</a>
+   <a href="/knigi/"><i>📚</i>Книги</a>
+   <a href="/treningi/"><i>🎯</i>Тренинги</a>
+   <a href="/"><i>🏠</i>meysternlp.ru</a>
+  </nav>
+  <div class="soc"><a href="https://t.me/meysternlp" target="_blank" rel="noopener" aria-label="Telegram">TG</a><a href="https://vk.com/meysternlp" target="_blank" rel="noopener" aria-label="ВКонтакте">VK</a></div>
+ </aside>
+ <div class="dim" id="dim"></div>
 
- <footer class="foot" id="foot">
-  <form class="bar" id="form" autocomplete="off">
-   <textarea id="inp" rows="1" placeholder="Напишите сообщение…" aria-label="Сообщение"></textarea>
-   <button class="send" id="send" type="submit" aria-label="Отправить" disabled>↑</button>
-  </form>
-  <div class="note">ИИ-собеседник, а не врач и не живой человек. Может ошибаться.</div>
- </footer>
+ <div class="main">
+  <header class="top">
+   <button class="icon burger" id="burger" type="button" aria-label="Меню">☰</button>
+   <button class="icon back" id="back" type="button" aria-label="К выбору собеседника">←</button>
+   <div class="who brand" id="who"><div style="min-width:0"><b>Фреди и команда</b><span>ИИ-собеседники под вашу ситуацию</span></div></div>
+   <button class="chip" id="chip" type="button" aria-label="Баланс токенов">💬 <span id="bal">…</span></button>
+  </header>
+
+  <main class="view" id="view">
+   <section class="pick" id="pick">
+    <h1>С кем поговорить?</h1>
+    <p class="lead">Выберите собеседника под свою ситуацию — у каждого свой характер и манера. Писать можно как есть, одной фразой, или сказать голосом.</p>
+    <div class="live" data-live="all"></div>
+    <div class="grid" id="grid"></div>
+    <div class="facts" id="facts"><span>🎁 25 сообщений бесплатно</span><span>🔒 Без регистрации</span><span>🎙 Можно голосом</span></div>
+   </section>
+   <section class="msgs" id="msgs" hidden aria-live="polite"></section>
+  </main>
+
+  <footer class="foot" id="foot">
+   <div class="foot-in">
+    <form class="bar" id="form" autocomplete="off">
+     <textarea id="inp" rows="1" placeholder="Напишите сообщение…" aria-label="Сообщение"></textarea>
+     <button class="mic" id="mic" type="button" aria-label="Сказать голосом" hidden>🎙</button>
+     <button class="send" id="send" type="submit" aria-label="Отправить" disabled>↑</button>
+    </form>
+    <div class="note" id="note">ИИ-собеседник, а не врач и не живой человек. Может ошибаться.</div>
+   </div>
+  </footer>
+ </div>
+
+ <aside class="aside" id="aside" aria-label="О собеседнике">
+  <div class="pc" id="pc"></div>
+  <div class="live" data-live="side"></div>
+  <div class="how">
+   <b>Как это устроено</b>
+   <p><i>🎁</i><span id="howFree">50 токенов на старте — это 25 сообщений</span></p>
+   <p><i>🎙</i><span id="howVoice">Голосом: скажите — и услышите ответ, 4 токена</span></p>
+   <p><i>🔒</i><span>Без регистрации и имён. Разговор с каждым собеседником — отдельный</span></p>
+  </div>
+  <a class="app-cta" href="/fredi/"><b>Нужно глубже?</b><span>В приложении Фреди — тесты, тренажёры, дневник и Лекторий</span></a>
+ </aside>
 </div>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
  <div class="panel">
   <button class="x" id="sheetX" aria-label="Закрыть">×</button>
   <h2 id="sheetTitle">Токены</h2>
-  <div class="sub" id="sheetSub">1 сообщение — 1 токен, озвучка ответа — ещё 1.</div>
+  <div class="sub" id="sheetSub">Сообщение — 2 токена, голосом — 4, озвучка ответа — 1.</div>
   <div id="packs"></div>
   <label for="email" class="sub" style="display:block;margin:4px 0 0">Почта для чека</label>
   <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@mail.ru">
@@ -140,17 +281,21 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
-  var grid = $('grid'), pick = $('pick'), msgs = $('msgs'), foot = $('foot'), inp = $('inp'), send = $('send'),
-      who = $('who'), back = $('back'), bal = $('bal'), chip = $('chip'), sheet = $('sheet');
-  var PERSONAS = [], cur = null, st = { balance: null, premium: false, packs: [] }, busy = false, sent = 0, plan = null;
+  var grid = $('grid'), pick = $('pick'), msgs = $('msgs'), foot = $('foot'), inp = $('inp'), send = $('send'), mic = $('mic'),
+      who = $('who'), back = $('back'), bal = $('bal'), chip = $('chip'), sheet = $('sheet'), shell = $('shell');
+  var PERSONAS = [], cur = null, busy = false, sent = 0, plan = null;
+  var st = { balance: null, premium: false, packs: [], cost_message: 2, cost_voice: 1, cost_voice_mode: 4 };
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function track(n, d) { try { window.FrediTracker && window.FrediTracker.track(n, Object.assign({ screen: 'chat', persona: cur && cur.id }, d || {})); } catch (e) {} }
   function goal(n) { try { window.ym && ym(108138656, 'reachGoal', n); } catch (e) {} }
   function toast(t) { var x = $('toast'); x.textContent = t; x.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(function () { x.style.display = 'none'; }, 3500); }
+  function hideToast() { $('toast').style.display = 'none'; clearTimeout(toast._t); }
   function ava(id) { return '/chat/ava/' + id + '.webp'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function byId(id) { return PERSONAS.filter(function (x) { return x.id === id; })[0]; }
+  function scrollEnd() { var v = $('view'); v.scrollTop = v.scrollHeight; }
 
   // Личность — та же, что у /fredi/: auth.js сверяет устройство с сервером.
   var ready = (window.authReady || Promise.resolve(null)).catch(function () { return null; }).then(function (u) {
@@ -159,60 +304,204 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     window.USER_ID = id; return id;
   });
 
+  // ---------- токены ----------
+  function msgsLeft() { return Math.floor((st.balance || 0) / (st.cost_message || 2)); }
   function showBal() {
-    if (st.premium) { bal.textContent = 'Premium'; chip.classList.remove('low'); return; }
-    bal.textContent = st.balance == null ? '…' : st.balance;
-    chip.classList.toggle('low', st.balance != null && st.balance <= 5);
+    if (st.premium) { bal.innerHTML = 'Premium'; chip.classList.remove('low'); return; }
+    if (st.balance == null) { bal.textContent = '…'; return; }
+    bal.innerHTML = st.balance + ' <em>· ' + msgsLeft() + ' сообщ.</em>';
+    chip.classList.toggle('low', st.balance < (st.cost_message || 2) * 3);
+  }
+  function showCosts() {
+    var m = st.cost_message, v = st.cost_voice_mode, free = st.free_tokens || 50;
+    $('sheetSub').textContent = 'Сообщение — ' + m + ' токена, голосом — ' + v + ', озвучка ответа — ' + st.cost_voice + '.';
+    $('howFree').textContent = free + ' токенов на старте — это ' + Math.floor(free / m) + ' сообщений';
+    $('howVoice').textContent = 'Голосом: скажите — и услышите ответ, ' + v + ' токена';
+    $('facts').firstChild.textContent = '🎁 ' + Math.floor(free / m) + ' сообщений бесплатно';
   }
   function loadTokens() {
     return ready.then(function (uid) { return fetch('/api/tokens/' + uid).then(function (r) { return r.json(); }); })
-      .then(function (d) { if (d && d.success) { st = Object.assign(st, d); showBal(); if (d.free_granted_now) toast('Вам начислено ' + d.free_tokens + ' бесплатных сообщений'); } })
-      .catch(function () {});
+      .then(function (d) {
+        if (!d || !d.success) return;
+        st = Object.assign(st, d); showBal(); showCosts();
+        if (d.free_granted_now) toast('Вам начислено ' + d.free_tokens + ' токенов — это ' + Math.floor(d.free_tokens / st.cost_message) + ' сообщений');
+      }).catch(function () {});
+  }
+
+  // ---------- последние реплики (только у себя в браузере) ----------
+  function recent() { try { return JSON.parse(lsGet('chat_recent') || '{}') || {}; } catch (e) { return {}; } }
+  function remember(id, text) { var r = recent(); r[id] = { t: String(text).slice(0, 90), ts: Date.now() }; lsSet('chat_recent', JSON.stringify(r)); renderSide(); }
+  function ago(ts) {
+    var d = new Date(ts), n = new Date();
+    if (d.toDateString() === n.toDateString()) return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    return d.getDate() + '.' + ('0' + (d.getMonth() + 1)).slice(-2);
+  }
+
+  // ---------- левая колонка ----------
+  function renderSide() {
+    var r = recent();
+    var list = PERSONAS.slice().sort(function (a, b) { return ((r[b.id] || {}).ts || 0) - ((r[a.id] || {}).ts || 0); });
+    $('plist').innerHTML = list.map(function (p) {
+      var x = r[p.id];
+      return '<button class="pi' + (cur && cur.id === p.id ? ' on' : '') + '" data-id="' + p.id + '" type="button"><img src="' + ava(p.id) + '" alt="" width="38" height="38">' +
+        '<div><b>' + esc(p.name) + '</b><span>' + esc(x ? x.t : p.tagline) + '</span></div>' + (x ? '<time>' + ago(x.ts) + '</time>' : '') + '</button>';
+    }).join('');
+  }
+  $('plist').addEventListener('click', function (e) { var b = e.target.closest('.pi'); if (b) { drawer(false); open(b.getAttribute('data-id'), 'side'); } });
+  $('all').addEventListener('click', function () { drawer(false); toPick(); });
+  function drawer(on) { shell.classList.toggle('drawer-on', on); document.body.classList.toggle('drawer-on', on); }
+  $('burger').addEventListener('click', function () { drawer(true); track('chat_menu'); });
+  $('dim').addEventListener('click', function () { drawer(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { drawer(false); closeSheet(); } });
+
+  // ---------- правая колонка ----------
+  function renderCard() {
+    var p = cur;
+    $('pc').innerHTML = p
+      ? '<img src="' + ava(p.id) + '" alt="" width="104" height="104"><b>' + esc(p.name) + '</b><span>' + esc(p.tagline) + '</span>'
+      : '<img src="' + ava('fredi') + '" alt="" width="104" height="104"><b>Фреди и команда</b><span>Восемь собеседников с разным характером — выберите того, с кем сейчас легче говорить</span>';
+    feeds.forEach(function (f) { f.reset(); });
+  }
+
+  // ---------- лента «С чем приходят» ----------
+  // Фразы — наши, по темам настоящих обращений (выгрузки Фреди), без имён.
+  var TOPICS = {
+    fredi: ['В три часа ночи я точно знаю, что всё зря. Утром — нет', 'Постоянно прокручиваю ситуацию, за которую стыдно',
+            'Иногда я радуюсь чужим неудачам. Что со мной?', 'Мне легче с чужими, чем с близкими',
+            'Я не скучаю по маме. Со мной что-то не так?', 'Получил повышение — и впервые захотел уволиться'],
+    vera: ['Муж «чинит машину» в гараже по три часа. Это конец или он прячется?', 'Мы не ссоримся, но я смотрю на него и ничего не чувствую',
+           'Почему я вдруг начала проверять его телефон?', 'Он ушёл со словами «я запутался». Ждать или нет?',
+           'Он говорит, что любит, но не уходит от жены', 'Полгода без близости, и оба делаем вид, что так и надо',
+           'Семь лет вместе — и больше никаких мурашек. Это конец?'],
+    mark: ['Тащу всё сам, а дома говорят, что меня нет', 'Срываюсь на своих из-за ерунды, потом жалею',
+           'Ипотека, двое детей — и ни дня, чтобы выдохнуть', 'Партнёр подвёл с деньгами. Как не наломать дров',
+           'Жена просит «поговори со мной», а я не знаю о чём', 'Злюсь — и не понимаю, на что на самом деле'],
+    nika: ['Бывший написал «привет» в два часа ночи. Отвечать?', 'Тянет к тому, кто даже не читает мои сообщения',
+           'Каждую пятницу тоска по бывшему, хотя я сама ушла', 'Все подруги в парах, а я одна по выходным',
+           'Не понимаю, кто я, когда не в отношениях', 'Встречаюсь с заботливым, а тянет к тому, кто игнорирует'],
+    olga: ['Сын-подросток не выходит из комнаты и молчит', 'Срываюсь на ребёнка, а потом плачу в ванной',
+           'Дочь врёт по мелочам. Наказывать или нет?', 'Устала быть мамой без выходных и стыжусь этого',
+           'Ребёнок не хочет учиться — уговоры не работают', 'После развода сын винит во всём меня'],
+    lev: ['Дети выросли и звонят раз в неделю. Дом опустел', 'Год, как не стало жены. Зачем вставать по утрам',
+          'Вышел на пенсию — и будто стал не нужен', 'Со старыми друзьями больше не о чем говорить',
+          'Всё жду, что настоящая жизнь вот-вот начнётся'],
+    sasha: ['Третий месяц откладываю одно письмо', 'Составляю планы и не делаю ни пункта',
+            'Сажусь работать — через минуту уже в телефоне', 'Хочу своё дело, но страшно начать',
+            'Дедлайн завтра, а я мою холодильник'],
+    luna: ['Ложусь — и прокручиваю разговор, который был днём', 'Сердце колотится перед сном без причины',
+           'Не могу уснуть, пока не проверю всё по три раза', 'Тревожно, а из-за чего — не понимаю',
+           'Просыпаюсь в четыре утра и больше не сплю']
+  };
+  function pool(only) {
+    var out = [];
+    Object.keys(TOPICS).forEach(function (id) { if (!only || only === id) TOPICS[id].forEach(function (q) { out.push({ id: id, q: q }); }); });
+    for (var i = out.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = out[i]; out[i] = out[j]; out[j] = t; }
+    return out;
+  }
+  var REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var feeds = [];
+  function Feed(box, mode) {
+    box.innerHTML = '<div class="live-h"><b></b><span class="now"><i></i><span></span></span></div><div class="feed"><ul></ul></div>' +
+      '<div class="live-f">Нажмите на фразу — начнёте разговор с неё</div>';
+    var ul = box.querySelector('ul'), title = box.querySelector('.live-h b'), items = [], k = 0, timer = null, paused = false;
+    function add(it, anim) {
+      var li = document.createElement('li'); if (anim) li.className = 'new';
+      li.innerHTML = '<img src="' + ava(it.id) + '" alt="" width="24" height="24"><p>' + esc(it.q) + '</p>';
+      li.addEventListener('click', function () { startWith(it); });
+      ul.appendChild(li);
+      while (ul.children.length > 6) ul.removeChild(ul.firstChild);
+    }
+    function tick() {
+      if (!paused && !document.hidden && items.length) add(items[k++ % items.length], true);
+      timer = setTimeout(tick, 2200 + Math.random() * 2600);
+    }
+    this.reset = function () {
+      var only = mode === 'side' && cur ? cur.id : null;
+      title.textContent = only ? 'С чем приходят к «' + cur.name + '»' : 'С чем сюда приходят';
+      items = pool(only); k = 0; ul.innerHTML = '';
+      var first = REDUCED ? items.length : 3;
+      for (var i = 0; i < first && i < items.length; i++) add(items[k++], false);
+      clearTimeout(timer); if (!REDUCED) timer = setTimeout(tick, 1400);
+    };
+    box.addEventListener('mouseenter', function () { paused = true; });
+    box.addEventListener('mouseleave', function () { paused = false; });
+    this.now = box.querySelector('.now');
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-live]'), function (b) { feeds.push(new Feed(b, b.getAttribute('data-live'))); });
+  function startWith(it) {
+    track('chat_feed_click', { to: it.id }); goal('chat_feed_click');
+    open(it.id, 'feed'); inp.value = it.q; size(); send.disabled = false; inp.focus();
+  }
+  // Настоящий счётчик: визиты на /chat/ и в приложение Фреди за 5 минут.
+  function online() {
+    fetch('/api/metrika/online?section=chat').then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.enabled || typeof d.online !== 'number' || d.online < 2) return;
+      var n = d.online, m10 = n % 10, m100 = n % 100;
+      var w = m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'человека' : 'человек';
+      feeds.forEach(function (f) { f.now.querySelector('span').textContent = n + ' ' + w + (d.window === 'hour' ? ' за час' : ' сейчас здесь'); f.now.classList.add('on'); });
+    }).catch(function () {});
   }
 
   // ---------- выбор собеседника ----------
   function renderGrid() {
     grid.innerHTML = PERSONAS.map(function (p, i) {
-      return '<button class="card' + (i === 0 ? ' def' : '') + '" data-id="' + p.id + '"><img src="' + ava(p.id) + '" alt="" width="64" height="64">' +
-        '<div><b>' + esc(p.name) + '</b><br><span>' + esc(i === 0 ? p.role : p.tagline) + '</span></div></button>';
+      var cls = i === 0 ? ' def' : i === PERSONAS.length - 1 && (PERSONAS.length - 2) % 2 === 0 ? ' wide' : '';
+      return '<button class="card' + cls + '" data-id="' + p.id + '" type="button"><img src="' + ava(p.id) + '" alt="" width="64" height="64">' +
+        '<div><b>' + esc(p.name) + '</b><br><span>' + esc(p.tagline) + '</span>' + (i === 0 ? '<br><em>Если не знаете, кого выбрать</em>' : '') + '</div></button>';
     }).join('');
   }
   grid.addEventListener('click', function (e) { var c = e.target.closest('.card'); if (c) open(c.getAttribute('data-id'), 'grid'); });
 
   function toPick() {
-    cur = null; msgs.hidden = true; pick.hidden = false; foot.style.display = 'none'; back.style.display = 'none';
-    who.innerHTML = '<div class="brand">Фреди<small>и команда ИИ-собеседников</small></div>';
+    stopRec(true);
+    cur = null; msgs.hidden = true; pick.hidden = false; foot.style.display = 'none';
+    back.style.display = 'none'; $('burger').style.display = '';
+    who.className = 'who brand';
+    who.innerHTML = '<div style="min-width:0"><b>Фреди и команда</b><span>ИИ-собеседники под вашу ситуацию</span></div>';
     history.replaceState(null, '', '/chat/' + location.search.replace(/([?&])p=[^&]*&?/, '$1').replace(/[?&]$/, ''));
+    renderSide(); renderCard(); $('view').scrollTop = 0;
   }
   back.addEventListener('click', toPick);
 
   // ---------- разговор ----------
-  function bubble(text, mine, withVoice) {
-    var d = document.createElement('div'); d.className = 'b ' + (mine ? 'me' : 'bot');
+  function bubble(text, mine, withVoice, voiceMark) {
+    var d = document.createElement('div'); d.className = 'b ' + (mine ? 'me' : 'bot') + (voiceMark ? ' vo' : '');
     var t = document.createElement('span'); t.textContent = text; d.appendChild(t);
     msgs.appendChild(d);
     if (withVoice) addSay(d, function () { return t.textContent; });
-    $('view').scrollTop = 1e9;
-    return { set: function (s) { t.textContent = s; $('view').scrollTop = 1e9; }, el: d, text: function () { return t.textContent; } };
+    scrollEnd();
+    return { set: function (s) { t.textContent = s; scrollEnd(); }, el: d, text: function () { return t.textContent; } };
   }
-  function addSay(d, getText) {
+  // Кнопка под ответом. Раз озвученный ответ хранится у кнопки (_url) и
+  // повторно звучит без запроса и без списания.
+  function sayLabel(b) { return b._url || b._ref || st.premium ? '▶ Слушать' : '▶ Озвучить · ' + st.cost_voice + ' токен'; }
+  function addSay(d, getText, ref) {
     var b = document.createElement('button'); b.className = 'say'; b.type = 'button';
-    b.textContent = st.premium ? '▶ Озвучить' : '▶ Озвучить · 1 токен';
+    b._ref = ref || null; b.textContent = sayLabel(b);
     b.addEventListener('click', function () { speak(getText(), b); });
     d.appendChild(document.createElement('br')); d.appendChild(b);
+    return b;
+  }
+  function play(url) {
+    if (audio) audio.pause();
+    audio = new Audio(url);
+    var pr = audio.play(); if (pr && pr.catch) pr.catch(function () { toast('Нажмите «Слушать», чтобы включить звук'); });
   }
   function typing(on) {
     var x = $('typing');
-    if (on && !x) { x = document.createElement('div'); x.id = 'typing'; x.className = 'typing'; x.innerHTML = '<i></i><i></i><i></i>'; msgs.appendChild(x); $('view').scrollTop = 1e9; }
+    if (on && !x) { x = document.createElement('div'); x.id = 'typing'; x.className = 'typing'; x.innerHTML = '<i></i><i></i><i></i>'; msgs.appendChild(x); scrollEnd(); }
     if (!on && x) x.remove();
   }
   function open(id, how) {
-    var p = PERSONAS.filter(function (x) { return x.id === id; })[0] || PERSONAS[0];
+    var p = byId(id) || PERSONAS[0]; if (!p) return;
+    stopRec(true);
     cur = p; sent = 0; lsSet('chat_persona', p.id);
-    pick.hidden = true; msgs.hidden = false; foot.style.display = 'block'; back.style.display = 'block';
+    pick.hidden = true; msgs.hidden = false; foot.style.display = 'block';
+    back.style.display = 'flex'; $('burger').style.display = 'none';
+    who.className = 'who';
     who.innerHTML = '<img src="' + ava(p.id) + '" alt="" width="40" height="40"><div style="min-width:0"><b>' + esc(p.name) + '</b><span>' + esc(p.role) + '</span></div>';
     history.replaceState(null, '', '/chat/?p=' + p.id);
-    msgs.innerHTML = '';
+    msgs.innerHTML = ''; renderSide(); renderCard();
     track('chat_persona_open', { how: how }); goal('chat_persona_open');
     ready.then(function (uid) {
       return fetch('/api/chat/history/' + uid + '?limit=50').then(function (r) { return r.json(); }).then(function (d) {
@@ -220,28 +509,28 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
         if (cur !== p) return;
         if (list.length) {
           list.forEach(function (m) { bubble(String(m.content || ''), m.role === 'user', m.role !== 'user'); });
-          var s = document.createElement('div'); s.className = 'sep'; s.textContent = 'продолжаем'; msgs.appendChild(s);
+          var s = document.createElement('div'); s.className = 'sep'; s.textContent = 'продолжаем'; msgs.appendChild(s); scrollEnd();
         } else bubble(p.greeting, false, false);
       });
     }).catch(function () { if (cur === p && !msgs.children.length) bubble(p.greeting, false, false); });
-    setTimeout(function () { inp.focus(); }, 50);
+    if (!('ontouchstart' in window)) setTimeout(function () { inp.focus(); }, 50);
   }
 
-  function hideToast() { $('toast').style.display = 'none'; clearTimeout(toast._t); }
   function noTokens() {
     hideToast();
     var o = document.createElement('div'); o.className = 'out';
     o.innerHTML = '<h3>Токены закончились</h3><p>Разговор сохранён — продолжите с этого места, когда пополните баланс.</p>' +
       '<button class="pay" type="button">Пополнить</button>';
     o.querySelector('button').addEventListener('click', openSheet);
-    msgs.appendChild(o); $('view').scrollTop = 1e9;
+    msgs.appendChild(o); scrollEnd();
     track('chat_no_tokens'); goal('chat_no_tokens');
   }
+  function enough(cost) { return st.premium || st.balance == null || st.balance >= cost; }
 
-  function stream(uid, text) {
+  function stream(uid, text, voice) {
     var b = null, full = '';
     return fetch('/api/persona/stream', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: uid, message: text, persona: cur.id }) })
+      body: JSON.stringify({ user_id: uid, message: text, persona: cur.id, voice: !!voice }) })
       .then(function (res) {
         if (res.status === 402) return { noTokens: true };
         if (!res.ok || !res.body) return null;
@@ -259,53 +548,115 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
           return pump(); }); }
         return pump().then(function () {
           if (failed || !done) { if (b) b.el.remove(); return null; }
-          addSay(b.el, b.text);
+          done.say = addSay(b.el, b.text, done.voice_ref);
+          done.text = b.text();
           return done;
         });
       }).catch(function () { if (b) b.el.remove(); return null; });
   }
 
-  function submit(e) {
+  function submit(e, voice) {
     if (e) e.preventDefault();
     var text = inp.value.trim(); if (!text || busy || !cur) return;
-    if (!st.premium && st.balance === 0) { noTokens(); return; }
-    busy = true; send.disabled = true;
-    bubble(text, true, false); inp.value = ''; size();
-    sent++; if (sent === 1) { track('chat_first_message', { len: text.length }); goal('chat_first_message'); }
+    var cost = voice ? st.cost_voice_mode : st.cost_message;
+    if (!enough(cost)) {
+      if (voice && enough(st.cost_message)) toast('Для ответа голосом нужно ' + cost + ' токена — отправьте текстом или пополните');
+      else noTokens();
+      return;
+    }
+    busy = true; send.disabled = true; mic.disabled = true;
+    bubble(text, true, false, voice); inp.value = ''; size();
+    remember(cur.id, text);
+    sent++; if (sent === 1) { track('chat_first_message', { len: text.length, voice: !!voice }); goal('chat_first_message'); }
+    if (voice) track('chat_voice_message');
     typing(true);
-    ready.then(function (uid) { return stream(uid, text); }).then(function (r) {
+    var p = cur;
+    ready.then(function (uid) { return stream(uid, text, voice); }).then(function (r) {
       typing(false);
       if (r && r.noTokens) { st.balance = 0; showBal(); noTokens(); return; }
-      if (!r) { bubble('Не получилось ответить — связь подвела. Токен не списан, напишите ещё раз.', false, false); loadTokens(); return; }
+      if (!r) { bubble('Не получилось ответить — связь подвела. Токены не списаны, напишите ещё раз.', false, false); loadTokens(); return; }
       if (!r.premium && typeof r.balance === 'number') { st.balance = r.balance; showBal(); }
-      if (!st.premium && st.balance !== null && st.balance <= 3 && st.balance > 0) toast('Осталось сообщений: ' + st.balance);
-    }).then(function () { busy = false; send.disabled = !inp.value.trim(); inp.focus(); });
+      if (cur === p) remember(p.id, r.text || '');
+      if (voice && r.say) r.say.click();
+      var left = msgsLeft();
+      if (!st.premium && st.balance !== null && left <= 3 && left > 0) toast('Осталось сообщений: ' + left);
+    }).then(function () { busy = false; send.disabled = !inp.value.trim(); mic.disabled = false; if (!('ontouchstart' in window)) inp.focus(); });
   }
 
-  // Озвучка ответа: Фреди — голос Джарвиса, остальные — свои голоса.
+  // Озвучка: Фреди — голос Джарвиса, остальные — свои голоса. С меткой
+  // voice_ref ответ голосового режима уже оплачен и звучит без списания.
   var audio = null;
   function speak(text, btn) {
-    if (!st.premium && st.balance === 0) { openSheet(); return; }
-    btn.disabled = true; var was = btn.textContent; btn.textContent = '… готовлю голос';
+    if (btn._url) { play(btn._url); return; }
+    var ref = btn._ref;
+    if (!ref && !enough(st.cost_voice)) { openSheet(); return; }
+    btn.disabled = true; btn.textContent = '… готовлю голос';
     ready.then(function (uid) {
       return fetch('/api/persona/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: uid, text: text, persona: cur ? cur.id : 'fredi' }) });
+        body: JSON.stringify({ user_id: uid, text: text, persona: cur ? cur.id : 'fredi', voice_ref: ref || '' }) });
     }).then(function (r) {
       if (r.status === 402) { st.balance = 0; showBal(); openSheet(); throw 0; }
       if (!r.ok) throw 1;
       return r.blob();
     }).then(function (blob) {
-      if (audio) audio.pause();
-      audio = new Audio(URL.createObjectURL(blob)); audio.play();
-      track('chat_voice'); if (!st.premium && st.balance) { st.balance--; showBal(); }
-    }).catch(function (e) { if (e !== 0) toast('Озвучка не удалась — токен не списан'); })
-      .then(function () { btn.disabled = false; btn.textContent = was; });
+      btn._url = URL.createObjectURL(blob); btn._ref = null;
+      play(btn._url);
+      track('chat_voice'); if (!ref && !st.premium && st.balance) { st.balance -= st.cost_voice; showBal(); }
+    }).catch(function (e) { if (e !== 0) { toast('Озвучка не удалась — токены вернутся'); loadTokens(); } })
+      .then(function () { btn.disabled = false; btn.textContent = sayLabel(btn); });
+  }
+
+  // ---------- голосовой режим: сказать → распознать → ответ голосом ----------
+  var rec = null, chunks = [], recTimer = null, recMime = '';
+  var canRec = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  if (canRec) mic.hidden = false;
+  function pickMime() {
+    var c = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+    for (var i = 0; i < c.length; i++) if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(c[i])) return c[i];
+    return '';
+  }
+  function stopRec(discard) {
+    clearTimeout(recTimer);
+    if (rec && rec.state !== 'inactive') { rec._discard = !!discard; rec.stop(); }
+  }
+  mic.addEventListener('click', function () {
+    if (rec && rec.state === 'recording') { stopRec(false); return; }
+    if (busy || !cur) return;
+    if (!enough(st.cost_voice_mode)) { toast('Голосом — ' + st.cost_voice_mode + ' токена. Пополните баланс или напишите текстом'); if (!enough(st.cost_message)) openSheet(); return; }
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      recMime = pickMime(); chunks = [];
+      try { rec = recMime ? new MediaRecorder(stream, { mimeType: recMime }) : new MediaRecorder(stream); } catch (e) { rec = new MediaRecorder(stream); }
+      rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = function () {
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        mic.classList.remove('rec'); mic.textContent = '🎙'; $('note').textContent = 'ИИ-собеседник, а не врач и не живой человек. Может ошибаться.';
+        if (rec._discard || !chunks.length) return;
+        transcribe(new Blob(chunks, { type: rec.mimeType || recMime || 'audio/webm' }));
+      };
+      rec.start();
+      mic.classList.add('rec'); mic.textContent = '■';
+      $('note').textContent = 'Говорите… нажмите ■, когда закончите. Ответ прозвучит голосом · ' + st.cost_voice_mode + ' токена';
+      track('chat_mic_start');
+      recTimer = setTimeout(function () { stopRec(false); }, 60000);
+    }).catch(function () { toast('Нет доступа к микрофону — разрешите его в настройках браузера'); });
+  });
+  function transcribe(blob) {
+    mic.classList.add('wait'); mic.disabled = true;
+    var ext = /mp4/.test(blob.type) ? 'mp4' : /ogg/.test(blob.type) ? 'ogg' : 'webm';
+    var fd = new FormData(); fd.append('file', blob, 'voice.' + ext);
+    ready.then(function (uid) { fd.append('user_id', uid); return fetch('/api/persona/stt', { method: 'POST', body: fd }); })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        mic.classList.remove('wait'); mic.disabled = false;
+        if (!d || !d.success || !d.text) { toast('Не расслышал — скажите ещё раз или напишите'); return; }
+        inp.value = d.text; size(); submit(null, true);
+      }).catch(function () { mic.classList.remove('wait'); mic.disabled = false; toast('Не получилось распознать — проверьте связь'); });
   }
 
   function size() { inp.style.height = 'auto'; inp.style.height = Math.min(140, inp.scrollHeight) + 'px'; }
   inp.addEventListener('input', function () { size(); send.disabled = busy || !inp.value.trim(); });
   inp.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && !('ontouchstart' in window)) { e.preventDefault(); submit(); } });
-  $('form').addEventListener('submit', submit);
+  $('form').addEventListener('submit', function (e) { submit(e, false); });
 
   // ---------- покупка ----------
   function openSheet() {
@@ -314,8 +665,8 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     if (!packs.length) { toast('Не удалось загрузить пакеты, попробуйте через минуту'); return; }
     plan = plan || packs[1 < packs.length ? 1 : 0].plan;
     $('packs').innerHTML = packs.map(function (p) {
-      var per = (p.price / p.tokens).toFixed(2).replace('.', ',');
-      return '<button class="pack' + (p.plan === plan ? ' sel' : '') + '" data-plan="' + p.plan + '"><div><b>' + p.tokens + ' сообщений</b><br><span>' + per + ' ₽ за сообщение</span></div><i>' + p.price + ' ₽</i></button>';
+      var n = Math.floor(p.tokens / st.cost_message), per = (p.price / n).toFixed(2).replace('.', ',');
+      return '<button class="pack' + (p.plan === plan ? ' sel' : '') + '" data-plan="' + p.plan + '" type="button"><div><b>' + p.tokens + ' токенов</b><br><span>' + n + ' сообщений · ' + per + ' ₽ за сообщение</span></div><i>' + p.price + ' ₽</i></button>';
     }).join('');
     $('email').value = $('email').value || lsGet('chat_email') || '';
     hideToast();
@@ -361,14 +712,16 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   }
 
   // ---------- старт ----------
+  renderCard();
   fetch('/api/personas').then(function (r) { return r.json(); }).then(function (d) {
     PERSONAS = (d && d.personas) || [];
-    renderGrid();
+    renderGrid(); renderSide();
     var want = (new URLSearchParams(location.search).get('p') || '').toLowerCase();
-    if (want && PERSONAS.some(function (p) { return p.id === want; })) open(want, 'link');
+    if (want && byId(want)) open(want, 'link');
     track('chat_open', { ref: document.referrer.slice(0, 120), p: want || '' }); goal('chat_open');
   }).catch(function () { grid.innerHTML = '<p class="lead">Не удалось загрузить собеседников. Обновите страницу через минуту.</p>'; });
   loadTokens().then(verifyReturn);
+  online(); setInterval(online, 60000);
 })();
 </script>
 </body>
