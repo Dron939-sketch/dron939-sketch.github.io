@@ -276,6 +276,22 @@
     }
 
     let _autoVerifyActive = false;
+    // Пришёл платить с запертой лекции (blog/lock.js кладёт адрес в
+    // fredi_after_pay) — после оплаты возвращаем туда же: лекция сама
+    // откроется по подписке. Иначе человек оставался в приложении и
+    // искал, где была его лекция. Ключ живёт три часа: столько хватает
+    // на кассу и банк, а старый адрес не утащит человека через неделю.
+    function _returnToLecture() {
+        try {
+            const raw = localStorage.getItem('fredi_after_pay');
+            if (!raw) return;
+            localStorage.removeItem('fredi_after_pay');
+            const d = JSON.parse(raw);
+            if (!d || !/^\/blog\/[\w.\-\/]+$/.test(d.url || '') || Date.now() - (d.t || 0) > 3 * 3600 * 1000) return;
+            setTimeout(function () { window.location.replace(d.url + '#lockGate'); }, 1500);
+        } catch (e) {}
+    }
+
     async function _autoVerifyOnReturn(container) {
         const paymentId = _readPendingPaymentId();
         if (!paymentId) return false;
@@ -321,6 +337,7 @@
                 // Метрику — по ней Директ и считает покупки.
                 _payStep('subscription_activated');
                 _toast('Подписка активирована ✨', 'info');
+                _returnToLecture();
                 return true;
             }
             if (lastResult && lastResult.status === 'canceled') {
@@ -680,6 +697,7 @@
                 ${priceHtml}
                 <ul class="sub-features">
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Фреди помнит каждый разговор и продолжает с того же места</li>
+                    <li><span class="sub-feature-icon">&#x1F4DA;</span> Лекторий целиком: все лекции курсов, а не только первые, с озвучкой голосом Фреди</li>
                     <li><span class="sub-feature-icon">&#x2728;</span> Голосом и текстом 24/7, без счётчика минут</li>
                     <li><span class="sub-feature-icon">&#x1F3AD;</span> Коуч и тренер без лимита (без подписки — три ответа)</li>
                     <li><span class="sub-feature-icon">&#x1F50D;</span> Глубинный разбор вашего теста: петли, механизмы, точки роста, прогноз, ключи</li>
