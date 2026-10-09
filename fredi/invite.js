@@ -98,7 +98,7 @@
         card.className = 'invite-card';
         card.innerHTML =
             '<div class="invite-card-t">Ссылка ' + _esc(_forWhom(relation)) + '</div>' +
-            '<div class="invite-card-d">Отдельный разговор с Фреди, двадцать минут бесплатно, без регистрации. ' +
+            '<div class="invite-card-d">Отдельный разговор с Фреди, пятнадцать минут бесплатно, без регистрации. ' +
                 'Ваших слов там не будет, и вы не увидите его слов.</div>' +
             '<div class="invite-card-url" id="frediInviteUrl">' + _esc(url) + '</div>' +
             '<div class="invite-card-btns">' +
@@ -116,7 +116,7 @@
         try { card.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {}
         _track('invite_card_shown', { relation: relation });
 
-        var text = 'Поговори с Фреди, это психолог по методу Андрея Мейстера. Разговор отдельный и анонимный, двадцать минут бесплатно: ' + url;
+        var text = 'Поговори с Фреди, это психолог по методу Андрея Мейстера. Разговор отдельный и анонимный, пятнадцать минут бесплатно: ' + url;
         card.querySelector('[data-act="share"]').addEventListener('click', function () {
             if (navigator.share) {
                 navigator.share({ text: text }).then(function () {
