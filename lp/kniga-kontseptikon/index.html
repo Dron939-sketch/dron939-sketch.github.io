@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Посадочная для Яндекс Директа, собрана tools/build_direct_landings.py —
+     правки вносить там. Из поиска сюда не ведём: у товара есть своя страница
+     (canonical), две индексируемые страницы об одном товаре спорили бы.
+     В sitemap не добавлять. -->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://meysternlp.ru/knigi/kontseptikon-sem-linz/">
+<title>«Концептикон. Семь линз для ясного мышления» — книга Андрея Мейстера</title>
+<meta name="description" content="Семь способов смотреть на одну ситуацию: связь, иерархия, процесс, система, информация, ресурсы, ценности. Как устроены главы, семь испытаний, глоссарий на 83 термина и демонстрация линз до покупки.">
+<link rel="icon" href="/favicon.ico">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--bg:#0C0C0C;--card:#151515;--line:rgba(58,134,255,.22);--text:#F0F0F0;--muted:#B8B8B8;--faint:#7A7A7A;--accent:#3A86FF;--accent2:#00A8E8}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:84px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:#fff}
+header.top{padding:18px 0;border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.logo{color:#fff;letter-spacing:.3em;font-size:1.1rem}
+.logo span{color:var(--accent)}
+header.top .hint{font-size:.85rem;color:var(--faint)}
+h1{font-size:clamp(1.9rem,6vw,3rem);font-weight:250;line-height:1.15;margin:0 0 18px;letter-spacing:.01em}
+h1 b{font-weight:500;color:#fff}
+h2{font-size:clamp(1.4rem,4.5vw,2rem);font-weight:300;margin:0 0 22px;color:var(--accent);line-height:1.25}
+h3{font-size:1.1rem;font-weight:500;margin:0 0 8px;color:#fff}
+p{color:var(--muted);font-size:1.05rem;margin:0 0 16px;font-weight:300}
+p b{color:#fff;font-weight:500}
+section{padding:56px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:44px 0 56px}
+.hero img{width:100%;height:auto;border-radius:18px;display:block}
+.badge{display:inline-block;padding:6px 14px;border-radius:20px;background:rgba(58,134,255,.15);color:#9cc2ff;font-size:.85rem;margin-bottom:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:14px 30px;border-radius:30px;font-weight:600;font-size:1rem;letter-spacing:.02em;text-align:center;transition:transform .2s,box-shadow .2s}
+.btn-ozon{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;box-shadow:0 4px 18px rgba(58,134,255,.35)}
+.btn-ozon:hover{color:#fff;transform:translateY(-2px);box-shadow:0 8px 26px rgba(58,134,255,.5)}
+.btn-ghost{border:1px solid var(--accent);color:#fff}
+.btn-ghost:hover{background:rgba(58,134,255,.12)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.small{font-size:.9rem;color:var(--faint);margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card p{margin:0;font-size:1rem}
+ul.check{list-style:none;display:grid;gap:12px}
+ul.check li{position:relative;padding-left:30px;color:var(--muted);font-weight:300;font-size:1.05rem}
+ul.check li::before{content:'✓';position:absolute;left:0;top:0;color:var(--accent);font-weight:700}
+ul.check li b{color:#fff;font-weight:500}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+.split img{width:100%;height:auto;border-radius:18px;display:block}
+ol.steps{list-style:none;counter-reset:s;display:grid;gap:16px}
+ol.steps li{counter-increment:s;position:relative;padding:18px 18px 18px 64px;background:var(--card);border:1px solid var(--line);border-radius:14px;color:var(--muted);font-weight:300}
+ol.steps li::before{content:counter(s);position:absolute;left:18px;top:16px;width:32px;height:32px;border-radius:50%;background:rgba(58,134,255,.18);color:#9cc2ff;display:flex;align-items:center;justify-content:center;font-weight:600}
+ol.steps li b{color:#fff;font-weight:500}
+table.cmp{width:100%;border-collapse:collapse;font-size:.98rem}
+table.cmp th,table.cmp td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;color:var(--muted);font-weight:300}
+table.cmp th{color:#fff;font-weight:500}
+table.cmp td.y{color:#9cc2ff}
+.faq h3{margin-top:22px}
+.final{text-align:center}
+.final p{max-width:640px;margin-left:auto;margin-right:auto}
+.final .ctas{justify-content:center}
+footer{padding:28px 0;color:var(--faint);font-size:.85rem}
+footer a{color:var(--faint)}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(12,12,12,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:center;gap:14px;align-items:center;transform:translateY(110%);transition:transform .25s}
+.sticky.on{transform:none}
+.sticky span{color:var(--muted);font-size:.95rem}
+.sticky .btn{min-height:46px;padding:10px 24px}
+@media(max-width:760px){
+ .hero,.split{grid-template-columns:1fr;gap:26px}
+ .hero img{max-width:420px;margin:0 auto}
+ .grid{grid-template-columns:1fr}
+ .btn{width:100%}
+ header.top .hint{display:none}
+ .sticky span{display:none}
+ .sticky .btn{width:100%}
+ table.cmp{font-size:.85rem;table-layout:fixed}
+ table.cmp th,table.cmp td{padding:10px 6px;word-break:break-word;hyphens:auto}
+}
+
+.toc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:8px 0 0}
+.toc b{color:#fff;font-weight:500;display:block;margin-bottom:8px}
+.toc ol{padding-left:20px;color:var(--muted)}
+.toc li{margin:4px 0}
+.short{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0}
+.ex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 14px}
+.ex h3{margin-bottom:6px}
+.ex p{margin:0 0 8px;font-size:1rem}
+.ex p:last-child{margin:0}
+.ex q{color:#fff;quotes:"«" "»"}
+.need td:first-child{color:#fff;font-weight:400;width:38%}
+.more{font-size:.95rem;color:var(--faint)}
+.hero-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.hero-card table.cmp{font-size:.92rem}
+.cross{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-top:24px}
+.cross p{margin:0;font-size:1rem}
+</style>
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
+ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+</script>
+</head>
+<body>
+<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
+
+<header class="top">
+ <div class="wrap">
+  <a class="logo" href="/">А <span>МЕЙСТЕР</span></a>
+  <span class="hint">Книга о том, как разбирать ситуации</span>
+ </div>
+</header>
+
+<main>
+<div class="wrap">
+ <div class="hero">
+  <div>
+   <span class="badge">Книга · 7 линз · 8 глав · глоссарий на 83 термина</span>
+   <h1>«Концептикон»: <b>проблема не в том, как вы думаете, а в том, что вы видите</b></h1>
+   <p>Вы знаете, что надо делегировать, — и делаете всё сами. Знаете, что конфликт надо разобрать, — и не видите, с чего он начался. Знание есть, а результата нет, и объяснение обычно находят в силе воли.</p>
+   <p>Книга предлагает другое объяснение — и семь способов посмотреть на одну и ту же ситуацию так, чтобы увидеть в ней проверяемые признаки, а не мнения.</p>
+   <div class="ctas">
+    <a class="btn btn-ozon" data-goal="hero" href="https://www.ozon.ru/product/kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/" target="_blank" rel="noopener">Купить на Ozon</a>
+    <a class="btn btn-ghost" href="#proverit">Сначала попробовать</a>
+   </div>
+  </div>
+  <img src="/kontseptikon/oblozhka.jpg" width="720" height="960" alt="Обложка книги Андрея Мейстера «Концептикон. Семь линз для ясного мышления»">
+ </div>
+
+ <div class="short">
+  <p><b>Коротко.</b> Коллега месяц молчит на встречах: руководитель говорит «не вовлечён», HR — «выгорел», и оба уверены. Линза даёт не мнение, а признаки: что спросить, куда посмотреть, что с чем сопоставить. Семь линз — семь разных диагнозов, и настоящий обычно виден только через несколько сразу.</p>
+ </div>
+
+ <nav class="toc" aria-label="Содержание">
+  <b>Содержание</b>
+  <ol>
+   <li><a href="#linzy">Семь линз</a></li>
+   <li><a href="#glava">Как устроена каждая глава</a></li>
+   <li><a href="#ispytaniya">Семь испытаний и честные сроки</a></li>
+   <li><a href="#proverit">Проверить до покупки</a></li>
+   <li><a href="#kupit">Бумажная книга</a></li>
+   <li><a href="#voprosy">Частые вопросы</a></li>
+  </ol>
+ </nav>
+</div>
+
+<section id="linzy">
+ <div class="wrap">
+  <h2>Семь линз</h2>
+  <table class="cmp">
+   <tr><th>Линза</th><th>Главный вопрос</th></tr>
+   <tr><td>Связь</td><td>Почему это происходит?</td></tr>
+   <tr><td>Иерархия</td><td>Кто здесь главный?</td></tr>
+   <tr><td>Процесс</td><td>Как это происходит?</td></tr>
+   <tr><td>Система</td><td>Какие правила этим управляют?</td></tr>
+   <tr><td>Информация</td><td>Что я знаю? Чего не знаю?</td></tr>
+   <tr><td>Ресурсы</td><td>Что есть и чего не хватает?</td></tr>
+   <tr><td>Ценности</td><td>Что ценно, для кого и почему?</td></tr>
+  </table>
+ </div>
+</section>
+
+<section id="glava">
+ <div class="wrap">
+  <h2>Как устроена каждая глава</h2>
+  <ol class="steps">
+   <li><b>Метафора</b> — образ, за который цепляется память: бильярдный стол, этажи офиса, цеха завода.</li>
+   <li><b>«Что ты видишь»</b> — что линза вытаскивает из ситуации: цепочки причин, петли обратной связи, узкие места, стимулы.</li>
+   <li><b>«Градусник»</b> — четыре вопроса самопроверки с примерами «без линзы» и «с линзой».</li>
+   <li><b>Концепции</b> — рабочие модели с именами: теория ограничений, закон Гудхарта, парадокс Джевонса, трагедия общин.</li>
+   <li><b>Практика</b> — на каждую линзу свой фильм и QR-код на тренажёр.</li>
+  </ol>
+ </div>
+</section>
+
+<section id="ispytaniya">
+ <div class="wrap">
+  <h2>Семь испытаний и честные сроки</h2>
+  <p>Восьмая глава — не упражнения из учебника, а задачи на своей жизни, по одной на линзу, с критерием успеха и списком ловушек. Первое называется «Отсечение»: выписать все свои задачи, спросить о каждой «что случится через шесть месяцев, если я этого не сделаю», и вычеркнуть девяносто процентов.</p>
+  <p><b>Чего книга не обещает:</b> что после чтения вы станете видеть иначе. Линзу нельзя узнать — её можно натренировать. Темп — одна линза в неделю; семь испытаний автор оценивает в два-три месяца.</p>
+ </div>
+</section>
+
+<section id="proverit">
+ <div class="wrap">
+  <h2>Проверить до покупки</h2>
+  <p>На сайте есть демонстрация: одна рабочая ситуация и все семь линз по очереди. Две минуты, без регистрации.</p>
+  <div class="ctas"><a class="btn btn-ghost" href="/kontseptikon/">Примерить линзы на ситуации</a></div>
+ </div>
+</section>
+
+<section id="kupit">
+ <div class="wrap">
+  <h2>Бумажная книга</h2>
+  <ul class="check">
+   <li><b>Семь глав-линз</b> с метафорой, признаками, самопроверкой и практикой</li>
+   <li><b>Восьмая глава</b> — семь испытаний на своей жизни</li>
+   <li><b>Глоссарий на 83 термина</b> — не словарь, а карточки «как это выглядит в жизни»</li>
+   <li><b>QR-коды</b> на тренажёры и материалы для разбора</li>
+  </ul>
+  <div class="ctas" style="margin-top:22px">
+   <a class="btn btn-ozon" data-goal="paket" href="https://www.ozon.ru/product/kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/" target="_blank" rel="noopener">Купить на Ozon</a>
+  </div>
+  <p class="small">Оплата, доставка и возврат — по правилам Ozon. Цена и наличие — на карточке товара.</p>
+  <div class="cross"><p>«Концептикон» вырос из книги <a href="/lp/kniga-variatika/">«Вариатика»</a>: она объясняет, почему люди разные, а «Концептикон» — как разобрать ситуацию, в которой эти люди уже сцепились.</p></div>
+ </div>
+</section>
+
+<section class="faq" id="voprosy">
+ <div class="wrap">
+  <h2>Частые вопросы</h2>
+  <h3>Это книга по критическому мышлению?</h3>
+  <p>Соседняя область. Критическое мышление проверяет утверждение, которое уже сформулировано. Здесь речь о шаге раньше: что вы вообще заметили в ситуации и что пропустили.</p>
+  <h3>Почему линз именно семь?</h3>
+  <p>Столько разобрано в книге, и они не независимы: в конце каждой главы показано, как одна линза связана с другими. Набор подобран так, чтобы держаться в голове целиком.</p>
+  <h3>Нужен ли доступ к видео?</h3>
+  <p>Книга читается и без него, но практика — половина смысла: каждая линза тренируется на своём фильме с инструкцией, куда смотреть.</p>
+  <h3>Почему покупка на Ozon?</h3>
+  <p>Привычная оплата, доставка в пункт выдачи и защита покупателя по правилам маркетплейса.</p>
+  <p class="more">Автор — Андрей Мейстер. <a href="/knigi/kontseptikon-sem-linz/">Подробная страница товара</a> · <a href="/knigi/">все книги</a> · <a href="/igry/">все игры</a></p>
+ </div>
+</section>
+
+<section class="final">
+ <div class="wrap">
+  <h2>Видеть корень там, где другие спорят о симптомах</h2>
+  <p>Семь линз, семь испытаний и глоссарий, по которому узнают, а не заучивают.</p>
+  <div class="ctas">
+   <a class="btn btn-ozon" data-goal="final" href="https://www.ozon.ru/product/kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/" target="_blank" rel="noopener">Купить на Ozon</a>
+   <a class="btn btn-ghost" href="/kontseptikon/">Примерить линзы на ситуации</a>
+  </div>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="wrap">© Андрей Мейстер · <a href="/oferta/">Оферта</a> · <a href="/politika-konfidencialnosti/">Конфиденциальность</a> · <a href="/kontakty/">Контакты</a></div>
+</footer>
+
+<div class="sticky" id="sticky">
+ <span>Книга «Концептикон»</span>
+ <a class="btn btn-ozon" data-goal="sticky" href="https://www.ozon.ru/product/kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/" target="_blank" rel="noopener">Купить на Ozon</a>
+</div>
+
+<script>
+/* Нижняя кнопка появляется, когда человек дочитал до товара, а кнопка
+   в блоке товара уже ушла с экрана. */
+(function(){var s=document.getElementById('sticky'),h=document.querySelector('#kupit .btn-ozon');
+if(!('IntersectionObserver' in window)||!h){s.classList.add('on');return;}
+new IntersectionObserver(function(e){var r=e[0];s.classList.toggle('on',!r.isIntersecting&&r.boundingClientRect.top<0);}).observe(h);})();
+
+/* Цели Метрики. Покупка проходит на Ozon, и Директ её не видит — кампания
+   учится на клике «Купить на Ozon» (direct_lp_ozon). tovar_ozon* — общие
+   цели страниц товаров, чтобы воронка сайта не разъезжалась. */
+(function(){var C=108138656,T='/kontseptikon/';
+function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
+document.addEventListener('click',function(e){
+var a=e.target&&e.target.closest?e.target.closest('a'):null;if(!a)return;
+var h=a.getAttribute('href')||'';
+if(h.indexOf('ozon.ru')>-1){g('tovar_ozon');g('tovar_ozon_kniga_konceptikon');g('direct_lp_ozon');}
+else if(h===T){g('direct_lp_try');}
+},true);})();
+</script>
+</body>
+</html>
