@@ -15,8 +15,13 @@
     python3 tools/build_lektorij_catalog.py ../Frederick/backend/data/lektorij_catalog.json
 
 Результат — JSON: {"generated_from": ..., "rules": [[pattern, slug], ...],
-"courses": {slug: {"title", "url", "description", "lectures": [{"n",
-"title", "url"}]}}}. Курсы без ни одной готовой лекции не попадают.
+"courses": {slug: {"title", "url", "description", "premium", "lectures":
+[{"n", "title", "url"}]}}}. Курсы без ни одной готовой лекции не попадают.
+
+premium — курс из blog/lektorij/premium.json: первая лекция открыта, со
+второй — по подписке Фреди. До 09.10.2026 этого поля не было, и Фреди
+называл Лекторий «бесплатным целиком» — в выгрузке 02–09.10 так в 50
+ответах, хотя лекции 2–10 премиум-курсов закрыты с 05.10.
 """
 import glob
 import html
@@ -43,6 +48,8 @@ def _clean(s: str) -> str:
 
 
 def build() -> dict:
+    with open(os.path.join(ROOT, "blog", "lektorij", "premium.json"), encoding="utf-8") as f:
+        premium = set(json.load(f).get("premium", []))
     courses = {}
     for path in sorted(glob.glob(os.path.join(ROOT, "blog", "lektorij", "*", "index.html"))):
         slug = os.path.basename(os.path.dirname(path))
@@ -56,6 +63,7 @@ def build() -> dict:
             "title": _clean(h1.group(1)) if h1 else slug,
             "url": f"/blog/lektorij/{slug}/",
             "description": _clean(desc.group(1)) if desc else "",
+            "premium": slug in premium,
             "lectures": lectures,
         }
     rules = [[p, c] for p, c in link_lektorij.RULES if c in courses]
