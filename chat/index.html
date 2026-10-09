@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cut, interactive-widget=resizes-content">
+<!-- Чат с личностями (09.10.2026, решение владельца): самостоятельный
+     продукт под Яндекс Директ на движке Фреди. Выбор собеседника, чат,
+     озвучка, токены вместо минут. Личности и промпты — на сервере
+     (Frederick/backend/personas.py), аватары — tools/build_chat_avatars.py.
+     Ссылка /chat/?p=<id> открывает нужную личность сразу — для объявлений
+     под разные аудитории. Из поиска сюда не ведём. -->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://meysternlp.ru/virtual-psychologist/">
+<title>Поговорить с ИИ-собеседником — Фреди и его команда</title>
+<meta name="description" content="Выберите собеседника под свою ситуацию: отношения, дети, тревога, работа, одиночество. 50 сообщений бесплатно, без регистрации.">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--bg:#fff;--soft:#F5F6FA;--bubble:#F1F2F7;--mine:#3A86FF;--text:#1D1D1F;--muted:#6E6E73;--faint:#9A9AA0;--line:#E6E7EE;--accent:#3A86FF}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+.app{display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:820px;margin:0 auto}
+.top{flex:none;display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.top .back{width:40px;height:40px;border:0;border-radius:50%;background:var(--soft);font-size:20px;display:none}
+.top .who{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
+.top .who img{width:40px;height:40px;border-radius:50%;flex:none}
+.top .who b{display:block;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .who span{display:block;font-size:.8rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{font-weight:700;font-size:1.05rem}
+.brand small{display:block;font-weight:400;font-size:.8rem;color:var(--muted)}
+.chip{flex:none;border:0;border-radius:20px;background:var(--soft);padding:9px 14px;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:6px}
+.chip.low{background:#FFF1E6;color:#B4541A}
+.view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* выбор */
+.pick{padding:18px 16px 28px}
+.pick h1{font-size:1.45rem;line-height:1.25;margin-bottom:6px}
+.pick p.lead{color:var(--muted);margin-bottom:18px;font-size:.98rem;line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{border:1px solid var(--line);border-radius:18px;padding:14px;background:#fff;text-align:left;display:flex;flex-direction:column;gap:8px;transition:box-shadow .15s,border-color .15s}
+.card:hover{border-color:#C7D8FF;box-shadow:0 6px 20px rgba(58,134,255,.12)}
+.card img{width:64px;height:64px;border-radius:50%}
+.card b{font-size:1rem}
+.card span{font-size:.86rem;color:var(--muted);line-height:1.4}
+.card.def{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;background:linear-gradient(135deg,#F2F7FF,#F7F2FF);border-color:#D6E2FF}
+.card.def img{width:72px;height:72px}
+.free{margin-top:18px;font-size:.85rem;color:var(--muted);text-align:center}
+/* чат */
+.msgs{padding:14px 16px 10px;display:flex;flex-direction:column;gap:12px}
+.b{max-width:86%;padding:13px 15px;border-radius:20px;font-size:1rem;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.b.bot{align-self:flex-start;background:var(--bubble);border-bottom-left-radius:6px}
+.b.me{align-self:flex-end;background:var(--mine);color:#fff;border-bottom-right-radius:6px}
+.say{display:inline-flex;align-items:center;gap:6px;margin-top:8px;border:0;background:#fff;border-radius:14px;padding:6px 10px;font-size:.8rem;color:var(--accent)}
+.say[disabled]{opacity:.6}
+.sep{align-self:center;font-size:.78rem;color:var(--faint)}
+.typing{align-self:flex-start;background:var(--bubble);border-radius:20px;padding:14px 18px;display:flex;gap:5px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#B5B7C2;animation:t 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes t{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.out{align-self:stretch;border:1px solid #C7D8FF;background:linear-gradient(135deg,#F2F7FF,#FAF5FF);border-radius:20px;padding:18px}
+.out h3{font-size:1.05rem;margin-bottom:6px}.out p{font-size:.95rem;color:#3C3C43;margin-bottom:12px}
+.foot{flex:none;padding:8px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:none}
+.bar{display:flex;align-items:flex-end;gap:8px;background:var(--soft);border-radius:28px;padding:8px 8px 8px 18px}
+.bar textarea{flex:1;border:0;background:transparent;resize:none;font:inherit;font-size:1rem;line-height:1.4;max-height:140px;padding:8px 0;outline:none;color:var(--text)}
+.bar .send{flex:none;width:44px;height:44px;border:0;border-radius:50%;background:var(--accent);color:#fff;font-size:20px}
+.bar .send:disabled{background:#C9CBD6;cursor:default}
+.note{font-size:.74rem;color:var(--faint);text-align:center;margin-top:7px}
+/* покупка */
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(15,20,35,.45);display:none;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex}
+.panel{background:#fff;width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:22px 18px calc(18px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+.panel h2{font-size:1.2rem;margin-bottom:4px}.panel .sub{color:var(--muted);font-size:.92rem;margin-bottom:14px}
+.pack{display:flex;align-items:center;justify-content:space-between;width:100%;border:2px solid var(--line);border-radius:16px;background:#fff;padding:14px 16px;margin-bottom:10px;text-align:left}
+.pack.sel{border-color:var(--accent);background:#F4F8FF}
+.pack b{font-size:1.02rem}.pack span{font-size:.85rem;color:var(--muted)}.pack i{font-style:normal;font-weight:700;font-size:1.05rem}
+.panel input{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px 14px;font:inherit;font-size:1rem;margin:6px 0 12px}
+.pay{width:100%;border:0;border-radius:50px;background:var(--accent);color:#fff;font-weight:600;font-size:1rem;padding:15px}
+.pay:disabled{opacity:.6}
+.fine{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.45}
+.fine a{color:var(--muted)}
+.x{float:right;border:0;background:var(--soft);width:36px;height:36px;border-radius:50%;font-size:20px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#1D1D1F;color:#fff;padding:10px 16px;border-radius:14px;font-size:.9rem;z-index:60;display:none;max-width:90%}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr}.sheet{align-items:center}.panel{border-radius:22px}}
+</style>
+<script>
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
+ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+</script>
+<script src="/fredi/auth.js"></script>
+</head>
+<body>
+<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<div class="app">
+ <header class="top">
+  <button class="back" id="back" aria-label="К выбору собеседника">←</button>
+  <div class="who" id="who"><div class="brand">Фреди<small>и команда ИИ-собеседников</small></div></div>
+  <button class="chip" id="chip" aria-label="Баланс токенов">💬 <span id="bal">…</span></button>
+ </header>
+
+ <main class="view" id="view">
+  <section class="pick" id="pick">
+   <h1>С кем поговорить?</h1>
+   <p class="lead">Выберите собеседника под свою ситуацию — у каждого свой характер и манера. Писать можно как есть, одной фразой.</p>
+   <div class="grid" id="grid"></div>
+   <p class="free">50 сообщений бесплатно, без регистрации · 1 сообщение = 1 токен</p>
+  </section>
+  <section class="msgs" id="msgs" hidden aria-live="polite"></section>
+ </main>
+
+ <footer class="foot" id="foot">
+  <form class="bar" id="form" autocomplete="off">
+   <textarea id="inp" rows="1" placeholder="Напишите сообщение…" aria-label="Сообщение"></textarea>
+   <button class="send" id="send" type="submit" aria-label="Отправить" disabled>↑</button>
+  </form>
+  <div class="note">ИИ-собеседник, а не врач и не живой человек. Может ошибаться.</div>
+ </footer>
+</div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+ <div class="panel">
+  <button class="x" id="sheetX" aria-label="Закрыть">×</button>
+  <h2 id="sheetTitle">Токены</h2>
+  <div class="sub" id="sheetSub">1 сообщение — 1 токен, озвучка ответа — ещё 1.</div>
+  <div id="packs"></div>
+  <label for="email" class="sub" style="display:block;margin:4px 0 0">Почта для чека</label>
+  <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@mail.ru">
+  <button class="pay" id="pay">Оплатить</button>
+  <div class="fine">Разовая покупка, без подписки и автосписаний. Оплата через ЮKassa.
+   Оплачивая, вы принимаете <a href="/oferta/" target="_blank" rel="noopener">оферту</a>.
+   С подпиской Фреди Premium токены не нужны.</div>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="/fredi/tracker.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var grid = $('grid'), pick = $('pick'), msgs = $('msgs'), foot = $('foot'), inp = $('inp'), send = $('send'),
+      who = $('who'), back = $('back'), bal = $('bal'), chip = $('chip'), sheet = $('sheet');
+  var PERSONAS = [], cur = null, st = { balance: null, premium: false, packs: [] }, busy = false, sent = 0, plan = null;
+
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function track(n, d) { try { window.FrediTracker && window.FrediTracker.track(n, Object.assign({ screen: 'chat', persona: cur && cur.id }, d || {})); } catch (e) {} }
+  function goal(n) { try { window.ym && ym(108138656, 'reachGoal', n); } catch (e) {} }
+  function toast(t) { var x = $('toast'); x.textContent = t; x.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(function () { x.style.display = 'none'; }, 3500); }
+  function ava(id) { return '/chat/ava/' + id + '.svg'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // Личность — та же, что у /fredi/: auth.js сверяет устройство с сервером.
+  var ready = (window.authReady || Promise.resolve(null)).catch(function () { return null; }).then(function (u) {
+    var id = u || Number(lsGet('fredi_user_id')) || 0;
+    if (!id) { id = Date.now(); lsSet('fredi_user_id', String(id)); document.cookie = 'fredi_uid=' + id + ';path=/;max-age=315360000;SameSite=Lax'; }
+    window.USER_ID = id; return id;
+  });
+
+  function showBal() {
+    if (st.premium) { bal.textContent = 'Premium'; chip.classList.remove('low'); return; }
+    bal.textContent = st.balance == null ? '…' : st.balance;
+    chip.classList.toggle('low', st.balance != null && st.balance <= 5);
+  }
+  function loadTokens() {
+    return ready.then(function (uid) { return fetch('/api/tokens/' + uid).then(function (r) { return r.json(); }); })
+      .then(function (d) { if (d && d.success) { st = Object.assign(st, d); showBal(); if (d.free_granted_now) toast('Вам начислено ' + d.free_tokens + ' бесплатных сообщений'); } })
+      .catch(function () {});
+  }
+
+  // ---------- выбор собеседника ----------
+  function renderGrid() {
+    grid.innerHTML = PERSONAS.map(function (p, i) {
+      return '<button class="card' + (i === 0 ? ' def' : '') + '" data-id="' + p.id + '"><img src="' + ava(p.id) + '" alt="" width="64" height="64">' +
+        '<div><b>' + esc(p.name) + '</b><br><span>' + esc(i === 0 ? p.role : p.tagline) + '</span></div></button>';
+    }).join('');
+  }
+  grid.addEventListener('click', function (e) { var c = e.target.closest('.card'); if (c) open(c.getAttribute('data-id'), 'grid'); });
+
+  function toPick() {
+    cur = null; msgs.hidden = true; pick.hidden = false; foot.style.display = 'none'; back.style.display = 'none';
+    who.innerHTML = '<div class="brand">Фреди<small>и команда ИИ-собеседников</small></div>';
+    history.replaceState(null, '', '/chat/' + location.search.replace(/([?&])p=[^&]*&?/, '$1').replace(/[?&]$/, ''));
+  }
+  back.addEventListener('click', toPick);
+
+  // ---------- разговор ----------
+  function bubble(text, mine, withVoice) {
+    var d = document.createElement('div'); d.className = 'b ' + (mine ? 'me' : 'bot');
+    var t = document.createElement('span'); t.textContent = text; d.appendChild(t);
+    msgs.appendChild(d);
+    if (withVoice) addSay(d, function () { return t.textContent; });
+    $('view').scrollTop = 1e9;
+    return { set: function (s) { t.textContent = s; $('view').scrollTop = 1e9; }, el: d, text: function () { return t.textContent; } };
+  }
+  function addSay(d, getText) {
+    var b = document.createElement('button'); b.className = 'say'; b.type = 'button';
+    b.textContent = st.premium ? '▶ Озвучить' : '▶ Озвучить · 1 токен';
+    b.addEventListener('click', function () { speak(getText(), b); });
+    d.appendChild(document.createElement('br')); d.appendChild(b);
+  }
+  function typing(on) {
+    var x = $('typing');
+    if (on && !x) { x = document.createElement('div'); x.id = 'typing'; x.className = 'typing'; x.innerHTML = '<i></i><i></i><i></i>'; msgs.appendChild(x); $('view').scrollTop = 1e9; }
+    if (!on && x) x.remove();
+  }
+  function open(id, how) {
+    var p = PERSONAS.filter(function (x) { return x.id === id; })[0] || PERSONAS[0];
+    cur = p; sent = 0; lsSet('chat_persona', p.id);
+    pick.hidden = true; msgs.hidden = false; foot.style.display = 'block'; back.style.display = 'block';
+    who.innerHTML = '<img src="' + ava(p.id) + '" alt="" width="40" height="40"><div style="min-width:0"><b>' + esc(p.name) + '</b><span>' + esc(p.role) + '</span></div>';
+    history.replaceState(null, '', '/chat/?p=' + p.id);
+    msgs.innerHTML = '';
+    track('chat_persona_open', { how: how }); goal('chat_persona_open');
+    ready.then(function (uid) {
+      return fetch('/api/chat/history/' + uid + '?limit=50').then(function (r) { return r.json(); }).then(function (d) {
+        var list = ((d && d.messages) || []).filter(function (m) { return ((m.metadata || {}).persona || 'fredi') === p.id; }).slice(-12);
+        if (cur !== p) return;
+        if (list.length) {
+          list.forEach(function (m) { bubble(String(m.content || ''), m.role === 'user', m.role !== 'user'); });
+          var s = document.createElement('div'); s.className = 'sep'; s.textContent = 'продолжаем'; msgs.appendChild(s);
+        } else bubble(p.greeting, false, false);
+      });
+    }).catch(function () { if (cur === p && !msgs.children.length) bubble(p.greeting, false, false); });
+    setTimeout(function () { inp.focus(); }, 50);
+  }
+
+  function hideToast() { $('toast').style.display = 'none'; clearTimeout(toast._t); }
+  function noTokens() {
+    hideToast();
+    var o = document.createElement('div'); o.className = 'out';
+    o.innerHTML = '<h3>Токены закончились</h3><p>Разговор сохранён — продолжите с этого места, когда пополните баланс.</p>' +
+      '<button class="pay" type="button">Пополнить</button>';
+    o.querySelector('button').addEventListener('click', openSheet);
+    msgs.appendChild(o); $('view').scrollTop = 1e9;
+    track('chat_no_tokens'); goal('chat_no_tokens');
+  }
+
+  function stream(uid, text) {
+    var b = null, full = '';
+    return fetch('/api/persona/stream', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: uid, message: text, persona: cur.id }) })
+      .then(function (res) {
+        if (res.status === 402) return { noTokens: true };
+        if (!res.ok || !res.body) return null;
+        var reader = res.body.getReader(), dec = new TextDecoder(), buf = '', done = null, failed = false;
+        function line(l) {
+          l = l.trim(); if (!l) return; var ev; try { ev = JSON.parse(l); } catch (e) { return; }
+          if (ev.type === 'delta' && ev.text) { if (!b) { typing(false); b = bubble('', false, false); } full += ev.text; b.set(full); }
+          else if (ev.type === 'done') { done = ev; if (ev.full_text && b) b.set(ev.full_text); }
+          else if (ev.type === 'error') failed = true;
+        }
+        function pump() { return reader.read().then(function (r) {
+          if (r.done) { if (buf) line(buf); return; }
+          buf += dec.decode(r.value, { stream: true }); var nl;
+          while ((nl = buf.indexOf('\n')) >= 0) { line(buf.slice(0, nl)); buf = buf.slice(nl + 1); }
+          return pump(); }); }
+        return pump().then(function () {
+          if (failed || !done) { if (b) b.el.remove(); return null; }
+          addSay(b.el, b.text);
+          return done;
+        });
+      }).catch(function () { if (b) b.el.remove(); return null; });
+  }
+
+  function submit(e) {
+    if (e) e.preventDefault();
+    var text = inp.value.trim(); if (!text || busy || !cur) return;
+    if (!st.premium && st.balance === 0) { noTokens(); return; }
+    busy = true; send.disabled = true;
+    bubble(text, true, false); inp.value = ''; size();
+    sent++; if (sent === 1) { track('chat_first_message', { len: text.length }); goal('chat_first_message'); }
+    typing(true);
+    ready.then(function (uid) { return stream(uid, text); }).then(function (r) {
+      typing(false);
+      if (r && r.noTokens) { st.balance = 0; showBal(); noTokens(); return; }
+      if (!r) { bubble('Не получилось ответить — связь подвела. Токен не списан, напишите ещё раз.', false, false); loadTokens(); return; }
+      if (!r.premium && typeof r.balance === 'number') { st.balance = r.balance; showBal(); }
+      if (!st.premium && st.balance !== null && st.balance <= 3 && st.balance > 0) toast('Осталось сообщений: ' + st.balance);
+    }).then(function () { busy = false; send.disabled = !inp.value.trim(); inp.focus(); });
+  }
+
+  // Озвучка ответа: Фреди — голос Джарвиса, остальные — свои голоса.
+  var audio = null;
+  function speak(text, btn) {
+    if (!st.premium && st.balance === 0) { openSheet(); return; }
+    btn.disabled = true; var was = btn.textContent; btn.textContent = '… готовлю голос';
+    ready.then(function (uid) {
+      return fetch('/api/persona/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: uid, text: text, persona: cur ? cur.id : 'fredi' }) });
+    }).then(function (r) {
+      if (r.status === 402) { st.balance = 0; showBal(); openSheet(); throw 0; }
+      if (!r.ok) throw 1;
+      return r.blob();
+    }).then(function (blob) {
+      if (audio) audio.pause();
+      audio = new Audio(URL.createObjectURL(blob)); audio.play();
+      track('chat_voice'); if (!st.premium && st.balance) { st.balance--; showBal(); }
+    }).catch(function (e) { if (e !== 0) toast('Озвучка не удалась — токен не списан'); })
+      .then(function () { btn.disabled = false; btn.textContent = was; });
+  }
+
+  function size() { inp.style.height = 'auto'; inp.style.height = Math.min(140, inp.scrollHeight) + 'px'; }
+  inp.addEventListener('input', function () { size(); send.disabled = busy || !inp.value.trim(); });
+  inp.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey && !('ontouchstart' in window)) { e.preventDefault(); submit(); } });
+  $('form').addEventListener('submit', submit);
+
+  // ---------- покупка ----------
+  function openSheet() {
+    if (st.premium) { toast('С подпиской Premium токены не нужны'); return; }
+    var packs = st.packs && st.packs.length ? st.packs : [];
+    if (!packs.length) { toast('Не удалось загрузить пакеты, попробуйте через минуту'); return; }
+    plan = plan || packs[1 < packs.length ? 1 : 0].plan;
+    $('packs').innerHTML = packs.map(function (p) {
+      var per = (p.price / p.tokens).toFixed(2).replace('.', ',');
+      return '<button class="pack' + (p.plan === plan ? ' sel' : '') + '" data-plan="' + p.plan + '"><div><b>' + p.tokens + ' сообщений</b><br><span>' + per + ' ₽ за сообщение</span></div><i>' + p.price + ' ₽</i></button>';
+    }).join('');
+    $('email').value = $('email').value || lsGet('chat_email') || '';
+    hideToast();
+    sheet.classList.add('on'); track('chat_buy_open'); goal('chat_buy_open');
+  }
+  $('packs').addEventListener('click', function (e) {
+    var b = e.target.closest('.pack'); if (!b) return; plan = b.getAttribute('data-plan');
+    Array.prototype.forEach.call(document.querySelectorAll('.pack'), function (x) { x.classList.toggle('sel', x === b); });
+  });
+  function closeSheet() { sheet.classList.remove('on'); }
+  $('sheetX').addEventListener('click', closeSheet);
+  sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+  chip.addEventListener('click', openSheet);
+  $('pay').addEventListener('click', function () {
+    var email = $('email').value.trim(), btn = this;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('Введите почту — на неё придёт чек'); $('email').focus(); return; }
+    lsSet('chat_email', email); btn.disabled = true; btn.textContent = 'Создаю платёж…';
+    track('chat_pay_click', { plan: plan }); goal('chat_pay_click');
+    ready.then(function (uid) {
+      var ret = location.origin + '/chat/?paid=1' + (cur ? '&p=' + cur.id : '');
+      return fetch('/api/subscription/create-payment', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: uid, email: email, plan: plan, return_url: ret }) }).then(function (r) { return r.json(); });
+    }).then(function (d) {
+      if (d && d.success && d.confirmation_url) { lsSet('chat_pending', d.payment_id); location.href = d.confirmation_url; return; }
+      toast((d && d.error) || 'Не удалось создать платёж'); btn.disabled = false; btn.textContent = 'Оплатить';
+    }).catch(function () { toast('Нет связи с сервером'); btn.disabled = false; btn.textContent = 'Оплатить'; });
+  });
+
+  // Возврат из кассы: подтверждаем платёж, токены ложатся на баланс.
+  function verifyReturn() {
+    var pid = lsGet('chat_pending'); if (!pid) return;
+    ready.then(function (uid) {
+      var tries = 0;
+      (function poll() {
+        fetch('/api/subscription/verify-payment', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: uid, payment_id: pid }) }).then(function (r) { return r.json(); }).then(function (d) {
+          if (d && d.activated) { try { localStorage.removeItem('chat_pending'); } catch (e) {} loadTokens(); toast('Токены зачислены'); track('chat_tokens_paid'); goal('chat_tokens_paid'); return; }
+          if (d && d.status === 'canceled') { try { localStorage.removeItem('chat_pending'); } catch (e) {} toast('Оплата не прошла — деньги не списаны'); return; }
+          if (++tries < 10) setTimeout(poll, 3000);
+        }).catch(function () { if (++tries < 10) setTimeout(poll, 3000); });
+      })();
+    });
+  }
+
+  // ---------- старт ----------
+  fetch('/api/personas').then(function (r) { return r.json(); }).then(function (d) {
+    PERSONAS = (d && d.personas) || [];
+    renderGrid();
+    var want = (new URLSearchParams(location.search).get('p') || '').toLowerCase();
+    if (want && PERSONAS.some(function (p) { return p.id === want; })) open(want, 'link');
+    track('chat_open', { ref: document.referrer.slice(0, 120), p: want || '' }); goal('chat_open');
+  }).catch(function () { grid.innerHTML = '<p class="lead">Не удалось загрузить собеседников. Обновите страницу через минуту.</p>'; });
+  loadTokens().then(verifyReturn);
+})();
+</script>
+</body>
+</html>

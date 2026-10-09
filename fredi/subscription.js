@@ -287,8 +287,8 @@
             if (!raw) return;
             localStorage.removeItem('fredi_after_pay');
             const d = JSON.parse(raw);
-            if (!d || !/^\/(blog\/[\w.\-\/]+|fredi\/chat\/)$/.test(d.url || '') || Date.now() - (d.t || 0) > 3 * 3600 * 1000) return;
-            setTimeout(function () { window.location.replace(d.url + (d.url.indexOf('/blog/') === 0 ? '#lockGate' : '')); }, 1500);
+            if (!d || !/^\/blog\/[\w.\-\/]+$/.test(d.url || '') || Date.now() - (d.t || 0) > 3 * 3600 * 1000) return;
+            setTimeout(function () { window.location.replace(d.url + '#lockGate'); }, 1500);
         } catch (e) {}
     }
 
