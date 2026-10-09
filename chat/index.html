@@ -149,7 +149,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   function track(n, d) { try { window.FrediTracker && window.FrediTracker.track(n, Object.assign({ screen: 'chat', persona: cur && cur.id }, d || {})); } catch (e) {} }
   function goal(n) { try { window.ym && ym(108138656, 'reachGoal', n); } catch (e) {} }
   function toast(t) { var x = $('toast'); x.textContent = t; x.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(function () { x.style.display = 'none'; }, 3500); }
-  function ava(id) { return '/chat/ava/' + id + '.svg'; }
+  function ava(id) { return '/chat/ava/' + id + '.webp'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   // Личность — та же, что у /fredi/: auth.js сверяет устройство с сервером.
