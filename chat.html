@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Переходник, а не страница. 09.10.2026 до деплоя чата nginx отвечал
+     на /chat/ постоянным 301 сюда (каталога ещё не было, сработало
+     правило @slash_html), и браузеры, открывшие ссылку в те минуты,
+     запомнили редирект. Ведём на index.html, а не на /chat/ — иначе
+     запомненный 301 вернёт браузер сюда по кругу. Метки utm_* и ?p=
+     сохраняются. Тот же случай — razgovornyj-gipnoz/standart.html. -->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://meysternlp.ru/virtual-psychologist/">
+<title>Чат с Фреди и другими собеседниками | Андрей Мейстер</title>
+<meta name="description" content="Переход в чат с Фреди и другими ИИ-собеседниками.">
+<script>location.replace('/chat/index.html'+location.search+location.hash);</script>
+<meta http-equiv="refresh" content="0; url=/chat/index.html">
+</head>
+<body>
+<h1>Чат с Фреди</h1>
+<p><a href="/chat/index.html">Перейти в чат</a></p>
+</body>
+</html>
