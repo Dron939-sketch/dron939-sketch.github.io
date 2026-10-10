@@ -46,7 +46,10 @@ BOOKS = {
         goal="tovar_dver_kniga_gipnoz",
         cta="Что внутри книги",
         try_href="/razgovornyj-gipnoz/",
-        try_label="Эксперимент на себе — 30 секунд, бесплатно"),
+        try_label="Эксперимент на себе — 30 секунд, бесплатно",
+        # Оценка и число отзывов — с карточки Ozon на 10.10.2026 (4,9 и 1 508).
+        # «Больше 1 500» остаётся правдой, пока отзывы растут; оценку сверять.
+        paid="Книга платная, продаётся на Ozon: оценка 4,9, больше 1&nbsp;500 отзывов. На её странице — что внутри и кому она не подойдёт."),
     "variatika": dict(
         title="«Вариатика. Библиотека человеческих паттернов»",
         href="/knigi/variatika-biblioteka-chelovecheskih-patternov/",
@@ -160,7 +163,7 @@ def build(cfg):
     paras = "\n".join('<p style="margin:0 0 10px">%s</p>' % x.format(title=b["title"]) for x in cfg["p"])
     items = "\n".join('<li style="margin:4px 0">%s</li>' % x for x in cfg["li"])
     return BOX_TPL.format(open=MARK_OPEN, close=MARK_CLOSE, head=cfg["head"], paras=paras,
-                          items=items, paid=PAID, **b)
+                          items=items, **dict({"paid": PAID}, **b))
 
 
 def insert(html, cfg, block):
