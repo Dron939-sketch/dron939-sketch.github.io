@@ -67,9 +67,10 @@
 
 ### Лист Г — нужен
 
-У курса «Обида» стоит временная векторная иконка (запечатанный конверт,
-который так и не отправили): она не совпадает по фактуре с
-фотографическим рядом и подлежит замене при следующей генерации.
+У курсов «Обида» и «Поколения» стоят временные векторные иконки:
+запечатанный конверт, который так и не отправили, и спил дерева с годовыми
+кольцами. По фактуре они не совпадают с фотографическим рядом и подлежат
+замене при следующей генерации.
 
 ```
 Cell 1: a vintage sealed envelope, never posted, edges yellowed and
@@ -80,12 +81,18 @@ Cell 2: an antique brass hand mirror lying face down on a black glossy
 surface, its back engraved and slightly worn, a small folded paper bill
 tucked under the handle. Mirror and bill only, no reflection of a face,
 no text.
+
+Cell 3: a thick cross-section slice of an old tree trunk lying flat on a
+black glossy surface, many clearly visible growth rings, bark intact around
+the edge, one ring slightly lighter than the others, a thin radial crack.
+Wood only, no carving, no text.
 ```
 
 | ячейка | файл | курс |
 |---|---|---|
 | 1 | `obida.webp` | Обида |
 | 2 | `vina-i-styd.webp` | Вина и стыд |
+| 3 | `pokoleniya.webp` | Поколения |
 
 ### Лист В — нужен сейчас
 

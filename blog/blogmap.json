@@ -12683,6 +12683,76 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 16
+  },
+  {
+   "slug": "lekciya-pokol-1-raznye-strany-odin-stol",
+   "title": "Поколения: что такое поколение — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 18
+  },
+  {
+   "slug": "lekciya-pokol-2-vozrast-epoha-ili-pokolenie",
+   "title": "Возраст, эпоха или поколение — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-pokol-3-kartochka-pokoleniya",
+   "title": "Карточка поколения: картина мира — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-pokol-4-molchalivoe-pokolenie",
+   "title": "Молчаливое поколение: язык выживания — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-pokol-5-bebi-bumery",
+   "title": "Беби-бумеры: язык долга — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-pokol-6-pokolenie-x",
+   "title": "Поколение X: язык самостоятельности — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 13
+  },
+  {
+   "slug": "lekciya-pokol-7-millenialy",
+   "title": "Миллениалы: язык смысла и выбора — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-pokol-8-zumery-i-alfa",
+   "title": "Зумеры и Альфа: язык подлинности — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-pokol-9-kak-dogovoritsya-pokoleniyam",
+   "title": "Как договориться поколениям — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-pokol-10-ekzamen-i-sud-nad-teoriej",
+   "title": "Поколения: экзамен и суд над теорией — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 12
   }
  ]
 }
