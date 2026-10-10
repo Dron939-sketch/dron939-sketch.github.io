@@ -4023,6 +4023,7 @@ async function init() {
                 weekend: () => { if (typeof showWeekendScreen==='function') showWeekendScreen(); else { const s=document.createElement('script'); s.src='weekend.js'; s.onload=()=>{ if(typeof showWeekendScreen==='function') showWeekendScreen(); }; document.head.appendChild(s); } },
                 statistics: () => showStatistics(),
                 lektorij: () => { window.location.href = '/blog/lektorij/'; },
+                persona: () => { try { if (window.ym) ym(108138656, 'reachGoal', 'fredi_to_chat'); } catch (e) {} window.location.href = '/chat/?from=fredi'; },
                 mirrors: () => { if (typeof showMirrorsScreen==='function') showMirrorsScreen(); },
                 settings: () => {
                     if (typeof showSettingsScreen === 'function') showSettingsScreen();
