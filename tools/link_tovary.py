@@ -350,7 +350,9 @@ def main():
         html = strip(src)
         absorbed += had_old
         if not args.strip:
-            key = pick(a)
+            # Статьи с блоком «решение целиком — в книге» (link_reshenie.py)
+            # уже ведут на книгу из середины текста; вторая дверь не нужна.
+            key = None if "<!-- kniga-reshenie -->" in html else pick(a)
             if key:
                 html, ok = insert_tail(html, build(key))
                 if ok:
