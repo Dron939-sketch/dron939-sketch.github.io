@@ -192,11 +192,14 @@ a{color:inherit}
 <script>
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
 ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+// Свой счётчик чата (10.10.2026): чат продвигается как отдельный продукт,
+// его воронка и цели Директа — здесь, а не среди двухсот целей сайта.
+ym(113593395,'init',{webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
 </script>
 <script src="/fredi/auth.js"></script>
 </head>
 <body>
-<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""><img src="https://mc.yandex.ru/watch/113593395" style="position:absolute;left:-9999px" alt=""></div></noscript>
 <div class="shell" id="shell">
 
  <aside class="side" id="side" aria-label="Собеседники и разделы">
@@ -289,7 +292,8 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function track(n, d) { try { window.FrediTracker && window.FrediTracker.track(n, Object.assign({ screen: 'chat', persona: cur && cur.id }, d || {})); } catch (e) {} }
-  function goal(n) { try { window.ym && ym(108138656, 'reachGoal', n); } catch (e) {} }
+  // Цель — в оба счётчика: свой счётчик чата и общий счётчик сайта.
+  function goal(n) { try { if (window.ym) { ym(113593395, 'reachGoal', n); ym(108138656, 'reachGoal', n); } } catch (e) {} }
   function toast(t) { var x = $('toast'); x.textContent = t; x.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(function () { x.style.display = 'none'; }, 3500); }
   function hideToast() { $('toast').style.display = 'none'; clearTimeout(toast._t); }
   function ava(id) { return '/chat/ava/' + id + '.webp'; }
@@ -636,7 +640,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
       rec.start();
       mic.classList.add('rec'); mic.textContent = '■';
       $('note').textContent = 'Говорите… нажмите ■, когда закончите. Ответ прозвучит голосом · ' + st.cost_voice_mode + ' токена';
-      track('chat_mic_start');
+      track('chat_mic_start'); goal('chat_mic_start');
       recTimer = setTimeout(function () { stopRec(false); }, 60000);
     }).catch(function () { toast('Нет доступа к микрофону — разрешите его в настройках браузера'); });
   });
