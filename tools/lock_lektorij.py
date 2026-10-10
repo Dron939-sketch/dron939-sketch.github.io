@@ -221,6 +221,59 @@ def mark_hub(premium, by_slug_name, dry):
     return n
 
 
+def sync_hub_labels(premium, dry):
+    """Метки на карточках хаба — строго по premium.json, в обе стороны.
+
+    mark_hub только ставил «первая бесплатно 🔒» и никогда не снимал: после
+    первого прогона 05.10.2026 замок остался на 66 открытых курсах, а три
+    запертых («Дело жизни», «КПТ самостоятельно», «Стимульный контроль»)
+    так и висели с «Открыто». Найдено и выправлено 10.10.2026."""
+    p = os.path.join(LEK, "index.html")
+    s = rd(p)
+    prem = set(premium)
+    fixed = [0]
+
+    def lectures(slug):
+        cp = os.path.join(LEK, slug, "index.html")
+        return len(dict.fromkeys(re.findall(r'href="/blog/(lekciya-[a-z0-9-]+)\.html"', rd(cp)))) if os.path.exists(cp) else 0
+
+    def word(n):
+        m = n % 100
+        return "лекций" if 11 <= m <= 14 else ("лекция" if m % 10 == 1 else ("лекции" if 2 <= m % 10 <= 4 else "лекций"))
+
+    def dcard(m):
+        slug, inner = m.group(1), m.group(2)
+        if slug in prem:
+            if "🔒" in inner:
+                return m.group(0)
+            n = lectures(slug)
+            new = inner.replace('<span class="st open">Открыто</span>',
+                                '<span class="dcnt">%d %s · первая бесплатно 🔒</span>' % (n, word(n)))
+            if new == inner:
+                new = re.sub(r'(<span class="dcnt">\d+ лекци[йия]+)(</span>)', r'\1 · первая бесплатно 🔒\2', inner)
+        else:
+            new = inner.replace(" · первая бесплатно 🔒", "")
+        fixed[0] += new != inner
+        return m.group(0).replace(inner, new)
+
+    def pop(m):
+        slug, inner = m.group(1), m.group(2)
+        if slug in prem and "🔒" not in inner:
+            new = re.sub(r'(<span class="cnt">\d+ лекци[йия]+)(</span>)', r'\1 🔒\2', inner)
+        elif slug not in prem:
+            new = inner.replace(" 🔒", "")
+        else:
+            new = inner
+        fixed[0] += new != inner
+        return m.group(0).replace(inner, new)
+
+    s = re.sub(r'<a class="dcard" href="/blog/lektorij/([^/"]+)/">(.*?)</a>', dcard, s, flags=re.S)
+    s = re.sub(r'<a class="c" href="/blog/lektorij/([^/"]+)/">(.*?)</a>', pop, s, flags=re.S)
+    if not dry and fixed[0]:
+        wr(p, s)
+    return fixed[0]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -260,7 +313,8 @@ def main():
                 if r == "снята":
                     stats["курс: снята"] = stats.get("курс: снята", 0) + 1
     n = mark_hub(premium, by_slug_name, a.dry_run)
-    print(("БЕЗ ЗАПИСИ: " if a.dry_run else "") + ", ".join(f"{k} {v}" for k, v in sorted(stats.items())) + f"; хаб ItemList помечено {n}")
+    lab = sync_hub_labels(premium, a.dry_run)
+    print(("БЕЗ ЗАПИСИ: " if a.dry_run else "") + ", ".join(f"{k} {v}" for k, v in sorted(stats.items())) + f"; хаб ItemList помечено {n}, метки карточек выправлено {lab}")
 
 
 if __name__ == "__main__":
