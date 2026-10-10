@@ -244,6 +244,7 @@ body{overflow-wrap:break-word}</style>
                 <div class="chat-item" data-chat="esoterica"><span class="nav-icon">🔮</span><span class="nav-name">Эзотерика</span></div>
             </div>
             <div class="chats-footer">
+                <div class="install-slot" data-install-app style="padding:0 8px 6px"></div>
                 <div class="nav-divider"></div>
                 <div class="chat-item" data-chat="settings" id="settingsBtn"><span class="nav-icon">⚙️</span><span class="nav-name">Настройки</span></div>
             </div>
@@ -485,6 +486,9 @@ body{overflow-wrap:break-word}</style>
     <!-- Окно разговора: история переписки, поле ввода и микрофон. После
          app.js — переносит к себе его узлы, а не заводит свои. -->
     <script src="talk.js"></script>
+    <!-- Кнопка «Установить на компьютер / телефон»: Фреди ставится из
+         браузера как программа, бэкенд тот же. -->
+    <script src="/assets/install-app.js" data-name="Фреди" data-pill="mobile" defer></script>
     <script src="anchors.js"></script>
     <script src="dreams.js"></script>
     <script src="esoterica.js"></script>

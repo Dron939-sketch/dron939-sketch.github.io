@@ -10,12 +10,16 @@
 высоты — неровный край кисти уходит за обрез, страница сама скругляет
 картинку (border-radius:50%). Новый холст — тот же порядок, тот же путь.
 
+Заодно собираются значки приложения для установки чата на компьютер и
+телефон (chat/icon-192.png, chat/icon-512.png, chat/manifest.json):
+четыре лица 2×2 на синем фоне, в безопасной зоне маскируемой иконки.
+
 Личности живут на сервере (Frederick/backend/personas.py), здесь — только
 их лица. Фреди и «Ночной режим» нарочно не люди.
 """
 import os
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageDraw
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR = os.path.join(ROOT, "chat", "ava")
@@ -63,6 +67,42 @@ def main():
         face.resize((SIZE, SIZE), Image.LANCZOS).save(
             os.path.join(DIR, pid + ".webp"), "WEBP", quality=84, method=6)
     print(f"{len(IDS)} аватаров → {os.path.relpath(DIR, ROOT)}/")
+    icons()
+
+
+def icons():
+    """Значок приложения: Фреди, Вера, Марк, Ника на синем фоне.
+
+    Маскируемая иконка: система может обрезать её в круг, поэтому лица
+    лежат внутри центральных 72% — дальше только фон.
+    """
+    big = 1024
+    bg = Image.new("RGB", (big, big), (58, 134, 255))
+    # мягкий переход к фиолетовому, как кнопки страницы
+    top, bot = (58, 134, 255), (108, 77, 255)
+    dr = ImageDraw.Draw(bg)
+    for y in range(big):
+        t = y / (big - 1)
+        dr.line([(0, y), (big, y)], fill=tuple(round(a + (b - a) * t) for a, b in zip(top, bot)))
+    safe = big * 0.72
+    gap = safe * 0.06
+    d = int((safe - gap) / 2)
+    x0 = int((big - safe) / 2)
+    for i, pid in enumerate(IDS[:4]):
+        face = Image.open(os.path.join(DIR, pid + ".webp")).convert("RGB").resize((d, d), Image.LANCZOS)
+        mask = Image.new("L", (d * 4, d * 4), 0)
+        ImageDraw.Draw(mask).ellipse((0, 0, d * 4 - 1, d * 4 - 1), fill=255)
+        mask = mask.resize((d, d), Image.LANCZOS)
+        ring = Image.new("L", (d * 4, d * 4), 0)
+        ImageDraw.Draw(ring).ellipse((0, 0, d * 4 - 1, d * 4 - 1), fill=255)
+        ring = ring.resize((d + 16, d + 16), Image.LANCZOS)
+        px = x0 + (i % 2) * int(d + gap)
+        py = x0 + (i // 2) * int(d + gap)
+        bg.paste((255, 255, 255), (px - 8, py - 8), ring)
+        bg.paste(face, (px, py), mask)
+    for size in (192, 512):
+        bg.resize((size, size), Image.LANCZOS).save(os.path.join(ROOT, "chat", f"icon-{size}.png"), optimize=True)
+    print("значки → chat/icon-192.png, chat/icon-512.png")
 
 
 if __name__ == "__main__":

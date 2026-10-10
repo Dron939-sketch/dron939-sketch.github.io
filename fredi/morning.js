@@ -107,7 +107,7 @@ async function subscribeToPushNotifications() {
             return;
         }
 
-        const registration = await navigator.serviceWorker.register('/sw.js');
+        const registration = await navigator.serviceWorker.register('./service_worker.js');
 
         // VAPID ключ из конфига или переменной окружения
         const vapidKey = window.VAPID_PUBLIC_KEY || window.CONFIG?.VAPID_PUBLIC_KEY;
@@ -156,7 +156,7 @@ function urlBase64ToUint8Array(base64String) {
 async function initMorningPush() {
     if ('serviceWorker' in navigator) {
         try {
-            await navigator.serviceWorker.register('/sw.js');
+            await navigator.serviceWorker.register('./service_worker.js');
         } catch (e) {
             console.warn('Service Worker registration failed:', e);
         }

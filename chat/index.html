@@ -22,6 +22,8 @@
 <meta name="description" content="Выберите собеседника под свою ситуацию: отношения, дети, тревога, работа, одиночество. 25 сообщений бесплатно, без регистрации. Можно голосом.">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/favicon.ico">
+<link rel="manifest" href="/chat/manifest.json">
+<link rel="apple-touch-icon" href="/chat/icon-192.png">
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -55,6 +57,7 @@ a{color:inherit}
 .nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;text-decoration:none;font-size:.88rem;color:#3C3C43}
 .nav a:hover{background:var(--soft)}
 .nav a .ic{color:#6E6E73}
+.inst{padding:2px 14px 8px}.inst:empty{display:none}
 .soc{display:flex;gap:8px;padding:6px 18px 16px}
 .soc a{width:34px;height:34px;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.72rem;font-weight:700;color:#3C3C43}
 
@@ -236,6 +239,8 @@ ym(113593395,'init',{webvisor:true,clickmap:true,referrer:document.referrer,url:
    <a href="/treningi/"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg>Тренинги</a>
    <a href="/"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg>meysternlp.ru</a>
   </nav>
+  <!-- Кнопка «Установить на компьютер / телефон» — assets/install-app.js -->
+  <div class="inst" data-install-app></div>
   <div class="soc"><a href="https://t.me/meysternlp" target="_blank" rel="noopener" aria-label="Telegram">TG</a><a href="https://vk.com/meysternlp" target="_blank" rel="noopener" aria-label="ВКонтакте">VK</a></div>
  </aside>
  <div class="dim" id="dim"></div>
@@ -301,6 +306,7 @@ ym(113593395,'init',{webvisor:true,clickmap:true,referrer:document.referrer,url:
 <div class="toast" id="toast"></div>
 
 <script src="/fredi/tracker.js"></script>
+<script src="/assets/install-app.js" data-sw="/chat/sw.js" data-name="Фреди и команду" defer></script>
 <script>
 (function () {
   'use strict';
