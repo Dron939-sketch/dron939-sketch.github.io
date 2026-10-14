@@ -32,6 +32,10 @@ jobs:
       # шага деплоя очередь не доходила вовсе — `if: always()` спасает от
       # ошибки предыдущего шага, но не от смерти всего job'а. Порядок
       # переставлен: сначала то, что видят люди, потом зеркало.
+      # Git-сервер — региона, где живёт приложение meysternlp. 14.10.2026
+      # регион Москва_0 лёг вместе с git.msk0.amvera.ru, приложение подняли
+      # в Moscow-1, и пуш на старый адрес падал по таймауту подключения:
+      # мерж в main до прода не доезжал. Переедет приложение — менять здесь.
       - name: Deploy to Amvera (push main to master)
         timeout-minutes: 8
         env:
@@ -44,7 +48,7 @@ jobs:
             exit 0
           fi
           git -c http.postBuffer=524288000 \
-            push "https://${AM_USER}:${AM_PASS}@git.msk0.amvera.ru/${AM_PATH}" \
+            push "https://${AM_USER}:${AM_PASS}@git.msk1.amvera.ru/${AM_PATH}" \
             "refs/heads/main:refs/heads/master" --force
 
       # Зеркало GitVerse вторично: его сбой (напр. HTTP 413 на большом паке)
