@@ -95,7 +95,7 @@
   }
 
   // ===== Настоящее число из Метрики =====
-  var API = 'https://ffred-ddd989.amvera.io';
+  var API = 'https://fffred-ddd989.mia0.amvera.tech';
   var live = null;      // последнее измеренное значение
   var liveAt = 0;       // когда оно получено
 

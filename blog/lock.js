@@ -24,7 +24,7 @@
     var first = gate.getAttribute('data-first') || '/blog/lektorij/';
     var course = gate.getAttribute('data-course') || '/blog/lektorij/';
     var courseName = gate.getAttribute('data-course-name') || 'курса';
-    var API = /(^|\.)meysternlp\.ru$/.test(location.hostname) ? '' : 'https://ffred-ddd989.amvera.io';
+    var API = /(^|\.)meysternlp\.ru$/.test(location.hostname) ? '' : 'https://fffred-ddd989.mia0.amvera.tech';
 
     function uid() {
         try {

@@ -31,7 +31,7 @@
 нет — берётся порядок ссылок на странице курса, он и есть порядок обучения.
 
 Переменные окружения:
-    FREDERICK_URL   адрес бэкенда, по умолчанию https://ffred-ddd989.amvera.io
+    FREDERICK_URL   адрес бэкенда, по умолчанию https://fffred-ddd989.mia0.amvera.tech
     ADMIN_TOKEN     тот же, что в env бэкенда; без него сервер ответит 403
 
 Модель синтеза задаётся НЕ здесь, а на сервере (Amvera):
@@ -67,7 +67,7 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEKTORIJ = os.path.join(ROOT, "blog", "lektorij")
 SITEMAP = os.path.join(ROOT, "sitemap.xml")
-DEFAULT_URL = "https://ffred-ddd989.amvera.io"
+DEFAULT_URL = "https://fffred-ddd989.mia0.amvera.tech"
 
 # Озвучка кэшируется для любой статьи блога, не только для лекции. Полная
 # переозвучка архива обязана захватывать и их, иначе половина сайта останется

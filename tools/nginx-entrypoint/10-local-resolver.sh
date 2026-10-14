@@ -4,7 +4,7 @@
 #
 # Зачем: 2 сентября 2026 прокси /api/ на проде лёг с ошибкой
 #
-#   ffred-ddd989.amvera.io could not be resolved (110: Operation timed out)
+#   fffred-ddd989.mia0.amvera.tech could not be resolved (110: Operation timed out)
 #
 # — запросы к внешним DNS из сети Amvera таймаутят, а nginx не читает
 # /etc/resolv.conf сам: резолвер ему задаётся только директивой resolver.

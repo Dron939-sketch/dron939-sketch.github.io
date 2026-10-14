@@ -25,7 +25,7 @@
 (function () {
     'use strict';
 
-    var API = 'https://ffred-ddd989.amvera.io';
+    var API = 'https://fffred-ddd989.mia0.amvera.tech';
     var KEY = 'fredi_test_email';
 
     function goal(id) {
