@@ -1,7 +1,7 @@
 # meysternlp.ru — сайт психолога Андрея Мейстера
 
 Статический сайт (GitHub Pages → Amvera). Бэкенд приложения «Фреди» — отдельный
-репозиторий `Dron939-sketch/Frederick` (FastAPI, https://ffred-ddd989.amvera.io).
+репозиторий `Dron939-sketch/Frederick` (FastAPI, https://fffred-ddd989.mia0.amvera.tech).
 
 ## Карта
 

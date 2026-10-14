@@ -16,7 +16,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-API = "https://ffred-ddd989.amvera.io"
+API = "https://fffred-ddd989.mia0.amvera.tech"
 
 _HERO_RE = re.compile(
     r'<p class="eyebrow"[^>]*>.*?</header>', re.S)

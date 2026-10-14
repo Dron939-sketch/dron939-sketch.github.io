@@ -2872,7 +2872,7 @@ document.querySelectorAll('.tab').forEach(function(t){
     // нет вовсе (GitHub Pages), и возвращался 502. Каждая заявка на будущие
     // курсы молча терялась, а человек видел «Не получилось отправить».
     // Эндпойнт живёт у Фреди, туда и обращаемся — как listen.js за озвучкой.
-    fetch('https://ffred-ddd989.amvera.io/api/lektorij/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
+    fetch('https://fffred-ddd989.mia0.amvera.tech/api/lektorij/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({course:cur.slug,title:cur.title,contact:c,name:(nameI.value||'').trim()})})
       .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j};});})
       .then(function(res){
