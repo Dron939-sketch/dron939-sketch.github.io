@@ -912,6 +912,13 @@
 
             var container = document.createElement('div');
             container.setAttribute('data-subscription-container', '');
+            // Сплошная подложка под карточкой (15.10.2026). Карточка
+            // .sub-card полупрозрачная — рассчитана на фон страницы. В окне
+            // под ней тёмное затемнение, и в светлой теме тёмный текст
+            // ложился на почти чёрное: «фон сливается с текстом».
+            container.setAttribute('style',
+                'background:var(--black-obsidian,#0a0a0a);border-radius:22px;' +
+                'box-shadow:0 18px 50px rgba(0,0,0,0.45);overflow:hidden');
 
             sheet.appendChild(closeBtn);
             sheet.appendChild(container);
