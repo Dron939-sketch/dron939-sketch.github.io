@@ -124,16 +124,37 @@ def main() -> int:
         if not ok:
             bad.append((path, f"ждали 410, пришло {code}"))
 
-    # 6. Clean-param доехал до robots.txt
+    # 6. robots.txt. С 15.10.2026 nginx отдаёт настоящий robots.txt только
+    # хостам meysternlp.ru и www, а любому другому (служебный адрес Amvera,
+    # localhost) — запрет обхода. Локальную проверку поэтому ведём от имени
+    # meysternlp.ru, а запрет проверяем отдельно — от имени служебного адреса.
+    import urllib.request
+    local = "localhost" in base or "127.0.0.1" in base
+
+    def robots_as(host):
+        req = urllib.request.Request(f"{base}/robots.txt")
+        if host:
+            req.add_header("Host", host)
+        with OPENER.open(req, timeout=TIMEOUT) as r:
+            return r.read().decode("utf-8", "replace")
+
     try:
-        with OPENER.open(f"{base}/robots.txt", timeout=TIMEOUT) as r:
-            robots = r.read().decode("utf-8", "replace")
+        robots = robots_as("meysternlp.ru" if local else None)
         ok = "Clean-param: m /fredi/" in robots
         print(f"  {'ok ' if ok else 'НЕТ'} robots.txt: Clean-param")
         if not ok:
             bad.append(("/robots.txt", "нет строки Clean-param: m /fredi/"))
     except Exception as e:  # noqa: BLE001
         bad.append(("/robots.txt", f"не открылся: {e}"))
+    if local:
+        try:
+            mirror = robots_as("meysternlp-ddd989.msk1.amvera.tech")
+            ok = "Disallow: /\n" in mirror and "Clean-param" not in mirror
+            print(f"  {'ok ' if ok else 'НЕТ'} robots.txt служебного адреса: обход запрещён")
+            if not ok:
+                bad.append(("/robots.txt (служебный адрес)", "ждали Disallow: /"))
+        except Exception as e:  # noqa: BLE001
+            bad.append(("/robots.txt (служебный адрес)", f"не открылся: {e}"))
 
     print()
     if bad:
