@@ -183,8 +183,63 @@ P.S. Свой выбор я сделал. Какой — не скажу: по �
 
 ## Промт для обложки статьи (1280×720)
 
-Обложка держит обе игры в одном кадре: готовая вещь крупно — и за ней
-то, что вырастает без автора.
+С седьмой редакции статья — эссе о городе, который все мы получили от
+незнакомых людей, а не спор «продукт против фундамента». Обложка поэтому
+не противопоставляет дом и город, а показывает сам механизм: древний
+фундамент внизу, на нём дома разных веков и разных рук. Такое бывает на
+самом деле — в старых городах Европы дома стоят прямо на античных стенах.
+
+> A photorealistic photograph at golden hour. A narrow old street seen
+> from street level, looking slightly up. The lower part of the buildings
+> is made of massive ancient hand-cut stone blocks, worn smooth and rounded
+> by centuries, chisel marks still visible. Directly on top of them rise
+> later houses of different eras: medieval brick, plastered walls in
+> different warm colours, wooden shutters, small iron balconies, a newer
+> top floor added later — clearly built by many different hands over many
+> centuries on the same old foundation. Warm low sunlight catches the upper
+> floors and windows; the ancient stones at the bottom stay in soft shade,
+> sharp and detailed. Muted natural palette: grey weathered stone, ochre
+> and terracotta plaster, pale evening sky; one warm accent of sunlight on
+> the upper windows. Calm, slightly darker lower third without small
+> details. Documentary style, 35mm, natural depth of field, high detail.
+> No people, no faces, no hands, no text, no letters, no signs, no logos,
+> no watermarks, no cars, no modern glass buildings. Aspect ratio 16:9.
+
+Для Кандинского или Шедеврума — то же по-русски:
+
+> Фотореалистичная фотография в золотой час. Узкая старая улица, взгляд
+> с уровня мостовой чуть вверх. Нижняя часть домов — огромные древние
+> тёсаные каменные блоки, стёртые веками, со следами резца. Прямо на них
+> стоят дома более поздних эпох: средневековый кирпич, штукатурка разных
+> тёплых цветов, деревянные ставни, маленькие кованые балконы,
+> надстроенный верхний этаж — видно, что строили много разных людей в
+> разные века на одном фундаменте. Низкое тёплое солнце освещает верхние
+> этажи и окна, древние камни внизу в мягкой тени, резкие и детальные.
+> Приглушённая природная палитра: серый камень, охра, терракота, бледное
+> вечернее небо. Нижняя треть кадра спокойная, без мелких деталей.
+> Документальный стиль, 35 мм. Без людей, без текста, без вывесок, без
+> машин, без современных стеклянных зданий. Формат 16:9.
+
+### Что не выбрасывается
+
+- **ancient stones at the bottom, houses of different eras on top** — это
+  и есть статья: фундамент одного, город многих;
+- **many different hands, different colours and styles** — одинаковые
+  дома читаются как застройка одного девелопера, а не как то, что
+  выросло само;
+- **sunlight on the upper floors, stones in shade** — тот, кто заложил
+  камень, света не видит, но всё стоит на нём («Город переживёт»);
+- **calm lower third** — во ВКонтакте на обложку статьи ложится
+  заголовок, мелкие детали под ним рябят;
+- **no people** — люди забирают внимание и делают кадр туристическим.
+
+### Если кадр не собирается
+
+Крупно один древний тёсаный камень в кладке, над ним — край более
+поздней кирпичной стены и окно в закатном свете. Город уйдёт, но
+механизм «на старом камне — новое» останется.
+
+### Запасной вариант (прежняя обложка, редакции 2–6)
 
 > A photorealistic photograph at golden hour. In the foreground, on a low
 > stone wall, a single small hand-built wooden house model, finished and
@@ -198,19 +253,5 @@ P.S. Свой выбор я сделал. Какой — не скажу: по �
 > faces, no hands, no text, no letters, no logos, no watermarks, no modern
 > skyscrapers, no cars in the foreground. Aspect ratio 16:9.
 
-### Что не выбрасывается
-
-- **finished and neat model in focus** — продукт: законченный, свой,
-  понятный, и поэтому в фокусе;
-- **dozens of different roofs, many different hands** — город должен быть
-  разным; одинаковые дома читаются как застройка одного девелопера, а не
-  как то, что выросло на фундаменте;
-- **out of focus** — город не в фокусе нарочно: автор фундамента его так
-  и не увидит целиком;
-- **no people** — люди забирают внимание и делают кадр туристическим.
-
-### Если кадр не собирается
-
-Только деревянный домик на каменной стене, без города. Обложка потеряет
-второй полюс, но останется честной: продукт крупно, а остальное пусть
-дорисует текст.
+Дом крупно, город размыт — лучше подходил к редакциям со «штангой», где
+статья противопоставляла продукт и фундамент.
