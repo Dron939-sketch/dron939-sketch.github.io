@@ -274,8 +274,13 @@ a{color:#16a34a}
     grid.appendChild(b);
   });
 
-  var buy=document.getElementById('buyOzon');
-  if(buy) buy.addEventListener('click',function(){ goal('tovar_ozon'); });
+  // Все ссылки на Ozon (кнопка и ответ в FAQ) — общая цель и цель этой книги,
+  // как на её странице в /knigi/: иначе продажи со страницы теста не видны
+  // в отчёте по книге.
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href*="ozon.ru"]');
+    if(a){ goal('tovar_ozon'); goal('tovar_ozon_kniga_konceptikon'); }
+  },true);
 })();
 </script>
 </body>
