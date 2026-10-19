@@ -494,6 +494,7 @@
     // вырезать — уходит второй раз. Поэтому: из адреса убираем сразу,
     // кладём в sessionStorage, а вынимаем оттуда в момент отправки.
     var PENDING_KEY = 'fredi_pending_ask';
+    var PENDING_AD_KEY = 'fredi_pending_ask_ad';
 
     function _takePending() {
         try {
@@ -520,13 +521,20 @@
             if (/«\s*»|\{keyword\}|«\s*-{2,}/.test(ask)) ask = sp.get('askf') || '';
         } catch (e) {}
         if (ask) {
+            // Пришёл ли человек из объявления — смотрим до того, как адрес
+            // перепишется, и запоминаем вместе с фразой: после входа
+            // (login.js перезагружает страницу) адреса уже не будет.
+            var fromAd = /[?&](?:yclid|utm_source|utm_campaign)=/.test(location.search);
             try {
                 var u = new URL(location.href);
                 u.searchParams.delete('ask');
                 u.searchParams.delete('askf');
                 history.replaceState(null, '', u.pathname + (u.search || '') + (u.hash || ''));
             } catch (e) {}
-            try { sessionStorage.setItem(PENDING_KEY, ask.slice(0, ASK_MAX)); } catch (e) {}
+            try {
+                sessionStorage.setItem(PENDING_KEY, ask.slice(0, ASK_MAX));
+                sessionStorage.setItem(PENDING_AD_KEY, fromAd ? '1' : '');
+            } catch (e) {}
         }
         var pending = '';
         try { pending = sessionStorage.getItem(PENDING_KEY) || ''; } catch (e) { pending = ask; }
@@ -543,7 +551,29 @@
         // человеку на третьем сообщении; теперь для всех — после
         // четвёртого своего (app.js, DOOR_AFTER_MESSAGES), флаг остаётся
         // для аналитики входа.
-        if (TEST_RX.test(pending) || /^\/testy\//.test(_sourcePath())) window.__frediDoorEntry = true;
+        var isTest = TEST_RX.test(pending) || /^\/testy\//.test(_sourcePath());
+        // Сама уходит только фраза из объявления и результат теста.
+        // Ссылки «Обсудить с Фреди» из статей (1290 страниц) несут готовую
+        // фразу в ?ask=, и до 19.10.2026 она отправлялась при открытии
+        // страницы — кем угодно. Выгрузка диалогов 12–19.10: робот из
+        // Сингапура обходил эти ссылки (98 из 106 его заходов на /fredi/
+        // — с ask=), и каждое открытие становилось «диалогом» без
+        // единого ответа: 40 из 41 таких за 18–19.10, с расходом на модель.
+        // Фраза со статьи теперь ложится в поле, как ?draft=: отправить —
+        // решение человека, и так разговор и продолжается чаще (56 % против
+        // 12 %, см. ниже). Под автоматизацией (navigator.webdriver) не
+        // уходит ничего.
+        var fromAdSaved = '';
+        try { fromAdSaved = sessionStorage.getItem(PENDING_AD_KEY) || ''; } catch (e) {}
+        if (navigator.webdriver) { _takePending(); return; }
+        if (!fromAdSaved && !isTest) {
+            _takePending();
+            try { sessionStorage.setItem(DRAFT_KEY, pending); } catch (e) {}
+            _track('ask_to_draft', { len: pending.length });
+            return;
+        }
+        try { sessionStorage.removeItem(PENDING_AD_KEY); } catch (e) {}
+        if (isTest) window.__frediDoorEntry = true;
         window.__frediAskBusy = true;
         FrediAsk(pending, 'url:' + _sourcePath(), true);
     }
