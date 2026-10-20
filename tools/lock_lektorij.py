@@ -38,6 +38,16 @@ LOCK_DIR = os.path.join(ROOT, "..", "Frederick", "backend", "data", "lektorij_lo
 
 GATE_RE = re.compile(r'<div id="lockGate"[^>]*></div>')
 LOCK_SCRIPT = '<script src="/blog/lock.js" defer></script>'
+# Сборщики курсов (scratchpad/<kurs>/build.py) писали тот же флаг в несколько
+# строк — его однострочный LD_FLAG не находил, и после снятия замка 28 лекций
+# так и оставались в разметке платными.
+LD_FLAG_ML_RE = re.compile(r'(,?)\n\s*"isAccessibleForFree": false,\s*"hasPart": \{\s*"@type": "WebPageElement",\s*"isAccessibleForFree": false,\s*"cssSelector": "\.lock-paid"\s*\}(,?)')
+
+
+def _strip_ld_flag(out):
+    """Флаг может стоять и посреди объекта, и последним — запятая остаётся
+    одна, только если она была с обеих сторон."""
+    return LD_FLAG_ML_RE.sub(lambda m: "," if m.group(1) and m.group(2) else "", out, count=1)
 LD_FLAG = '"isAccessibleForFree": false,\n  "hasPart": {"@type": "WebPageElement", "isAccessibleForFree": false, "cssSelector": ".lock-paid"},'
 LECT_NOTE = ('Первая лекция открыта всем, лекции 2–10 входят в подписку Фреди (690 ₽ в месяц, первые три дня 69 ₽): '
              'откройте её в <a href="/fredi/?from=lektorij-{slug}&checkout=1">приложении</a>, и лекции на этом устройстве откроются сами. ')
@@ -143,6 +153,7 @@ def unlock_page(path, slug, dry):
         return "НЕТ ФРАГМЕНТА"
     out = page[:m.start()] + rd(fp).rstrip() + "\n" + page[m.end():].lstrip("\n")
     out = out.replace("\n  " + LD_FLAG, "", 1)
+    out = _strip_ld_flag(out)
     out = out.replace("\n" + LOCK_SCRIPT, "", 1)
     if not dry:
         wr(path, out)
@@ -152,7 +163,10 @@ def unlock_page(path, slug, dry):
 
 # ───────────── страница курса ─────────────
 
-ROW_RE = re.compile(r'(<span class="n">(\d+)</span><span class="t"><b>[^<]*</b><i>)([^<]*)(</i>)')
+# Внутри <i> после замка стоит <span class="lk-lock">🔒</span>: без него в
+# группе снятие (--unlock) не видело метку и оставляло «по подписке 🔒» на
+# всех 42 страницах курсов (найдено 20.10.2026, когда замки сняли целиком).
+ROW_RE = re.compile(r'(<span class="n">(\d+)</span><span class="t"><b>[^<]*</b><i>)((?:[^<]|<span class="lk-lock"[^>]*>🔒</span>)*)(</i>)')
 
 
 def mark_course(slug, name, dry, lock=True):

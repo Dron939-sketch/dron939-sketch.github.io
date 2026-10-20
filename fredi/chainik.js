@@ -290,7 +290,7 @@
     });
     c.innerHTML =
       '<div class="ch-wrap">' +
-        '<div class="ch-top"><button class="ch-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>🫖 бесплатно</span></div>' +
+        '<div class="ch-top"><button class="ch-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>🫖</span></div>' +
         '<h1 class="ch-h1">🫖 Чайник Рассела</h1>' +
         '<p class="ch-sub">Тренажёр интеллектуальной честности по Бертрану Расселу: где лежит бремя доказательства, какие допущения протаскивают мимо тебя и сколько веры честно выдать утверждению. <b style="color:#e7eaf0">Ясная голова — это навык.</b></p>' +
         '<div class="ch-card"><div class="ch-ch">Знаменитый чайник</div>' +

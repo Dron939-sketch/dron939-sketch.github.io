@@ -248,7 +248,7 @@
     });
     c.innerHTML =
       '<div class="sg-wrap">' +
-        '<div class="sg-top"><button class="sg-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>📡 бесплатно</span></div>' +
+        '<div class="sg-top"><button class="sg-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>📡</span></div>' +
         '<h1 class="sg-h1">📡 Сигнал</h1>' +
         '<p class="sg-sub">Тренажёр опорных сигналов по методу Шаталова: учись сжимать любой материал в опору, которую <b style="color:#e7eaf0">невозможно забыть</b>, — и разворачивать её обратно в знание. Так запоминают учебник за вечер.</p>' +
         '<div class="sg-card"><div class="sg-ch">Пример: целая тема одной строкой</div>' +
