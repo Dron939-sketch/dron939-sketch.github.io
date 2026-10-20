@@ -49,6 +49,9 @@ BODY = """<style>
 .items .item img{height:190px}
 .items .item img.cover{object-fit:cover;object-position:50% 50%}
 .items .item img.cover.face{object-position:50% 18%}
+.zk-inside{margin:0 0 22px;border-radius:18px;overflow:hidden;background:#fff}
+.zk-inside img{display:block;width:100%;height:auto}
+.zk-inside figcaption{padding:10px 16px 14px;font-size:.92rem;color:#5b6475;background:#fff}
 .zk-proof{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 0;font-size:.92rem;color:var(--muted)}
 .zk-proof b{color:inherit}
 </style>
@@ -66,6 +69,10 @@ BODY = """<style>
   </div>
 
   <div class="h2">Что в коробке</div>
+  <figure class="zk-inside">
+    <img src="/razgovornyj-gipnoz/standart/zakaz/vnutri.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот «Практикум», печатные схемы, коробка «Доступ» и книга «Матчасть»" loading="lazy" width="1020" height="700">
+    <figcaption>Так пакет выглядит, когда вы его открываете: слева — блокнот «Практикум», печатные схемы и коробка «Доступ», справа — книга «Матчасть».</figcaption>
+  </figure>
   <div class="items">
     <div class="item">
       <img src="/razgovornyj-gipnoz/standart/zakaz/matchast.webp" alt="Книга «Матчасть» в папке пакета" loading="lazy" width="400" height="190">
@@ -74,15 +81,15 @@ BODY = """<style>
       <div class="desc">274 страницы учебного материала курса и две печатные схемы-разворота: как устроены сознание, подсознание и защита.</div>
     </div>
     <div class="item">
-      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/dostup.webp" alt="Карточка доступа с QR-кодом на видеоуроки" loading="lazy" width="400" height="190">
+      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/dostup.webp" alt="Коробка «Доступ. Дидактические материалы»" loading="lazy" width="400" height="190">
       <div class="kind">Образец</div>
       <div class="name">38 видео</div>
-      <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев — по QR-коду с карточки в коробке.</div>
+      <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев — по QR-коду на коробке «Доступ».</div>
     </div>
     <div class="item">
-      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/bloknot.webp" alt="Блокнот на пружине с заданиями" loading="lazy" width="400" height="190">
+      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/bloknot.webp" alt="Блокнот «Разговорный гипноз. Практикум» на пружине" loading="lazy" width="400" height="190">
       <div class="kind">Отработка</div>
-      <div class="name">Блокнот с заданиями</div>
+      <div class="name">Блокнот «Практикум»</div>
       <div class="desc">На пружине, с QR-кодами на видеоразборы упражнений: одно задание — один приём.</div>
     </div>
     <div class="item">
