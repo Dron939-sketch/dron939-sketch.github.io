@@ -177,6 +177,23 @@ BODY = """<div class="wrap">
       if (!r.ok) throw new Error('http ' + r.status);
       return r.json();
     }).then(function (d) {
+      if (d && d.success && d.manual) {
+        // Платёж не создался, но заказ записан и владельцу ушли контакты
+        // (Frederick, order_routes._payment_failed). Человеку — не «ошибка»,
+        // а «заказ принят, свяжусь с вами».
+        step('manual');
+        var f = document.getElementById('orderForm');
+        f.innerHTML = '';
+        var h = document.createElement('div'); h.className = 'h3'; h.style.marginTop = '0';
+        h.textContent = 'Заказ принят';
+        var p1 = document.createElement('p'); p1.className = 't';
+        p1.textContent = d.message || 'Оплата сейчас не открылась. Я свяжусь с вами по телефону или почте и помогу оплатить.';
+        var p2 = document.createElement('p'); p2.className = 't';
+        p2.textContent = 'Номер заказа: ' + (d.order_no || '') + '. Сохраните его на всякий случай.';
+        f.appendChild(h); f.appendChild(p1); f.appendChild(p2);
+        f.scrollIntoView({ block: 'center' });
+        return;
+      }
       if (d && d.success && d.confirmation_url) { window.location.href = d.confirmation_url; return; }
       busy = false; btn.disabled = false; btn.textContent = LABEL;
       fail((d && d.error) || 'Не получилось создать платёж. Попробуйте ещё раз или напишите нам.');
