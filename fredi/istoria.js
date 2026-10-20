@@ -200,7 +200,7 @@
     var p = loadProg();
     c.innerHTML =
       '<div class="is-wrap">' +
-        '<div class="is-top"><button class="is-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>📖 бесплатно</span></div>' +
+        '<div class="is-top"><button class="is-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>📖</span></div>' +
         '<h1 class="is-h1">📖 Другая история</h1>' +
         '<p class="is-sub">Прошлое как факт не изменить. Но его <b style="color:#e7eaf0">след в тебе</b> — можно. Вместе с Фреди ты найдёшь сцену из прошлого, которая до сих пор управляет настоящим. А потом Фреди <b style="color:#e7eaf0">прочитает тебе другую версию этой истории</b> — и ты проживёшь её, представляя как можно ярче, будто это происходит с тобой. Так память дополняется новым опытом.</p>' +
         (p.line ? '<div class="is-card"><div class="is-ch">Твоя прошлая история</div><div class="is-quote">' + esc(p.line) + '</div>' + (p.done ? '<div class="is-hint" style="margin-top:8px">Пройдено сессий: ' + p.done + '</div>' : '') + '</div>' : '') +

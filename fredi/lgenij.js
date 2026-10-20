@@ -6,7 +6,7 @@
 // связь), затем генерация под соревнование (дуэли с Фреди),
 // затем перенос в свою жизнь (своя цель, микрообязательство,
 // чек-ин при возврате — spacing). Блиц-припоминание рычагов.
-// Бесплатная игра (без премиума).
+// С 20.10.2026 — по подписке, первый заход бесплатно (meter.js, PREMIUM_GAMES).
 // Экспорт: window.showLgenijGame, window.LGENIJ
 // ============================================================
 (function () {
@@ -386,7 +386,7 @@
     var titleLine = p.title ? '<div style="text-align:center;margin:0 0 10px"><span class="lg-quad" style="background:rgba(52,211,153,.13);color:#6ee7b7">' + esc(p.title) + '</span></div>' : '';
     c.innerHTML =
       '<div class="lg-wrap">' +
-        '<div class="lg-top"><button class="lg-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>🧲 бесплатно</span></div>' +
+        '<div class="lg-top"><button class="lg-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>🧲</span></div>' +
         '<h1 class="lg-h1">🧲 Ленивый гений</h1>' +
         '<p class="lg-sub">Двигатель гения = дерзкая цель × ленивый путь. Хотеть в 10 раз больше — делать в 10 раз меньше. Путь из 9 уровней: сначала научишься <b style="color:#e7eaf0">видеть</b> сильные ходы, потом <b style="color:#e7eaf0">обыграешь Фреди</b>, потом <b style="color:#e7eaf0">применишь к своей жизни</b>.</p>' +
         titleLine + checkin +

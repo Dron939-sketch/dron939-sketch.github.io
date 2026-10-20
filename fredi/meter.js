@@ -1784,10 +1784,8 @@
     // Единственный список: по нему kontur.js рисует значок и перехватывает
     // запуск, app.js закрывает прямые ссылки ?m=<игра>. Ключ — глобальная
     // функция запуска, потому что именно её зовут и хаб, и роутер.
-    // Бесплатными остаются короткие тренажёры без Фреди-игротехника
-    // (N-back, счёт, калибровка, данетки, Ферми, «Лови ошибку») и входные
-    // игры первого экрана (Контур, Два потока, Мнемо, Чувства, Мысль под
-    // допросом, Скажи «нет», Чайник Рассела, Вариатика Basic).
+    // До 20.10.2026 бесплатными оставались короткие тренажёры и входные
+    // игры первого экрана; с 20.10 по подписке все (см. конец списка).
     var PREMIUM_GAMES = {
         showOdiScreen: 'ОДИ: игра всерьёз',
         showVsluhGame: 'Мысль вслух',
@@ -1818,6 +1816,28 @@
         showDotogokakScreen: 'До того, как',
         showSobesGame: 'Собеседование',
         showPodrostokGame: 'Разговор с подростком',
+        // 20.10.2026 владелец: «замки с лекций снимай, а упражнения во Фреди
+        // делай по подписке». Правило — понять бесплатно, сделать с
+        // подпиской: Лекторий, статьи, тест и разговор с Фреди открыты, а
+        // тренировка навыка — платная. Сюда ушли и входные тренажёры,
+        // которые до этого дня оставались бесплатными. Первый заход
+        // по-прежнему бесплатный — человек видит, за что платит.
+        showKonturGame: 'О чём ты умеешь думать',
+        showDvaPotokaGame: 'Два потока',
+        showMnemoGame: 'Мнемо',
+        showFokusGame: 'Фокус',
+        showSchetGame: 'Устный счёт',
+        showKalibrGame: 'Калибровка',
+        showOshibkaGame: 'Лови ошибку',
+        showChuvstvaGame: 'Чувства',
+        showMyslGame: 'Мысль под допросом',
+        showSkazhiNetGame: 'Скажи «нет»',
+        showDanetkiGame: 'Данетки',
+        showFermiGame: 'Прикидка',
+        showAdvokatGame: 'Адвокат дьявола',
+        showChainikGame: 'Чайник Рассела',
+        showLestnicaGame: 'Лестница',
+        showVariatikaGame: 'Вариатика — Basic',
     };
     // Сильные инструменты — по той же схеме, что и игры (решение владельца
     // 15.09.2026: «самые сильные вывести в премиум»). Отбор не по размеру
@@ -1837,6 +1857,13 @@
         showAnchorsScreen: 'Якоря: библиотека состояний',
         showPersonalBrandScreen: 'Мой бренд',
         showMirrorsScreen: 'Зеркала',
+        // 20.10.2026 — упражнения по подписке (см. PREMIUM_GAMES). Бесплатными
+        // остаются разговор с Фреди, тест, сны, сказки, эзотерика и «Мне
+        // плохо сейчас»: протокол стабилизации не запирается никогда.
+        showPracticesScreen: 'КПТ-практики',
+        showHabitsScreen: 'Привычки',
+        showBerneScreen: 'Роли и игры',
+        showDiaryScreen: 'Дневник эмоций',
     };
     // Один список для проверки: и роутер, и хаб игр, и сами модули зовут
     // gameLocked() с именем функции запуска.
@@ -1897,6 +1924,9 @@
         showHypnosisScreen: 'hypnosis',
         showAnchorsScreen: 'anchors',
         showPersonalBrandScreen: 'brand',
+        showPracticesScreen: 'practices',
+        showBerneScreen: 'berne',
+        showDiaryScreen: 'diary',
     };
     function _markPremiumNav() {
         try {
@@ -1926,6 +1956,35 @@
         } catch (e) {}
     }
 
+    // Замок на самой функции запуска. Игры зовут не только хаб и роутер
+    // ?m=, но и «Сегодня» (segodnya.js), левое меню и сами модули — до
+    // 20.10.2026 замок стоял только у первых двух, и входные тренажёры из
+    // «Сегодня» открывались мимо него. Модули грузятся лениво, поэтому
+    // обёртку надеваем, когда функция появляется. Повторный вопрос к
+    // gameLocked после роутера безопасен: выданный в этой загрузке
+    // бесплатный заход помнит _freeGranted.
+    function _guardLaunchers() {
+        Object.keys(PREMIUM_ALL).forEach(function (fn) {
+            var f = window[fn];
+            if (typeof f !== 'function' || f._meterGuard) return;
+            var guarded = function () {
+                if (gameLocked(fn)) { showGameLock(fn, 'direct'); return; }
+                return f.apply(this, arguments);
+            };
+            guarded._meterGuard = true;
+            try { window[fn] = guarded; } catch (e) {}
+        });
+    }
+    setInterval(_guardLaunchers, 700);
+    // Модуль, подгруженный по клику, зовут сразу в onload его <script> —
+    // раньше, чем сработает таймер. Событие load ресурса не всплывает, но
+    // ловится на погружении: обёртка встаёт до вызова.
+    try {
+        document.addEventListener('load', function (e) {
+            if (e.target && e.target.tagName === 'SCRIPT') _guardLaunchers();
+        }, true);
+    } catch (e) {}
+
     function showGameLock(fn, source) {
         var isTool = PREMIUM_TOOLS.hasOwnProperty(fn);
         var name = PREMIUM_ALL[fn] || (isTool ? 'этот инструмент' : 'эта игра');
@@ -1953,8 +2012,8 @@
                       ' с подпиской вместе с голосом, всеми режимами ' +
                       'и памятью Фреди о каждом разговоре. ' +
                       (isTool
-                        ? 'Разговор с Фреди, дневник, сны, сказки и эзотерика остаются бесплатными.'
-                        : 'Короткие тренажёры остаются бесплатными.')) + '</div>' +
+                        ? 'Разговор с Фреди, тест, сны, сказки и Лекторий остаются бесплатными.'
+                        : 'Разговор с Фреди, тест и Лекторий остаются бесплатными.')) + '</div>' +
                 '<button class="meter-btn meter-btn-primary" id="meterGameLockSub">✨ Попробовать 3 дня — 69 ₽</button>' +
                 '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на 3 дня, потом 690 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>' +
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +

@@ -331,7 +331,7 @@
     });
     c.innerHTML =
       '<div class="vl-wrap">' +
-        '<div class="vl-top"><button class="vl-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>💭 бесплатно</span></div>' +
+        '<div class="vl-top"><button class="vl-x" onclick="(window.showKonturScreen||function(){})()">← К списку игр</button><span>💭</span></div>' +
         '<h1 class="vl-h1">💭 Мысль вслух</h1>' +
         '<p class="vl-sub">Думать — <b style="color:#e7eaf0">приватное поведение</b>: его видит только сам человек, поэтому его никто не поправил. Здесь мы выносим мышление <b style="color:#e7eaf0">наружу</b>: Фреди думает вслух, ты повторяешь, он оценивает и дорабатывает. Сначала — навык думать, потом — привычка.</p>' +
         '<p class="vl-sub" style="margin-top:-4px">Это <b style="color:#e7eaf0">игра, а не экзамен</b>. Не старайся «думать правильно» — просто решай задачу раунда: пойми текст, ответь на вопрос. Операции ставятся легче без давления — когда прожектор на смысле, а не на себе. Ошибаться тут можно и нужно.</p>' +
