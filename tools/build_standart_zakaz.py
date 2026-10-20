@@ -16,7 +16,7 @@ Ozon не говорит, кто купил после перехода с са�
 order_routes.py, PRODUCTS). Адрес новый нарочно: бэкенд без каталога
 ответит 404, а не возьмёт 19 999 ₽ за комплект.
 
-Цена 4 900 ₽ без доставки; доставку покупатель платит в пункте выдачи по
+Цена 5 900 ₽ с НДС 22 %, без доставки; доставку покупатель платит в пункте выдачи по
 тарифу СДЭК (решение владельца). Состав пакета — со страницы
 /razgovornyj-gipnoz/standart/, обещать больше нельзя.
 
@@ -33,47 +33,69 @@ SRC_THX = os.path.join(ROOT, "komplekt", "spasibo", "index.html")
 OUT = os.path.join(ROOT, "razgovornyj-gipnoz", "standart", "zakaz", "index.html")
 OUT_THX = os.path.join(ROOT, "razgovornyj-gipnoz", "standart", "spasibo", "index.html")
 LANDING = "https://meysternlp.ru/razgovornyj-gipnoz/standart/"
-PRICE = 4900
+PRICE = 5900
 
-TITLE = "Оформить заказ: пакет «Стандартный» — 4 900 ₽ | Андрей Мейстер"
+TITLE = "Оформить заказ: пакет «Стандартный» — 5 900 ₽ | Андрей Мейстер"
 DESC = ("Пакет «Стандартный» курса «Разговорный гипноз»: книга «Матчасть», 38 видео, блокнот "
-        "с заданиями, колода «Маркетолог» и разбор с автором. 4 900 ₽, доставка СДЭК до пункта выдачи.")
+        "с заданиями, колода «Маркетолог» и разбор с автором. 5 900 ₽, доставка СДЭК до пункта выдачи.")
 
-BODY = """<div class="wrap">
+BODY = """<style>
+.zk-hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center}
+.zk-hero .shot{background:radial-gradient(circle at 50% 40%,#2B3A55,#0E1420);border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:center}
+.zk-hero .shot img{width:100%;max-width:340px;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.zk-hero .go{display:inline-block;margin-top:18px;padding:13px 26px;border-radius:14px;background:linear-gradient(135deg,#3b82ff,#6366f1);color:#fff;font-weight:600}
+.zk-hero .go:hover{text-decoration:none;opacity:.92}
+@media(max-width:720px){.zk-hero{grid-template-columns:1fr}.zk-hero .shot{order:-1;padding:16px}.zk-hero .shot img{max-width:240px}}
+.items .item img{height:190px}
+.items .item img.cover{object-fit:cover;object-position:50% 50%}
+.items .item img.cover.face{object-position:50% 18%}
+.zk-proof{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 0;font-size:.92rem;color:var(--muted)}
+.zk-proof b{color:inherit}
+</style>
+<div class="wrap">
   <div class="crumbs"><a href="/">Главная</a> / <a href="/razgovornyj-gipnoz/standart/">Разговорный гипноз</a> / <span>Оформление заказа</span></div>
-  <div class="hero">
-    <h1>Пакет «Стандартный»</h1>
-    <p>Всё, что нужно, чтобы приёмы разговорного гипноза перестали быть текстом и начали срабатывать в разговоре: механизм, образец, задания, проверка на живом человеке и разбор ваших ошибок.</p>
-    <div class="pricetag"><b>4 900 ₽</b><span>оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
+  <div class="hero zk-hero">
+    <div>
+      <h1>Пакет «Стандартный»</h1>
+      <p>Всё, что нужно, чтобы приёмы разговорного гипноза перестали быть текстом и начали срабатывать в разговоре: механизм, образец, задания, проверка на живом человеке и разбор ваших ошибок.</p>
+      <div class="pricetag"><b>5 900 ₽</b><span>с НДС · оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
+      <div class="zk-proof"><span>⭐ <b>4,9</b> и больше 300 отзывов на Ozon</span><span>📦 СДЭК до пункта выдачи</span><span>🎥 доступ к видео на 12 месяцев</span></div>
+      <a class="go" href="#orderForm">Оформить заказ ↓</a>
+    </div>
+    <div class="shot"><img src="/3.webp" alt="Коробка «Разговорный гипноз. Пакет „Стандарт“»" width="499" height="500"></div>
   </div>
 
   <div class="h2">Что в коробке</div>
   <div class="items">
     <div class="item">
-      <img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный»: книга, блокнот, колода и карточки" loading="lazy" width="400" height="225">
+      <img src="/razgovornyj-gipnoz/standart/zakaz/matchast.webp" alt="Книга «Матчасть» в папке пакета" loading="lazy" width="400" height="190">
       <div class="kind">Механизм</div>
       <div class="name">Книга «Матчасть»</div>
       <div class="desc">274 страницы учебного материала курса и две печатные схемы-разворота: как устроены сознание, подсознание и защита.</div>
     </div>
     <div class="item">
+      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/dostup.webp" alt="Карточка доступа с QR-кодом на видеоуроки" loading="lazy" width="400" height="190">
       <div class="kind">Образец</div>
       <div class="name">38 видео</div>
-      <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев.</div>
+      <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев — по QR-коду с карточки в коробке.</div>
     </div>
     <div class="item">
+      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/bloknot.webp" alt="Блокнот на пружине с заданиями" loading="lazy" width="400" height="190">
       <div class="kind">Отработка</div>
       <div class="name">Блокнот с заданиями</div>
       <div class="desc">На пружине, с QR-кодами на видеоразборы упражнений: одно задание — один приём.</div>
     </div>
     <div class="item">
+      <img src="/didakticheskaya-igra-marketolog-andreya-mejstera.png" alt="Колода настольной игры «Маркетолог»" loading="lazy" width="400" height="190">
       <div class="kind">Проверка</div>
       <div class="name">Колода игры «Маркетолог»</div>
       <div class="desc">Один рассказывает историю по картам, второй слушает, третий по лицу слушателя определяет, поймали его или нет.</div>
     </div>
     <div class="item">
+      <img class="cover face" src="/razgovornyj-gipnoz/standart/zakaz/avtor.webp" alt="Андрей Мейстер, автор курса" loading="lazy" width="400" height="190">
       <div class="kind">Разбор</div>
-      <div class="name">Закрытый Telegram-канал</div>
-      <div class="desc">Личные ответы на вопросы и разбор ваших ситуаций с автором.</div>
+      <div class="name">Закрытый Telegram-канал с автором</div>
+      <div class="desc">Личные ответы на вопросы и разбор ваших ситуаций — от Андрея Мейстера.</div>
     </div>
   </div>
   <p class="t">Подробно о том, как устроен курс и почему в нём пять частей, — на <a href="/razgovornyj-gipnoz/standart/">странице пакета</a>. Первое занятие курса <a href="/razgovornyj-gipnoz/urok-1/">открыто бесплатно</a>.</p>
@@ -117,7 +139,7 @@ BODY = """<div class="wrap">
     <label class="agree"><input id="fAgree" type="checkbox">
       <span>Согласен с <a href="/oferta/" target="_blank" rel="noopener">офертой</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener">политикой конфиденциальности</a>. Данные нужны для доставки и чека.</span>
     </label>
-    <button class="btn-buy" id="fSubmit" type="button">Оплатить 4 900 ₽</button>
+    <button class="btn-buy" id="fSubmit" type="button">Оплатить 5 900 ₽</button>
     <div class="err" id="fErr"></div>
   </div>
 
@@ -141,7 +163,7 @@ BODY = """<div class="wrap">
   var btn = document.getElementById('fSubmit');
   var err = document.getElementById('fErr');
   var busy = false;
-  var LABEL = 'Оплатить 4 900 \\u20BD';
+  var LABEL = 'Оплатить 5 900 \\u20BD';
   function val(id) { return (document.getElementById(id).value || '').trim(); }
   function fail(msg, focus) {
     err.textContent = msg;
