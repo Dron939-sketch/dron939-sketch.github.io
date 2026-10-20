@@ -16,7 +16,7 @@ Ozon не говорит, кто купил после перехода с са�
 order_routes.py, PRODUCTS). Адрес новый нарочно: бэкенд без каталога
 ответит 404, а не возьмёт 19 999 ₽ за комплект.
 
-Цена 4 900 ₽ без доставки; доставку покупатель платит в пункте выдачи по
+Цена 5 900 ₽ с НДС 22 %, без доставки; доставку покупатель платит в пункте выдачи по
 тарифу СДЭК (решение владельца). Состав пакета — со страницы
 /razgovornyj-gipnoz/standart/, обещать больше нельзя.
 
@@ -33,18 +33,18 @@ SRC_THX = os.path.join(ROOT, "komplekt", "spasibo", "index.html")
 OUT = os.path.join(ROOT, "razgovornyj-gipnoz", "standart", "zakaz", "index.html")
 OUT_THX = os.path.join(ROOT, "razgovornyj-gipnoz", "standart", "spasibo", "index.html")
 LANDING = "https://meysternlp.ru/razgovornyj-gipnoz/standart/"
-PRICE = 4900
+PRICE = 5900
 
-TITLE = "Оформить заказ: пакет «Стандартный» — 4 900 ₽ | Андрей Мейстер"
+TITLE = "Оформить заказ: пакет «Стандартный» — 5 900 ₽ | Андрей Мейстер"
 DESC = ("Пакет «Стандартный» курса «Разговорный гипноз»: книга «Матчасть», 38 видео, блокнот "
-        "с заданиями, колода «Маркетолог» и разбор с автором. 4 900 ₽, доставка СДЭК до пункта выдачи.")
+        "с заданиями, колода «Маркетолог» и разбор с автором. 5 900 ₽, доставка СДЭК до пункта выдачи.")
 
 BODY = """<div class="wrap">
   <div class="crumbs"><a href="/">Главная</a> / <a href="/razgovornyj-gipnoz/standart/">Разговорный гипноз</a> / <span>Оформление заказа</span></div>
   <div class="hero">
     <h1>Пакет «Стандартный»</h1>
     <p>Всё, что нужно, чтобы приёмы разговорного гипноза перестали быть текстом и начали срабатывать в разговоре: механизм, образец, задания, проверка на живом человеке и разбор ваших ошибок.</p>
-    <div class="pricetag"><b>4 900 ₽</b><span>оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
+    <div class="pricetag"><b>5 900 ₽</b><span>с НДС · оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
   </div>
 
   <div class="h2">Что в коробке</div>
@@ -117,7 +117,7 @@ BODY = """<div class="wrap">
     <label class="agree"><input id="fAgree" type="checkbox">
       <span>Согласен с <a href="/oferta/" target="_blank" rel="noopener">офертой</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener">политикой конфиденциальности</a>. Данные нужны для доставки и чека.</span>
     </label>
-    <button class="btn-buy" id="fSubmit" type="button">Оплатить 4 900 ₽</button>
+    <button class="btn-buy" id="fSubmit" type="button">Оплатить 5 900 ₽</button>
     <div class="err" id="fErr"></div>
   </div>
 
@@ -141,7 +141,7 @@ BODY = """<div class="wrap">
   var btn = document.getElementById('fSubmit');
   var err = document.getElementById('fErr');
   var busy = false;
-  var LABEL = 'Оплатить 4 900 \\u20BD';
+  var LABEL = 'Оплатить 5 900 \\u20BD';
   function val(id) { return (document.getElementById(id).value || '').trim(); }
   function fail(msg, focus) {
     err.textContent = msg;
