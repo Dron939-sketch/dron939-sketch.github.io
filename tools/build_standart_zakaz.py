@@ -46,9 +46,6 @@ BODY = """<style>
 .zk-hero .go{display:inline-block;margin-top:18px;padding:13px 26px;border-radius:14px;background:linear-gradient(135deg,#3b82ff,#6366f1);color:#fff;font-weight:600}
 .zk-hero .go:hover{text-decoration:none;opacity:.92}
 @media(max-width:720px){.zk-hero{grid-template-columns:1fr}.zk-hero .shot{order:-1;padding:16px}.zk-hero .shot img{max-width:240px}}
-.items .item img{height:190px}
-.items .item img.cover{object-fit:cover;object-position:50% 50%}
-.items .item img.cover.face{object-position:50% 18%}
 .zk-inside{margin:0 0 22px;border-radius:18px;overflow:hidden;background:#fff}
 .zk-inside img{display:block;width:100%;height:auto}
 .zk-inside figcaption{padding:10px 16px 14px;font-size:.92rem;color:#5b6475;background:#fff}
@@ -75,31 +72,26 @@ BODY = """<style>
   </figure>
   <div class="items">
     <div class="item">
-      <img src="/razgovornyj-gipnoz/standart/zakaz/matchast.webp" alt="Книга «Матчасть» в папке пакета" loading="lazy" width="400" height="190">
       <div class="kind">Механизм</div>
       <div class="name">Книга «Матчасть»</div>
       <div class="desc">274 страницы учебного материала курса и две печатные схемы-разворота: как устроены сознание, подсознание и защита.</div>
     </div>
     <div class="item">
-      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/dostup.webp" alt="Коробка «Доступ. Дидактические материалы»" loading="lazy" width="400" height="190">
       <div class="kind">Образец</div>
       <div class="name">38 видео</div>
       <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев — по QR-коду на коробке «Доступ».</div>
     </div>
     <div class="item">
-      <img class="cover" src="/razgovornyj-gipnoz/standart/zakaz/bloknot.webp" alt="Блокнот «Разговорный гипноз. Практикум» на пружине" loading="lazy" width="400" height="190">
       <div class="kind">Отработка</div>
       <div class="name">Блокнот «Практикум»</div>
       <div class="desc">На пружине, с QR-кодами на видеоразборы упражнений: одно задание — один приём.</div>
     </div>
     <div class="item">
-      <img src="/didakticheskaya-igra-marketolog-andreya-mejstera.png" alt="Колода настольной игры «Маркетолог»" loading="lazy" width="400" height="190">
       <div class="kind">Проверка</div>
       <div class="name">Колода игры «Маркетолог»</div>
       <div class="desc">Один рассказывает историю по картам, второй слушает, третий по лицу слушателя определяет, поймали его или нет.</div>
     </div>
     <div class="item">
-      <img class="cover face" src="/razgovornyj-gipnoz/standart/zakaz/avtor.webp" alt="Андрей Мейстер, автор курса" loading="lazy" width="400" height="190">
       <div class="kind">Разбор</div>
       <div class="name">Закрытый Telegram-канал с автором</div>
       <div class="desc">Личные ответы на вопросы и разбор ваших ситуаций — от Андрея Мейстера.</div>
