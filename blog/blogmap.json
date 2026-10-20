@@ -12753,6 +12753,76 @@
    "rubric": "lektorij",
    "level": "n",
    "mins": 12
+  },
+  {
+   "slug": "lekciya-sklad-1-pravilo-iz-chuzhoj-sredy",
+   "title": "Искажение — это правило из чужой среды — Лекция 1",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-sklad-2-sem-shagov-mysli",
+   "title": "Семь шагов одной мысли — Лекция 2",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-sklad-3-za-chto-derzhat-iskazhenie",
+   "title": "За что человек держится за своё искажение — Лекция 3",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-sklad-4-lestnica-iskazhenij",
+   "title": "Лестница искажений — Лекция 4",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 17
+  },
+  {
+   "slug": "lekciya-sklad-5-predprinimatel",
+   "title": "Склад ума предпринимателя — Лекция 5",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
+  },
+  {
+   "slug": "lekciya-sklad-6-lider",
+   "title": "Склад ума лидера — Лекция 6",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 14
+  },
+  {
+   "slug": "lekciya-sklad-7-peregovorshchik",
+   "title": "Склад ума переговорщика — Лекция 7",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 17
+  },
+  {
+   "slug": "lekciya-sklad-8-ruk-investor-issledovatel",
+   "title": "Руководитель, инвестор, исследователь — Лекция 8",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 16
+  },
+  {
+   "slug": "lekciya-sklad-9-svoj-sklad-uma",
+   "title": "Свой склад ума — Лекция 9",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 17
+  },
+  {
+   "slug": "lekciya-sklad-10-zamer-i-sud",
+   "title": "Замер и суд над теорией — Лекция 10",
+   "rubric": "lektorij",
+   "level": "n",
+   "mins": 15
   }
  ]
 }

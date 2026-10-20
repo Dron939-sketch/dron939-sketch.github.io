@@ -4405,6 +4405,7 @@ document.addEventListener('DOMContentLoaded', function() {
             vsluh: { fn: 'showVsluhGame', src: 'vsluh.js', chat: 'kontur' }, // «Мысль вслух» — наладка приватных процессов мышления
             lazejka: { fn: 'showLazejkaGame', src: 'lazejka.js', chat: 'kontur' }, // «Лазейка» — буква правила против его духа
             perehod: { fn: 'showPerehodGame', src: 'perehod.js', chat: 'kontur' }, // «Переход» — месяц из десяти решений: чьё решение вы выполнили
+            sklad: { fn: 'showSkladGame', src: 'sklad.js', chat: 'kontur' }, // «Склад ума» — включить искажение роли или выключить стоп-вопросом (курс «Склад ума»; роль: &role=biz|pol|neg|ruk|inv|nauk)
             lestnica: { fn: 'showLestnicaGame', src: 'lestnica.js', chat: 'kontur' }, // «Лестница» — конструктор экспозиции (курс «Страхи и фобии»)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' }, // «Мне плохо сейчас» — протокол стабилизации
             alfavit: { fn: 'showAlfavitGame', src: 'alfavit.js', chat: 'kontur' },
