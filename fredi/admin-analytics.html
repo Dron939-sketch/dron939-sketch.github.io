@@ -395,6 +395,58 @@ body{overflow-wrap:break-word}</style>
         <div id="controlPresets" style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px"></div>
         <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin:18px 0 8px">Полный текст активного пресета</h3>
         <pre id="controlActiveText" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:12px;line-height:1.55;color:var(--text);white-space:pre-wrap;word-wrap:break-word;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;max-height:480px;overflow:auto"></pre>
+
+        <!-- Премиум вручную (владелец 20.10.2026): подарить подписку без оплаты.
+             Без автопродления — с карты человека ничего не спишется; снять
+             можно только подаренную. Ручка /api/analytics/premium-grant под ADMIN_TOKEN. -->
+        <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin:28px 0 8px">💎 Премиум вручную</h3>
+        <p style="font-size:12px;color:var(--text-dim);margin:0 0 12px;line-height:1.6">
+            Подарить подписку по почте аккаунта во Фреди или по ID. Срок прибавляется к текущему, если подписка уже есть.
+            Автопродления нет — деньги ни с кого не спишутся. «Снять подарок» отключает только подаренную подписку, оплаченную не трогает.
+        </p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
+            <input id="pgWho" type="text" placeholder="почта или ID" autocomplete="off" style="flex:1;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text)">
+            <input id="pgDays" type="number" min="1" max="3650" value="365" style="width:90px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text)">
+            <span style="font-size:12px;color:var(--text-dim)">дней</span>
+            <button id="pgGive" type="button" style="padding:9px 16px;border-radius:10px;border:0;background:#3b82ff;color:#fff;font-weight:600;cursor:pointer">Выдать</button>
+            <button id="pgTake" type="button" style="padding:9px 16px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer">Снять подарок</button>
+        </div>
+        <div id="pgOut" style="font-size:13px;line-height:1.6;color:var(--text)"></div>
+        <script>
+        (function(){
+            function api(){ try { return window.API_BASE_URL || ''; } catch(e){ return ''; } }
+            function token(){ try { return localStorage.getItem('fredi_admin_token') || ''; } catch(e){ return ''; } }
+            var out = document.getElementById('pgOut');
+            function say(t, bad){ out.style.color = bad ? '#ef4444' : 'var(--text)'; out.textContent = t; }
+            async function send(revoke){
+                var who = (document.getElementById('pgWho').value || '').trim();
+                var days = parseInt(document.getElementById('pgDays').value, 10) || 0;
+                if (!who) { say('Впиши почту или ID', true); return; }
+                if (!token()) { say('Сначала введи ADMIN_TOKEN вверху страницы', true); return; }
+                if (!revoke && (days < 1 || days > 3650)) { say('Дней — от 1 до 3650', true); return; }
+                if (revoke && !confirm('Снять подаренный премиум у ' + who + '?')) return;
+                var body = /^\d+$/.test(who) ? { user_id: parseInt(who, 10) } : { email: who };
+                body.days = days; body.revoke = revoke;
+                say('Отправляю…');
+                try {
+                    var r = await fetch(api() + '/api/analytics/premium-grant', {
+                        method: 'POST',
+                        headers: { 'X-Admin-Token': token(), 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body)
+                    });
+                    var d = await r.json().catch(function(){ return {}; });
+                    if (!r.ok) { say('Не вышло: ' + ((d.detail && (d.detail.message || d.detail.error)) || ('HTTP ' + r.status)), true); return; }
+                    var until = d.expires_at ? new Date(d.expires_at).toLocaleString('ru-RU') : '—';
+                    say((revoke ? 'Подарок снят. ' : 'Готово. ') + 'Пользователь ' + d.user_id + ': ' +
+                        (d.status === 'active' ? 'премиум до ' + until : 'подписка ' + d.status) +
+                        (d.plan ? ' · ' + (d.plan === 'gift' ? 'подарок' : 'тариф ' + d.plan) : '') +
+                        (d.auto_renew ? ' · автопродление включено (оплаченная подписка)' : ''));
+                } catch (e) { say('Сеть: ' + e.message, true); }
+            }
+            document.getElementById('pgGive').addEventListener('click', function(){ send(false); });
+            document.getElementById('pgTake').addEventListener('click', function(){ send(true); });
+        })();
+        </script>
     </section>
 
     <section id="reengTab" style="display:none">
