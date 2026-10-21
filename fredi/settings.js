@@ -748,7 +748,15 @@
                     '<button class="st-prof-save" id="stProfSave">💾 Сохранить</button>' +
                 '</div>' +
                 '<div style="margin-top:12px;font-size:11px;color:var(--text-secondary);line-height:1.5;">' +
-                    'User ID: ' + (_uid() || '-') + ' · Фреди v3.2' +
+                    // ID нужен владельцу и поддержке (выдать премиум, найти аккаунт), а
+                    // приложение запрещает выделение текста — 21.10.2026 его нельзя было
+                    // скопировать. Теперь ID выделяется целиком и копируется по нажатию.
+                    'User ID: <span style="user-select:all;-webkit-user-select:all;font-family:ui-monospace,monospace">' + (_uid() || '-') + '</span>' +
+                    (_uid() ? ' <button type="button" style="margin-left:6px;padding:2px 8px;border-radius:8px;border:1px solid var(--border-color,rgba(127,127,127,.35));background:transparent;color:var(--text-secondary);font-size:11px;cursor:pointer" ' +
+                        'onclick="var b=this,t=\'' + String(_uid()).replace(/[^0-9a-zA-Z_-]/g, '') + '\';' +
+                        'function ok(){b.textContent=\'✓ скопировано\';setTimeout(function(){b.textContent=\'📋 копировать\';},1800);}' +
+                        'try{navigator.clipboard.writeText(t).then(ok,function(){prompt(\'Скопируйте ID\',t);});}catch(e){prompt(\'Скопируйте ID\',t);}">📋 копировать</button>' : '') +
+                    ' · Фреди v3.2' +
                 '</div>' +
                 _profRenderInbox();
 
