@@ -401,11 +401,11 @@ body{overflow-wrap:break-word}</style>
              можно только подаренную. Ручка /api/analytics/premium-grant под ADMIN_TOKEN. -->
         <h3 style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-dim);margin:28px 0 8px">💎 Премиум вручную</h3>
         <p style="font-size:12px;color:var(--text-dim);margin:0 0 12px;line-height:1.6">
-            Подарить подписку по почте аккаунта во Фреди или по ID. Срок прибавляется к текущему, если подписка уже есть.
+            Подарить подписку по <b>User ID</b> (надёжнее всего: во Фреди — «Настройки», внизу строка «User ID») или по почте аккаунта. Срок прибавляется к текущему, если подписка уже есть.
             Автопродления нет — деньги ни с кого не спишутся. «Снять подарок» отключает только подаренную подписку, оплаченную не трогает.
         </p>
         <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px">
-            <input id="pgWho" type="text" placeholder="почта или ID" autocomplete="off" style="flex:1;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text)">
+            <input id="pgWho" type="text" placeholder="User ID или почта" autocomplete="off" style="flex:1;min-width:200px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text)">
             <input id="pgDays" type="number" min="1" max="3650" value="365" style="width:90px;padding:9px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text)">
             <span style="font-size:12px;color:var(--text-dim)">дней</span>
             <button id="pgGive" type="button" style="padding:9px 16px;border-radius:10px;border:0;background:#3b82ff;color:#fff;font-weight:600;cursor:pointer">Выдать</button>
