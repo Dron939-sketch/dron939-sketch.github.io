@@ -4406,6 +4406,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lazejka: { fn: 'showLazejkaGame', src: 'lazejka.js', chat: 'kontur' }, // «Лазейка» — буква правила против его духа
             perehod: { fn: 'showPerehodGame', src: 'perehod.js', chat: 'kontur' }, // «Переход» — месяц из десяти решений: чьё решение вы выполнили
             sklad: { fn: 'showSkladGame', src: 'sklad.js', chat: 'kontur' }, // «Склад ума» — включить искажение роли или выключить стоп-вопросом (курс «Склад ума»; роль: &role=biz|pol|neg|ruk|inv|nauk)
+            svetofor: { fn: 'showSvetoforGame', src: 'svetofor.js', chat: 'kontur' }, // «Светофор» — красный по умолчанию: неделя Кати + журнал своих шагов со сверкой страха
             lestnica: { fn: 'showLestnicaGame', src: 'lestnica.js', chat: 'kontur' }, // «Лестница» — конструктор экспозиции (курс «Страхи и фобии»)
             sos: { fn: 'showSosScreen', src: 'sos.js', chat: 'fredi' }, // «Мне плохо сейчас» — протокол стабилизации
             alfavit: { fn: 'showAlfavitGame', src: 'alfavit.js', chat: 'kontur' },
