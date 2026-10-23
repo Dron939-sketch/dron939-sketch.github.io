@@ -142,7 +142,7 @@ p.t{color:var(--muted);font-weight:300;margin:0 0 14px}
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ order_no: order })
     }).then(function (r) { return r.json(); }).then(function (d) {
-      if (d && d.paid) { paid(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); } catch (e) {} return; }
+      if (d && d.paid) { paid(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); ym(108138656, 'reachGoal', 'standart_paid', { order_price: 5900, currency: 'RUB' }); } catch (e) {} return; }
       if (tries >= 10) {
         pending('Банк ещё не подтвердил платёж. Если вы его завершили, подождите пару минут и обновите страницу.');
         return;

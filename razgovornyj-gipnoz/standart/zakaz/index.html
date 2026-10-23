@@ -229,9 +229,10 @@ p.t{color:var(--muted);font-weight:300;margin:0 0 14px}
     if (focus) { var el = document.getElementById(focus); if (el) el.focus(); }
     return false;
   }
-  // Цели счётчика исчерпаны (лимит Метрики), поэтому шаги воронки идут в
-  // параметры визита: открыл страницу заказа → нажал «Оплатить».
-  function step(name) { try { if (window.ym) ym(108138656, 'params', { standart_zakaz: name }); } catch (e) {} }
+  // Шаги воронки: открыл страницу заказа → нажал «Оплатить». Параметр визита —
+  // для отчётов; цель standart_<шаг> — для Директа: на параметрах кампания
+  // учиться не умеет, а с 20.10 «Купить на Ozon» у пакета нет.
+  function step(name) { try { if (window.ym) { ym(108138656, 'params', { standart_zakaz: name }); ym(108138656, 'reachGoal', 'standart_' + name); } } catch (e) {} }
   step('open');
   btn.addEventListener('click', function () {
     if (busy) return;

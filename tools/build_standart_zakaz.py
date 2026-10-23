@@ -169,9 +169,10 @@ BODY = """<style>
     if (focus) { var el = document.getElementById(focus); if (el) el.focus(); }
     return false;
   }
-  // Цели счётчика исчерпаны (лимит Метрики), поэтому шаги воронки идут в
-  // параметры визита: открыл страницу заказа → нажал «Оплатить».
-  function step(name) { try { if (window.ym) ym(108138656, 'params', { standart_zakaz: name }); } catch (e) {} }
+  // Шаги воронки: открыл страницу заказа → нажал «Оплатить». Параметр визита —
+  // для отчётов; цель standart_<шаг> — для Директа: на параметрах кампания
+  // учиться не умеет, а с 20.10 «Купить на Ozon» у пакета нет.
+  function step(name) { try { if (window.ym) { ym(108138656, 'params', { standart_zakaz: name }); ym(108138656, 'reachGoal', 'standart_' + name); } } catch (e) {} }
   step('open');
   btn.addEventListener('click', function () {
     if (busy) return;
@@ -255,7 +256,7 @@ def main():
                     "Соберу посылку и отправлю СДЭК в указанный пункт выдачи — трек-номер придёт на вашу почту. Доставку оплачиваете при получении.")
     th = th.replace('<a href="/komplekt/">оформить заказ заново</a>', '<a href="/razgovornyj-gipnoz/standart/zakaz/">оформить заказ заново</a>')
     th = th.replace("if (d && d.paid) { paid(); return; }",
-                    "if (d && d.paid) { paid(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); } catch (e) {} return; }")
+                    "if (d && d.paid) { paid(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); ym(108138656, 'reachGoal', 'standart_paid', { order_price: 5900, currency: 'RUB' }); } catch (e) {} return; }")
     assert "komplekt" not in re.sub(r"<head>.*?</head>", "", th, flags=re.S), "в «спасибо» остались ссылки на комплект"
     io.open(OUT_THX, "w", encoding="utf-8").write(th)
     print("записано:", os.path.relpath(OUT, ROOT), os.path.relpath(OUT_THX, ROOT))
