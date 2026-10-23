@@ -70,6 +70,7 @@ main,.wrap{position:relative;z-index:1}
 .field input:focus,.field textarea:focus{border-color:#5B9BFF;box-shadow:0 0 0 3px rgba(91,155,255,.18)}
 .h2{color:#fff}.h3{color:#E9EEF6}
 .agree input{accent-color:#3A86FF;width:18px;height:18px}
+.field input::placeholder,.field textarea::placeholder{color:rgba(233,238,246,.28)}
 @media(max-width:720px){.zk-hero .go{display:block;text-align:center}}
 @media(prefers-reduced-motion:reduce){.zk-hero .go::after,.btn-buy::after{animation:none}}
 </style>"""
@@ -112,43 +113,8 @@ BODY = """<style>
     <div class="shot"><img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот, схемы, коробка «Доступ» и книга «Матчасть»" width="1100" height="1100"></div>
   </div>
 
-  <div class="h2">Что в коробке</div>
-  <figure class="zk-inside">
-    <img src="/razgovornyj-gipnoz/standart/zakaz/vnutri.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот «Практикум», печатные схемы, коробка «Доступ» и книга «Матчасть»" loading="lazy" width="1020" height="700">
-    <figcaption>Так пакет выглядит, когда вы его открываете: слева — блокнот «Практикум», печатные схемы и коробка «Доступ», справа — книга «Матчасть». Приходит папка в чёрной коробке с надписью «Пакет „Стандарт“».</figcaption>
-  </figure>
-  <div class="items">
-    <div class="item">
-      <div class="kind">Механизм</div>
-      <div class="name">Книга «Матчасть»</div>
-      <div class="desc">274 страницы учебного материала курса и две печатные схемы-разворота: как устроены сознание, подсознание и защита.</div>
-    </div>
-    <div class="item">
-      <div class="kind">Образец</div>
-      <div class="name">38 видео</div>
-      <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев — по QR-коду на коробке «Доступ».</div>
-    </div>
-    <div class="item">
-      <div class="kind">Отработка</div>
-      <div class="name">Блокнот «Практикум»</div>
-      <div class="desc">На пружине, с QR-кодами на видеоразборы упражнений: одно задание — один приём.</div>
-    </div>
-    <div class="item">
-      <div class="kind">Проверка</div>
-      <div class="name">Колода игры «Маркетолог»</div>
-      <div class="desc">Один рассказывает историю по картам, второй слушает, третий по лицу слушателя определяет, поймали его или нет.</div>
-    </div>
-    <div class="item">
-      <div class="kind">Разбор</div>
-      <div class="name">Закрытый Telegram-канал с автором</div>
-      <div class="desc">Личные ответы на вопросы и разбор ваших ситуаций — от Андрея Мейстера, в течение суток.</div>
-    </div>
-  </div>
-  <p class="t">Подробно о том, как устроен курс и почему в нём пять частей, — на <a href="/razgovornyj-gipnoz/standart/">странице пакета</a>. Первое занятие курса <a href="/razgovornyj-gipnoz/urok-1/">открыто бесплатно</a>.</p>
-
   <div class="h2">Оформление и доставка</div>
-  <p class="t">Заполните форму и оплатите картой — данные для отправки придут мне сразу после оплаты. Посылка едет СДЭК до пункта выдачи, который вы укажете. Доставку вы оплачиваете при получении, по тарифу СДЭК для вашего города. Трек-номер придёт на почту.</p>
-  <div class="note warn">Перед оплатой выключите VPN, если он включён: страница подтверждения банка с зарубежного адреса может не открыться. Тогда платёж просто не пройдёт — деньги не спишутся, и оплату можно повторить.</div>
+  <p class="t">Заполните форму и оплатите картой — данные для отправки придут менеджеру сразу после оплаты. Посылка едет СДЭК до пункта выдачи, который вы укажете. Доставку вы оплачиваете при получении, по тарифу СДЭК для вашего города. Трек-номер придёт на почту.</p>
 
   <div class="form" id="orderForm">
     <div class="h3" style="margin-top:0">Куда отправлять</div>
@@ -187,8 +153,43 @@ BODY = """<style>
     </label>
     <p class="t" style="font-size:.88rem;color:var(--muted);margin:10px 0 12px">Сейчас вы платите 5 900 ₽ — это вся стоимость пакета. Доставку СДЭК оплачиваете при получении. Вернуть можно в течение семи дней после получения, если товар не был в употреблении. Продаёт и отправляет пакет менеджер Андрея Мейстера — ИП Медведев Андрей Юрьевич, ИНН 502238728185: от его имени придёт чек на почту, реквизиты — в <a href="/oferta/">оферте</a>.</p>
     <button class="btn-buy" id="fSubmit" type="button">Оплатить 5 900 ₽</button>
+    <p class="t" style="font-size:.82rem;color:var(--faint);margin:10px 0 0">Если включён VPN, выключите его на время оплаты — иначе страница банка может не открыться. Деньги в этом случае не спишутся.</p>
     <div class="err" id="fErr"></div>
   </div>
+
+  <div class="h2">Что в коробке</div>
+  <figure class="zk-inside">
+    <img src="/razgovornyj-gipnoz/standart/zakaz/vnutri.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот «Практикум», печатные схемы, коробка «Доступ» и книга «Матчасть»" loading="lazy" width="1020" height="700">
+    <figcaption>Так пакет выглядит, когда вы его открываете: слева — блокнот «Практикум», печатные схемы и коробка «Доступ», справа — книга «Матчасть». Приходит папка в чёрной коробке с надписью «Пакет „Стандарт“».</figcaption>
+  </figure>
+  <div class="items">
+    <div class="item">
+      <div class="kind">Механизм</div>
+      <div class="name">Книга «Матчасть»</div>
+      <div class="desc">274 страницы учебного материала курса и две печатные схемы-разворота: как устроены сознание, подсознание и защита.</div>
+    </div>
+    <div class="item">
+      <div class="kind">Образец</div>
+      <div class="name">38 видео</div>
+      <div class="desc">Конкретные конструкции и алгоритмы — как приём звучит в разговоре. Доступ на 12 месяцев — по QR-коду на коробке «Доступ».</div>
+    </div>
+    <div class="item">
+      <div class="kind">Отработка</div>
+      <div class="name">Блокнот «Практикум»</div>
+      <div class="desc">На пружине, с QR-кодами на видеоразборы упражнений: одно задание — один приём.</div>
+    </div>
+    <div class="item">
+      <div class="kind">Проверка</div>
+      <div class="name">Колода игры «Маркетолог»</div>
+      <div class="desc">Один рассказывает историю по картам, второй слушает, третий по лицу слушателя определяет, поймали его или нет.</div>
+    </div>
+    <div class="item">
+      <div class="kind">Разбор</div>
+      <div class="name">Закрытый Telegram-канал с автором</div>
+      <div class="desc">Личные ответы на вопросы и разбор ваших ситуаций — от Андрея Мейстера, в течение суток.</div>
+    </div>
+  </div>
+  <p class="t">Подробно о том, как устроен курс и почему в нём пять частей, — на <a href="/razgovornyj-gipnoz/standart/">странице пакета</a>. Первое занятие курса <a href="/razgovornyj-gipnoz/urok-1/">открыто бесплатно</a>.</p>
 
   <div class="h2">Частые вопросы</div>
   <div class="h3">Сколько стоит доставка?</div>
