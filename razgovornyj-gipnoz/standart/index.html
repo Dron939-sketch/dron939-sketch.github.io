@@ -14,7 +14,7 @@
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-:root{--bg:#0C0C0C;--card:#151515;--line:rgba(58,134,255,.22);--text:#F0F0F0;--muted:#B8B8B8;--faint:#7A7A7A;--accent:#3A86FF;--accent2:#00A8E8}
+:root{--bg:#0C0C0C;--card:#151515;--line:rgba(58,134,255,.22);--text:#F0F0F0;--muted:#C4C4C4;--faint:#9C9C9C;--accent:#3A86FF;--accent2:#00A8E8}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:84px}
@@ -37,7 +37,7 @@ section{padding:56px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .btn-ghost{border:1px solid var(--accent);color:#fff}
 .btn-ghost:hover{background:rgba(58,134,255,.12)}
 .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
-.small{font-size:.9rem;color:var(--faint);margin-top:12px}
+.small{font-size:.95rem;color:var(--faint);margin-top:12px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
 .card p{margin:0;font-size:1rem}
@@ -87,6 +87,7 @@ footer a{color:var(--faint)}
 .ex p:last-child{margin:0}
 .ex q{color:#fff;quotes:"«" "»"}
 .ex .was b{color:var(--faint);font-weight:500}
+@media(max-width:600px){.hero .badge{display:none}.hero h1{margin-top:0}}
 .ex .now b{color:var(--accent);font-weight:500}
 .vid{margin:6px 0 10px}
 .vid video{width:100%;height:auto;aspect-ratio:16/9;max-width:860px;border-radius:14px;display:block;background:#000;border:1px solid var(--line)}
@@ -633,7 +634,6 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <b>Содержание</b>
   <ol>
    <li><a href="#cherez-mesyac">Что изменится через месяц</a></li>
-   <li><a href="#obrazec">Как это звучит: 2,5 минуты из первого занятия</a></li>
    <li><a href="#temy">Что в 38 видео</a></li>
    <li><a href="#avtor">Кто ведёт</a></li>
    <li><a href="#chto-eto">Что такое разговорный гипноз</a></li>
@@ -671,18 +671,6 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
  </div>
 </section>
 
-<!-- Образец и автор (23.10.2026): все пятеро персонажей фокус-группы при сравнении
-     с лидерами рынка попросили одно — увидеть автора и услышать приём, не уходя
-     со страницы. Фрагмент 02:09–04:36 первого занятия, без вставок из фильмов. -->
-<section id="obrazec">
- <div class="wrap">
-  <h2>Как это звучит</h2>
-  <p>Две с половиной минуты из первого занятия: что значит захватить внимание, что такое команда и два способа провалить разговор. Где-то на второй минуте автор применяет приём прямо к вам — заметите где?</p>
-  <div class="vid"><video controls preload="none" playsinline poster="/razgovornyj-gipnoz/standart/obrazec-poster.webp" width="1280" height="720"><source src="/razgovornyj-gipnoz/standart/obrazec.mp4" type="video/mp4">Ваш браузер не показывает видео — <a href="/razgovornyj-gipnoz/urok-1/">первое занятие целиком</a>.</video></div>
-  <p class="small">Это одно из 38 видео пакета. <a href="/razgovornyj-gipnoz/urok-1/">Первое занятие целиком</a> — 13 минут, бесплатно и без регистрации.</p>
- </div>
-</section>
-
 <!-- Темы — дословно от автора 23.10.2026, это примеры, а не порядок курса:
      полного списка 38 видео у нас нет, план по неделям не придумывать. -->
 <section id="temy">
@@ -690,9 +678,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <h2>Что в 38 видео</h2>
   <p>Каждое видео — один приём: объяснение, как он звучит, и упражнение. Несколько тем для примера:</p>
   <div class="ex"><h3>Увидеть и не попасться</h3><p>«Как распознать воздействие» · «Как отвечать на воздействие» · «Непроизвольные бессознательные сигналы»</p><p class="now"><b>Будете уметь:</b> замечать, что на вас давят, по реакции собеседника — и отвечать, а не соглашаться по инерции.</p></div>
-  <div class="ex"><h3>Основа</h3><p>«Единая структура воздействия» · «Как держать ритм» · «Собственный транс и чужой транс» · «Самовнушение»</p><p class="now"><b>Будете уметь:</b> вести разговор так, чтобы вас слушали до конца, и не терять собеседника на середине.</p></div>
+  <div class="ex"><h3>Основа</h3><p>«Единая структура воздействия» · «Как держать ритм» · «Самовнушение»</p><p class="now"><b>Будете уметь:</b> вести разговор так, чтобы вас слушали до конца, и не терять собеседника на середине.</p></div>
   <div class="ex"><h3>Приёмы речи</h3><p>«Моно-тон, перегрузка, замешательство и другие приёмы разговорного гипноза» · «Скрытые внушения» · «Прерывание паттерна» · «Шаблон неопределённости, псевдологика и другие приёмы убедительности» · «Фокусы языка»</p><p class="now"><b>Будете уметь:</b> сказать то же самое так, чтобы с этим не спорили, — и слышать, когда такие фразы применяют к вам.</p></div>
-  <div class="ex"><h3>Эмоции и внушения</h3><p>«Разные аспекты проекции эмоций» · «Предвкушение, страх, доверие, секс и другие эмоциональные приёмы» · «Внушения и сброс внушений»</p><p class="now"><b>Будете уметь:</b> видеть, на какую эмоцию опирается чужое предложение, и снимать навязанное, если оно вам не подходит.</p></div>
+  <div class="ex"><h3>Эмоции и внушения</h3><p>«Разные аспекты проекции эмоций» · «Внушения и сброс внушений»</p><p class="now"><b>Будете уметь:</b> видеть, на какую эмоцию опирается чужое предложение, и снимать навязанное, если оно вам не подходит.</p></div>
  </div>
 </section>
 
@@ -704,7 +692,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <p><b>Андрей Мейстер</b> — кандидат психологических наук, специалист по психологии коммуникации и влияния. Больше 50 научных публикаций по психологии влияния и теории манипуляции, член Европейской ассоциации консультирования (EAC) и Международной ассоциации прикладной психологии (IAAP).</p>
    <p>Автор книги «Теория манипуляции. Том I. Разговорный гипноз», методологии «Вариатика» и виртуального психолога Фреди. Статьи о том, как люди слушают и соглашаются, пишет с 2008 года.</p>
    <p>В «Стандартном» он сам отвечает на ваши вопросы и разбирает ваши ситуации в закрытом Telegram-канале — это то, чего нет ни в книге, ни в бесплатных роликах. Отвечает в течение суток.</p>
-   <p class="more"><a href="/about/">Биография и образование</a></p>
+   <p class="more"><a href="/about/">Биография и образование</a> · <a href="/razgovornyj-gipnoz/urok-1/">первое занятие целиком — 13 минут, бесплатно</a></p>
   </div>
  </div>
 </section>
@@ -792,7 +780,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     <li><b>Механизм:</b> книга «Матчасть» — 274 страницы учебного материала курса и две печатные схемы-разворота о том, как устроены сознание, подсознание и защита</li>
     <li><b>Образец:</b> 38 видео с конкретными конструкциями и алгоритмами, доступ на 12 месяцев</li>
     <li><b>Отработка:</b> блокнот на пружине с заданиями и QR-кодами на видеоразборы упражнений</li>
-    <li><b>Проверка:</b> колода игры «Маркетолог» — один рассказывает историю по картам, второй слушает, третий по лицу слушателя считает, поймали его или нет</li>
+    <li><b>Проверка:</b> колода игры «Маркетолог» — один рассказывает историю по картам, второй слушает, третий по лицу слушателя считает, поймали его или нет. Не с кем играть втроём — задания блокнота делаются в обычных разговорах на работе и дома</li>
     <li><b>Разбор:</b> закрытый Telegram-канал, личные ответы на вопросы и разбор ваших ситуаций с автором — ответ в течение суток</li>
    </ul>
    <div class="ctas" style="margin-top:22px">
@@ -861,7 +849,12 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    пакета уже ушла с экрана: раньше она давила бы на того, кто пришёл за ответом. */
 (function(){var s=document.getElementById('sticky'),h=document.querySelector('#paket .btn-ozon');
 if(!('IntersectionObserver' in window)||!h){s.classList.add('on');return;}
-new IntersectionObserver(function(e){var r=e[0];s.classList.toggle('on',!r.isIntersecting&&r.boundingClientRect.top<0);}).observe(h);})();
+/* У финального блока свои кнопки: нижняя полоса там дублировала их и
+   закрывала текст (фокус-группа 23.10.2026) — на финале прячется. */
+var past=false,fin=false,f=document.querySelector('section.final');
+function upd(){s.classList.toggle('on',past&&!fin);}
+new IntersectionObserver(function(e){var r=e[0];past=!r.isIntersecting&&r.boundingClientRect.top<0;upd();}).observe(h);
+if(f)new IntersectionObserver(function(e){fin=e[0].isIntersecting;upd();}).observe(f);})();
 
 /* Цели Метрики. С 20.10.2026 пакет продаётся у нас (решение владельца):
    кнопка ведёт на /razgovornyj-gipnoz/standart/zakaz/, оплата — ЮKassa.
