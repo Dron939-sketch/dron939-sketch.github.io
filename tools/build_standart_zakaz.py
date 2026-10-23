@@ -39,6 +39,58 @@ TITLE = "Оформить заказ: пакет «Стандартный» — 
 DESC = ("Пакет «Стандартный» курса «Разговорный гипноз»: книга «Матчасть», 38 видео, блокнот "
         "с заданиями, колода «Маркетолог» и разбор с автором. 5 900 ₽, доставка СДЭК до пункта выдачи.")
 
+
+# Праздничный слой (23.10.2026, владелец: «страницу нужно сделать более
+# праздничной»). Поверх светлой темы /komplekt/: тёмный фон с мягким
+# свечением и искрами, перелив на заголовке и цене, лента «подарок» на
+# фото, блик на кнопке оплаты. Тот же тёмный мир, что на странице пакета, —
+# фокус-группа принимала светлый заказ за чужой сайт. Анимации гасятся
+# при prefers-reduced-motion.
+FEST_CSS = """<style>
+:root{--accent:#5B9BFF;--surface:rgba(19,25,38,.82);--border:rgba(91,155,255,.24);--muted:#A9B4C7;--faint:#7E8AA0}
+body{color:#E9EEF6;background:#070A12;background-image:radial-gradient(900px 520px at 12% -8%,rgba(58,134,255,.28),transparent 62%),radial-gradient(760px 460px at 100% 6%,rgba(0,168,232,.18),transparent 60%),radial-gradient(820px 560px at 50% 108%,rgba(139,92,246,.16),transparent 62%);background-attachment:fixed}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;background-image:radial-gradient(1.4px 1.4px at 12% 22%,#fff,transparent 60%),radial-gradient(1.2px 1.2px at 78% 14%,#cfe0ff,transparent 60%),radial-gradient(1.6px 1.6px at 64% 68%,#fff,transparent 60%),radial-gradient(1.1px 1.1px at 28% 82%,#bcd4ff,transparent 60%),radial-gradient(1.3px 1.3px at 90% 52%,#fff,transparent 60%),radial-gradient(1px 1px at 44% 40%,#dbe7ff,transparent 60%);animation:zk-tw 6s ease-in-out infinite alternate}
+@keyframes zk-tw{from{opacity:.25}to{opacity:.7}}
+main,.wrap{position:relative;z-index:1}
+.crumbs,.crumbs a{color:var(--faint)}
+.hero h1,.zk-hero h1{background:linear-gradient(180deg,#fff 0,#cfe0ff 55%,#7fb0ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.zk-badge{display:inline-block;margin-bottom:12px;padding:6px 14px;border-radius:30px;font-size:.85rem;font-weight:600;color:#ffe9b0;background:linear-gradient(135deg,rgba(255,196,84,.18),rgba(255,140,66,.12));border:1px solid rgba(255,200,110,.38)}
+.pricetag b{font-size:2.4rem;background:linear-gradient(135deg,#fff,#9cc3ff 60%,#5B9BFF);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 30px rgba(91,155,255,.25)}
+.zk-hero .shot{position:relative;overflow:hidden;background:radial-gradient(circle at 50% 42%,rgba(91,155,255,.35),rgba(14,20,32,.2) 62%),#0E1420;border:1px solid var(--border);box-shadow:0 0 0 1px rgba(255,255,255,.03),0 24px 60px rgba(30,80,200,.25)}
+.zk-hero .shot img{border-radius:14px;max-width:320px;box-shadow:0 18px 40px rgba(0,0,0,.5),0 0 60px rgba(91,155,255,.25)}
+.zk-ribbon{position:absolute;z-index:3;top:22px;right:-50px;transform:rotate(45deg);width:190px;text-align:center;padding:7px 0;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#3b2500;background:linear-gradient(90deg,#ffd27a,#ffb347);box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.zk-hero .go,.btn-buy{position:relative;overflow:hidden;background:linear-gradient(135deg,#00A8E8,#3A86FF 55%,#6366f1);box-shadow:0 8px 26px rgba(58,134,255,.45);transition:transform .15s,box-shadow .15s}
+.zk-hero .go:hover,.btn-buy:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 12px 32px rgba(58,134,255,.6)}
+.zk-hero .go::after,.btn-buy::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:zk-shine 3.2s ease-in-out infinite}
+@keyframes zk-shine{0%,60%{left:-60%}100%{left:130%}}
+.item,.form{background:var(--surface);border:1px solid var(--border);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.form{box-shadow:0 0 0 1px rgba(91,155,255,.12),0 20px 60px rgba(30,80,200,.18)}
+.item .kind{color:#8fb6ff}
+.item .name::before{margin-right:8px}
+.items .item:nth-child(1) .name::before{content:'📘'}
+.items .item:nth-child(2) .name::before{content:'🎥'}
+.items .item:nth-child(3) .name::before{content:'📓'}
+.items .item:nth-child(4) .name::before{content:'🃏'}
+.items .item:nth-child(5) .name::before{content:'💬'}
+.zk-inside,.zk-inside figcaption{background:var(--surface);color:var(--muted)}
+.zk-inside{border:1px solid var(--border)}
+.field input,.field textarea{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.12)}
+.field input:focus,.field textarea:focus{border-color:#5B9BFF;box-shadow:0 0 0 3px rgba(91,155,255,.18)}
+.h2{color:#fff}.h3{color:#E9EEF6}
+@media(prefers-reduced-motion:reduce){body::before,.zk-hero .go::after,.btn-buy::after{animation:none}}
+</style>"""
+
+# Конфетти на «спасибо» — только когда сервер подтвердил оплату.
+FEST_JS = """<script>
+function zkConfetti(){try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var c=document.createElement('canvas'),x=c.getContext('2d'),W,H,P=[],t=0,C=['#5B9BFF','#00A8E8','#ffd27a','#ffb347','#ffffff','#a78bfa'];
+c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9999';document.body.appendChild(c);
+function rs(){W=c.width=innerWidth;H=c.height=innerHeight}rs();addEventListener('resize',rs);
+for(var i=0;i<160;i++)P.push({x:W/2+(Math.random()-.5)*W*.3,y:H*.3,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,s:4+Math.random()*5,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[i%C.length]});
+(function f(){t++;x.clearRect(0,0,W,H);P.forEach(function(p){p.vy+=.28;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()});
+if(t<240)requestAnimationFrame(f);else c.remove()})()}catch(e){}}
+</script>"""
+
 BODY = """<style>
 .zk-hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center}
 .zk-hero .shot{background:radial-gradient(circle at 50% 40%,#2B3A55,#0E1420);border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:center}
@@ -56,13 +108,14 @@ BODY = """<style>
   <div class="crumbs"><a href="/">Главная</a> / <a href="/razgovornyj-gipnoz/standart/">Разговорный гипноз</a> / <span>Оформление заказа</span></div>
   <div class="hero zk-hero">
     <div>
+      <span class="zk-badge">🎁 Подарок себе — или тому, кто важен</span>
       <h1>Пакет «Стандартный»</h1>
       <p>Всё, что нужно, чтобы приёмы разговорного гипноза перестали быть текстом и начали срабатывать в разговоре: механизм, образец, задания, проверка на живом человеке и разбор ваших ошибок.</p>
       <div class="pricetag"><b>5 900 ₽</b><span>с НДС · оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
       <div class="zk-proof"><span>⭐ <b>4,9</b> и больше 300 отзывов на Ozon</span><span>📦 СДЭК до пункта выдачи</span><span>🎥 доступ к видео на 12 месяцев</span></div>
       <a class="go" href="#orderForm">Оформить заказ ↓</a>
     </div>
-    <div class="shot"><img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот, схемы, коробка «Доступ» и книга «Матчасть»" width="1100" height="1100"></div>
+    <div class="shot"><span class="zk-ribbon">подарок</span><img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот, схемы, коробка «Доступ» и книга «Матчасть»" width="1100" height="1100"></div>
   </div>
 
   <div class="h2">Что в коробке</div>
@@ -246,7 +299,7 @@ def head_from(src, title, desc, canonical_crumb):
 
 def main():
     head, tail = head_from(SRC, TITLE, DESC, LANDING)
-    io.open(OUT, "w", encoding="utf-8").write(head + BODY + tail)
+    io.open(OUT, "w", encoding="utf-8").write(head + BODY + FEST_CSS + tail)
     th = io.open(SRC_THX, encoding="utf-8").read()
     th = re.sub(r"<title>.*?</title>", "<title>Оплата заказа — пакет «Стандартный» | Андрей Мейстер</title>", th, count=1, flags=re.S)
     th = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="%s">' % LANDING, th, count=1)
@@ -257,8 +310,10 @@ def main():
                     "Соберу посылку и отправлю СДЭК в указанный пункт выдачи — трек-номер придёт на вашу почту. Доставку оплачиваете при получении.")
     th = th.replace('<a href="/komplekt/">оформить заказ заново</a>', '<a href="/razgovornyj-gipnoz/standart/zakaz/">оформить заказ заново</a>')
     th = th.replace("if (d && d.paid) { paid(); return; }",
-                    "if (d && d.paid) { paid(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); ym(108138656, 'reachGoal', 'standart_paid', { order_price: 5900, currency: 'RUB' }); } catch (e) {} return; }")
+                    "if (d && d.paid) { paid(); zkConfetti(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); ym(108138656, 'reachGoal', 'standart_paid', { order_price: 5900, currency: 'RUB' }); } catch (e) {} return; }")
     assert "komplekt" not in re.sub(r"<head>.*?</head>", "", th, flags=re.S), "в «спасибо» остались ссылки на комплект"
+    assert th.count("</head>") == 1, "в «спасибо» не один </head>"
+    th = th.replace("</head>", FEST_CSS + FEST_JS + "</head>")
     io.open(OUT_THX, "w", encoding="utf-8").write(th)
     print("записано:", os.path.relpath(OUT, ROOT), os.path.relpath(OUT_THX, ROOT))
 
