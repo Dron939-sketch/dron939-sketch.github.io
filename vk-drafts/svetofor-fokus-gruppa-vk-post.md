@@ -105,3 +105,31 @@ https://disk.yandex.ru/d/JwbrO9ipjpa14w
 — Пользовались ли касанием пальцев.
 — Слушали ли запись ещё — сколько раз.
 — Посоветовали бы её другу? Почему.
+
+---
+
+## Картинка к посту
+
+Готовая, 1080×1080: светофор с горящим зелёным внутри наушников (L и R —
+два канала), под ним «Фокус-группа «Светофор»», «Ищу 10–15 человек · 16 минут
+в наушниках» и кнопка «Напишите «Светофор» в сообщения». Собрана в стиле
+страницы пакета: тёмный фон, Inter, синий акцент.
+
+### Промт для фотореалистичной версии (1:1)
+
+Продолжение обложки статьи про Катю: тот же пустой перекрёсток в сумерках,
+только теперь красный гаснет, а зелёный загорается, и на переднем плане —
+наушники.
+
+> A photorealistic photograph at dusk. In the foreground, a pair of black
+> over-ear headphones rests on a wet stone parapet, sharp focus on the ear
+> cups. Behind them, slightly out of focus, an old city traffic light on a
+> pole at an empty intersection: the red lamp is fading out, the green lamp
+> is glowing brightly. Wet asphalt reflects the green light. No cars, no
+> people. Muted cool blue-grey dusk palette, one strong green accent, faint
+> warm street lamps far ahead. Shallow depth of field, 50mm, eye level,
+> documentary style, high detail. No text, no letters, no logos, no signs
+> with writing, no watermarks. Aspect ratio 1:1.
+
+Текст поверх кадра: сверху «Ищу 10–15 человек», снизу «Аудиосессия
+«Светофор» · 16 минут в наушниках».
