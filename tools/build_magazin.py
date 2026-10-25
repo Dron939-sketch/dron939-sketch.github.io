@@ -23,7 +23,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "magazin", "index.html")
 SITE = "https://meysternlp.ru"
 
-# (ключ, ярлык, значок, объяснение под «?»)
+# (ключ, ярлык, значок, объяснение под «?»). Картинка ярлыка — magazin/img/cat-<ключ>.webp,
+# нарезана из одного фотореалистичного холста (25.10.2026); значок — запас на случай без картинки.
 CATS = [
     ("besplatno", "Бесплатно", "🎁",
      "С чего начать без денег и регистрации: Лекторий целиком, первое занятие курса, "
@@ -43,7 +44,7 @@ CATS = [
     ("klyuchi", "Ключи · аудио", "🔑",
      "Аудиосерия: по записи на предмет — каркас понятий, из которого остальное "
      "выводится самому. Готовится, первая запись на проверке."),
-    ("vybor", "Не знаю, что выбрать", "🧭",
+    ("vybor", "Что выбрать?", "🧭",
      "Семь подсказок: от того, что мешает сейчас, — к вещи, которая с этим работает."),
 ]
 
@@ -158,7 +159,7 @@ PRODUCTS = [
              "навыков на каждый день.",
          gain="разговор и тесты открыты всем; по подписке — игры-тренажёры и практики без "
               "ограничений, каждое упражнение первый раз бесплатно.",
-         emo="🧠",
+         img="/magazin/img/cat-fredi.webp",
          btns=[("Попробовать Фреди", "/virtual-psychologist/", True)]),
 ]
 
@@ -200,6 +201,11 @@ KEYS_LIST = [
     ("И ещё 39 записей", "вещество и Земля, жизнь, информация и машины, человек и общество, искусство."),
 ]
 
+# Обложки первых записей: настоящее фото автора и стеклянный плеер (стиль «автор с плеером»).
+# Собраны скриптом из фото obo-mne/andrej-mejster.jpg / креатива РСЯ, не генерацией лица.
+KEYS_COVERS = [("um-obyasnitel", "Ум-объяснитель"), ("logika", "Логика"),
+               ("uchitsya", "Учиться и помнить"), ("reshat", "Решать и изобретать")]
+
 FAQ = [
     ("Почему часть товаров продаётся на Ozon, а часть — здесь?",
      "Книги и игры давно продаются на Ozon: там быстрая доставка в любой город и отзывы "
@@ -235,13 +241,14 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .lead{color:var(--muted);max-width:720px}
 /* ярлыки категорий */
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:18px 0 8px}
-.cat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 40px 12px 12px;cursor:pointer;color:var(--text);text-align:left;font:inherit;display:flex;flex-direction:column;gap:2px;min-height:68px}
+.cat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 34px 8px 8px;cursor:pointer;color:var(--text);text-align:left;font:inherit;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;min-height:68px}
 .cat:hover,.cat.on{border-color:var(--accent)}
 .cat.on{background:rgba(58,134,255,.1)}
-.cat .ic{font-size:1.25rem;line-height:1}
-.cat b{font-weight:620;font-size:.95rem;line-height:1.25}
-.cat small{color:var(--faint);font-size:.78rem}
-.q{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cat .ic{width:52px;height:52px;border-radius:10px;object-fit:cover;display:block}
+.cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cat b{font-weight:620;font-size:.92rem;line-height:1.25}
+.cat small{color:var(--faint);font-size:.76rem;line-height:1.3}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
@@ -281,6 +288,9 @@ details p{margin-top:4px}
 .free li,.keys li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);font-size:.92rem}
 .free li b,.keys li b{color:var(--text);font-weight:600}
 .keys li b{display:block}
+.covers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 14px}
+.covers img{width:100%;height:auto;border-radius:12px;display:block;border:1px solid var(--line)}
+@media(max-width:560px){.covers{grid-template-columns:1fr 1fr}}
 .status{display:inline-block;background:rgba(255,190,60,.12);color:#ffd27a;border-radius:12px;padding:3px 10px;font-size:.8rem}
 .keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
 .note{font-size:.85rem;color:var(--faint)}
@@ -292,7 +302,7 @@ table.pick td:first-child{color:var(--text);width:46%}
 .faq{padding:30px 0 40px;border-top:1px solid var(--line);margin-top:26px}
 .faq h3{margin:16px 0 4px}
 .faq p{color:var(--muted);font-size:.95rem}
-@media(max-width:560px){.cats{grid-template-columns:1fr 1fr}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
+@media(max-width:560px){.cats{grid-template-columns:1fr 1fr;gap:8px}.cat{grid-template-columns:40px 1fr;gap:8px;min-height:58px}.cat .ic{width:40px;height:40px}.cat b{font-size:.86rem}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
 """
 
 JS = r"""
@@ -380,16 +390,17 @@ def shelf(key, title, lead, body, extra=""):
 def build():
     counts = {k: sum(1 for p in PRODUCTS if p["cat"] == k) for k, *_ in CATS}
     sub = {"besplatno": "%d способа" % len(FREE), "vybor": "7 подсказок",
-           "klyuchi": "47 записей · готовится"}
+           "klyuchi": "47 записей, скоро"}
     forms = ("товар", "товара", "товаров")
     tiles, tips = [], []
     for k, label, ic, tip in CATS:
         small = sub.get(k) or "%d %s" % (counts[k], count_word(counts[k], forms))
         tiles.append(
             '<div class="cat" role="button" tabindex="0" data-cat="%s" aria-pressed="false">'
-            '<span class="ic" aria-hidden="true">%s</span><b>%s</b><small>%s</small>'
+            '<img class="ic" src="/magazin/img/cat-%s.webp" width="52" height="52" alt="" loading="lazy">'
+            '<span class="t"><b>%s</b><small>%s</small></span>'
             '<button class="q" type="button" aria-label="Что в категории «%s»" aria-expanded="false" '
-            'aria-controls="tip-%s">?</button></div>' % (k, ic, label, small, esc(label), k))
+            'aria-controls="tip-%s">?</button></div>' % (k, k, label, small, esc(label), k))
         tips.append('<div class="tip" id="tip-%s"><b>%s.</b> %s</div>' % (k, label, tip))
     cats_html = '<div class="cats" role="group" aria-label="Категории">\n%s\n%s\n</div>' % (
         "\n".join(tiles), "\n".join(tips))
@@ -420,12 +431,15 @@ def build():
               'старшеклассникам перед новой темой — с 16 лет. Для детей готовим отдельную версию, без погружения, с текстом для родителя.</p>\n'
               '<p><b style="color:var(--text)">Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку '
               'внимания, на которые дальше ложится практика.</p>\n'
+              '<div class="covers">%s</div>\n'
               '<ol>%s</ol>\n'
               '<p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при '
               'эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>\n'
               '<div class="btns"><a class="btn btn-buy" data-p="klyuchi" href="https://t.me/meysternlp" target="_blank" '
-              'rel="noopener">Ранний доступ — написать в Telegram</a></div></div>' % "".join(
-                  '<li><b>%s</b>%s</li>' % kl for kl in KEYS_LIST)),
+              'rel="noopener">Ранний доступ — написать в Telegram</a></div></div>' % (
+                  "".join('<img src="/magazin/img/klyuchi-%s.webp" width="1080" height="1080" loading="lazy" '
+                          'alt="Обложка записи «%s»">' % c for c in KEYS_COVERS),
+                  "".join('<li><b>%s</b>%s</li>' % kl for kl in KEYS_LIST))),
         shelf("vybor", "Не знаю, что выбрать", "Начните с того, что мешает сейчас, а не с того, что кажется самым полным.",
               '<table class="pick">%s</table>' % "".join(
                   '<tr><td>%s</td><td>%s</td></tr>' % r for r in PICK)),
