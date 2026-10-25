@@ -95,7 +95,7 @@ PRODUCTS = [
          who="тем, кто хочет понимать механику влияния — и свою, и чужую.",
          gain="транс как обычное состояние, две линии воздействия, пресуппозиции и "
               "тридцать с лишним видов внушений. 250 страниц.",
-         img="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png",
+         img="/magazin/img/kniga-tm.webp",
          btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-tm", True),
                ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-tm-pdf", False),
                ("О книге", "/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/", False)]),
@@ -115,7 +115,7 @@ PRODUCTS = [
          who="тем, кто застрял в одной ситуации и видит её только с одной стороны.",
          gain="семь способов смотреть на одну ситуацию — у каждого свой главный вопрос и "
               "индикаторы самопроверки. Темп — одна линза в неделю.",
-         img="/Концептикон.png",
+         img="/magazin/img/kniga-konc.webp",
          btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-konc", True),
                ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-konc-pdf", False),
                ("О книге", "/knigi/kontseptikon-sem-linz/", False)]),
