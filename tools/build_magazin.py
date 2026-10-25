@@ -44,7 +44,7 @@ CATS = [
     ("fredi", "Фреди", "🧠",
      "Фреди — программа-собеседник, виртуальный психолог: разговор, тесты и тренажёры. "
      "Бесплатно каждый день — несколько минут разговора и тесты; без ограничений — по подписке."),
-    ("klyuchi", "Ключи · аудио", "🔑",
+    ("klyuchi", "Ключи", "🔑",
      "Аудиозаписи по школьным и вузовским предметам: по записи на предмет — каркас "
      "понятий, из которого остальное выводится самому. Готовится, купить пока нельзя."),
 ]
@@ -57,24 +57,16 @@ PRODUCTS = [
     dict(cat="kursy", id="standart", kind="Курс · печатный комплект",
          name="Разговорный гипноз. Пакет «Стандартный»", price="5 900 ₽",
          note="СДЭК до пункта выдачи, возврат 7 дней", main=True,
-         who="тем, кому важно, чтобы слушали и соглашались, — руководителям, "
-             "продажникам, психологам, родителям подростков.",
+         who="тем, кому важно, чтобы слушали и соглашались: переговоры, совещания, "
+             "продажи, разговор с подростком.",
          gain="за месяц три-четыре приёма, которые срабатывают без подготовки, и умение "
               "замечать, когда их применяют к вам. Внутри: книга «Матчасть», 38 видео на "
               "год, блокнот с заданиями, игра «Маркетолог». Разбор — автор сам отвечает "
-              "на ваши вопросы и разбирает ваши ситуации в закрытом Telegram-канале.",
+              "на ваши вопросы и разбирает ваши ситуации в закрытом Telegram-канале, ответ в "
+              "течение суток. Доступ к видео и разбору — 12 месяцев, книга и блокнот остаются у вас.",
          img="/treningi/komplekt-standart.webp",
          btns=[("Заказать", "/razgovornyj-gipnoz/standart/zakaz/", True),
                ("Подробнее", "/razgovornyj-gipnoz/standart/", False)]),
-    dict(cat="kursy", id="komplekt", kind="Комплект · одной посылкой",
-         name="Комплект «Разговорный гипноз»: тренинг, три книги, три игры", price="19 999 ₽",
-         note="за всё, доставка СДЭК входит в цену",
-         who="тем, кто хочет всю систему сразу: приёмы, механику и тренировку за столом.",
-         gain="тренинг «Разговорный гипноз. Стандартный» (38 видеоуроков на QR-карточках), книги "
-              "«Теория манипуляции», «Вариатика» и «Концептикон», игры «Вариатика» Basic, "
-              "Intensive и Progressive. Оплата картой на сайте, чек и трек-номер — на почту.",
-         img="/images/komplekt-hero.jpg",
-         btns=[("Собрать заказ", "/komplekt/", True)]),
     dict(cat="kursy", id="samostoyatelnyy", kind="Курс · видео",
          name="Разговорный гипноз. Пакет «Самостоятельный»", price=None, note="цена и отзывы — на Ozon",
          who="тем, кто учится сам и не нуждается в обратной связи.",
@@ -83,6 +75,17 @@ PRODUCTS = [
          img="/kurs1.png",
          btns=[("Купить на Ozon", OZON + "razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/", True),
                ("Подробнее", "/treningi/razgovornyy-gipnoz-samostoyatelnyy.html", False)]),
+    dict(cat="kursy", id="komplekt", kind="Комплект · одной посылкой",
+         name="Комплект «Разговорный гипноз»: тренинг, три книги, три игры", price="19 999 ₽",
+         note="за всё, доставка СДЭК входит в цену",
+         who="тем, кто хочет всю систему сразу: приёмы, механику и тренировку за столом.",
+         gain="тренинг «Разговорный гипноз. Стандартный» (38 видеоуроков на QR-карточках), книги "
+              "«Теория манипуляции», «Вариатика» и «Концептикон», игры «Вариатика» Basic, "
+              "Intensive и Progressive. Оплата картой на сайте, чек и трек-номер — на почту. "
+              "Разбор ситуаций с автором в описании комплекта не заявлен — если он нужен, "
+              "это «Стандартный».",
+         img="/images/komplekt-hero.jpg",
+         btns=[("Собрать заказ", "/komplekt/", True)]),
     dict(cat="kursy", id="proryv", kind="Живой тренинг",
          name="«Прорыв» — против выученной беспомощности", price="от 2 900 ₽", note="первый этап, очно",
          who="тем, у кого «пробовал — бесполезно» стало привычкой и уговоры себя больше "
@@ -137,8 +140,8 @@ PRODUCTS = [
                ("Об игре", "/igry/marketolog.html", False)]),
     dict(cat="igry", id="var-basic", kind="Настольная игра",
          name="«Вариатика — Basic»", price=None, note="цена и отзывы — на Ozon",
-         who="тем, кто хочет предсказывать поступки людей, а не удивляться им.",
-         gain="навык разбирать чужие истории и прогнозировать поведение людей — через игру.",
+         who="тем, кто хочет понимать поступки людей, а не удивляться им.",
+         gain="навык разбирать чужие истории и замечать повторяющиеся сценарии — через игру.",
          img="/Басик.webp",
          btns=[("Купить на Ozon", OZON + "variatika-basic-chernyy-lebed-1263096092/", True),
                ("Об игре", "/igry/variatika-basic.html", False)]),
@@ -159,14 +162,15 @@ PRODUCTS = [
                ("Об игре", "/igry/variatika-progressive.html", False)]),
     dict(cat="igry", id="tri-puti", kind="Игра-задачник · 16+",
          name="«Три пути»", price="бесплатно", note="листы для печати",
-         who="двоим — игроку и ведущему; тем, кто привык говорить «у меня нет выхода».",
+         who="двоим — игроку и ведущему; тем, кто привык говорить «у меня нет выхода». "
+             "Психологу — прямо на сессию.",
          gain="за минуту собрать три пути из того, что у человека уже есть. Партия — "
               "полчаса, пять партий по нарастающей.",
          img="/blog/og/avtopilot.jpg",
          btns=[("Скачать и играть", "/igry/tri-puti.html", True)]),
     dict(cat="fredi", id="fredi-sub", kind="Подписка",
          name="Фреди: разговор, тесты и тренажёры", price="690 ₽ в месяц",
-         note="первые 3 дня — 69 ₽, дальше автопродление; отмена в любой момент",
+         note="первые 3 дня — 69 ₽, потом 690 ₽ в месяц списываются сами; отменить можно в любой момент",
          who="тем, кому нужен собеседник, который не устаёт и не оценивает, — и тренажёр "
              "навыков на каждый день.",
          gain="бесплатно каждый день — несколько минут разговора и тесты, каждое упражнение "
@@ -188,7 +192,8 @@ FREE = [
     ("/blog/lektorij/psihologiya-peregruzok/", "Курс «Психология перегрузок»", "почему устаёшь, даже когда ничего тяжёлого не делал."),
     ("/blog/lektorij/", "Весь Лекторий", "все курсы открыты целиком и без регистрации: отношения, дети, мышление, общение, работа."),
     ("/razgovornyj-gipnoz/urok-1/", "Первое занятие курса «Разговорный гипноз»", "13 минут, целиком."),
-    ("/igry/tri-puti.html", "Игра «Три пути»", "листы для печати, вдвоём за полчаса."),
+    ("/blog/lektorij/kak-uchitsya/", "Курс «Как учиться»", "как запоминать и понимать — себе или чтобы помочь ребёнку."),
+    ("/igry/tri-puti.html", "Игра «Три пути»", "листы для печати, вдвоём за полчаса; подходит и для сессии с клиентом."),
     ("/virtual-psychologist/", "Фреди", "несколько минут разговора каждый день и тесты; каждое упражнение первый раз бесплатно."),
 ]
 
@@ -201,9 +206,14 @@ PICK = [
      'бесплатные курсы <a href="/blog/lektorij/psihologiya-peregruzok/">«Психология перегрузок»</a> и '
      '<a href="/blog/lektorij/depressiya-i-apatiya/">«Депрессия и апатия»</a>. Если так неделями и не отпускает — '
      'это повод идти к врачу или психотерапевту, а не в магазин'),
-    ("Трудно с детьми — маленькими или уже взрослыми",
-     'бесплатные курсы <a href="/blog/lektorij/roditelstvo/">«Родительство»</a> и '
-     '<a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы с детьми по-разному видим одно и то же'),
+    ("Трудно с ребёнком: истерики, школа, экраны",
+     'бесплатный курс <a href="/blog/lektorij/roditelstvo/">«Родительство»</a>'),
+    ("Трудно со взрослыми детьми или с пожилыми родителями",
+     'бесплатный курс <a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы видим одно и то же '
+     'по-разному. Отдельного курса про взрослых детей пока нет'),
+    ("Ребёнку не даётся предмет",
+     'бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a> — прочитать самим и пересказать; '
+     'детская версия <a href="#klyuchi" data-go="klyuchi">«Ключей»</a> — когда выйдет'),
     ("Вас перебивают, не дослушивают, «мы подумаем» — и тишина",
      '<a href="#standart" data-go="kursy">Пакет «Стандартный»</a> — с разбором ваших ситуаций у автора; '
      'или <a href="#kniga-tm" data-go="knigi">книга «Теория манипуляции»</a>, если сначала хочется понять механику'),
@@ -216,7 +226,8 @@ PICK = [
      'на планёрку с отделом: учит рассказывать так, чтобы слушали'),
     ("Сами работаете с людьми — психолог, коуч, педагог",
      '<a href="#tri-puti" data-go="igry">игра «Три пути»</a> — бесплатно, прямо на сессию; '
-     '<a href="#kniga-konc" data-go="knigi">«Концептикон»</a> и <a href="#kniga-var" data-go="knigi">«Вариатика»</a> — для разбора случаев'),
+     'книги <a href="#kniga-konc" data-go="knigi">«Концептикон»</a> и <a href="#kniga-var" data-go="knigi">«Вариатика»</a> — '
+     'увидеть ситуацию клиента с разных сторон'),
     ("«Пробовал — бесполезно» стало привычкой",
      '<a href="#proryv" data-go="kursy">живой тренинг «Прорыв»</a>'),
     ("Нужен собеседник и тренажёр каждый день",
@@ -293,9 +304,8 @@ FAQ = [
      "покупателей. Пакет «Стандартный» с 20 октября 2026 года продаём сами — так автор "
      "сразу получает ваш заказ и подключает к разбору ситуаций."),
     ("С чего начать, если не знаю, что выбрать?",
-     "С бесплатного: Лекторий открыт целиком, первое занятие курса — 13 минут. Если после "
-     "него захочется практики с разбором — «Стандартный». Если сначала хочется понять "
-     "механику — книга «Теория манипуляции»."),
+     'Откройте <a href="#vybor" data-go="vybor">«Подобрать под задачу»</a> и найдите строку про '
+     'себя — бесплатное там стоит первым. Лекторий открыт целиком и без регистрации.'),
     ("Можно ли вернуть пакет «Стандартный»?",
      'Да, в течение семи дней после получения, если товар не был в употреблении. Условия — '
      'в <a href="/oferta/">оферте</a>.'),
@@ -328,7 +338,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .cat .ic{width:52px;height:52px;border-radius:10px;object-fit:cover;display:block}
 .cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
 .cat b{font-weight:620;font-size:.92rem;line-height:1.25}
-.cat small{color:var(--faint);font-size:.76rem;line-height:1.3}
+.cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
 .q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
@@ -351,7 +361,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .tx{display:flex;flex-direction:column;gap:4px;min-width:0}
 .kind{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#9cc2ff}
 .price{font-weight:650;font-size:.98rem}
-.price small{font-weight:400;color:var(--faint);font-size:.82rem}
+.price small{font-weight:400;color:var(--muted);font-size:.86rem}
 .who{font-size:.88rem;color:var(--muted)}
 .who b{color:var(--text);font-weight:600}
 details{font-size:.88rem;color:var(--muted)}
@@ -395,6 +405,7 @@ table.pick td:first-child{color:var(--text);width:46%}
 .legend{font-size:.82rem;color:var(--faint);margin:10px 0 0}
 details.all{margin-top:12px}
 details.all>summary{font-size:.95rem;padding:10px 0}
+@media(max-width:560px){table.pick,table.pick tbody,table.pick tr,table.pick td{display:block;width:auto}table.pick tr{border-bottom:1px solid var(--line);padding:10px 0}table.pick td{border:0;padding:2px 0}table.pick td:first-child{width:auto;font-weight:600}}
 @media(max-width:560px){.cats{grid-template-columns:1fr 1fr;gap:8px}.cat{grid-template-columns:40px 1fr;gap:8px;min-height:58px}.cat .ic{width:40px;height:40px}.cat b{font-size:.86rem}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
 """
 
@@ -509,7 +520,7 @@ def build():
     sub = {"besplatno": "%d %s" % (len(FREE), count_word(len(FREE), ("способ", "способа", "способов"))),
            "vybor": "%d %s" % (len(PICK), count_word(len(PICK), ("ситуация", "ситуации", "ситуаций"))),
            "fredi": "программа-собеседник",
-           "klyuchi": "по предметам, скоро"}
+           "klyuchi": "аудио, скоро"}
     forms = ("товар", "товара", "товаров")
     tiles, tips = [], []
     for k, label, ic, tip in CATS:
@@ -536,7 +547,7 @@ def build():
               '<div class="list">%s</div>' % by("knigi"), more("knigi")),
         shelf("igry", "Игры", "Навык ставится решением задач, а не объяснением. Игра — способ решать задачи всей компанией.",
               '<div class="list">%s</div>' % by("igry"), more("igry")),
-        shelf("fredi", "Фреди — виртуальный психолог", "",
+        shelf("fredi", "Фреди — программа-собеседник", "",
               '<div class="list">%s</div>' % by("fredi")),
         shelf("klyuchi", "Аудиосерия «Ключи» — фундамент предметов", "",
               '<div class="keys"><span class="status">готовится · купить пока нельзя</span>\n'
