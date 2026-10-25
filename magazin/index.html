@@ -42,7 +42,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
 .cat b{font-weight:620;font-size:.92rem;line-height:1.25}
 .cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
-.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:italic 700 .9rem/1 Georgia,'Times New Roman',serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
@@ -208,7 +208,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
      "@type": "ListItem",
      "position": 7,
      "name": "«Настольная книга депутата»",
-     "url": "https://meysternlp.ru/magazin/zakaz/?t=kniga-dep"
+     "url": "https://meysternlp.ru/magazin/zakaz/?t=kniga-dep-pdf"
     },
     {
      "@type": "ListItem",
@@ -259,15 +259,15 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <main class="wrap">
 <div class="crumbs"><a href="/">Главная</a> / Магазин</div>
 <h1>Магазин</h1>
-<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «?» объяснит, что внутри.</p>
+<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «i» объяснит, что внутри.</p>
 <div class="cats" role="group" aria-label="Категории">
-<div class="cat" role="button" tabindex="0" data-cat="vybor" aria-pressed="false"><img class="ic" src="/magazin/img/cat-vybor.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Подобрать под задачу</b><small>13 ситуаций</small></span><button class="q" type="button" aria-label="Что в категории «Подобрать под задачу»" aria-expanded="false" aria-controls="tip-vybor">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="besplatno" aria-pressed="false"><img class="ic" src="/magazin/img/cat-besplatno.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Бесплатно</b><small>8 способов</small></span><button class="q" type="button" aria-label="Что в категории «Бесплатно»" aria-expanded="false" aria-controls="tip-besplatno">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="kursy" aria-pressed="false"><img class="ic" src="/magazin/img/cat-kursy.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Курсы и тренинги</b><small>3 товара</small></span><button class="q" type="button" aria-label="Что в категории «Курсы и тренинги»" aria-expanded="false" aria-controls="tip-kursy">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="knigi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-knigi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Книги</b><small>4 товара</small></span><button class="q" type="button" aria-label="Что в категории «Книги»" aria-expanded="false" aria-controls="tip-knigi">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="igry" aria-pressed="false"><img class="ic" src="/magazin/img/cat-igry.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Игры</b><small>5 товаров</small></span><button class="q" type="button" aria-label="Что в категории «Игры»" aria-expanded="false" aria-controls="tip-igry">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="fredi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-fredi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Фреди</b><small>программа-собеседник</small></span><button class="q" type="button" aria-label="Что в категории «Фреди»" aria-expanded="false" aria-controls="tip-fredi">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="klyuchi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-klyuchi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Ключи</b><small>аудио, 690 ₽</small></span><button class="q" type="button" aria-label="Что в категории «Ключи»" aria-expanded="false" aria-controls="tip-klyuchi">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="vybor" aria-pressed="false"><img class="ic" src="/magazin/img/cat-vybor.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Подобрать под задачу</b><small>13 ситуаций</small></span><button class="q" type="button" aria-label="Что в категории «Подобрать под задачу»" aria-expanded="false" aria-controls="tip-vybor">i</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="besplatno" aria-pressed="false"><img class="ic" src="/magazin/img/cat-besplatno.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Бесплатно</b><small>8 способов</small></span><button class="q" type="button" aria-label="Что в категории «Бесплатно»" aria-expanded="false" aria-controls="tip-besplatno">i</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="kursy" aria-pressed="false"><img class="ic" src="/magazin/img/cat-kursy.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Курсы и тренинги</b><small>3 товара</small></span><button class="q" type="button" aria-label="Что в категории «Курсы и тренинги»" aria-expanded="false" aria-controls="tip-kursy">i</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="knigi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-knigi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Книги</b><small>4 товара</small></span><button class="q" type="button" aria-label="Что в категории «Книги»" aria-expanded="false" aria-controls="tip-knigi">i</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="igry" aria-pressed="false"><img class="ic" src="/magazin/img/cat-igry.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Игры</b><small>5 товаров</small></span><button class="q" type="button" aria-label="Что в категории «Игры»" aria-expanded="false" aria-controls="tip-igry">i</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="fredi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-fredi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Фреди</b><small>программа-собеседник</small></span><button class="q" type="button" aria-label="Что в категории «Фреди»" aria-expanded="false" aria-controls="tip-fredi">i</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="klyuchi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-klyuchi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Ключи</b><small>аудио, 690 ₽</small></span><button class="q" type="button" aria-label="Что в категории «Ключи»" aria-expanded="false" aria-controls="tip-klyuchi">i</button></div>
 <div class="tip" id="tip-vybor"><b>Подобрать под задачу.</b> Найдите строку про себя — тревога, усталость, дети, работа с людьми, переговоры — и рядом будет то, что с этим работает. Бесплатное — первым.</div>
 <div class="tip" id="tip-besplatno"><b>Бесплатно.</b> С чего начать без денег и регистрации: курсы Лектория — в том числе про тревогу, сон и усталость, — первое занятие курса, игра для печати и разговор с Фреди.</div>
 <div class="tip" id="tip-kursy"><b>Курсы и тренинги.</b> Видео, задания и живая практика. Здесь учатся делать, а не только понимать: приём — упражнение — разбор ошибок.</div>
@@ -277,7 +277,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="tip" id="tip-klyuchi"><b>Ключи.</b> Аудиозаписи по школьным и вузовским предметам: по записи на предмет — каркас понятий, из которого остальное выводится самому. Первая запись — в продаже, 690 ₽.</div>
 </div>
 <div class="top" id="top"><div class="top-h">Главное сейчас</div><div class="toprow"><div class="list"><article class="it main" id="standart-top">
- <div class="th"><img src="/treningi/komplekt-standart.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
+ <div class="th"><img src="/magazin/img/standart-razvorot.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
  <div class="tx">
   <span class="kind">Курс · печатный комплект</span>
   <h3>Разговорный гипноз. Пакет «Стандартный»</h3>
@@ -296,7 +296,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="shelf-h"><h2>Курсы и тренинги</h2><button class="back" type="button">← Все категории</button></div>
 <p class="shelf-lead">Видео и задания — чтобы приём перестал быть текстом и начал срабатывать в разговоре.</p>
 <div class="list"><article class="it main" id="standart">
- <div class="th"><img src="/treningi/komplekt-standart.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
+ <div class="th"><img src="/magazin/img/standart-razvorot.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
  <div class="tx">
   <span class="kind">Курс · печатный комплект</span>
   <h3>Разговорный гипноз. Пакет «Стандартный»</h3>
@@ -333,7 +333,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="shelf-h"><h2>Книги</h2><button class="back" type="button">← Все категории</button></div>
 <p class="shelf-lead">Механика — то, без чего приёмы остаются заученными фразами.</p>
 <div class="list"><article class="it" id="kniga-tm">
- <div class="th"><img src="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png" alt="«Теория манипуляции. Разговорный гипноз»" loading="lazy" width="84" height="84"></div>
+ <div class="th"><img src="/magazin/img/kniga-tm.webp" alt="«Теория манипуляции. Разговорный гипноз»" loading="lazy" width="84" height="84"></div>
  <div class="tx">
   <span class="kind">Книга</span>
   <h3>«Теория манипуляции. Разговорный гипноз»</h3>
@@ -355,7 +355,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
  </div>
 </article>
 <article class="it" id="kniga-konc">
- <div class="th"><img src="/Концептикон.png" alt="«Концептикон. Семь линз для ясного мышления»" loading="lazy" width="84" height="84"></div>
+ <div class="th"><img src="/magazin/img/kniga-konc.webp" alt="«Концептикон. Семь линз для ясного мышления»" loading="lazy" width="84" height="84"></div>
  <div class="tx">
   <span class="kind">Книга</span>
   <h3>«Концептикон. Семь линз для ясного мышления»</h3>
@@ -370,10 +370,10 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
  <div class="tx">
   <span class="kind">Книга</span>
   <h3>«Настольная книга депутата»</h3>
-  <div class="price">990 ₽ <small>· печатная; PDF — 690 ₽</small></div>
+  <div class="price">1 490 ₽ <small>· PDF · предзаказ</small></div>
   <p class="who"><b>Кому:</b> тем, кто претендует на власть и не хочет её имитировать.</p>
-  <details><summary>Что даст</summary><p>речевые навыки, когнитивные стратегии и протоколы публичного действия.</p></details>
-  <div class="btns"><a class="btn btn-buy" data-p="kniga-dep" href="/magazin/zakaz/?t=kniga-dep">Печатная — 990 ₽</a><a class="btn btn-more" href="/magazin/zakaz/?t=kniga-dep-pdf">PDF — 690 ₽</a><a class="btn btn-more" href="/knigi/nastolnaya-kniga-deputata/">О книге</a></div>
+  <details><summary>Что даст</summary><p>речевые навыки, когнитивные стратегии и протоколы публичного действия. Только в PDF. Это предзаказ: книга готовится, файл придёт на почту, как только будет готов.</p></details>
+  <div class="btns"><a class="btn btn-buy" data-p="kniga-dep" href="/magazin/zakaz/?t=kniga-dep-pdf">Предзаказ — 1 490 ₽</a><a class="btn btn-more" href="/knigi/nastolnaya-kniga-deputata/">О книге</a></div>
  </div>
 </article></div>
 <p class="shelf-lead" style="margin-top:12px"><a href="/knigi/">Все книги →</a></p></section>

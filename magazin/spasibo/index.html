@@ -34,7 +34,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
 .cat b{font-weight:620;font-size:.92rem;line-height:1.25}
 .cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
-.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:italic 700 .9rem/1 Georgia,'Times New Roman',serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
@@ -171,6 +171,7 @@ function paid(d){T.textContent='Оплачено. Спасибо!';N.hidden=fals
   if(d.digital){
     if(d.link){X.textContent='Ссылка — ниже и в письме на вашу почту.';var a=document.getElementById('tLink');a.href=d.link;L.hidden=false;
       N.textContent='Ссылка личная — пожалуйста, не пересылайте её.';}
+    else if(d.preorder){X.textContent='Предзаказ оформлен. PDF придёт на вашу почту, как только книга будет готова — ничего делать не нужно.';N.textContent='Чек уже на почте. Если письма нет — проверьте «Спам».';}
     else{X.textContent='Оплата прошла. Ссылку пришлю на вашу почту в течение дня.';N.textContent='Если письма нет — проверьте «Спам» или ответьте на письмо с чеком.';}
   }else{X.textContent='Заказ у меня. Соберу посылку и отправлю СДЭК в указанный пункт выдачи — трек-номер придёт на почту.';
     N.textContent='Доставку вы оплачиваете сами при получении в пункте выдачи, по тарифу СДЭК. Если в адресе ошибка — ответьте на письмо с подтверждением, пока посылка не уехала.';}

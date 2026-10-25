@@ -7,7 +7,8 @@
 
 Решения владельца 25.10.2026: все товары — в одном магазине, «Книги»,
 «Игры» и «Тренинги» из меню убраны, «Магазин» — последним пунктом. При
-входе — компактные ярлыки категорий, у каждого кнопка «?» с объяснением,
+входе — компактные ярлыки категорий, у каждого кнопка «i» с объяснением («?» читался как «не понял»,
+владелец 25.10.2026),
 что в этой категории. Ярлык открывает свою витрину, остальные свёрнуты;
 без JS видно всё сразу, поэтому краулер получает полный каталог.
 
@@ -68,7 +69,7 @@ PRODUCTS = [
               "год, блокнот с заданиями, игра «Маркетолог». Разбор — автор сам отвечает "
               "на ваши вопросы и разбирает ваши ситуации в закрытом Telegram-канале, ответ в "
               "течение суток. Доступ к видео и разбору — 12 месяцев, книга и блокнот остаются у вас.",
-         img="/treningi/komplekt-standart.webp",
+         img="/magazin/img/standart-razvorot.webp",
          btns=[("Заказать", "/razgovornyj-gipnoz/standart/zakaz/", True),
                ("Подробнее", "/razgovornyj-gipnoz/standart/", False)]),
     dict(cat="kursy", id="samostoyatelnyy", kind="Курс · видео",
@@ -94,7 +95,7 @@ PRODUCTS = [
          who="тем, кто хочет понимать механику влияния — и свою, и чужую.",
          gain="транс как обычное состояние, две линии воздействия, пресуппозиции и "
               "тридцать с лишним видов внушений. 250 страниц.",
-         img="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png",
+         img="/magazin/img/kniga-tm.webp",
          btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-tm", True),
                ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-tm-pdf", False),
                ("О книге", "/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/", False)]),
@@ -114,17 +115,19 @@ PRODUCTS = [
          who="тем, кто застрял в одной ситуации и видит её только с одной стороны.",
          gain="семь способов смотреть на одну ситуацию — у каждого свой главный вопрос и "
               "индикаторы самопроверки. Темп — одна линза в неделю.",
-         img="/Концептикон.png",
+         img="/magazin/img/kniga-konc.webp",
          btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-konc", True),
                ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-konc-pdf", False),
                ("О книге", "/knigi/kontseptikon-sem-linz/", False)]),
     dict(cat="knigi", id="kniga-dep", kind="Книга",
-         name="«Настольная книга депутата»", price="990 ₽", note="печатная; PDF — 690 ₽", pdf=True,
+         name="«Настольная книга депутата»", price="1 490 ₽", note="PDF · предзаказ",
+         pdf_only=True, pdf_kind="Книга · PDF, предзаказ",
          who="тем, кто претендует на власть и не хочет её имитировать.",
-         gain="речевые навыки, когнитивные стратегии и протоколы публичного действия.",
+         gain="речевые навыки, когнитивные стратегии и протоколы публичного действия. "
+              "Только в PDF. Это предзаказ: книга готовится, файл придёт на почту, как только "
+              "будет готов.",
          img="/nastolnaya-kniga-deputata-andrej-mejster.png",
-         btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-dep", True),
-               ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-dep-pdf", False),
+         btns=[("Предзаказ — 1 490 ₽", "/magazin/zakaz/?t=kniga-dep-pdf", True),
                ("О книге", "/knigi/nastolnaya-kniga-deputata/", False)]),
     dict(cat="igry", id="marketolog", kind="Настольная игра",
          name="«Маркетолог»", price="1 200 ₽", note="+ доставка СДЭК при получении",
@@ -401,7 +404,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
 .cat b{font-weight:620;font-size:.92rem;line-height:1.25}
 .cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
-.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:italic 700 .9rem/1 Georgia,'Times New Roman',serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
@@ -619,7 +622,7 @@ def build():
             '<img class="ic" src="/magazin/img/cat-%s.webp" width="52" height="52" alt="" loading="lazy">'
             '<span class="t"><b>%s</b><small>%s</small></span>'
             '<button class="q" type="button" aria-label="Что в категории «%s»" aria-expanded="false" '
-            'aria-controls="tip-%s">?</button></div>' % (k, k, label, small, esc(label), k))
+            'aria-controls="tip-%s">i</button></div>' % (k, k, label, small, esc(label), k))
         tips.append('<div class="tip" id="tip-%s"><b>%s.</b> %s</div>' % (k, label, tip))
     cats_html = '<div class="cats" role="group" aria-label="Категории">\n%s\n%s\n</div>' % (
         "\n".join(tiles), "\n".join(tips))
@@ -739,7 +742,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <main class="wrap">
 <div class="crumbs"><a href="/">Главная</a> / Магазин</div>
 <h1>Магазин</h1>
-<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «?» объяснит, что внутри.</p>
+<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «i» объяснит, что внутри.</p>
 %(cats)s
 %(top)s
 %(shelves)s
@@ -767,6 +770,11 @@ def order_catalog():
     PDF — цифровое (только почта, ссылка после оплаты)."""
     cat = {}
     for p in PRODUCTS:
+        if p.get("pdf_only"):
+            cat[p["id"] + "-pdf"] = {"name": p["name"], "img": p.get("img") or "", "digital": True,
+                                     "amount": int(p["price"].replace(" ", "").replace("₽", "")),
+                                     "kind": p.get("pdf_kind", "Книга · PDF"), "preorder": True}
+            continue
         if not any(u == "/magazin/zakaz/?t=" + p["id"] for _t, u, _m in p["btns"]):
             continue
         amount = int(p["price"].replace(" ", "").replace("₽", ""))
@@ -803,7 +811,7 @@ var box=document.getElementById('ord'),f=document.getElementById('of'),phys=docu
 if(!p){box.innerHTML='<p>Товар не найден. <a href="/magazin/">Вернуться в магазин</a></p>';f.hidden=true;return;}
 document.title='Заказ: '+p.name+' | Андрей Мейстер';
 box.innerHTML='<img alt="" src="'+p.img+'"><div><span class="kind">'+p.kind+'</span><h2 style="font-size:1.15rem;margin:4px 0"></h2>'
- +'<div class="price">'+p.amount.toLocaleString('ru-RU')+' ₽ <small>'+(p.digital?'· ссылка на почту сразу после оплаты':'+ доставка СДЭК — оплачивается при получении')+'</small></div></div>';
+ +'<div class="price">'+p.amount.toLocaleString('ru-RU')+' ₽ <small>'+(p.preorder?'· предзаказ: PDF придёт на почту, когда книга будет готова':p.digital?'· ссылка на почту сразу после оплаты':'+ доставка СДЭК — оплачивается при получении')+'</small></div></div>';
 box.querySelector('h2').textContent=p.name;
 phys.forEach(function(el){el.hidden=p.digital});
 var btn=f.querySelector('button'),err=f.querySelector('.oerr');
@@ -838,6 +846,7 @@ function paid(d){T.textContent='Оплачено. Спасибо!';N.hidden=fals
   if(d.digital){
     if(d.link){X.textContent='Ссылка — ниже и в письме на вашу почту.';var a=document.getElementById('tLink');a.href=d.link;L.hidden=false;
       N.textContent='Ссылка личная — пожалуйста, не пересылайте её.';}
+    else if(d.preorder){X.textContent='Предзаказ оформлен. PDF придёт на вашу почту, как только книга будет готова — ничего делать не нужно.';N.textContent='Чек уже на почте. Если письма нет — проверьте «Спам».';}
     else{X.textContent='Оплата прошла. Ссылку пришлю на вашу почту в течение дня.';N.textContent='Если письма нет — проверьте «Спам» или ответьте на письмо с чеком.';}
   }else{X.textContent='Заказ у меня. Соберу посылку и отправлю СДЭК в указанный пункт выдачи — трек-номер придёт на почту.';
     N.textContent='Доставку вы оплачиваете сами при получении в пункте выдачи, по тарифу СДЭК. Если в адресе ошибка — ответьте на письмо с подтверждением, пока посылка не уехала.';}
