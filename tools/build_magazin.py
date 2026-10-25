@@ -153,8 +153,8 @@ PRODUCTS = [
          name="«Вариатика — Intensive»", price="3 800 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто разбирается в сложных системах — семье, команде, организации.",
          gain="системное, критическое и латеральное мышление: видеть, как части влияют "
-              "друг на друга.",
-         img="/интенсив.webp",
+              "друг на друга. В коробке: инструкция, тетрадь упражнений и карточки-схемы.",
+         img="/magazin/img/igra-variatika-intensive.webp",
          btns=[("Купить", "/magazin/zakaz/?t=var-intensive", True),
                ("Об игре", "/igry/variatika-intensive.html", False)]),
     dict(cat="igry", id="var-progressive", kind="Настольная игра",
