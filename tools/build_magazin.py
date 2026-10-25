@@ -12,8 +12,11 @@
 без JS видно всё сразу, поэтому краулер получает полный каталог.
 
 Цены — от владельца (25.10.2026): книги по 990 ₽, игры «Вариатика» по
-3 800 ₽, «Маркетолог» 1 200 ₽, пакет «Самостоятельный» 3 200 ₽, свои товары и Фреди — как на их страницах. У товаров Ozon без
-названной цены — ссылка без цифры. Цена меняется — менять здесь и
+3 800 ₽, «Маркетолог» 1 200 ₽, пакет «Самостоятельный» 3 200 ₽, свои товары и Фреди — как на их страницах.
+С 25.10.2026 всё продаём сами, без Ozon (владелец): товар — оплата картой на
+сайте через ЮKassa (/api/shop/checkout, каталог PRODUCTS в order_routes.py
+Frederick — цены менять в обоих местах), доставка СДЭК — при получении.
+Заказ — /magazin/zakaz/?t=<id>, страница после оплаты — /magazin/spasibo/. Цена меняется — менять здесь и
 пересобрать. Новый товар — новая строка в PRODUCTS. Комплект за 19 999 ₽
 снят с продажи 25.10.2026 (решение владельца).
 """
@@ -51,14 +54,13 @@ CATS = [
      "понятий, из которого остальное выводится самому. Первая запись — в продаже, 690 ₽."),
 ]
 
-OZON = "https://www.ozon.ru/product/"
 
 # Товар: категория, якорь, вид, название, цена (или None), примечание к цене,
 # кому, что даст, картинка (или значок), кнопки [(текст, адрес, главная?)].
 PRODUCTS = [
     dict(cat="kursy", id="standart", kind="Курс · печатный комплект",
          name="Разговорный гипноз. Пакет «Стандартный»", price="5 900 ₽",
-         note="СДЭК до пункта выдачи, возврат 7 дней", main=True,
+         note="+ доставка СДЭК при получении, возврат 7 дней", main=True,
          who="тем, кому важно, чтобы слушали и соглашались: переговоры, совещания, "
              "продажи, разговор с подростком.",
          gain="за месяц три-четыре приёма, которые срабатывают без подготовки, и умение "
@@ -70,12 +72,12 @@ PRODUCTS = [
          btns=[("Заказать", "/razgovornyj-gipnoz/standart/zakaz/", True),
                ("Подробнее", "/razgovornyj-gipnoz/standart/", False)]),
     dict(cat="kursy", id="samostoyatelnyy", kind="Курс · видео",
-         name="Разговорный гипноз. Пакет «Самостоятельный»", price="3 200 ₽", note="на Ozon",
+         name="Разговорный гипноз. Пакет «Самостоятельный»", price="3 200 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто учится сам и не нуждается в обратной связи.",
          gain="те же 38 видео с приёмами речевого воздействия — без печатного комплекта "
               "и без разбора ваших ситуаций.",
          img="/kurs1.png",
-         btns=[("Купить на Ozon", OZON + "razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/", True),
+         btns=[("Купить", "/magazin/zakaz/?t=samostoyatelnyy", True),
                ("Подробнее", "/treningi/razgovornyy-gipnoz-samostoyatelnyy.html", False)]),
     dict(cat="kursy", id="proryv", kind="Живой тренинг",
          name="«Прорыв» — против выученной беспомощности", price="от 2 900 ₽", note="первый этап, очно, в Коломне",
@@ -88,68 +90,75 @@ PRODUCTS = [
          img="/treningi/proryv-hero.jpg",
          btns=[("Этапы и запись", "/treningi/proryv.html", True)]),
     dict(cat="knigi", id="kniga-tm", kind="Книга",
-         name="«Теория манипуляции. Разговорный гипноз»", price="990 ₽", note="на Ozon",
+         name="«Теория манипуляции. Разговорный гипноз»", price="990 ₽", note="печатная; PDF — 690 ₽", pdf=True,
          who="тем, кто хочет понимать механику влияния — и свою, и чужую.",
          gain="транс как обычное состояние, две линии воздействия, пресуппозиции и "
               "тридцать с лишним видов внушений. 250 страниц.",
          img="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png",
-         btns=[("Купить на Ozon", OZON + "teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527/", True),
+         btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-tm", True),
+               ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-tm-pdf", False),
                ("О книге", "/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/", False)]),
     dict(cat="knigi", id="kniga-var", kind="Книга",
-         name="«Вариатика. Библиотека человеческих паттернов»", price="990 ₽", note="на Ozon",
+         name="«Вариатика. Библиотека человеческих паттернов»", price="990 ₽", note="печатная; PDF — 690 ₽", pdf=True,
          who="тем, кто устал от объяснения «он просто такой», — психологам, "
              "руководителям, всем, кто работает с людьми.",
          gain="четыре базовые программы и девять уровней у каждой — понимать, почему "
               "человек повторяет один сценарий и как он переходит на другой уровень. "
               "Авторская модель, собранная из практики, а не результат исследований.",
          img="/magazin/img/kniga-variatika.webp",
-         btns=[("Купить на Ozon", OZON + "variatika-biblioteka-chelovecheskih-patternov-meyster-andrey-yurevich-989039765/", True),
+         btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-var", True),
+               ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-var-pdf", False),
                ("О книге", "/knigi/variatika-biblioteka-chelovecheskih-patternov/", False)]),
     dict(cat="knigi", id="kniga-konc", kind="Книга",
-         name="«Концептикон. Семь линз для ясного мышления»", price="990 ₽", note="на Ozon",
+         name="«Концептикон. Семь линз для ясного мышления»", price="990 ₽", note="печатная; PDF — 690 ₽", pdf=True,
          who="тем, кто застрял в одной ситуации и видит её только с одной стороны.",
          gain="семь способов смотреть на одну ситуацию — у каждого свой главный вопрос и "
               "индикаторы самопроверки. Темп — одна линза в неделю.",
          img="/Концептикон.png",
-         btns=[("Купить на Ozon", OZON + "kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/", True),
+         btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-konc", True),
+               ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-konc-pdf", False),
                ("О книге", "/knigi/kontseptikon-sem-linz/", False)]),
     dict(cat="knigi", id="kniga-dep", kind="Книга",
-         name="«Настольная книга депутата»", price=None, note="как получить — на странице книги",
+         name="«Настольная книга депутата»", price="990 ₽", note="печатная; PDF — 690 ₽", pdf=True,
          who="тем, кто претендует на власть и не хочет её имитировать.",
          gain="речевые навыки, когнитивные стратегии и протоколы публичного действия.",
          img="/nastolnaya-kniga-deputata-andrej-mejster.png",
-         btns=[("О книге", "/knigi/nastolnaya-kniga-deputata/", True)]),
+         btns=[("Печатная — 990 ₽", "/magazin/zakaz/?t=kniga-dep", True),
+               ("PDF — 690 ₽", "/magazin/zakaz/?t=kniga-dep-pdf", False),
+               ("О книге", "/knigi/nastolnaya-kniga-deputata/", False)]),
     dict(cat="igry", id="marketolog", kind="Настольная игра",
-         name="«Маркетолог»", price="1 200 ₽", note="на Ozon",
+         name="«Маркетолог»", price="1 200 ₽", note="+ доставка СДЭК при получении",
          who="командам продаж, тренерам, преподавателям — всем, кому нужно убеждать "
              "историей.",
          gain="один рассказывает историю по картам, другой слушает, третий по лицу "
               "слушателя видит, поймали его или нет. Учит строить истории и видеть, "
-              "работают ли они.",
-         img="/Маркетолог.png",
-         btns=[("Купить на Ozon", OZON + "nastolnaya-kartochnaya-igra-marketolog-984307394/", True),
-               ("Об игре", "/igry/marketolog.html", False)]),
+              "работают ли они. 2–3 игрока, 16+, три колоды: обстоятельства, образы, развязка.",
+         img="/magazin/img/igra-marketolog.webp",
+         btns=[("Купить", "/magazin/zakaz/?t=marketolog", True),
+               ("Об игре", "/igry/marketolog.html", False),
+               ("Правила (PDF)", "/igry/marketolog-pravila.pdf", False)]),
     dict(cat="igry", id="var-basic", kind="Настольная игра",
-         name="«Вариатика — Basic»", price="3 800 ₽", note="на Ozon",
+         name="«Вариатика — Basic»", price="3 800 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто хочет понимать поступки людей, а не удивляться им.",
          gain="навык разбирать чужие истории и замечать повторяющиеся сценарии — через игру.",
          img="/Басик.webp",
-         btns=[("Купить на Ozon", OZON + "variatika-basic-chernyy-lebed-1263096092/", True),
+         btns=[("Купить", "/magazin/zakaz/?t=var-basic", True),
                ("Об игре", "/igry/variatika-basic.html", False)]),
     dict(cat="igry", id="var-intensive", kind="Настольная игра",
-         name="«Вариатика — Intensive»", price="3 800 ₽", note="как получить — на странице игры",
+         name="«Вариатика — Intensive»", price="3 800 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто разбирается в сложных системах — семье, команде, организации.",
          gain="системное, критическое и латеральное мышление: видеть, как части влияют "
               "друг на друга.",
          img="/интенсив.webp",
-         btns=[("Об игре", "/igry/variatika-intensive.html", True)]),
+         btns=[("Купить", "/magazin/zakaz/?t=var-intensive", True),
+               ("Об игре", "/igry/variatika-intensive.html", False)]),
     dict(cat="igry", id="var-progressive", kind="Настольная игра",
-         name="«Вариатика — Progressive»", price="3 800 ₽", note="на Ozon",
+         name="«Вариатика — Progressive»", price="3 800 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто хочет не только разбирать чужие сценарии, но и строить свои.",
          gain="умение создавать новые сценарии и превращать маловероятные хорошие исходы "
               "в реальные.",
          img="/progresive.webp",
-         btns=[("Купить на Ozon", OZON + "variatika-progressive-1705906113/", True),
+         btns=[("Купить", "/magazin/zakaz/?t=var-progressive", True),
                ("Об игре", "/igry/variatika-progressive.html", False)]),
     dict(cat="igry", id="tri-puti", kind="Игра-задачник · 16+",
          name="«Три пути»", price="бесплатно", note="листы для печати",
@@ -344,10 +353,10 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
 """
 
 FAQ = [
-    ("Почему часть товаров продаётся на Ozon, а часть — здесь?",
-     "Книги и игры давно продаются на Ozon: там быстрая доставка в любой город и отзывы "
-     "покупателей. Пакет «Стандартный» с 20 октября 2026 года продаём сами — так автор "
-     "сразу получает ваш заказ и подключает к разбору ситуаций."),
+    ("Как оплатить и получить заказ?",
+     "Товар оплачиваете картой на сайте — через ЮKassa, чек приходит на почту. Доставку СДЭК "
+     "оплачиваете при получении в пункте выдачи, по тарифу СДЭК. После отправки на почту "
+     "приходит трек-номер. Записи «Ключей» приходят ссылкой сразу после оплаты."),
     ("С чего начать, если не знаю, что выбрать?",
      'Откройте <a href="#vybor" data-go="vybor">«Подобрать под задачу»</a> и найдите строку про '
      'себя — бесплатное там стоит первым. Лекторий открыт целиком и без регистрации.'),
@@ -745,6 +754,149 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)
     print("записано: magazin/index.html — категорий %d, товаров %d" % (len(CATS), len(PRODUCTS)))
+    order_pages(nav, loader)
+
+
+def order_catalog():
+    """Что можно заказать на /magazin/zakaz/?t=<id>: ключи — как в PRODUCTS
+    бэкенда (Frederick, order_routes.py). Печатное — с доставкой СДЭК,
+    PDF — цифровое (только почта, ссылка после оплаты)."""
+    cat = {}
+    for p in PRODUCTS:
+        if not any(u == "/magazin/zakaz/?t=" + p["id"] for _t, u, _m in p["btns"]):
+            continue
+        amount = int(p["price"].replace(" ", "").replace("₽", ""))
+        cat[p["id"]] = {"name": p["name"], "amount": amount, "img": p.get("img") or "", "digital": False,
+                        "kind": p["kind"] + (" · печатная" if p.get("pdf") else "")}
+        if p.get("pdf"):
+            cat[p["id"] + "-pdf"] = {"name": p["name"], "amount": 690, "img": p.get("img") or "",
+                                     "digital": True, "kind": "Книга · PDF"}
+    return cat
+
+
+ORDER_CSS = """
+.ord{display:grid;grid-template-columns:120px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:14px 0}
+.ord img{width:120px;height:120px;object-fit:cover;border-radius:10px;background:#1f1f1f}
+.ord .price{font-size:1.2rem}
+.of{display:grid;gap:10px;max-width:560px;margin:10px 0 40px}
+.of label{font-size:.85rem;color:var(--muted);display:grid;gap:4px}
+.of input,.of textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#101010;color:var(--text);font:inherit}
+.of input:focus,.of textarea:focus{outline:none;border-color:var(--accent)}
+.of .hp{position:absolute;left:-9999px;width:1px;height:1px}
+.of .agree{display:flex;gap:8px;align-items:flex-start;font-size:.85rem}
+.of .agree input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:#3A86FF}
+.of .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:48px;font-size:1rem}
+.of .btn:disabled{opacity:.6;cursor:default}
+.oerr{color:#ff8a8a;font-size:.9rem;min-height:1.1em}
+.ship{background:#101828;border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;font-size:.9rem;color:var(--muted)}
+@media(max-width:560px){.ord{grid-template-columns:84px 1fr}.ord img{width:84px;height:84px}}
+"""
+
+ORDER_JS = r"""
+(function(){
+var C=window.ORDER_CATALOG||{},t=new URLSearchParams(location.search).get('t')||'',p=C[t];
+var box=document.getElementById('ord'),f=document.getElementById('of'),phys=document.querySelectorAll('.phys');
+if(!p){box.innerHTML='<p>Товар не найден. <a href="/magazin/">Вернуться в магазин</a></p>';f.hidden=true;return;}
+document.title='Заказ: '+p.name+' | Андрей Мейстер';
+box.innerHTML='<img alt="" src="'+p.img+'"><div><span class="kind">'+p.kind+'</span><h2 style="font-size:1.15rem;margin:4px 0"></h2>'
+ +'<div class="price">'+p.amount.toLocaleString('ru-RU')+' ₽ <small>'+(p.digital?'· ссылка на почту сразу после оплаты':'+ доставка СДЭК — оплачивается при получении')+'</small></div></div>';
+box.querySelector('h2').textContent=p.name;
+phys.forEach(function(el){el.hidden=p.digital});
+var btn=f.querySelector('button'),err=f.querySelector('.oerr');
+btn.textContent='Оплатить '+p.amount.toLocaleString('ru-RU')+' ₽';
+try{ym(108138656,'reachGoal','shop_order_open',{shop_product:t})}catch(x){}
+f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
+  var v=function(n){return (f[n]&&f[n].value||'').trim()};
+  if(!p.digital){
+    if(v('fio').split(/\s+/).length<2){err.textContent='Укажите фамилию, имя и отчество — так СДЭК выдаст посылку.';return;}
+    if(v('phone').replace(/\D/g,'').length<10){err.textContent='Проверьте телефон.';return;}
+    if(v('pvz').length<8){err.textContent='Укажите адрес пункта выдачи СДЭК.';return;}}
+  if(!/^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(v('email'))){err.textContent='Проверьте почту — на неё придёт чек'+(p.digital?' и ссылка':'')+'.';return;}
+  if(!f.agree.checked){err.textContent='Отметьте, что принимаете оферту.';return;}
+  btn.disabled=true;var lbl=btn.textContent;btn.textContent='Открываем оплату…';
+  try{ym(108138656,'reachGoal','shop_pay_click',{shop_product:t})}catch(x){}
+  fetch('/api/shop/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:t,
+    fio:v('fio'),phone:v('phone'),email:v('email'),city:v('city'),pvz:v('pvz'),comment:v('comment'),website:v('website')})})
+  .then(function(r){return r.json()}).then(function(d){
+    if(d&&d.confirmation_url){location.href=d.confirmation_url;return;}
+    if(d&&d.manual){f.innerHTML='<p><b>Заказ принят.</b> '+(d.message||'')+'</p><p>Номер заказа: '+(d.order_no||'')+'</p>';return;}
+    btn.disabled=false;btn.textContent=lbl;err.textContent=(d&&d.error)||'Оплата сейчас не открылась. Попробуйте ещё раз через минуту.';})
+  .catch(function(){btn.disabled=false;btn.textContent=lbl;err.textContent='Нет связи с сервером. Попробуйте ещё раз через минуту.';});});
+})();
+"""
+
+THANKS_JS = r"""
+(function(){
+var order=(new URLSearchParams(location.search).get('order')||'').trim(),tries=0;
+var T=document.getElementById('tTitle'),X=document.getElementById('tText'),N=document.getElementById('tNote'),L=document.getElementById('tListen');
+if(order)document.getElementById('tOrder').textContent='Номер заказа: '+order;
+function paid(d){T.textContent='Оплачено. Спасибо!';N.hidden=false;
+  if(d.digital){
+    if(d.link){X.textContent='Ссылка — ниже и в письме на вашу почту.';var a=document.getElementById('tLink');a.href=d.link;L.hidden=false;
+      N.textContent='Ссылка личная — пожалуйста, не пересылайте её.';}
+    else{X.textContent='Оплата прошла. Ссылку пришлю на вашу почту в течение дня.';N.textContent='Если письма нет — проверьте «Спам» или ответьте на письмо с чеком.';}
+  }else{X.textContent='Заказ у меня. Соберу посылку и отправлю СДЭК в указанный пункт выдачи — трек-номер придёт на почту.';
+    N.textContent='Доставку вы оплачиваете сами при получении в пункте выдачи, по тарифу СДЭК. Если в адресе ошибка — ответьте на письмо с подтверждением, пока посылка не уехала.';}
+  try{ym(108138656,'reachGoal','shop_paid')}catch(e){}}
+function fail(m){T.textContent='Оплата не подтвердилась';X.textContent=m;N.hidden=false;
+  N.innerHTML='Деньги по незавершённому платежу не списываются. Можно <a href="/magazin/">вернуться в магазин</a> и оформить заказ заново. Если платёж прошёл, а страница этого не видит — напишите, разберусь вручную.';}
+if(!order){fail('Не вижу номера заказа в адресе страницы.');return;}
+(function check(){tries++;
+  fetch('/api/shop/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_no:order})})
+  .then(function(r){return r.json()}).then(function(d){
+    if(d&&d.paid){paid(d);return;}
+    if(tries>=10){fail('Банк ещё не подтвердил платёж. Если вы его завершили, подождите пару минут и обновите страницу.');return;}
+    setTimeout(check,3000);})
+  .catch(function(){if(tries>=10){fail('Не удалось связаться с сервером.');return;}setTimeout(check,3000);});})();
+})();
+"""
+
+
+def order_pages(nav, loader):
+    """/magazin/zakaz/ — заказ любого товара магазина; /magazin/spasibo/ — после оплаты."""
+    head = ('<!DOCTYPE html>\n<html lang="ru">\n<head>\n<meta charset="UTF-8">\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">\n'
+            '<meta name="robots" content="noindex, follow">\n<title>@TITLE@ | Андрей Мейстер</title>\n'
+            '<meta name="description" content="@DESC@">\n<link rel="canonical" href="https://meysternlp.ru/magazin/">\n'
+            '<link rel="icon" href="/favicon.ico">\n<!-- Собрано tools/build_magazin.py — правки там, не здесь. -->\n'
+            '<style>' + CSS + ORDER_CSS + '</style>\n'
+            '<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();'
+            'k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})'
+            '(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");'
+            'ym(108138656,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script>\n'
+            '</head>\n<body>\n' + nav + "\n" + loader % ("header", "header") + "\n")
+    foot = ('<div id="footer-placeholder"></div>\n' + loader % ("footer", "footer") + "\n")
+    page_head = lambda t, d: head.replace("@TITLE@", t).replace("@DESC@", d)
+    zakaz = (page_head("Заказ", "Оформление заказа в магазине Андрея Мейстера.") +
+        '<main class="wrap">\n<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Заказ</div>\n'
+        '<h1>Оформление заказа</h1>\n<div id="ord" class="ord"></div>\n'
+        '<form id="of" class="of" novalidate>\n'
+        '<p class="ship phys">Товар оплачиваете сейчас, картой через ЮKassa. Доставку СДЭК — сами, при получении в пункте выдачи, '
+        'по тарифу СДЭК. Ближайший пункт — на <a href="https://www.cdek.ru/ru/offices" target="_blank" rel="noopener">карте СДЭК</a>.</p>\n'
+        '<label class="phys">ФИО получателя<input name="fio" autocomplete="name" maxlength="200" placeholder="Иванов Иван Иванович"></label>\n'
+        '<label class="phys">Телефон<input name="phone" type="tel" autocomplete="tel" maxlength="32" placeholder="+7 900 000-00-00"></label>\n'
+        '<label>Почта — на неё придёт чек<input name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@mail.ru"></label>\n'
+        '<label class="phys">Город<input name="city" autocomplete="address-level2" maxlength="200" placeholder="Ростов-на-Дону"></label>\n'
+        '<label class="phys">Адрес пункта выдачи СДЭК<textarea name="pvz" rows="2" maxlength="500" placeholder="ул. Большая Садовая, 15, ПВЗ СДЭК"></textarea></label>\n'
+        '<label class="phys">Комментарий (необязательно)<textarea name="comment" rows="2" maxlength="1000"></textarea></label>\n'
+        '<input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">\n'
+        '<label class="agree"><input type="checkbox" name="agree"><span>Принимаю <a href="/oferta/">оферту</a> и '
+        '<a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span></label>\n'
+        '<button class="btn btn-buy" type="submit">Оплатить</button>\n<p class="oerr" role="alert"></p>\n</form>\n</main>\n'
+        + foot + '<script>window.ORDER_CATALOG=' + json.dumps(order_catalog(), ensure_ascii=False) + ';' + ORDER_JS + '</script>\n</body>\n</html>\n')
+    spasibo = (page_head("Оплата заказа", "Статус оплаты заказа в магазине Андрея Мейстера.") +
+        '<main class="wrap">\n<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Оплата</div>\n'
+        '<h1 id="tTitle">Проверяем оплату…</h1>\n<p class="lead" id="tText">Это занимает несколько секунд. Страницу закрывать не нужно.</p>\n'
+        '<p class="note" id="tOrder"></p>\n'
+        '<p id="tListen" hidden><a class="btn btn-buy" id="tLink" href="#" target="_blank" rel="noopener">Открыть</a></p>\n'
+        '<p class="ship" id="tNote" hidden></p>\n<p style="margin:26px 0 50px"><a href="/magazin/">← В магазин</a></p>\n</main>\n'
+        + foot + '<script>' + THANKS_JS + '</script>\n</body>\n</html>\n')
+    for path, html_ in (("zakaz", zakaz), ("spasibo", spasibo)):
+        d = os.path.join(ROOT, "magazin", path)
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+            f.write(html_)
+    print("записано: magazin/zakaz/, magazin/spasibo/ — товаров к заказу %d" % len(order_catalog()))
 
 
 if __name__ == "__main__":

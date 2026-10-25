@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, follow">
+<title>Оплата заказа | Андрей Мейстер</title>
+<meta name="description" content="Статус оплаты заказа в магазине Андрея Мейстера.">
+<link rel="canonical" href="https://meysternlp.ru/magazin/">
+<link rel="icon" href="/favicon.ico">
+<!-- Собрано tools/build_magazin.py — правки там, не здесь. -->
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--bg:#0c0c0c;--card:#151515;--card2:#1b1b1b;--line:rgba(255,255,255,.09);--text:#f0f0f0;--muted:#b9b9b9;--faint:#8a8a8a;--accent:#3A86FF;--accent2:#00b4ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.55;font-size:16px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.crumbs{font-size:.85rem;color:var(--faint);padding:18px 0 0}
+.crumbs a{color:var(--faint)}
+h1{font-size:clamp(1.8rem,4.5vw,2.6rem);font-weight:700;line-height:1.15;margin:10px 0 6px}
+h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:650;line-height:1.25}
+h3{font-size:1rem;font-weight:620;line-height:1.3}
+.lead{color:var(--muted);max-width:720px}
+/* ярлыки категорий */
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:18px 0 8px}
+.cat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 34px 8px 8px;cursor:pointer;color:var(--text);text-align:left;font:inherit;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;min-height:68px}
+.cat:hover,.cat.on{border-color:var(--accent)}
+.cat.on{background:rgba(58,134,255,.1)}
+.cat .ic{width:52px;height:52px;border-radius:10px;object-fit:cover;display:block}
+.cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cat b{font-weight:620;font-size:.92rem;line-height:1.25}
+.cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
+.tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
+.tip.on{display:block}
+.tip b{color:var(--text)}
+/* витрины */
+.shelf{padding:22px 0 8px}
+.js .shelf{display:none}
+.js .shelf.on{display:block}
+.shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.shelf-lead{color:var(--muted);font-size:.95rem;margin-bottom:12px}
+.back{background:none;border:0;color:var(--accent);font:inherit;font-size:.9rem;cursor:pointer;display:none}
+.js .back{display:inline}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.it{display:grid;grid-template-columns:84px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.it.main{border-color:rgba(58,134,255,.6)}
+.th{width:84px;height:84px;border-radius:10px;background:#1f1f1f;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.th img{width:100%;height:100%;object-fit:cover}
+.th .emo{font-size:2.2rem}
+.tx{display:flex;flex-direction:column;gap:4px;min-width:0}
+.kind{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#9cc2ff}
+.price{font-weight:650;font-size:.98rem}
+.price small{font-weight:400;color:var(--muted);font-size:.86rem}
+.who{font-size:.88rem;color:var(--muted)}
+.who b{color:var(--text);font-weight:600}
+details{font-size:.88rem;color:var(--muted)}
+summary{cursor:pointer;color:var(--accent);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'＋ '}
+details[open] summary::before{content:'－ '}
+details p{margin-top:4px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 16px;border-radius:20px;font-weight:600;font-size:.88rem}
+.btn-buy{background:linear-gradient(135deg,#0a6fd6,#2f6fe0);color:#fff}
+.btn-more{border:1px solid var(--accent);color:#fff}
+.btn:hover{text-decoration:none;filter:brightness(1.1)}
+.free ul,.keys ol{list-style:none;display:grid;gap:8px}
+.free li,.keys li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);font-size:.92rem}
+.free li b,.keys li b{color:var(--text);font-weight:600}
+.keys li b{display:block}
+.covers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 14px}
+.covers img{width:100%;height:auto;border-radius:12px;display:block;border:1px solid var(--line)}
+@media(max-width:560px){.covers{grid-template-columns:1fr 1fr}}
+.recs-h{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:16px 0 8px}
+.recs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.rec{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px}
+.rec img{width:52px;height:52px;border-radius:9px;object-fit:cover;display:block}
+.rec b{display:block;color:var(--text);font-weight:600;font-size:.9rem;line-height:1.25}
+.rec b i{font-style:normal;color:#9cc2ff;font-weight:600;margin-right:4px}
+.rec small{display:block;color:var(--faint);font-size:.78rem;line-height:1.3;margin-top:2px}
+.rec em{font-style:normal;font-size:.7rem;color:#ffd27a;margin-left:4px}
+.status{display:inline-block;background:rgba(255,190,60,.12);color:#ffd27a;border-radius:12px;padding:3px 10px;font-size:.8rem}
+.keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
+.note{font-size:.85rem;color:var(--faint)}
+table.pick{width:100%;border-collapse:collapse;font-size:.93rem}
+table.pick td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+table.pick td:first-child{color:var(--text);width:46%}
+.top{margin:14px 0 4px}
+.top-h{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.faq{padding:30px 0 40px;border-top:1px solid var(--line);margin-top:26px}
+.faq h3{margin:16px 0 4px}
+.faq p{color:var(--muted);font-size:.95rem}
+@media(min-width:900px){.cats{grid-template-columns:repeat(4,1fr)}.cats .cat:nth-child(7){grid-column:span 2}}
+.legend{font-size:.82rem;color:var(--faint);margin:10px 0 0}
+.buy{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--card);border:1px solid rgba(58,134,255,.6);border-radius:14px;padding:14px;margin:6px 0 16px}
+.bimg img{width:150px;height:150px;border-radius:12px;object-fit:cover;display:block}
+.listen{display:grid;gap:3px;background:#101828;border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;margin:8px 0}
+.listen b{font-size:.92rem}.listen small{color:var(--muted);font-size:.82rem}
+.listen audio{width:100%;height:40px;margin-top:4px}
+.cancel{font-size:.86rem;color:var(--muted);border-left:2px solid var(--accent);padding-left:8px}
+.toprow{display:grid;gap:12px}
+.author{align-self:start;display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.author img{width:84px;height:84px;border-radius:50%;object-fit:cover}
+.author b{display:block;font-size:1rem}.author p{color:var(--muted);font-size:.88rem;margin:2px 0 4px}
+.author a{font-size:.88rem}
+@media(min-width:900px){.toprow{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.top .list{grid-template-columns:1fr}}
+@media(max-width:899px){.cats .cat:nth-child(7){grid-column:1/-1}}
+.q::after{content:'';position:absolute;inset:-10px}
+.bf .agree input{width:20px;height:20px;flex:none}
+.buy h3{font-size:1.15rem;margin:2px 0 4px}
+.buy .who{margin-bottom:6px}
+.bf{display:grid;gap:8px;margin-top:8px;max-width:440px}
+.bf input[type=email],.bf input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#101010;color:var(--text);font:inherit}
+.bf input:focus{outline:none;border-color:var(--accent)}
+.bf .hp{position:absolute;left:-9999px;width:1px;height:1px}
+.bf .agree{font-size:.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+.bf .agree input{margin-top:3px;accent-color:#3A86FF}
+.bf .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:44px}
+.bf .btn:disabled{opacity:.6;cursor:default}
+.berr{color:#ff8a8a;font-size:.88rem;min-height:1.1em}
+@media(max-width:560px){.buy{grid-template-columns:1fr}}
+details.all{margin-top:12px}
+details.all>summary{font-size:.95rem;padding:10px 0}
+@media(max-width:560px){table.pick,table.pick tbody,table.pick tr,table.pick td{display:block;width:auto}table.pick tr{border-bottom:1px solid var(--line);padding:10px 0}table.pick td{border:0;padding:2px 0}table.pick td:first-child{width:auto;font-weight:600}}
+@media(max-width:560px){.cats{grid-template-columns:1fr 1fr;gap:8px}.cat{grid-template-columns:40px 1fr;gap:8px;min-height:58px}.cat .ic{width:40px;height:40px}.cat b{font-size:.86rem}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
+
+.ord{display:grid;grid-template-columns:120px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:14px 0}
+.ord img{width:120px;height:120px;object-fit:cover;border-radius:10px;background:#1f1f1f}
+.ord .price{font-size:1.2rem}
+.of{display:grid;gap:10px;max-width:560px;margin:10px 0 40px}
+.of label{font-size:.85rem;color:var(--muted);display:grid;gap:4px}
+.of input,.of textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#101010;color:var(--text);font:inherit}
+.of input:focus,.of textarea:focus{outline:none;border-color:var(--accent)}
+.of .hp{position:absolute;left:-9999px;width:1px;height:1px}
+.of .agree{display:flex;gap:8px;align-items:flex-start;font-size:.85rem}
+.of .agree input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:#3A86FF}
+.of .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:48px;font-size:1rem}
+.of .btn:disabled{opacity:.6;cursor:default}
+.oerr{color:#ff8a8a;font-size:.9rem;min-height:1.1em}
+.ship{background:#101828;border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;font-size:.9rem;color:var(--muted)}
+@media(max-width:560px){.ord{grid-template-columns:84px 1fr}.ord img{width:84px;height:84px}}
+</style>
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(108138656,"init",{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script>
+</head>
+<body>
+<div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/magazin/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Магазин</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<main class="wrap">
+<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Оплата</div>
+<h1 id="tTitle">Проверяем оплату…</h1>
+<p class="lead" id="tText">Это занимает несколько секунд. Страницу закрывать не нужно.</p>
+<p class="note" id="tOrder"></p>
+<p id="tListen" hidden><a class="btn btn-buy" id="tLink" href="#" target="_blank" rel="noopener">Открыть</a></p>
+<p class="ship" id="tNote" hidden></p>
+<p style="margin:26px 0 50px"><a href="/magazin/">← В магазин</a></p>
+</main>
+<div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script>
+(function(){
+var order=(new URLSearchParams(location.search).get('order')||'').trim(),tries=0;
+var T=document.getElementById('tTitle'),X=document.getElementById('tText'),N=document.getElementById('tNote'),L=document.getElementById('tListen');
+if(order)document.getElementById('tOrder').textContent='Номер заказа: '+order;
+function paid(d){T.textContent='Оплачено. Спасибо!';N.hidden=false;
+  if(d.digital){
+    if(d.link){X.textContent='Ссылка — ниже и в письме на вашу почту.';var a=document.getElementById('tLink');a.href=d.link;L.hidden=false;
+      N.textContent='Ссылка личная — пожалуйста, не пересылайте её.';}
+    else{X.textContent='Оплата прошла. Ссылку пришлю на вашу почту в течение дня.';N.textContent='Если письма нет — проверьте «Спам» или ответьте на письмо с чеком.';}
+  }else{X.textContent='Заказ у меня. Соберу посылку и отправлю СДЭК в указанный пункт выдачи — трек-номер придёт на почту.';
+    N.textContent='Доставку вы оплачиваете сами при получении в пункте выдачи, по тарифу СДЭК. Если в адресе ошибка — ответьте на письмо с подтверждением, пока посылка не уехала.';}
+  try{ym(108138656,'reachGoal','shop_paid')}catch(e){}}
+function fail(m){T.textContent='Оплата не подтвердилась';X.textContent=m;N.hidden=false;
+  N.innerHTML='Деньги по незавершённому платежу не списываются. Можно <a href="/magazin/">вернуться в магазин</a> и оформить заказ заново. Если платёж прошёл, а страница этого не видит — напишите, разберусь вручную.';}
+if(!order){fail('Не вижу номера заказа в адресе страницы.');return;}
+(function check(){tries++;
+  fetch('/api/shop/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_no:order})})
+  .then(function(r){return r.json()}).then(function(d){
+    if(d&&d.paid){paid(d);return;}
+    if(tries>=10){fail('Банк ещё не подтвердил платёж. Если вы его завершили, подождите пару минут и обновите страницу.');return;}
+    setTimeout(check,3000);})
+  .catch(function(){if(tries>=10){fail('Не удалось связаться с сервером.');return;}setTimeout(check,3000);});})();
+})();
+</script>
+</body>
+</html>
