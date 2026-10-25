@@ -85,6 +85,14 @@ details p{margin-top:4px}
 .covers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 14px}
 .covers img{width:100%;height:auto;border-radius:12px;display:block;border:1px solid var(--line)}
 @media(max-width:560px){.covers{grid-template-columns:1fr 1fr}}
+.recs-h{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:16px 0 8px}
+.recs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.rec{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px}
+.rec img{width:52px;height:52px;border-radius:9px;object-fit:cover;display:block}
+.rec b{display:block;color:var(--text);font-weight:600;font-size:.9rem;line-height:1.25}
+.rec b i{font-style:normal;color:#9cc2ff;font-weight:600;margin-right:4px}
+.rec small{display:block;color:var(--faint);font-size:.78rem;line-height:1.3;margin-top:2px}
+.rec em{font-style:normal;font-size:.7rem;color:#ffd27a;margin-left:4px}
 .status{display:inline-block;background:rgba(255,190,60,.12);color:#ffd27a;border-radius:12px;padding:3px 10px;font-size:.8rem}
 .keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
 .note{font-size:.85rem;color:var(--faint)}
@@ -418,7 +426,69 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <p><b style="color:var(--text)">Кому:</b> взрослым, которые хотят наконец понять «свою нелюбимую» науку, и старшеклассникам перед новой темой — с 16 лет. Для детей готовим отдельную версию, без погружения, с текстом для родителя.</p>
 <p><b style="color:var(--text)">Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку внимания, на которые дальше ложится практика.</p>
 <div class="covers"><img src="/magazin/img/klyuchi-um-obyasnitel.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Ум-объяснитель»"><img src="/magazin/img/klyuchi-logika.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Логика»"><img src="/magazin/img/klyuchi-uchitsya.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Учиться и помнить»"><img src="/magazin/img/klyuchi-reshat.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Решать и изобретать»"></div>
-<ol><li><b>0.1 Ум-объяснитель</b>как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» и пять вопросов-выключателей.</li><li><b>0.2 Логика</b>что утверждается и на чём держится; почему «если — то» не переворачивается и одного контрпримера хватает.</li><li><b>0.3 Учиться и помнить</b>как слушать и закреплять остальные записи: вспоминание, растущие промежутки, сон.</li><li><b>0.4 Решать и изобретать</b>общий порядок решения задачи для любого предмета: переформулировать, идти от цели, разрешить противоречие.</li><li><b>1.1 Число → 1.2 Геометрия → 2.1 Механика → 4.6 Биомеханика</b>первая цепочка — от основ к применению в собственном теле.</li><li><b>И ещё 39 записей</b>вещество и Земля, жизнь, информация и машины, человек и общество, искусство.</li></ol>
+<div class="recs-h">0. Как думать и учиться</div><div class="recs">
+<div class="rec" id="k-0-1"><img src="/magazin/img/k/01.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>0.1</i>Ум-объяснитель<em>первая · на проверке</em></b><small>→ наблюдение, догадка и проверка во всех предметах</small></div></div>
+<div class="rec" id="k-0-2"><img src="/magazin/img/k/02.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>0.2</i>Логика</b><small>→ доказательство, право, спор, программирование</small></div></div>
+<div class="rec" id="k-0-3"><img src="/magazin/img/k/03.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>0.3</i>Учиться и помнить</b><small>→ любое обучение</small></div></div>
+<div class="rec" id="k-0-4"><img src="/magazin/img/k/04.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>0.4</i>Решать и изобретать</b><small>→ инженерия, наука, бизнес</small></div></div>
+</div>
+<div class="recs-h">1. Математика</div><div class="recs">
+<div class="rec" id="k-1-1"><img src="/magazin/img/k/05.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>1.1</i>Число и алгебра</b><small>→ вся количественная наука, финансы</small></div></div>
+<div class="rec" id="k-1-2"><img src="/magazin/img/k/06.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>1.2</i>Геометрия и пространство</b><small>→ черчение, архитектура, навигация, биомеханика, физика</small></div></div>
+<div class="rec" id="k-1-3"><img src="/magazin/img/k/07.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>1.3</i>Изменение и накопление (математический анализ)</b><small>→ физика, инженерия, экономика, биология популяций</small></div></div>
+<div class="rec" id="k-1-4"><img src="/magazin/img/k/08.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>1.4</i>Счёт вариантов и связи (дискретная математика)</b><small>→ алгоритмы, криптография, сети, логистика</small></div></div>
+<div class="rec" id="k-1-5"><img src="/magazin/img/k/09.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>1.5</i>Вероятность</b><small>→ статистика, физика частиц, страхование, игры</small></div></div>
+<div class="rec" id="k-1-6"><img src="/magazin/img/k/10.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>1.6</i>Статистика и данные</b><small>→ медицина, психология, экономика, любые выводы из цифр</small></div></div>
+</div>
+<div class="recs-h">2. Физика</div><div class="recs">
+<div class="rec" id="k-2-1"><img src="/magazin/img/k/11.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>2.1</i>Механика</b><small>→ инженерия, астрономия, биомеханика</small></div></div>
+<div class="rec" id="k-2-2"><img src="/magazin/img/k/12.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>2.2</i>Тепло и энтропия</b><small>→ двигатели, климат, химия, жизнь</small></div></div>
+<div class="rec" id="k-2-3"><img src="/magazin/img/k/13.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>2.3</i>Электричество и магнетизм</b><small>→ электроника, связь, медицинская техника, химия</small></div></div>
+<div class="rec" id="k-2-4"><img src="/magazin/img/k/14.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>2.4</i>Волны, звук и свет</b><small>→ музыка, оптика, связь, медицина</small></div></div>
+<div class="rec" id="k-2-5"><img src="/magazin/img/k/15.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>2.5</i>Атомы и кванты</b><small>→ химия, электроника, лазеры, энергетика</small></div></div>
+<div class="rec" id="k-2-6"><img src="/magazin/img/k/16.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>2.6</i>Пространство, время и Вселенная</b><small>→ астрономия, навигация (спутники), космология</small></div></div>
+</div>
+<div class="recs-h">3. Вещество и Земля</div><div class="recs">
+<div class="rec" id="k-3-1"><img src="/magazin/img/k/17.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>3.1</i>Атом и связь (химия)</b><small>→ материалы, фармакология, кулинария</small></div></div>
+<div class="rec" id="k-3-2"><img src="/magazin/img/k/18.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>3.2</i>Реакции и энергия</b><small>→ промышленность, биохимия, экология</small></div></div>
+<div class="rec" id="k-3-3"><img src="/magazin/img/k/19.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>3.3</i>Химия жизни ◆</b><small>→ медицина, питание, генетика</small></div></div>
+<div class="rec" id="k-3-4"><img src="/magazin/img/k/20.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>3.4</i>Земля: недра, вода, климат</b><small>→ география, экология, климат</small></div></div>
+</div>
+<div class="recs-h">4. Жизнь</div><div class="recs">
+<div class="rec" id="k-4-1"><img src="/magazin/img/k/21.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.1</i>Клетка и наследственность</b><small>→ генетика, медицина, селекция</small></div></div>
+<div class="rec" id="k-4-2"><img src="/magazin/img/k/22.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.2</i>Эволюция</b><small>→ вся биология, медицина, психология</small></div></div>
+<div class="rec" id="k-4-3"><img src="/magazin/img/k/23.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.3</i>Тело: физиология</b><small>→ медицина, спорт, питание</small></div></div>
+<div class="rec" id="k-4-4"><img src="/magazin/img/k/24.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.4</i>Мозг и нервная система</b><small>→ психология, медицина, обучение</small></div></div>
+<div class="rec" id="k-4-5"><img src="/magazin/img/k/25.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.5</i>Экология</b><small>→ охрана природы, сельское хозяйство</small></div></div>
+<div class="rec" id="k-4-6"><img src="/magazin/img/k/26.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.6</i>Биомеханика ◆</b><small>→ спорт, осанка, реабилитация</small></div></div>
+<div class="rec" id="k-4-7"><img src="/magazin/img/k/27.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>4.7</i>Здоровье и восстановление ◆</b><small>→ режим, тренировки, работоспособность</small></div></div>
+</div>
+<div class="recs-h">5. Информация и машины</div><div class="recs">
+<div class="rec" id="k-5-1"><img src="/magazin/img/k/28.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>5.1</i>Системы и обратная связь</b><small>→ управление, экология, экономика, медицина</small></div></div>
+<div class="rec" id="k-5-2"><img src="/magazin/img/k/29.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>5.2</i>Информация и код</b><small>→ связь, сжатие, шифрование, генетика</small></div></div>
+<div class="rec" id="k-5-3"><img src="/magazin/img/k/30.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>5.3</i>Алгоритмы и вычисление</b><small>→ программирование, искусственный интеллект, автоматизация</small></div></div>
+<div class="rec" id="k-5-4"><img src="/magazin/img/k/31.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>5.4</i>Инженерия ◆</b><small>→ изобретения, производство</small></div></div>
+</div>
+<div class="recs-h">6. Человек и общество</div><div class="recs">
+<div class="rec" id="k-6-1"><img src="/magazin/img/k/32.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.1</i>Восприятие и мышление</b><small>→ педагогика, дизайн, реклама</small></div></div>
+<div class="rec" id="k-6-2"><img src="/magazin/img/k/33.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.2</i>Эмоции и мотивация</b><small>→ коучинг, управление, педагогика</small></div></div>
+<div class="rec" id="k-6-3"><img src="/magazin/img/k/34.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.3</i>Развитие и личность</b><small>→ воспитание, педагогика, психотерапия</small></div></div>
+<div class="rec" id="k-6-4"><img src="/magazin/img/k/35.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.4</i>Общение и влияние</b><small>→ переговоры, продажи, лидерство, разговорный гипноз</small></div></div>
+<div class="rec" id="k-6-5"><img src="/magazin/img/k/36.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.5</i>Язык</b><small>→ риторика, перевод, литература</small></div></div>
+<div class="rec" id="k-6-6"><img src="/magazin/img/k/37.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.6</i>Риторика и аргументация ◆</b><small>→ выступления, переговоры, продажи</small></div></div>
+<div class="rec" id="k-6-7"><img src="/magazin/img/k/38.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.7</i>Литература</b><small>→ сценарий, журналистика, убеждение историей</small></div></div>
+<div class="rec" id="k-6-8"><img src="/magazin/img/k/39.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.8</i>История</b><small>→ политика, право, понимание настоящего</small></div></div>
+<div class="rec" id="k-6-9"><img src="/magazin/img/k/40.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.9</i>Общество</b><small>→ политика, управление, социальная работа</small></div></div>
+<div class="rec" id="k-6-10"><img src="/magazin/img/k/41.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.10</i>Стратегия и игры</b><small>→ экономика, политика, переговоры, эволюция поведения</small></div></div>
+<div class="rec" id="k-6-11"><img src="/magazin/img/k/42.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.11</i>Экономика</b><small>→ бизнес, личные финансы, политика</small></div></div>
+<div class="rec" id="k-6-12"><img src="/magazin/img/k/43.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.12</i>Право и государство ◆</b><small>→ гражданская жизнь, договоры, политика</small></div></div>
+<div class="rec" id="k-6-13"><img src="/magazin/img/k/44.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.13</i>Познание (философия)</b><small>→ наука, критическое мышление, мировоззрение</small></div></div>
+<div class="rec" id="k-6-14"><img src="/magazin/img/k/45.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>6.14</i>Этика</b><small>→ право, лидерство, медицина, решения в жизни</small></div></div>
+</div>
+<div class="recs-h">7. Искусство</div><div class="recs">
+<div class="rec" id="k-7-1"><img src="/magazin/img/k/46.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>7.1</i>Музыка</b><small>→ исполнение, сочинение, ритм речи</small></div></div>
+<div class="rec" id="k-7-2"><img src="/magazin/img/k/47.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>7.2</i>Изображение и композиция</b><small>→ живопись, фотография, дизайн, архитектура</small></div></div>
+</div>
 <p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>
 <div class="btns"><a class="btn btn-buy" data-p="klyuchi" href="https://t.me/meysternlp" target="_blank" rel="noopener">Ранний доступ — написать в Telegram</a></div></div>
 </section>
