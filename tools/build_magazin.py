@@ -161,13 +161,14 @@ PRODUCTS = [
          btns=[("Скачать и играть", "/igry/tri-puti.html", True)]),
     dict(cat="fredi", id="fredi-sub", kind="Подписка",
          name="Фреди: разговор, тесты и тренажёры", price="690 ₽ в месяц",
-         note="первые 3 дня — 69 ₽, потом 690 ₽ в месяц списываются сами; отменить можно в любой момент",
+         note="первые 3 дня — 69 ₽, потом 690 ₽ в месяц списываются сами",
          who="тем, кому нужен собеседник, который не устаёт и не оценивает, — и тренажёр "
              "навыков на каждый день.",
          gain="бесплатно каждый день — несколько минут разговора и тесты, каждое упражнение "
               "первый раз бесплатно. По подписке — разговор без счётчика, игры-тренажёры и "
-              "практики без ограничений. Отменить можно в управлении подпиской, доступ "
-              "останется до конца оплаченного срока.",
+              "практики без ограничений.",
+         cancel="Отменить: во Фреди «Настройки подписки» → «Отключить автопродление». Доступ "
+                "останется до конца оплаченного срока, больше ничего не спишется.",
          img="/magazin/img/cat-fredi.webp",
          btns=[("Попробовать Фреди", "/virtual-psychologist/", True),
                ("Тарифы", "/tarify/", False)]),
@@ -181,8 +182,8 @@ FREE = [
     ("/blog/lektorij/trevoga/", "Курс «Тревога и как с ней жить»", "что такое тревога, зачем она нужна и что с ней делать."),
     ("/blog/lektorij/son/", "Курс «Сон»", "зачем мы спим, цена недосыпа и что мешает уснуть."),
     ("/blog/lektorij/psihologiya-peregruzok/", "Курс «Психология перегрузок»", "почему устаёшь, даже когда ничего тяжёлого не делал."),
-    ("/blog/lektorij/", "Весь Лекторий", "все курсы открыты целиком и без регистрации: отношения, дети, мышление, общение, работа."),
     ("/razgovornyj-gipnoz/urok-1/", "Первое занятие курса «Разговорный гипноз»", "13 минут, целиком."),
+    ("/blog/lektorij/", "Весь Лекторий", "все курсы открыты целиком и без регистрации: отношения, дети, мышление, общение, работа."),
     ("/blog/lektorij/kak-uchitsya/", "Курс «Как учиться»", "как запоминать и понимать — себе или чтобы помочь ребёнку."),
     ("/igry/tri-puti.html", "Игра «Три пути»", "листы для печати, вдвоём за полчаса; подходит и для сессии с клиентом."),
     ("/virtual-psychologist/", "Фреди", "несколько минут разговора каждый день и тесты; каждое упражнение первый раз бесплатно."),
@@ -201,7 +202,8 @@ PICK = [
      'бесплатный курс <a href="/blog/lektorij/roditelstvo/">«Родительство»</a>'),
     ("Трудно со взрослыми детьми или с пожилыми родителями",
      'бесплатный курс <a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы видим одно и то же '
-     'по-разному. Отдельного курса про взрослых детей пока нет'),
+     'по-разному. Отдельного курса пока нет — есть статья '
+     '<a href="/blog/vzroslye-deti-ne-hotyat-obshchatsya.html">«Взрослые дети не хотят общаться»</a>'),
     ("Ребёнку не даётся предмет",
      'родителям старшеклассника — <a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> (с 16 лет, первая запись — 690 ₽); '
      'пока — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>: прочитать самим и пересказать'),
@@ -294,27 +296,40 @@ KEYS_COVERS = [("um-obyasnitel", "Ум-объяснитель"), ("logika", "Л�
 # запись выдаёт сервер после оплаты — на странице её нет.
 BUY_HTML = (
     '<div class="buy" id="kupit-zapis">'
-    '<img src="/magazin/img/klyuchi-um-obyasnitel.webp" width="1080" height="1080" alt="Обложка записи «Ум-объяснитель»">'
+    '<div class="bimg"><img src="/magazin/img/k/01.webp" width="160" height="160" alt="Ярлык записи «Ум-объяснитель»"></div>'
     '<div><span class="kind">Запись 0.1 · 21 минута</span><h3>«Ум-объяснитель»</h3>'
     '<p class="who">Как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» '
     'и пять вопросов-выключателей. Первая в серии — с неё остальные слушаются легче.</p>'
+    '<div class="listen"><b>Послушать отрывок — 46 секунд</b><small>Кухня, мокрая бутылка и проверка, которую Лёва придумал сам</small>'
+    '<audio controls preload="none" src="/magazin/audio/klyuchi-um-otryvok.mp3"></audio></div>'
     '<div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div>'
     '<form class="bf" novalidate>'
     '<input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта">'
     '<input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя">'
     '<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">'
-    '<label class="agree"><input type="checkbox" name="agree" required><span>Согласен с '
-    '<a href="/oferta/">офертой</a> и <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a></span></label>'
+    '<label class="agree"><input type="checkbox" name="agree" required><span>Принимаю '
+    '<a href="/oferta/">оферту</a> и <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span></label>'
     '<button class="btn btn-buy" type="submit">Купить за 690 ₽</button>'
     '<p class="berr" role="alert"></p></form></div></div>\n')
 
+# Кто продаёт: в трёх визитах фокус-группы «нет лица» — главный повод не верить.
+# Факты — со страницы /obo-mne/.
+AUTHOR_HTML = (
+    '<aside class="author"><img src="/obo-mne/andrey-meyster-portret.jpg" width="480" height="480" '
+    'alt="Андрей Мейстер" loading="lazy"><div><b>Андрей Мейстер</b>'
+    '<p>Кандидат психологических наук, когнитивный тренер. Автор «Теории манипуляции», «Вариатики» '
+    'и виртуального психолога Фреди. Пишу о психологии с 2008 года.</p>'
+    '<a href="/obo-mne/">Об авторе →</a></div></aside>')
+
 BUY_JS = r"""
-(function(){var f=document.querySelector('.bf');if(!f)return;
+(function(){var au=document.querySelector('.listen audio');
+if(au)au.addEventListener('play',function(){try{ym(108138656,'reachGoal','klyuchi_preview_play')}catch(x){}},{once:true});
+var f=document.querySelector('.bf');if(!f)return;
 var err=f.querySelector('.berr'),btn=f.querySelector('button');
 f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   var email=f.email.value.trim();
   if(!/^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(email)){err.textContent='Проверьте почту — на неё придут чек и ссылка.';return;}
-  if(!f.agree.checked){err.textContent='Отметьте согласие с офертой.';return;}
+  if(!f.agree.checked){err.textContent='Отметьте, что принимаете оферту.';return;}
   btn.disabled=true;btn.textContent='Открываем оплату…';
   try{ym(108138656,'reachGoal','klyuchi_buy_click')}catch(x){}
   fetch('/api/shop/checkout',{method:'POST',headers:{'Content-Type':'application/json'},
@@ -406,7 +421,7 @@ details[open] summary::before{content:'－ '}
 details p{margin-top:4px}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 16px;border-radius:20px;font-weight:600;font-size:.88rem}
-.btn-buy{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+.btn-buy{background:linear-gradient(135deg,#0a6fd6,#2f6fe0);color:#fff}
 .btn-more{border:1px solid var(--accent);color:#fff}
 .btn:hover{text-decoration:none;filter:brightness(1.1)}
 .free ul,.keys ol{list-style:none;display:grid;gap:8px}
@@ -435,10 +450,23 @@ table.pick td:first-child{color:var(--text);width:46%}
 .faq{padding:30px 0 40px;border-top:1px solid var(--line);margin-top:26px}
 .faq h3{margin:16px 0 4px}
 .faq p{color:var(--muted);font-size:.95rem}
-@media(min-width:900px){.cats{grid-template-columns:repeat(4,1fr)}.top .list{grid-template-columns:minmax(0,760px)}}
+@media(min-width:900px){.cats{grid-template-columns:repeat(4,1fr)}.cats .cat:nth-child(7){grid-column:span 2}}
 .legend{font-size:.82rem;color:var(--faint);margin:10px 0 0}
 .buy{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--card);border:1px solid rgba(58,134,255,.6);border-radius:14px;padding:14px;margin:6px 0 16px}
-.buy>img{width:150px;height:150px;border-radius:10px;object-fit:cover}
+.bimg img{width:150px;height:150px;border-radius:12px;object-fit:cover;display:block}
+.listen{display:grid;gap:3px;background:#101828;border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;margin:8px 0}
+.listen b{font-size:.92rem}.listen small{color:var(--muted);font-size:.82rem}
+.listen audio{width:100%;height:40px;margin-top:4px}
+.cancel{font-size:.86rem;color:var(--muted);border-left:2px solid var(--accent);padding-left:8px}
+.toprow{display:grid;gap:12px}
+.author{align-self:start;display:grid;grid-template-columns:84px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.author img{width:84px;height:84px;border-radius:50%;object-fit:cover}
+.author b{display:block;font-size:1rem}.author p{color:var(--muted);font-size:.88rem;margin:2px 0 4px}
+.author a{font-size:.88rem}
+@media(min-width:900px){.toprow{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.top .list{grid-template-columns:1fr}}
+@media(max-width:899px){.cats .cat:nth-child(7){grid-column:1/-1}}
+.q::after{content:'';position:absolute;inset:-10px}
+.bf .agree input{width:20px;height:20px;flex:none}
 .buy h3{font-size:1.15rem;margin:2px 0 4px}
 .buy .who{margin-bottom:6px}
 .bf{display:grid;gap:8px;margin-top:8px;max-width:440px}
@@ -450,7 +478,7 @@ table.pick td:first-child{color:var(--text);width:46%}
 .bf .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:44px}
 .bf .btn:disabled{opacity:.6;cursor:default}
 .berr{color:#ff8a8a;font-size:.88rem;min-height:1.1em}
-@media(max-width:560px){.buy{grid-template-columns:1fr}.buy>img{width:100%;height:auto;max-width:260px}}
+@media(max-width:560px){.buy{grid-template-columns:1fr}}
 details.all{margin-top:12px}
 details.all>summary{font-size:.95rem;padding:10px 0}
 @media(max-width:560px){table.pick,table.pick tbody,table.pick tr,table.pick td{display:block;width:auto}table.pick tr{border-bottom:1px solid var(--line);padding:10px 0}table.pick td{border:0;padding:2px 0}table.pick td:first-child{width:auto;font-weight:600}}
@@ -513,7 +541,7 @@ def count_word(n, forms):
     return forms[2]
 
 
-def card(p):
+def card(p, open_gain=False):
     ext = lambda u: u.startswith("http")
     th = ('<img src="%s" alt="%s" loading="lazy" width="84" height="84">' % (p["img"], esc(p["name"]))
           if p.get("img") else '<span class="emo" aria-hidden="true">%s</span>' % p["emo"])
@@ -527,11 +555,11 @@ def card(p):
         for t, u, main in p["btns"])
     return ('<article class="it%s" id="%s">\n <div class="th">%s</div>\n <div class="tx">\n'
             '  <span class="kind">%s</span>\n  <h3>%s</h3>\n  <div class="price">%s</div>\n'
-            '  <p class="who"><b>Кому:</b> %s</p>\n'
-            '  <details><summary>Что даст</summary><p>%s</p></details>\n'
+            '  <p class="who"><b>Кому:</b> %s</p>\n%s'
+            '  <details%s><summary>Что даст</summary><p>%s</p></details>\n'
             '  <div class="btns">%s</div>\n </div>\n</article>' % (
                 " main" if p.get("main") else "", p["id"], th, p["kind"], p["name"], price,
-                p["who"], p["gain"], btns))
+                p["who"], ('  <p class="cancel">%s</p>\n' % p["cancel"]) if p.get("cancel") else "", " open" if open_gain else "", p["gain"], btns))
 
 
 def shelf(key, title, lead, body, extra=""):
@@ -607,7 +635,8 @@ def build():
               'информатика, язык, литература, история, экономика, музыка и другие. В каждой — история героя, который сам '
               'открывает закон, настройка внимания под этот предмет, порядок мышления и четыре-шесть ключевых идей.</p>\n'
               '<p><b style="color:var(--text)">Кому:</b> взрослым, которые хотят наконец понять «свою нелюбимую» науку, и '
-              'родителям, которые хотят дать записи старшекласснику перед новой темой, — с 16 лет. Детских записей нет.</p>\n'
+              'родителям, которые хотят дать записи старшекласснику перед новой темой, — с 16 лет. Детских записей нет: '
+              'ребёнку младше — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>, прочитайте сами и перескажите.</p>\n'
               '<p><b style="color:var(--text)">Как это звучит:</b> первые минуты — расслабление, как перед сном: голос '
               'предлагает закрыть глаза и замедлить дыхание, чтобы внимание не разбегалось. Вы всё слышите и можете '
               'остановить запись в любой момент. Дальше — история и загадки, на которые вы отвечаете про себя.</p>\n'
@@ -615,15 +644,12 @@ def build():
               'приходит личная ссылка на прослушивание — с телефона или компьютера.</p>\n'
               '<p><b style="color:var(--text)">Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку '
               'внимания, на которые дальше ложится практика.</p>\n'
-              '<div class="covers">%s</div>\n'
               '%s\n'
               '<p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при '
               'эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>\n'
               '<p class="note">О выходе новых записей — в <a href="https://t.me/meysternlp" target="_blank" '
               'rel="noopener">Telegram-канале</a>.</p></div>' % (
-                  "".join('<img src="/magazin/img/klyuchi-%s.webp" width="1080" height="1080" loading="lazy" '
-                          'alt="Обложка записи «%s»">' % c for c in KEYS_COVERS),
-                  recs_html())),
+                  recs_html(),)),
         shelf("vybor", "Подобрать под задачу", "Начните с того, что мешает сейчас, а не с того, что кажется самым полным.",
               '<table class="pick">%s</table>' % "".join(
                   '<tr><td>%s</td><td>%s</td></tr>' % r for r in PICK)),
@@ -631,7 +657,8 @@ def build():
 
     top = [p for p in PRODUCTS if p.get("main")]
     top_html = ('<div class="top" id="top"><div class="top-h">Главное сейчас</div>'
-                '<div class="list">%s</div></div>' % "\n".join(card(dict(p, id=p["id"] + "-top")) for p in top))
+                '<div class="toprow"><div class="list">%s</div>%s</div></div>' % (
+                    "\n".join(card(dict(p, id=p["id"] + "-top"), open_gain=True) for p in top), AUTHOR_HTML))
 
     faq = '<section class="faq" id="voprosy"><h2>❓ Частые вопросы</h2>%s</section>' % "".join(
         '<h3>%s</h3><p>%s</p>' % qa for qa in FAQ)
@@ -639,7 +666,7 @@ def build():
     items = []
     for i, p in enumerate(PRODUCTS, 1):
         url = next((u for t, u, m in p["btns"] if not u.startswith("http")), p["btns"][0][1])
-        items.append({"@type": "ListItem", "position": i, "name": p["name"].strip("«»"),
+        items.append({"@type": "ListItem", "position": i, "name": p["name"],
                       "url": url if url.startswith("http") else SITE + url})
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
