@@ -75,9 +75,10 @@ PRODUCTS = [
     dict(cat="kursy", id="samostoyatelnyy", kind="Курс · видео",
          name="Разговорный гипноз. Пакет «Самостоятельный»", price="3 200 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто учится сам и не нуждается в обратной связи.",
-         gain="те же 38 видео с приёмами речевого воздействия — без печатного комплекта "
-              "и без разбора ваших ситуаций.",
-         img="/kurs1.png",
+         gain="те же 38 видео с приёмами речевого воздействия — на карточках с QR-кодами, "
+              "по занятию на день, и доступ в закрытый Telegram-канал. Без печатного комплекта "
+              "и без личного разбора ваших ситуаций с автором.",
+         img="/magazin/img/samostoyatelnyy.webp",
          btns=[("Купить", "/magazin/zakaz/?t=samostoyatelnyy", True),
                ("Подробнее", "/treningi/razgovornyy-gipnoz-samostoyatelnyy.html", False)]),
     dict(cat="kursy", id="proryv", kind="Живой тренинг",
