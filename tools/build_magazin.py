@@ -48,7 +48,7 @@ CATS = [
      "Бесплатно каждый день — несколько минут разговора и тесты; без ограничений — по подписке."),
     ("klyuchi", "Ключи", "🔑",
      "Аудиозаписи по школьным и вузовским предметам: по записи на предмет — каркас "
-     "понятий, из которого остальное выводится самому. Готовится, купить пока нельзя."),
+     "понятий, из которого остальное выводится самому. Первая запись — в продаже, 690 ₽."),
 ]
 
 OZON = "https://www.ozon.ru/product/"
@@ -203,7 +203,7 @@ PICK = [
      'бесплатный курс <a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы видим одно и то же '
      'по-разному. Отдельного курса про взрослых детей пока нет'),
     ("Ребёнку не даётся предмет",
-     'родителям старшеклассника — <a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> (с 16 лет, готовится); '
+     'родителям старшеклассника — <a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> (с 16 лет, первая запись — 690 ₽); '
      'пока — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>: прочитать самим и пересказать'),
     ("Вас перебивают, не дослушивают, «мы подумаем» — и тишина",
      '<a href="#standart" data-go="kursy">Пакет «Стандартный»</a> — с разбором ваших ситуаций у автора; '
@@ -224,7 +224,7 @@ PICK = [
     ("Нужен собеседник и тренажёр каждый день",
      '<a href="#fredi-sub" data-go="fredi">подписка на Фреди</a>'),
     ("Хочется наконец понять предмет, который в школе не дался",
-     '<a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> — готовится; пока — бесплатные курсы '
+     '<a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> — первая запись 690 ₽; бесплатно — курсы '
      '<a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a> и <a href="/blog/lektorij/logika/">«Логика»</a>'),
 ]
 
@@ -289,6 +289,45 @@ KEY_BLOCKS = {"0": "Как думать и учиться", "1": "Математ
 KEYS_COVERS = [("um-obyasnitel", "Ум-объяснитель"), ("logika", "Логика"),
                ("uchitsya", "Учиться и помнить"), ("reshat", "Решать и изобретать")]
 
+# Покупка первой записи (25.10.2026): 690 ₽, только почта, оплата через
+# /api/shop/checkout (товар klyuchi-01 в order_routes.py бэкенда). Ссылку на
+# запись выдаёт сервер после оплаты — на странице её нет.
+BUY_HTML = (
+    '<div class="buy" id="kupit-zapis">'
+    '<img src="/magazin/img/klyuchi-um-obyasnitel.webp" width="1080" height="1080" alt="Обложка записи «Ум-объяснитель»">'
+    '<div><span class="kind">Запись 0.1 · 21 минута</span><h3>«Ум-объяснитель»</h3>'
+    '<p class="who">Как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» '
+    'и пять вопросов-выключателей. Первая в серии — с неё остальные слушаются легче.</p>'
+    '<div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div>'
+    '<form class="bf" novalidate>'
+    '<input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта">'
+    '<input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя">'
+    '<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">'
+    '<label class="agree"><input type="checkbox" name="agree" required><span>Согласен с '
+    '<a href="/oferta/">офертой</a> и <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a></span></label>'
+    '<button class="btn btn-buy" type="submit">Купить за 690 ₽</button>'
+    '<p class="berr" role="alert"></p></form></div></div>\n')
+
+BUY_JS = r"""
+(function(){var f=document.querySelector('.bf');if(!f)return;
+var err=f.querySelector('.berr'),btn=f.querySelector('button');
+f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
+  var email=f.email.value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}$/.test(email)){err.textContent='Проверьте почту — на неё придут чек и ссылка.';return;}
+  if(!f.agree.checked){err.textContent='Отметьте согласие с офертой.';return;}
+  btn.disabled=true;btn.textContent='Открываем оплату…';
+  try{ym(108138656,'reachGoal','klyuchi_buy_click')}catch(x){}
+  fetch('/api/shop/checkout',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({product:'klyuchi-01',email:email,fio:f.fio.value.trim(),website:f.website.value})})
+  .then(function(r){return r.json()}).then(function(d){
+    if(d&&d.confirmation_url){location.href=d.confirmation_url;return;}
+    btn.disabled=false;btn.textContent='Купить за 690 ₽';
+    err.textContent=(d&&(d.message||d.error))||'Оплата сейчас не открылась. Попробуйте ещё раз через минуту.';})
+  .catch(function(){btn.disabled=false;btn.textContent='Купить за 690 ₽';
+    err.textContent='Нет связи с сервером. Попробуйте ещё раз через минуту.';});});
+})();
+"""
+
 FAQ = [
     ("Почему часть товаров продаётся на Ozon, а часть — здесь?",
      "Книги и игры давно продаются на Ozon: там быстрая доставка в любой город и отзывы "
@@ -300,8 +339,12 @@ FAQ = [
     ("Можно ли вернуть пакет «Стандартный»?",
      'Да, в течение семи дней после получения, если товар не был в употреблении. Условия — '
      'в <a href="/oferta/">оферте</a>.'),
-    ("Когда выйдут «Ключи»?",
-     "Серия выходит по одной записи. Первая, «Ум-объяснитель», сейчас проходит проверку на "
+    ("Как устроена покупка записи «Ключей»?",
+     "Оставляете почту и оплачиваете 690 ₽ картой. Сразу после оплаты на странице и в письме "
+     "появляется ссылка на прослушивание — с телефона или компьютера. Ссылка личная, "
+     "пожалуйста, не пересылайте её."),
+    ("Когда выйдут остальные «Ключи»?",
+     "Серия выходит по одной записи. Первая, «Ум-объяснитель», уже продаётся, остальные — на "
      "слушателях. Напишите в Telegram — сообщим о выходе и дадим послушать первым."),
 ]
 
@@ -394,6 +437,20 @@ table.pick td:first-child{color:var(--text);width:46%}
 .faq p{color:var(--muted);font-size:.95rem}
 @media(min-width:900px){.cats{grid-template-columns:repeat(4,1fr)}.top .list{grid-template-columns:minmax(0,760px)}}
 .legend{font-size:.82rem;color:var(--faint);margin:10px 0 0}
+.buy{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--card);border:1px solid rgba(58,134,255,.6);border-radius:14px;padding:14px;margin:6px 0 16px}
+.buy>img{width:150px;height:150px;border-radius:10px;object-fit:cover}
+.buy h3{font-size:1.15rem;margin:2px 0 4px}
+.buy .who{margin-bottom:6px}
+.bf{display:grid;gap:8px;margin-top:8px;max-width:440px}
+.bf input[type=email],.bf input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#101010;color:var(--text);font:inherit}
+.bf input:focus{outline:none;border-color:var(--accent)}
+.bf .hp{position:absolute;left:-9999px;width:1px;height:1px}
+.bf .agree{font-size:.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+.bf .agree input{margin-top:3px;accent-color:#3A86FF}
+.bf .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:44px}
+.bf .btn:disabled{opacity:.6;cursor:default}
+.berr{color:#ff8a8a;font-size:.88rem;min-height:1.1em}
+@media(max-width:560px){.buy{grid-template-columns:1fr}.buy>img{width:100%;height:auto;max-width:260px}}
 details.all{margin-top:12px}
 details.all>summary{font-size:.95rem;padding:10px 0}
 @media(max-width:560px){table.pick,table.pick tbody,table.pick tr,table.pick td{display:block;width:auto}table.pick tr{border-bottom:1px solid var(--line);padding:10px 0}table.pick td{border:0;padding:2px 0}table.pick td:first-child{width:auto;font-weight:600}}
@@ -497,7 +554,7 @@ def recs_html():
                     len(KEYS_ALL), count_word(len(KEYS_ALL), ("запись", "записи", "записей"))))
             out.append('<div class="recs-h">%s. %s</div><div class="recs">' % (blk, KEY_BLOCKS[blk]))
             cur = blk
-        mark = "<em>первая · на проверке</em>" if i == 1 else ""
+        mark = "<em>в продаже · 690 ₽</em>" if i == 1 else ""
         out.append('<div class="rec" id="k-%s"><img src="/magazin/img/k/%02d.webp" width="52" height="52" '
                    'loading="lazy" alt=""><div><b><i>%s</i>%s%s%s</b><small>→ %s</small></div></div>' % (
                        num.replace(".", "-"), i, num, html.escape(title), " ◆" if node else "", mark, html.escape(grows)))
@@ -511,7 +568,7 @@ def build():
     sub = {"besplatno": "%d %s" % (len(FREE), count_word(len(FREE), ("способ", "способа", "способов"))),
            "vybor": "%d %s" % (len(PICK), count_word(len(PICK), ("ситуация", "ситуации", "ситуаций"))),
            "fredi": "программа-собеседник",
-           "klyuchi": "аудио, скоро"}
+           "klyuchi": "аудио, 690 ₽"}
     forms = ("товар", "товара", "товаров")
     tiles, tips = [], []
     for k, label, ic, tip in CATS:
@@ -541,10 +598,11 @@ def build():
         shelf("fredi", "Фреди — программа-собеседник", "",
               '<div class="list">%s</div>' % by("fredi")),
         shelf("klyuchi", "Аудиосерия «Ключи» — фундамент предметов", "",
-              '<div class="keys"><span class="status">готовится · купить пока нельзя</span>\n'
+              '<div class="keys"><span class="status">первая запись — в продаже · остальные готовятся</span>\n'
               '<p style="margin-top:10px">Вспомните предмет, который в школе так и не дался: формулы были, а понимания — нет. '
               'Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — '
               'и привычки смотреть на предмет под нужным углом.</p>\n'
+              + BUY_HTML +
               '<p>«Ключи» — 47 аудиозаписей по 15–20 минут, по одной на предмет: логика, математика, физика, химия, биология, '
               'информатика, язык, литература, история, экономика, музыка и другие. В каждой — история героя, который сам '
               'открывает закон, настройка внимания под этот предмет, порядок мышления и четыре-шесть ключевых идей.</p>\n'
@@ -553,16 +611,16 @@ def build():
               '<p><b style="color:var(--text)">Как это звучит:</b> первые минуты — расслабление, как перед сном: голос '
               'предлагает закрыть глаза и замедлить дыхание, чтобы внимание не разбегалось. Вы всё слышите и можете '
               'остановить запись в любой момент. Дальше — история и загадки, на которые вы отвечаете про себя.</p>\n'
-              '<p><b style="color:var(--text)">Цена и формат</b> появятся с выходом первой записи — до этого здесь ничего '
-              'не продаётся.</p>\n'
+              '<p><b style="color:var(--text)">Цена и формат:</b> 690 ₽ за запись. После оплаты на почту и на страницу '
+              'приходит личная ссылка на прослушивание — с телефона или компьютера.</p>\n'
               '<p><b style="color:var(--text)">Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку '
               'внимания, на которые дальше ложится практика.</p>\n'
               '<div class="covers">%s</div>\n'
               '%s\n'
               '<p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при '
               'эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>\n'
-              '<div class="btns"><a class="btn btn-buy" data-p="klyuchi" href="https://t.me/meysternlp" target="_blank" '
-              'rel="noopener">Ранний доступ — написать в Telegram</a></div></div>' % (
+              '<p class="note">О выходе новых записей — в <a href="https://t.me/meysternlp" target="_blank" '
+              'rel="noopener">Telegram-канале</a>.</p></div>' % (
                   "".join('<img src="/magazin/img/klyuchi-%s.webp" width="1080" height="1080" loading="lazy" '
                           'alt="Обложка записи «%s»">' % c for c in KEYS_COVERS),
                   recs_html())),
@@ -655,7 +713,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 </html>
 """ % dict(title=title, desc=desc, css=CSS, ld=json.dumps(ld, ensure_ascii=False, indent=1),
            nav=nav, hload=loader % ("header", "header"), fload=loader % ("footer", "footer"),
-           cats=cats_html, top=top_html, shelves="\n".join(shelves), faq=faq, js=JS)
+           cats=cats_html, top=top_html, shelves="\n".join(shelves), faq=faq, js=JS + BUY_JS)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(page)
