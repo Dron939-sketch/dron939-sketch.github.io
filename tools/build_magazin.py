@@ -7,7 +7,8 @@
 
 Решения владельца 25.10.2026: все товары — в одном магазине, «Книги»,
 «Игры» и «Тренинги» из меню убраны, «Магазин» — последним пунктом. При
-входе — компактные ярлыки категорий, у каждого кнопка «?» с объяснением,
+входе — компактные ярлыки категорий, у каждого кнопка «i» с объяснением («?» читался как «не понял»,
+владелец 25.10.2026),
 что в этой категории. Ярлык открывает свою витрину, остальные свёрнуты;
 без JS видно всё сразу, поэтому краулер получает полный каталог.
 
@@ -401,7 +402,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
 .cat b{font-weight:620;font-size:.92rem;line-height:1.25}
 .cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
-.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:italic 700 .9rem/1 Georgia,'Times New Roman',serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
@@ -619,7 +620,7 @@ def build():
             '<img class="ic" src="/magazin/img/cat-%s.webp" width="52" height="52" alt="" loading="lazy">'
             '<span class="t"><b>%s</b><small>%s</small></span>'
             '<button class="q" type="button" aria-label="Что в категории «%s»" aria-expanded="false" '
-            'aria-controls="tip-%s">?</button></div>' % (k, k, label, small, esc(label), k))
+            'aria-controls="tip-%s">i</button></div>' % (k, k, label, small, esc(label), k))
         tips.append('<div class="tip" id="tip-%s"><b>%s.</b> %s</div>' % (k, label, tip))
     cats_html = '<div class="cats" role="group" aria-label="Категории">\n%s\n%s\n</div>' % (
         "\n".join(tiles), "\n".join(tips))
@@ -739,7 +740,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <main class="wrap">
 <div class="crumbs"><a href="/">Главная</a> / Магазин</div>
 <h1>Магазин</h1>
-<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «?» объяснит, что внутри.</p>
+<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «i» объяснит, что внутри.</p>
 %(cats)s
 %(top)s
 %(shelves)s
