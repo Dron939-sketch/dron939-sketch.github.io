@@ -35,13 +35,14 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .lead{color:var(--muted);max-width:720px}
 /* ярлыки категорий */
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:18px 0 8px}
-.cat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 40px 12px 12px;cursor:pointer;color:var(--text);text-align:left;font:inherit;display:flex;flex-direction:column;gap:2px;min-height:68px}
+.cat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 34px 8px 8px;cursor:pointer;color:var(--text);text-align:left;font:inherit;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;min-height:68px}
 .cat:hover,.cat.on{border-color:var(--accent)}
 .cat.on{background:rgba(58,134,255,.1)}
-.cat .ic{font-size:1.25rem;line-height:1}
-.cat b{font-weight:620;font-size:.95rem;line-height:1.25}
-.cat small{color:var(--faint);font-size:.78rem}
-.q{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cat .ic{width:52px;height:52px;border-radius:10px;object-fit:cover;display:block}
+.cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cat b{font-weight:620;font-size:.92rem;line-height:1.25}
+.cat small{color:var(--faint);font-size:.76rem;line-height:1.3}
+.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:600 .85rem/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
@@ -81,6 +82,9 @@ details p{margin-top:4px}
 .free li,.keys li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);font-size:.92rem}
 .free li b,.keys li b{color:var(--text);font-weight:600}
 .keys li b{display:block}
+.covers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 14px}
+.covers img{width:100%;height:auto;border-radius:12px;display:block;border:1px solid var(--line)}
+@media(max-width:560px){.covers{grid-template-columns:1fr 1fr}}
 .status{display:inline-block;background:rgba(255,190,60,.12);color:#ffd27a;border-radius:12px;padding:3px 10px;font-size:.8rem}
 .keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
 .note{font-size:.85rem;color:var(--faint)}
@@ -92,7 +96,7 @@ table.pick td:first-child{color:var(--text);width:46%}
 .faq{padding:30px 0 40px;border-top:1px solid var(--line);margin-top:26px}
 .faq h3{margin:16px 0 4px}
 .faq p{color:var(--muted);font-size:.95rem}
-@media(max-width:560px){.cats{grid-template-columns:1fr 1fr}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
+@media(max-width:560px){.cats{grid-template-columns:1fr 1fr;gap:8px}.cat{grid-template-columns:40px 1fr;gap:8px;min-height:58px}.cat .ic{width:40px;height:40px}.cat b{font-size:.86rem}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
 </style>
 <script type="text/javascript">
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
@@ -217,20 +221,20 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <h1>Магазин</h1>
 <p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «?» объяснит, что внутри.</p>
 <div class="cats" role="group" aria-label="Категории">
-<div class="cat" role="button" tabindex="0" data-cat="besplatno" aria-pressed="false"><span class="ic" aria-hidden="true">🎁</span><b>Бесплатно</b><small>4 способа</small><button class="q" type="button" aria-label="Что в категории «Бесплатно»" aria-expanded="false" aria-controls="tip-besplatno">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="kursy" aria-pressed="false"><span class="ic" aria-hidden="true">🎯</span><b>Курсы и тренинги</b><small>3 товара</small><button class="q" type="button" aria-label="Что в категории «Курсы и тренинги»" aria-expanded="false" aria-controls="tip-kursy">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="knigi" aria-pressed="false"><span class="ic" aria-hidden="true">📚</span><b>Книги</b><small>4 товара</small><button class="q" type="button" aria-label="Что в категории «Книги»" aria-expanded="false" aria-controls="tip-knigi">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="igry" aria-pressed="false"><span class="ic" aria-hidden="true">🎲</span><b>Игры</b><small>5 товаров</small><button class="q" type="button" aria-label="Что в категории «Игры»" aria-expanded="false" aria-controls="tip-igry">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="fredi" aria-pressed="false"><span class="ic" aria-hidden="true">🧠</span><b>Фреди</b><small>1 товар</small><button class="q" type="button" aria-label="Что в категории «Фреди»" aria-expanded="false" aria-controls="tip-fredi">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="klyuchi" aria-pressed="false"><span class="ic" aria-hidden="true">🔑</span><b>Ключи · аудио</b><small>47 записей · готовится</small><button class="q" type="button" aria-label="Что в категории «Ключи · аудио»" aria-expanded="false" aria-controls="tip-klyuchi">?</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="vybor" aria-pressed="false"><span class="ic" aria-hidden="true">🧭</span><b>Не знаю, что выбрать</b><small>7 подсказок</small><button class="q" type="button" aria-label="Что в категории «Не знаю, что выбрать»" aria-expanded="false" aria-controls="tip-vybor">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="besplatno" aria-pressed="false"><img class="ic" src="/magazin/img/cat-besplatno.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Бесплатно</b><small>4 способа</small></span><button class="q" type="button" aria-label="Что в категории «Бесплатно»" aria-expanded="false" aria-controls="tip-besplatno">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="kursy" aria-pressed="false"><img class="ic" src="/magazin/img/cat-kursy.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Курсы и тренинги</b><small>3 товара</small></span><button class="q" type="button" aria-label="Что в категории «Курсы и тренинги»" aria-expanded="false" aria-controls="tip-kursy">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="knigi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-knigi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Книги</b><small>4 товара</small></span><button class="q" type="button" aria-label="Что в категории «Книги»" aria-expanded="false" aria-controls="tip-knigi">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="igry" aria-pressed="false"><img class="ic" src="/magazin/img/cat-igry.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Игры</b><small>5 товаров</small></span><button class="q" type="button" aria-label="Что в категории «Игры»" aria-expanded="false" aria-controls="tip-igry">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="fredi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-fredi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Фреди</b><small>1 товар</small></span><button class="q" type="button" aria-label="Что в категории «Фреди»" aria-expanded="false" aria-controls="tip-fredi">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="klyuchi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-klyuchi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Ключи · аудио</b><small>47 записей, скоро</small></span><button class="q" type="button" aria-label="Что в категории «Ключи · аудио»" aria-expanded="false" aria-controls="tip-klyuchi">?</button></div>
+<div class="cat" role="button" tabindex="0" data-cat="vybor" aria-pressed="false"><img class="ic" src="/magazin/img/cat-vybor.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Что выбрать?</b><small>7 подсказок</small></span><button class="q" type="button" aria-label="Что в категории «Что выбрать?»" aria-expanded="false" aria-controls="tip-vybor">?</button></div>
 <div class="tip" id="tip-besplatno"><b>Бесплатно.</b> С чего начать без денег и регистрации: Лекторий целиком, первое занятие курса, игра для печати и разговор с Фреди.</div>
 <div class="tip" id="tip-kursy"><b>Курсы и тренинги.</b> Видео, задания и живая практика. Здесь учатся делать, а не только понимать: приём — упражнение — разбор ошибок.</div>
 <div class="tip" id="tip-knigi"><b>Книги.</b> Механика: как устроены влияние, люди и мышление. Для тех, кто сначала хочет понять, а потом пробовать.</div>
 <div class="tip" id="tip-igry"><b>Игры.</b> Настольные игры и игры-задачники. Навык ставится решением задач — за столом, вдвоём или компанией.</div>
 <div class="tip" id="tip-fredi"><b>Фреди.</b> Виртуальный психолог: разговор, тесты и тренажёры на каждый день. Разговор и тесты открыты всем, тренажёры — по подписке.</div>
 <div class="tip" id="tip-klyuchi"><b>Ключи · аудио.</b> Аудиосерия: по записи на предмет — каркас понятий, из которого остальное выводится самому. Готовится, первая запись на проверке.</div>
-<div class="tip" id="tip-vybor"><b>Не знаю, что выбрать.</b> Семь подсказок: от того, что мешает сейчас, — к вещи, которая с этим работает.</div>
+<div class="tip" id="tip-vybor"><b>Что выбрать?.</b> Семь подсказок: от того, что мешает сейчас, — к вещи, которая с этим работает.</div>
 </div>
 <div class="top" id="top"><div class="top-h">Главное сейчас</div><div class="list"><article class="it main" id="standart-top">
  <div class="th"><img src="/treningi/komplekt-standart.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
@@ -395,7 +399,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <section class="shelf" id="fredi" aria-label="Фреди — виртуальный психолог">
 <div class="shelf-h"><h2>Фреди — виртуальный психолог</h2><button class="back" type="button">← Все категории</button></div>
 <div class="list"><article class="it" id="fredi-sub">
- <div class="th"><span class="emo" aria-hidden="true">🧠</span></div>
+ <div class="th"><img src="/magazin/img/cat-fredi.webp" alt="Фреди: разговор, тесты и тренажёры" loading="lazy" width="84" height="84"></div>
  <div class="tx">
   <span class="kind">Подписка</span>
   <h3>Фреди: разговор, тесты и тренажёры</h3>
@@ -413,6 +417,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <p>«Ключи» — 47 аудиозаписей по 15–20 минут, по одной на предмет: логика, математика, физика, химия, биология, информатика, язык, литература, история, экономика, музыка и другие. В каждой — история героя, который сам открывает закон, настройка внимания под этот предмет, порядок мышления и четыре-шесть ключевых идей.</p>
 <p><b style="color:var(--text)">Кому:</b> взрослым, которые хотят наконец понять «свою нелюбимую» науку, и старшеклассникам перед новой темой — с 16 лет. Для детей готовим отдельную версию, без погружения, с текстом для родителя.</p>
 <p><b style="color:var(--text)">Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку внимания, на которые дальше ложится практика.</p>
+<div class="covers"><img src="/magazin/img/klyuchi-um-obyasnitel.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Ум-объяснитель»"><img src="/magazin/img/klyuchi-logika.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Логика»"><img src="/magazin/img/klyuchi-uchitsya.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Учиться и помнить»"><img src="/magazin/img/klyuchi-reshat.webp" width="1080" height="1080" loading="lazy" alt="Обложка записи «Решать и изобретать»"></div>
 <ol><li><b>0.1 Ум-объяснитель</b>как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» и пять вопросов-выключателей.</li><li><b>0.2 Логика</b>что утверждается и на чём держится; почему «если — то» не переворачивается и одного контрпримера хватает.</li><li><b>0.3 Учиться и помнить</b>как слушать и закреплять остальные записи: вспоминание, растущие промежутки, сон.</li><li><b>0.4 Решать и изобретать</b>общий порядок решения задачи для любого предмета: переформулировать, идти от цели, разрешить противоречие.</li><li><b>1.1 Число → 1.2 Геометрия → 2.1 Механика → 4.6 Биомеханика</b>первая цепочка — от основ к применению в собственном теле.</li><li><b>И ещё 39 записей</b>вещество и Земля, жизнь, информация и машины, человек и общество, искусство.</li></ol>
 <p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>
 <div class="btns"><a class="btn btn-buy" data-p="klyuchi" href="https://t.me/meysternlp" target="_blank" rel="noopener">Ранний доступ — написать в Telegram</a></div></div>
