@@ -157,8 +157,9 @@ PRODUCTS = [
          name="«Вариатика — Progressive»", price="3 800 ₽", note="+ доставка СДЭК при получении",
          who="тем, кто хочет не только разбирать чужие сценарии, но и строить свои.",
          gain="умение создавать новые сценарии и превращать маловероятные хорошие исходы "
-              "в реальные.",
-         img="/progresive.webp",
+              "в реальные. В коробке: инструкция, тетрадь упражнений, учётная карточка "
+              "персонажа и карты.",
+         img="/magazin/img/igra-variatika-progressive.webp",
          btns=[("Купить", "/magazin/zakaz/?t=var-progressive", True),
                ("Об игре", "/igry/variatika-progressive.html", False)]),
     dict(cat="igry", id="tri-puti", kind="Игра-задачник · 16+",
