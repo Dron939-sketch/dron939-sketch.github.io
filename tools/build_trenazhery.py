@@ -522,10 +522,9 @@ NAV = ('<div id="header-placeholder"><nav aria-label="Основная нави�
        'font-weight:700">А МЕЙСТЕР</a>'
        + "".join(
            f'<a href="{h}" style="color:#3A86FF;text-decoration:none;font-size:.9rem">{t}</a>'
-           for h, t in [("/knigi/", "Книги"), ("/igry/", "Игры"),
-                        ("/treningi/", "Тренинги"), ("/blog/", "Блог"),
+           for h, t in [("/blog/", "Блог"),
                         ("/blog/lektorij/", "Лекторий"), ("/istorii/", "Истории"),
-                        ("/sobytiya/", "Архив"),
+                        ("/sobytiya/", "Архив"), ("/magazin/", "Магазин"),
                         ("/virtual-psychologist/", "Виртуальный психолог")])
        + "</nav></div>")
 

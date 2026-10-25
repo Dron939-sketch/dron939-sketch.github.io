@@ -249,9 +249,9 @@ NAV = ('<div id="header-placeholder"><nav aria-label="Основная нави�
        'padding:14px 20px;max-width:1200px;margin:0 auto">'
        '<a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a>'
        + "".join(f'<a href="{h}" style="color:#3A86FF;text-decoration:none;font-size:.9rem">{t}</a>'
-                 for h, t in [("/knigi/", "Книги"), ("/igry/", "Игры"), ("/treningi/", "Тренинги"),
-                              ("/blog/", "Блог"), ("/blog/lektorij/", "Лекторий"),
+                 for h, t in [("/blog/", "Блог"), ("/blog/lektorij/", "Лекторий"),
                               ("/istorii/", "Истории"), ("/sobytiya/", "Архив"),
+                              ("/magazin/", "Магазин"),
                               ("/virtual-psychologist/", "Виртуальный психолог")])
        + "</nav></div>"
        "<script>(function(){fetch('/header.html').then(function(r){return r.text();})"
