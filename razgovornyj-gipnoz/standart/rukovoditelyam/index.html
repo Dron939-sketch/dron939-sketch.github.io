@@ -77,6 +77,16 @@ footer a{color:var(--faint)}
  table.cmp th,table.cmp td{padding:10px 6px;word-break:break-word;hyphens:auto}
 }
 
+/* Карточка товара первым экраном — только для пришедших с рекламы (25.10.2026):
+   с объявления о пакете человек попадал на заголовок статьи, кнопка была на
+   втором экране, фото — на третьем. За 24–25.10 ни одного перехода в заказ. */
+.offer{display:none;grid-template-columns:96px 1fr;gap:14px 16px;align-items:center;background:var(--card);border:1px solid var(--accent);border-radius:16px;padding:16px;margin:0 0 26px}
+.offer.on{display:grid}
+.offer img{width:96px;height:96px;object-fit:cover;border-radius:12px}
+.offer b{display:block;color:#fff;font-weight:600;font-size:1.05rem;line-height:1.3}
+.offer span{display:block;color:var(--muted);font-size:.9rem;line-height:1.4;margin-top:4px}
+.offer .btn{grid-column:1/-1;width:100%}
+.offer .free{grid-column:1/-1;text-align:center;font-size:.92rem;margin-top:-4px}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:8px 0 0}
 .toc b{color:#fff;font-weight:500;display:block;margin-bottom:8px}
 .toc ol{padding-left:20px;color:var(--muted)}
@@ -612,6 +622,13 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="wrap">
  <div class="hero">
   <div>
+   <div class="offer" id="offer">
+    <img src="/treningi/komplekt-standart.webp" width="96" height="96" alt="Пакет «Стандартный»: книга, блокнот, схемы, колода">
+    <div><b>Пакет «Стандартный» — 5 900 ₽</b><span>Книга «Матчасть», 38 видео на год, блокнот с заданиями, игра и разбор ваших ситуаций с автором. СДЭК до пункта выдачи, возврат 7 дней.</span></div>
+    <a class="btn btn-ozon" data-goal="offer" href="/razgovornyj-gipnoz/standart/zakaz/">Заказать — 5 900 ₽</a>
+    <a class="free" href="/razgovornyj-gipnoz/urok-1/">Сначала посмотреть бесплатное занятие — 13 минут</a>
+   </div>
+   <script>try{if(/[?&](yclid|utm_medium=cpc)/.test(location.search)||sessionStorage.getItem('std_ad')==='1')document.getElementById('offer').classList.add('on')}catch(e){}</script>
    <span class="badge">Для руководителей и родителей</span>
    <h1>Чтобы вас дослушивали — <b>на совещании и дома</b></h1>
    <p>Вас перебивают на второй фразе, и предложение тонет в споре. Дома «сколько раз говорить» заканчивается хлопком двери. Дело не в громкости и не в должности: так построена фраза.</p>
@@ -622,7 +639,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     <a class="btn btn-ozon" data-goal="hero" href="/razgovornyj-gipnoz/standart/zakaz/">Оформить заказ — 5 900 ₽</a>
     <a class="btn btn-ghost" href="/razgovornyj-gipnoz/urok-1/">Первое занятие бесплатно</a>
    </div>
-   <p class="small">В коробке: книга «Матчасть», 38 видео на 12 месяцев, блокнот с заданиями, игра «Маркетолог» и разбор ваших ситуаций с автором — <a href="#paket">подробнее</a>. Доставка СДЭК до пункта выдачи, вернуть можно в течение семи дней после получения. <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener">На Ozon у пакета оценка 4,9 и 320 отзывов</a>.</p>
+   <p class="small">В коробке: книга «Матчасть», 38 видео на 12 месяцев, блокнот с заданиями, игра «Маркетолог» и разбор ваших ситуаций с автором — <a href="#paket">подробнее</a>. Доставка СДЭК до пункта выдачи, вернуть можно в течение семи дней после получения. На Ozon у пакета оценка 4,9 и 320 отзывов.</p>
   </div>
   <img src="/treningi/komplekt-standart.webp" width="1100" height="1100" alt="Комплект курса «Разговорный гипноз»: книга «Матчасть», блокнот с заданиями, схема-разворот и колода игры «Маркетолог»">
  </div>
@@ -784,7 +801,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <div class="ctas" style="margin-top:22px">
     <a class="btn btn-ozon" data-goal="paket" href="/razgovornyj-gipnoz/standart/zakaz/">Оформить заказ — 5 900 ₽</a>
    </div>
-   <p class="small">5 900 ₽, оплата картой через ЮKassa. Пакет приходит СДЭК в пункт выдачи, который вы выберете, — папка в чёрной коробке с надписью «Пакет „Стандарт“»; доставку оплачиваете при получении. Вернуть можно в течение семи дней после получения, если товар не был в употреблении. Продаёт и отправляет пакет менеджер автора — ИП Медведев А. Ю., чек придёт от его имени. <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener">На Ozon у пакета оценка 4,9 и 320 отзывов</a>.</p>
+   <p class="small">5 900 ₽, оплата картой через ЮKassa. Пакет приходит СДЭК в пункт выдачи, который вы выберете, — папка в чёрной коробке с надписью «Пакет „Стандарт“»; доставку оплачиваете при получении. Вернуть можно в течение семи дней после получения, если товар не был в употреблении. Продаёт и отправляет пакет менеджер автора — ИП Медведев А. Ю., чек придёт от его имени. На Ozon у пакета оценка 4,9 и 320 отзывов.</p>
   </div>
  </div>
  <div class="wrap">
@@ -845,6 +862,10 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 /* Нижняя кнопка появляется, когда человек дочитал до пакета, а кнопка
    пакета уже ушла с экрана: раньше она давила бы на того, кто пришёл за ответом. */
 (function(){var s=document.getElementById('sticky'),h=document.querySelector('#paket .btn-ozon');
+/* С рекламы пришли за пакетом, а не за статьёй: карточка товара наверху и
+   нижняя кнопка сразу, как только кнопка первого экрана ушла вверх. */
+var ad=false;try{ad=/[?&](yclid|utm_medium=cpc)/.test(location.search)||sessionStorage.getItem('std_ad')==='1';if(ad)sessionStorage.setItem('std_ad','1');}catch(e){}
+if(ad){var o=document.getElementById('offer');if(o)o.classList.add('on');h=document.querySelector('#offer .btn-ozon')||h;}
 if(!('IntersectionObserver' in window)||!h){s.classList.add('on');return;}
 /* У финального блока свои кнопки: нижняя полоса там дублировала их и
    закрывала текст (фокус-группа 23.10.2026) — на финале прячется. */
@@ -858,14 +879,16 @@ if(f)new IntersectionObserver(function(e){fin=e[0].isIntersecting;upd();}).obser
    direct_standart_ozon по-прежнему значит «нажал „Купить“» — имя цели
    осталось от Ozon, менять его значит рвать историю кампании. Дальше
    воронка видна в параметрах визита standart_zakaz (open → pay_click →
-   paid) и в заказах в базе. Ссылки на Ozon с этой страницы больше нет. */
+   paid) и в заказах в базе. На Ozon осталась одна ссылка — на отзывы, для проверки. */
 (function(){var C=108138656;
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){
 var a=e.target&&e.target.closest?e.target.closest('a'):null;if(!a)return;
 var h=a.getAttribute('href')||'';
-if(h.indexOf('/razgovornyj-gipnoz/standart/zakaz/')>-1||h.indexOf('ozon.ru')>-1){g('direct_standart_ozon');
+if(h.indexOf('/razgovornyj-gipnoz/standart/zakaz/')>-1){g('direct_standart_ozon');
  if(a.dataset.goal)g('direct_standart_ozon_'+a.dataset.goal);}
+/* Ozon — отдельно: раньше уход на Ozon засчитывался как «нажал заказ». */
+else if(h.indexOf('ozon.ru')>-1){g('standart_ozon_out');}
 else if(h.indexOf('/razgovornyj-gipnoz/urok-1/')>-1){g('direct_standart_urok1');}
 },true);})();
 </script>
