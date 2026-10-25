@@ -33,6 +33,7 @@ NAV = ("display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;"
 HEADER = (
     '<nav aria-label="Основная навигация" style="%s">'
     '<a href="/" style="%s;font-weight:700">А МЕЙСТЕР</a>'
+    '<a href="/magazin/" style="%s">Магазин</a>'
     '<a href="/knigi/" style="%s">Книги</a>'
     '<a href="/igry/" style="%s">Игры</a>'
     '<a href="/treningi/" style="%s">Тренинги</a>'
@@ -41,7 +42,7 @@ HEADER = (
     '<a href="/istorii/" style="%s">Истории</a>'
     '<a href="/sobytiya/" style="%s">Архив</a>'
     '<a href="/virtual-psychologist/" style="%s">Виртуальный психолог</a>'
-    '</nav>' % ((NAV,) + (LINK,) * 9))
+    '</nav>' % ((NAV,) + (LINK,) * 10))
 
 FOOTER = (
     '<nav aria-label="Разделы сайта" style="%s">'
