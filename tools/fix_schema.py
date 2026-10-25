@@ -143,7 +143,7 @@ def crumbs(rel, s, lec):
         return ([home, ("Истории", url)] if rel == "istorii/index.html"
                 else [home, ("Истории", SITE + "/istorii/"), (name, url)])
     if rel.startswith("knigi/nastolnaya-kniga-deputata/"):
-        chain = [home, ("Книги", SITE + "/knigi/"),
+        chain = [home, ("Магазин", SITE + "/magazin/"),
                  ("Настольная книга депутата", SITE + "/knigi/nastolnaya-kniga-deputata/")]
         return chain if rel.endswith("deputata/index.html") else chain + [(name, url)]
     if rel.count("/") == 1 and rel.endswith("index.html"):
