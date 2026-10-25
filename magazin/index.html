@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<title>Магазин: курсы, книги, игры и записи Андрея Мейстера</title>
+<meta name="description" content="Всё, что сделано для тех, кто хочет понимать людей и себя: курс «Разговорный гипноз», книги, игры-тренажёры, подписка на Фреди и аудиосерия «Ключи». Для кого каждая вещь и что она даёт.">
+<meta name="author" content="Андрей Юрьевич Мейстер">
+<link rel="canonical" href="https://meysternlp.ru/magazin/">
+<meta property="og:title" content="Магазин: курсы, книги, игры и записи Андрея Мейстера">
+<meta property="og:description" content="Курс «Разговорный гипноз», книги, игры-тренажёры, Фреди и аудиосерия «Ключи» — для кого каждая вещь и что она даёт.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://meysternlp.ru/magazin/">
+<meta property="og:image" content="https://meysternlp.ru/treningi/komplekt-standart.webp">
+<meta property="og:site_name" content="Андрей Мейстер">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--bg:#0c0c0c;--card:#151515;--line:rgba(255,255,255,.09);--text:#f0f0f0;--muted:#b9b9b9;--faint:#8a8a8a;--accent:#3A86FF;--accent2:#00b4ff}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;font-size:17px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.crumbs{font-size:.88rem;color:var(--faint);padding:22px 0 0}
+.crumbs a{color:var(--faint)}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.15;margin:14px 0 14px}
+h2{font-size:clamp(1.45rem,3.4vw,2rem);font-weight:650;line-height:1.25;margin:0 0 10px}
+h3{font-size:1.15rem;font-weight:620;line-height:1.3}
+.lead{color:var(--muted);font-size:1.08rem;max-width:760px;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
+.chips a{border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:.92rem;color:var(--text)}
+.chips a:hover{border-color:var(--accent);text-decoration:none}
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+.sec-lead{color:var(--muted);max-width:760px;margin-bottom:22px}
+.free{background:linear-gradient(135deg,rgba(58,134,255,.12),rgba(0,180,255,.05));border:1px solid rgba(58,134,255,.35);border-radius:18px;padding:22px;margin-top:26px}
+.free ul{list-style:none;display:grid;gap:10px;margin-top:10px}
+.free li{color:var(--muted)}
+.free li b{color:var(--text);font-weight:600}
+table.pick{width:100%;border-collapse:collapse;font-size:.98rem}
+table.pick td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+table.pick td:first-child{color:var(--text);width:46%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.item.main{border-color:rgba(58,134,255,.6)}
+.pic{aspect-ratio:16/10;background:#1d1d1d;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover}
+.pic.contain img{object-fit:contain;padding:12px}
+.pic .emo{font-size:3.4rem}
+.body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.kind{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:#9cc2ff}
+.price{font-weight:650;font-size:1.08rem}
+.price small{font-weight:400;color:var(--faint);font-size:.88rem}
+.who,.gain{font-size:.95rem;color:var(--muted)}
+.who b,.gain b{color:var(--text);font-weight:600}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 20px;border-radius:26px;font-weight:600;font-size:.95rem}
+.btn-buy{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff}
+.btn-more{border:1px solid var(--accent);color:#fff}
+.btn:hover{text-decoration:none;filter:brightness(1.1)}
+.keys{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:start}
+.keys ol{list-style:none;display:grid;gap:10px;counter-reset:k}
+.keys ol li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--muted);font-size:.95rem}
+.keys ol li b{color:var(--text);font-weight:600;display:block}
+.note{font-size:.9rem;color:var(--faint);margin-top:12px}
+.status{display:inline-block;background:rgba(255,190,60,.12);color:#ffd27a;border-radius:14px;padding:4px 12px;font-size:.85rem;margin-bottom:12px}
+.faq h3{margin:20px 0 6px}
+.faq p{color:var(--muted)}
+@media(max-width:760px){body{font-size:16px}.keys{grid-template-columns:1fr}.btn{flex:1 1 auto}table.pick td:first-child{width:50%}}
+</style>
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
+ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://meysternlp.ru/"},{"@type":"ListItem","position":2,"name":"Магазин","item":"https://meysternlp.ru/magazin/"}]},
+{"@type":"ItemList","name":"Магазин Андрея Мейстера","itemListElement":[
+{"@type":"ListItem","position":1,"name":"Разговорный гипноз. Пакет «Стандартный»","url":"https://meysternlp.ru/razgovornyj-gipnoz/standart/"},
+{"@type":"ListItem","position":2,"name":"Разговорный гипноз. Пакет «Самостоятельный»","url":"https://meysternlp.ru/treningi/razgovornyy-gipnoz-samostoyatelnyy.html"},
+{"@type":"ListItem","position":3,"name":"Прорыв — живой тренинг","url":"https://meysternlp.ru/treningi/proryv.html"},
+{"@type":"ListItem","position":4,"name":"Теория манипуляции. Разговорный гипноз","url":"https://meysternlp.ru/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/"},
+{"@type":"ListItem","position":5,"name":"Вариатика. Библиотека человеческих паттернов","url":"https://meysternlp.ru/knigi/variatika-biblioteka-chelovecheskih-patternov/"},
+{"@type":"ListItem","position":6,"name":"Концептикон. Семь линз для ясного мышления","url":"https://meysternlp.ru/knigi/kontseptikon-sem-linz/"},
+{"@type":"ListItem","position":7,"name":"Настольная книга депутата","url":"https://meysternlp.ru/knigi/nastolnaya-kniga-deputata/"},
+{"@type":"ListItem","position":8,"name":"Игра «Маркетолог»","url":"https://meysternlp.ru/igry/marketolog.html"},
+{"@type":"ListItem","position":9,"name":"Игра «Вариатика — Basic»","url":"https://meysternlp.ru/igry/variatika-basic.html"},
+{"@type":"ListItem","position":10,"name":"Игра «Вариатика — Intensive»","url":"https://meysternlp.ru/igry/variatika-intensive.html"},
+{"@type":"ListItem","position":11,"name":"Игра «Вариатика — Progressive»","url":"https://meysternlp.ru/igry/variatika-progressive.html"},
+{"@type":"ListItem","position":12,"name":"Игра «Три пути»","url":"https://meysternlp.ru/igry/tri-puti.html"},
+{"@type":"ListItem","position":13,"name":"Фреди — виртуальный психолог","url":"https://meysternlp.ru/virtual-psychologist/"}]}
+]}
+</script>
+</head>
+<body>
+<div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/magazin/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Магазин</a><a href="/knigi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Книги</a><a href="/igry/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Игры</a><a href="/treningi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тренинги</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div>
+<script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+
+<main class="wrap">
+<div class="crumbs"><a href="/">Главная</a> / Магазин</div>
+<h1>Магазин</h1>
+<p class="lead">Одно и то же умение люди берут разными путями: кто-то лучше учится по книге, кто-то — за игровым столом с друзьями, кто-то — в разговоре с автором, который видит его ошибки. Здесь всё, что мы делаем, и у каждой вещи — честный ответ на два вопроса: кому она и что вы будете уметь после.</p>
+
+<nav class="chips" aria-label="Разделы магазина">
+ <a href="#vybor">Как выбрать</a><a href="#kursy">Курсы</a><a href="#knigi">Книги</a><a href="#igry">Игры</a><a href="#fredi">Фреди</a><a href="#klyuchi">Аудиосерия «Ключи»</a><a href="#voprosy">Вопросы</a>
+</nav>
+
+<div class="free">
+ <h2 style="font-size:1.25rem">Начать можно бесплатно</h2>
+ <ul>
+  <li><b><a href="/blog/lektorij/">Лекторий</a></b> — все курсы открыты целиком и без регистрации: психология, мышление, общение.</li>
+  <li><b><a href="/razgovornyj-gipnoz/urok-1/">Первое занятие курса «Разговорный гипноз»</a></b> — 13 минут, целиком.</li>
+  <li><b><a href="/igry/tri-puti.html">Игра «Три пути»</a></b> — листы для печати, вдвоём за полчаса.</li>
+  <li><b><a href="/virtual-psychologist/">Фреди</a></b> — разговор и тесты открыты; каждое упражнение первый раз бесплатно.</li>
+ </ul>
+</div>
+
+<section id="vybor">
+ <h2>Как выбрать</h2>
+ <p class="sec-lead">Начните с того, что болит сейчас, а не с того, что кажется самым полным.</p>
+ <table class="pick">
+  <tr><td>Вас перебивают, не дослушивают, «мы подумаем» — и тишина</td><td><a href="#standart">Пакет «Стандартный»</a> — с разбором ваших ситуаций у автора; или <a href="#kniga-tm">книга «Теория манипуляции»</a>, если хотите сначала понять механику</td></tr>
+  <tr><td>Не понимаете, почему люди раз за разом поступают одинаково</td><td><a href="#kniga-var">книга «Вариатика»</a> и <a href="#var-basic">игра «Вариатика — Basic»</a></td></tr>
+  <tr><td>Ходите по кругу в одной ситуации и не видите выхода</td><td><a href="#kniga-konc">книга «Концептикон»</a> — семь способов посмотреть иначе</td></tr>
+  <tr><td>Продаёте, ведёте команду или учите других</td><td><a href="#marketolog">игра «Маркетолог»</a> и <a href="#standart">«Стандартный»</a></td></tr>
+  <tr><td>«Пробовал — бесполезно» стало привычкой</td><td><a href="#proryv">живой тренинг «Прорыв»</a></td></tr>
+  <tr><td>Нужен собеседник и тренажёр каждый день</td><td><a href="#fredi">подписка на Фреди</a></td></tr>
+  <tr><td>Хочется наконец понять предмет, который в школе не дался</td><td><a href="#klyuchi">аудиосерия «Ключи»</a></td></tr>
+ </table>
+</section>
+
+<section id="kursy">
+ <h2>Курсы и тренинги</h2>
+ <p class="sec-lead">Видео и задания — чтобы приём перестал быть текстом и начал срабатывать в разговоре.</p>
+ <div class="grid">
+  <article class="item main" id="standart">
+   <div class="pic"><img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный»: книга «Матчасть», блокнот с заданиями, схемы и колода игры" loading="lazy" width="1100" height="1100"></div>
+   <div class="body">
+    <span class="kind">Курс · печатный комплект</span>
+    <h3>Разговорный гипноз. Пакет «Стандартный»</h3>
+    <div class="price">5 900 ₽ <small>· СДЭК до пункта выдачи, возврат 7 дней</small></div>
+    <p class="who"><b>Кому:</b> тем, кому важно, чтобы слушали и соглашались, — руководителям, продажникам, психологам, родителям подростков.</p>
+    <p class="gain"><b>Что даст:</b> за месяц три-четыре приёма, которые срабатывают без подготовки, и умение замечать, когда их применяют к вам. Внутри: книга «Матчасть», 38 видео на год, блокнот с заданиями, игра «Маркетолог» и разбор ваших ситуаций с автором в закрытом канале.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="standart" href="/razgovornyj-gipnoz/standart/zakaz/">Заказать</a><a class="btn btn-more" href="/razgovornyj-gipnoz/standart/">Подробнее</a></div>
+   </div>
+  </article>
+  <article class="item" id="samostoyatelnyy">
+   <div class="pic contain"><img src="/kurs1.png" alt="Пакет «Самостоятельный»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Курс · видео</span>
+    <h3>Разговорный гипноз. Пакет «Самостоятельный»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> тем, кто учится сам и не нуждается в обратной связи.</p>
+    <p class="gain"><b>Что даст:</b> те же 38 видео с приёмами речевого воздействия — без печатного комплекта и без разбора ваших ситуаций.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="samostoyatelnyy" href="https://www.ozon.ru/product/razgovornyy-gipnoz-samostoyatelnoe-obuchenie-tehnikam-nlp-dlya-primeneniya-v-realnoy-zhizni-932753267/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html">Подробнее</a></div>
+   </div>
+  </article>
+  <article class="item" id="proryv">
+   <div class="pic"><img src="/treningi/proryv-hero.jpg" alt="Тренинг «Прорыв»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Живой тренинг</span>
+    <h3>«Прорыв» — против выученной беспомощности</h3>
+    <div class="price">от 2 900 ₽ <small>за этап</small></div>
+    <p class="who"><b>Кому:</b> тем, у кого «пробовал — бесполезно» стало привычкой, и уговоры себя больше не работают.</p>
+    <p class="gain"><b>Что даст:</b> телесный опыт «я приложил усилие — и препятствие поддалось». Беспомощность снимают опытом, а не словами; начать можно с одного этапа, где вы гарантированно справляетесь.</p>
+    <div class="btns"><a class="btn btn-more" href="/treningi/proryv.html">Этапы и запись</a></div>
+   </div>
+  </article>
+ </div>
+</section>
+
+<section id="knigi">
+ <h2>Книги</h2>
+ <p class="sec-lead">Механика — то, без чего приёмы остаются заученными фразами.</p>
+ <div class="grid">
+  <article class="item" id="kniga-tm">
+   <div class="pic contain"><img src="/teoriya-manipulyacii.-tom-i-razgovornyj-gipnoz-andrej-mejster.png" alt="Книга «Теория манипуляции. Разговорный гипноз»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Книга</span>
+    <h3>«Теория манипуляции. Разговорный гипноз»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> тем, кто хочет понимать механику влияния — и свою, и чужую.</p>
+    <p class="gain"><b>Что даст:</b> транс как обычное состояние, две линии воздействия, пресуппозиции и тридцать с лишним видов внушений. 250 страниц.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="kniga-tm" href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/">О книге</a></div>
+   </div>
+  </article>
+  <article class="item" id="kniga-var">
+   <div class="pic"><span class="emo" aria-hidden="true">🧩</span></div>
+   <div class="body">
+    <span class="kind">Книга</span>
+    <h3>«Вариатика. Библиотека человеческих паттернов»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> тем, кто устал от объяснения «он просто такой», — психологам, руководителям, всем, кто работает с людьми.</p>
+    <p class="gain"><b>Что даст:</b> четыре базовые программы и девять уровней у каждой — понимать, почему человек повторяет один сценарий, и как он переходит на другой уровень.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="kniga-var" href="https://www.ozon.ru/product/variatika-biblioteka-chelovecheskih-patternov-meyster-andrey-yurevich-989039765/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/knigi/variatika-biblioteka-chelovecheskih-patternov/">О книге</a></div>
+   </div>
+  </article>
+  <article class="item" id="kniga-konc">
+   <div class="pic contain"><img src="/Концептикон.png" alt="Книга «Концептикон»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Книга</span>
+    <h3>«Концептикон. Семь линз для ясного мышления»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> тем, кто застрял в одной ситуации и видит её только с одной стороны.</p>
+    <p class="gain"><b>Что даст:</b> семь способов смотреть на одну ситуацию — у каждого свой главный вопрос и индикаторы самопроверки. Темп — одна линза в неделю.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="kniga-konc" href="https://www.ozon.ru/product/kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/knigi/kontseptikon-sem-linz/">О книге</a></div>
+   </div>
+  </article>
+  <article class="item" id="kniga-dep">
+   <div class="pic contain"><img src="/nastolnaya-kniga-deputata-andrej-mejster.png" alt="Настольная книга депутата" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Книга</span>
+    <h3>«Настольная книга депутата»</h3>
+    <div class="price"><small>как получить — на странице книги</small></div>
+    <p class="who"><b>Кому:</b> тем, кто претендует на власть и не хочет её имитировать.</p>
+    <p class="gain"><b>Что даст:</b> речевые навыки, когнитивные стратегии и протоколы публичного действия.</p>
+    <div class="btns"><a class="btn btn-more" href="/knigi/nastolnaya-kniga-deputata/">О книге</a></div>
+   </div>
+  </article>
+ </div>
+</section>
+
+<section id="igry">
+ <h2>Игры</h2>
+ <p class="sec-lead">Навык ставится решением задач, а не объяснением. Игра — способ решать задачи всей компанией.</p>
+ <div class="grid">
+  <article class="item" id="marketolog">
+   <div class="pic contain"><img src="/Маркетолог.png" alt="Игра «Маркетолог»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Настольная игра</span>
+    <h3>«Маркетолог»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> командам продаж, тренерам, преподавателям — и всем, кому нужно убеждать историей.</p>
+    <p class="gain"><b>Что даст:</b> один рассказывает историю по картам, другой слушает, третий по лицу слушателя видит, поймали его или нет. Учит строить истории и видеть, работают ли они.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="marketolog" href="https://www.ozon.ru/product/nastolnaya-kartochnaya-igra-marketolog-984307394/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/igry/marketolog.html">Об игре</a></div>
+   </div>
+  </article>
+  <article class="item" id="var-basic">
+   <div class="pic contain"><img src="/Басик.webp" alt="Игра «Вариатика — Basic»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Настольная игра</span>
+    <h3>«Вариатика — Basic»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> тем, кто хочет предсказывать поступки людей, а не удивляться им.</p>
+    <p class="gain"><b>Что даст:</b> навык разбирать чужие истории и прогнозировать поведение людей — через игру.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="var-basic" href="https://www.ozon.ru/product/variatika-basic-chernyy-lebed-1263096092/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/igry/variatika-basic.html">Об игре</a></div>
+   </div>
+  </article>
+  <article class="item" id="var-intensive">
+   <div class="pic contain"><img src="/интенсив.webp" alt="Игра «Вариатика — Intensive»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Настольная игра</span>
+    <h3>«Вариатика — Intensive»</h3>
+    <div class="price"><small>как получить — на странице игры</small></div>
+    <p class="who"><b>Кому:</b> тем, кто разбирается в сложных системах — семье, команде, организации.</p>
+    <p class="gain"><b>Что даст:</b> системное, критическое и латеральное мышление: видеть, как части влияют друг на друга.</p>
+    <div class="btns"><a class="btn btn-more" href="/igry/variatika-intensive.html">Об игре</a></div>
+   </div>
+  </article>
+  <article class="item" id="var-progressive">
+   <div class="pic contain"><img src="/progresive.webp" alt="Игра «Вариатика — Progressive»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Настольная игра</span>
+    <h3>«Вариатика — Progressive»</h3>
+    <div class="price">на Ozon</div>
+    <p class="who"><b>Кому:</b> тем, кто хочет не только разбирать чужие сценарии, но и строить свои.</p>
+    <p class="gain"><b>Что даст:</b> умение создавать новые сценарии и превращать маловероятные хорошие исходы в реальные.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="var-progressive" href="https://www.ozon.ru/product/variatika-progressive-1705906113/" target="_blank" rel="noopener">Купить на Ozon</a><a class="btn btn-more" href="/igry/variatika-progressive.html">Об игре</a></div>
+   </div>
+  </article>
+  <article class="item" id="tri-puti">
+   <div class="pic"><img src="/blog/og/avtopilot.jpg" alt="Игра «Три пути»" loading="lazy"></div>
+   <div class="body">
+    <span class="kind">Игра-задачник · 16+</span>
+    <h3>«Три пути»</h3>
+    <div class="price">бесплатно <small>· листы для печати</small></div>
+    <p class="who"><b>Кому:</b> двоим — игроку и ведущему; тем, кто привык говорить «у меня нет выхода».</p>
+    <p class="gain"><b>Что даст:</b> за минуту собрать три пути из того, что у человека уже есть. Партия — полчаса, пять партий по нарастающей.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="tri-puti" href="/igry/tri-puti.html">Скачать и играть</a></div>
+   </div>
+  </article>
+ </div>
+</section>
+
+<section id="fredi">
+ <h2>Фреди — виртуальный психолог</h2>
+ <div class="grid">
+  <article class="item" id="fredi-sub">
+   <div class="pic"><span class="emo" aria-hidden="true">🧠</span></div>
+   <div class="body">
+    <span class="kind">Подписка</span>
+    <h3>Фреди: разговор, тесты и тренажёры</h3>
+    <div class="price">690 ₽ в месяц <small>· пробный доступ за 69 ₽</small></div>
+    <p class="who"><b>Кому:</b> тем, кому нужен собеседник, который не устаёт и не оценивает, — и тренажёр навыков на каждый день.</p>
+    <p class="gain"><b>Что даст:</b> разговор и тесты открыты всем; по подписке — игры-тренажёры и практики без ограничений, каждое упражнение первый раз бесплатно.</p>
+    <div class="btns"><a class="btn btn-buy" data-p="fredi" href="/virtual-psychologist/">Попробовать Фреди</a></div>
+   </div>
+  </article>
+ </div>
+</section>
+
+<section id="klyuchi">
+ <span class="status">готовится · первая запись проходит проверку</span>
+ <h2>Аудиосерия «Ключи» — фундамент предметов</h2>
+ <div class="keys">
+  <div>
+   <p class="sec-lead">Вспомните предмет, который в школе так и не дался: формулы были, а понимания — нет. Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — и привычки смотреть на предмет под нужным углом.</p>
+   <p class="sec-lead">«Ключи» — 47 аудиозаписей по 15–20 минут, по одной на предмет: логика, математика, физика, химия, биология, информатика, язык, литература, история, экономика, музыка и другие. В каждой — история героя, который сам открывает закон, настройка внимания под этот предмет (что в нём замечать), порядок мышления (в каком порядке думать) и четыре-шесть ключевых идей.</p>
+   <p class="who"><b>Кому:</b> взрослым, которые хотят наконец понять «свою нелюбимую» науку, и старшеклассникам перед новой темой — с 16 лет. Для детей готовим отдельную версию, без погружения, с текстом для родителя.</p>
+   <p class="gain"><b>Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку внимания, на которые дальше ложится практика. Экономит годы, которые обычно уходят на поиск этого каркаса.</p>
+   <p class="note">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>
+   <div class="btns" style="margin-top:16px"><a class="btn btn-buy" data-p="klyuchi" href="https://t.me/meysternlp" target="_blank" rel="noopener">Ранний доступ — написать в Telegram</a></div>
+  </div>
+  <ol>
+   <li><b>0.1 Ум-объяснитель</b>как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» и пять вопросов-выключателей.</li>
+   <li><b>0.2 Логика</b>что утверждается и на чём держится; почему «если — то» не переворачивается и одного контрпримера хватает.</li>
+   <li><b>0.3 Учиться и помнить</b>как слушать и закреплять остальные записи: вспоминание, растущие промежутки, сон.</li>
+   <li><b>0.4 Решать и изобретать</b>общий порядок решения задачи для любого предмета: переформулировать, идти от цели, разрешить противоречие.</li>
+   <li><b>1.1 Число → 1.2 Геометрия → 2.1 Механика → 4.6 Биомеханика</b>первая цепочка — от основ к применению в собственном теле.</li>
+   <li><b>И ещё 39 записей</b>вещество и Земля, жизнь, информация и машины, человек и общество, искусство.</li>
+  </ol>
+ </div>
+</section>
+
+<section id="voprosy" class="faq">
+ <h2>❓ Частые вопросы</h2>
+ <h3>Почему часть товаров продаётся на Ozon, а часть — здесь?</h3>
+ <p>Книги и игры давно продаются на Ozon: там быстрая доставка в любой город и отзывы покупателей. Пакет «Стандартный» с 20 октября 2026 года продаём сами — так автор сразу получает ваш заказ и подключает к разбору ситуаций.</p>
+ <h3>С чего начать, если не знаю, что выбрать?</h3>
+ <p>С бесплатного: Лекторий открыт целиком, первое занятие курса — 13 минут. Если после него захочется практики с разбором — «Стандартный». Если сначала хочется понять механику — книга «Теория манипуляции».</p>
+ <h3>Можно ли вернуть пакет «Стандартный»?</h3>
+ <p>Да, в течение семи дней после получения, если товар не был в употреблении. Условия — в <a href="/oferta/">оферте</a>.</p>
+ <h3>Когда выйдут «Ключи»?</h3>
+ <p>Серия выходит по одной записи. Первая, «Ум-объяснитель», сейчас проходит проверку на слушателях. Напишите в Telegram — сообщим о выходе и дадим послушать первым.</p>
+</section>
+</main>
+
+<div id="footer-placeholder"><nav aria-label="Разделы сайта" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Главная</a><a href="/obo-mne/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Об авторе</a><a href="/fredi/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Фреди</a><a href="/kontakty/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Контакты</a><a href="/oferta/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Конфиденциальность</a><a href="/tarify/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Тарифы</a></nav></div>
+<script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
+<script>
+/* Цель Метрики shop_buy с параметром товара: видно, что из магазина берут. */
+document.addEventListener('click',function(e){var a=e.target&&e.target.closest?e.target.closest('a[data-p]'):null;if(!a)return;
+try{ym(108138656,'reachGoal','shop_buy',{shop_product:a.dataset.p});ym(108138656,'params',{shop_product:a.dataset.p});}catch(err){}},true);
+</script>
+</body>
+</html>
