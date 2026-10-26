@@ -44,6 +44,8 @@
   .download-block .dl-text b { color:#1E293B; font-size:1.05em; }
   .download-block .dl-text span { display:block; color:#64748B; font-size:0.9em; margin-top:4px; }
   .download-block .btn-download { display:inline-flex; align-items:center; gap:10px; background:#3A86FF; color:#fff !important; text-decoration:none !important; font-weight:600; font-size:1em; padding:14px 26px; border-radius:12px; white-space:nowrap; transition:background 0.2s, transform 0.2s; }
+  .download-block .btn-pdf { background:#fff; color:#1f6fe5 !important; border:1px solid #3A86FF; }
+  .download-block .btn-pdf:hover { background:#EEF4FF; color:#1f6fe5 !important; }
   .download-block .btn-download:hover { background:#1D1D1F; color:#fff !important; transform:translateY(-2px); }
   .btn-download .ic { font-size:1.2em; }
 </style>
@@ -164,8 +166,9 @@ body{overflow-wrap:break-word}</style>
 <!-- Кнопка наверху (10.10.2026): из статей сюда приходят уже решившие,
      а единственная кнопка Ozon стояла в самом низу страницы. -->
 <div class="download-block" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:18px 0 6px;padding:16px 20px;background:#F1F5F9;border-radius:14px">
-<div class="dl-text"><b>Бумажная книга</b><span>На Ozon у книги оценка 4,9 и больше 1&nbsp;500 отзывов покупателей. Цена и доставка — на карточке, а ниже — что внутри и кому она не подойдёт.</span></div>
-<a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527" target="_blank" rel="noopener noreferrer" class="btn-download"><span class="ic">📦</span> Купить на Ozon</a>
+<div class="dl-text"><b>Книгу можно купить здесь</b><span>Печатная книга — 990 ₽, доставка СДЭК до пункта выдачи, её оплачиваете при получении. PDF — 690 ₽, ссылка придёт на почту сразу после оплаты. На Ozon у книги оценка 4,9 и больше 1&nbsp;500 отзывов — <a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527/reviews/" target="_blank" rel="noopener">почитать</a>.</span></div>
+<a href="/magazin/zakaz/?t=kniga-tm" class="btn-download">Печатная — 990 ₽</a>
+<a href="/magazin/zakaz/?t=kniga-tm-pdf" class="btn-download btn-pdf">PDF — 690 ₽</a>
 </div>
 
 <h2 id="korotko">Коротко: о чём книга</h2>
@@ -228,8 +231,9 @@ body{overflow-wrap:break-word}</style>
 <p>«Разговорный гипноз» — про то, как устроено влияние в речи. <a href="/knigi/variatika-biblioteka-chelovecheskih-patternov/">«Вариатика»</a> — про то, почему одни и те же слова работают на одного человека и не работают на другого.</p>
 
 <div class="download-block" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:26px 0;padding:18px 20px;background:#F1F5F9;border-radius:14px">
-<div class="dl-text"><b>Бумажная книга</b><span>Цена и наличие — на Ozon. Оценка покупателей — 4,9, больше 1&nbsp;500 отзывов.</span></div>
-<a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527" target="_blank" rel="noopener noreferrer" class="btn-download"><span class="ic">📦</span> Купить на Ozon</a>
+<div class="dl-text"><b>Книгу можно купить здесь</b><span>Печатная книга — 990 ₽, доставка СДЭК до пункта выдачи, её оплачиваете при получении. PDF — 690 ₽, ссылка придёт на почту сразу после оплаты. На Ozon у книги оценка 4,9 и больше 1&nbsp;500 отзывов — <a href="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527/reviews/" target="_blank" rel="noopener">почитать</a>.</span></div>
+<a href="/magazin/zakaz/?t=kniga-tm" class="btn-download">Печатная — 990 ₽</a>
+<a href="/magazin/zakaz/?t=kniga-tm-pdf" class="btn-download btn-pdf">PDF — 690 ₽</a>
 </div>
 
 <h2 id="dalshe">Что рядом</h2>
@@ -241,13 +245,13 @@ body{overflow-wrap:break-word}</style>
 <script>(function(){fetch('/footer.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('footer-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <!-- tovar-goals -->
 <script>
-/* Уход на Ozon — единственное действие, которое эта страница может дать.
-   Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
+/* С 26.10.2026 книга продаётся здесь: цель — переход к заказу.
+   Ссылка на отзывы Ozon целью не считается, чтобы Директ не учился на ней. */
 (function(){var C=108138656;
-function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
+function g(n,p){try{if(window.ym)ym(C,'reachGoal',n,p)}catch(e){}}
 document.addEventListener('click',function(e){
-var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
-if(a){g('tovar_ozon');g('tovar_ozon_kniga_gipnoz');}},true);})();
+var t=e.target,a=t&&t.closest?t.closest('a[href^="/magazin/zakaz/"]'):null;
+if(a){g('tovar_order',{shop_product:a.getAttribute('href').split('t=')[1]});g('tovar_order_kniga_gipnoz');}},true);})();
 </script>
 <!-- /tovar-goals -->
 </body>
