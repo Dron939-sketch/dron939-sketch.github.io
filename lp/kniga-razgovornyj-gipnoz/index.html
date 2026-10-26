@@ -765,9 +765,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 if(!('IntersectionObserver' in window)||!h){s.classList.add('on');return;}
 new IntersectionObserver(function(e){var r=e[0];s.classList.toggle('on',!r.isIntersecting&&r.boundingClientRect.top<0);}).observe(h);})();
 
-/* Цели Метрики. Покупка проходит на Ozon, и Директ её не видит — кампания
-   учится на клике «Купить на Ozon» (direct_lp_ozon). tovar_ozon* — общие
-   цели страниц товаров, чтобы воронка сайта не разъезжалась. */
+/* Цели Метрики. С 26.10.2026 покупка проходит на сайте: клик к заказу —
+   tovar_order, оплата — shop_pay_click / shop_paid магазина. Ветка Ozon
+   осталась для товаров, которые вернутся на маркетплейс. */
 (function(){var C=108138656,T='/razgovornyj-gipnoz/';
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){

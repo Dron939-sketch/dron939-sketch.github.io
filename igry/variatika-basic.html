@@ -937,7 +937,7 @@
   "offers": {
     "@type": "Offer",
     "priceCurrency": "RUB",
-    "url": "https://www.ozon.ru/product/variatika-basic-chernyy-lebed-1263096092/",
+    "url": "https://meysternlp.ru/magazin/zakaz/?t=var-basic",
     "availability": "https://schema.org/InStock"
   }
 }
@@ -1005,7 +1005,7 @@ body{overflow-wrap:break-word}</style>
       </div>
       
       <div class="product-actions">
-        <a href="https://www.ozon.ru/product/variatika-basic-chernyy-lebed-1263096092/" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon">Заказать на Ozon</a>
+        <a href="/magazin/zakaz/?t=var-basic" class="btn btn-large btn-ozon">Заказать — 3 800 ₽</a>
         <!-- try-mechanic --><a href="/predskazat-povedenie/" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:inherit">Попробовать механику: разобрать 3 ситуации →</a><!-- /try-mechanic -->
         <!-- rules-link --><a href="/igry/variatika-pravila.html" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:inherit">Как играть: правила и все 28 карт →</a><!-- /rules-link -->
       </div>
@@ -1092,7 +1092,7 @@ body{overflow-wrap:break-word}</style>
       *Это один из моих камней. Берите и бросайте.
     </p>
     
-    <a href="https://www.ozon.ru/product/variatika-basic-chernyy-lebed-1263096092/" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру на Ozon</a>
+    <a href="/magazin/zakaz/?t=var-basic" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру — 3 800 ₽</a>
   </div>
 </div>
 
@@ -1160,13 +1160,13 @@ body{overflow-wrap:break-word}</style>
 
 <!-- tovar-goals -->
 <script>
-/* Уход на Ozon — единственное действие, которое эта страница может дать.
+/* С 26.10.2026 игра продаётся на сайте: цель — переход к заказу.
    Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
 (function(){var C=108138656;
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){
-var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
-if(a){g('tovar_ozon');g('tovar_ozon_igra_basic');}},true);})();
+var t=e.target,a=t&&t.closest?t.closest('a[href^="/magazin/zakaz/"]'):null;
+if(a){g('tovar_order');g('tovar_order_igra_basic');}},true);})();
 </script>
 <!-- /tovar-goals -->
 </body>

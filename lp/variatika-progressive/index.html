@@ -636,7 +636,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <p>Один месяц пробивает стену, второй тот же результат получает за неделю — потому что зашёл в тот момент и с той стороны, где ему уже помогали. Со стороны это выглядит как удача.</p>
    <p>Progressive разбирает эту удачу на части. Не как случай, на который остаётся надеяться, а как навык: замечать силы, которые уже действуют, и ставить паруса под ветер, а не грести против него.</p>
    <div class="ctas">
-    <a class="btn btn-ozon" data-goal="hero" href="https://www.ozon.ru/product/variatika-progressive-1705906113/" target="_blank" rel="noopener">Купить на Ozon</a>
+    <a class="btn btn-ozon" data-goal="hero" href="/magazin/zakaz/?t=var-progressive">Заказать — 3 800 ₽</a>
     <a class="btn btn-ghost" href="#proverit">Сначала попробовать</a>
    </div>
   </div>
@@ -705,9 +705,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <li>Серия игры лимитирована</li>
   </ul>
   <div class="ctas" style="margin-top:22px">
-   <a class="btn btn-ozon" data-goal="paket" href="https://www.ozon.ru/product/variatika-progressive-1705906113/" target="_blank" rel="noopener">Купить на Ozon</a>
+   <a class="btn btn-ozon" data-goal="paket" href="/magazin/zakaz/?t=var-progressive">Заказать — 3 800 ₽</a>
   </div>
-  <p class="small">Оплата, доставка и возврат — по правилам Ozon. Цена и наличие — на карточке товара.</p>
+  <p class="small">Оплата картой через ЮKassa на сайте. Игру везёт СДЭК до пункта выдачи — доставку оплачиваете при получении.</p>
   <div class="cross"><p>Все три уровня — Basic, Intensive и Progressive — используют одни масти; их подробное описание — в книге <a href="/lp/kniga-variatika/">«Вариатика»</a>.</p></div>
  </div>
 </section>
@@ -719,8 +719,8 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <p>Нет. Везение в программе определено через вероятность и затраты: исход с шансами три-четыре из десяти или результат, полученный легче обычного. Навык — замечать такие возможности и пользоваться ими.</p>
   <h3>Нужно ли сначала играть в Basic и Intensive?</h3>
   <p>Желательно начать с Basic: масти и иерархия общие для всех уровней. Progressive — третья ступень.</p>
-  <h3>Почему покупка на Ozon?</h3>
-  <p>Привычная оплата, доставка в пункт выдачи и защита покупателя по правилам маркетплейса.</p>
+  <h3>Как оплатить и получить?</h3>
+  <p>Картой через ЮKassa прямо на сайте — 3 800 ₽. Игру везёт СДЭК в пункт выдачи, доставку оплачиваете при получении.</p>
   <p class="more">Автор — Андрей Мейстер. <a href="/igry/variatika-progressive.html">Подробная страница товара</a> · <a href="/knigi/">все книги</a> · <a href="/igry/">все игры</a></p>
  </div>
 </section>
@@ -730,7 +730,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <h2>Ставить паруса, а не грести</h2>
   <p>Третий уровень «Вариатики»: как добиваться результата, используя силы, которые уже действуют.</p>
   <div class="ctas">
-   <a class="btn btn-ozon" data-goal="final" href="https://www.ozon.ru/product/variatika-progressive-1705906113/" target="_blank" rel="noopener">Купить на Ozon</a>
+   <a class="btn btn-ozon" data-goal="final" href="/magazin/zakaz/?t=var-progressive">Заказать — 3 800 ₽</a>
    <a class="btn btn-ghost" href="/iskusstvo-vezeniya/">Найти попутную силу</a>
   </div>
  </div>
@@ -743,7 +743,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 
 <div class="sticky" id="sticky">
  <span>Игра «Вариатика — Progressive»</span>
- <a class="btn btn-ozon" data-goal="sticky" href="https://www.ozon.ru/product/variatika-progressive-1705906113/" target="_blank" rel="noopener">Купить на Ozon</a>
+ <a class="btn btn-ozon" data-goal="sticky" href="/magazin/zakaz/?t=var-progressive">Заказать — 3 800 ₽</a>
 </div>
 
 <script>
@@ -753,9 +753,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 if(!('IntersectionObserver' in window)||!h){s.classList.add('on');return;}
 new IntersectionObserver(function(e){var r=e[0];s.classList.toggle('on',!r.isIntersecting&&r.boundingClientRect.top<0);}).observe(h);})();
 
-/* Цели Метрики. Покупка проходит на Ozon, и Директ её не видит — кампания
-   учится на клике «Купить на Ozon» (direct_lp_ozon). tovar_ozon* — общие
-   цели страниц товаров, чтобы воронка сайта не разъезжалась. */
+/* Цели Метрики. С 26.10.2026 покупка проходит на сайте: клик к заказу —
+   tovar_order, оплата — shop_pay_click / shop_paid магазина. Ветка Ozon
+   осталась для товаров, которые вернутся на маркетплейс. */
 (function(){var C=108138656,T='/iskusstvo-vezeniya/';
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){

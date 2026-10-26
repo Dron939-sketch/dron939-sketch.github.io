@@ -636,7 +636,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <p>Сотрудника, который срывал сроки, уволили — через два месяца сроки срывает новый. Поговорили с ребёнком про оценки — через неделю всё как было. Каждый раз решали правильно, а проблема живёт.</p>
    <p>Так бывает, когда лечат симптом, а причина сидит в петле, которая его воспроизводит. Intensive учит видеть систему целиком: где связи, где петли и где точка, на которую стоит нажать.</p>
    <div class="ctas">
-    <a class="btn btn-ozon" data-goal="hero" href="https://ozon.ru/t/nbM4EJd" target="_blank" rel="noopener">Купить на Ozon</a>
+    <a class="btn btn-ozon" data-goal="hero" href="/magazin/zakaz/?t=var-intensive">Заказать — 3 800 ₽</a>
     <a class="btn btn-ghost" href="#proverit">Сначала попробовать</a>
    </div>
   </div>
@@ -696,9 +696,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <li>Серия игры лимитирована</li>
   </ul>
   <div class="ctas" style="margin-top:22px">
-   <a class="btn btn-ozon" data-goal="paket" href="https://ozon.ru/t/nbM4EJd" target="_blank" rel="noopener">Купить на Ozon</a>
+   <a class="btn btn-ozon" data-goal="paket" href="/magazin/zakaz/?t=var-intensive">Заказать — 3 800 ₽</a>
   </div>
-  <p class="small">Оплата, доставка и возврат — по правилам Ozon. Цена и наличие — на карточке товара.</p>
+  <p class="small">Оплата картой через ЮKassa на сайте. Игру везёт СДЭК до пункта выдачи — доставку оплачиваете при получении.</p>
   <div class="cross"><p>Если вам ближе разбор ситуаций по шагам, а не за игровым столом, посмотрите книгу <a href="/lp/kniga-kontseptikon/">«Концептикон»</a> — линза «Система» разобрана там отдельной главой.</p></div>
  </div>
 </section>
@@ -710,8 +710,8 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <p>Желательно: Intensive опирается на те же масти и иерархию. Basic учит видеть отдельного человека, Intensive — систему, в которой он действует.</p>
   <h3>Где правила?</h3>
   <p>Общие принципы — масти, иерархия, разбор — описаны на странице <a href="/igry/variatika-pravila.html">«Как играть в «Вариатику»»</a>. Состав и задания у Intensive свои.</p>
-  <h3>Почему покупка на Ozon?</h3>
-  <p>Привычная оплата, доставка в пункт выдачи и защита покупателя по правилам маркетплейса.</p>
+  <h3>Как оплатить и получить?</h3>
+  <p>Картой через ЮKassa прямо на сайте — 3 800 ₽. Игру везёт СДЭК в пункт выдачи, доставку оплачиваете при получении.</p>
   <p class="more">Автор — Андрей Мейстер. <a href="/igry/variatika-intensive.html">Подробная страница товара</a> · <a href="/knigi/">все книги</a> · <a href="/igry/">все игры</a></p>
  </div>
 </section>
@@ -721,7 +721,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <h2>Чинить причину, а не симптом</h2>
   <p>Второй уровень «Вариатики»: системы целиком, петли и точки, на которые стоит нажать.</p>
   <div class="ctas">
-   <a class="btn btn-ozon" data-goal="final" href="https://ozon.ru/t/nbM4EJd" target="_blank" rel="noopener">Купить на Ozon</a>
+   <a class="btn btn-ozon" data-goal="final" href="/magazin/zakaz/?t=var-intensive">Заказать — 3 800 ₽</a>
    <a class="btn btn-ghost" href="/videt-sistemu/">Найти петлю в 3 задачах</a>
   </div>
  </div>
@@ -734,7 +734,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 
 <div class="sticky" id="sticky">
  <span>Игра «Вариатика — Intensive»</span>
- <a class="btn btn-ozon" data-goal="sticky" href="https://ozon.ru/t/nbM4EJd" target="_blank" rel="noopener">Купить на Ozon</a>
+ <a class="btn btn-ozon" data-goal="sticky" href="/magazin/zakaz/?t=var-intensive">Заказать — 3 800 ₽</a>
 </div>
 
 <script>
@@ -744,9 +744,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 if(!('IntersectionObserver' in window)||!h){s.classList.add('on');return;}
 new IntersectionObserver(function(e){var r=e[0];s.classList.toggle('on',!r.isIntersecting&&r.boundingClientRect.top<0);}).observe(h);})();
 
-/* Цели Метрики. Покупка проходит на Ozon, и Директ её не видит — кампания
-   учится на клике «Купить на Ozon» (direct_lp_ozon). tovar_ozon* — общие
-   цели страниц товаров, чтобы воронка сайта не разъезжалась. */
+/* Цели Метрики. С 26.10.2026 покупка проходит на сайте: клик к заказу —
+   tovar_order, оплата — shop_pay_click / shop_paid магазина. Ветка Ozon
+   осталась для товаров, которые вернутся на маркетплейс. */
 (function(){var C=108138656,T='/videt-sistemu/';
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){
