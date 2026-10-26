@@ -27,6 +27,8 @@ import io
 import os
 import re
 
+from theme_css import convert_html, scope_dark
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "komplekt", "index.html")
 SRC_THX = os.path.join(ROOT, "komplekt", "spasibo", "index.html")
@@ -88,8 +90,8 @@ if(t<240)requestAnimationFrame(f);else c.remove()})()}catch(e){}}
 
 BODY = """<style>
 .zk-hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center}
-.zk-hero .shot{background:radial-gradient(circle at 50% 40%,#2B3A55,#0E1420);border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:center}
-.zk-hero .shot img{width:100%;max-width:340px;height:auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.zk-hero .shot{background:#fff;border:1px solid #E1E8F2;border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:center}
+.zk-hero .shot img{width:100%;max-width:340px;height:auto;display:block}
 .zk-hero .go{display:inline-block;margin-top:18px;padding:13px 26px;border-radius:14px;background:linear-gradient(135deg,#3b82ff,#6366f1);color:#fff;font-weight:600}
 .zk-hero .go:hover{text-decoration:none;opacity:.92}
 @media(max-width:720px){.zk-hero{grid-template-columns:1fr}.zk-hero .shot{order:-1;padding:16px}.zk-hero .shot img{max-width:240px}}
@@ -98,8 +100,12 @@ BODY = """<style>
 .zk-inside figcaption{padding:10px 16px 14px;font-size:.92rem;color:#5b6475;background:#fff}
 .zk-proof{display:flex;flex-wrap:wrap;gap:10px 22px;margin:14px 0 0;font-size:.92rem;color:var(--muted)}
 .zk-proof b{color:inherit}
+.zk-badge{display:inline-block;margin-bottom:12px;padding:6px 14px;border-radius:30px;font-size:.85rem;font-weight:600;color:#1d5fd1;background:rgba(58,134,255,.1);border:1px solid rgba(58,134,255,.3)}
+.theme-btn{float:right;margin:10px 0 0 12px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(58,134,255,.3);background:transparent;color:inherit;font-size:1.05rem;cursor:pointer}
+.theme-btn .sun{display:none}[data-theme=dark] .theme-btn .moon{display:none}[data-theme=dark] .theme-btn .sun{display:inline}
 </style>
 <div class="wrap">
+  <button class="theme-btn" type="button" aria-label="Переключить тему" aria-pressed="false"><span class="moon">☾</span><span class="sun">☀</span></button>
   <div class="crumbs"><a href="/">Главная</a> / <a href="/razgovornyj-gipnoz/standart/">Разговорный гипноз</a> / <span>Оформление заказа</span></div>
   <div class="hero zk-hero">
     <div>
@@ -107,7 +113,7 @@ BODY = """<style>
       <h1>Пакет «Стандартный»</h1>
       <p>Всё, что нужно, чтобы приёмы разговорного гипноза перестали быть текстом и начали срабатывать в разговоре: механизм, образец, задания, проверка на живом человеке и разбор ваших ошибок.</p>
       <div class="pricetag"><b>5 900 ₽</b><span>с НДС · оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
-      <div class="zk-proof"><span><b>4,9</b> и 320 отзывов на Ozon</span><span>СДЭК до пункта выдачи</span><span>доступ к видео на 12 месяцев</span><span>ответ автора в течение суток</span></div>
+      <div class="zk-proof"><span><a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/reviews/" target="_blank" rel="noopener"><b>4,9</b> и 320 отзывов на Ozon</a></span><span>СДЭК до пункта выдачи</span><span>доступ к видео на 12 месяцев</span><span>ответ автора в течение суток</span></div>
       <a class="go" href="#orderForm">Оформить заказ ↓</a>
     </div>
     <div class="shot"><img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот, схемы, коробка «Доступ» и книга «Матчасть»" width="1100" height="1100"></div>
@@ -292,9 +298,21 @@ def head_from(src, title, desc, canonical_crumb):
     return head, tail
 
 
+# С 26.10.2026 светлая по умолчанию, тёмный слой — по кнопке (/theme.js):
+# фокус-группа по сайту — где платят, тёмное мешает; страница пакета тоже светлая.
+FEST_DARK = "<style>" + scope_dark(FEST_CSS[len("<style>"):-len("</style>")]) + "</style>"
+
+
+def themed(html):
+    html = convert_html(html)
+    assert html.count("<style") and "/theme.js" not in html
+    i = html.index("<style")
+    return html[:i] + '<script src="/theme.js"></script>\n' + html[i:]
+
+
 def main():
     head, tail = head_from(SRC, TITLE, DESC, LANDING)
-    io.open(OUT, "w", encoding="utf-8").write(head + BODY + FEST_CSS + tail)
+    io.open(OUT, "w", encoding="utf-8").write(themed(head + BODY + FEST_DARK + tail))
     th = io.open(SRC_THX, encoding="utf-8").read()
     th = re.sub(r"<title>.*?</title>", "<title>Оплата заказа — пакет «Стандартный» | Андрей Мейстер</title>", th, count=1, flags=re.S)
     th = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="%s">' % LANDING, th, count=1)
@@ -308,8 +326,8 @@ def main():
                     "if (d && d.paid) { paid(); zkConfetti(); try { if (window.ym) ym(108138656, 'params', { standart_zakaz: 'paid' }); ym(108138656, 'reachGoal', 'standart_paid', { order_price: 5900, currency: 'RUB' }); } catch (e) {} return; }")
     assert "komplekt" not in re.sub(r"<head>.*?</head>", "", th, flags=re.S), "в «спасибо» остались ссылки на комплект"
     assert th.count("</head>") == 1, "в «спасибо» не один </head>"
-    th = th.replace("</head>", FEST_CSS + FEST_JS + "</head>")
-    io.open(OUT_THX, "w", encoding="utf-8").write(th)
+    th = th.replace("</head>", FEST_DARK + FEST_JS + "</head>")
+    io.open(OUT_THX, "w", encoding="utf-8").write(themed(th))
     print("записано:", os.path.relpath(OUT, ROOT), os.path.relpath(OUT_THX, ROOT))
 
 
