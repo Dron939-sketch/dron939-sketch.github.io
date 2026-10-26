@@ -555,10 +555,11 @@ function show(k,scroll){
   cats.forEach(function(c){c.classList.toggle('on',c.dataset.cat===k);c.setAttribute('aria-pressed',c.dataset.cat===k)});
   shelves.forEach(function(s){s.classList.toggle('on',s.id===k)});
   var top=document.getElementById('top');if(top)top.style.display=k?'none':'';
-  if(k){try{history.replaceState(null,'','#'+k)}catch(e){}
+  /* query (utm_*, yclid) не трогаем: Метрика читает его позже, чем срабатывает этот код */
+  if(k){try{history.replaceState(null,'',location.pathname+location.search+'#'+k)}catch(e){}
     if(scroll){var s=document.getElementById(k);if(s)s.scrollIntoView({behavior:'smooth',block:'start'})}
     try{ym(108138656,'params',{shop_cat:k})}catch(e){}}
-  else{try{history.replaceState(null,'',location.pathname)}catch(e){}}
+  else{try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
 }
 cats.forEach(function(c){c.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!e.target.closest('.q')){e.preventDefault();c.click();}});});
 cats.forEach(function(c){c.addEventListener('click',function(e){
