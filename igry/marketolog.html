@@ -904,7 +904,7 @@
   "offers": {
     "@type": "Offer",
     "priceCurrency": "RUB",
-    "url": "https://www.ozon.ru/product/nastolnaya-kartochnaya-igra-marketolog-984307394",
+    "url": "https://meysternlp.ru/magazin/zakaz/?t=marketolog",
     "availability": "https://schema.org/InStock"
   }
 }
@@ -970,7 +970,7 @@ body{overflow-wrap:break-word}</style>
       </div>
       
       <div class="product-actions">
-        <a href="https://www.ozon.ru/product/nastolnaya-kartochnaya-igra-marketolog-984307394" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon">Заказать на Ozon</a>
+        <a href="/magazin/zakaz/?t=marketolog" class="btn btn-large btn-ozon">Заказать — 1 200 ₽</a>
         <!-- try-mechanic --><a href="/reklamnoe-soobshchenie/" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:inherit">Попробовать механику: раздача из 3 карт →</a><!-- /try-mechanic -->
         <a href="#composition" class="btn btn-large">Подробнее об игре</a>
       </div>
@@ -1072,7 +1072,7 @@ body{overflow-wrap:break-word}</style>
       *Это один из моих камней. Берите и бросайте.
     </p>
     <p style="text-align:center;color:#666;margin-bottom:20px">Колода входит в комплект пакета <a href="/treningi/razgovornyy-gipnoz-standart.html" style="color:#3A86FF">«Разговорный гипноз. Стандартный»</a> вместе с книгой, блокнотом и схемами — если берёте курс, отдельно игру покупать не нужно.</p>
-    <a href="https://www.ozon.ru/product/nastolnaya-kartochnaya-igra-marketolog-984307394" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру на Ozon</a>
+    <a href="/magazin/zakaz/?t=marketolog" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру — 1 200 ₽</a>
   </div>
 </div>
 
@@ -1140,13 +1140,13 @@ body{overflow-wrap:break-word}</style>
 
 <!-- tovar-goals -->
 <script>
-/* Уход на Ozon — единственное действие, которое эта страница может дать.
+/* С 26.10.2026 игра продаётся на сайте: цель — переход к заказу.
    Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
 (function(){var C=108138656;
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){
-var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
-if(a){g('tovar_ozon');g('tovar_ozon_igra_marketolog');}},true);})();
+var t=e.target,a=t&&t.closest?t.closest('a[href^="/magazin/zakaz/"]'):null;
+if(a){g('tovar_order');g('tovar_order_igra_marketolog');}},true);})();
 </script>
 <!-- /tovar-goals -->
 </body>
