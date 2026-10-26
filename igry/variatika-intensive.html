@@ -929,7 +929,7 @@
   "offers": {
     "@type": "Offer",
     "priceCurrency": "RUB",
-    "url": "https://ozon.ru/t/nbM4EJd",
+    "url": "https://meysternlp.ru/magazin/zakaz/?t=var-intensive",
     "availability": "https://schema.org/InStock"
   }
 }
@@ -997,7 +997,7 @@ body{overflow-wrap:break-word}</style>
       </div>
       
       <div class="product-actions">
-        <a href="https://ozon.ru/t/nbM4EJd" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon">Заказать на Ozon</a>
+        <a href="/magazin/zakaz/?t=var-intensive" class="btn btn-large btn-ozon">Заказать — 3 800 ₽</a>
         <!-- try-mechanic --><a href="/videt-sistemu/" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:inherit">Попробовать механику: найти петлю в 3 задачах →</a><!-- /try-mechanic -->
         <!-- rules-link --><a href="/igry/variatika-pravila.html" class="btn btn-large" style="background:transparent;border:1.5px solid rgba(255,255,255,.45);color:inherit">Как играть: правила и все 28 карт →</a><!-- /rules-link -->
       </div>
@@ -1111,7 +1111,7 @@ body{overflow-wrap:break-word}</style>
       *Это один из моих камней. Берите и бросайте.
     </p>
     
-    <a href="https://ozon.ru/t/nbM4EJd" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру на Ozon</a>
+    <a href="/magazin/zakaz/?t=var-intensive" class="btn btn-large btn-ozon" style="font-size: clamp(1rem, 4vw, 1.2rem);">Заказать игру — 3 800 ₽</a>
   </div>
 </div>
 
@@ -1179,13 +1179,13 @@ body{overflow-wrap:break-word}</style>
 
 <!-- tovar-goals -->
 <script>
-/* Уход на Ozon — единственное действие, которое эта страница может дать.
+/* С 26.10.2026 игра продаётся на сайте: цель — переход к заказу.
    Без цели видно, что человек пришёл, и не видно, купил ли он попытку. */
 (function(){var C=108138656;
 function g(n){try{if(window.ym)ym(C,'reachGoal',n)}catch(e){}}
 document.addEventListener('click',function(e){
-var t=e.target,a=t&&t.closest?t.closest('a[href*="ozon.ru"]'):null;
-if(a){g('tovar_ozon');g('tovar_ozon_igra_intensive');}},true);})();
+var t=e.target,a=t&&t.closest?t.closest('a[href^="/magazin/zakaz/"]'):null;
+if(a){g('tovar_order');g('tovar_order_igra_intensive');}},true);})();
 </script>
 <!-- /tovar-goals -->
 </body>

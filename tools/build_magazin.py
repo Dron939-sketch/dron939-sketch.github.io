@@ -26,6 +26,11 @@ import json
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Срок предзаказа «Ключей» (владелец 26.10.2026: фокус-группа спрашивала «когда?»).
+# Меняется здесь — встаёт в витрину, вопросы и страницу заказа.
+KEYS_DUE = "до 30 ноября 2026"
+
 OUT = os.path.join(ROOT, "magazin", "index.html")
 SITE = "https://meysternlp.ru"
 
@@ -432,14 +437,23 @@ FAQ = [
      "пожалуйста, не пересылайте её."),
     ("Когда выйдут остальные «Ключи»?",
      "Серия выходит по одной записи. Первая, «Ум-объяснитель», уже продаётся. На остальные 46 "
-     "можно оформить предзаказ — 690 ₽: ссылка придёт на почту в день выхода записи, делать "
-     "ничего не нужно. О выходе новых записей — в Telegram-канале."),
+     "можно оформить предзаказ — 690 ₽. Срок выхода — " + KEYS_DUE + ": ссылка придёт на почту "
+     "в день выхода записи, делать ничего не нужно. О выходе новых записей — в Telegram-канале."),
 ]
 
 CSS = """
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
-:root{--bg:#0c0c0c;--card:#151515;--card2:#1b1b1b;--line:rgba(255,255,255,.09);--text:#f0f0f0;--muted:#b9b9b9;--faint:#8a8a8a;--accent:#3A86FF;--accent2:#00b4ff}
+:root{--bg:#f5f6f8;--card:#fff;--card2:#eef1f5;--line:rgba(15,23,42,.11);--text:#15181d;--muted:#4a5260;--faint:#667085;--accent:#1f6fe5;--accent2:#00b4ff;--kind:#1d5fd1;--tint:#eef4ff;--input:#fff;--warn:#8a5a00;--warnbg:rgba(255,190,60,.18);--err:#c62828;--hero:#0f1115;--hero-text:#f0f2f5;--hero-muted:#b9c0ca}
+[data-theme=dark]{--bg:#121417;--card:#1a1d22;--card2:#20242a;--line:rgba(255,255,255,.09);--text:#e6e9ee;--muted:#b4bac3;--faint:#8e96a1;--accent:#3A86FF;--kind:#9cc2ff;--tint:#101828;--input:#101215;--warn:#ffd27a;--warnbg:rgba(255,190,60,.12);--err:#ff8a8a;--hero:#0c0d10}
+/* полоса-герой сверху всегда тёмная: характер бренда, как на главной */
+.hero{background:var(--hero);color:var(--hero-text);padding:0 0 22px;margin-bottom:6px}
+.hero .crumbs,.hero .crumbs a{color:#9aa3ae}.hero .lead{color:var(--hero-muted)}.hero h1{color:#fff}
+.hero .wrap{position:relative}
+.theme-btn{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.theme-btn:hover{border-color:#3A86FF}.theme-btn .moon{display:inline}.theme-btn .sun{display:none}
+[data-theme=dark] .theme-btn .moon{display:none}[data-theme=dark] .theme-btn .sun{display:inline}
+.hero h1{padding-right:52px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.55;font-size:16px}
@@ -462,7 +476,7 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .cat b{font-weight:620;font-size:.92rem;line-height:1.25}
 .cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
 .q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:italic 700 .9rem/1 Georgia,'Times New Roman',serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:#fff}
+.q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
 .tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
 .tip.on{display:block}
 .tip b{color:var(--text)}
@@ -477,11 +491,11 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
 .it{display:grid;grid-template-columns:84px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
 .it.main{border-color:rgba(58,134,255,.6)}
-.th{width:84px;height:84px;border-radius:10px;background:#1f1f1f;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.th{width:84px;height:84px;border-radius:10px;background:var(--card2);overflow:hidden;display:flex;align-items:center;justify-content:center}
 .th img{width:100%;height:100%;object-fit:cover}
 .th .emo{font-size:2.2rem}
 .tx{display:flex;flex-direction:column;gap:4px;min-width:0}
-.kind{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#9cc2ff}
+.kind{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--kind)}
 .price{font-weight:650;font-size:.98rem}
 .price small{font-weight:400;color:var(--muted);font-size:.86rem}
 .who{font-size:.88rem;color:var(--muted)}
@@ -495,7 +509,7 @@ details p{margin-top:4px}
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 16px;border-radius:20px;font-weight:600;font-size:.88rem}
 .btn-buy{background:linear-gradient(135deg,#0a6fd6,#2f6fe0);color:#fff}
-.btn-more{border:1px solid var(--accent);color:#fff}
+.btn-more{border:1px solid var(--accent);color:var(--text)}
 .btn:hover{text-decoration:none;filter:brightness(1.1)}
 .free ul,.keys ol{list-style:none;display:grid;gap:8px}
 .free li,.keys li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--muted);font-size:.92rem}
@@ -509,15 +523,15 @@ details p{margin-top:4px}
 .rec{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px}
 .rec img{width:52px;height:52px;border-radius:9px;object-fit:cover;display:block}
 .rec b{display:block;color:var(--text);font-weight:600;font-size:.9rem;line-height:1.25}
-.rec b i{font-style:normal;color:#9cc2ff;font-weight:600;margin-right:4px}
+.rec b i{font-style:normal;color:var(--kind);font-weight:600;margin-right:4px}
 .rec small{display:block;color:var(--faint);font-size:.78rem;line-height:1.3;margin-top:2px}
 .rec .teach{color:var(--muted);margin-top:4px}
 .rb{display:inline-flex;align-items:center;min-height:32px;margin-top:6px;padding:4px 12px;border-radius:16px;font-size:.8rem;font-weight:600;color:#fff;background:linear-gradient(135deg,#0a6fd6,#2f6fe0)}
-.rb.pre{background:none;border:1px solid var(--accent);color:#cfe0ff}
+.rb.pre{background:none;border:1px solid var(--accent);color:var(--kind)}
 .rb:hover{text-decoration:none;filter:brightness(1.15)}
 .rec{align-items:start}
-.rec em{font-style:normal;font-size:.7rem;color:#ffd27a;margin-left:4px}
-.status{display:inline-block;background:rgba(255,190,60,.12);color:#ffd27a;border-radius:12px;padding:3px 10px;font-size:.8rem}
+.rec em{font-style:normal;font-size:.7rem;color:var(--warn);margin-left:4px}
+.status{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:12px;padding:3px 10px;font-size:.8rem}
 .keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
 .note{font-size:.85rem;color:var(--faint)}
 table.pick{width:100%;border-collapse:collapse;font-size:.93rem}
@@ -532,7 +546,7 @@ table.pick td:first-child{color:var(--text);width:46%}
 .legend{font-size:.82rem;color:var(--faint);margin:10px 0 0}
 .buy{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--card);border:1px solid rgba(58,134,255,.6);border-radius:14px;padding:14px;margin:6px 0 16px}
 .bimg img{width:150px;height:150px;border-radius:12px;object-fit:cover;display:block}
-.listen{display:grid;gap:3px;background:#101828;border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;margin:8px 0}
+.listen{display:grid;gap:3px;background:var(--tint);border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;margin:8px 0}
 .listen b{font-size:.92rem}.listen small{color:var(--muted);font-size:.82rem}
 .listen audio{width:100%;height:40px;margin-top:4px}
 .cancel{font-size:.86rem;color:var(--muted);border-left:2px solid var(--accent);padding-left:8px}
@@ -548,14 +562,14 @@ table.pick td:first-child{color:var(--text);width:46%}
 .buy h3{font-size:1.15rem;margin:2px 0 4px}
 .buy .who{margin-bottom:6px}
 .bf{display:grid;gap:8px;margin-top:8px;max-width:440px}
-.bf input[type=email],.bf input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#101010;color:var(--text);font:inherit}
+.bf input[type=email],.bf input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--input);color:var(--text);font:inherit}
 .bf input:focus{outline:none;border-color:var(--accent)}
 .bf .hp{position:absolute;left:-9999px;width:1px;height:1px}
 .bf .agree{font-size:.82rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
 .bf .agree input{margin-top:3px;accent-color:#3A86FF}
 .bf .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:44px}
 .bf .btn:disabled{opacity:.6;cursor:default}
-.berr{color:#ff8a8a;font-size:.88rem;min-height:1.1em}
+.berr{color:var(--err);font-size:.88rem;min-height:1.1em}
 @media(max-width:560px){.buy{grid-template-columns:1fr}}
 details.all{margin-top:12px}
 details.all>summary{font-size:.95rem;padding:10px 0}
@@ -713,7 +727,7 @@ def build():
         shelf("fredi", "Фреди — программа-собеседник", "",
               '<div class="list">%s</div>' % by("fredi")),
         shelf("klyuchi", "Аудиосерия «Ключи» — фундамент предметов", "",
-              '<div class="keys"><span class="status">первая запись — в продаже · остальные 46 — предзаказ по 690 ₽</span>\n'
+              '<div class="keys"><span class="status">первая запись — в продаже · остальные 46 — предзаказ по 690 ₽, выход ' + KEYS_DUE + '</span>\n'
               '<p style="margin-top:10px">Вспомните предмет, который в школе так и не дался: формулы были, а понимания — нет. '
               'Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — '
               'и привычки смотреть на предмет под нужным углом.</p>\n'
@@ -799,6 +813,7 @@ def build():
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico">
 <!-- Собрано tools/build_magazin.py — правки там, не здесь. -->
+<script src="/theme.js"></script>
 <style>%(css)s</style>
 <script type="text/javascript">
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');
@@ -813,10 +828,13 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 %(nav)s
 %(hload)s
 
-<main class="wrap">
+<div class="hero"><div class="wrap">
 <div class="crumbs"><a href="/">Главная</a> / Магазин</div>
+<button class="theme-btn" type="button" aria-label="Переключить тему" aria-pressed="false"><span class="moon">☾</span><span class="sun">☀</span></button>
 <h1>Магазин</h1>
 <p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «i» объяснит, что внутри.</p>
+</div></div>
+<main class="wrap">
 %(cats)s
 %(top)s
 %(shelves)s
@@ -865,26 +883,26 @@ def order_catalog():
             "name": "«Ключи». Запись %s «%s»" % (num, title), "amount": 690,
             "img": "/magazin/img/k/%02d.webp" % i, "digital": True, "preorder": True,
             "kind": "Аудиозапись · предзаказ",
-            "note": "· предзаказ: ссылка придёт на почту в день выхода записи",
+            "note": "· предзаказ, выход " + KEYS_DUE + ": ссылка придёт на почту в день выхода",
             "desc": "Учит замечать: %s. Ключевая идея: %s" % (f, k)}
     return cat
 
 
 ORDER_CSS = """
 .ord{display:grid;grid-template-columns:120px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:14px 0}
-.ord img{width:120px;height:120px;object-fit:cover;border-radius:10px;background:#1f1f1f}
+.ord img{width:120px;height:120px;object-fit:cover;border-radius:10px;background:var(--card2)}
 .ord .price{font-size:1.2rem}
 .of{display:grid;gap:10px;max-width:560px;margin:10px 0 40px}
 .of label{font-size:.85rem;color:var(--muted);display:grid;gap:4px}
-.of input,.of textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:#101010;color:var(--text);font:inherit}
+.of input,.of textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--input);color:var(--text);font:inherit}
 .of input:focus,.of textarea:focus{outline:none;border-color:var(--accent)}
 .of .hp{position:absolute;left:-9999px;width:1px;height:1px}
 .of .agree{display:flex;gap:8px;align-items:flex-start;font-size:.85rem}
 .of .agree input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:#3A86FF}
 .of .btn{border:0;cursor:pointer;font:inherit;font-weight:600;min-height:48px;font-size:1rem}
 .of .btn:disabled{opacity:.6;cursor:default}
-.oerr{color:#ff8a8a;font-size:.9rem;min-height:1.1em}
-.ship{background:#101828;border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;font-size:.9rem;color:var(--muted)}
+.oerr{color:var(--err);font-size:.9rem;min-height:1.1em}
+.ship{background:var(--tint);border:1px solid rgba(58,134,255,.35);border-radius:12px;padding:10px 12px;font-size:.9rem;color:var(--muted)}
 @media(max-width:560px){.ord{grid-template-columns:84px 1fr}.ord img{width:84px;height:84px}}
 """
 
@@ -957,7 +975,7 @@ def order_pages(nav, loader):
             '<meta name="robots" content="noindex, follow">\n<title>@TITLE@ | Андрей Мейстер</title>\n'
             '<meta name="description" content="@DESC@">\n<link rel="canonical" href="https://meysternlp.ru/magazin/">\n'
             '<link rel="icon" href="/favicon.ico">\n<!-- Собрано tools/build_magazin.py — правки там, не здесь. -->\n'
-            '<style>' + CSS + ORDER_CSS + '</style>\n'
+            '<script src="/theme.js"></script>\n<style>' + CSS + ORDER_CSS + '</style>\n'
             '<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();'
             'k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})'
             '(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");'
@@ -966,8 +984,8 @@ def order_pages(nav, loader):
     foot = ('<div id="footer-placeholder"></div>\n' + loader % ("footer", "footer") + "\n")
     page_head = lambda t, d: head.replace("@TITLE@", t).replace("@DESC@", d)
     zakaz = (page_head("Заказ", "Оформление заказа в магазине Андрея Мейстера.") +
-        '<main class="wrap">\n<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Заказ</div>\n'
-        '<h1>Оформление заказа</h1>\n<div id="ord" class="ord"></div>\n'
+        '<div class="hero"><div class="wrap">\n<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Заказ</div>\n<button class=\"theme-btn\" type=\"button\" aria-label=\"Переключить тему\" aria-pressed=\"false\"><span class=\"moon\">☾</span><span class=\"sun\">☀</span></button>\n'
+        '<h1>Оформление заказа</h1>\n</div></div>\n<main class="wrap">\n<div id="ord" class="ord"></div>\n'
         '<form id="of" class="of" novalidate>\n'
         '<p class="ship phys">Товар оплачиваете сейчас, картой через ЮKassa. Доставку СДЭК — сами, при получении в пункте выдачи, '
         'по тарифу СДЭК. Ближайший пункт — на <a href="https://www.cdek.ru/ru/offices" target="_blank" rel="noopener">карте СДЭК</a>.</p>\n'
@@ -983,8 +1001,8 @@ def order_pages(nav, loader):
         '<button class="btn btn-buy" type="submit">Оплатить</button>\n<p class="oerr" role="alert"></p>\n</form>\n</main>\n'
         + foot + '<script>window.ORDER_CATALOG=' + json.dumps(order_catalog(), ensure_ascii=False) + ';' + ORDER_JS + '</script>\n</body>\n</html>\n')
     spasibo = (page_head("Оплата заказа", "Статус оплаты заказа в магазине Андрея Мейстера.") +
-        '<main class="wrap">\n<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Оплата</div>\n'
-        '<h1 id="tTitle">Проверяем оплату…</h1>\n<p class="lead" id="tText">Это занимает несколько секунд. Страницу закрывать не нужно.</p>\n'
+        '<div class="hero"><div class="wrap">\n<div class="crumbs"><a href="/">Главная</a> / <a href="/magazin/">Магазин</a> / Оплата</div>\n<button class=\"theme-btn\" type=\"button\" aria-label=\"Переключить тему\" aria-pressed=\"false\"><span class=\"moon\">☾</span><span class=\"sun\">☀</span></button>\n'
+        '<h1 id="tTitle">Проверяем оплату…</h1>\n</div></div>\n<main class="wrap">\n<p class="lead" id="tText">Это занимает несколько секунд. Страницу закрывать не нужно.</p>\n'
         '<p class="note" id="tOrder"></p>\n'
         '<p id="tListen" hidden><a class="btn btn-buy" id="tLink" href="#" target="_blank" rel="noopener">Открыть</a></p>\n'
         '<p class="ship" id="tNote" hidden></p>\n<p style="margin:26px 0 50px"><a href="/magazin/">← В магазин</a></p>\n</main>\n'

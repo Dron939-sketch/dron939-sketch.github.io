@@ -20,19 +20,19 @@ BLOG = os.path.join(ROOT, "blog")
 
 BOOKS = [
     dict(key="manip",
-         url="https://www.ozon.ru/product/teoriya-manipulyatsii-razgovornyy-gipnoz-knigi-po-psihologii-nlp-2-0-meyster-andrey-yurevich-839926527",
+         url="/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/",
          li='Мейстер А. «Теория манипуляции. Том 1: Разговорный гипноз» — как устроены '
             'речевые конструкции влияния и как замечать их в свой адрес.',
          pat=r"манипул|гипноз|внушен|убежд|влиян|перегово|продаж|речев|воздейств|раппорт|транс\b|нлп",
          rub={"gipnoz"}),
     dict(key="konceptikon",
-         url="https://www.ozon.ru/product/kontseptikon-sem-linz-dlya-yasnogo-myshleniya-meyster-andrey-yurevich-1167705948/",
+         url="/knigi/kontseptikon-sem-linz/",
          li='Мейстер А. «Концептикон. Семь линз для ясного мышления» — семь способов '
             'смотреть на одну и ту же ситуацию и что каждый из них показывает.',
          pat=r"мышлен|искажен|критическ|логик|аргумент|довод|рассужд|заблужд",
          rub={"myshlenie"}),
     dict(key="variatika",
-         url="https://www.ozon.ru/product/variatika-biblioteka-chelovecheskih-patternov-meyster-andrey-yurevich-989039765/",
+         url="/knigi/variatika-biblioteka-chelovecheskih-patternov/",
          li='Мейстер А. «Вариатика. Библиотека человеческих паттернов» — четыре базовые '
             'программы и девять уровней развития: как устроены типовые сценарии поведения.',
          pat=r"паттерн|психотип|типолог|тип личност|прошивк личност|архетип|"
@@ -85,7 +85,7 @@ def book_box(b):
             '<span style="font-size:1.6rem" aria-hidden="true">📕</span>'
             '<div style="flex:1;min-width:220px"><b style="color:#1D1D1F">Разобрано подробно в книге</b>'
             '<br><span style="color:#6E6E73;font-size:.92rem">%s</span></div>'
-            '<a href="%s" rel="nofollow" style="background:#3A86FF;color:#fff;'
+            '<a href="%s" style="background:#3A86FF;color:#fff;'
             'text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:600;'
             'font-size:.92rem">О книге →</a></div>' % (b["li"], b["url"]))
 
@@ -152,14 +152,14 @@ def main(apply=False):
         b = pick(BOOKS, text, rk)
         if b and b["url"] not in s:
             if m:
-                li = ('<li><a href="%s" rel="nofollow">%s</a></li>' % (b["url"], b["li"]))
+                li = ('<li><a href="%s">%s</a></li>' % (b["url"], b["li"]))
                 if s[m.end():].lstrip().startswith("<ul>"):
                     i = s.index("<ul>", m.end())
                     s = s[:i + 4] + li + s[i + 4:]
                 else:
                     j = s.find("</p>", m.end())
                     if j > 0:
-                        s = (s[:j + 4] + '<p><a href="%s" rel="nofollow">%s</a></p>'
+                        s = (s[:j + 4] + '<p><a href="%s">%s</a></p>'
                              % (b["url"], b["li"]) + s[j + 4:])
                 if s != orig:
                     stat["книга в список: " + b["key"]] += 1
