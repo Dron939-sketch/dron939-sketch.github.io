@@ -122,6 +122,27 @@ def sync_hub(by):
     s = re.sub(r"\b\d+ стат(?:ья|ьи|ей)\b", "%d %s" % (total, plural(total)), s0)
     s = re.sub(r'<a class="go" href="/blog/rubrika/([a-z]+)/">Все \d+ стат(?:ья|ьи|ей)',
                per_rubric, s)
+    # У карточки рубрики есть и своё число в шапке, и полоска уровней — их
+    # инструмент не трогал, и они отстали от ссылки «Все N статей» в той же
+    # карточке: у «Страхов» 29 против 47, у «Отношений» 25 против 98 (фокус-
+    # группа 26.10.2026: «каким цифрам верить?»). Обновляем по карточкам.
+    def per_card(m):
+        card = m.group(0)
+        g = re.search(r'href="/blog/rubrika/([a-z]+)/"', card)
+        if not g or g.group(1) not in by:
+            return card
+        arts = by[g.group(1)]
+        n = len(arts)
+        lv = {k: sum(1 for a in arts if a.get("level") == k) for k in ("n", "m", "p")}
+        card = re.sub(r'(<span class="count tnum">)\d+(</span>)', lambda x: "%s%d%s" % (x.group(1), n, x.group(2)), card, count=1)
+        card = re.sub(r'title="новичку \d+ · среднему \d+ · профи \d+"',
+                      'title="новичку %d · среднему %d · профи %d"' % (lv["n"], lv["m"], lv["p"]), card, count=1)
+        if n:
+            for k in ("n", "m", "p"):
+                card = re.sub(r'--w%s:[\d.]+%%' % k, "--w%s:%.1f%%" % (k, 100.0 * lv[k] / n), card, count=1)
+        return card
+    s = re.sub(r'<div class="card"[^>]*>.*?(?=<div class="card"|</div>\s*</div>\s*<(?!div class="card"))',
+               per_card, s, flags=re.S)
     # счётчик «N материалов» дорисовывает скрипт, а в разметке лежит «0»:
     # краулер без JS читал «0 материалов». Кладём число прямо в тег.
     s = re.sub(r'(id="counter" data-target=")\d+("[^>]*>)\d+',
