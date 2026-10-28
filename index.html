@@ -593,8 +593,16 @@
     .intro-proof li::before{content:'';position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:#3A86FF}
     .intro-proof b{color:#fff;font-weight:600}
     .intro-lead2{color:#fff;margin-top:-6px}
-    .intro-test{margin:22px 0 0;color:#B9BFC8;font-size:.95rem}
-    .intro-test a{color:#8EC5FF;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(142,197,255,.4)}
+    .paths{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .path-h{text-transform:none;font-size:1.3rem;font-weight:600;letter-spacing:0;color:#fff;margin:0 0 2px;text-align:left}
+    .path-h::after{display:none}
+    .path-sub{color:#8EC5FF;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 12px}
+    .path .door{flex-direction:row;gap:0 14px;padding:14px 16px;margin-bottom:12px}
+    .path .door img{width:64px;height:64px;margin:0;flex:none}
+    .path .door .dt{min-width:0}
+    .path .door b{font-size:1.06rem;margin-bottom:4px}
+    .path .door p{font-size:.93rem;margin-bottom:8px}
+    @media(max-width:860px){.paths{grid-template-columns:1fr}}
     .doors{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
     .door{position:relative;display:flex;flex-direction:column;background:#15171B;border:1px solid rgba(58,134,255,.22);border-radius:16px;padding:20px 20px 22px;color:#E6E8EB;text-decoration:none;transition:border-color .2s,transform .2s}
     .door:hover{border-color:#3A86FF;transform:translateY(-3px);color:#E6E8EB;text-shadow:none}
@@ -1446,34 +1454,62 @@ body{overflow-wrap:break-word}</style>
     <div class="intro-kick">Андрей Мейстер · исследователь</div>
     <h1 id="intro-h">Бог умер. <span>Теперь мы сами по себе.</span></h1>
     <p class="intro-lead">Старые истории — религия, идеология — больше не держат. А без истории, в которую верит, человек не живёт, поэтому берёт готовую: у семьи, у рекламы, у начальника, у того, кто говорит увереннее. На этом стоит любая манипуляция. Вам дают историю — и вы считаете её своей.</p>
-    <p class="intro-lead intro-lead2">Люди предсказуемы, если знать, куда смотреть. С 2008 года — исследование того, как истории управляют решениями. Всё, что ниже, — его результаты.</p>
+    <p class="intro-lead intro-lead2">Люди предсказуемы, если знать, куда смотреть. С 2008 года — исследование того, как истории управляют решениями. Всё, что ниже, — его результаты: инструменты, чтобы распознать чужую историю или создать свою — для себя и для других.</p>
     <ul class="intro-proof">
       <li><b>Кандидат психологических наук</b></li>
       <li><b>4,9 ★</b> у «Теории манипуляции» — больше 1&nbsp;500 отзывов на Ozon</li>
       <li><b>Лекторий</b> — открыт целиком, без регистрации</li>
       <li><b>Фреди</b> — отвечает и в три часа ночи</li>
     </ul>
-    <div class="doors">
-      <a class="door" href="/blog/lektorij/">
-        <img src="/magazin/img/cat-besplatno.webp" alt="" width="84" height="84" loading="eager">
-        <span class="dt"><span class="door-kick">Понять себя · бесплатно</span><b>Лекторий</b>
-        <p>Курсы-лекции о страхе, решениях, отношениях и деньгах. Без регистрации и без оплаты.</p>
-        <span class="go">Открыть Лекторий →</span></span>
-      </a>
-      <a class="door" href="/virtual-psychologist/">
-        <img src="/magazin/img/cat-fredi.webp" alt="" width="84" height="84" loading="eager">
-        <span class="dt"><span class="door-kick">Поговорить сейчас</span><b>Фреди — виртуальный психолог</b>
-        <p>Отвечает в три часа ночи и не устаёт слушать. Первые 15 минут бесплатно.</p>
-        <span class="go">Начать разговор →</span></span>
-      </a>
-      <a class="door main" href="/razgovornyj-gipnoz/standart/">
-        <img src="/magazin/img/cat-kursy.webp" alt="" width="84" height="84" loading="eager">
-        <span class="dt"><span class="door-kick">Научиться влиять словом</span><b>Разговорный гипноз</b>
-        <p>Пакет «Стандартный»: книга, 38 видео, блокнот с заданиями, игра и разбор ваших ситуаций с автором. 5&nbsp;900 ₽.</p>
-        <span class="go">Смотреть пакет →</span></span>
-      </a>
+    <!-- Продукты — инструменты на две стороны тезиса (владелец, 28.10.2026):
+         распознать чужой нарратив или создать свой — для себя и для других. -->
+    <div class="paths">
+      <div class="path">
+        <h2 class="path-h">Распознать чужую историю</h2>
+        <p class="path-sub">кто вас ведёт и как</p>
+        <a class="door" href="/blog/lektorij/">
+          <img src="/magazin/img/cat-besplatno.webp" alt="" width="64" height="64" loading="eager">
+          <span class="dt"><span class="door-kick">Бесплатно, без регистрации</span><b>Лекторий</b>
+          <p>Курсы-лекции о страхе, решениях, отношениях и деньгах — и о том, где в них чужой сценарий.</p>
+          <span class="go">Открыть Лекторий →</span></span>
+        </a>
+        <a class="door" href="/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/">
+          <img src="/magazin/img/kniga-tm.webp" alt="" width="64" height="64" loading="eager">
+          <span class="dt"><span class="door-kick">Книга · 990 ₽</span><b>«Теория манипуляции»</b>
+          <p>Приёмы воздействия по шагам: узнать их, когда их применяют к вам. 4,9 ★ на Ozon.</p>
+          <span class="go">О книге →</span></span>
+        </a>
+        <a class="door" href="/testy/klyuchi-karta-probelov/">
+          <img src="/magazin/img/cat-klyuchi.webp" alt="" width="64" height="64" loading="eager">
+          <span class="dt"><span class="door-kick">Тест · бесплатно</span><b>«Карта пробелов»</b>
+          <p>22 вопроса — и видно, каких понятий не хватает, чтобы замечать подмену.</p>
+          <span class="go">Пройти тест →</span></span>
+        </a>
+      </div>
+      <div class="path">
+        <h2 class="path-h">Создать свою</h2>
+        <p class="path-sub">для себя и для других</p>
+        <a class="door" href="/virtual-psychologist/">
+          <img src="/magazin/img/cat-fredi.webp" alt="" width="64" height="64" loading="eager">
+          <span class="dt"><span class="door-kick">Для себя · 15 минут бесплатно</span><b>Фреди — виртуальный психолог</b>
+          <p>Разобрать, по какой истории вы живёте и где она не ваша. Отвечает и в три часа ночи.</p>
+          <span class="go">Начать разговор →</span></span>
+        </a>
+        <a class="door" href="/variatika/">
+          <img src="/magazin/img/igra-variatika-basic.webp" alt="" width="64" height="64" loading="eager">
+          <span class="dt"><span class="door-kick">Игра · 3&nbsp;800 ₽</span><b>«Вариатика»</b>
+          <p>Пробовать другие ходы в безопасной игре — прежде чем в жизни.</p>
+          <span class="go">Об игре →</span></span>
+        </a>
+        <a class="door main" href="/razgovornyj-gipnoz/standart/">
+          <img src="/magazin/img/cat-kursy.webp" alt="" width="64" height="64" loading="eager">
+          <span class="dt"><span class="door-kick">Для других · 5&nbsp;900 ₽</span><b>Разговорный гипноз</b>
+          <p>Говорить так, чтобы вашу историю услышали. Пакет «Стандартный»: книга, 38 видео, блокнот, игра и разбор ваших ситуаций с автором.</p>
+          <span class="go">Смотреть пакет →</span></span>
+        </a>
+      </div>
     </div>
-    <p class="intro-test"><a href="/testy/klyuchi-karta-probelov/">Проверить себя: тест «Карта пробелов» →</a> 22 вопроса — и видно, каких понятий не хватает, чтобы замечать чужую историю.</p>
+
   </div>
 </section>
 
