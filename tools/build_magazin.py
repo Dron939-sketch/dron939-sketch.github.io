@@ -301,7 +301,7 @@ KEYS_ALL = [
 # продаются по предзаказу за 690 ₽ (владелец 25.10.2026), товары klyuchi-<номер>
 # в order_routes.py Frederick.
 KEYS_TEACH = {
-    "0.2": ("что утверждается и на чём держится", "Из верного по правилам выводится только верное; правильная форма при ложной посылке даёт ложный вывод."),
+    "0.2": ("что утверждается и на чём держится", "Из верных посылок по правилам выводится только верное; из ложной посылки может выйти что угодно — и ложь, и случайная правда."),
     "0.3": ("что я могу вспомнить без подсказки, а что только узнаю, когда вижу", "Вспоминание учит сильнее перечитывания."),
     "0.4": ("что дано, что ищем, что мешает, где противоречие", "Переформулировка задачи часто и есть половина решения."),
     "1.1": ("сколько, что от чего зависит, что не меняется", "Число — сколько раз повторяется единица; умножение — счёт пачками."),
@@ -523,7 +523,7 @@ details p{margin-top:4px}
 .rec em{font-style:normal;font-size:.7rem;color:var(--warn);margin-left:4px}
 .status{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:12px;padding:3px 10px;font-size:.8rem}
 .keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
-.kt-cta{display:grid;gap:4px;margin:12px 0 4px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,rgba(123,47,247,.10),rgba(241,7,163,.08));border:1px solid rgba(123,47,247,.35);color:var(--text);text-decoration:none}
+.kt-cta{display:grid;gap:4px;margin:12px 0 4px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,rgba(58,134,255,.10),rgba(123,47,247,.08));border:1px solid rgba(123,47,247,.35);color:var(--text);text-decoration:none}
 .kt-cta:hover{text-decoration:none;border-color:#7B2FF7}
 .kt-cta span{color:var(--muted);font-size:.92rem}
 .kt-cta i{font-style:normal;font-weight:600;color:#7B2FF7}
