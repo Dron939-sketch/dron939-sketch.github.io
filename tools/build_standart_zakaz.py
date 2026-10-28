@@ -113,7 +113,7 @@ BODY = """<style>
       <h1>Пакет «Стандартный»</h1>
       <p>Всё, что нужно, чтобы приёмы разговорного гипноза перестали быть текстом и начали срабатывать в разговоре: механизм, образец, задания, проверка на живом человеке и разбор ваших ошибок.</p>
       <div class="pricetag"><b>5 900 ₽</b><span>с НДС · оплата картой через ЮKassa · доставку СДЭК вы оплачиваете при получении</span></div>
-      <div class="zk-proof"><span><a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/reviews/" target="_blank" rel="noopener"><b>4,9</b> и 320 отзывов на Ozon</a></span><span>СДЭК до пункта выдачи</span><span>доступ к видео на 12 месяцев</span><span>ответ автора в течение суток</span></div>
+      <div class="zk-proof"><span><b>4,9</b> и 320 отзывов на Ozon</span><span>СДЭК до пункта выдачи</span><span>доступ к видео на 12 месяцев</span><span>ответ автора в течение суток</span></div>
       <a class="go" href="#orderForm">Оформить заказ ↓</a>
     </div>
     <div class="shot"><img src="/treningi/komplekt-standart.webp" alt="Пакет «Стандартный» в раскрытой папке: блокнот, схемы, коробка «Доступ» и книга «Матчасть»" width="1100" height="1100"></div>
