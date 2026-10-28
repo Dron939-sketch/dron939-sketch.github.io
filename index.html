@@ -593,6 +593,7 @@
     .intro-proof li::before{content:'';position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:#3A86FF}
     .intro-proof b{color:#fff;font-weight:600}
     .intro-lead2{color:#fff;margin-top:-6px}
+    .intro-sign{margin:-4px 0 22px;font-size:clamp(.95rem,3.4vw,1.05rem);letter-spacing:.08em;color:#8EC5FF;font-style:italic}
     .paths{display:grid;grid-template-columns:1fr 1fr;gap:22px}
     .path-h{text-transform:none;font-size:1.3rem;font-weight:600;letter-spacing:0;color:#fff;margin:0 0 2px;text-align:left}
     .path-h::after{display:none}
@@ -1451,8 +1452,8 @@ body{overflow-wrap:break-word}</style>
      Авторитет — проверяемыми фактами (степень, отзывы на Ozon, Лекторий). -->
 <section class="intro" aria-labelledby="intro-h">
   <div class="container">
-    <div class="intro-kick">Андрей Мейстер · исследователь</div>
     <h1 id="intro-h">Бог умер. <span>Теперь мы сами по себе.</span></h1>
+    <p class="intro-sign">— Андрей Мейстер</p>
     <p class="intro-lead">Старые истории — религия, идеология — больше не держат. А без истории, в которую верит, человек не живёт, поэтому берёт готовую: у семьи, у рекламы, у начальника, у того, кто говорит увереннее. На этом стоит любая манипуляция. Вам дают историю — и вы считаете её своей.</p>
     <p class="intro-lead intro-lead2">Люди предсказуемы, если знать, куда смотреть. С 2008 года — исследование того, как истории управляют решениями. Всё, что ниже, — его результаты: инструменты, чтобы распознать чужую историю или создать свою — для себя и для других.</p>
     <ul class="intro-proof">
@@ -2201,5 +2202,54 @@ body{overflow-wrap:break-word}</style>
   });
 </script>
 
+<script>
+/* Метрика главной (28.10.2026): вовлекает она или отпугивает.
+   Цели home_* шлёт только живой браузер: без navigator.webdriver (наши
+   проверки в Playwright) и только пока вкладка видна. Боты рекламной сети
+   без JS сюда не доходят — их считает лишь запасной пиксель.
+   home_seen — 3 с на странице; home_read_15s — прочёл первый экран;
+   home_engaged_45s — задержался; home_see_tools / home_see_manifest —
+   докрутил до инструментов / до манифеста; home_click_raspoznat /
+   home_click_sozdat — клик в колонке; home_click_other — любой другой
+   переход; home_any_click — любой клик по ссылке. Параметр home_click —
+   адрес, куда ушёл. */
+(function () {
+  if (navigator.webdriver) return;
+  var ID = 108138656, sent = {};
+  function g(n, p) {
+    var k = n + (p ? '|' + p.home_click : '');
+    if (sent[k]) return; sent[k] = 1;
+    try { if (window.ym) p ? ym(ID, 'reachGoal', n, p) : ym(ID, 'reachGoal', n); } catch (e) {}
+  }
+  var active = 0;
+  setInterval(function () {
+    if (document.visibilityState !== 'visible') return;
+    active++;
+    if (active === 3) g('home_seen');
+    if (active === 15) g('home_read_15s');
+    if (active === 45) g('home_engaged_45s');
+  }, 1000);
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { g(e.target.getAttribute('data-ymg')); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.3 });
+    [['.paths', 'home_see_tools'], ['#home', 'home_see_manifest']].forEach(function (x) {
+      var el = document.querySelector(x[0]);
+      if (el) { el.setAttribute('data-ymg', x[1]); io.observe(el); }
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '', col = a.closest('.path');
+    var paths = document.querySelectorAll('.path');
+    if (col) g(col === paths[0] ? 'home_click_raspoznat' : 'home_click_sozdat', { home_click: href });
+    else g('home_click_other', { home_click: href });
+    g('home_any_click');
+  }, true);
+})();
+</script>
 </body>
 </html>
