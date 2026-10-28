@@ -157,9 +157,9 @@ BODY = """<style>
     <label class="agree"><input id="fAgree" type="checkbox">
       <span>Соглашаюсь с <a href="/oferta/" target="_blank" rel="noopener">офертой</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener">политикой конфиденциальности</a>. Данные нужны для доставки и чека.</span>
     </label>
-    <p class="t" style="font-size:.88rem;color:var(--muted);margin:10px 0 12px">Сейчас вы платите 5 900 ₽ — это вся стоимость пакета. Доставку СДЭК оплачиваете при получении. Вернуть можно в течение семи дней после получения, если товар не был в употреблении. Продаёт и отправляет пакет менеджер Андрея Мейстера — ИП Медведев Андрей Юрьевич, ИНН 502238728185: от его имени придёт чек на почту, реквизиты — в <a href="/oferta/">оферте</a>.</p>
+    <p class="t" style="font-size:.88rem;color:var(--muted);margin:10px 0 12px">Сейчас вы платите 5 900 ₽ — это вся стоимость пакета. Доставку СДЭК оплачиваете при получении. Вернуть можно в течение семи дней после получения, если товар не был в употреблении. Чек придёт на почту, реквизиты продавца — в <a href="/oferta/">оферте</a>.</p>
     <button class="btn-buy" id="fSubmit" type="button">Оплатить 5 900 ₽</button>
-    <p class="t" style="font-size:.82rem;color:var(--faint);margin:10px 0 0">Если включён VPN, выключите его на время оплаты — иначе страница банка может не открыться. Деньги в этом случае не спишутся.</p>
+    <p class="t" style="font-size:.82rem;color:var(--faint);margin:10px 0 0">Оплата — на защищённой странице ЮKassa. Если она не открылась, выключите VPN и нажмите ещё раз.</p>
     <div class="err" id="fErr"></div>
   </div>
 
