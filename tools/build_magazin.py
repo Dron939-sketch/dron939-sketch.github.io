@@ -523,6 +523,10 @@ details p{margin-top:4px}
 .rec em{font-style:normal;font-size:.7rem;color:var(--warn);margin-left:4px}
 .status{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:12px;padding:3px 10px;font-size:.8rem}
 .keys p{color:var(--muted);font-size:.95rem;margin-bottom:10px;max-width:760px}
+.kt-cta{display:grid;gap:4px;margin:12px 0 4px;padding:14px 16px;border-radius:14px;background:linear-gradient(135deg,rgba(123,47,247,.10),rgba(241,7,163,.08));border:1px solid rgba(123,47,247,.35);color:var(--text);text-decoration:none}
+.kt-cta:hover{text-decoration:none;border-color:#7B2FF7}
+.kt-cta span{color:var(--muted);font-size:.92rem}
+.kt-cta i{font-style:normal;font-weight:600;color:#7B2FF7}
 .note{font-size:.85rem;color:var(--faint)}
 table.pick{width:100%;border-collapse:collapse;font-size:.93rem}
 table.pick td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
@@ -718,6 +722,9 @@ def build():
               '<div class="list">%s</div>' % by("fredi")),
         shelf("klyuchi", "Аудиосерия «Ключи» — фундамент предметов", "",
               '<div class="keys"><span class="status">первая запись — в продаже · остальные 46 — предзаказ по 690 ₽, выход ' + KEYS_DUE + '</span>\n'
+              '<a class="kt-cta" href="/testy/klyuchi-karta-probelov/" onclick="try{ym(108138656,\'reachGoal\',\'klyuchi_test_from_shop\')}catch(e){}">'
+              '<b>С какой записи начать?</b><span>Тест «Карта пробелов»: 22 бытовые ситуации, 5–7 минут. Покажет, каких понятий '
+              'вам не хватает, к чему это ведёт и какие записи закрывают пробел.</span><i>Пройти тест →</i></a>\n'
               '<p style="margin-top:10px">Вспомните предмет, который в школе так и не дался: формулы были, а понимания — нет. '
               'Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — '
               'и привычки смотреть на предмет под нужным углом.</p>\n'
