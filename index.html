@@ -593,9 +593,15 @@
        с переходом 0,35 с. Видео снято на чёрном: в режиме lighten чёрное уходит в фон секции,
        вырезать фигуру не нужно. Свет фона — за заголовком, а за фигурой
        темно, иначе тёмный жилет подсвечивается синим. */
-    .intro-face{aspect-ratio:1/1;overflow:hidden}
+    .intro-face{margin:0}
+    .intro-vid{aspect-ratio:1/1;overflow:hidden}
+    /* Подпись под видео (владелец, 29.10.2026): степень — как подпись к
+       портрету, а не строка о себе в тексте. */
+    .intro-cap{text-align:center;margin-top:-6px;line-height:1.35}
+    .intro-cap b{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:1.15rem;color:#fff;letter-spacing:.01em}
+    .intro-cap span{display:block;font-size:.88rem;color:#8EC5FF;letter-spacing:.04em}
     .intro-face video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(#000 72%,transparent 100%);mask-image:linear-gradient(#000 72%,transparent 100%)}
-    @media(max-width:860px){.intro-grid{grid-template-columns:1fr;gap:0}.intro-face{order:-1;width:78%;max-width:320px;margin:-14px auto 4px}}
+    @media(max-width:860px){.intro-grid{grid-template-columns:1fr;gap:0}.intro-face{order:-1;width:78%;max-width:320px;margin:-14px auto 22px}}
     .intro h1{text-transform:none;font-size:clamp(1.9rem,6.5vw,3rem);font-weight:600;letter-spacing:.01em;line-height:1.15;margin:0 0 14px;color:#fff}
     .intro-lead{max-width:720px;font-size:clamp(1.02rem,3.8vw,1.2rem);color:#D0D4DA;margin:0 0 20px}
     .intro-kick{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:#8EC5FF;margin:0 0 14px}
@@ -1492,19 +1498,21 @@ body{overflow-wrap:break-word}</style>
     <div class="intro-grid">
       <div class="intro-text">
       <h1 id="intro-h">Бог умер<sup class="intro-ast">*</sup>. Теперь вы сами по себе.</h1>
-      <p class="intro-sign">— Андрей Мейстер</p>
       <div class="intro-note">
         <p><span class="intro-ast">*</span>Бог — это история, в которую вы верили. Теперь вы в ней сомневаетесь, и это хорошо: значит, вы хотите разобраться сами, а не верить, потому что верят все.</p>
         <p>Сомнение — только первый шаг. Дальше захочется понять, кто вы: не кем вас считают, а какой вы на самом деле. Вы будете перебирать одну истину за другой, пока не поймёте, что готовой истины нет — её собирают сами. То, во что вы верили, привело не туда, куда обещали, и те, кому вы верили вчера, больше не убеждают. Теперь вы ищете путь сами.</p>
         <p class="intro-last">Здесь есть всё для этого.</p>
       </div>
       </div>
-      <div class="intro-face" aria-label="Андрей Мейстер">
-        <video autoplay loop muted playsinline preload="metadata" poster="/poster.webp" width="1280" height="720">
-          <source src="/hero-loop.webm" type="video/webm">
-          <source src="/hero-loop.mp4" type="video/mp4">
-        </video>
-      </div>
+      <figure class="intro-face">
+        <div class="intro-vid">
+          <video autoplay loop muted playsinline preload="metadata" poster="/poster.webp" width="1280" height="720" aria-label="Андрей Мейстер">
+            <source src="/hero-loop.webm" type="video/webm">
+            <source src="/hero-loop.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption class="intro-cap"><b>Андрей Мейстер</b><span>Кандидат психологических наук</span></figcaption>
+      </figure>
     </div>
     <!-- Что здесь есть (владелец, 29.10.2026): главная ничего не продаёт и не
          зовёт «попробуйте» — только описывает, что есть на сайте. Две колонки —
