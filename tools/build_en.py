@@ -49,7 +49,7 @@ a{color:var(--accent2)}
 .nav a{color:#E6E8EB;text-decoration:none;font-size:.86rem;letter-spacing:.08em;text-transform:uppercase}
 .nav a:hover,.nav a[aria-current]{color:var(--accent2)}
 .nav .lang{border:1px solid var(--line);border-radius:999px;padding:3px 10px;letter-spacing:.06em}
-@media(max-width:760px){.hd .wrap{padding-top:10px;padding-bottom:10px}.nav{margin-left:0;width:100%;gap:10px 16px}.nav a{font-size:.78rem}}
+@media(max-width:760px){.hd .wrap{padding-top:8px;padding-bottom:8px;min-height:0;flex-wrap:nowrap;gap:10px}.logo{font-size:1rem;letter-spacing:.2em}.nav{margin-left:auto;gap:12px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav a{font-size:.72rem;letter-spacing:.04em;white-space:nowrap}.nav a[href='/en/about/'],.nav a[href='/en/collaboration/']{display:none}}
 .hero{background:radial-gradient(900px 620px at 18% 12%,#1c2a5c 0%,#0f1633 50%,#090c1a 100%);padding:clamp(36px,7vw,72px) 0 clamp(30px,5vw,48px)}
 h1,h2,.serif{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:600;color:var(--ink);line-height:1.12}
 h1{font-size:clamp(2.3rem,6.4vw,3.8rem);margin:0 0 14px}
@@ -167,7 +167,9 @@ def page(path, title, desc, body, ld=None):
 
 
 def card(href, kick, title, text, ru=True):
-    tail = ' <span class="ru">In Russian.</span>' if ru else ""
+    # «In Russian» в каждой карточке читался как список недоступного
+    # (фокус-группа, раунд 6) — одна пометка над блоком, здесь пусто.
+    tail = ""
     return (f'<a class="card" href="{href}"><span class="k">{kick}</span><b>{title}</b>'
             f'<p>{text}{tail}</p></a>')
 
@@ -190,7 +192,7 @@ def home():
              "Anxiety, mood, burnout, personality type. Every result comes with an explanation of what it means and what to do."),
         card("/knigi/", "Books", "Theory of Manipulation, Variatika, Concepticon",
              "How influence, people and thinking work."),
-        card("/magazin/#klyuchi", "Audio · “Keys”", "The Conceptual Base",
+        card("/magazin/#klyuchi", "Audio", "The Conceptual Base",
              "One recording per school or university subject: the framework of concepts from which the rest can be derived."),
         card("/en/fredi/", "Companion", "Fredi — a virtual psychologist",
              "Conversation at any hour, tests and exercises. Talks in English.", ru=False),
@@ -211,7 +213,7 @@ def home():
 </div>{VIDEO}</div></div></section>
 <section class="sec"><div class="wrap">
 <h2>What has been built</h2>
-<p class="sub">eight tools — most of the content is in Russian</p>
+<p class="sub">eight tools · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
 </div></section>
@@ -242,7 +244,7 @@ def about():
 <p class="lead">Member of the European Association for Counselling (EAC) and the International Association of Applied Psychology (IAAP).</p>
 </div><div class="portrait"><img src="/obo-mne/andrej-mejster.jpg" alt="Andrey Meyster" width="1200" height="1500" loading="eager"></div></div></div></section>
 <section class="sec"><div class="wrap"><h2>Path</h2><p class="sub">education, research, work</p>{facts}</div></section>
-<section class="sec"><div class="wrap"><h2>What he builds</h2><p class="sub">most of it is in Russian</p><div class="cards">{cards}</div></div></section>
+<section class="sec"><div class="wrap"><h2>What he builds</h2><p class="sub">everything except Fredi is in Russian</p><div class="cards">{cards}</div></div></section>
 {COOP}"""
     ld = {"@context": "https://schema.org", "@type": "Person", "name": "Andrey Meyster",
           "alternateName": "Андрей Мейстер", "url": SITE + "/en/about/", "jobTitle": "Psychologist",
