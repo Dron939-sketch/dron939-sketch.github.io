@@ -583,6 +583,17 @@
 
     /* ===== КТО И ЧТО (26.10.2026): фокус-группа не понимала по «Бог умер», кто это ===== */
     .intro{padding:clamp(36px,7vw,72px) 0 clamp(30px,5vw,50px);background:#0C0C0C;border-bottom:1px solid rgba(58,134,255,.15)}
+    @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url(/fonts/playfair-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+    @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url(/fonts/playfair-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    .intro{background:radial-gradient(900px 620px at 18% 12%,#1c2a5c 0%,#0f1633 50%,#090c1a 100%)!important}
+    .intro-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:28px;align-items:center;margin-bottom:8px}
+    .intro h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif!important;font-weight:600!important;font-size:clamp(2.2rem,6.2vw,3.6rem)!important;letter-spacing:0!important;line-height:1.1!important}
+    /* Видео снято на чёрном: в режиме lighten чёрное уходит в фон секции,
+       вырезать фигуру не нужно. Свет фона — за заголовком, а за фигурой
+       темно, иначе тёмный жилет подсвечивается синим. */
+    .intro-face{aspect-ratio:1/1;overflow:hidden}
+    .intro-face video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(#000 72%,transparent 100%);mask-image:linear-gradient(#000 72%,transparent 100%)}
+    @media(max-width:860px){.intro-grid{grid-template-columns:1fr;gap:0}.intro-face{order:-1;width:78%;max-width:320px;margin:-14px auto 4px}}
     .intro h1{text-transform:none;font-size:clamp(1.9rem,6.5vw,3rem);font-weight:600;letter-spacing:.01em;line-height:1.15;margin:0 0 14px;color:#fff}
     .intro-lead{max-width:720px;font-size:clamp(1.02rem,3.8vw,1.2rem);color:#D0D4DA;margin:0 0 20px}
     .intro-kick{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:#8EC5FF;margin:0 0 14px}
@@ -604,6 +615,12 @@
     @media(max-width:520px){.intro-cta a{width:100%;text-align:center}}
     .paths-shop{margin:6px 0 0;color:#8A8F98;font-size:.93rem}
     .paths-shop a{color:#8EC5FF}
+    .path .door:hover b{color:#8EC5FF}
+    .coop-strip{padding:clamp(40px,7vw,64px) 0;border-top:1px solid rgba(58,134,255,.15);background:radial-gradient(700px 400px at 15% 0%,#15204a 0%,#0C0C0C 70%)}
+    .coop-strip h2{font-family:'Playfair Display',Georgia,serif;text-transform:none;letter-spacing:0;font-weight:600;color:#fff;margin:0 0 12px}
+    .coop-strip p{max-width:720px;color:#C9CED6;margin:0 0 18px}
+    .coop-link{display:inline-block;padding:12px 22px;border:1px solid rgba(58,134,255,.55);border-radius:12px;color:#E6E8EB;font-weight:600;text-decoration:none}
+    .coop-link:hover{border-color:#3A86FF;color:#fff;text-shadow:none}
     .paths{display:grid;grid-template-columns:1fr 1fr;gap:22px}
     .path-h{text-transform:none;font-size:1.3rem;font-weight:600;letter-spacing:0;color:#fff;margin:0 0 2px;text-align:left}
     .path-h::after{display:none}
@@ -1466,294 +1483,93 @@ body{overflow-wrap:break-word}</style>
      товары — в магазине. -->
 <section class="intro" aria-labelledby="intro-h">
   <div class="container">
-    <h1 id="intro-h">Бог умер<sup class="intro-ast">*</sup>. Теперь вы сами по себе.</h1>
-    <p class="intro-sign">— Андрей Мейстер</p>
-    <div class="intro-note">
-      <p><span class="intro-ast">*</span>Бог — это история, в которую вы верили. Теперь вы в ней сомневаетесь, и это хорошо: значит, вы хотите разобраться сами, а не верить, потому что верят все.</p>
-      <p>Сомнение — только первый шаг. Дальше захочется понять, кто вы: не кем вас считают, а какой вы на самом деле. Вы будете перебирать одну истину за другой, пока не поймёте, что готовой истины нет — её собирают сами. То, во что вы верили, привело не туда, куда обещали, и вчерашние учителя потеряли ваше доверие. Теперь вы ищете путь сами.</p>
-      <p class="intro-last">Здесь есть всё для этого.</p>
+    <!-- Лицо, шрифт с засечками и один глубокий фон — по образцу kurpatov.ru
+         (владелец, 29.10.2026): фокус-группа просила лицо автора с 26.10. -->
+    <div class="intro-grid">
+      <div class="intro-text">
+      <h1 id="intro-h">Бог умер<sup class="intro-ast">*</sup>. Теперь вы сами по себе.</h1>
+      <p class="intro-sign">— Андрей Мейстер</p>
+      <div class="intro-note">
+        <p><span class="intro-ast">*</span>Бог — это история, в которую вы верили. Теперь вы в ней сомневаетесь, и это хорошо: значит, вы хотите разобраться сами, а не верить, потому что верят все.</p>
+        <p>Сомнение — только первый шаг. Дальше захочется понять, кто вы: не кем вас считают, а какой вы на самом деле. Вы будете перебирать одну истину за другой, пока не поймёте, что готовой истины нет — её собирают сами. То, во что вы верили, привело не туда, куда обещали, и вчерашние учителя потеряли ваше доверие. Теперь вы ищете путь сами.</p>
+        <p class="intro-last">Здесь есть всё для этого.</p>
+      </div>
+      </div>
+      <div class="intro-face" aria-label="Андрей Мейстер">
+        <video autoplay loop muted playsinline preload="metadata" poster="/poster.webp" width="1280" height="720">
+          <source src="/video.webm" type="video/webm">
+          <source src="/video.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
-    <div class="intro-cta">
-      <a class="cta-free" href="/blog/lektorij/">Начать бесплатно — Лекторий</a>
-      <a class="cta-paid" href="/virtual-psychologist/">Поговорить с Фреди — 15 минут бесплатно</a>
-    </div>
-    <!-- Продукты — инструменты на две стороны тезиса (владелец, 28.10.2026):
-         распознать чужой нарратив или создать свой — для себя и для других. -->
+    <!-- Что здесь есть (владелец, 29.10.2026): главная ничего не продаёт и не
+         зовёт «попробуйте» — только описывает, что есть на сайте. Две колонки —
+         две стороны тезиса: распознать чужую историю или создать свою. -->
     <div class="paths">
       <div class="path">
         <h2 class="path-h">Распознать чужую историю</h2>
         <p class="path-sub">кто вас ведёт и как</p>
         <a class="door" href="/blog/lektorij/">
-          <img src="/magazin/img/cat-besplatno.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Бесплатно, без регистрации</span><b>Лекторий</b>
-          <p>Курсы-лекции о страхе, решениях, отношениях и деньгах — и о том, где в них чужой сценарий.</p>
-          <span class="go">Открыть Лекторий →</span></span>
+          <img src="/magazin/img/cat-besplatno.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Курсы-лекции</span><b>Лекторий</b>
+          <p>Университет жизни: страх, решения, отношения, деньги, мышление. Открыт целиком, без регистрации.</p></span>
         </a>
-        <a class="door" href="/blog/rubrika/gipnoz/">
-          <img src="/magazin/img/cat-knigi.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Статьи</span><b>Гипноз, влияние, речь</b>
-          <p>Как работают внушение и манипуляция — разбор без мистики.</p>
-          <span class="go">Читать →</span></span>
+        <a class="door" href="/testy/">
+          <img src="/magazin/img/cat-vybor.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Опросники</span><b>Тесты</b>
+          <p>Тревога, настроение, выгорание, тип личности. К каждому результату — разбор: что он значит и что с этим делать.</p></span>
         </a>
-        <a class="door" href="/testy/klyuchi-karta-probelov/">
-          <img src="/magazin/img/cat-klyuchi.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Тест · бесплатно</span><b>«Карта пробелов»</b>
-          <p>22 вопроса — и видно, каких понятий не хватает, чтобы замечать подмену.</p>
-          <span class="go">Пройти тест →</span></span>
+        <a class="door" href="/knigi/">
+          <img src="/magazin/img/cat-knigi.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Книги</span><b>«Теория манипуляции», «Вариатика», «Концептикон»</b>
+          <p>Механика: как устроены влияние, люди и мышление.</p></span>
+        </a>
+        <a class="door" href="/magazin/#klyuchi">
+          <img src="/magazin/img/cat-klyuchi.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Аудиозаписи</span><b>Ключи</b>
+          <p>По записи на школьный или вузовский предмет: каркас понятий, из которого остальное выводится самому.</p></span>
         </a>
       </div>
       <div class="path">
         <h2 class="path-h">Создать свою</h2>
         <p class="path-sub">для себя и для других</p>
         <a class="door" href="/virtual-psychologist/">
-          <img src="/magazin/img/cat-fredi.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">15 минут бесплатно</span><b>Фреди — виртуальный психолог</b>
-          <p>Разобрать, по какой истории вы живёте и где она не ваша. Отвечает и в три часа ночи.</p>
-          <span class="go">Начать разговор →</span></span>
+          <img src="/magazin/img/cat-fredi.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Собеседник</span><b>Фреди — виртуальный психолог</b>
+          <p>Разговор в любое время, тесты и тренажёры. Помогает разобрать, по какой истории вы живёте и где она не ваша.</p></span>
+        </a>
+        <a class="door" href="/igry/">
+          <img src="/magazin/img/cat-igry.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Игры</span><b>«Вариатика» и игры-задачники</b>
+          <p>Навык ставится решением задач — за столом, вдвоём или компанией.</p></span>
+        </a>
+        <a class="door" href="/razgovornyj-gipnoz/">
+          <img src="/magazin/img/cat-kursy.webp" alt="" width="64" height="64" loading="lazy">
+          <span class="dt"><span class="door-kick">Метод</span><b>Разговорный гипноз</b>
+          <p>Как говорить так, чтобы вашу историю услышали: приём, упражнение, разбор ошибок.</p></span>
         </a>
         <a class="door" href="/istorii/">
-          <img src="/magazin/img/cat-vybor.webp" alt="" width="64" height="64" loading="eager">
+          <img src="/magazin/img/fredi-razgovor.webp" alt="" width="64" height="64" loading="lazy">
           <span class="dt"><span class="door-kick">Истории</span><b>Вы не один такой</b>
-          <p>Люди, которые проходят через то же, что и вы, — и их первый шаг.</p>
-          <span class="go">Читать истории →</span></span>
-        </a>
-        <a class="door" href="/blog/rubrika/motivaciya/">
-          <img src="/magazin/img/cat-igry.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Статьи</span><b>Мотивация и беспомощность</b>
-          <p>Почему «не поднимается рука», даже когда знаешь как, — и маршрут наружу.</p>
-          <span class="go">Читать →</span></span>
+          <p>Обезличенные истории людей, которые проходят через то же, что и вы, — и их первый шаг.</p></span>
         </a>
       </div>
     </div>
-    <p class="paths-shop">Книги, игры и курсы для этого — <a href="/magazin/">в магазине</a>.</p>
   </div>
 </section>
 
-<!-- ПОЛОСА БЫСТРОЙ ПОМОЩИ -->
-<section class="help-strip" aria-label="Быстрая помощь">
-  <div class="container">
-    <div class="help-strip-inner">
-      <div class="help-strip-label">Пришли не за философией, а за помощью?</div>
-      <div class="help-strip-links">
-        <a href="/istorii/">📖 Читать истории</a>
-        <a href="/blog/rubrika/telo/">🔋 Выгорание и усталость</a>
-        <a href="/fredi/" class="help-strip-cta">🧠 Поговорить с Фреди — 15 минут бесплатно</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- МОИ ПРОЕКТЫ -->
-<section id="projects" class="section">
-  <div class="container">
-    <h2>МОИ ПРОЕКТЫ</h2>
-    
-    <div class="projects-grid">
-      
-      <!-- Карточка 1 - Книги -->
-      <div class="project-card">
-        <div class="project-icon"><img src="/magazin/img/cat-knigi.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-question">ЧТО У МЕНЯ ВНУТРИ?</div>
-        <div class="project-title">КНИГИ</div>
-        <div class="project-desc">Увидеть свой нарратив, разобраться в его структуре</div>
-        <a href="/knigi/" aria-label="Перейти к книгам" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
-      </div>
-      
-      <!-- Карточка 2 - Игры -->
-      <div class="project-card">
-        <div class="project-icon"><img src="/magazin/img/cat-igry.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-question">КАК ЭТО РАБОТАЕТ?</div>
-        <div class="project-title">ИГРЫ</div>
-        <div class="project-desc">Научиться менять нарративы, пробовать в безопасной среде</div>
-        <a href="/igry/" aria-label="Перейти к играм" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
-      </div>
-      
-      <!-- Карточка 3 - Практикум -->
-      <div class="project-card">
-        <div class="project-icon"><img src="/magazin/img/cat-vybor.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-question">ЗАЧЕМ ЭТО НУЖНО?</div>
-        <div class="project-title">ПРАКТИКУМ</div>
-        <div class="project-desc">Создать свой камень, чтобы он жил после тебя</div>
-        <a href="/treningi/" aria-label="Перейти к тренингам" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
-      </div>
-      
-      <!-- Карточка 4 - Фреди -->
-      <div class="project-card">
-        <div class="project-icon"><img src="/magazin/img/cat-fredi.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-question">НУЖЕН РАЗГОВОР ПРЯМО СЕЙЧАС?</div>
-        <div class="project-title">ФРЕДИ — ВИРТУАЛЬНЫЙ ПСИХОЛОГ</div>
-        <div class="project-desc">AI-помощник для психологической поддержки 24/7. Первые 15 минут бесплатно.</div>
-        <a href="/fredi/" aria-label="Открыть Фреди — виртуальный психолог" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;"></a>
-      </div>
-      
-    </div>
-  </div>
-</section>
 
-<!-- КАК ЭТО РАБОТАЕТ -->
-<section class="system-section">
-  <div class="container">
-    <h2>КАК ЭТО РАБОТАЕТ</h2>
-    <p class="system-intro">Нарратив → Действия → Результаты. Ты можешь выбрать.</p>
-    
-    <div class="cycle-grid">
-      
-      <!-- Карточка 1: НАРРАТИВ -->
-      <div class="cycle-item">
-        <h3>НАРРАТИВ</h3>
-        <p>Определяет твои ценности и цели. Задает направление.</p>
-        <div class="cycle-quote">«Зачем я просыпаюсь утром?»</div>
-      </div>
-      
-      <!-- Карточка 2: ДЕЙСТВИЯ -->
-      <div class="cycle-item">
-        <h3>ДЕЙСТВИЯ</h3>
-        <p>Ты делаешь то, что соответствует нарративу. Осознанно или нет.</p>
-        <div class="cycle-quote">«Почему я поступаю именно так?»</div>
-      </div>
-      
-      <!-- Карточка 3: РЕЗУЛЬТАТЫ -->
-      <div class="cycle-item">
-        <h3>РЕЗУЛЬТАТЫ</h3>
-        <p>То, что ты получаешь в жизни. То, во что превращается твой нарратив.</p>
-        <div class="cycle-quote">«Это вообще моя жизнь?»</div>
-      </div>
-      
-    </div>
-    
-    <!-- Блок ВЫБОР -->
-    <div class="choice-block">
-      <div class="choice-inner">
-        <div class="choice-arrow">⬆️</div>
-        <div class="choice-title">ВЫБОР</div>
-        <div class="choice-text">Ты можешь поменять нарратив. А можешь оставить всё как есть.</div>
-      </div>
-    </div>
-    
-    <!-- ФРАЗА -->
-    <div class="statement-block">
-      <div class="statement-text">Я стремлюсь к тому, чтобы мои продукты работали без меня.</div>
-    </div>
-    
-    <!-- ТРИ КВАДРАТА С РАЗДЕЛИТЕЛЬНОЙ ЛИНИЕЙ.
-         На широком экране это перекличка с «Моими проектами»: там
-         развёрнуто, здесь одним словом. На телефоне переклички не выходит —
-         блоки идут в одну колонку, и человек второй раз подряд пролистывает
-         те же КНИГИ, ИГРЫ и ПРАКТИКУМЫ. Поэтому на узком экране повтор
-         убран (класс system-tools), те же ссылки остаются выше. -->
-    <div class="projects-grid system-tools" style="margin-top: 20px; margin-bottom: 10px;">
-      
-      <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-        <div class="project-icon" style="margin-bottom: 15px; display: block;"><img src="/magazin/img/cat-knigi.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">КНИГИ</div>
-        <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">увидеть нарратив</div>
-        <a href="/knigi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;" aria-label="Перейти к книгам"></a>
-      </div>
-      
-      <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-        <div class="project-icon" style="margin-bottom: 15px; display: block;"><img src="/magazin/img/cat-igry.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">ИГРЫ</div>
-        <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">научиться менять</div>
-        <a href="/igry/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;" aria-label="Перейти к играм"></a>
-      </div>
-      
-      <div class="project-card" style="padding: 30px 20px; position: relative; border-radius: 4px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-        <div class="project-icon" style="margin-bottom: 15px; display: block;"><img src="/magazin/img/cat-vybor.webp" alt="" width="72" height="72" loading="lazy"></div>
-        <div class="project-title" style="font-size: 1.2rem; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 10px; margin-bottom: 10px; width: 100%; color: #FFFFFF;">ПРАКТИКУМЫ</div>
-        <div style="font-size: 0.85rem; color: #3A86FF; letter-spacing: 0.1em; font-weight: 300; opacity: 0.9;">создать свой камень</div>
-        <a href="/treningi/" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-indent: -9999px;" aria-label="Перейти к тренингам"></a>
-      </div>
-      
-    </div>
-    
-    <!-- МИНИМАЛИСТИЧНОЕ ПОЯСНЕНИЕ (подпись к тем самым трём квадратам) -->
-    <div class="system-tools-caption" style="text-align: center; margin: 10px 0 50px;">
-      <span style="color: #8A8A8A; font-size: clamp(0.8rem, 3vw, 0.9rem); letter-spacing: 0.2em; border-bottom: 1px solid rgba(58, 134, 255, 0.3); padding-bottom: 5px;">ВЫБЕРИ СВОЙ ИНСТРУМЕНТ</span>
-    </div>
-    
-  </div>
-</section>
+
+
+
 
 <!-- Манифест «Бог умер» и «Чем я могу быть полезен» — ниже проектов (ФГ-2, 28.10.2026:
      8 из 9 участников сбивались, когда сразу под новым первым экраном начинался манифест). -->
-<!-- ГЕРОЙ -->
-<section id="home" class="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <div class="hero-phrase-block">
-          <div class="hero-phrase-line1">ЧУЖАЯ ИСТОРИЯ</div>
-          <div class="hero-phrase-line2">Её выбрали за вас</div>
-        </div>
-        
-        <div class="hero-divider"></div>
-        
-        <div class="hero-footnote">
-          семья, школа, реклама, тот, кто говорит увереннее
-        </div>
-        
-        <div class="hero-buttons">
-          <a href="/obo-mne/" class="btn">УЗНАТЬ</a>
-          <a href="#projects" class="btn">ПРОЕКТЫ</a>
-        </div>
-      </div>
-      
-      <div class="hero-image">
-        <div class="video-wrapper">
-          <video autoplay loop muted playsinline preload="metadata"
-                 poster="/poster.webp" width="1280" height="720">
-            <source src="/video.webm" type="video/webm">
-            <source src="/video.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
-          </video>
-        </div>
-        <div class="hero-sticker">НАРРАТИВ</div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Нижний блок «Чужая история» с тем же видео убран 29.10.2026: видео
+     переехало на первый экран. -->
 
-<!-- ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН -->
-<section id="strategies" class="section">
-  <div class="container">
-    <h2>ЧЕМ Я МОГУ БЫТЬ ПОЛЕЗЕН</h2>
-    <div class="help-grid">
-      
-      <div class="help-card">
-        <div class="help-question">ЗАЧЕМ?</div>
-        <div class="help-question-small">Зачем я просыпаюсь утром?</div>
-        <div class="help-answer">
-          <strong>Найти свой нарратив.</strong> Понять, какая история движет именно вами. Отличить своё от навязанного.
-        </div>
-      </div>
-      
-      <div class="help-card">
-        <div class="help-question">ПОЧЕМУ?</div>
-        <div class="help-question-small">Почему мне так неуютно?</div>
-        <div class="help-answer">
-          <strong>Разобрать пересечения.</strong> Увидеть, где голоса семьи, работы и среды спорят друг с другом. Найти точку выбора.
-        </div>
-      </div>
-      
-      <div class="help-card">
-        <div class="help-question">КАК?</div>
-        <div class="help-question-small">Как создать свой камень?</div>
-        <div class="help-answer">
-          <strong>Инструменты.</strong> Книги, игры, практикумы — готовые способы бросить свой нарратив в мир.
-        </div>
-      </div>
-      
-      <div class="help-card">
-        <div class="help-question">ЧТО ДАЛЬШЕ?</div>
-        <div class="help-question-small">Как не исчезнуть?</div>
-        <div class="help-answer">
-          <strong>Сделать так, чтобы нарратив жил после тебя.</strong> Научиться создавать истории, которые не умирают.
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</section>
+
 
 <!-- МАНИФЕСТЫ (подборка, не лента: заголовок «Последние статьи» обещал свежее, а там май) -->
 <section class="blog-preview-section">
@@ -1834,6 +1650,17 @@ body{overflow-wrap:break-word}</style>
     </div>
   </div>
 </section>
+
+<!-- СОТРУДНИЧЕСТВО (29.10.2026, владелец): по образцу kurpatov.ru, но как
+     обратная связь — не мы предлагаем, а нам предлагают. -->
+<section class="coop-strip" aria-labelledby="coop-h">
+  <div class="container">
+    <h2 id="coop-h">Сотрудничество</h2>
+    <p>Есть идея, задача или площадка — лекция для компании, интервью, совместное исследование, игры и методики в работе психолога? Предложите. Каждое предложение дойдёт до автора.</p>
+    <a class="coop-link" href="/sotrudnichestvo/">Предложить сотрудничество</a>
+  </div>
+</section>
+
 
 <!-- ПОДВАЛ -->
 <footer class="footer">
@@ -1921,62 +1748,6 @@ body{overflow-wrap:break-word}</style>
 }</script>
 
 <!-- FAQPage — для rich snippets Google/Яндекс и голосовых ответов Алисы -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Кто такой Андрей Мейстер?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Андрей Юрьевич Мейстер — кандидат психологических наук, специалист по когнитивной психологии и психологии коммуникации. Автор книг по теории манипуляции и разговорному гипнозу, разработчик образовательной системы «Вариатика». Создатель виртуального психолога Фреди — ИИ-ассистента для психологической поддержки 24/7."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Что такое Вариатика?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Вариатика — авторская образовательная система Андрея Мейстера, основанная на работе с нарративами, системным мышлением и психологией влияния. Включает книги, дидактические игры и тренинги, которые учат видеть свой нарратив, разбираться в его структуре и менять в нужную сторону."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Какие книги написал Андрей Мейстер?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Основные книги Андрея Мейстера: «Теория манипуляции. Том I — Разговорный гипноз», «Теория манипуляции. Том II — Проницательность», «Теория манипуляции. Том III — Стимульный контроль», а также «Вариатика — библиотека человеческих паттернов»."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Что такое Фреди?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Фреди — виртуальный психолог на базе искусственного интеллекта, созданный Андреем Мейстером. Чат и голос, психологический тест на тип восприятия, дневник эмоций, КПТ-практики, разговорный гипноз и толкование снов. Первые 15 минут бесплатно без регистрации, дальше три дня за 69 ₽ и 690 ₽/мес. Доступен 24/7. Открыть: https://meysternlp.ru/fredi/."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Где обучает Андрей Мейстер?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Андрей Мейстер ведёт онлайн-тренинги по разговорному гипнозу и системному мышлению, доступные в форматах самостоятельного обучения и стандартного курса с обратной связью. Все программы и расписание — на странице meysternlp.ru/treningi/."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Как связаться с Андреем Мейстером?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Связаться с Андреем Мейстером можно через Telegram-канал t.me/meysternlp, сообщество ВКонтакте vk.com/meysternlp, канал на RuTube или через виртуального психолога Фреди на сайте meysternlp.ru/fredi/."
-      }
-    }
-  ]
-}
-</script>
 
 <!-- WebSite schema с SearchAction — питает Sitelinks searchbox в Google -->
 <script type="application/ld+json">
@@ -2126,35 +1897,6 @@ body{overflow-wrap:break-word}</style>
 </script>
 
 <!-- Микроразметка Schema.org для проектов -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": [
-    {
-      "@type": "CreativeWork",
-      "position": 1,
-      "name": "Книги",
-      "description": "Увидеть свой нарратив, разобраться в его структуре",
-      "url": "https://meysternlp.ru/knigi/"
-    },
-    {
-      "@type": "CreativeWork",
-      "position": 2,
-      "name": "Игры",
-      "description": "Научиться менять нарративы, пробовать в безопасной среде",
-      "url": "https://meysternlp.ru/igry/"
-    },
-    {
-      "@type": "CreativeWork",
-      "position": 3,
-      "name": "Практикумы",
-      "description": "Создать свой камень, чтобы он жил после тебя",
-      "url": "https://meysternlp.ru/treningi/"
-    }
-  ]
-}
-</script>
 
 <script>
   // Единый обработчик для всего
@@ -2251,7 +1993,7 @@ body{overflow-wrap:break-word}</style>
         if (e.isIntersecting) { g(e.target.getAttribute('data-ymg')); io.unobserve(e.target); }
       });
     }, { threshold: 0.3 });
-    [['.paths', 'home_see_tools'], ['#home', 'home_see_manifest']].forEach(function (x) {
+    [['.paths', 'home_see_tools'], ['.blog-preview-section', 'home_see_manifest']].forEach(function (x) {
       var el = document.querySelector(x[0]);
       if (el) { el.setAttribute('data-ymg', x[1]); io.observe(el); }
     });
