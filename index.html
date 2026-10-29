@@ -588,7 +588,9 @@
     .intro{background:radial-gradient(900px 620px at 18% 12%,#1c2a5c 0%,#0f1633 50%,#090c1a 100%)!important}
     .intro-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:28px;align-items:center;margin-bottom:8px}
     .intro h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif!important;font-weight:600!important;font-size:clamp(2.2rem,6.2vw,3.6rem)!important;letter-spacing:0!important;line-height:1.1!important}
-    /* Видео снято на чёрном: в режиме lighten чёрное уходит в фон секции,
+    /* Петля без подмигивания (29.10.2026, фокус-группа: рядом с «гипнозом»
+       оно читалось как «сейчас разведу»): 0–1,8 с и 2,9–4,7 с исходника
+       с переходом 0,35 с. Видео снято на чёрном: в режиме lighten чёрное уходит в фон секции,
        вырезать фигуру не нужно. Свет фона — за заголовком, а за фигурой
        темно, иначе тёмный жилет подсвечивается синим. */
     .intro-face{aspect-ratio:1/1;overflow:hidden}
@@ -1493,14 +1495,14 @@ body{overflow-wrap:break-word}</style>
       <p class="intro-sign">— Андрей Мейстер</p>
       <div class="intro-note">
         <p><span class="intro-ast">*</span>Бог — это история, в которую вы верили. Теперь вы в ней сомневаетесь, и это хорошо: значит, вы хотите разобраться сами, а не верить, потому что верят все.</p>
-        <p>Сомнение — только первый шаг. Дальше захочется понять, кто вы: не кем вас считают, а какой вы на самом деле. Вы будете перебирать одну истину за другой, пока не поймёте, что готовой истины нет — её собирают сами. То, во что вы верили, привело не туда, куда обещали, и вчерашние учителя потеряли ваше доверие. Теперь вы ищете путь сами.</p>
+        <p>Сомнение — только первый шаг. Дальше захочется понять, кто вы: не кем вас считают, а какой вы на самом деле. Вы будете перебирать одну истину за другой, пока не поймёте, что готовой истины нет — её собирают сами. То, во что вы верили, привело не туда, куда обещали, и те, кому вы верили вчера, больше не убеждают. Теперь вы ищете путь сами.</p>
         <p class="intro-last">Здесь есть всё для этого.</p>
       </div>
       </div>
       <div class="intro-face" aria-label="Андрей Мейстер">
         <video autoplay loop muted playsinline preload="metadata" poster="/poster.webp" width="1280" height="720">
-          <source src="/video.webm" type="video/webm">
-          <source src="/video.mp4" type="video/mp4">
+          <source src="/hero-loop.webm" type="video/webm">
+          <source src="/hero-loop.mp4" type="video/mp4">
         </video>
       </div>
     </div>
