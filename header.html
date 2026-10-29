@@ -17,6 +17,7 @@
         <a href="/istorii/">Истории</a>
         <a href="/sobytiya/">Архив</a>
         <a href="/magazin/">Магазин</a>
+        <a href="/en/" class="lang-switch" hreflang="en" lang="en" title="English version">EN</a>
         <!-- Виртуальный психолог для мобильных -->
         <a href="/virtual-psychologist/" class="mobile-only">🧠 Виртуальный психолог</a>
       </div>
@@ -25,9 +26,17 @@
     </div>
   </div>
 </header>
+<script>
+/* EN — английская пара страницы, если есть (rel=alternate hreflang=en),
+   иначе английская главная. По умолчанию сайт русский. */
+(function(){var l=document.querySelector('link[rel="alternate"][hreflang="en"]'),a=document.querySelector('.lang-switch');
+if(l&&a){try{a.href=new URL(l.href).pathname;}catch(e){}}})();
+</script>
 
 <style>
 /* ===== СТИЛИ ШАПКИ ===== */
+
+.nav-links .lang-switch{border:1px solid rgba(58,134,255,.45);border-radius:999px;padding:2px 10px;letter-spacing:.06em}
 
 .header {
   padding: 20px 0;
