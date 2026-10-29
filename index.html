@@ -584,16 +584,20 @@
     /* ===== КТО И ЧТО (26.10.2026): фокус-группа не понимала по «Бог умер», кто это ===== */
     .intro{padding:clamp(36px,7vw,72px) 0 clamp(30px,5vw,50px);background:#0C0C0C;border-bottom:1px solid rgba(58,134,255,.15)}
     .intro h1{text-transform:none;font-size:clamp(1.9rem,6.5vw,3rem);font-weight:600;letter-spacing:.01em;line-height:1.15;margin:0 0 14px;color:#fff}
-    .intro h1 span{color:#3A86FF}
     .intro-lead{max-width:720px;font-size:clamp(1.02rem,3.8vw,1.2rem);color:#D0D4DA;margin:0 0 20px}
     .intro-kick{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:#8EC5FF;margin:0 0 14px}
     .intro h1 span{display:block}
-    .intro-proof{list-style:none;display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 30px;padding:0;color:#B9BFC8;font-size:.95rem}
-    .intro-proof li{position:relative;padding-left:14px}
-    .intro-proof li::before{content:'';position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:#3A86FF}
-    .intro-proof b{color:#fff;font-weight:600}
-    .intro-lead2{color:#fff;margin-top:-6px}
-    .intro-sign{margin:-4px 0 22px;font-size:clamp(.95rem,3.4vw,1.05rem);letter-spacing:.08em;color:#8EC5FF;font-style:italic}
+    .intro-pre{margin:0 0 6px;font-size:clamp(1rem,3.6vw,1.2rem);color:#B9BFC8;font-style:italic}
+    .intro-sign{margin:0 0 20px;font-size:clamp(.95rem,3.4vw,1.05rem);letter-spacing:.04em;color:#8EC5FF;font-style:italic}
+    .intro-stat{margin:0 0 22px;color:#B9BFC8;font-size:.98rem}
+    .intro-stat b{color:#fff;font-weight:600}
+    .intro-cta{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 40px}
+    .intro-cta a{display:inline-block;padding:14px 22px;border-radius:12px;font-weight:600;text-decoration:none;font-size:1rem;letter-spacing:0;text-transform:none}
+    .intro-cta .cta-free{background:#3A86FF;color:#fff}
+    .intro-cta .cta-free:hover{background:#2f74e6;color:#fff;text-shadow:none}
+    .intro-cta .cta-paid{border:1px solid rgba(58,134,255,.55);color:#E6E8EB}
+    .intro-cta .cta-paid:hover{border-color:#3A86FF;color:#fff;text-shadow:none}
+    @media(max-width:520px){.intro-cta a{width:100%;text-align:center}}
     .paths{display:grid;grid-template-columns:1fr 1fr;gap:22px}
     .path-h{text-transform:none;font-size:1.3rem;font-weight:600;letter-spacing:0;color:#fff;margin:0 0 2px;text-align:left}
     .path-h::after{display:none}
@@ -1445,23 +1449,22 @@ body{overflow-wrap:break-word}</style>
   </div>
 </header>
 
-<!-- Первый экран (28.10.2026, решение владельца): не рассказ о себе, а
-     тезис исследования — как у Чалдини и Хьюбермана: сначала что открыто,
-     потом кто открыл. «Бог умер» — тезис, из которого выводятся принципы
-     манипуляции; всё ниже подано как результаты этого исследования.
-     Авторитет — проверяемыми фактами (степень, отзывы на Ozon, Лекторий). -->
+<!-- Первый экран (29.10.2026, решение владельца): короткий — тезис, кто
+     сказал, чем доказано, бесплатный шаг (формула по десяти сайтам
+     авторов-исследователей и третьему опросу фокус-группы). «Бог умер» —
+     Ницше, «Теперь мы сами по себе» — Мейстер: подпись под чужой фразой
+     образованный читатель считывает как присвоение. -->
 <section class="intro" aria-labelledby="intro-h">
   <div class="container">
-    <h1 id="intro-h">Бог умер. <span>Теперь мы сами по себе.</span></h1>
-    <p class="intro-sign">— Андрей Мейстер</p>
-    <p class="intro-lead">Старые истории — религия, идеология — больше не держат. А без истории, в которую верит, человек не живёт, поэтому берёт готовую: у семьи, у рекламы, у начальника, у того, кто говорит увереннее. На этом стоит любая манипуляция. Вам дают историю — и вы считаете её своей.</p>
-    <p class="intro-lead intro-lead2">Люди предсказуемы, если знать, куда смотреть. С 2008 года — исследование того, как истории управляют решениями. Всё, что ниже, — его результаты: инструменты, чтобы распознать чужую историю или создать свою — для себя и для других.</p>
-    <ul class="intro-proof">
-      <li><b>Кандидат психологических наук</b></li>
-      <li><b>4,9 ★</b> у «Теории манипуляции» — больше 1&nbsp;500 отзывов на Ozon</li>
-      <li><b>Лекторий</b> — открыт целиком, без регистрации</li>
-      <li><b>Фреди</b> — отвечает и в три часа ночи</li>
-    </ul>
+    <p class="intro-pre">«Бог умер», — сказал Ницше.</p>
+    <h1 id="intro-h">Теперь мы сами по себе.</h1>
+    <p class="intro-sign">— Андрей Мейстер, кандидат психологических наук</p>
+    <p class="intro-lead">Поэтому каждый живёт по чужой истории и не видит, кто её подсунул. Здесь учат это замечать — и говорить так, чтобы слышали.</p>
+    <p class="intro-stat"><b>4,9 ★</b> · больше 1&nbsp;500 отзывов о «Теории манипуляции»</p>
+    <div class="intro-cta">
+      <a class="cta-free" href="/blog/lektorij/">Начать бесплатно — Лекторий</a>
+      <a class="cta-paid" href="/razgovornyj-gipnoz/standart/">Разговорный гипноз — 5&nbsp;900&nbsp;₽</a>
+    </div>
     <!-- Продукты — инструменты на две стороны тезиса (владелец, 28.10.2026):
          распознать чужой нарратив или создать свой — для себя и для других. -->
     <div class="paths">
@@ -2210,7 +2213,8 @@ body{overflow-wrap:break-word}</style>
    home_seen — 3 с на странице; home_read_15s — прочёл первый экран;
    home_engaged_45s — задержался; home_see_tools / home_see_manifest —
    докрутил до инструментов / до манифеста; home_click_raspoznat /
-   home_click_sozdat — клик в колонке; home_click_other — любой другой
+   home_click_sozdat — клик в колонке; home_click_cta — кнопка первого
+   экрана; home_click_other — любой другой
    переход; home_any_click — любой клик по ссылке. Параметр home_click —
    адрес, куда ушёл. */
 (function () {
@@ -2246,6 +2250,7 @@ body{overflow-wrap:break-word}</style>
     var href = a.getAttribute('href') || '', col = a.closest('.path');
     var paths = document.querySelectorAll('.path');
     if (col) g(col === paths[0] ? 'home_click_raspoznat' : 'home_click_sozdat', { home_click: href });
+    else if (a.closest('.intro-cta')) g('home_click_cta', { home_click: href });
     else g('home_click_other', { home_click: href });
     g('home_any_click');
   }, true);
