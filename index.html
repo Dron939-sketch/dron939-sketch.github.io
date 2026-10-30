@@ -1576,6 +1576,45 @@ body{overflow-wrap:break-word}</style>
 @media(max-width:860px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px}}
 .mk-posline{margin:-2px 0 16px;max-width:680px;font-size:clamp(1.12rem,4vw,1.35rem);line-height:1.45;color:var(--mk-text);font-weight:300}
 .mk-posline b{display:block;color:var(--mk-ink);font-weight:600}
+/* «С чего начать прямо сейчас» — газетная вёрстка на тёмном */
+.dn .dn-mast{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 20px;border-top:3px double var(--mk-ink);border-bottom:1px solid rgba(240,240,240,.35);padding:12px 0 10px}
+.dn .dn-mast .mk-h{margin:0!important}
+.dn .dn-meta{font:italic 1rem Georgia,'Times New Roman',serif;color:var(--mk-muted)}
+.dn .mk-read-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:0;border-bottom:3px double var(--mk-ink)}
+.dn .mk-art{background:none!important;border:0!important;border-radius:0!important;border-bottom:1px solid rgba(240,240,240,.18)!important;padding:16px 0 16px 28px;grid-column:2}
+.dn .mk-art:last-child{border-bottom:0!important}
+.dn .mk-art.dn-lead{grid-column:1;grid-row:1/span 5;padding:24px 28px 24px 0;border-bottom:0!important;border-right:1px solid rgba(240,240,240,.18)!important}
+.dn .dn-lead b{font-size:clamp(1.6rem,3.2vw,2.3rem)!important;line-height:1.15!important;margin:4px 0 14px}
+.dn .dn-lead .mk-art-t{font-size:1.08rem!important}
+.dn .mk-art b{font-family:'Playfair Display',Georgia,serif;font-weight:700!important;font-size:1.18rem;line-height:1.25}
+.dn .mk-art-t{font-family:Georgia,'Times New Roman',serif;font-weight:400!important;color:#D2D6DD!important;font-size:1rem;line-height:1.6}
+.dn .mk-art:hover b{color:#fff!important;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.dn .dn-in{display:block;margin-top:22px;padding-top:14px;border-top:1px solid rgba(240,240,240,.18)}
+.dn .dn-in span{display:block;font:400 .98rem/1.5 Georgia,serif;color:#D2D6DD;padding:5px 0 5px 16px;position:relative}
+.dn .dn-in span::before{content:'';position:absolute;left:0;top:.95em;width:6px;height:6px;border-radius:50%;background:var(--mk-accent)}
+.dn .dn-in .dn-in-k{font:400 .74rem/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mk-soft);padding:0 0 6px}
+.dn .dn-in .dn-in-k::before{display:none}
+.dn .dn-go{display:inline-block;margin-top:14px;color:var(--mk-soft);font-weight:500}
+.dn .dn-min{display:block;margin-top:10px;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mk-muted)}
+.dn .mk-read-all{margin:14px 0 0}
+.dn .mk-read-all a{font:italic 1rem Georgia,serif}
+@media(max-width:860px){.dn .mk-read-grid{grid-template-columns:1fr}.dn .mk-art,.dn .mk-art.dn-lead{grid-column:1;grid-row:auto;padding:16px 0!important;border-right:0!important;border-bottom:1px solid rgba(240,240,240,.18)!important}.dn .mk-art:last-child{border-bottom:0!important}}
+/* Подвал главной — две строки */
+.mk-foot{padding:clamp(28px,5vw,40px) 0 clamp(20px,4vw,28px)!important}
+.mk-foot .mk-foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px 24px}
+.mk-foot .mk-foot-low{margin-top:14px;padding-top:14px;border-top:1px solid rgba(58,134,255,.12)}
+.mk-foot .mk-foot-links{display:flex;flex-wrap:wrap;gap:0 18px}
+.mk-foot .mk-foot-links a{color:var(--mk-muted);font-size:.85rem;text-decoration:none;padding:9px 0}
+.mk-foot .mk-foot-links a:hover{color:var(--mk-ink);text-shadow:none}
+.mk-foot .mk-foot-links a:first-child{color:var(--mk-soft)}
+.mk-foot .copyright{margin:0!important;text-align:right}
+@media(max-width:640px){.mk-foot .mk-foot-row{flex-direction:column;text-align:center}.mk-foot .mk-foot-links{justify-content:center}.mk-foot .copyright{text-align:center}}
+/* Фото на телефоне. Видео накладывается на фон режимом lighten: на
+   компьютере портрет стоит справа, где фон почти чёрный, и режим ничего не
+   меняет; на телефоне портрет уходит вверх по центру — на самое светлое
+   синее пятно, и чёрный костюм с фоном синели («как под фильтром»,
+   владелец, 31.10.2026). На узком экране свечение уводим вниз, под текст. */
+@media(max-width:860px){.intro{background:radial-gradient(640px 520px at 30% 82%,#1c2a5c 0%,#0f1633 45%,var(--mk-bg) 100%)!important}}
 .mk-pos p.mk-sub,.mk-pos p.mk-pos-sign,.mk-cred,.mk-cred a,.mk-read-all a,.coop-press a{color:var(--mk-soft)!important}
 </style>
 </head>
@@ -1761,7 +1800,7 @@ body{overflow-wrap:break-word}</style>
   </div>
 </section>
 
-<!-- С чего начать чтение (владелец, 30.10.2026): вместо «Манифестов» —
+<!-- С чего начать прямо сейчас (до 31.10 — «С чего начать чтение»; владелец, 30.10.2026): вместо «Манифестов» —
      против них высказались 9 из 9 в раунде 8 фокус-группы («Закон Мейстера»,
      «30% психической мощности россиян» перечёркивали «Позицию»). Шесть
      статей, каждая подкрепляет тезис «Позиции»: как человек учится,
@@ -1769,17 +1808,21 @@ body{overflow-wrap:break-word}</style>
      статьи, за которыми люди уже приходят из поиска (по Метрике октября:
      КПТ самостоятельно — четверть всей органики, справочник искажений —
      вторая страница сайта): позиция «самостоятельно» подтверждается сразу. -->
-<section class="mk-read" aria-labelledby="read-h">
+<section class="mk-read dn" aria-labelledby="read-h">
   <div class="container">
-    <h2 class="mk-h" id="read-h">С чего начать чтение</h2>
-    <p class="mk-sub">как человек понимает, учится и решает</p>
+    <!-- Газетная вёрстка на тёмном (владелец: «газетно-крафтовый стиль»;
+         раунд 11 ФГ — «Тёмная газета» первая у 6 из 9: не выпадает из
+         страницы, в отличие от светлой полосы; крафт последний у всех).
+         Акцент — синий сайта, а не золото макета (третий цвет, 3 из 9);
+         первая статья — ведущая; время чтения — из blogmap. -->
+    <div class="dn-mast"><h2 class="mk-h" id="read-h">С чего начать прямо сейчас</h2><span class="dn-meta">выпуск для тех, кто разбирается самостоятельно</span></div>
     <div class="mk-read-grid">
-      <a class="mk-art" href="/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html"><span class="mk-art-k">Сделать самому</span><b>Техники КПТ для самостоятельной работы</b><span class="mk-art-t">Семь пошаговых упражнений когнитивно-поведенческой терапии и план на четыре недели — дневник автомыслей, поведенческий эксперимент, иерархия страхов.</span></a>
-      <a class="mk-art" href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html"><span class="mk-art-k">Справочник</span><b>100 когнитивных искажений</b><span class="mk-art-t">Полный список с примерами в восьми группах — как ошибается мышление и как это замечать.</span></a>
-      <a class="mk-art" href="/blog/uchitsya-uchitsya.html"><span class="mk-art-k">Обучение</span><b>Учиться учиться: почему перечитывание не работает</b><span class="mk-art-t">Главная иллюзия знания и три техники, которые закрепляют материал на деле.</span></a>
-      <a class="mk-art" href="/blog/kak-nauchitsya-dumat-samomu.html"><span class="mk-art-k">Понятия</span><b>Как научиться думать самому</b><span class="mk-art-t">Читаете много, а своё мнение не складывается. Шесть процедур, которые превращают чужие мысли в свои выводы.</span></a>
-      <a class="mk-art" href="/blog/kak-nauchitsya-obyasnyat.html"><span class="mk-art-k">Объяснение</span><b>Как научиться объяснять</b><span class="mk-art-t">Почему знание мешает объяснять и пять операций, которые это чинят.</span></a>
-      <a class="mk-art" href="/blog/chto-takoe-manipulyaciya.html"><span class="mk-art-k">Влияние</span><b>Что такое манипуляция</b><span class="mk-art-t">Признаки скрытого воздействия и способы защиты — основа «Теории манипуляции».</span></a>
+      <a class="mk-art dn-lead" href="/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html"><span class="mk-art-k">Сделать самостоятельно</span><b>Техники когнитивно-поведенческой терапии (КПТ) для самостоятельной работы</b><span class="mk-art-t">Семь пошаговых упражнений когнитивно-поведенческой терапии и план на четыре недели — дневник автомыслей, поведенческий эксперимент, иерархия страхов.</span><span class="dn-in"><span class="dn-in-k">Внутри</span><span>КПТ за 3 абзаца</span><span>Когда КПТ работает, а когда — нет</span><span>Семь упражнений с протоколами</span><span>4-недельный план для самостоятельной работы</span></span><span class="dn-min">20 мин</span><span class="dn-go">Читать&nbsp;→</span></a>
+      <a class="mk-art" href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html"><span class="mk-art-k">Справочник</span><b>100 когнитивных искажений</b><span class="mk-art-t">Сто искажений с примерами в восьми группах — как ошибается мышление и как это замечать.</span><span class="dn-min">35 мин</span></a>
+      <a class="mk-art" href="/blog/uchitsya-uchitsya.html"><span class="mk-art-k">Обучение</span><b>Учиться учиться: почему перечитывание не работает</b><span class="mk-art-t">Главная иллюзия знания и три техники, которые закрепляют материал на деле.</span><span class="dn-min">30 мин</span></a>
+      <a class="mk-art" href="/blog/kak-nauchitsya-dumat-samomu.html"><span class="mk-art-k">Понятия</span><b>Как научиться думать самому</b><span class="mk-art-t">Читаете много, а своё мнение не складывается. Шесть процедур, которые превращают чужие мысли в свои выводы.</span><span class="dn-min">12 мин</span></a>
+      <a class="mk-art" href="/blog/kak-nauchitsya-obyasnyat.html"><span class="mk-art-k">Объяснение</span><b>Как научиться объяснять</b><span class="mk-art-t">Почему знание мешает объяснять и пять операций, которые это чинят.</span><span class="dn-min">12 мин</span></a>
+      <a class="mk-art" href="/blog/chto-takoe-manipulyaciya.html"><span class="mk-art-k">Влияние</span><b>Что такое манипуляция</b><span class="mk-art-t">Признаки скрытого воздействия и способы защиты — основа «Теории манипуляции».</span><span class="dn-min">14 мин</span></a>
     </div>
     <p class="mk-read-all"><a href="/blog/">Все 1822 статьи блога&nbsp;→</a></p>
   </div>
@@ -1798,19 +1841,22 @@ body{overflow-wrap:break-word}</style>
 
 
 <!-- ПОДВАЛ -->
-<footer class="footer">
+<!-- Подвал главной (владелец, 30.10.2026): без Rutube, «Контактов» и «В
+     разработке», с пресс-службой; две строки вместо трёх ярусов. -->
+<footer class="footer mk-foot">
   <div class="container">
-    <div class="footer-content">
+    <div class="mk-foot-row">
       <div class="footer-logo"><span class="text-blue">А</span>МЕЙСТЕР</div>
-      <div class="social-links">
+      <nav class="social-links" aria-label="Соцсети">
         <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
         <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
-        <a href="https://rutube.ru/channel/29916593/" target="_blank" rel="noopener noreferrer">Rutube</a>
         <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
-      </div>
+      </nav>
     </div>
-    <nav aria-label="Документы" style="display:flex;flex-wrap:wrap;gap:0 22px;justify-content:center;padding-top:24px;border-top:1px solid rgba(58,134,255,.12)"><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Тарифы</a><a href="/kontakty/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">Контакты</a><a href="/v-razrabotke/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 4px">В разработке</a></nav>
-    <div class="copyright">© Андрей Мейстер · 2026</div>
+    <div class="mk-foot-row mk-foot-low">
+      <nav class="mk-foot-links" aria-label="Разделы и документы"><a href="/press/">Пресс-служба</a><a href="/sotrudnichestvo/">Сотрудничество</a><a href="/oferta/">Оферта</a><a href="/politika-konfidencialnosti/">Конфиденциальность</a><a href="/tarify/">Тарифы</a></nav>
+      <div class="copyright">© Андрей Мейстер · 2026</div>
+    </div>
   </div>
 </footer>
 
@@ -1900,12 +1946,12 @@ body{overflow-wrap:break-word}</style>
 }
 </script>
 
-<!-- Микроразметка блока «С чего начать чтение» — те же шесть статей, что видны на странице -->
+<!-- Микроразметка блока «С чего начать прямо сейчас» — те же шесть статей, что видны на странице -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "С чего начать чтение — статьи Андрея Мейстера",
+  "name": "С чего начать прямо сейчас — статьи Андрея Мейстера",
   "itemListElement": [
     {
       "@type": "Article",
