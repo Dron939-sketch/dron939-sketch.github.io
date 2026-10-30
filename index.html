@@ -1498,7 +1498,7 @@ body{overflow-wrap:break-word}</style>
 .mk-pos p.mk-pos-last{color:#fff;font-weight:600}
 .mk-pos p.mk-pos-sign{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#8EC5FF;margin:0}
 .mk-partners{padding:clamp(36px,6vw,56px) 0;background:#0C0C0C;border-top:1px solid rgba(58,134,255,.15)}
-.mk-partners .mk-h{margin-bottom:20px!important}
+.mk-partners .mk-h{margin-bottom:24px!important}
 .mk-read{padding:clamp(36px,6vw,56px) 0;background:#0C0C0C;border-top:1px solid rgba(58,134,255,.15)}
 .mk-read .mk-sub{margin:0 0 22px}
 .mk-read-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -1570,12 +1570,10 @@ body{overflow-wrap:break-word}</style>
 .coop-link{border-radius:999px!important;border-color:rgba(58,134,255,.55)!important;color:var(--mk-ink)!important;font-weight:500!important;padding:12px 24px!important}
 .coop-link:hover{background:linear-gradient(135deg,var(--mk-accent2),var(--mk-accent))!important;border-color:transparent!important}
 .mk-steps li.done::before{background:var(--mk-accent)!important;border-color:var(--mk-accent)!important}
-.partner-lead{max-width:720px;color:var(--mk-text);font-weight:300;margin:0 0 22px}
-.partner-lead b{color:var(--mk-ink);font-weight:600}
-.partner-logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.partner-logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .partner-logos li{display:flex;align-items:center;justify-content:center;height:96px;padding:14px 18px;background:#fff;border-radius:var(--mk-r)}
-.partner-logos img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
-@media(max-width:600px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px}}
+.partner-logos img{display:block;max-width:78%;max-height:62px;width:auto;height:auto;object-fit:contain}
+@media(max-width:860px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px}}
 .mk-pos p.mk-sub,.mk-pos p.mk-pos-sign,.mk-cred,.mk-cred a,.mk-read-all a,.coop-press a{color:var(--mk-soft)!important}
 </style>
 </head>
@@ -1726,7 +1724,6 @@ body{overflow-wrap:break-word}</style>
 <section class="mk-partners" aria-labelledby="partners-h">
   <div class="container">
     <h2 class="mk-h" id="partners-h">Партнёры</h2>
-    <p class="partner-lead"><b>Skill Lab</b> — Андрей Мейстер разрабатывает для компании учебные программы.</p>
     <!-- Логотипы — файлы владельца (30.10.2026), исходники в images/partners/src/;
          обрезаны по краю и приведены к одной высоте. Ряд картинками, как у
          Курпатова: белые плитки одного размера, логотипы в родных цветах —
