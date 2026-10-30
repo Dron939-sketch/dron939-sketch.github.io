@@ -215,23 +215,19 @@ def n_courses():
 
 
 def home():
+    # Пять карточек, как на русской главной (ФГ, раунд 7, 30.10.2026):
+    # без «Разговорного гипноза» и «Историй»; Conceptual Base — в блоке статуса.
     cards = "".join([
-        card("/en/lectorium/", "Courses", "Lectorium",
-             "An open university of life: fear, decisions, relationships, money, thinking. Free, no sign-up."),
-        card("/testy/", "Questionnaires", "Tests",
+        card("/en/lectorium/", "Open university · free, no sign-up", "Lectorium",
+             "Courses of lectures on fear, decisions, relationships, money and thinking — from how it works to what to do."),
+        card("/knigi/", "Books · three volumes, 200,000 copies", "The Theory of Manipulation",
+             "How influence works and how to recognise it. Alongside: Variatika and Concepticon, on people and thinking."),
+        card("/igry/", "Method", "Variatika and training games",
+             "A skill is built by solving problems — at a table, in pairs or in a group."),
+        card("/en/fredi/", "Companion · conversation is free", "Fredi — a virtual psychologist",
+             "Conversation, tests and exercises, at night and at weekends. Talks in English.", ru=False),
+        card("/testy/", "Questionnaires · free", "Tests",
              "Anxiety, mood, burnout, personality type. Every result comes with an explanation of what it means and what to do."),
-        card("/knigi/", "Books", "Theory of Manipulation, Variatika, Concepticon",
-             "How influence, people and thinking work."),
-        card("/magazin/#klyuchi", "Audio", "The Conceptual Base",
-             "One recording per school or university subject: the framework of concepts from which the rest can be derived."),
-        card("/en/fredi/", "Companion", "Fredi — a virtual psychologist",
-             "Conversation at any hour, tests and exercises. Talks in English.", ru=False),
-        card("/igry/", "Games", "Training games",
-             "Board games and puzzle games: a skill is built by solving problems — at a table, in pairs or in a group."),
-        card("/razgovornyj-gipnoz/", "Method", "Conversational hypnosis",
-             "How to speak so that you are heard: technique, exercise, review of mistakes."),
-        card("/istorii/", "Stories", "You are not the only one",
-             "Anonymised stories of people going through the same — and their first step."),
     ])
     body = f"""<section class="hero"><div class="wrap"><div class="grid2"><div>
 <h1>Andrey Meyster</h1>
@@ -256,7 +252,7 @@ def home():
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>What has been built</h2>
-<p class="sub">eight tools · everything except Fredi is in Russian</p>
+<p class="sub">open and working · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
 </div></section>

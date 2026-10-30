@@ -1486,6 +1486,11 @@ body{overflow-wrap:break-word}</style>
 .mk-new-k{display:block;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:#8EC5FF;margin-bottom:4px}
 .mk-new b{display:block;font-family:'Playfair Display',Georgia,serif;font-size:1.45rem;font-weight:600;color:#fff;margin-bottom:4px}
 .mk-new-t{display:block;font-size:.95rem;color:#C9CED6}
+.mk-built{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px}
+.mk-built .door{margin-bottom:0}
+.mk-built .mk-lead{grid-column:1/-1}
+.door-tag{display:inline-block;align-self:flex-start;width:fit-content;max-width:100%;margin-top:2px;padding:3px 10px;border:1px solid rgba(58,134,255,.45);border-radius:999px;font-size:.78rem;letter-spacing:.02em;color:#8EC5FF}
+@media(max-width:860px){.mk-built{grid-template-columns:1fr}}
 .mk-pos{max-width:760px;margin:46px 0 0;padding:4px 0 4px 20px;border-left:2px solid rgba(58,134,255,.55)}
 .mk-pos p{color:#C9CED6;font-size:clamp(1rem,3.7vw,1.1rem);line-height:1.65;margin:0 0 12px}
 .mk-pos p.mk-sub{margin:0 0 8px}
@@ -1596,9 +1601,6 @@ body{overflow-wrap:break-word}</style>
       </figure>
     </div>
 
-    <!-- Что здесь есть (владелец, 29.10.2026): главная ничего не продаёт и не
-         зовёт «попробуйте» — только описывает, что есть на сайте. Две колонки —
-         две стороны тезиса: распознать чужую историю или создать свою. -->
     <!-- Позиция — по образцу «Профессия в кризисе — мой ответ» у Курпатова
          (владелец, 30.10.2026): не что сделано, а зачем. -->
     <div class="mk-pos">
@@ -1610,57 +1612,45 @@ body{overflow-wrap:break-word}</style>
       <p class="mk-pos-sign">Андрей Мейстер</p>
     </div>
 
+    <!-- Что уже построено (ФГ, раунд 7, 30.10.2026): колонки «Распознать чужую
+         историю / Создать свою» не понял никто из девяти — остаток прежней
+         концепции. «Разговорный гипноз» убран (владелец и 7 из 9: рядом с
+         «наукой о мышлении» слово тянет образ к инфобизнесу), «Истории» есть в
+         меню. Карточки повторяют звания под именем; «Понятийная база» — в блоке
+         статуса ниже. Главная не продаёт: в строке статуса факт, не цена. -->
     <h2 class="mk-h" style="margin-top:44px!important">Что уже построено</h2>
-    <p class="mk-sub">восемь инструментов — для каждого шага</p>
-    <div class="paths">
-      <div class="path">
-        <h2 class="path-h">Распознать чужую историю</h2>
-        <p class="path-sub">кто вас ведёт и как</p>
-        <a class="door" href="/blog/lektorij/">
-          <img src="/magazin/img/cat-besplatno.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Курсы-лекции</span><b>Лекторий</b>
-          <p>Университет жизни: страх, решения, отношения, деньги, мышление. Открыт целиком, без регистрации.</p></span>
-        </a>
-        <a class="door" href="/testy/">
-          <img src="/magazin/img/cat-vybor.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Опросники</span><b>Тесты</b>
-          <p>Тревога, настроение, выгорание, тип личности. К каждому результату — разбор: что он значит и что с этим делать.</p></span>
-        </a>
-        <a class="door" href="/knigi/">
-          <img src="/magazin/img/cat-knigi.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Книги</span><b>«Теория манипуляции», «Вариатика», «Концептикон»</b>
-          <p>Механика: как устроены влияние, люди и мышление.</p></span>
-        </a>
-        <a class="door" href="/magazin/#klyuchi">
-          <img src="/magazin/img/cat-klyuchi.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Аудиозаписи</span><b>Понятийная база</b>
-          <p>По записи на школьный или вузовский предмет: каркас понятий, из которого остальное выводится самому.</p></span>
-        </a>
-      </div>
-      <div class="path">
-        <h2 class="path-h">Создать свою</h2>
-        <p class="path-sub">для себя и для других</p>
-        <a class="door" href="/virtual-psychologist/">
-          <img src="/magazin/img/cat-fredi.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Собеседник</span><b>Фреди — виртуальный психолог</b>
-          <p>Разговор в любое время, тесты и тренажёры. Помогает разобрать, по какой истории вы живёте и где она не ваша.</p></span>
-        </a>
-        <a class="door" href="/igry/">
-          <img src="/magazin/img/cat-igry.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Игры</span><b>Игры-тренажёры</b>
-          <p>Настольные игры и игры-задачники: навык ставится решением задач — за столом, вдвоём или компанией.</p></span>
-        </a>
-        <a class="door" href="/razgovornyj-gipnoz/">
-          <img src="/magazin/img/cat-kursy.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Метод</span><b>Разговорный гипноз</b>
-          <p>Как говорить так, чтобы вашу историю услышали: приём, упражнение, разбор ошибок.</p></span>
-        </a>
-        <a class="door" href="/istorii/">
-          <img src="/magazin/img/fredi-razgovor.webp" alt="" width="64" height="64" loading="eager">
-          <span class="dt"><span class="door-kick">Истории</span><b>Вы не один такой</b>
-          <p>Обезличенные истории людей, которые проходят через то же, что и вы, — и их первый шаг.</p></span>
-        </a>
-      </div>
+    <p class="mk-sub">открыто и работает</p>
+    <div class="path mk-built">
+      <a class="door mk-lead" href="/blog/lektorij/">
+        <img src="/magazin/img/cat-besplatno.webp" alt="" width="64" height="64" loading="eager">
+        <span class="dt"><span class="door-kick">Открытый университет</span><b>Лекторий</b>
+        <p>Курсы лекций о страхе, решениях, отношениях, деньгах и мышлении — от того, как устроено, до того, что делать.</p>
+        <span class="door-tag">бесплатно · без регистрации</span></span>
+      </a>
+      <a class="door" href="/knigi/">
+        <img src="/magazin/img/cat-knigi.webp" alt="" width="64" height="64" loading="eager">
+        <span class="dt"><span class="door-kick">Книги</span><b>«Теория манипуляции»</b>
+        <p>Как устроено влияние и как его распознать. Рядом — «Вариатика» и «Концептикон»: о людях и мышлении.</p>
+        <span class="door-tag">три тома · тираж 200&nbsp;000</span></span>
+      </a>
+      <a class="door" href="/igry/">
+        <img src="/magazin/img/cat-igry.webp" alt="" width="64" height="64" loading="eager">
+        <span class="dt"><span class="door-kick">Метод</span><b>«Вариатика» и игры-тренажёры</b>
+        <p>Навык ставится решением задач — за столом, вдвоём или компанией.</p>
+        <span class="door-tag">настольные игры и задачники</span></span>
+      </a>
+      <a class="door" href="/virtual-psychologist/">
+        <img src="/magazin/img/cat-fredi.webp" alt="" width="64" height="64" loading="eager">
+        <span class="dt"><span class="door-kick">Собеседник</span><b>Фреди — виртуальный психолог</b>
+        <p>Разговор, тесты и упражнения. Отвечает ночью и в выходные.</p>
+        <span class="door-tag">разговор бесплатно · в любое время</span></span>
+      </a>
+      <a class="door" href="/testy/">
+        <img src="/magazin/img/cat-vybor.webp" alt="" width="64" height="64" loading="eager">
+        <span class="dt"><span class="door-kick">Опросники</span><b>Тесты</b>
+        <p>Тревога, настроение, выгорание, тип личности. К каждому результату — разбор: что он значит и что с этим делать.</p>
+        <span class="door-tag">бесплатно · проверенные шкалы</span></span>
+      </a>
     </div>
   </div>
 </section>
@@ -2103,8 +2093,10 @@ body{overflow-wrap:break-word}</style>
    без JS сюда не доходят — их считает лишь запасной пиксель.
    home_seen — 3 с на странице; home_read_15s — прочёл первый экран;
    home_engaged_45s — задержался; home_see_tools / home_see_manifest —
-   докрутил до инструментов / до манифеста; home_click_raspoznat /
-   home_click_sozdat — клик в колонке; home_click_cta — кнопка первого
+   докрутил до инструментов / до манифеста; home_click_raspoznat — клик
+   по карточке «Что уже построено» (с 30.10.2026 колонок нет, цель та же,
+   куда ушёл — в home_click; home_click_sozdat больше не шлётся);
+   home_click_cta — кнопка первого
    экрана; home_click_other — любой другой
    переход; home_any_click — любой клик по ссылке. Параметр home_click —
    адрес, куда ушёл. */
@@ -2130,7 +2122,7 @@ body{overflow-wrap:break-word}</style>
         if (e.isIntersecting) { g(e.target.getAttribute('data-ymg')); io.unobserve(e.target); }
       });
     }, { threshold: 0.3 });
-    [['.paths', 'home_see_tools'], ['.blog-preview-section', 'home_see_manifest']].forEach(function (x) {
+    [['.mk-built', 'home_see_tools'], ['.blog-preview-section', 'home_see_manifest']].forEach(function (x) {
       var el = document.querySelector(x[0]);
       if (el) { el.setAttribute('data-ymg', x[1]); io.observe(el); }
     });
@@ -2138,9 +2130,8 @@ body{overflow-wrap:break-word}</style>
   document.addEventListener('click', function (e) {
     var a = e.target.closest ? e.target.closest('a') : null;
     if (!a) return;
-    var href = a.getAttribute('href') || '', col = a.closest('.path');
-    var paths = document.querySelectorAll('.path');
-    if (col) g(col === paths[0] ? 'home_click_raspoznat' : 'home_click_sozdat', { home_click: href });
+    var href = a.getAttribute('href') || '';
+    if (a.closest('.mk-built')) g('home_click_raspoznat', { home_click: href });
     else if (a.closest('.intro-cta')) g('home_click_cta', { home_click: href });
     else g('home_click_other', { home_click: href });
     g('home_any_click');
