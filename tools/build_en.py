@@ -19,6 +19,7 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://meysternlp.ru"
 
+# 2013–2023 в «Пути» — со слов владельца (29.10.2026).
 # английский адрес → русская пара
 PAIRS = {
     "/en/": "/",
@@ -62,6 +63,8 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .face video,.face img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(#000 72%,transparent 100%);mask-image:linear-gradient(#000 72%,transparent 100%)}
 .portrait{border-radius:18px;overflow:hidden;max-width:360px}
 .portrait img{display:block;width:100%;height:auto}
+.cred{margin:-4px 0 18px;max-width:680px;color:var(--accent2);font-size:clamp(.95rem,3.5vw,1.05rem)}
+.cred a{color:#C9D9FF;white-space:nowrap}
 .ach{list-style:none;margin:0 0 22px;max-width:680px}
 .ach li{position:relative;padding-left:20px;margin:0 0 10px;font-size:clamp(1rem,3.7vw,1.12rem)}
 .ach li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--accent)}
@@ -205,6 +208,7 @@ def home():
     ])
     body = f"""<section class="hero"><div class="wrap"><div class="grid2"><div>
 <h1>Andrey Meyster</h1>
+<p class="cred">Psychologist, Candidate of Psychological Sciences. Faculty of Psychology (GAUGN); postgraduate research at MIPT under Boris Velichkovsky. <a href="/en/about/">His path →</a></p>
 <ul class="ach">
 <li><b>Author of the Lectorium</b> — an open university of life: courses on fear, decisions, relationships, money and thinking. Free, no sign-up.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
@@ -228,6 +232,7 @@ def about():
 <li><span class="y">2008</span>Graduated from the Faculty of Psychology, State Academic University for the Humanities (GAUGN), Moscow.</li>
 <li><span class="y">2008–2013</span>Postgraduate research at the NBIC faculty of the Moscow Institute of Physics and Technology (MIPT), supervised by Boris Velichkovsky.</li>
 <li><span class="y">2013</span>Candidate of Psychological Sciences — the Russian equivalent of a PhD. Since then, author’s trainings “Conversational Hypnosis” and “Insight”.</li>
+<li><span class="y">2013–2023</span>Work on the Lectorium and research into applying hypnosis for educational purposes — it grew into the “Keys”, today the Conceptual Base.</li>
 <li><span class="y">2023</span>“Theory of Manipulation. Vol. I: Conversational Hypnosis” (Skill Lab). The series also includes Vol. II “Insight” and Vol. III “Stimulus Control”.</li>
 <li><span class="y">Today</span>The Lectorium, Fredi, the Variatika system, the Conceptual Base.</li>
 </ul>"""
