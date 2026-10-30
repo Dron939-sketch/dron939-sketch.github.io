@@ -252,6 +252,23 @@ def sync_lektorij(n_courses, n_lectures):
     write(p, s)
 
 
+def sync_home_courses(n_courses):
+    """Число курсов в звании «Основатель Лектория» на главной.
+
+    Стоит в <span class="lk-count"> — по классу, а не по формулировке:
+    у карточек на главной свои «N курсов» быть не должно, но и задевать их
+    незачем. Английская главная считает курсы сама (tools/build_en.py).
+    """
+    p = os.path.join(ROOT, "index.html")
+    s0 = read(p)
+    now = '<span class="lk-count">%d %s</span>' % (
+        n_courses, plural(n_courses, ("курс", "курса", "курсов")))
+    s = re.sub(r'<span class="lk-count">[^<]*</span>', now, s0, count=1)
+    if s != s0:
+        log.append("главная сайта: %s" % now)
+    write(p, s)
+
+
 def main():
     bm = json.load(io.open(os.path.join(BLOG, "blogmap.json"), encoding="utf-8"))
     by = {}
@@ -267,6 +284,7 @@ def main():
     sync_hub(by)
     sync_home(sum(len(v) for v in by.values()))
     sync_lektorij(n_courses, len(by.get("lektorij", [])))
+    sync_home_courses(n_courses)
 
     print("%s%d правок" % ("БЕЗ ЗАПИСИ: " if dry else "", len(log)))
     for l in log:
