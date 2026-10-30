@@ -19,6 +19,7 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://meysternlp.ru"
 
+# 2013–2023 в «Пути» — со слов владельца (29.10.2026).
 # английский адрес → русская пара
 PAIRS = {
     "/en/": "/",
@@ -49,7 +50,7 @@ a{color:var(--accent2)}
 .nav a{color:#E6E8EB;text-decoration:none;font-size:.86rem;letter-spacing:.08em;text-transform:uppercase}
 .nav a:hover,.nav a[aria-current]{color:var(--accent2)}
 .nav .lang{border:1px solid var(--line);border-radius:999px;padding:3px 10px;letter-spacing:.06em}
-@media(max-width:760px){.hd .wrap{padding-top:10px;padding-bottom:10px}.nav{margin-left:0;width:100%;gap:10px 16px}.nav a{font-size:.78rem}}
+@media(max-width:760px){.hd .wrap{padding-top:8px;padding-bottom:8px;min-height:0;flex-wrap:nowrap;gap:10px}.logo{font-size:1rem;letter-spacing:.2em}.nav{margin-left:auto;gap:12px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.nav a{font-size:.72rem;letter-spacing:.04em;white-space:nowrap}.nav a[href='/en/about/'],.nav a[href='/en/collaboration/']{display:none}}
 .hero{background:radial-gradient(900px 620px at 18% 12%,#1c2a5c 0%,#0f1633 50%,#090c1a 100%);padding:clamp(36px,7vw,72px) 0 clamp(30px,5vw,48px)}
 h1,h2,.serif{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:600;color:var(--ink);line-height:1.12}
 h1{font-size:clamp(2.3rem,6.4vw,3.8rem);margin:0 0 14px}
@@ -62,6 +63,8 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .face video,.face img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(#000 72%,transparent 100%);mask-image:linear-gradient(#000 72%,transparent 100%)}
 .portrait{border-radius:18px;overflow:hidden;max-width:360px}
 .portrait img{display:block;width:100%;height:auto}
+.cred{margin:-4px 0 18px;max-width:680px;color:var(--accent2);font-size:clamp(.95rem,3.5vw,1.05rem)}
+.cred a{color:#C9D9FF;white-space:nowrap}
 .ach{list-style:none;margin:0 0 22px;max-width:680px}
 .ach li{position:relative;padding-left:20px;margin:0 0 10px;font-size:clamp(1rem,3.7vw,1.12rem)}
 .ach li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--accent)}
@@ -167,7 +170,9 @@ def page(path, title, desc, body, ld=None):
 
 
 def card(href, kick, title, text, ru=True):
-    tail = ' <span class="ru">In Russian.</span>' if ru else ""
+    # «In Russian» в каждой карточке читался как список недоступного
+    # (фокус-группа, раунд 6) — одна пометка над блоком, здесь пусто.
+    tail = ""
     return (f'<a class="card" href="{href}"><span class="k">{kick}</span><b>{title}</b>'
             f'<p>{text}{tail}</p></a>')
 
@@ -190,7 +195,7 @@ def home():
              "Anxiety, mood, burnout, personality type. Every result comes with an explanation of what it means and what to do."),
         card("/knigi/", "Books", "Theory of Manipulation, Variatika, Concepticon",
              "How influence, people and thinking work."),
-        card("/magazin/#klyuchi", "Audio · “Keys”", "The Conceptual Base",
+        card("/magazin/#klyuchi", "Audio", "The Conceptual Base",
              "One recording per school or university subject: the framework of concepts from which the rest can be derived."),
         card("/en/fredi/", "Companion", "Fredi — a virtual psychologist",
              "Conversation at any hour, tests and exercises. Talks in English.", ru=False),
@@ -203,6 +208,7 @@ def home():
     ])
     body = f"""<section class="hero"><div class="wrap"><div class="grid2"><div>
 <h1>Andrey Meyster</h1>
+<p class="cred">Psychologist, Candidate of Psychological Sciences. Faculty of Psychology (GAUGN); postgraduate research at MIPT under Boris Velichkovsky. <a href="/en/about/">His path →</a></p>
 <ul class="ach">
 <li><b>Author of the Lectorium</b> — an open university of life: courses on fear, decisions, relationships, money and thinking. Free, no sign-up.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
@@ -211,7 +217,7 @@ def home():
 </div>{VIDEO}</div></div></section>
 <section class="sec"><div class="wrap">
 <h2>What has been built</h2>
-<p class="sub">eight tools — most of the content is in Russian</p>
+<p class="sub">eight tools · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
 </div></section>
@@ -226,6 +232,7 @@ def about():
 <li><span class="y">2008</span>Graduated from the Faculty of Psychology, State Academic University for the Humanities (GAUGN), Moscow.</li>
 <li><span class="y">2008–2013</span>Postgraduate research at the NBIC faculty of the Moscow Institute of Physics and Technology (MIPT), supervised by Boris Velichkovsky.</li>
 <li><span class="y">2013</span>Candidate of Psychological Sciences — the Russian equivalent of a PhD. Since then, author’s trainings “Conversational Hypnosis” and “Insight”.</li>
+<li><span class="y">2013–2023</span>Work on the Lectorium and research into applying hypnosis for educational purposes — it grew into the “Keys”, today the Conceptual Base.</li>
 <li><span class="y">2023</span>“Theory of Manipulation. Vol. I: Conversational Hypnosis” (Skill Lab). The series also includes Vol. II “Insight” and Vol. III “Stimulus Control”.</li>
 <li><span class="y">Today</span>The Lectorium, Fredi, the Variatika system, the Conceptual Base.</li>
 </ul>"""
@@ -242,7 +249,7 @@ def about():
 <p class="lead">Member of the European Association for Counselling (EAC) and the International Association of Applied Psychology (IAAP).</p>
 </div><div class="portrait"><img src="/obo-mne/andrej-mejster.jpg" alt="Andrey Meyster" width="1200" height="1500" loading="eager"></div></div></div></section>
 <section class="sec"><div class="wrap"><h2>Path</h2><p class="sub">education, research, work</p>{facts}</div></section>
-<section class="sec"><div class="wrap"><h2>What he builds</h2><p class="sub">most of it is in Russian</p><div class="cards">{cards}</div></div></section>
+<section class="sec"><div class="wrap"><h2>What he builds</h2><p class="sub">everything except Fredi is in Russian</p><div class="cards">{cards}</div></div></section>
 {COOP}"""
     ld = {"@context": "https://schema.org", "@type": "Person", "name": "Andrey Meyster",
           "alternateName": "Андрей Мейстер", "url": SITE + "/en/about/", "jobTitle": "Psychologist",
