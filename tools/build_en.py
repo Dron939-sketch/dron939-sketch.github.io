@@ -83,6 +83,15 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .partner{display:flex;align-items:center;gap:22px;max-width:720px}
 .partner img{flex:none;width:160px;height:auto}
 .partner p{margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;counter-reset:st}
+.steps li{position:relative;padding:16px 16px 16px 50px;border:1px solid rgba(255,255,255,.12);border-radius:14px;color:#9AA3B2}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:15px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.25);font-size:.8rem;font-weight:700;line-height:20px;text-align:center}
+.steps b{display:block;color:#fff;font-weight:600;margin-bottom:2px}
+.steps span{display:block;font-size:.9rem}
+.steps li.done::before{content:'✓';background:var(--accent);border-color:var(--accent);color:#fff}
+.steps li.now{border-color:var(--accent);background:rgba(58,134,255,.10)}
+.steps li.now::before{border-color:var(--accent);color:var(--accent2)}
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
 @media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
@@ -206,23 +215,19 @@ def n_courses():
 
 
 def home():
+    # Пять карточек, как на русской главной (ФГ, раунд 7, 30.10.2026):
+    # без «Разговорного гипноза» и «Историй»; Conceptual Base — в блоке статуса.
     cards = "".join([
-        card("/en/lectorium/", "Courses", "Lectorium",
-             "An open university of life: fear, decisions, relationships, money, thinking. Free, no sign-up."),
-        card("/testy/", "Questionnaires", "Tests",
+        card("/en/lectorium/", "Open university · free, no sign-up", "Lectorium",
+             "Courses of lectures on fear, decisions, relationships, money and thinking — from how it works to what to do."),
+        card("/knigi/", "Books · three volumes, 200,000 copies", "The Theory of Manipulation",
+             "How influence works and how to recognise it. Alongside: Variatika and Concepticon, on people and thinking."),
+        card("/igry/", "Method", "Variatika and training games",
+             "A skill is built by solving problems — at a table, in pairs or in a group."),
+        card("/en/fredi/", "Companion · conversation is free", "Fredi — a virtual psychologist",
+             "Conversation, tests and exercises, at night and at weekends. Talks in English.", ru=False),
+        card("/testy/", "Questionnaires · free", "Tests",
              "Anxiety, mood, burnout, personality type. Every result comes with an explanation of what it means and what to do."),
-        card("/knigi/", "Books", "Theory of Manipulation, Variatika, Concepticon",
-             "How influence, people and thinking work."),
-        card("/magazin/#klyuchi", "Audio", "The Conceptual Base",
-             "One recording per school or university subject: the framework of concepts from which the rest can be derived."),
-        card("/en/fredi/", "Companion", "Fredi — a virtual psychologist",
-             "Conversation at any hour, tests and exercises. Talks in English.", ru=False),
-        card("/igry/", "Games", "Training games",
-             "Board games and puzzle games: a skill is built by solving problems — at a table, in pairs or in a group."),
-        card("/razgovornyj-gipnoz/", "Method", "Conversational hypnosis",
-             "How to speak so that you are heard: technique, exercise, review of mistakes."),
-        card("/istorii/", "Stories", "You are not the only one",
-             "Anonymised stories of people going through the same — and their first step."),
     ])
     body = f"""<section class="hero"><div class="wrap"><div class="grid2"><div>
 <h1>Andrey Meyster</h1>
@@ -233,7 +238,7 @@ def home():
 <li><b>Author of the Variatika and Conceptual Base methods</b> — teaching built on the findings of cognitive science.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
 </ul>
-<a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. It starts with the Gap Map: 22 questions. <span class="ru">In Russian.</span></span></a>
+<a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. The project is complete and its results are being confirmed. The Gap Map is open: 22 questions. <span class="ru">In Russian.</span></span></a>
 </div>{VIDEO}</div></div></section>
 <section class="sec"><div class="wrap">
 <div class="pos">
@@ -247,9 +252,19 @@ def home():
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>What has been built</h2>
-<p class="sub">eight tools · everything except Fredi is in Russian</p>
+<p class="sub">open and working · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
+</div></section>
+<section class="sec"><div class="wrap">
+<p class="sub">The Conceptual Base · status</p>
+<h2>All recordings are ready. Final trials are under way</h2>
+<p class="lead">The recordings of the Conceptual Base are finished. They are now in final trials with a focus group: the result has to hold up on real people, not just on paper. Once the data confirms it, access opens.</p>
+<ol class="steps">
+<li class="done"><b>Recordings ready</b><span>every subject</span></li>
+<li class="now"><b>Final trials</b><span>focus group, checking the result</span></li>
+<li><b>Access opens</b><span>expected 1 December 2026</span></li>
+</ol>
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>Partners</h2>
