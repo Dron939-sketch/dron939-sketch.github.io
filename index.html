@@ -1574,6 +1574,8 @@ body{overflow-wrap:break-word}</style>
 .partner-logos li{display:flex;align-items:center;justify-content:center;height:96px;padding:14px 18px;background:#fff;border-radius:var(--mk-r)}
 .partner-logos img{display:block;max-width:78%;max-height:62px;width:auto;height:auto;object-fit:contain}
 @media(max-width:860px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px}}
+.mk-posline{margin:-2px 0 16px;max-width:680px;font-size:clamp(1.12rem,4vw,1.35rem);line-height:1.45;color:var(--mk-text);font-weight:300}
+.mk-posline b{display:block;color:var(--mk-ink);font-weight:600}
 .mk-pos p.mk-sub,.mk-pos p.mk-pos-sign,.mk-cred,.mk-cred a,.mk-read-all a,.coop-press a{color:var(--mk-soft)!important}
 </style>
 </head>
@@ -1625,6 +1627,11 @@ body{overflow-wrap:break-word}</style>
     <div class="intro-grid">
       <div class="intro-text">
       <h1 id="intro-h" class="mk-name">Андрей Мейстер</h1>
+      <!-- Строка позиции (владелец, 30.10.2026; по «Позиционированию» Райса и
+           Траута — одно слово в голове: «самостоятельно»). Раунд 10 фокус-группы:
+           вариант «Психология, которой можно пользоваться…» — первый у 7 из 9;
+           «хвастается» 3,9 против 5,5 у прежнего экрана. -->
+      <p class="mk-posline"><b>Психология, которой можно пользоваться самостоятельно.</b> Курсы, тесты и ИИ-собеседник — на науке о мышлении, а не на вере. Курсы и тесты бесплатно, без регистрации.</p>
       <p class="mk-cred">Психолог, кандидат психологических наук. Психфак ГАУГН, аспирантура МФТИ у Б.&nbsp;М.&nbsp;Величковского. <a href="/about/#put">Путь по годам&nbsp;→</a></p>
       <!-- Звания — образ А+Б (владелец, 30.10.2026): кто — исследователь,
            основатель открытого университета и создатель технологий обучения.
@@ -1635,11 +1642,6 @@ body{overflow-wrap:break-word}</style>
         <li><b>Автор теории архетипов «Вариатика»</b> и метода «Понятийная база».</li>
         <li><b>Автор кода Фреди</b> — виртуального психолога, который отвечает в любое время.</li>
       </ul>
-      <a class="mk-new" href="/testy/klyuchi-karta-probelov/">
-        <span class="mk-new-k">Новый проект</span>
-        <b>«Понятийная база»</b>
-        <span class="mk-new-t">Каркас понятий, без которых не понять ни предмет, ни себя. Проект реализован и находится на стадии подтверждения результатов. Открыта карта пробелов — 22 вопроса.</span>
-      </a>
       </div>
       <figure class="intro-face">
         <div class="intro-vid">
@@ -1763,15 +1765,18 @@ body{overflow-wrap:break-word}</style>
      против них высказались 9 из 9 в раунде 8 фокус-группы («Закон Мейстера»,
      «30% психической мощности россиян» перечёркивали «Позицию»). Шесть
      статей, каждая подкрепляет тезис «Позиции»: как человек учится,
-     понимает и решает. Сами манифесты остаются в блоге. -->
+     понимает и решает. Сами манифесты остаются в блоге. Первыми — две
+     статьи, за которыми люди уже приходят из поиска (по Метрике октября:
+     КПТ самостоятельно — четверть всей органики, справочник искажений —
+     вторая страница сайта): позиция «самостоятельно» подтверждается сразу. -->
 <section class="mk-read" aria-labelledby="read-h">
   <div class="container">
     <h2 class="mk-h" id="read-h">С чего начать чтение</h2>
     <p class="mk-sub">как человек понимает, учится и решает</p>
     <div class="mk-read-grid">
+      <a class="mk-art" href="/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html"><span class="mk-art-k">Сделать самому</span><b>Техники КПТ для самостоятельной работы</b><span class="mk-art-t">Семь пошаговых упражнений когнитивно-поведенческой терапии и план на четыре недели — дневник автомыслей, поведенческий эксперимент, иерархия страхов.</span></a>
+      <a class="mk-art" href="/blog/100-kognitivnyh-iskazhenij-spravochnik.html"><span class="mk-art-k">Справочник</span><b>100 когнитивных искажений</b><span class="mk-art-t">Полный список с примерами в восьми группах — как ошибается мышление и как это замечать.</span></a>
       <a class="mk-art" href="/blog/uchitsya-uchitsya.html"><span class="mk-art-k">Обучение</span><b>Учиться учиться: почему перечитывание не работает</b><span class="mk-art-t">Главная иллюзия знания и три техники, которые закрепляют материал на деле.</span></a>
-      <a class="mk-art" href="/blog/trenirovka-mozga-9-kognitivnyh-navykov.html"><span class="mk-art-k">Наука против мифа</span><b>Тренировка мозга: почему «игры для ума» не работают</b><span class="mk-art-t">Кроссворды учат только кроссвордам. Какие девять навыков на самом деле развиваются.</span></a>
-      <a class="mk-art" href="/blog/kak-my-dumaem-kognitivnye-iskazheniya-vvedenie.html"><span class="mk-art-k">Мышление</span><b>Как мы думаем: что такое когнитивные искажения</b><span class="mk-art-t">Почему мышление ошибается предсказуемо и как замечать это у себя.</span></a>
       <a class="mk-art" href="/blog/kak-nauchitsya-dumat-samomu.html"><span class="mk-art-k">Понятия</span><b>Как научиться думать самому</b><span class="mk-art-t">Читаете много, а своё мнение не складывается. Шесть процедур, которые превращают чужие мысли в свои выводы.</span></a>
       <a class="mk-art" href="/blog/kak-nauchitsya-obyasnyat.html"><span class="mk-art-k">Объяснение</span><b>Как научиться объяснять</b><span class="mk-art-t">Почему знание мешает объяснять и пять операций, которые это чинят.</span></a>
       <a class="mk-art" href="/blog/chto-takoe-manipulyaciya.html"><span class="mk-art-k">Влияние</span><b>Что такое манипуляция</b><span class="mk-art-t">Признаки скрытого воздействия и способы защиты — основа «Теории манипуляции».</span></a>
@@ -1905,6 +1910,30 @@ body{overflow-wrap:break-word}</style>
     {
       "@type": "Article",
       "position": 1,
+      "headline": "Техники КПТ для самостоятельной работы",
+      "datePublished": "2026-04-06",
+      "description": "Семь пошаговых упражнений когнитивно-поведенческой терапии и план на четыре недели — дневник автомыслей, поведенческий эксперимент, иерархия страхов.",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Юрьевич Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/tehniki-kpt-dlya-samostoyatelnoj-raboty.html"
+    },
+    {
+      "@type": "Article",
+      "position": 2,
+      "headline": "100 когнитивных искажений",
+      "datePublished": "2026-05-19",
+      "description": "Полный список с примерами в восьми группах — как ошибается мышление и как это замечать.",
+      "author": {
+        "@type": "Person",
+        "name": "Андрей Юрьевич Мейстер"
+      },
+      "url": "https://meysternlp.ru/blog/100-kognitivnyh-iskazhenij-spravochnik.html"
+    },
+    {
+      "@type": "Article",
+      "position": 3,
       "headline": "Учиться учиться: почему перечитывание не работает",
       "datePublished": "2026-06-22",
       "description": "Главная иллюзия знания и три техники, которые закрепляют материал на деле.",
@@ -1913,30 +1942,6 @@ body{overflow-wrap:break-word}</style>
         "name": "Андрей Юрьевич Мейстер"
       },
       "url": "https://meysternlp.ru/blog/uchitsya-uchitsya.html"
-    },
-    {
-      "@type": "Article",
-      "position": 2,
-      "headline": "Тренировка мозга: почему «игры для ума» не работают",
-      "datePublished": "2026-07-01",
-      "description": "Кроссворды учат только кроссвордам. Какие девять навыков на самом деле развиваются.",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Юрьевич Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/trenirovka-mozga-9-kognitivnyh-navykov.html"
-    },
-    {
-      "@type": "Article",
-      "position": 3,
-      "headline": "Как мы думаем: что такое когнитивные искажения",
-      "datePublished": "2026-07-05",
-      "description": "Почему мышление ошибается предсказуемо и как замечать это у себя.",
-      "author": {
-        "@type": "Person",
-        "name": "Андрей Юрьевич Мейстер"
-      },
-      "url": "https://meysternlp.ru/blog/kak-my-dumaem-kognitivnye-iskazheniya-vvedenie.html"
     },
     {
       "@type": "Article",
