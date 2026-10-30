@@ -1540,6 +1540,45 @@ body{overflow-wrap:break-word}</style>
 .mk-quote{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.6rem,4.6vw,2.4rem);color:#fff;margin:0 0 14px;line-height:1.2}
 </style>
 <style>.nav-links .lang-switch{border:1px solid rgba(58,134,255,.45);border-radius:999px;padding:2px 10px;letter-spacing:.06em}</style>
+<style>
+/* Единая система главной — под шапку и подвал (владелец, 30.10.2026: шапку
+   и подвал не трогать, подгонять под них). Из них взяты: фон #0C0C0C, текст
+   #F0F0F0, второстепенный #9AA4B2 (подвал), Inter 300 и капс с разрядкой
+   (меню), акцент #3A86FF и его пара #00A8E8 (кнопка «Виртуальный психолог»),
+   скругление пилюли 999px (переключатель EN), граница рамок rgba(58,134,255,.2)
+   (подвал). До этого на главной было 16 сочетаний цвета и начертания текста,
+   7 видов рамок карточек и фиолетовый #7B2FF7, которого нет ни в шапке, ни
+   в подвале. Правила ниже стоят последними и касаются только секций главной. */
+:root{--mk-bg:#0C0C0C;--mk-ink:#F0F0F0;--mk-text:#C9CED6;--mk-muted:#9AA4B2;--mk-accent:#3A86FF;--mk-accent2:#00A8E8;--mk-soft:#8EC5FF;--mk-line:rgba(58,134,255,.2);--mk-card:rgba(255,255,255,.03);--mk-card-line:rgba(255,255,255,.10);--mk-r:14px}
+/* Фон: все секции на чёрном шапки; синее свечение — одним рецептом и
+   растворяется в #0C0C0C, без отдельного «тёмно-синего листа» под шапкой. */
+.intro{background:radial-gradient(900px 620px at 18% 10%,#1c2a5c 0%,#0f1633 42%,var(--mk-bg) 100%)!important;border-bottom:1px solid var(--mk-line)!important}
+.mk-partners,.mk-read{background:var(--mk-bg)!important}
+.mk-status,.coop-strip{background:radial-gradient(760px 420px at 85% 0%,#15204a 0%,var(--mk-bg) 70%)!important}
+.mk-partners,.mk-status,.mk-read,.coop-strip{border-top:1px solid var(--mk-line)!important;padding:clamp(44px,6vw,64px) 0!important}
+/* Текст: три уровня вместо шести оттенков серого. */
+.intro h1,.mk-h,.coop-strip h2{color:var(--mk-ink)!important}
+.coop-strip h2{font-size:clamp(1.6rem,4.5vw,2.3rem)!important}
+.mk-ach li,.mk-pos p,.mk-status-t,.partner p,.coop-strip p,.door p,.path .door p,.mk-art-t,.mk-new-t{color:var(--mk-text)!important;font-weight:300}
+.mk-ach b,.door b,.mk-art b,.mk-steps b,.partner b,.mk-pos p.mk-pos-last{color:var(--mk-ink)!important}
+.mk-steps li,.mk-steps span,.coop-press{color:var(--mk-muted)!important}
+/* Подписи-капсом — как пункты меню: Inter 300, разрядка .12em. */
+.mk-sub,.door-kick,.mk-art-k,.mk-new-k{font-weight:300!important;letter-spacing:.12em!important;color:var(--mk-soft)!important}
+/* Карточки: одна рамка, один радиус, одна реакция на наведение. */
+.door,.mk-art,.mk-steps li,.partner-list li{background:var(--mk-card)!important;border:1px solid var(--mk-card-line)!important;border-radius:var(--mk-r)!important}
+.door:hover,.mk-art:hover{border-color:var(--mk-accent)!important}
+.mk-steps li.now{border-color:var(--mk-accent)!important;background:rgba(58,134,255,.08)!important}
+/* Акцентная плашка — градиент кнопки из шапки вместо фиолетового. */
+.mk-new{border:1px solid rgba(58,134,255,.55)!important;border-radius:var(--mk-r)!important;background:linear-gradient(135deg,rgba(0,168,232,.12),rgba(58,134,255,.16))!important}
+/* Пилюли — как переключатель EN в шапке. */
+.door-tag,.partner-list li{border-radius:20px!important}
+.door-tag{border-color:rgba(58,134,255,.45)!important;color:var(--mk-soft)!important;font-weight:400}
+.partner-list li{font-weight:400!important;color:var(--mk-text)!important}
+.coop-link{border-radius:999px!important;border-color:rgba(58,134,255,.55)!important;color:var(--mk-ink)!important;font-weight:500!important;padding:12px 24px!important}
+.coop-link:hover{background:linear-gradient(135deg,var(--mk-accent2),var(--mk-accent))!important;border-color:transparent!important}
+.mk-steps li.done::before{background:var(--mk-accent)!important;border-color:var(--mk-accent)!important}
+.mk-pos p.mk-sub,.mk-pos p.mk-pos-sign,.mk-cred,.mk-cred a,.mk-read-all a,.coop-press a{color:var(--mk-soft)!important}
+</style>
 </head>
 <body>
 
