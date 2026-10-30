@@ -72,6 +72,10 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .steps li.now{border-color:var(--accent);background:rgba(58,134,255,.10)}
 .steps li.now::before{border-color:var(--accent);color:var(--accent2)}
 @media(max-width:700px){.steps{grid-template-columns:1fr}}
+.plogos{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.plogos li{display:flex;align-items:center;justify-content:center;height:96px;padding:14px 18px;background:#fff;border-radius:14px}
+.plogos img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+@media(max-width:600px){.plogos{grid-template-columns:repeat(2,1fr);gap:10px}.plogos li{height:84px}}
 @media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
@@ -121,7 +125,7 @@ textarea{min-height:150px;resize:vertical}
 <ul class="ach">
 <li><b>Founder of the Lectorium</b> — 110 courses on fear, decisions, relationships, money and thinking.</li>
 <li><b>Author of the books</b> The Theory of Manipulation, Concepticon and Variatika: A Library of Human Patterns — over 200,000 copies in print.</li>
-<li><b>Developer of Variatika and the Conceptual Base</b> — teaching built on the findings of cognitive science.</li>
+<li><b>Author of Variatika, a theory of archetypes</b>, and of the Conceptual Base method.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
 </ul>
 <a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. The project is complete and its results are being confirmed. The Gap Map is open: 22 questions. <span class="ru">In Russian.</span></span></a>
@@ -155,7 +159,8 @@ textarea{min-height:150px;resize:vertical}
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>Partners</h2>
-<div class="partner"><img src="/images/partners/skilllab.webp" width="160" height="95" alt="Upgrade Skill Lab" loading="lazy"><p><b>Skill Lab</b> — Andrey Meyster develops training programmes for the company.</p></div>
+<p><b>Skill Lab</b> — Andrey Meyster develops training programmes for the company.</p>
+<ul class="plogos"><li><img src="/images/partners/skilllab.webp" width="474" height="160" alt="Upgrade Skill Lab" title="Upgrade Skill Lab" loading="lazy"></li><li><img src="/images/partners/yandex-praktikum.webp" width="861" height="126" alt="Yandex Practicum" title="Yandex Practicum" loading="lazy"></li><li><img src="/images/partners/foxford.webp" width="727" height="160" alt="Foxford" title="Foxford" loading="lazy"></li><li><img src="/images/partners/skytrainer.webp" width="138" height="28" alt="SkyTrainer" title="SkyTrainer" loading="lazy"></li><li><img src="/images/partners/psifak.webp" width="163" height="160" alt="Psifak" title="Psifak" loading="lazy"></li><li><img src="/images/partners/vita.webp" width="160" height="160" alt="Vita medical and biological school" title="Vita medical and biological school" loading="lazy"></li><li><img src="/images/partners/gazprom-media.webp" width="500" height="160" alt="Gazprom-Media" title="Gazprom-Media" loading="lazy"></li><li><img src="/images/partners/minkult-mo.webp" width="417" height="160" alt="Ministry of Culture of the Moscow Region" title="Ministry of Culture of the Moscow Region" loading="lazy"></li><li><img src="/images/partners/mister-freeman.webp" width="172" height="160" alt="Mister Freeman" title="Mister Freeman" loading="lazy"></li><li><img src="/images/partners/legio-felix.webp" width="118" height="160" alt="Legio Felix" title="Legio Felix" loading="lazy"></li></ul>
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>Collaboration</h2>
