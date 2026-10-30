@@ -83,6 +83,15 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .partner{display:flex;align-items:center;gap:22px;max-width:720px}
 .partner img{flex:none;width:160px;height:auto}
 .partner p{margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;counter-reset:st}
+.steps li{position:relative;padding:16px 16px 16px 50px;border:1px solid rgba(255,255,255,.12);border-radius:14px;color:#9AA3B2}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:15px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.25);font-size:.8rem;font-weight:700;line-height:20px;text-align:center}
+.steps b{display:block;color:#fff;font-weight:600;margin-bottom:2px}
+.steps span{display:block;font-size:.9rem}
+.steps li.done::before{content:'✓';background:var(--accent);border-color:var(--accent);color:#fff}
+.steps li.now{border-color:var(--accent);background:rgba(58,134,255,.10)}
+.steps li.now::before{border-color:var(--accent);color:var(--accent2)}
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
 @media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
@@ -250,6 +259,16 @@ def home():
 <p class="sub">eight tools · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
+</div></section>
+<section class="sec"><div class="wrap">
+<p class="sub">The Conceptual Base · status</p>
+<h2>All recordings are ready. Final trials are under way</h2>
+<p class="lead">The recordings of the Conceptual Base are finished. They are now in final trials with a focus group: the result has to hold up on real people, not just on paper. Once the data confirms it, access opens.</p>
+<ol class="steps">
+<li class="done"><b>Recordings ready</b><span>every subject</span></li>
+<li class="now"><b>Final trials</b><span>focus group, checking the result</span></li>
+<li><b>Access opens</b><span>expected 1 December 2026</span></li>
+</ol>
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>Partners</h2>

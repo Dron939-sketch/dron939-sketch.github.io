@@ -1499,6 +1499,21 @@ body{overflow-wrap:break-word}</style>
 .partner p{margin:0;color:#C9CED6;font-size:1.02rem;line-height:1.55}
 .partner b{color:#fff}
 @media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
+.mk-status{padding:clamp(36px,6vw,56px) 0;background:radial-gradient(700px 380px at 85% 0%,#15204a 0%,#0C0C0C 70%);border-top:1px solid rgba(58,134,255,.15)}
+.mk-status .mk-sub{margin:0 0 8px}
+.mk-status .mk-h{margin-bottom:12px!important}
+.mk-status-t{max-width:720px;color:#C9CED6;font-size:clamp(1rem,3.7vw,1.08rem);line-height:1.65;margin:0 0 24px}
+.mk-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;counter-reset:st}
+.mk-steps li{position:relative;padding:16px 16px 16px 50px;border:1px solid rgba(255,255,255,.12);border-radius:14px;color:#9AA3B2}
+.mk-steps li::before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:15px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.25);font-size:.8rem;font-weight:700;line-height:20px;text-align:center;color:#9AA3B2}
+.mk-steps b{display:block;color:#fff;font-weight:600;margin-bottom:2px}
+.mk-steps span{display:block;font-size:.9rem}
+.mk-steps li.done::before{content:'✓';background:#3A86FF;border-color:#3A86FF;color:#fff}
+.mk-steps li.now{border-color:#3A86FF;background:rgba(58,134,255,.10)}
+.mk-steps li.now::before{border-color:#3A86FF;color:#8EC5FF;animation:stp 1.6s ease-in-out infinite}
+@keyframes stp{50%{box-shadow:0 0 0 6px rgba(58,134,255,.18)}}
+@media(prefers-reduced-motion:reduce){.mk-steps li.now::before{animation:none}}
+@media(max-width:700px){.mk-steps{grid-template-columns:1fr}}
 .coop-press{margin:18px 0 0!important;font-size:.95rem;color:#B9BFC8!important}
 .coop-press b{color:#fff;font-weight:600}
 .coop-press a{color:#8EC5FF}
@@ -1673,6 +1688,22 @@ body{overflow-wrap:break-word}</style>
       <img src="/images/partners/skilllab.webp" width="160" height="95" alt="Апгрейд Skill Lab" loading="lazy">
       <p><b>Skill Lab</b> — Андрей Мейстер разрабатывает для компании учебные программы.</p>
     </div>
+  </div>
+</section>
+
+<!-- Статус «Понятийной базы» (владелец, 30.10.2026): записи готовы, идут
+     финальные испытания на фокус-группе; доступ — после подтверждения данных.
+     Дату менять здесь и в build_en.py; срок предзаказа в магазине — отдельно. -->
+<section class="mk-status" aria-labelledby="status-h">
+  <div class="container">
+    <p class="mk-sub">«Понятийная база» · статус</p>
+    <h2 class="mk-h" id="status-h">Все записи готовы. Идут финальные испытания</h2>
+    <p class="mk-status-t">Записи «Понятийной базы» закончены. Сейчас они проходят финальные испытания на фокус-группе: результат должен подтвердиться на людях, а не только в замысле. Когда данные подтвердятся, доступ откроется.</p>
+    <ol class="mk-steps">
+      <li class="done"><b>Записи готовы</b><span>все предметы</span></li>
+      <li class="now"><b>Финальные испытания</b><span>фокус-группа, проверка результата</span></li>
+      <li><b>Открытие доступа</b><span>ориентировочно 1&nbsp;декабря 2026</span></li>
+    </ol>
   </div>
 </section>
 

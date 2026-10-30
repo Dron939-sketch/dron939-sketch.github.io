@@ -63,6 +63,15 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .partner{display:flex;align-items:center;gap:22px;max-width:720px}
 .partner img{flex:none;width:160px;height:auto}
 .partner p{margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;counter-reset:st}
+.steps li{position:relative;padding:16px 16px 16px 50px;border:1px solid rgba(255,255,255,.12);border-radius:14px;color:#9AA3B2}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:15px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.25);font-size:.8rem;font-weight:700;line-height:20px;text-align:center}
+.steps b{display:block;color:#fff;font-weight:600;margin-bottom:2px}
+.steps span{display:block;font-size:.9rem}
+.steps li.done::before{content:'✓';background:var(--accent);border-color:var(--accent);color:#fff}
+.steps li.now{border-color:var(--accent);background:rgba(58,134,255,.10)}
+.steps li.now::before{border-color:var(--accent);color:var(--accent2)}
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
 @media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
@@ -133,6 +142,16 @@ textarea{min-height:150px;resize:vertical}
 <p class="sub">eight tools · everything except Fredi is in Russian</p>
 <div class="cards"><a class="card" href="/en/lectorium/"><span class="k">Courses</span><b>Lectorium</b><p>An open university of life: fear, decisions, relationships, money, thinking. Free, no sign-up.</p></a><a class="card" href="/testy/"><span class="k">Questionnaires</span><b>Tests</b><p>Anxiety, mood, burnout, personality type. Every result comes with an explanation of what it means and what to do.</p></a><a class="card" href="/knigi/"><span class="k">Books</span><b>Theory of Manipulation, Variatika, Concepticon</b><p>How influence, people and thinking work.</p></a><a class="card" href="/magazin/#klyuchi"><span class="k">Audio</span><b>The Conceptual Base</b><p>One recording per school or university subject: the framework of concepts from which the rest can be derived.</p></a><a class="card" href="/en/fredi/"><span class="k">Companion</span><b>Fredi — a virtual psychologist</b><p>Conversation at any hour, tests and exercises. Talks in English.</p></a><a class="card" href="/igry/"><span class="k">Games</span><b>Training games</b><p>Board games and puzzle games: a skill is built by solving problems — at a table, in pairs or in a group.</p></a><a class="card" href="/razgovornyj-gipnoz/"><span class="k">Method</span><b>Conversational hypnosis</b><p>How to speak so that you are heard: technique, exercise, review of mistakes.</p></a><a class="card" href="/istorii/"><span class="k">Stories</span><b>You are not the only one</b><p>Anonymised stories of people going through the same — and their first step.</p></a></div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
+</div></section>
+<section class="sec"><div class="wrap">
+<p class="sub">The Conceptual Base · status</p>
+<h2>All recordings are ready. Final trials are under way</h2>
+<p class="lead">The recordings of the Conceptual Base are finished. They are now in final trials with a focus group: the result has to hold up on real people, not just on paper. Once the data confirms it, access opens.</p>
+<ol class="steps">
+<li class="done"><b>Recordings ready</b><span>every subject</span></li>
+<li class="now"><b>Final trials</b><span>focus group, checking the result</span></li>
+<li><b>Access opens</b><span>expected 1 December 2026</span></li>
+</ol>
 </div></section>
 <section class="sec"><div class="wrap">
 <h2>Partners</h2>

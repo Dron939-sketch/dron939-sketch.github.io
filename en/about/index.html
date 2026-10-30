@@ -64,6 +64,15 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .partner{display:flex;align-items:center;gap:22px;max-width:720px}
 .partner img{flex:none;width:160px;height:auto}
 .partner p{margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:900px;counter-reset:st}
+.steps li{position:relative;padding:16px 16px 16px 50px;border:1px solid rgba(255,255,255,.12);border-radius:14px;color:#9AA3B2}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:15px;width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,.25);font-size:.8rem;font-weight:700;line-height:20px;text-align:center}
+.steps b{display:block;color:#fff;font-weight:600;margin-bottom:2px}
+.steps span{display:block;font-size:.9rem}
+.steps li.done::before{content:'✓';background:var(--accent);border-color:var(--accent);color:#fff}
+.steps li.now{border-color:var(--accent);background:rgba(58,134,255,.10)}
+.steps li.now::before{border-color:var(--accent);color:var(--accent2)}
+@media(max-width:700px){.steps{grid-template-columns:1fr}}
 @media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
