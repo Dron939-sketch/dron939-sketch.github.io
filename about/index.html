@@ -543,24 +543,46 @@ body{overflow-wrap:break-word}</style>
   <div class="container">
     <h2>Контакты</h2>
     <p style="margin-bottom: 20px;">Личная позиция и взгляд на работу — в <a href="/obo-mne/">манифесте</a>.</p>
+    <!-- Соцсети — один раз, в подвале (владелец, 31.10.2026: «все дубли
+         убери»). Здесь было ещё четыре кнопки: Telegram и VK повторяли
+         подвал, Rutube с сайта убран, а «Дзен» на деле вёл на MAX. -->
     <div class="contacts">
-      <a href="https://t.me/meysternlp" target="_blank" class="contact-link">📱 Telegram</a>
-      <a href="https://vk.com/meysternlp" target="_blank" class="contact-link">📘 VK</a>
-      <a href="https://rutube.ru/channel/29916593/" target="_blank" class="contact-link">🎬 Rutube</a>
-      <a href="https://max.ru/id502238728185_biz" target="_blank" class="contact-link">📰 Дзен</a>
-      <a href="mailto:dron939@yandex.ru" class="contact-link">✉️ Email</a>
+      <a href="mailto:dron939@yandex.ru" class="contact-link">✉️ dron939@yandex.ru</a>
+      <a href="/press/" class="contact-link">Пресс-служба</a>
     </div>
   </div>
 </section>
 
 <!-- ПОДВАЛ -->
-<!-- Подвал «Биографии» (владелец, 31.10.2026): соцсети здесь уже стоят
-     кнопками в «Контактах» прямо над подвалом — второй их ряд читался как
-     задвоенный подвал. Оставлена одна компактная строка, как на главной. -->
-<footer class="footer" style="padding:22px 0 26px">
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px 24px">
-    <nav aria-label="Разделы и документы" style="display:flex;flex-wrap:wrap;gap:0 18px"><a href="/press/" style="color:#8EC5FF;font-size:.85rem;text-decoration:none;padding:9px 0">Пресс-служба</a><a href="/sotrudnichestvo/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 0">Сотрудничество</a><a href="/oferta/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 0">Оферта</a><a href="/politika-konfidencialnosti/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 0">Конфиденциальность</a><a href="/tarify/" style="color:#9aa4b2;font-size:.85rem;text-decoration:none;padding:9px 0">Тарифы</a></nav>
-    <div class="copyright" style="margin:0">© Андрей Юрьевич Мейстер · 2026</div>
+<!-- Подвал — тот же, что на главной (владелец, 31.10.2026). -->
+<style>
+.mk-foot{padding:clamp(28px,5vw,40px) 0 clamp(20px,4vw,28px)!important;border-top:1px solid rgba(58,134,255,.2)}
+.mk-foot .mk-foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px 24px}
+.mk-foot .mk-foot-logo{font-size:clamp(1rem,4vw,1.2rem);letter-spacing:.3em;color:#F0F0F0}
+.mk-foot .mk-foot-logo span{color:#3A86FF}
+.mk-foot .social-links{margin:0}
+.mk-foot .mk-foot-low{margin-top:14px;padding-top:14px;border-top:1px solid rgba(58,134,255,.12)}
+.mk-foot .mk-foot-links{display:flex;flex-wrap:wrap;gap:0 18px}
+.mk-foot .mk-foot-links a{color:#9AA4B2;font-size:.85rem;text-decoration:none;padding:9px 0}
+.mk-foot .mk-foot-links a:hover{color:#F0F0F0}
+.mk-foot .mk-foot-links a:first-child{color:#8EC5FF}
+.mk-foot .copyright{margin:0!important;text-align:right}
+@media(max-width:640px){.mk-foot .mk-foot-row{flex-direction:column;text-align:center}.mk-foot .mk-foot-links{justify-content:center}.mk-foot .copyright{text-align:center}}
+</style>
+<footer class="footer mk-foot">
+  <div class="container">
+    <div class="mk-foot-row">
+      <div class="mk-foot-logo"><span>А</span>МЕЙСТЕР</div>
+      <nav class="social-links" aria-label="Соцсети">
+        <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+        <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
+      </nav>
+    </div>
+    <div class="mk-foot-row mk-foot-low">
+      <nav class="mk-foot-links" aria-label="Разделы и документы"><a href="/press/">Пресс-служба</a><a href="/sotrudnichestvo/">Сотрудничество</a><a href="/oferta/">Оферта</a><a href="/politika-konfidencialnosti/">Конфиденциальность</a><a href="/tarify/">Тарифы</a></nav>
+      <div class="copyright">© Андрей Юрьевич Мейстер · 2026</div>
+    </div>
   </div>
 </footer>
 
