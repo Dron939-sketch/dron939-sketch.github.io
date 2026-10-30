@@ -75,6 +75,15 @@ h2{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:0 0 6px}
 .new b{display:block;font-family:'Playfair Display',Georgia,serif;font-size:1.45rem;font-weight:600;color:#fff;margin-bottom:4px}
 .new .t{display:block;font-size:.95rem;color:#C9CED6}
 .sec{padding:clamp(34px,6vw,56px) 0}
+.pos{max-width:760px;padding:4px 0 4px 20px;border-left:2px solid rgba(58,134,255,.55)}
+.pos h2{margin-bottom:14px}
+.pos p{font-size:clamp(1rem,3.7vw,1.1rem);margin:0 0 12px}
+.pos .last{color:#fff;font-weight:600}
+.pos .sign{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:var(--accent2);margin:0}
+.partner{display:flex;align-items:center;gap:22px;max-width:720px}
+.partner img{flex:none;width:160px;height:auto}
+.partner p{margin:0}
+@media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.cards{grid-template-columns:1fr}}
 .card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;text-decoration:none;color:var(--text)}
@@ -184,7 +193,16 @@ COOP = """<section class="sec"><div class="wrap">
 <h2>Collaboration</h2>
 <p class="lead">An idea, a task, a platform — a lecture for your company, an interview, joint research, games and methods for your clients? Make a proposal. Every one reaches the author.</p>
 <a class="btn o" href="/en/collaboration/">Propose a collaboration</a>
+<p style="margin-top:18px"><b>Press office</b> — interviews, comments, broadcasts: <a href="/en/collaboration/">send a request</a> (choose “Media or author”).</p>
 </div></section>"""
+
+
+def n_courses():
+    """Число курсов Лектория — как в tools/sync_counters.py: каталоги
+    blog/lektorij/<slug>/ со своей index.html. Руками не вписывать."""
+    d = os.path.join(ROOT, "blog", "lektorij")
+    return len([x for x in os.listdir(d)
+                if os.path.exists(os.path.join(d, x, "index.html"))])
 
 
 def home():
@@ -210,20 +228,36 @@ def home():
 <h1>Andrey Meyster</h1>
 <p class="cred">Psychologist, Candidate of Psychological Sciences. Faculty of Psychology (GAUGN); postgraduate research at MIPT under Boris Velichkovsky. <a href="/en/about/">His path →</a></p>
 <ul class="ach">
-<li><b>Author of the Lectorium</b> — an open university of life: courses on fear, decisions, relationships, money and thinking. Free, no sign-up.</li>
+<li><b>Founder of the Lectorium</b> — an open university of life: {n_courses()} courses on fear, decisions, relationships, money and thinking. Free, no sign-up.</li>
+<li><b>Author of “The Theory of Manipulation”</b> — three volumes, 200,000 copies in print.</li>
+<li><b>Author of the Variatika and Conceptual Base methods</b> — teaching built on the findings of cognitive science.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
 </ul>
 <a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. It starts with the Gap Map: 22 questions. <span class="ru">In Russian.</span></span></a>
 </div>{VIDEO}</div></div></section>
+<section class="sec"><div class="wrap">
+<div class="pos">
+<p class="sub">position</p>
+<h2>Education lags behind the science of thinking</h2>
+<p>Over half a century, cognitive science has learned how people understand, remember and decide. Understanding rests on a framework of concepts, not on a sum of facts. Knowledge sticks when it is used, not when it is reread. Thinking errs predictably — and that can be taught.</p>
+<p>The education system barely takes this into account. It teaches the way it did a hundred years ago.</p>
+<p class="last">The Lectorium, Variatika and the Conceptual Base are my answer: teaching assembled from these findings.</p>
+<p class="sign">Andrey Meyster</p>
+</div>
+</div></section>
 <section class="sec"><div class="wrap">
 <h2>What has been built</h2>
 <p class="sub">eight tools · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
 <p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
 </div></section>
+<section class="sec"><div class="wrap">
+<h2>Partners</h2>
+<div class="partner"><img src="/images/partners/skilllab.webp" width="160" height="95" alt="Upgrade Skill Lab" loading="lazy"><p><b>Skill Lab</b> — Andrey Meyster develops training programmes for the company.</p></div>
+</div></section>
 {COOP}"""
-    return page("/en/", "Andrey Meyster — author of the Lectorium and of Fredi, a virtual psychologist",
-                "Andrey Meyster, psychologist, Candidate of Psychological Sciences: author of the Lectorium, an open university of life, and of the code behind Fredi, a virtual psychologist. New project: the Conceptual Base.",
+    return page("/en/", "Andrey Meyster — psychologist, founder of the Lectorium, author of The Theory of Manipulation",
+                "Andrey Meyster, psychologist, Candidate of Psychological Sciences: founder of the Lectorium, an open university of life; author of The Theory of Manipulation, of the Variatika and Conceptual Base methods and of the code behind Fredi, a virtual psychologist.",
                 body)
 
 
