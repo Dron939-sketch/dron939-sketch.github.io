@@ -220,7 +220,7 @@ def home():
     cards = "".join([
         card("/en/lectorium/", "Open university · free, no sign-up", "Lectorium",
              "Courses of lectures on fear, decisions, relationships, money and thinking — from how it works to what to do."),
-        card("/knigi/", "Books · three volumes, 200,000 copies", "The Theory of Manipulation",
+        card("/knigi/", "Books · over 200,000 copies", "The Theory of Manipulation",
              "How influence works and how to recognise it. Alongside: Variatika and Concepticon, on people and thinking."),
         card("/igry/", "Method", "Variatika and training games",
              "A skill is built by solving problems — at a table, in pairs or in a group."),
@@ -233,9 +233,9 @@ def home():
 <h1>Andrey Meyster</h1>
 <p class="cred">Psychologist, Candidate of Psychological Sciences. Faculty of Psychology (GAUGN); postgraduate research at MIPT under Boris Velichkovsky. <a href="/en/about/">His path →</a></p>
 <ul class="ach">
-<li><b>Founder of the Lectorium</b> — an open university of life: {n_courses()} courses on fear, decisions, relationships, money and thinking. Free, no sign-up.</li>
-<li><b>Author of “The Theory of Manipulation”</b> — three volumes, 200,000 copies in print.</li>
-<li><b>Author of the Variatika and Conceptual Base methods</b> — teaching built on the findings of cognitive science.</li>
+<li><b>Founder of the Lectorium</b> — {n_courses()} courses on fear, decisions, relationships, money and thinking.</li>
+<li><b>Author of the books</b> The Theory of Manipulation, Concepticon and Variatika: A Library of Human Patterns — over 200,000 copies in print.</li>
+<li><b>Developer of Variatika and the Conceptual Base</b> — teaching built on the findings of cognitive science.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
 </ul>
 <a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. The project is complete and its results are being confirmed. The Gap Map is open: 22 questions. <span class="ru">In Russian.</span></span></a>
