@@ -1499,11 +1499,6 @@ body{overflow-wrap:break-word}</style>
 .mk-pos p.mk-pos-sign{font-family:'Playfair Display',Georgia,serif;font-style:italic;color:#8EC5FF;margin:0}
 .mk-partners{padding:clamp(36px,6vw,56px) 0;background:#0C0C0C;border-top:1px solid rgba(58,134,255,.15)}
 .mk-partners .mk-h{margin-bottom:20px!important}
-.partner{display:flex;align-items:center;gap:22px;max-width:720px}
-.partner img{flex:none;width:160px;height:auto}
-.partner p{margin:0;color:#C9CED6;font-size:1.02rem;line-height:1.55}
-.partner b{color:#fff}
-@media(max-width:520px){.partner{flex-direction:column;align-items:flex-start;gap:14px}.partner img{width:140px}}
 .mk-read{padding:clamp(36px,6vw,56px) 0;background:#0C0C0C;border-top:1px solid rgba(58,134,255,.15)}
 .mk-read .mk-sub{margin:0 0 22px}
 .mk-read-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -1531,8 +1526,6 @@ body{overflow-wrap:break-word}</style>
 @keyframes stp{50%{box-shadow:0 0 0 6px rgba(58,134,255,.18)}}
 @media(prefers-reduced-motion:reduce){.mk-steps li.now::before{animation:none}}
 @media(max-width:700px){.mk-steps{grid-template-columns:1fr}}
-.partner-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
-.partner-list li{padding:10px 16px;border:1px solid rgba(255,255,255,.14);border-radius:10px;color:#D3D8E0;font-size:.95rem;font-weight:500}
 .coop-press{margin:18px 0 0!important;font-size:.95rem;color:#B9BFC8!important}
 .coop-press b{color:#fff;font-weight:600}
 .coop-press a{color:#8EC5FF}
@@ -1559,25 +1552,31 @@ body{overflow-wrap:break-word}</style>
 /* Текст: три уровня вместо шести оттенков серого. */
 .intro h1,.mk-h,.coop-strip h2{color:var(--mk-ink)!important}
 .coop-strip h2{font-size:clamp(1.6rem,4.5vw,2.3rem)!important}
-.mk-ach li,.mk-pos p,.mk-status-t,.partner p,.coop-strip p,.door p,.path .door p,.mk-art-t,.mk-new-t{color:var(--mk-text)!important;font-weight:300}
-.mk-ach b,.door b,.mk-art b,.mk-steps b,.partner b,.mk-pos p.mk-pos-last{color:var(--mk-ink)!important}
-.mk-ach b,.door b,.mk-art b,.mk-steps b,.partner b{font-weight:600}
+.mk-ach li,.mk-pos p,.mk-status-t,.coop-strip p,.door p,.path .door p,.mk-art-t,.mk-new-t{color:var(--mk-text)!important;font-weight:300}
+.mk-ach b,.door b,.mk-art b,.mk-steps b,.mk-pos p.mk-pos-last{color:var(--mk-ink)!important}
+.mk-ach b,.door b,.mk-art b,.mk-steps b{font-weight:600}
 .mk-steps li,.mk-steps span,.coop-press{color:var(--mk-muted)!important}
 /* Подписи-капсом — как пункты меню: Inter 300, разрядка .12em. */
 .mk-sub,.door-kick,.mk-art-k,.mk-new-k{font-weight:300!important;letter-spacing:.12em!important;color:var(--mk-soft)!important}
 /* Карточки: одна рамка, один радиус, одна реакция на наведение. */
-.door,.mk-art,.mk-steps li,.partner-list li{background:var(--mk-card)!important;border:1px solid var(--mk-card-line)!important;border-radius:var(--mk-r)!important}
+.door,.mk-art,.mk-steps li{background:var(--mk-card)!important;border:1px solid var(--mk-card-line)!important;border-radius:var(--mk-r)!important}
 .door:hover,.mk-art:hover{border-color:var(--mk-accent)!important}
 .mk-steps li.now{border-color:var(--mk-accent)!important;background:rgba(58,134,255,.08)!important}
 /* Акцентная плашка — градиент кнопки из шапки вместо фиолетового. */
 .mk-new{border:1px solid rgba(58,134,255,.55)!important;border-radius:var(--mk-r)!important;background:linear-gradient(135deg,rgba(0,168,232,.12),rgba(58,134,255,.16))!important}
 /* Пилюли — как переключатель EN в шапке. */
-.door-tag,.partner-list li{border-radius:20px!important}
+.door-tag{border-radius:20px!important}
 .door-tag{border-color:rgba(58,134,255,.45)!important;color:var(--mk-soft)!important;font-weight:400}
-.partner-list li{font-weight:400!important;color:var(--mk-text)!important}
 .coop-link{border-radius:999px!important;border-color:rgba(58,134,255,.55)!important;color:var(--mk-ink)!important;font-weight:500!important;padding:12px 24px!important}
 .coop-link:hover{background:linear-gradient(135deg,var(--mk-accent2),var(--mk-accent))!important;border-color:transparent!important}
 .mk-steps li.done::before{background:var(--mk-accent)!important;border-color:var(--mk-accent)!important}
+.partner-lead{max-width:720px;color:var(--mk-text);font-weight:300;margin:0 0 22px}
+.partner-lead b{color:var(--mk-ink);font-weight:600}
+.partner-logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.partner-logos li{display:flex;align-items:center;justify-content:center;height:96px;padding:14px 18px;background:#fff;border-radius:var(--mk-r)}
+.partner-logos img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;filter:grayscale(1) contrast(1.05);opacity:.82;transition:filter .2s,opacity .2s}
+.partner-logos li:hover img{filter:none;opacity:1}
+@media(max-width:600px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px}}
 .mk-pos p.mk-sub,.mk-pos p.mk-pos-sign,.mk-cred,.mk-cred a,.mk-read-all a,.coop-press a{color:var(--mk-soft)!important}
 </style>
 </head>
@@ -1728,25 +1727,23 @@ body{overflow-wrap:break-word}</style>
 <section class="mk-partners" aria-labelledby="partners-h">
   <div class="container">
     <h2 class="mk-h" id="partners-h">Партнёры</h2>
-    <div class="partner">
-      <img src="/images/partners/skilllab.webp" width="160" height="95" alt="Апгрейд Skill Lab" loading="lazy">
-      <p><b>Skill Lab</b> — Андрей Мейстер разрабатывает для компании учебные программы.</p>
-    </div>
-    <!-- Список партнёров — от владельца (30.10.2026), логотипы прислал
-         картинками в чат; пока файлов нет, стоят названия. Не «козырем»:
-         блок внизу страницы, на первом экране партнёров нет (владелец). -->
-    <p class="mk-sub" style="margin:26px 0 12px">также работали с</p>
-    <ul class="partner-list">
-      <li>Яндекс Практикум</li>
-      <li>Фоксфорд</li>
-      <li>SkyTrainer</li>
-      <li>Психфак</li>
-      <li>Медико-биологическая школа «Vita»</li>
-      <li>Газпром-Медиа</li>
-      <li>Министерство культуры Московской области</li>
-      <li>«Мистер Фримен»</li>
-      <li>Ozon</li>
-      <li>Legio Felix</li>
+    <p class="partner-lead"><b>Skill Lab</b> — Андрей Мейстер разрабатывает для компании учебные программы.</p>
+    <!-- Логотипы — файлы владельца (30.10.2026), исходники в images/partners/src/;
+         обрезаны по краю и приведены к одной высоте. Ряд картинками, как у
+         Курпатова: светлые плитки одного размера, логотипы в сером, цвет —
+         при наведении. Блок внизу страницы: «не с козырей» (владелец). -->
+    <ul class="partner-logos">
+      <li><img src="/images/partners/skilllab-mono.webp" width="474" height="160" alt="Апгрейд Skill Lab" title="Апгрейд Skill Lab" loading="lazy"></li>
+      <li><img src="/images/partners/yandex-praktikum.webp" width="861" height="126" alt="Яндекс Практикум" title="Яндекс Практикум" loading="lazy"></li>
+      <li><img src="/images/partners/foxford.webp" width="727" height="160" alt="Фоксфорд" title="Фоксфорд" loading="lazy"></li>
+      <li><img src="/images/partners/skytrainer.webp" width="138" height="28" alt="SkyTrainer" title="SkyTrainer" loading="lazy"></li>
+      <li><img src="/images/partners/psifak.webp" width="163" height="160" alt="Психфак" title="Психфак" loading="lazy"></li>
+      <li><img src="/images/partners/vita.webp" width="160" height="160" alt="Медико-биологическая школа «Vita»" title="Медико-биологическая школа «Vita»" loading="lazy"></li>
+      <li><img src="/images/partners/gazprom-media.webp" width="500" height="160" alt="Газпром-Медиа" title="Газпром-Медиа" loading="lazy"></li>
+      <li><img src="/images/partners/minkult-mo.webp" width="417" height="160" alt="Министерство культуры Московской области" title="Министерство культуры Московской области" loading="lazy"></li>
+      <li><img src="/images/partners/mister-freeman.webp" width="172" height="160" alt="«Мистер Фримен»" title="«Мистер Фримен»" loading="lazy"></li>
+      <li><img src="/images/partners/ozon.webp" width="160" height="160" alt="Ozon" title="Ozon" loading="lazy"></li>
+      <li><img src="/images/partners/legio-felix.webp" width="118" height="160" alt="Legio Felix" title="Legio Felix" loading="lazy"></li>
     </ul>
   </div>
 </section>
