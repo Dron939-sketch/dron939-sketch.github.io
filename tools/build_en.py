@@ -238,7 +238,7 @@ def home():
 <li><b>Author of the Variatika and Conceptual Base methods</b> — teaching built on the findings of cognitive science.</li>
 <li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
 </ul>
-<a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. It starts with the Gap Map: 22 questions. <span class="ru">In Russian.</span></span></a>
+<a class="new" href="/testy/klyuchi-karta-probelov/"><span class="k">New project</span><b>The Conceptual Base</b><span class="t">The framework of concepts you need to understand a subject — and yourself. The project is complete and its results are being confirmed. The Gap Map is open: 22 questions. <span class="ru">In Russian.</span></span></a>
 </div>{VIDEO}</div></div></section>
 <section class="sec"><div class="wrap">
 <div class="pos">
