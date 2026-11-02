@@ -58,7 +58,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:#fff;color:#1D1D1F;
 h1{font-size:clamp(1.9rem,5vw,2.7rem);font-weight:600;line-height:1.2;letter-spacing:-.02em;margin:0 0 16px}
 h2{font-size:clamp(1.35rem,3.6vw,1.8rem);font-weight:600;margin:46px 0 18px}
 h3{font-size:1.15rem;font-weight:600;margin:26px 0 8px}
-p{font-size:1.08rem;font-weight:300;margin-bottom:1.2rem}
+p{font-size:1.08rem;font-weight:400;margin-bottom:1.2rem}
 a{color:#3A86FF}
 .badges{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 24px}
 .badge{font-size:.82rem;border:1px solid #E0E0E0;border-radius:30px;padding:5px 14px;color:#6E6E73}
@@ -98,7 +98,14 @@ a{color:#3A86FF}
 .test-card:hover{border-color:#3A86FF;transform:translateY(-2px)}
 .test-card h3{margin:0 0 8px}
 .test-card p{font-size:.97rem;color:#4A5563;margin:0 0 10px}
-.test-card .meta{font-size:.85rem;color:#8A93A3}
+.test-card .meta{font-size:.85rem;color:#5B6472}
+.t-group{margin:38px 0 0}
+.t-group h2{font-size:clamp(1.15rem,3.2vw,1.45rem);margin:0 0 6px}
+.t-group .t-sub{font-size:.95rem;color:#5B6472;font-weight:400;margin:0 0 16px}
+.test-card .get{font-size:.9rem;color:#1D1D1F;margin:0 0 9px;font-weight:500}
+.badge-v,.badge-a{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:middle;font-weight:500;letter-spacing:.01em}
+.badge-v{background:#E8F5EC;color:#1E7A3E;border:1px solid #BBE3C7}
+.badge-a{background:#F1F3F6;color:#4B5563;border:1px solid #DDE2E8}
 </style>
 <script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 </head>
@@ -106,87 +113,121 @@ a{color:#3A86FF}
 <div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto"><a href="/" style="color:#3A86FF;text-decoration:none;font-size:.9rem;font-weight:700">А МЕЙСТЕР</a><a href="/blog/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Блог</a><a href="/blog/lektorij/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Лекторий</a><a href="/istorii/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Истории</a><a href="/sobytiya/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Архив</a><a href="/magazin/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Магазин</a><a href="/virtual-psychologist/" style="color:#3A86FF;text-decoration:none;font-size:.9rem">Виртуальный психолог</a></nav></div><script>(function(){fetch('/header.html').then(function(r){return r.text();}).then(function(html){var el=document.getElementById('header-placeholder');el.innerHTML=html;el.querySelectorAll('script').forEach(function(s){var n=document.createElement('script');for(var i=0;i<s.attributes.length;i++){n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>
 <main class="container">
 <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a> / Тесты</nav>
-<h1>Тесты: проверенные шкалы, а не картинки</h1>
-<p class="lede">По запросу «психологический тест» интернет выдаёт «узнай себя по картинке» с воронкой в платный марафон. Здесь другое: две короткие шкалы с огромной исследовательской базой, которыми пользуются клиники по всему миру, и два авторских опросника, у которых статус написан прямо на странице. Подсчёт идёт в вашем браузере, ответы никуда не отправляются.</p>
+<h1>Психологические тесты</h1>
+<p class="lede">Проверенные шкалы и авторские опросники. Подсчёт идёт в вашем браузере, ответы никуда не отправляются. На каждой карточке написано, какого происхождения тест и что вы получите в конце.</p>
+<p class="lede" style="font-size:1rem;color:#5B6472">Часть тестов открывается во <a href="/virtual-psychologist/">Фреди</a>: первый разговор — 15 минут бесплатно, дальше подписка 690 ₽ в месяц, отключается в один клик. Страница каждого такого теста говорит об этом прямо.</p>
+<div class="t-group">
+<h2>Проверенные шкалы</h2>
+<p class="t-sub">Скрининг с исследовательской базой. Если сомневаетесь, с чего начать, — начинайте отсюда.</p>
 <div class="tests-grid">
 <a class="test-card" href="/testy/trevoga-gad-7/">
-<h3>😰 Тест на тревожность</h3>
+<h3>Тест на тревожность<span class="badge-v">проверенная шкала</span></h3>
 <p>Шкала GAD-7: скрининг генерализованной тревоги. Насколько тревога за последние две недели выходит за рамки обычной.</p>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
 <span class="meta">7 вопросов · ~2 минуты · Спитцер, Кроенке и др.</span>
 </a>
 <a class="test-card" href="/testy/depressiya-phq-9/">
-<h3>🌧 Тест на депрессию</h3>
+<h3>Тест на депрессию<span class="badge-v">проверенная шкала</span></h3>
 <p>Шкала PHQ-9: девять вопросов по диагностическим критериям депрессии. С бережным кризисным блоком.</p>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
 <span class="meta">9 вопросов · ~2 минуты · Спитцер, Кроенке и др.</span>
 </a>
+</div>
+</div>
+
+<div class="t-group">
+<h2>Авторские опросники</h2>
+<p class="t-sub">Свои инструменты: профили, типологии, карты пробелов. У каждого на карточке честно указан статус.</p>
+<div class="tests-grid">
 <a class="test-card" href="/testy/test-na-revnost/">
-<h3>💚 Тест на ревность</h3>
-<p>Профиль по шести типам ревности с диаграммой — от адаптивной до патологической. Авторский опросник, статус честно указан.</p>
+<h3>Тест на ревность<span class="badge-a">авторский опросник</span></h3>
+<p>Профиль по шести типам ревности с диаграммой — от адаптивной до патологической. Авторский опросник.</p>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
 <span class="meta">18 утверждений · ~3 минуты · типология А. Мейстера</span>
 </a>
 <a class="test-card" href="/testy/kakoy-muzhchina-mne-nuzhen/">
-<h3>🧭 Какой мужчина вам нужен</h3>
+<h3>Какой мужчина вам нужен<span class="badge-a">авторский опросник</span></h3>
 <p>Вход — жизнь, к которой вы хотите прийти; выход — пять качеств человека, с которым она возможна, места, где такие люди водятся, и сигналы первых встреч.</p>
+<p class="get">Что вы получите: пять качеств, где искать и сигналы первых встреч.</p>
 <span class="meta">10 вопросов · ~3 минуты · рабочий инструмент, не диагностика</span>
 </a>
 <a class="test-card" href="/testy/test-na-umenie-lyubit/">
-<h3>💛 Тест на умение любить</h3>
+<h3>Тест на умение любить<span class="badge-a">авторский опросник</span></h3>
 <p>Профиль по четырём компонентам зрелой любви из «Искусства любить» Фромма: забота, ответственность, уважение, знание.</p>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
 <span class="meta">16 утверждений · ~3 минуты · по Э. Фромму</span>
 </a>
 <a class="test-card" href="/test-na-odinochestvo/">
-<h3>🌒 Тест на одиночество</h3>
+<h3>Тест на одиночество<span class="badge-a">авторский опросник</span></h3>
 <p>Какой из четырёх типов у вас — эмоциональное, социальное, экзистенциальное или цифровое. Типы лечатся по-разному; главная ошибка — лечить не тот.</p>
-<span class="meta">12 вопросов · ~2 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
+<span class="meta">12 вопросов · ~2 минуты · авторский опросник</span>
 </a>
 <a class="test-card" href="/test-na-samozvanca/">
-<h3>🎭 Тест на синдром самозванца</h3>
+<h3>Тест на синдром самозванца<span class="badge-a">авторский опросник</span></h3>
 <p>Насколько глубоко сидит «скоро все поймут, что я не тяну»: уровень выраженности с разбором и три техники присвоения заслуг.</p>
-<span class="meta">12 вопросов · ~2 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
+<span class="meta">12 вопросов · ~2 минуты · авторский опросник</span>
 </a>
 <a class="test-card" href="/testy/klyuchi-karta-probelov/">
-<h3>🗝 Карта пробелов: каких понятий вам не хватает</h3>
+<h3>Карта пробелов: каких понятий вам не хватает<span class="badge-a">авторский опросник</span></h3>
 <p>22 бытовые ситуации из восьми областей — логика, вероятность, физика, биология, системы, психология, искусство. Покажет, где понятие есть, где пробел, к чему он ведёт и чем его закрыть: бесплатный курс Лектория и записи «Ключей».</p>
+<p class="get">Что вы получите: карту пробелов и чем закрыть каждый.</p>
 <span class="meta">22 ситуации · ~6 минут · авторский инструмент</span>
 </a>
 <a class="test-card" href="/test-na-kognitivnye-iskazheniya/">
-<h3>🪤 Тест на когнитивные искажения: 8 ловушек</h3>
+<h3>Тест на когнитивные искажения: 8 ловушек<span class="badge-a">авторский опросник</span></h3>
 <p>Линии Аша, число на колесе, карточки Уэйсона — восемь ловушек из классических опытов с разбором после каждой. В итоге — какие искажения решают за вас, что дают, во что обходятся и на что их поменять, с уровнем усилий.</p>
-<span class="meta">8 ловушек и 11 вопросов · ~5 минут · авторский инструмент, статус честно указан</span>
+<p class="get">Что вы получите: свои искажения и на что их менять.</p>
+<span class="meta">8 ловушек и 11 вопросов · ~5 минут · авторский инструмент</span>
 </a>
 <a class="test-card" href="/test-na-vygoranie/">
-<h3>🔥 Тест на выгорание</h3>
+<h3>Тест на выгорание<span class="badge-a">авторский опросник</span></h3>
 <p>Три шкалы — энергия, смысл, отдача: где именно горит и с чего начинать восстановление. С прямым указанием, когда теста мало.</p>
-<span class="meta">12 вопросов · ~3 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
+<span class="meta">12 вопросов · ~3 минуты · авторский опросник</span>
 </a>
 <a class="test-card" href="/test-na-proforientaciyu/">
-<h3>🧭 Тест на профориентацию</h3>
+<h3>Тест на профориентацию<span class="badge-a">авторский опросник</span></h3>
 <p>Не «кем быть», а с чем и как: пять направлений по материалу труда плюс три условия работы — глубина, колея, отклик. Сужает поле и объясняет, по какому признаку сравнивать варианты.</p>
-<span class="meta">24 вопроса · ~3 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: сужение поля профессий и по какому признаку сравнивать.</p>
+<span class="meta">24 вопроса · ~3 минуты · авторский опросник</span>
 </a>
 <a class="test-card" href="/test-na-tip-lichnosti/">
-<h3>🧩 Тест на тип личности</h3>
+<h3>Тест на тип личности<span class="badge-a">авторский опросник</span></h3>
 <p>Четыре оси: откуда берёте силы, что замечаете первым, чем меряете решения, как устраиваете жизнь. Не ярлык, а разбор — где сильная сторона и где рядом с ней слепая зона.</p>
-<span class="meta">20 вопросов · ~3 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: профиль с сильной стороной и слепой зоной.</p>
+<span class="meta">20 вопросов · ~3 минуты · авторский опросник</span>
 </a>
 <a class="test-card" href="/test-na-stress/">
-<h3>⚡ Тест на уровень стресса</h3>
+<h3>Тест на уровень стресса<span class="badge-a">авторский опросник</span></h3>
 <p>Три шкалы — нагрузка, опора, тело: где именно напряжение и с чего начинать. Одинаковый балл у двух людей означает разное, и советы у них не совпадают.</p>
-<span class="meta">12 вопросов · ~2 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
+<span class="meta">12 вопросов · ~2 минуты · авторский опросник</span>
 </a>
 <a class="test-card" href="/express-test-lichnosti/">
-<h3>🧩 Экспресс-тест личности</h3>
+<h3>Экспресс-тест личности<span class="badge-a">авторский опросник</span></h3>
 <p>Какая стратегия ведёт вас по жизни — контроль, угождение, достижение или наблюдение. С разбором: где она помогает, где мешает и один шаг на неделю.</p>
-<span class="meta">12 вопросов · ~2 минуты · авторский опросник, статус честно указан</span>
+<p class="get">Что вы получите: балл, расшифровку и шаг, что делать дальше.</p>
+<span class="meta">12 вопросов · ~2 минуты · авторский опросник</span>
 </a>
-<a class="test-card" href="/bolshoj-test-lichnosti/" style="border-color:#3A86FF">
-<h3>🧠 Большой тест личности — во Фреди</h3>
+</div>
+</div>
+
+<div class="t-group">
+<h2>В приложении Фреди</h2>
+<p class="t-sub">Большой разбор в диалоге, а не анкетой. Первый разговор бесплатный.</p>
+<div class="tests-grid">
+<a class="test-card" href="/bolshoj-test-lichnosti/">
+<h3>Большой тест личности — во Фреди<span class="badge-a">в приложении</span></h3>
 <p>Пять этапов: восприятие, мышление, поведение, точка роста, глубинные паттерны. В конце — ваш портрет и персональные рекомендации, что с этим делать. Проходится в диалоге, а не анкетой.</p>
+<p class="get">Что вы получите: портрет личности и персональные рекомендации.</p>
 <span class="meta">~15 минут · в приложении Фреди · 15 минут разговора бесплатно</span>
 </a>
 </div>
+</div>
 <div class="disclaimer">⚠️ Ни один из тестов не ставит диагноз. GAD-7 и PHQ-9 — скрининг: они измеряют выраженность симптомов, как термометр — температуру, и балл 10 и выше в любом из них — обоснованный повод дойти до очной оценки специалиста. Тесты на ревность и умение любить — структурированное самонаблюдение по авторским опросникам, у них и такой силы нет.</div>
-<h2>Почему тестов так мало</h2>
+<h2>Почему тестов немного</h2>
 <p>Потому что честных коротких шкал, свободных для публикации, немного, а «тесты из 10 картинок» мы не делаем принципиально: у них нет ни валидности, ни надёжности, и они существуют ради воронки продаж. Тесты на ревность и умение любить — сознательные исключения: валидированных коротких шкал под эти темы не существует, поэтому мы сделали авторские опросники и написали их статус прямо на странице, а не выдали за «научные». Как отличать настоящие тесты от пустышек — разобрано в <a href="/blog/lekciya-diag-7-testy-pustyshki.html">лекции про тесты-пустышки</a>; что вообще значит «валидность» — в <a href="/blog/lekciya-diag-2-nadezhnost-validnost.html">лекции про надёжность и валидность</a>.</p>
 <p>Разобрать результат словами и понять, что за ним стоит именно у вас, можно с <a href="/virtual-psychologist/">Фреди</a> — бесплатно и без регистрации.</p>
 </main>
