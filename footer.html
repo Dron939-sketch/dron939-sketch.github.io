@@ -254,4 +254,18 @@
 .footer {
   animation: fadeInUp 0.5s ease-out;
 }
+/* Компактный подвал на телефоне (03.11.2026): при ширине 390px подвал
+   занимал 569px — две трети экрана. Сжимаем отступы, проекты скрываем,
+   ссылки ставим плотнее. Цель — не выше ~45% экрана. */
+@media (max-width:768px){
+  .footer{padding:22px 0 14px}
+  .footer-content{flex-direction:row;align-items:center;justify-content:space-between;text-align:left;gap:12px;margin-bottom:14px}
+  .footer-logo{font-size:.95rem;letter-spacing:.18em}
+  .social-links{gap:14px}
+  .social-links a{font-size:.76rem;min-height:36px;padding:6px 0}
+  .footer-legal{padding-top:12px;gap:0 14px}
+  .footer-legal a{font-size:.78rem;padding:7px 2px}
+  .footer-projects{display:none}
+  .copyright{font-size:.76rem;margin-top:8px}
+}
 </style>
