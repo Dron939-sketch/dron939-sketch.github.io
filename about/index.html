@@ -423,7 +423,8 @@ body{overflow-wrap:break-word}</style>
     <p style="max-width: 700px; margin: 0 auto;">
       Специалист в области когнитивной психологии и психологии коммуникации.<br>
       Разработчик образовательной системы «Вариатика».<br>
-      Член Европейской ассоциации консультирования (EAC) и Международной ассоциации прикладной психологии (IAAP).
+      Член Европейской ассоциации консультирования (EAC) и Международной ассоциации прикладной психологии (IAAP).<br>
+      Кандидат наук — 2013, МФТИ. Психология, которой можно пользоваться, — на научной основе, без веры в чудо.
     </p>
   </div>
 </section>
@@ -435,8 +436,11 @@ body{overflow-wrap:break-word}</style>
     <div class="grid-2">
       <div class="info-card">
         <h3>📚 Образование</h3>
-        <p>Кандидат психологических наук. Специализация — когнитивная психология, психология коммуникации, системное мышление.</p>
+        <p>Кандидат психологических наук, 2013 год. Факультет психологии ГАУГН (2008), аспирантура НБИК-факультета МФТИ (2008–2013), научный руководитель — Борис Митрофанович Величковский.</p>
         <p>Автор более 50 научных публикаций по психологии влияния, теории манипуляции и нарративным практикам.</p>
+                <!-- TODO(владелец): нужны тема и год защиты диссертации и 3–5 ссылок на публикации
+             (РИНЦ/DOI/ORCID). Фокус-группа 02.11.2026: 7 из 9 назвали «50 публикаций»
+             без ссылок главной дырой в доверии. Без реальных данных не заполнять. -->
       </div>
       <div class="info-card">
         <h3>🔬 Научная деятельность</h3>
@@ -483,7 +487,7 @@ body{overflow-wrap:break-word}</style>
       </div>
       <div class="info-card">
         <h3>🧩 Инструменты</h3>
-        <p>Книги, игры, практикумы — готовые способы увидеть свой нарратив, научиться его менять и создать свой камень, который будет жить после вас.</p>
+        <p>Книги, игры, практикумы — готовые способы увидеть свою историю со стороны, назвать её словами и переписать там, где она мешает. Не «стать другим человеком», а перестать повторять один и тот же сценарий.</p>
       </div>
     </div>
   </div>
@@ -534,24 +538,34 @@ body{overflow-wrap:break-word}</style>
     <div style="text-align: center; max-width: 800px; margin: 0 auto; padding: 30px 0;">
       <p style="font-size: 1.4rem; color: #3A86FF; font-style: italic;">«Я стремлюсь к тому, чтобы мои продукты работали без меня»</p>
       <p style="color: #666; margin-top: 15px;">— Андрей Мейстер</p>
+      <p style="color:#9AA4B2;margin:14px auto 0;max-width:620px;font-size:.95rem;">Речь не о том, что со мной нельзя поговорить, а о том, чтобы инструменты оставались у вас: начать можно самому — с теста, Лектория или разговора с Фреди.</p>
     </div>
   </div>
 </section>
 
-<!-- КОНТАКТЫ -->
-<section class="section">
+<!-- ЧТО ДАЛЬШЕ (02.11.2026): фокус-группа на /about/ — 7 из 9 «дочитал, но дальше
+     не пошёл»: страница заканчивалась почтой и пресс-службой, и уйти было некуда.
+     Блок «Контакты» убран по просьбе владельца — почта и пресс-служба дублировали подвал. -->
+<section class="section" id="dalshe">
   <div class="container">
-    <h2>Контакты</h2>
-    <p style="margin-bottom: 20px;">Личная позиция и взгляд на работу — в <a href="/obo-mne/">манифесте</a>.</p>
-    <!-- Соцсети — один раз, в подвале (владелец, 31.10.2026: «все дубли
-         убери»). Здесь было ещё четыре кнопки: Telegram и VK повторяли
-         подвал, Rutube с сайта убран, а «Дзен» на деле вёл на MAX. -->
-    <div class="contacts">
-      <a href="mailto:dron939@yandex.ru" class="contact-link">✉️ dron939@yandex.ru</a>
-      <a href="/press/" class="contact-link">Пресс-служба</a>
+    <h2>Что дальше</h2>
+    <p style="max-width:700px;margin-bottom:22px;">Начать можно самому — бесплатно и без регистрации.</p>
+    <div class="about-cta">
+      <a class="about-cta-btn primary" href="/testy/">Пройти тест · 3 минуты</a>
+      <a class="about-cta-btn" href="/fredi/">Поговорить с Фреди</a>
+      <a class="about-cta-btn" href="/blog/lektorij/">Открыть Лекторий</a>
     </div>
+    <p style="margin-top:18px;color:#9AA4B2;font-size:.92rem;">Тревога и сон · Отношения и границы · Выгорание и силы · Решения и цели</p>
+    <p style="margin-top:14px;font-size:.95rem;">Личная позиция и взгляд на работу — в <a href="/obo-mne/">манифесте</a>.</p>
   </div>
 </section>
+<style>
+.about-cta{display:flex;flex-wrap:wrap;gap:12px}
+.about-cta-btn{display:inline-block;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:600;border:1px solid rgba(58,134,255,.45);color:#F0F0F0}
+.about-cta-btn:hover{border-color:#3A86FF;color:#fff}
+.about-cta-btn.primary{background:linear-gradient(135deg,#00A8E8,#3A86FF);border-color:transparent;color:#fff}
+@media(max-width:520px){.about-cta-btn{width:100%;text-align:center}}
+</style>
 
 <!-- ПОДВАЛ -->
 <!-- Подвал — тот же, что на главной (владелец, 31.10.2026). -->
