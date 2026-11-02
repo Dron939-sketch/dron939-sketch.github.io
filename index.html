@@ -602,7 +602,7 @@
     .intro-cap b{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:1.15rem;color:#fff;letter-spacing:.01em}
     .intro-cap span{display:block;font-size:.88rem;color:#8EC5FF;letter-spacing:.04em}
     .intro-face video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 0;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(#000 72%,transparent 100%);mask-image:linear-gradient(#000 72%,transparent 100%)}
-    @media(max-width:860px){.intro-grid{grid-template-columns:1fr;gap:0}.intro-face{order:-1;width:78%;max-width:320px;margin:-14px auto 22px}}
+    @media(max-width:860px){.intro-grid{grid-template-columns:1fr;gap:0}.intro-face{order:2;width:100%;max-width:360px;margin:22px auto 0}}
     .intro h1{text-transform:none;font-size:clamp(1.9rem,6.5vw,3rem);font-weight:600;letter-spacing:.01em;line-height:1.15;margin:0 0 14px;color:#fff}
     .intro-lead{max-width:720px;font-size:clamp(1.02rem,3.8vw,1.2rem);color:#D0D4DA;margin:0 0 20px}
     .intro-kick{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:#8EC5FF;margin:0 0 14px}
@@ -1481,6 +1481,24 @@ body{overflow-wrap:break-word}</style>
 .mk-ach li{position:relative;padding-left:20px;margin:0 0 10px;color:#D3D8E0;font-size:clamp(1rem,3.7vw,1.12rem);line-height:1.55}
 .mk-ach li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:#3A86FF}
 .mk-ach b{color:#fff}
+/* Первый экран: автор строкой, ценность заголовком, одно действие.
+   Фокус-группа 02.11.2026: текущий экран 4,1/10, черновик v3 — 7,1/10,
+   9 из 9 предпочли новую структуру. Регалии (mk-ach) ушли ниже кнопок. */
+.intro-author{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 18px;max-width:720px;font-size:clamp(.92rem,3.4vw,1.02rem);line-height:1.5;color:var(--mk-soft,#8EC5FF)}
+.intro-author b{color:#fff;font-weight:600;white-space:nowrap}
+.intro-dot{width:6px;height:6px;border-radius:50%;background:var(--mk-accent,#3A86FF);flex:none}
+.intro-sub{max-width:46ch;margin:0 0 24px;font-size:clamp(1.05rem,4vw,1.22rem);line-height:1.5;color:#fff}
+.intro-cta{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 14px}
+.intro-cta a{display:inline-block;padding:15px 24px;border-radius:12px;font-weight:600;font-size:1rem;text-decoration:none;transition:filter .15s}
+.intro-cta a:hover{filter:brightness(1.08)}
+.btn-primary{background:linear-gradient(135deg,var(--mk-accent2,#00A8E8),var(--mk-accent,#3A86FF));color:#fff}
+.btn-ghost{border:1px solid rgba(255,255,255,.22);color:#fff}
+.intro-routes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.intro-routes a{font-size:.86rem;color:var(--mk-soft,#8EC5FF);border:1px solid var(--mk-line,rgba(58,134,255,.3));border-radius:999px;padding:6px 13px;text-decoration:none;transition:border-color .15s,color .15s}
+.intro-routes a:hover{border-color:var(--mk-accent,#3A86FF);color:#fff}
+.intro-fine{max-width:52ch;margin:0 0 7px;font-size:.84rem;line-height:1.55;color:var(--mk-text,#C9CED6)}
+.intro-path{color:var(--mk-soft,#8EC5FF);text-decoration:none}
+@media(max-width:520px){.intro-cta a{width:100%;text-align:center}}
 .mk-new{display:block;max-width:620px;padding:16px 20px;border:1px solid rgba(58,134,255,.55);border-radius:14px;background:linear-gradient(135deg,rgba(58,134,255,.16),rgba(123,47,247,.10));text-decoration:none;color:#E6E8EB}
 .mk-new:hover{border-color:#3A86FF;color:#fff;text-shadow:none}
 .mk-new-k{display:block;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:#8EC5FF;margin-bottom:4px}
@@ -1573,7 +1591,7 @@ body{overflow-wrap:break-word}</style>
 .partner-logos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .partner-logos li{display:flex;align-items:center;justify-content:center;height:96px;padding:14px 18px;background:#fff;border-radius:var(--mk-r)}
 .partner-logos img{display:block;max-width:78%;max-height:62px;width:auto;height:auto;object-fit:contain}
-@media(max-width:860px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px}}
+@media(max-width:860px){.partner-logos{grid-template-columns:repeat(2,1fr);gap:10px}.partner-logos li{height:84px;padding:10px 12px}.partner-logos img{max-width:100%;max-height:54px}}
 .mk-posline{margin:-2px 0 16px;max-width:680px;font-size:clamp(1.12rem,4vw,1.35rem);line-height:1.45;color:var(--mk-text);font-weight:300}
 .mk-posline b{display:block;color:var(--mk-ink);font-weight:600}
 /* «С чего начать прямо сейчас» — газетная вёрстка на тёмном */
@@ -1665,13 +1683,29 @@ body{overflow-wrap:break-word}</style>
          (владелец, 29.10.2026): фокус-группа просила лицо автора с 26.10. -->
     <div class="intro-grid">
       <div class="intro-text">
-      <h1 id="intro-h" class="mk-name">Андрей Мейстер</h1>
+      <p class="intro-author"><span class="intro-dot"></span><b>Андрей Мейстер</b> — психолог, кандидат психологических наук · психфак ГАУГН, аспирантура МФТИ у Б.&nbsp;М.&nbsp;Величковского</p>
+      <h1 id="intro-h">Психология, которой можно пользоваться</h1>
       <!-- Строка позиции (владелец, 30.10.2026; по «Позиционированию» Райса и
            Траута — одно слово в голове: «самостоятельно»). Раунд 10 фокус-группы:
            вариант «Психология, которой можно пользоваться…» — первый у 7 из 9;
            «хвастается» 3,9 против 5,5 у прежнего экрана. -->
-      <p class="mk-posline"><b>Психология, которой можно пользоваться самостоятельно.</b> Курсы, тесты и ИИ-собеседник — на науке о мышлении, а не на вере. Курсы и тесты бесплатно, без регистрации.</p>
-      <p class="mk-cred">Психолог, кандидат психологических наук. Психфак ГАУГН, аспирантура МФТИ у Б.&nbsp;М.&nbsp;Величковского. <a href="/about/#put">Путь по годам&nbsp;→</a></p>
+      <p class="intro-sub">Понять, что с вами происходит, — и что с этим делать. На научной основе, без веры в чудо.</p>
+
+      <div class="intro-cta">
+        <a class="btn-primary" href="/testy/">Пройти тест · 3 минуты</a>
+        <a class="btn-ghost" href="/fredi/">Поговорить с Фреди</a>
+      </div>
+
+      <div class="intro-routes">
+        <a href="/testy/trevoga-gad-7/">Тревога и сон</a>
+        <a href="/testy/">Отношения и границы</a>
+        <a href="/testy/">Выгорание и силы</a>
+      </div>
+
+      <p class="intro-fine">Сразу после теста — разбор: что это значит и что делать. Бесплатно, без регистрации.</p>
+      <p class="intro-fine">Фреди — ИИ-собеседник, отвечает круглосуточно. Не ставит диагнозов и не заменяет врача.</p>
+      <p class="intro-fine">Тест тревоги — шкала GAD-7, 7 вопросов. Подписка — только если захотите глубже.</p>
+      <p class="intro-fine"><a class="intro-path" href="/about/#put">Путь по годам&nbsp;→</a></p>
       <!-- Звания — образ А+Б (владелец, 30.10.2026): кто — исследователь,
            основатель открытого университета и создатель технологий обучения.
            Число курсов пересчитывает tools/sync_counters.py, руками не вписывать. -->
