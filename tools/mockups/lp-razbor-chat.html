@@ -17,7 +17,8 @@
   .head{display:flex;align-items:center;gap:12px;padding:14px 20px 16px;border-bottom:1px solid #1a2230}
   .ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00A8E8,#3A86FF);
        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px}
-  .who b{display:block;color:#fff;font-size:17px;letter-spacing:.01em}
+  .who b{display:block;color:#fff;font-size:17px;letter-spacing:.01em;filter:blur(7px);
+         user-select:none;-webkit-user-select:none}
   .who span{display:block;color:#5fd08a;font-size:12.5px;margin-top:2px}
   .chat{flex:1;padding:18px 16px 10px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
   .b{max-width:88%;border-radius:16px;padding:13px 15px;font-size:15.5px;line-height:1.42}
@@ -40,31 +41,27 @@
   <div class="screen">
     <div class="status"><span>21:14</span><span>5G ▮▮▮</span></div>
     <div class="head">
-      <div class="ava">АМ</div>
-      <div class="who"><b>Андрей Мейстер</b><span>● разбор разговора</span></div>
+      <div class="ava">?</div>
+      <div class="who"><b>Андрей Мейстер</b><span>● разбор занятия</span></div>
     </div>
     <div class="chat">
-      <div class="b me"><span class="lbl">Вы</span>Клиент говорит «мы подумаем», я теряюсь и отвечаю «конечно, звоните». Дальше он пропадает. Что сказать в этот момент?</div>
+      <div class="b me"><span class="lbl">Вы</span>Не получается погрузить человека в транс. Говорю медленно, спокойно, подстраиваюсь — а он просто слушает и всё. Никакого транса.</div>
 
-      <div class="b ai"><span class="lbl">Андрей</span>Не отвечайте на «подумаем» согласием — это вежливый отказ, и вы его принимаете.
-        Спросите: <b>«Чтобы было о чём думать — что для вас сейчас важнее, срок или цена?»</b>
-        Вы не спорите и не давите, вы переводите паузу в выбор.</div>
+      <div class="b ai"><span class="lbl">Ответ</span>Медленно — ещё не значит в трансе. Работает <b>ритм</b>.
+        Задайте ритм незаметно для себя: рукой, лёгким кивком, дыханием — и говорите
+        <b>внутри этого ритмического рисунка</b>, укладывая по одной мысли на такт.
+        Собеседник подстраивается под ритм неосознанно, а удержанное внимание и есть вход в транс.</div>
 
-      <div class="b me"><span class="lbl">Вы</span>А если скажет «и то, и другое»?</div>
+      <div class="b me"><span class="lbl">Вы</span>А если он перебьёт на середине?</div>
 
-      <div class="b ai"><span class="lbl">Андрей</span>Тогда: <b>«Тогда начнём со срока — когда он должен быть?»</b>
-        Слушайте не ответ, а <b>что он назовёт первым</b>: это и есть настоящий критерий, из-за которого
-        сделка не закрывалась.</div>
+      <div class="b ai"><span class="lbl">Ответ</span>Держите ритм ещё два-три такта, не меняя темпа, и вернитесь к своей фразе
+        <b>с середины, а не с начала</b>. Сбой ритма читается как суета — и выводит из транса
+        быстрее, чем любое слово.</div>
 
-      <div class="b me"><span class="lbl">Вы</span>Попробовал на встрече — он назвал цену. Сработало, но как теперь не скатиться в давление?</div>
-
-      <div class="b ai"><span class="lbl">Андрей</span>Отличие давления от вопроса простое: <b>после давления человек должен согласиться</b>, после вопроса — он может выбрать.
-        Держите правило: один вопрос на одну мысль, и после его ответа <b>вы замолкаете</b>. Пауза работает лучше второй фразы.</div>
-
-      <div class="typing">Андрей печатает…</div>
+      <div class="typing">Ответ приходит…</div>
     </div>
     <div class="input">
-      <div class="field">Напишите сообщение</div>
+      <div class="field">Опишите ситуацию</div>
       <div class="send">➤</div>
     </div>
   </div>
