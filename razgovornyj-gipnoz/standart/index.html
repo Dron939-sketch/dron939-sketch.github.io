@@ -823,17 +823,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     <li><b>Проверка:</b> колода игры «Маркетолог» — один рассказывает историю по картам, второй слушает, третий по лицу слушателя считает, поймали его или нет. Не с кем играть втроём — задания блокнота делаются в обычных разговорах на работе и дома</li>
     <li><b>Разбор:</b> закрытый Telegram-канал, личные ответы на вопросы и разбор ваших ситуаций с автором — ответ в течение суток</li>
    </ul>
-   <figure class="razbor-fig">
-    <img src="/images/lp-razbor-chat-2.webp" width="560" height="1090" alt="Пример разбора: переписка с автором — ситуация «не получается погрузить в транс» и ответ про ритм" loading="lazy">
-    <figcaption><b>Так выглядит разбор.</b> Вы присылаете реальный разговор, который не получился. В ответ — что было, каким приёмом можно было ответить и готовая фраза. Отвечает автор, в течение суток.</figcaption>
-   </figure>
-   <style>
-   .razbor-fig{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:center;margin:26px 0;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
-   .razbor-fig img{width:100%;height:auto;border-radius:14px;display:block}
-   .razbor-fig figcaption{font-size:.95rem;line-height:1.6;color:var(--muted)}
-   .razbor-fig figcaption b{display:block;color:var(--text);font-size:1.02rem;margin-bottom:6px}
-   @media(max-width:720px){.razbor-fig{grid-template-columns:1fr;gap:14px}.razbor-fig img{max-width:280px;margin:0 auto}}
-   </style>
+   
    <div class="ctas" style="margin-top:22px">
     <a class="btn btn-ozon" data-goal="paket" href="/razgovornyj-gipnoz/standart/zakaz/">Оформить заказ — 5 900 ₽</a>
    </div>
@@ -912,9 +902,36 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 </section>
 </main>
 
-<footer>
- <div class="wrap">© Андрей Мейстер · <a href="/oferta/">Оферта</a> · <a href="/politika-konfidencialnosti/">Конфиденциальность</a> · <a href="/kontakty/">Контакты</a></div>
+<footer class="lp-foot">
+ <div class="wrap">
+  <div class="lp-foot-row">
+   <div class="lp-foot-logo"><span>А</span>МЕЙСТЕР</div>
+   <nav class="lp-foot-social" aria-label="Соцсети">
+    <a href="https://t.me/meysternlp" target="_blank" rel="noopener noreferrer">Telegram</a>
+    <a href="https://vk.com/meysternlp" target="_blank" rel="noopener noreferrer">VK</a>
+    <a href="https://max.ru/id502238728185_biz" target="_blank" rel="noopener noreferrer">Max</a>
+   </nav>
+  </div>
+  <div class="lp-foot-row lp-foot-low">
+   <nav class="lp-foot-links" aria-label="Разделы и документы"><a href="/press/">Пресс-служба</a><a href="/sotrudnichestvo/">Сотрудничество</a><a href="/oferta/">Оферта</a><a href="/politika-konfidencialnosti/">Конфиденциальность</a><a href="/tarify/">Тарифы</a></nav>
+   <div class="lp-foot-copy">© Андрей Мейстер · 2026</div>
+  </div>
+ </div>
 </footer>
+<style>
+.lp-foot{padding:34px 0 24px;border-top:1px solid var(--line);margin-top:46px}
+.lp-foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px 24px}
+.lp-foot-low{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.lp-foot-logo{font-weight:600;letter-spacing:.14em;font-size:1.02rem;color:var(--text)}
+.lp-foot-logo span{color:var(--accent)}
+.lp-foot-social{display:flex;gap:18px}
+.lp-foot-social a{font-size:.82rem;color:var(--accent);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;padding:8px 0}
+.lp-foot-links{display:flex;flex-wrap:wrap;gap:0 18px}
+.lp-foot-links a{color:var(--muted);font-size:.86rem;text-decoration:none;padding:9px 0}
+.lp-foot-links a:first-child{color:var(--accent)}
+.lp-foot-copy{color:var(--faint);font-size:.85rem}
+@media(max-width:640px){.lp-foot-row{flex-direction:column;text-align:center}.lp-foot-links,.lp-foot-social{justify-content:center}}
+</style>
 
 <div class="sticky" id="sticky">
  <span>Разговорный гипноз · пакет «Стандартный»</span>
