@@ -1497,6 +1497,16 @@ body{overflow-wrap:break-word}</style>
 .intro-routes a{font-size:.86rem;color:var(--mk-soft,#8EC5FF);border:1px solid var(--mk-line,rgba(58,134,255,.3));border-radius:999px;padding:6px 13px;text-decoration:none;transition:border-color .15s,color .15s}
 .intro-routes a:hover{border-color:var(--mk-accent,#3A86FF);color:#fff}
 .intro-fine{max-width:52ch;margin:0 0 7px;font-size:.84rem;line-height:1.55;color:var(--mk-text,#C9CED6)}
+/* Три входа, строка автора и «для кого» (03.11.2026, reports/copy-first-screen.md 1.1). */
+.intro-doors{list-style:none;margin:0 0 18px;padding:0;max-width:720px;display:grid;gap:10px}
+.intro-doors li{position:relative;padding-left:18px;color:#D3D8E0;font-size:clamp(.98rem,3.6vw,1.08rem);line-height:1.55}
+.intro-doors li::before{content:'';position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--mk-accent,#3A86FF)}
+.intro-doors b{color:#fff}
+.intro-author-full{max-width:62ch;margin:0 0 10px;font-size:.9rem;line-height:1.6;color:var(--mk-text,#C9CED6)}
+.intro-author-full b{color:#fff;font-weight:600}
+.intro-for{max-width:56ch;margin:0 0 8px;font-size:clamp(.98rem,3.6vw,1.05rem);line-height:1.5;color:var(--mk-soft,#8EC5FF)}
+.mk-cred-block{max-width:760px;margin:26px 0 0}
+.mk-cred-block .mk-ach{margin-bottom:4px}
 .intro-path{color:var(--mk-soft,#8EC5FF);text-decoration:none}
 @media(max-width:520px){.intro-cta a{width:100%;text-align:center}}
 .mk-new{display:block;max-width:620px;padding:16px 20px;border:1px solid rgba(58,134,255,.55);border-radius:14px;background:linear-gradient(135deg,rgba(58,134,255,.16),rgba(123,47,247,.10));text-decoration:none;color:#E6E8EB}
@@ -1683,7 +1693,7 @@ body{overflow-wrap:break-word}</style>
          (владелец, 29.10.2026): фокус-группа просила лицо автора с 26.10. -->
     <div class="intro-grid">
       <div class="intro-text">
-      <p class="intro-author"><span class="intro-dot"></span><b>Андрей Мейстер</b> — психолог, кандидат психологических наук · психфак ГАУГН, аспирантура МФТИ у Б.&nbsp;М.&nbsp;Величковского</p>
+      <p class="intro-author"><span class="intro-dot"></span><b>Андрей Мейстер</b> — психолог, кандидат психологических наук</p>
       <h1 id="intro-h">Психология, которой можно пользоваться самостоятельно</h1>
       <!-- Строка позиции (владелец, 30.10.2026; по «Позиционированию» Райса и
            Траута — одно слово в голове: «самостоятельно»). Раунд 10 фокус-группы:
@@ -1691,26 +1701,23 @@ body{overflow-wrap:break-word}</style>
            «хвастается» 3,9 против 5,5 у прежнего экрана. -->
       <p class="intro-sub">Понять, что с вами происходит, — и что с этим делать. На научной основе, без веры в чудо.</p>
 
+      <!-- Три входа (03.11.2026, reports/copy-first-screen.md 1.1): на каждой
+           строке формат, срок и результат — вместо витрины из четырёх званий.
+           Тест — «3 минуты», как на кнопке и на /testy/. -->
+      <ul class="intro-doors">
+        <li><b>Тест — 3 минуты.</b> GAD-7, PHQ-9 и авторские опросники: результат считается в браузере, ответы никуда не уходят.</li>
+        <li><b>Курс — Лекторий открыт целиком.</b> Страх, решения, отношения, деньги и мышление — читайте и слушайте без регистрации и оплаты. Без регистрации и оплаты.</li>
+        <li><b>Разговор — 15 минут бесплатно.</b> Фреди отвечает круглосуточно и не ставит диагнозов.</li>
+      </ul>
+
       <div class="intro-cta">
         <a class="btn-primary" href="/testy/">Пройти тест · 3 минуты</a>
         <a class="btn-ghost" href="/fredi/">Поговорить с Фреди</a>
       </div>
 
-      
-
-      <p class="intro-fine">Сразу после теста — разбор: что это значит и что делать. Бесплатно, без регистрации.</p>
-      <p class="intro-fine">Фреди — ИИ-собеседник, отвечает круглосуточно. Не ставит диагнозов и не заменяет врача.</p>
-      <p class="intro-fine">Тест тревоги — шкала GAD-7, 7 вопросов. Подписка — только если захотите глубже.</p>
-      <p class="intro-fine"><a class="intro-path" href="/about/#put">Путь по годам&nbsp;→</a></p>
-      <!-- Звания — образ А+Б (владелец, 30.10.2026): кто — исследователь,
-           основатель открытого университета и создатель технологий обучения.
-           Число курсов пересчитывает tools/sync_counters.py, руками не вписывать. -->
-      <ul class="mk-ach">
-        <li><b>Основатель Лектория</b> — <span class="lk-count">110 курсов</span> о страхе, решениях, отношениях, деньгах и мышлении.</li>
-        <li><b>Автор книг</b> «Теория манипуляции», «Концептикон» и «Вариатика. Библиотека человеческих паттернов» — тираж более 200&nbsp;000 экземпляров.</li>
-        <li><b>Автор теории архетипов «Вариатика»</b> и метода «Понятийная база».</li>
-        <li><b>Автор кода Фреди</b> — виртуального психолога, который отвечает в любое время.</li>
-      </ul>
+      <p class="intro-fine">Бесплатно и без регистрации. Сразу после теста — разбор: что это значит и что делать.</p>
+      <p class="intro-author-full"><b>Андрей Мейстер</b> — кандидат психологических наук (2013), психфак ГАУГН, аспирантура НБИК-факультета МФТИ у Б.&nbsp;М.&nbsp;Величковского. Автор книг «Теория манипуляции», «Концептикон», «Вариатика. Библиотека человеческих паттернов».</p>
+      <p class="intro-for">Для тех, кто хочет разобраться сам: понять механизм и применить, а не поверить на слово.</p>
       </div>
       <figure class="intro-face">
         <div class="intro-vid">
@@ -1720,6 +1727,19 @@ body{overflow-wrap:break-word}</style>
           </video>
         </div>
       </figure>
+    </div>
+
+    <!-- Звания — доказательства под именем, а не вместо первого экрана
+         (03.11.2026: убраны с первого экрана, reports/copy-first-screen.md 1.1).
+         Число курсов пересчитывает tools/sync_counters.py, руками не вписывать. -->
+    <div class="mk-cred-block">
+      <ul class="mk-ach">
+        <li><b>Основатель Лектория</b> — <span class="lk-count">110 курсов</span> о страхе, решениях, отношениях, деньгах и мышлении.</li>
+        <li><b>Автор книг</b> «Теория манипуляции», «Концептикон» и «Вариатика. Библиотека человеческих паттернов» — тираж более 200&nbsp;000 экземпляров.</li>
+        <li><b>Автор теории архетипов «Вариатика»</b> и метода «Понятийная база».</li>
+        <li><b>Автор кода Фреди</b> — виртуального психолога, который отвечает в любое время.</li>
+      </ul>
+      <p class="intro-fine"><a class="intro-path" href="/about/#put">Путь по годам&nbsp;→</a></p>
     </div>
 
     <!-- Позиция — по образцу «Профессия в кризисе — мой ответ» у Курпатова

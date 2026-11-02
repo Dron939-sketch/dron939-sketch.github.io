@@ -58,6 +58,10 @@ table.cmp{width:100%;border-collapse:collapse;font-size:.98rem}
 table.cmp th,table.cmp td{padding:12px 10px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top;color:var(--muted);font-weight:400}
 table.cmp th{color:var(--strong);font-weight:600}
 table.cmp td.y{color:var(--kind)}
+/* Сравнение двух пакетов на телефоне: три колонки в 390 px рвут слова
+   («Самостоятельны/й»), поэтому таблица скроллится вбок, а не ломается. */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:760px){.tbl-scroll table.cmp{min-width:520px}}
 .faq h3{margin-top:22px}
 .final{text-align:center}
 .final p{max-width:640px;margin-left:auto;margin-right:auto}
@@ -94,6 +98,18 @@ footer a{color:var(--faint)}
 .toc b{color:var(--strong);font-weight:500;display:block;margin-bottom:8px}
 .toc ol{padding-left:20px;color:var(--muted)}
 .toc li{margin:4px 0}
+/* Первый экран товаром (03.11.2026): надзаголовок «для кого», подзаголовок с
+   составом и ценой. Карточка цены стоит рядом с составом, а не в подвале. */
+.hero-for{max-width:640px;margin:0 0 12px;font-size:.92rem;line-height:1.5;color:var(--faint);letter-spacing:.01em}
+.hero-lead{font-size:1.1rem;line-height:1.6;color:var(--muted);max-width:640px}
+.hero-lead b{color:var(--strong);font-weight:600}
+.price-box{background:var(--card);border:1px solid var(--accent);border-radius:16px;padding:20px 22px;margin:24px 0 8px}
+.price-box p{margin:0 0 10px}
+.price-box .price-line{font-size:1.06rem}
+.price-box .price-alt{font-size:.95rem;color:var(--faint);margin:0 0 4px}
+.price-box .ctas{margin:14px 0 10px}
+.price-box .small{margin-top:0}
+.article-intro{max-width:720px;margin:0 auto}
 .short{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:20px 0}
 .ex{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 14px}
 .ex h3{margin-bottom:6px}
@@ -114,14 +130,22 @@ footer a{color:var(--faint)}
 .theme-btn{position:absolute;right:16px;top:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--tbtn);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .theme-btn:hover{border-color:var(--accent)}.theme-btn .sun{display:none}[data-theme=dark] .theme-btn .moon{display:none}[data-theme=dark] .theme-btn .sun{display:inline}
 main>.wrap:first-child{position:relative}
-/* Телефон: фото пакета над текстом — дизайнер фокус-группы: оно стояло ниже кнопок. С рекламы фото уже есть в карточке. */
-@media(max-width:760px){.hero>img{order:-1;max-width:300px}.hero:has(.offer.on)>img{display:none}}
+/* Телефон: фото пакета над текстом — дизайнер фокус-группы: оно стояло ниже кнопок. С рекламы фото уже есть в карточке.
+   С 03.11.2026 фото уменьшено до 200 px: первый экран должен успевать показать
+   заголовок, состав с ценой и кнопку заказа, а не только фотографию. */
+@media(max-width:760px){.hero{padding-top:24px}.hero>img{order:-1;width:200px;max-width:200px;margin:0 auto 4px}.hero:has(.offer.on)>img{display:none}}
+/* С рекламы карточка оффера уже содержит состав, цену и кнопку заказа: второй
+   такой же блок в заголовке дублировал и цену, и действие (03.11.2026). */
+.hero:has(.offer.on) .hero-lead{display:none}
+.hero:has(.offer.on) .ctas{display:none}
 </style>
 <script>
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
 ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
 </script>
-</head>
+<style>/* Кнопка темы на телефоне перекрывала карточку оффера (03.11.2026). */
+@media(max-width:768px){.theme-btn{display:none!important}}
+</style></head>
 <body>
 <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
 
@@ -638,32 +662,135 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
     <a class="free" href="/razgovornyj-gipnoz/urok-1/">Сначала посмотреть бесплатное занятие — 13 минут</a>
    </div>
    <script>try{if(/[?&](yclid|utm_medium=cpc)/.test(location.search)||sessionStorage.getItem('std_ad')==='1')document.getElementById('offer').classList.add('on')}catch(e){}</script>
-   <span class="badge">Ответы, примеры, план освоения</span>
-   <h1>Разговорный гипноз: <b>как говорить, чтобы вас слышали</b></h1>
-   <p>Вы объясняете толково, приводите доводы — а собеседник кивает и делает по-своему. А бывает наоборот: после разговора с некоторыми людьми вы соглашаетесь на то, чего не собирались делать, и не можете понять, в какой момент это произошло.</p>
-   <p>И то и другое — про одно умение: управлять вниманием собеседника словами. Через месяц практики это выглядит так: вас реже перебивают на совещаниях, клиент после «мы подумаем» не пропадает, а разговор с подростком не заканчивается хлопком двери. Ниже — <a href="#cherez-mesyac">как это выглядит в жизни</a>, какие приёмы за этим стоят и как им научиться.</p>
-   <!-- Кнопка на первом экране (10.10.2026): первая стояла в середине страницы.
+   <!-- Первый экран товаром (03.11.2026, reports/copy-first-screen.md 2.1): кто,
+        что получит, за какой срок, что внутри и сколько стоит — до статьи. -->
+   <p class="hero-for">Для тех, кто говорит с людьми по работе и дома: руководители, продажи, психологи, родители подростков.</p>
+   <h1>Разговорный гипноз: за месяц — <b>три-четыре приёма, которые срабатывают в живом разговоре</b></h1>
+   <p class="hero-lead">Пакет «Стандартный»: книга «Матчасть» на 274 страницы и две печатные схемы, 38 видео на 12 месяцев, блокнот с заданиями, игра «Маркетолог» и разбор ваших ситуаций с автором. <b>5 900 ₽, доставка включена.</b></p>
+   <!-- Одно главное действие (03.11.2026): заказ пакета; бесплатное занятие —
+        тихой ссылкой (reports/copy-first-screen.md, 2.1). Карточку-превью .prev
+        убрал: она была заглушкой вместо видео, теперь ниже стоит настоящее видео.
         Оценка и отзывы — с карточки Ozon на 10.10.2026 (4,9 и 320). -->
    <div class="ctas">
-    <a class="btn btn-ozon" data-goal="hero" href="/razgovornyj-gipnoz/standart/zakaz/">Оформить заказ — 5 900 ₽</a>
-
+    <a class="btn btn-ozon" data-goal="hero" href="/razgovornyj-gipnoz/standart/zakaz/">Заказать пакет — 5 900 ₽</a>
    </div>
-   <a class="prev" href="/razgovornyj-gipnoz/urok-1/">
-    <span class="prev-play">▶</span>
-    <span class="prev-t"><b>Занятие 1 — бесплатно</b><span>13 минут: что такое разговорный гипноз и первый приём</span></span>
-   </a>
-   <style>
-   .prev{display:flex;align-items:center;gap:14px;margin:18px 0 6px;padding:14px 18px;border:1px solid var(--line);border-radius:16px;background:var(--card);text-decoration:none;color:var(--text);max-width:520px;transition:border-color .18s,transform .18s}
-   .prev:hover{border-color:var(--accent);transform:translateY(-1px)}
-   .prev-play{flex:none;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-size:15px}
-   .prev-t{display:block;line-height:1.35}
-   .prev-t b{display:block;font-size:.98rem}
-   .prev-t span{display:block;font-size:.86rem;color:var(--faint);margin-top:3px}
-   </style>
-   <p class="small">В коробке: книга «Матчасть», 38 видео на 12 месяцев, блокнот с заданиями, игра «Маркетолог» и разбор ваших ситуаций с автором — <a href="#paket">подробнее</a>. Доставка СДЭК до пункта выдачи включена в цену, вернуть можно в течение семи дней. На Ozon у пакета <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener noreferrer">оценка 4,9 и 320 отзывов</a>.</p>
+   <p class="small">Оплата картой через ЮKassa. Возврат — 7 дней после получения. Если ещё не готовы покупать — <a href="/razgovornyj-gipnoz/urok-1/">посмотрите занятие 1, 13 минут бесплатно</a>.</p>
+   <p class="small">У пакета оценка 4,9 и 320 отзывов на <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener noreferrer">карточке Ozon</a> — цифры видно сразу. Отзывы там в основном о книге; о результатах курса отзывов пока нет.</p>
    <p class="small" style="margin-top:6px">Примеры под вашу задачу: <a href="/razgovornyj-gipnoz/standart/rukovoditelyam/">для руководителей</a> · <a href="/razgovornyj-gipnoz/standart/prodazhi/">для продаж</a> · <a href="/razgovornyj-gipnoz/standart/psihologam/">для психологов и коучей</a>.</p>
   </div>
   <img src="/treningi/komplekt-standart.webp" width="1100" height="1100" alt="Комплект курса «Разговорный гипноз»: книга «Матчасть», блокнот с заданиями, схема-разворот и колода игры «Маркетолог»">
+ </div>
+
+ <!-- Видео автора (03.11.2026): фрагмент первого занятия, 92 с; ставится сразу
+      после первого экрана, на место прежней карточки-превью .prev. -->
+ <div class="vid">
+  <video controls preload="metadata" playsinline poster="/images/lp-urok-poster.jpg" width="860" height="484">
+   <source src="/images/lp-urok-fragment.mp4" type="video/mp4">
+   <a href="/razgovornyj-gipnoz/urok-1/">Посмотреть занятие 1 на странице курса</a>
+  </video>
+ </div>
+ <p class="small">Фрагмент первого занятия, 92 секунды. <a href="/razgovornyj-gipnoz/urok-1/">Полное занятие — 13 минут, бесплатно</a>.</p>
+</div>
+
+<!-- Пакет — сразу под первым экраном (03.11.2026): товар и проверяемые
+     доказательства выше лонгрида. Состав, цена, доказательства и таблицы
+     «кому подойдёт / кому нет» — по reports/copy-first-screen.md, 2.2–2.5. -->
+<section id="paket">
+ <div class="wrap">
+  <h2>Пакет «Стандартный»: что внутри</h2>
+  <p>Пять позиций — по числу пяти этапов: механизм, образец, отработка, проверка, разбор.</p>
+  <ul class="check">
+   <li><b>Книга «Матчасть» — 274 страницы</b> и две печатные схемы-разворота о том, как устроены сознание, подсознание и защита.</li>
+   <li><b>38 видео на 12 месяцев</b> — конкретные конструкции и алгоритмы; первое видео идёт 13 минут.</li>
+   <li><b>Блокнот с заданиями</b> на каждый приём — с QR-кодами на видеоразборы упражнений.</li>
+   <li><b>Игра «Маркетолог»</b> — проверка на живом человеке втроём: один рассказывает историю по картам, второй слушает, третий по лицу считает, поймали его или нет.</li>
+   <li><b>Разбор ваших ситуаций с автором</b> — закрытый Telegram-канал, личные ответы на вопросы; ответ в течение суток.</li>
+  </ul>
+
+  <div class="price-box">
+   <p class="price-line"><b>5 900 ₽.</b> Доставка включена — СДЭК до пункта выдачи, при получении доплат нет. Оплата картой через ЮKassa. Вернуть можно в течение 7 дней, если товар не был в употреблении. Реквизиты продавца — в <a href="/oferta/">оферте</a>.</p>
+   <p class="price-alt">Есть пакет «Самостоятельный» за 3 200 ₽: те же 38 видео на 12 месяцев и закрытый Telegram-канал, но без книги, блокнота, игры и личного разбора.</p>
+   <div class="ctas">
+    <a class="btn btn-ozon" data-goal="paket" href="/razgovornyj-gipnoz/standart/zakaz/">Заказать пакет — 5 900 ₽</a>
+   </div>
+   <p class="small">У пакета <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener noreferrer">оценка 4,9 и 320 отзывов на Ozon</a> — цифры видно сразу. Отзывы там в основном о книге; о результатах курса отзывов пока нет.</p>
+  </div>
+
+  <h3 style="margin-top:34px">Что проверяется</h3>
+  <ul class="check">
+   <li><b>Карточка Ozon:</b> <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener noreferrer">оценка 4,9 и 320 отзывов</a> — цифры видны сразу.</li>
+   <li><b>Бесплатное занятие:</b> <a href="/razgovornyj-gipnoz/urok-1/">13 минут, занятие 1</a> — формат и голос автора можно оценить до покупки.</li>
+   <li><b>Возврат:</b> 7 дней после получения, условия — в <a href="/oferta/">оферте</a>.</li>
+   <li><b>Доставка:</b> включена в цену, доплат при получении нет.</li>
+   <li><b>Автор:</b> Андрей Мейстер — кандидат психологических наук; тренинг «Разговорный гипноз» ведёт с 2013 года; книга «Теория манипуляции. Том I: Разговорный гипноз» вышла в 2023-м.</li>
+   <li><b>Разбор:</b> ответ автора в течение суток — обратная связь не «когда-нибудь».</li>
+  </ul>
+
+  <h3 style="margin-top:34px">Кому подойдёт</h3>
+  <table class="cmp">
+   <tr><th>Кому</th><th>Что с этим делать</th></tr>
+   <tr><td>Руководителям и менеджерам</td><td>На совещании перебивают на второй фразе; после курса — начинаете с того, с чем согласна комната, и вас дослушивают.</td></tr>
+   <tr><td>Продажам</td><td>Клиент говорит «мы подумаем» и пропадает; разговор не обрывается, а переходит к тому, что человека держит.</td></tr>
+   <tr><td>Психологам и коучам</td><td>Клиент на каждый совет отвечает «да, но…»; вместо совета — косвенная формулировка, и вывод клиент делает сам.</td></tr>
+   <tr><td>Родителям подростков</td><td>«Убери телефон» заканчивается хлопком двери; два честных варианта выбора — и спорить не с чем.</td></tr>
+   <tr><td>Тем, кто хочет узнавать приёмы со стороны</td><td>«Оформим сегодня или завтра?» в магазине и на переговорах перестаёт действовать.</td></tr>
+  </table>
+
+  <h3 style="margin-top:34px">Кому не подойдёт</h3>
+  <table class="cmp">
+   <tr><th>Кому</th><th>Почему</th></tr>
+   <tr><td>Тем, кто хочет управлять человеком против его воли</td><td>Заставить человека действовать против своих интересов речевые приёмы не могут — это сказано и в курсе, и в FAQ.</td></tr>
+   <tr><td>Тем, кто не готов практиковать</td><td>Один приём требует недели обычных разговоров; без практики пакет останется книгой.</td></tr>
+   <tr><td>Тем, кому нужен только онлайн без бумаги</td><td>Для них есть «Самостоятельный» за 3 200 ₽ — те же 38 видео и Telegram-канал, без книги, блокнота, игры и личного разбора.</td></tr>
+  </table>
+
+  <h3 style="margin-top:34px">Два пакета: чем отличаются</h3>
+  <div class="tbl-scroll">
+  <table class="cmp">
+   <tr><th></th><th>«Самостоятельный» — 3 200 ₽</th><th>«Стандартный» — 5 900 ₽</th></tr>
+   <tr><td>38 видео, доступ 12 месяцев</td><td class="y">есть</td><td class="y">есть</td></tr>
+   <tr><td>Закрытый Telegram-канал</td><td class="y">есть</td><td class="y">есть</td></tr>
+   <tr><td>Книга «Матчасть» и две схемы-разворота</td><td>—</td><td class="y">есть</td></tr>
+   <tr><td>Блокнот с заданиями на каждый приём</td><td>—</td><td class="y">есть</td></tr>
+   <tr><td>Игра «Маркетолог» — проверка на живом человеке</td><td>—</td><td class="y">есть</td></tr>
+   <tr><td>Личные ответы автора и разбор ваших ситуаций</td><td>—</td><td class="y">есть</td></tr>
+  </table>
+  </div>
+  <p class="small">«Самостоятельный» — если есть время искать свои ошибки самому: <a href="/magazin/zakaz/?t=samostoyatelnyy">заказать за 3 200 ₽</a> или <a href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html">подробнее о нём</a>. Нужна проверка и разбор — «Стандартный».</p>
+
+  <h3 style="margin-top:34px">Вопросы из практики</h3>
+  <p class="small" style="margin-top:0">Фрагменты переписки, имена и детали изменены. Не отзывы, а ответы. Спрашивают практикующие психологи — отвечает автор, даже если вопрос не про сам тренинг. Так выглядит разбор: конкретная ситуация и то, что с ней делать.</p>
+  <div class="qa">
+   <figure class="qa-item">
+    <img src="/images/lp-qa-v4-a.webp" width="560" height="1090" loading="lazy" alt="Вопрос психолога о клиенте, который всё рационализирует, и ответ с примером истории">
+    <figcaption>Клиент всё рационализирует — как обойти защиту</figcaption>
+   </figure>
+   <figure class="qa-item">
+    <img src="/images/lp-qa-v4-b.webp" width="560" height="1090" loading="lazy" alt="Вопрос про клиента, который не верит в гипноз, и ответ про то, что транс — узкое сосредоточение">
+    <figcaption>«В гипноз не верю» — с чего начать работу</figcaption>
+   </figure>
+   <figure class="qa-item">
+    <img src="/images/lp-qa-v4-c.webp" width="560" height="1090" loading="lazy" alt="Вопрос про этику: не манипуляция ли это, и ответ про проверку границы">
+    <figcaption>А это не манипуляция? — где проходит граница</figcaption>
+   </figure>
+  </div>
+  <style>
+  .qa{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0 8px}
+  .qa-item{margin:0;text-align:center}
+  .qa-item img{width:100%;height:auto;border-radius:16px;display:block}
+  .qa-item figcaption{margin-top:10px;font-size:.86rem;line-height:1.45;color:var(--faint)}
+  @media(max-width:760px){.qa{grid-template-columns:1fr;gap:22px;max-width:340px;margin-left:auto;margin-right:auto}}
+  </style>
+  <!-- Цитаты дословно с карточки 1292495422, 23.10.2026. Отзывы там в основном о книге:
+       про видео и разбор отзывов на карточке нет, поэтому за результаты курса их не выдавать. -->
+ </div>
+</section>
+
+<div class="wrap">
+ <h2 class="article-h2" style="margin:46px 0 10px">Как устроен разговорный гипноз</h2>
+ <div class="article-intro">
+  <p>Вы объясняете толково, приводите доводы — а собеседник кивает и делает по-своему. А бывает наоборот: после разговора с некоторыми людьми вы соглашаетесь на то, чего не собирались делать, и не можете понять, в какой момент это произошло.</p>
+  <p>И то и другое — про одно умение: управлять вниманием собеседника словами. Через месяц практики это выглядит так: вас реже перебивают на совещаниях, клиент после «мы подумаем» не пропадает, а разговор с подростком не заканчивается хлопком двери. Ниже — <a href="#cherez-mesyac">как это выглядит в жизни</a>, какие приёмы за этим стоят и как им научиться.</p>
  </div>
 
  <div class="short">
@@ -682,7 +809,6 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    <li><a href="#zashchita">Как распознать и защититься</a></li>
    <li><a href="#kak-nauchitsya">Как научиться: пять этапов</a></li>
    <li><a href="#chto-nuzhno">Что для этого нужно</a></li>
-   <li><a href="#paket">Пакет «Стандартный»</a></li>
    <li><a href="#voprosy">Частые вопросы</a></li>
   </ol>
  </nav>
@@ -813,63 +939,8 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
  </div>
 </section>
 
-<section id="paket">
- <div class="wrap">
-  <div>
-   <h2>Пакет «Стандартный»: все пять этапов в одной коробке</h2>
-   <ul class="check">
-    <li><b>Механизм:</b> книга «Матчасть» — 274 страницы учебного материала курса и две печатные схемы-разворота о том, как устроены сознание, подсознание и защита</li>
-    <li><b>Образец:</b> 38 видео с конкретными конструкциями и алгоритмами, доступ на 12 месяцев</li>
-    <li><b>Отработка:</b> блокнот на пружине с заданиями и QR-кодами на видеоразборы упражнений</li>
-    <li><b>Проверка:</b> колода игры «Маркетолог» — один рассказывает историю по картам, второй слушает, третий по лицу слушателя считает, поймали его или нет. Не с кем играть втроём — задания блокнота делаются в обычных разговорах на работе и дома</li>
-    <li><b>Разбор:</b> закрытый Telegram-канал, личные ответы на вопросы и разбор ваших ситуаций с автором — ответ в течение суток</li>
-   </ul>
-   
-   <div class="ctas" style="margin-top:22px">
-    <a class="btn btn-ozon" data-goal="paket" href="/razgovornyj-gipnoz/standart/zakaz/">Оформить заказ — 5 900 ₽</a>
-   </div>
-   <p class="small">5 900 ₽, оплата картой через ЮKassa. Пакет приходит СДЭК в пункт выдачи, который вы выберете, — папка в чёрной коробке с надписью «Пакет „Стандарт“». Доставка включена в цену — доплат при получении нет. Вернуть можно в течение семи дней после получения, если товар не был в употреблении. Чек придёт на почту, реквизиты продавца — в <a href="/oferta/">оферте</a>. На Ozon у пакета <a href="https://www.ozon.ru/product/razgovornyy-gipnoz-paket-standartnyy-meyster-andrey-yurevich-1292495422/" target="_blank" rel="noopener noreferrer">оценка 4,9 и 320 отзывов</a>.</p>
-  </div>
- </div>
- <div class="wrap">
-  <h3 style="margin-top:22px">Два пакета: чем отличаются</h3>
-  <table class="cmp">
-   <tr><th></th><th>«Самостоятельный» — 3 200 ₽</th><th>«Стандартный» — 5 900 ₽</th></tr>
-   <tr><td>38 видео, доступ 12 месяцев</td><td class="y">есть</td><td class="y">есть</td></tr>
-   <tr><td>Закрытый Telegram-канал</td><td class="y">есть</td><td class="y">есть</td></tr>
-   <tr><td>Книга «Матчасть» и две схемы-разворота</td><td>—</td><td class="y">есть</td></tr>
-   <tr><td>Блокнот с заданиями на каждый приём</td><td>—</td><td class="y">есть</td></tr>
-   <tr><td>Игра «Маркетолог» — проверка на живом человеке</td><td>—</td><td class="y">есть</td></tr>
-   <tr><td>Личные ответы автора и разбор ваших ситуаций</td><td>—</td><td class="y">есть</td></tr>
-  </table>
-  <p class="small">«Самостоятельный» — если есть время искать свои ошибки самому: <a href="/magazin/zakaz/?t=samostoyatelnyy">заказать за 3 200 ₽</a> или <a href="/treningi/razgovornyy-gipnoz-samostoyatelnyy.html">подробнее о нём</a>. Нужна проверка и разбор — «Стандартный».</p>
-  <h3 style="margin-top:34px">Вопросы из практики</h3>
-  <p class="small" style="margin-top:0">Фрагменты переписки, имена и детали изменены. Не отзывы, а ответы. Спрашивают практикующие психологи — отвечает автор, даже если вопрос не про сам тренинг. Так выглядит разбор: конкретная ситуация и то, что с ней делать.</p>
-  <div class="qa">
-   <figure class="qa-item">
-    <img src="/images/lp-qa-v4-a.webp" width="560" height="1090" loading="lazy" alt="Вопрос психолога о клиенте, который всё рационализирует, и ответ с примером истории">
-    <figcaption>Клиент всё рационализирует — как обойти защиту</figcaption>
-   </figure>
-   <figure class="qa-item">
-    <img src="/images/lp-qa-v4-b.webp" width="560" height="1090" loading="lazy" alt="Вопрос про клиента, который не верит в гипноз, и ответ про то, что транс — узкое сосредоточение">
-    <figcaption>«В гипноз не верю» — с чего начать работу</figcaption>
-   </figure>
-   <figure class="qa-item">
-    <img src="/images/lp-qa-v4-c.webp" width="560" height="1090" loading="lazy" alt="Вопрос про этику: не манипуляция ли это, и ответ про проверку границы">
-    <figcaption>А это не манипуляция? — где проходит граница</figcaption>
-   </figure>
-  </div>
-  <style>
-  .qa{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0 8px}
-  .qa-item{margin:0;text-align:center}
-  .qa-item img{width:100%;height:auto;border-radius:16px;display:block}
-  .qa-item figcaption{margin-top:10px;font-size:.86rem;line-height:1.45;color:var(--faint)}
-  @media(max-width:760px){.qa{grid-template-columns:1fr;gap:22px;max-width:340px;margin-left:auto;margin-right:auto}}
-  </style>
-  <!-- Цитаты дословно с карточки 1292495422, 23.10.2026. Отзывы там в основном о книге:
-       про видео и разбор отзывов на карточке нет, поэтому за результаты курса их не выдавать. -->
- </div>
-</section>
+<!-- Пакет «Стандартный» перенесён сразу под первый экран 03.11.2026: -->
+<!-- товар и доказательства выше лонгрида (см. #paket выше). -->
 
 <section class="faq" id="voprosy">
  <div class="wrap">
