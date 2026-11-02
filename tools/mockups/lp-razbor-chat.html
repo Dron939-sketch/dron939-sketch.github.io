@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d1117;display:flex;align-items:center;justify-content:center;
+       font-family:'Segoe UI',-apple-system,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .phone{width:560px;height:1090px;background:#0f1420;border-radius:52px;padding:14px;
+         border:10px solid #1b2230;box-shadow:0 30px 60px rgba(0,0,0,.6);position:relative}
+  .screen{width:100%;height:100%;background:#0b0f18;border-radius:42px;overflow:hidden;
+          display:flex;flex-direction:column}
+  .status{display:flex;justify-content:space-between;padding:18px 30px 6px;color:#e6ebf2;
+          font-size:17px;font-weight:600;letter-spacing:.02em}
+  .notch{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:26px;
+         background:#05070c;border-radius:14px}
+  .head{display:flex;align-items:center;gap:12px;padding:14px 20px 16px;border-bottom:1px solid #1a2230}
+  .ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00A8E8,#3A86FF);
+       display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px}
+  .who b{display:block;color:#fff;font-size:17px;letter-spacing:.01em}
+  .who span{display:block;color:#5fd08a;font-size:12.5px;margin-top:2px}
+  .chat{flex:1;padding:18px 16px 10px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+  .b{max-width:88%;border-radius:16px;padding:13px 15px;font-size:15.5px;line-height:1.42}
+  .b .lbl{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+          color:#8fa0b8;margin-bottom:6px}
+  .me{align-self:flex-end;background:#1e3a63;color:#eaf1fb;border-bottom-right-radius:6px}
+  .me .lbl{color:#9db6d8}
+  .ai{align-self:flex-start;background:#16221c;color:#d7e6dd;border:1px solid #1f3529;border-bottom-left-radius:6px}
+  .ai b{color:#fff}
+  .typing{color:#6b7c93;font-size:14px;padding-left:4px}
+  .input{display:flex;align-items:center;gap:10px;padding:14px 16px 26px}
+  .field{flex:1;background:#141b26;border-radius:22px;padding:13px 18px;color:#5f7086;font-size:15px}
+  .send{width:44px;height:44px;border-radius:50%;background:#3A86FF;display:flex;
+        align-items:center;justify-content:center;color:#fff;font-size:17px}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen">
+    <div class="status"><span>21:14</span><span>5G ▮▮▮</span></div>
+    <div class="head">
+      <div class="ava">АМ</div>
+      <div class="who"><b>Андрей Мейстер</b><span>● разбор разговора</span></div>
+    </div>
+    <div class="chat">
+      <div class="b me"><span class="lbl">Вы</span>Клиент говорит «мы подумаем», я теряюсь и отвечаю «конечно, звоните». Дальше он пропадает. Что сказать в этот момент?</div>
+
+      <div class="b ai"><span class="lbl">Андрей</span>Не отвечайте на «подумаем» согласием — это вежливый отказ, и вы его принимаете.
+        Спросите: <b>«Чтобы было о чём думать — что для вас сейчас важнее, срок или цена?»</b>
+        Вы не спорите и не давите, вы переводите паузу в выбор.</div>
+
+      <div class="b me"><span class="lbl">Вы</span>А если скажет «и то, и другое»?</div>
+
+      <div class="b ai"><span class="lbl">Андрей</span>Тогда: <b>«Тогда начнём со срока — когда он должен быть?»</b>
+        Слушайте не ответ, а <b>что он назовёт первым</b>: это и есть настоящий критерий, из-за которого
+        сделка не закрывалась.</div>
+
+      <div class="b me"><span class="lbl">Вы</span>Попробовал на встрече — он назвал цену. Сработало, но как теперь не скатиться в давление?</div>
+
+      <div class="b ai"><span class="lbl">Андрей</span>Отличие давления от вопроса простое: <b>после давления человек должен согласиться</b>, после вопроса — он может выбрать.
+        Держите правило: один вопрос на одну мысль, и после его ответа <b>вы замолкаете</b>. Пауза работает лучше второй фразы.</div>
+
+      <div class="typing">Андрей печатает…</div>
+    </div>
+    <div class="input">
+      <div class="field">Напишите сообщение</div>
+      <div class="send">➤</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
