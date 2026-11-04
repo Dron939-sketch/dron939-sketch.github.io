@@ -57,7 +57,7 @@ CATS = [
      "Бесплатно каждый день — несколько минут разговора и тесты; без ограничений — по подписке."),
     ("klyuchi", "Ключи", "🔑",
      "Аудиозаписи по школьным и вузовским предметам — суггестивная техника с двойным наведением: по записи на предмет — каркас "
-     "понятий, из которого остальное выводится самому. Первая запись — в продаже, остальные — "
+     "понятий, из которого остальное выводится самому. Две записи — в продаже, остальные — "
      "предзаказ, по 690 ₽."),
 ]
 
@@ -370,7 +370,25 @@ BUY_HTML = (
     '<div class="listen"><b>Послушать отрывок — 46 секунд</b><small>Кухня, мокрая бутылка и проверка, которую Лёва придумал сам</small>'
     '<audio controls preload="none" src="/magazin/audio/klyuchi-um-otryvok.mp3"></audio></div>'
     '<div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div>'
-    '<form class="bf" novalidate>'
+    '<form class="bf" novalidate data-product="klyuchi-01">'
+    '<input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта">'
+    '<input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя">'
+    '<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">'
+    '<label class="agree"><input type="checkbox" name="agree" required><span>Принимаю '
+    '<a href="/oferta/">оферту</a> и <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span></label>'
+    '<button class="btn btn-buy" type="submit">Купить за 690 ₽</button>'
+    '<p class="berr" role="alert"></p></form></div></div>\n')
+
+# Запись 0.2 «Логика» вышла (04.11.2026, владелец): продаётся сразу, как 0.1.
+BUY_HTML_02 = (
+    '<div class="buy" id="kupit-zapis-logika">'
+    '<div class="bimg"><img src="/magazin/img/klyuchi-logika.webp" width="400" height="400" alt="Ярлык записи «Логика»"></div>'
+    '<div><span class="kind">Запись 0.2 · 16 минут</span><h3>«Логика»</h3>'
+    '<p class="who">Учит замечать, что утверждается и на чём держится: правда ли посылки и следует ли из них вывод. '
+    'Ключевая идея — из верных посылок по правилам выводится только верное; из ложной может выйти что угодно — и ложь, и случайная правда. '
+    'Суггестивная техника с двойным наведением: два голоса, по одному в каждом ухе, — слушать в наушниках.</p>'
+    '<div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div>'
+    '<form class="bf" novalidate data-product="klyuchi-0-2">'
     '<input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта">'
     '<input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя">'
     '<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">'
@@ -400,7 +418,7 @@ f.addEventListener('submit',function(e){e.preventDefault();err.textContent='';
   btn.disabled=true;btn.textContent='Открываем оплату…';
   try{ym(108138656,'reachGoal','klyuchi_buy_click')}catch(x){}
   fetch('/api/shop/checkout',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({product:'klyuchi-01',email:email,fio:f.fio.value.trim(),website:f.website.value})})
+    body:JSON.stringify({product:f.dataset.product||'klyuchi-01',email:email,fio:f.fio.value.trim(),website:f.website.value})})
   .then(function(r){return r.json()}).then(function(d){
     if(d&&d.confirmation_url){location.href=d.confirmation_url;return;}
     btn.disabled=false;btn.textContent='Купить за 690 ₽';
@@ -426,7 +444,7 @@ FAQ = [
      "появляется ссылка на прослушивание — с телефона или компьютера. Ссылка личная, "
      "пожалуйста, не пересылайте её."),
     ("Когда выйдут остальные «Ключи»?",
-     "Серия выходит по одной записи. Первая, «Ум-объяснитель», уже продаётся. На остальные 46 "
+     "Серия выходит по одной записи. «Ум-объяснитель» и «Логика» уже продаются. На остальные 45 "
      "можно оформить предзаказ — 690 ₽. Срок выхода — " + KEYS_DUE + ": ссылка придёт на почту "
      "в день выхода записи, делать ничего не нужно. О выходе новых записей — в Telegram-канале."),
 ]
@@ -665,12 +683,13 @@ def recs_html():
                 out.append("</div>")
             if cur == "0":
                 # Первый блок виден, остальные 43 — по нажатию: на телефоне список занимал пять экранов.
-                out.append('<details class="all"><summary>Вся программа — %d %s · предзаказ по 690 ₽</summary>' % (
+                out.append('<details class="all"><summary>Вся программа — %d %s · две в продаже, остальные — предзаказ по 690 ₽</summary>' % (
                     len(KEYS_ALL), count_word(len(KEYS_ALL), ("запись", "записи", "записей"))))
             out.append('<div class="recs-h">%s. %s</div><div class="recs">' % (blk, KEY_BLOCKS[blk]))
             cur = blk
-        if i == 1:
-            mark, more = "<em>в продаже · 690 ₽</em>", ('<a class="rb" href="#kupit-zapis">Купить · 690 ₽</a>')
+        if num in ("0.1", "0.2"):
+            anchor = "kupit-zapis" if num == "0.1" else "kupit-zapis-logika"
+            mark, more = "<em>в продаже · 690 ₽</em>", ('<a class="rb" href="#%s">Купить · 690 ₽</a>' % anchor)
         else:
             f, k = KEYS_TEACH[num]
             mark = ""
@@ -721,7 +740,7 @@ def build():
         shelf("fredi", "Фреди — программа-собеседник", "",
               '<div class="list">%s</div>' % by("fredi")),
         shelf("klyuchi", "Аудиосерия «Ключи» — фундамент предметов", "",
-              '<div class="keys"><span class="status">первая запись — в продаже · остальные 46 — предзаказ по 690 ₽, выход ' + KEYS_DUE + '</span>\n'
+              '<div class="keys"><span class="status">две записи — в продаже · остальные 45 — предзаказ по 690 ₽, выход ' + KEYS_DUE + '</span>\n'
               '<a class="kt-cta" href="/testy/klyuchi-karta-probelov/" onclick="try{ym(108138656,\'reachGoal\',\'klyuchi_test_from_shop\')}catch(e){}">'
               '<b>С какой записи начать?</b><span>Тест «Карта пробелов»: 22 бытовые ситуации, 5–7 минут. Покажет, каких понятий '
               'вам не хватает, к чему это ведёт и какие записи закрывают пробел.</span><i>Пройти тест →</i></a>\n'
@@ -729,6 +748,7 @@ def build():
               'Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — '
               'и привычки смотреть на предмет под нужным углом.</p>\n'
               + BUY_HTML +
+              BUY_HTML_02 +
               '<p>«Ключи» — 47 аудиозаписей по 15–20 минут, по одной на предмет: логика, математика, физика, химия, биология, '
               'информатика, язык, литература, история, экономика, музыка и другие. В каждой — история героя, который сам '
               'открывает закон, настройка внимания под этот предмет, порядок мышления и четыре-шесть ключевых идей.</p>\n'
@@ -873,7 +893,7 @@ def order_catalog():
             cat[p["id"] + "-pdf"] = {"name": p["name"], "amount": 690, "img": p.get("img") or "",
                                      "digital": True, "kind": "Книга · PDF"}
     for i, (num, title, grows, node) in enumerate(KEYS_ALL, 1):
-        if i == 1:
+        if num in ("0.1", "0.2"):
             continue
         f, k = KEYS_TEACH[num]
         cat["klyuchi-" + num.replace(".", "-")] = {
