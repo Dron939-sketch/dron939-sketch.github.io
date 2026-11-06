@@ -494,6 +494,23 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .shelf-lead{color:var(--muted);font-size:.95rem;margin-bottom:12px}
 .back{background:none;border:0;color:var(--accent);font:inherit;font-size:.9rem;cursor:pointer;display:none}
+.shop-nav{position:sticky;top:0;z-index:9;background:var(--bg,#fff);border-bottom:1px solid var(--line);
+  box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.shop-nav .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0}
+.shop-nav .wrap::-webkit-scrollbar{display:none}
+.shop-nav a{flex:none;color:var(--text);text-decoration:none;font-size:.86rem;padding:7px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card2,#f7f7f9)}
+.shop-nav a:hover,.shop-nav a:focus-visible{color:#fff;background:var(--accent,#2F6FE0);border-color:var(--accent,#2F6FE0)}
+.fmt{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
+.fmt span{color:var(--muted);font-size:.82rem;margin-right:2px}
+.fmt a,.fmt button{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+  background:transparent;color:var(--text);text-decoration:none;cursor:pointer}
+.fmt a.on,.fmt button.on{background:var(--accent,#2F6FE0);border-color:var(--accent,#2F6FE0);color:#fff}
+.fmt-note{color:var(--muted);font-size:.82rem;margin:0 0 10px}
+.btn-link{display:inline-block;margin-left:14px;color:var(--accent,#2F6FE0);font-size:.9rem}
+details.keys-more{margin:14px 0 0;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--card2,#f7f7f9)}
+details.keys-more>summary{cursor:pointer;font-weight:600;color:var(--text)}
+details.keys-more[open]>summary{margin-bottom:12px}
 .shop-terms{color:var(--muted);font-size:.88rem;line-height:1.6;border-top:1px solid var(--line);
   margin:26px 0 0;padding:16px 0 0}
 .shop-terms b{color:var(--text);font-weight:600}
@@ -655,12 +672,26 @@ def card(p, open_gain=False):
           if p.get("img") else '<span class="emo" aria-hidden="true">%s</span>' % p["emo"])
     price = (('%s <small>· %s</small>' % (p["price"], p["note"])) if p["price"]
              else '<small>%s</small>' % p["note"])
-    btns = "".join(
-        '<a class="btn %s"%s href="%s"%s>%s</a>' % (
-            "btn-buy" if main else "btn-more",
-            ' data-p="%s"' % p["id"] if main else "",
-            u, ' target="_blank" rel="noopener"' if ext(u) else "", t)
-        for t, u, main in p["btns"])
+    if p["cat"] == "knigi" and len(p["btns"]) > 2:
+        # 07.11.2026: у книги два формата, и раньше три равные кнопки выглядели как
+        # два товара. Формат — отдельной строкой, покупка — одной главной кнопкой,
+        # «О книге» — тихой ссылкой.
+        fmt = "".join('<a class="%s" href="%s">%s</a>' % ("on" if i == 0 else "", u, t)
+                      for i, (t, u, main) in enumerate(p["btns"][:2]))
+        about = p["btns"][2]
+        btns = ('<div class="fmt"><span>Формат:</span>%s</div>'
+                '<p class="fmt-note">Доставка СДЭК и оплата при получении — только для печатной; '
+                'PDF приходит ссылкой сразу после оплаты.</p>'
+                '<a class="btn btn-buy" data-p="%s" href="%s">%s</a>'
+                '<a class="btn-link" href="%s">%s</a>' % (
+                    fmt, p["id"], p["btns"][0][1], p["btns"][0][0], about[1], about[0]))
+    else:
+        btns = "".join(
+            '<a class="btn %s"%s href="%s"%s>%s</a>' % (
+                "btn-buy" if main else "btn-more",
+                ' data-p="%s"' % p["id"] if main else "",
+                u, ' target="_blank" rel="noopener"' if ext(u) else "", t)
+            for t, u, main in p["btns"])
     return ('<article class="it%s" id="%s">\n <div class="th">%s</div>\n <div class="tx">\n'
             '  <span class="kind">%s</span>\n  <h3>%s</h3>\n  <div class="price">%s</div>\n'
             '  <p class="who"><b>Кому:</b> %s</p>\n%s'
@@ -744,12 +775,15 @@ def build():
               '<div class="list">%s</div>' % by("fredi")),
         shelf("klyuchi", "Аудиосерия «Ключи» — фундамент предметов", "",
               '<div class="keys"><span class="status">две записи — в продаже · остальные 45 — предзаказ по 690 ₽, выход ' + KEYS_DUE + '</span>\n'
+              '<p class="shelf-lead">Серия коротких аудиозаписей: одна запись — один предмет, 15–20 минут, '
+              'два голоса в наушниках. Понять, с чего начать, помогает бесплатный тест ниже.</p>\n'
               '<a class="kt-cta" href="/testy/klyuchi-karta-probelov/" onclick="try{ym(108138656,\'reachGoal\',\'klyuchi_test_from_shop\')}catch(e){}">'
               '<b>С какой записи начать?</b><span>Тест «Карта пробелов»: 22 бытовые ситуации, 5–7 минут. Покажет, каких понятий '
               'вам не хватает, к чему это ведёт и какие записи закрывают пробел.</span><i>Пройти тест →</i></a>\n'
               '<p style="margin-top:10px">Вспомните предмет, который в школе так и не дался: формулы были, а понимания — нет. '
               'Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — '
               'и привычки смотреть на предмет под нужным углом.</p>\n'
+              + '<details class="keys-more"><summary>Все 47 записей, условия и покупка</summary>'
               + BUY_HTML +
               BUY_HTML_02 +
               '<p>«Ключи» — 47 аудиозаписей по 15–20 минут, по одной на предмет: логика, математика, физика, химия, биология, '
@@ -768,7 +802,7 @@ def build():
               'приходит личная ссылка на прослушивание — с телефона или компьютера.</p>\n'
               '<p><b style="color:var(--text)">Что даст — честно:</b> запись не «загружает» предмет. Она ставит каркас и привычку '
               'внимания, на которые дальше ложится практика.</p>\n'
-              '%s\n'
+              '%s</details>\n'
               '<p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при '
               'эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>\n'
               '<p class="note">О выходе новых записей — в <a href="https://t.me/meysternlp" target="_blank" '
@@ -854,6 +888,10 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <h1>Магазин</h1>
 <p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Каталог открыт целиком: прокрутите или перейдите по плитке; кнопка «i» объяснит, что внутри категории.</p>
 </div></div>
+<nav class="shop-nav" aria-label="Разделы магазина"><div class="wrap">
+<a href="#vybor">Подобрать</a><a href="#besplatno">Бесплатно</a><a href="#kursy">Курсы</a>
+<a href="#knigi">Книги</a><a href="#igry">Игры</a><a href="#fredi">Фреди</a><a href="#klyuchi">Ключи</a>
+</div></nav>
 <main class="wrap">
 %(cats)s
 %(top)s

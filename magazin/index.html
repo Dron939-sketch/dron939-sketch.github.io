@@ -63,6 +63,23 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .shelf-lead{color:var(--muted);font-size:.95rem;margin-bottom:12px}
 .back{background:none;border:0;color:var(--accent);font:inherit;font-size:.9rem;cursor:pointer;display:none}
+.shop-nav{position:sticky;top:0;z-index:9;background:var(--bg,#fff);border-bottom:1px solid var(--line);
+  box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.shop-nav .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0}
+.shop-nav .wrap::-webkit-scrollbar{display:none}
+.shop-nav a{flex:none;color:var(--text);text-decoration:none;font-size:.86rem;padding:7px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--card2,#f7f7f9)}
+.shop-nav a:hover,.shop-nav a:focus-visible{color:#fff;background:var(--accent,#2F6FE0);border-color:var(--accent,#2F6FE0)}
+.fmt{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px}
+.fmt span{color:var(--muted);font-size:.82rem;margin-right:2px}
+.fmt a,.fmt button{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+  background:transparent;color:var(--text);text-decoration:none;cursor:pointer}
+.fmt a.on,.fmt button.on{background:var(--accent,#2F6FE0);border-color:var(--accent,#2F6FE0);color:#fff}
+.fmt-note{color:var(--muted);font-size:.82rem;margin:0 0 10px}
+.btn-link{display:inline-block;margin-left:14px;color:var(--accent,#2F6FE0);font-size:.9rem}
+details.keys-more{margin:14px 0 0;border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--card2,#f7f7f9)}
+details.keys-more>summary{cursor:pointer;font-weight:600;color:var(--text)}
+details.keys-more[open]>summary{margin-bottom:12px}
 .shop-terms{color:var(--muted);font-size:.88rem;line-height:1.6;border-top:1px solid var(--line);
   margin:26px 0 0;padding:16px 0 0}
 .shop-terms b{color:var(--text);font-weight:600}
@@ -277,6 +294,10 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <h1>Магазин</h1>
 <p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Каталог открыт целиком: прокрутите или перейдите по плитке; кнопка «i» объяснит, что внутри категории.</p>
 </div></div>
+<nav class="shop-nav" aria-label="Разделы магазина"><div class="wrap">
+<a href="#vybor">Подобрать</a><a href="#besplatno">Бесплатно</a><a href="#kursy">Курсы</a>
+<a href="#knigi">Книги</a><a href="#igry">Игры</a><a href="#fredi">Фреди</a><a href="#klyuchi">Ключи</a>
+</div></nav>
 <main class="wrap">
 <div class="cats" role="group" aria-label="Категории">
 <div class="cat" role="button" tabindex="0" data-cat="vybor" aria-pressed="false"><img class="ic" src="/magazin/img/cat-vybor.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Подобрать под задачу</b><small>13 ситуаций</small></span><button class="q" type="button" aria-label="Что в категории «Подобрать под задачу»" aria-expanded="false" aria-controls="tip-vybor">i</button></div>
@@ -358,7 +379,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <div class="price">990 ₽ <small>· печатная; PDF — 690 ₽</small></div>
   <p class="who"><b>Кому:</b> тем, кто хочет понимать механику влияния — и свою, и чужую.</p>
   <details><summary>Что даст</summary><p>транс как обычное состояние, две линии воздействия, пресуппозиции и тридцать с лишним видов внушений. 250 страниц.</p></details>
-  <div class="btns"><a class="btn btn-buy" data-p="kniga-tm" href="/magazin/zakaz/?t=kniga-tm">Печатная — 990 ₽</a><a class="btn btn-more" href="/magazin/zakaz/?t=kniga-tm-pdf">PDF — 690 ₽</a><a class="btn btn-more" href="/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/">О книге</a></div>
+  <div class="btns"><div class="fmt"><span>Формат:</span><a class="on" href="/magazin/zakaz/?t=kniga-tm">Печатная — 990 ₽</a><a class="" href="/magazin/zakaz/?t=kniga-tm-pdf">PDF — 690 ₽</a></div><p class="fmt-note">Доставка СДЭК и оплата при получении — только для печатной; PDF приходит ссылкой сразу после оплаты.</p><a class="btn btn-buy" data-p="kniga-tm" href="/magazin/zakaz/?t=kniga-tm">Печатная — 990 ₽</a><a class="btn-link" href="/knigi/teoriya-manipulyacii-tom-1-razgovornyj-gipnoz/">О книге</a></div>
  </div>
 </article>
 <article class="it" id="kniga-var">
@@ -369,7 +390,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <div class="price">990 ₽ <small>· печатная; PDF — 690 ₽</small></div>
   <p class="who"><b>Кому:</b> тем, кто устал от объяснения «он просто такой», — психологам, руководителям, всем, кто работает с людьми.</p>
   <details><summary>Что даст</summary><p>четыре базовые программы и девять уровней у каждой — понимать, почему человек повторяет один сценарий и как он переходит на другой уровень. Авторская модель, собранная из практики, а не результат исследований.</p></details>
-  <div class="btns"><a class="btn btn-buy" data-p="kniga-var" href="/magazin/zakaz/?t=kniga-var">Печатная — 990 ₽</a><a class="btn btn-more" href="/magazin/zakaz/?t=kniga-var-pdf">PDF — 690 ₽</a><a class="btn btn-more" href="/knigi/variatika-biblioteka-chelovecheskih-patternov/">О книге</a></div>
+  <div class="btns"><div class="fmt"><span>Формат:</span><a class="on" href="/magazin/zakaz/?t=kniga-var">Печатная — 990 ₽</a><a class="" href="/magazin/zakaz/?t=kniga-var-pdf">PDF — 690 ₽</a></div><p class="fmt-note">Доставка СДЭК и оплата при получении — только для печатной; PDF приходит ссылкой сразу после оплаты.</p><a class="btn btn-buy" data-p="kniga-var" href="/magazin/zakaz/?t=kniga-var">Печатная — 990 ₽</a><a class="btn-link" href="/knigi/variatika-biblioteka-chelovecheskih-patternov/">О книге</a></div>
  </div>
 </article>
 <article class="it" id="kniga-konc">
@@ -380,7 +401,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   <div class="price">990 ₽ <small>· печатная; PDF — 690 ₽</small></div>
   <p class="who"><b>Кому:</b> тем, кто застрял в одной ситуации и видит её только с одной стороны.</p>
   <details><summary>Что даст</summary><p>семь способов смотреть на одну ситуацию — у каждого свой главный вопрос и индикаторы самопроверки. Темп — одна линза в неделю.</p></details>
-  <div class="btns"><a class="btn btn-buy" data-p="kniga-konc" href="/magazin/zakaz/?t=kniga-konc">Печатная — 990 ₽</a><a class="btn btn-more" href="/magazin/zakaz/?t=kniga-konc-pdf">PDF — 690 ₽</a><a class="btn btn-more" href="/knigi/kontseptikon-sem-linz/">О книге</a></div>
+  <div class="btns"><div class="fmt"><span>Формат:</span><a class="on" href="/magazin/zakaz/?t=kniga-konc">Печатная — 990 ₽</a><a class="" href="/magazin/zakaz/?t=kniga-konc-pdf">PDF — 690 ₽</a></div><p class="fmt-note">Доставка СДЭК и оплата при получении — только для печатной; PDF приходит ссылкой сразу после оплаты.</p><a class="btn btn-buy" data-p="kniga-konc" href="/magazin/zakaz/?t=kniga-konc">Печатная — 990 ₽</a><a class="btn-link" href="/knigi/kontseptikon-sem-linz/">О книге</a></div>
  </div>
 </article>
 <article class="it" id="kniga-dep">
@@ -461,9 +482,10 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <section class="shelf" id="klyuchi" aria-label="Аудиосерия «Ключи» — фундамент предметов">
 <div class="shelf-h"><h2>Аудиосерия «Ключи» — фундамент предметов</h2><button class="back" type="button">← Все категории</button></div>
 <div class="keys"><span class="status">две записи — в продаже · остальные 45 — предзаказ по 690 ₽, выход до 30 ноября 2026</span>
+<p class="shelf-lead">Серия коротких аудиозаписей: одна запись — один предмет, 15–20 минут, два голоса в наушниках. Понять, с чего начать, помогает бесплатный тест ниже.</p>
 <a class="kt-cta" href="/testy/klyuchi-karta-probelov/" onclick="try{ym(108138656,'reachGoal','klyuchi_test_from_shop')}catch(e){}"><b>С какой записи начать?</b><span>Тест «Карта пробелов»: 22 бытовые ситуации, 5–7 минут. Покажет, каких понятий вам не хватает, к чему это ведёт и какие записи закрывают пробел.</span><i>Пройти тест →</i></a>
 <p style="margin-top:10px">Вспомните предмет, который в школе так и не дался: формулы были, а понимания — нет. Обычно дело не в способностях. Не хватило каркаса — нескольких идей, из которых остальное выводится само, — и привычки смотреть на предмет под нужным углом.</p>
-<div class="buy" id="kupit-zapis"><div class="bimg"><img src="/magazin/img/klyuchi-um-big.webp" width="400" height="400" alt="Ярлык записи «Ум-объяснитель»"></div><div><span class="kind">Запись 0.1 · 21 минута</span><h3>«Ум-объяснитель»</h3><p class="who">Как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» и пять вопросов-выключателей. Первая в серии — с неё остальные слушаются легче. Суггестивная техника с двойным наведением: два голоса, по одному в каждом ухе, — слушать в наушниках.</p><div class="listen"><b>Послушать отрывок — 46 секунд</b><small>Кухня, мокрая бутылка и проверка, которую Лёва придумал сам</small><audio controls preload="none" src="/magazin/audio/klyuchi-um-otryvok.mp3"></audio></div><div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div><form class="bf" novalidate data-product="klyuchi-01"><input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта"><input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя"><input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><label class="agree"><input type="checkbox" name="agree" required><span>Принимаю <a href="/oferta/">оферту</a> и <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span></label><button class="btn btn-buy" type="submit">Купить за 690 ₽</button><p class="berr" role="alert"></p></form></div></div>
+<details class="keys-more"><summary>Все 47 записей, условия и покупка</summary><div class="buy" id="kupit-zapis"><div class="bimg"><img src="/magazin/img/klyuchi-um-big.webp" width="400" height="400" alt="Ярлык записи «Ум-объяснитель»"></div><div><span class="kind">Запись 0.1 · 21 минута</span><h3>«Ум-объяснитель»</h3><p class="who">Как ум ищет объяснения и чем открытие отличается от приметы: пять «двигателей» и пять вопросов-выключателей. Первая в серии — с неё остальные слушаются легче. Суггестивная техника с двойным наведением: два голоса, по одному в каждом ухе, — слушать в наушниках.</p><div class="listen"><b>Послушать отрывок — 46 секунд</b><small>Кухня, мокрая бутылка и проверка, которую Лёва придумал сам</small><audio controls preload="none" src="/magazin/audio/klyuchi-um-otryvok.mp3"></audio></div><div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div><form class="bf" novalidate data-product="klyuchi-01"><input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта"><input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя"><input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><label class="agree"><input type="checkbox" name="agree" required><span>Принимаю <a href="/oferta/">оферту</a> и <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span></label><button class="btn btn-buy" type="submit">Купить за 690 ₽</button><p class="berr" role="alert"></p></form></div></div>
 <div class="buy" id="kupit-zapis-logika"><div class="bimg"><img src="/magazin/img/k/02.webp" width="400" height="400" alt="Ярлык записи «Логика»"></div><div><span class="kind">Запись 0.2 · 16 минут</span><h3>«Логика»</h3><p class="who">Учит замечать, что утверждается и на чём держится: правда ли посылки и следует ли из них вывод. Ключевая идея — из верных посылок по правилам выводится только верное; из ложной может выйти что угодно — и ложь, и случайная правда. Суггестивная техника с двойным наведением: два голоса, по одному в каждом ухе, — слушать в наушниках.</p><div class="price">690 ₽ <small>· ссылка сразу после оплаты</small></div><form class="bf" novalidate data-product="klyuchi-0-2"><input type="email" name="email" required autocomplete="email" placeholder="Почта — на неё придут чек и ссылка" aria-label="Почта"><input type="text" name="fio" autocomplete="name" placeholder="Имя (необязательно)" aria-label="Имя"><input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><label class="agree"><input type="checkbox" name="agree" required><span>Принимаю <a href="/oferta/">оферту</a> и <a href="/politika-konfidencialnosti/">политику конфиденциальности</a></span></label><button class="btn btn-buy" type="submit">Купить за 690 ₽</button><p class="berr" role="alert"></p></form></div></div>
 <p>«Ключи» — 47 аудиозаписей по 15–20 минут, по одной на предмет: логика, математика, физика, химия, биология, информатика, язык, литература, история, экономика, музыка и другие. В каждой — история героя, который сам открывает закон, настройка внимания под этот предмет, порядок мышления и четыре-шесть ключевых идей.</p>
 <p><b style="color:var(--text)">Кому:</b> взрослым, которые хотят наконец понять «свою нелюбимую» науку, и родителям, которые хотят дать записи старшекласснику перед новой темой, — с 16 лет. Детских записей нет: ребёнку младше — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>, прочитайте сами и перескажите.</p>
@@ -534,7 +556,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="rec" id="k-7-1"><img src="/magazin/img/k/46.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>7.1</i>Музыка</b><small>→ исполнение, сочинение, ритм речи</small><small class="teach">Учит замечать: напряжение и разрешение, повтор и его нарушение. Ключевая идея: Звук — колебание, высота — частота.</small><a class="rb pre" href="/magazin/zakaz/?t=klyuchi-7-1">Предзаказ · 690 ₽</a></div></div>
 <div class="rec" id="k-7-2"><img src="/magazin/img/k/47.webp" width="52" height="52" loading="lazy" alt=""><div><b><i>7.2</i>Изображение и композиция</b><small>→ живопись, фотография, дизайн, архитектура</small><small class="teach">Учит замечать: куда идёт взгляд, где свет, где контраст. Ключевая идея: Свет и тень создают объём.</small><a class="rb pre" href="/magazin/zakaz/?t=klyuchi-7-2">Предзаказ · 690 ₽</a></div></div>
 </div></details>
-<p class="legend">◆ — запись-узел: собирает в одно несколько предыдущих.</p>
+<p class="legend">◆ — запись-узел: собирает в одно несколько предыдущих.</p></details>
 <p class="note" style="margin-top:10px">Записи слушают в наушниках, в расслабленном состоянии. Не за рулём; при эпилепсии и серьёзных психических расстройствах — после консультации с врачом.</p>
 <p class="note">О выходе новых записей — в <a href="https://t.me/meysternlp" target="_blank" rel="noopener">Telegram-канале</a>.</p></div>
 </section>
