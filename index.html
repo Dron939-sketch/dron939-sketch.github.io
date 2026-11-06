@@ -1616,6 +1616,23 @@ body{overflow-wrap:break-word}</style>
    владелец, 31.10.2026). На узком экране свечение уводим вниз, под текст. */
 @media(max-width:860px){.intro{background:radial-gradient(640px 520px at 30% 82%,#1c2a5c 0%,#0f1633 45%,var(--mk-bg) 100%)!important}}
 .mk-pos p.mk-sub,.mk-pos p.mk-pos-sign,.mk-cred,.mk-cred a,.mk-read-all a,.coop-press a{color:var(--mk-soft)!important}
+/* ===== Правки главной 07.11.2026: шаг на первом экране, карточки в результат ===== */
+.intro-cta .cta-free{background:#2F6FE0!important;color:#fff!important}
+.intro-cta .cta-free:hover{background:#2559bd!important;color:#fff!important}
+.intro-cta .cta-sub{display:inline-block;padding:14px 6px;border-radius:12px;color:var(--mk-soft)!important;
+  font-weight:500;text-decoration:none;letter-spacing:0;text-transform:none}
+.intro-cta .cta-sub:hover{color:#fff!important}
+.intro-cta-note{color:var(--mk-muted);font-size:.85rem;margin:-18px 0 30px!important;letter-spacing:.02em}
+.mk-built-note{max-width:760px;color:var(--mk-muted);font-size:.85rem;line-height:1.6;margin:16px 0 0}
+.mk-built-note a{color:var(--mk-soft)}
+.mk-hint{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  max-width:900px;margin:26px 0 0;padding:18px 22px;border:1px solid rgba(201,164,106,.35);
+  border-radius:14px;background:rgba(201,164,106,.05)}
+.mk-hint b{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:1.15rem;color:#fff}
+.mk-hint-k{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A46A;margin-bottom:4px}
+.mk-hint a{color:var(--mk-soft);font-weight:600;text-decoration:none;white-space:nowrap}
+.mk-hint a:hover{color:#fff}
+@media(max-width:640px){.mk-hint{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -1670,17 +1687,20 @@ body{overflow-wrap:break-word}</style>
            Траута — одно слово в голове: «самостоятельно»). Раунд 10 фокус-группы:
            вариант «Психология, которой можно пользоваться…» — первый у 7 из 9;
            «хвастается» 3,9 против 5,5 у прежнего экрана. -->
-      <p class="mk-posline"><b>Психология, которой можно пользоваться самостоятельно.</b> Курсы, тесты и ИИ-собеседник — на науке о мышлении, а не на вере. Курсы и тесты бесплатно, без регистрации.</p>
+      <p class="mk-posline"><b>Психология, которой можно пользоваться самостоятельно.</b> Открытый университет о мышлении, решениях и отношениях: 110 курсов, тесты и ИИ-собеседник. Без регистрации.</p>
+      <!-- Шаг на первом экране (07.11.2026): обещание без действия не работает.
+           Основной шаг — Лекторий: курсы открыты целиком, читать можно сразу.
+           Тест — второй ссылкой, чтобы не обещать мгновенный результат. -->
+      <div class="intro-cta">
+        <a class="cta-free" href="/blog/lektorij/">Открыть Лекторий</a>
+        <a class="cta-sub" href="/testy/">Пройти тест&nbsp;→</a>
+      </div>
+      <p class="intro-cta-note">110 курсов · открыты целиком · без регистрации</p>
       <p class="mk-cred">Психолог, кандидат психологических наук. Психфак ГАУГН, аспирантура МФТИ у Б.&nbsp;М.&nbsp;Величковского. <a href="/about/#put">Путь по годам&nbsp;→</a></p>
-<!-- Звания — образ А+Б (владелец, 30.10.2026): кто — исследователь,
-           основатель открытого университета и создатель технологий обучения.
-           Число курсов пересчитывает tools/sync_counters.py, руками не вписывать. -->
-      <ul class="mk-ach">
-        <li><b>Основатель Лектория</b> — <span class="lk-count">110 курсов</span> о страхе, решениях, отношениях, деньгах и мышлении.</li>
-        <li><b>Автор книг</b> «Теория манипуляции», «Концептикон» и «Вариатика. Библиотека человеческих паттернов» — тираж более 200&nbsp;000 экземпляров.</li>
-        <li><b>Автор теории архетипов «Вариатика»</b> и метода «Понятийная база».</li>
-        <li><b>Автор кода Фреди</b> — виртуального психолога, который отвечает в любое время.</li>
-      </ul>
+<!-- Четыре звания убраны с первого экрана 07.11.2026: те же факты
+           (110 курсов, тираж, «Вариатика», код Фреди) теперь в карточках
+           «Что можно использовать» — там они работают как доказательство выбора,
+           а не как список статуса над текстом. -->
       </div>
       <figure class="intro-face">
         <div class="intro-vid">
@@ -1698,7 +1718,6 @@ body{overflow-wrap:break-word}</style>
       <p class="mk-sub">позиция</p>
       <h2 class="mk-h">Образование отстало от&nbsp;науки о&nbsp;мышлении</h2>
       <p>Когнитивная наука за полвека узнала, как человек понимает, запоминает и решает. Понимание держится на каркасе понятий, а не на сумме фактов. Знание закрепляется, когда его применяют, а не когда перечитывают. Мышление ошибается предсказуемо — и этому можно учить.</p>
-      <p>Система образования этого почти не учитывает. Учит так же, как сто лет назад.</p>
       <p class="mk-pos-last">Лекторий, «Вариатика» и «Понятийная база» — мой ответ: обучение, собранное на этих открытиях.</p>
       <p class="mk-pos-sign">Андрей Мейстер</p>
     </div>
@@ -1709,39 +1728,44 @@ body{overflow-wrap:break-word}</style>
          «наукой о мышлении» слово тянет образ к инфобизнесу), «Истории» есть в
          меню. Карточки повторяют звания под именем; «Понятийная база» — в блоке
          статуса ниже. Главная не продаёт: в строке статуса факт, не цена. -->
-    <h2 class="mk-h" style="margin-top:44px!important">Что уже построено</h2>
-    <p class="mk-sub">открыто и работает</p>
+    <h2 class="mk-h" style="margin-top:44px!important">Что можно использовать самостоятельно</h2>
+    <p class="mk-sub">открыто и без регистрации</p>
     <div class="path mk-built">
       <a class="door mk-lead" href="/blog/lektorij/">
         <img src="/magazin/img/cat-besplatno.webp" alt="" width="64" height="64" loading="eager">
         <span class="dt"><span class="door-kick">Открытый университет</span><b>Лекторий</b>
-        <p>Курсы лекций о страхе, решениях, отношениях, деньгах и мышлении — от того, как устроено, до того, что делать.</p>
+        <p>Разобрать тему последовательно, в своём темпе: 110 курсов о страхе, решениях и отношениях — от того, как устроено, до того, что делать.</p>
         <span class="door-tag">бесплатно · без регистрации</span></span>
       </a>
       <a class="door" href="/knigi/">
         <img src="/magazin/img/cat-knigi.webp" alt="" width="64" height="64" loading="eager">
         <span class="dt"><span class="door-kick">Книги</span><b>«Теория манипуляции»</b>
-        <p>Как устроено влияние и как его распознать. Рядом — «Вариатика» и «Концептикон»: о людях и мышлении.</p>
+        <p>Прочитать целиком: как устроено влияние и как его распознать. Рядом — «Вариатика» и «Концептикон». Тираж более 200&nbsp;000.</p>
         <span class="door-tag">тираж книг — более 200&nbsp;000</span></span>
       </a>
       <a class="door" href="/igry/">
         <img src="/magazin/img/cat-igry.webp" alt="" width="64" height="64" loading="eager">
         <span class="dt"><span class="door-kick">Метод</span><b>«Вариатика» и игры-тренажёры</b>
-        <p>Навык ставится решением задач — за столом, вдвоём или компанией.</p>
+        <p>Проверить себя: собственный тип и уровень — решением задач за столом, вдвоём или компанией.</p>
         <span class="door-tag">настольные игры и задачники</span></span>
       </a>
       <a class="door" href="/virtual-psychologist/">
         <img src="/magazin/img/cat-fredi.webp" alt="" width="64" height="64" loading="eager">
         <span class="dt"><span class="door-kick">Собеседник</span><b>Фреди — виртуальный психолог</b>
-        <p>Разговор, тесты и упражнения. Отвечает ночью и в выходные.</p>
+        <p>Сформулировать ситуацию словами в диалоге. Отвечает ночью и в выходные.</p>
         <span class="door-tag">разговор бесплатно · в любое время</span></span>
       </a>
       <a class="door" href="/testy/">
         <img src="/magazin/img/cat-vybor.webp" alt="" width="64" height="64" loading="eager">
         <span class="dt"><span class="door-kick">Опросники</span><b>Тесты</b>
-        <p>Тревога, настроение, выгорание, тип личности. К каждому результату — разбор: что он значит и что с этим делать.</p>
+        <p>Структурировать самонаблюдение: тревога, настроение, выгорание, тип. К результату — разбор, что он значит.</p>
         <span class="door-tag">бесплатно · проверенные шкалы</span></span>
       </a>
+    </div>
+    <p class="mk-built-note">Опросники и диалог с ИИ — для самонаблюдения. Это не диагностика и не замена психолога или врача. <a href="/about/">Как я работаю с пределами метода&nbsp;→</a></p>
+    <div class="mk-hint">
+      <div><span class="mk-hint-k">не знаете, с чего начать</span><b>Тест за три минуты покажет, на что смотреть</b></div>
+      <a href="/testy/">Пройти тест&nbsp;→</a>
     </div>
   </div>
 </section>
