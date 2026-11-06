@@ -14,7 +14,9 @@
 русских страниц берёт адрес из <link rel="alternate" hreflang="en">.
 """
 import json
+import io
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://meysternlp.ru"
@@ -34,6 +36,22 @@ FONTS = """<style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url(/fonts/playfair-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url(/fonts/playfair-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 10px}
+.cta-main{display:inline-block;background:#2F6FE0;color:#fff!important;text-decoration:none;
+  padding:14px 24px;border-radius:12px;font-weight:600;font-size:1rem;letter-spacing:0}
+.cta-main:hover{background:#2559bd;color:#fff!important}
+.cta-sub{display:inline-block;padding:14px 6px;color:var(--accent2)!important;text-decoration:none;font-weight:500}
+.cta-sub:hover{color:#fff!important}
+.cta-note{color:var(--muted);font-size:.85rem;letter-spacing:.02em;margin:0 0 22px}
+.note{max-width:760px;color:var(--muted);font-size:.85rem;line-height:1.6;margin:16px 0 0}
+.hint{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  max-width:900px;margin:26px 0 0;padding:18px 22px;border:1px solid rgba(201,164,106,.35);
+  border-radius:14px;background:rgba(201,164,106,.05)}
+.hint b{display:block;font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:1.15rem;color:#fff}
+.hint-k{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A46A;margin-bottom:4px}
+.hint a{color:var(--accent2);font-weight:600;text-decoration:none;white-space:nowrap}
+.hint a:hover{color:#fff}
+@media(max-width:640px){.hint{flex-direction:column;align-items:flex-start}}
 </style>"""
 
 CSS = """<style>
@@ -214,10 +232,17 @@ COOP = """<section class="sec"><div class="wrap">
 
 def n_courses():
     """Число курсов Лектория — как в tools/sync_counters.py: каталоги
-    blog/lektorij/<slug>/ со своей index.html. Руками не вписывать."""
+    blog/lektorij/<slug>/ со своей index.html. Руками не вписывать.
+
+    В частичном клоне (sparse-checkout) каталога блога нет: тогда берём число
+    со русской главной — его всё равно ведёт sync_counters.py, второго источника нет."""
     d = os.path.join(ROOT, "blog", "lektorij")
-    return len([x for x in os.listdir(d)
-                if os.path.exists(os.path.join(d, x, "index.html"))])
+    if os.path.isdir(d):
+        return len([x for x in os.listdir(d)
+                    if os.path.exists(os.path.join(d, x, "index.html"))])
+    with io.open(os.path.join(ROOT, "index.html"), encoding="utf-8") as fh:
+        m = re.search(r'class="lk-count">\s*(\d+)', fh.read())
+    return int(m.group(1)) if m else 0
 
 
 def home():
@@ -225,42 +250,40 @@ def home():
     # без «Разговорного гипноза» и «Историй»; Conceptual Base — в блоке статуса.
     cards = "".join([
         card("/en/lectorium/", "Open university · free, no sign-up", "Lectorium",
-             "Courses of lectures on fear, decisions, relationships, money and thinking — from how it works to what to do."),
+             "Work through a topic in order, at your own pace: courses on fear, decisions and relationships — from how it works to what to do."),
         card("/knigi/", "Books · over 200,000 copies", "The Theory of Manipulation",
-             "How influence works and how to recognise it. Alongside: Variatika and Concepticon, on people and thinking."),
+             "Read the whole thing: how influence works and how to recognise it. Also Variatika and Concepticon. Over 200,000 copies in print."),
         card("/igry/", "Method", "Variatika and training games",
-             "A skill is built by solving problems — at a table, in pairs or in a group."),
+             "Check yourself: your type and level, by solving problems at a table, in pairs or in a group."),
         card("/en/fredi/", "Companion · conversation is free", "Fredi — a virtual psychologist",
-             "Conversation, tests and exercises, at night and at weekends. Talks in English.", ru=False),
+             "Put a situation into words in a conversation. Replies at night and at weekends, in English.", ru=False),
         card("/testy/", "Questionnaires · free", "Tests",
-             "Anxiety, mood, burnout, personality type. Every result comes with an explanation of what it means and what to do."),
+             "Structure self-observation: anxiety, mood, burnout, type. Every result comes with an explanation of what it means."),
     ])
     body = f"""<section class="hero"><div class="wrap"><div class="grid2"><div>
 <h1>Andrey Meyster</h1>
-<p class="posline"><b>Psychology you can use on your own.</b> Courses, tests and an AI companion built on the science of thinking, not on faith. Courses and tests are free, no sign-up.</p>
+<p class="posline"><b>Psychology you can use on your own.</b> An open university of thinking, decisions and relationships: {n_courses()} courses, tests and an AI companion. No sign-up.</p>
+<div class="cta-row"><a class="cta-main" href="/en/lectorium/">Open the Lectorium</a><a class="cta-sub" href="/testy/">Take a test →</a></div>
+<p class="cta-note">{n_courses()} courses · all open · tests in Russian · no sign-up</p>
 <p class="cred">Psychologist, Candidate of Psychological Sciences. Faculty of Psychology (GAUGN); postgraduate research at MIPT under Boris Velichkovsky. <a href="/en/about/">His path →</a></p>
-<ul class="ach">
-<li><b>Founder of the Lectorium</b> — {n_courses()} courses on fear, decisions, relationships, money and thinking.</li>
-<li><b>Author of the books</b> The Theory of Manipulation, Concepticon and Variatika: A Library of Human Patterns — over 200,000 copies in print.</li>
-<li><b>Author of Variatika, a theory of archetypes</b>, and of the Conceptual Base method.</li>
-<li><b>Author of the code behind Fredi</b> — a virtual psychologist available at any hour.</li>
-</ul>
+<!-- Four credentials removed from the first screen (07.11.2026): the same facts
+     (course count, print run, Variatika, Fredi code) now stand in the cards below. -->
 </div>{VIDEO}</div></div></section>
 <section class="sec"><div class="wrap">
 <div class="pos">
 <p class="sub">position</p>
 <h2>Education lags behind the science of thinking</h2>
 <p>Over half a century, cognitive science has learned how people understand, remember and decide. Understanding rests on a framework of concepts, not on a sum of facts. Knowledge sticks when it is used, not when it is reread. Thinking errs predictably — and that can be taught.</p>
-<p>The education system barely takes this into account. It teaches the way it did a hundred years ago.</p>
 <p class="last">The Lectorium, Variatika and the Conceptual Base are my answer: teaching assembled from these findings.</p>
 <p class="sign">Andrey Meyster</p>
 </div>
 </div></section>
 <section class="sec"><div class="wrap">
-<h2>What has been built</h2>
-<p class="sub">open and working · everything except Fredi is in Russian</p>
+<h2>What you can use on your own</h2>
+<p class="sub">open · no sign-up · everything except Fredi is in Russian</p>
 <div class="cards">{cards}</div>
-<p style="margin-top:22px"><a href="/en/about/">About Andrey Meyster →</a></p>
+<p class="note">Questionnaires and the AI companion are for self-observation. This is not diagnosis and not a substitute for a psychologist or a doctor.</p>
+<div class="hint"><div><span class="hint-k">not sure where to start</span><b>A three-minute test shows what to look at</b></div><a href="/testy/">Take a test →</a></div>
 </div></section>
 <section class="sec"><div class="wrap">
 <p class="sub">The Conceptual Base · status</p>
