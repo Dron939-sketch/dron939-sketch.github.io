@@ -24,6 +24,7 @@ Frederick — цены менять в обоих местах), доставк�
 import html
 import json
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -826,11 +827,34 @@ def build():
         url = next((u for t, u, m in p["btns"] if not u.startswith("http")), p["btns"][0][1])
         items.append({"@type": "ListItem", "position": i, "name": p["name"],
                       "url": url if url.startswith("http") else SITE + url})
+    # Разметка товаров: только то, что видно на странице, — название, цена, наличие, ссылка покупки.
+    # 07.11.2026: раньше был только ItemList, поисковики не видели ни цен, ни наличия.
+    offers = []
+    for p in PRODUCTS:
+        digits = re.sub(r"[^\d]", "", p["price"].split("₽")[0]) if p["price"] else ""
+        if not digits:
+            continue
+        buy = next((u for t, u, main in p["btns"] if main and u.startswith("/")), None)
+        if not buy:
+            continue
+        item = {"@type": "Product", "name": p["name"], "description": p["who"]}
+        if p.get("img"):
+            item["image"] = SITE + p["img"]
+        item["offers"] = {"@type": "Offer", "price": digits, "priceCurrency": "RUB",
+                          "availability": ("https://schema.org/PreOrder" if "предзаказ" in p["kind"].lower()
+                                           else "https://schema.org/InStock"),
+                          "url": SITE + buy}
+        offers.append(item)
+    faq_ld = {"@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": re.sub(r"<[^>]+>", "", q),
+         "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", a)}}
+        for q, a in FAQ]}
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Главная", "item": SITE + "/"},
             {"@type": "ListItem", "position": 2, "name": "Магазин", "item": SITE + "/magazin/"}]},
-        {"@type": "ItemList", "name": "Магазин Андрея Мейстера", "itemListElement": items}]}
+        {"@type": "ItemList", "name": "Магазин Андрея Мейстера", "itemListElement": items},
+        ] + offers + [faq_ld]}
 
     nav = ('<div id="header-placeholder"><nav aria-label="Основная навигация" style="display:flex;flex-wrap:wrap;'
            'gap:10px 20px;align-items:center;padding:14px 20px;max-width:1200px;margin:0 auto">'
@@ -846,8 +870,8 @@ def build():
               "{n.setAttribute(s.attributes[i].name,s.attributes[i].value);}n.text=s.text;s.parentNode.replaceChild(n,s);});});})();</script>")
 
     title = "Магазин: курсы, книги, игры и записи Андрея Мейстера"
-    desc = ("Всё, что сделано для тех, кто хочет понимать людей и себя: курс «Разговорный гипноз», книги, "
-            "игры-тренажёры, подписка на Фреди и аудиосерия «Ключи». Для кого каждая вещь и что она даёт.")
+    desc = ("Курсы, книги, игры и аудиосерия «Ключи» Андрея Мейстера: у каждой вещи сказано, "
+            "кому она и что даёт. Цены, форматы и бесплатный вход в Лекторий.")
     page = """<!DOCTYPE html>
 <html lang="ru">
 <head>

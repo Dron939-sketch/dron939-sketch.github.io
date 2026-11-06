@@ -300,8 +300,8 @@ def home():
 <ul class="plogos"><li><img src="/images/partners/skilllab.webp" width="474" height="160" alt="Upgrade Skill Lab" title="Upgrade Skill Lab" loading="lazy"></li><li><img src="/images/partners/yandex-praktikum.webp" width="861" height="126" alt="Yandex Practicum" title="Yandex Practicum" loading="lazy"></li><li><img src="/images/partners/foxford.webp" width="727" height="160" alt="Foxford" title="Foxford" loading="lazy"></li><li><img src="/images/partners/skytrainer.webp" width="138" height="28" alt="SkyTrainer" title="SkyTrainer" loading="lazy"></li><li><img src="/images/partners/psifak.webp" width="163" height="160" alt="Psifak" title="Psifak" loading="lazy"></li><li><img src="/images/partners/vita.webp" width="160" height="160" alt="Vita medical and biological school" title="Vita medical and biological school" loading="lazy"></li><li><img src="/images/partners/gazprom-media.webp" width="500" height="160" alt="Gazprom-Media" title="Gazprom-Media" loading="lazy"></li><li><img src="/images/partners/minkult-mo.webp" width="417" height="160" alt="Ministry of Culture of the Moscow Region" title="Ministry of Culture of the Moscow Region" loading="lazy"></li><li><img src="/images/partners/mister-freeman.webp" width="172" height="160" alt="Mister Freeman" title="Mister Freeman" loading="lazy"></li><li><img src="/images/partners/legio-felix.webp" width="118" height="160" alt="Legio Felix" title="Legio Felix" loading="lazy"></li></ul>
 </div></section>
 {COOP}"""
-    return page("/en/", "Andrey Meyster — psychologist, founder of the Lectorium, author of The Theory of Manipulation",
-                "Andrey Meyster, psychologist, Candidate of Psychological Sciences: founder of the Lectorium, an open university of life; author of The Theory of Manipulation, of the Variatika and Conceptual Base methods and of the code behind Fredi, a virtual psychologist.",
+    return page("/en/", "Andrey Meyster — psychologist, founder of the Lectorium",
+                "Andrey Meyster, psychologist: founder of the Lectorium, 110 open courses on thinking, author of The Theory of Manipulation and Variatika.",
                 body)
 
 
