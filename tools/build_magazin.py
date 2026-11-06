@@ -490,11 +490,13 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .tip b{color:var(--text)}
 /* витрины */
 .shelf{padding:22px 0 8px}
-.js .shelf{display:none}
-.js .shelf.on{display:block}
+.js .shelf{display:block}
 .shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .shelf-lead{color:var(--muted);font-size:.95rem;margin-bottom:12px}
 .back{background:none;border:0;color:var(--accent);font:inherit;font-size:.9rem;cursor:pointer;display:none}
+.shop-terms{color:var(--muted);font-size:.88rem;line-height:1.6;border-top:1px solid var(--line);
+  margin:26px 0 0;padding:16px 0 0}
+.shop-terms b{color:var(--text);font-weight:600}
 .js .back{display:inline}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
 .it{display:grid;grid-template-columns:84px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
@@ -598,8 +600,9 @@ function closeTips(){document.querySelectorAll('.q').forEach(function(o){o.setAt
 function show(k,scroll){
   closeTips();
   cats.forEach(function(c){c.classList.toggle('on',c.dataset.cat===k);c.setAttribute('aria-pressed',c.dataset.cat===k)});
-  shelves.forEach(function(s){s.classList.toggle('on',s.id===k)});
-  var top=document.getElementById('top');if(top)top.style.display=k?'none':'';
+  /* 07.11.2026: каталог больше не прячется по клику — все секции видны всегда,
+     плитка становится быстрой ссылкой: подсветить себя и прокрутить к разделу. */
+  shelves.forEach(function(s){s.classList.add('on')});
   /* query (utm_*, yclid) не трогаем: Метрика читает его позже, чем срабатывает этот код */
   if(k){try{history.replaceState(null,'',location.pathname+location.search+'#'+k)}catch(e){}
     if(scroll){var s=document.getElementById(k);if(s)s.scrollIntoView({behavior:'smooth',block:'start'})}
@@ -849,12 +852,15 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="crumbs"><a href="/">Главная</a> / Магазин</div>
 <button class="theme-btn" type="button" aria-label="Переключить тему" aria-pressed="false"><span class="moon">☾</span><span class="sun">☀</span></button>
 <h1>Магазин</h1>
-<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «i» объяснит, что внутри.</p>
+<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Каталог открыт целиком: прокрутите или перейдите по плитке; кнопка «i» объяснит, что внутри категории.</p>
 </div></div>
 <main class="wrap">
 %(cats)s
 %(top)s
 %(shelves)s
+<p class="shop-terms"><b>Оплата</b> картой на сайте через ЮKassa · <b>возврат</b> 7 дней, если товар
+не использован · <b>доставка</b> СДЭК, оплата при получении · <b>записи «Ключей»</b> приходят
+ссылкой в письме и на странице после оплаты.</p>
 %(faq)s
 </main>
 
