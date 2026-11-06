@@ -59,11 +59,13 @@ h3{font-size:1rem;font-weight:620;line-height:1.3}
 .tip b{color:var(--text)}
 /* витрины */
 .shelf{padding:22px 0 8px}
-.js .shelf{display:none}
-.js .shelf.on{display:block}
+.js .shelf{display:block}
 .shelf-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .shelf-lead{color:var(--muted);font-size:.95rem;margin-bottom:12px}
 .back{background:none;border:0;color:var(--accent);font:inherit;font-size:.9rem;cursor:pointer;display:none}
+.shop-terms{color:var(--muted);font-size:.88rem;line-height:1.6;border-top:1px solid var(--line);
+  margin:26px 0 0;padding:16px 0 0}
+.shop-terms b{color:var(--text);font-weight:600}
 .js .back{display:inline}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
 .it{display:grid;grid-template-columns:84px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
@@ -273,7 +275,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <div class="crumbs"><a href="/">Главная</a> / Магазин</div>
 <button class="theme-btn" type="button" aria-label="Переключить тему" aria-pressed="false"><span class="moon">☾</span><span class="sun">☀</span></button>
 <h1>Магазин</h1>
-<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Выберите категорию; кнопка «i» объяснит, что внутри.</p>
+<p class="lead">Курсы, книги, игры, Фреди и аудиозаписи — у каждой вещи сказано, кому она и что вы будете уметь после. Каталог открыт целиком: прокрутите или перейдите по плитке; кнопка «i» объяснит, что внутри категории.</p>
 </div></div>
 <main class="wrap">
 <div class="cats" role="group" aria-label="Категории">
@@ -541,6 +543,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <p class="shelf-lead">Начните с того, что мешает сейчас, а не с того, что кажется самым полным.</p>
 <table class="pick"><tr><td>Тревожно, плохо сплю, всё откладываю</td><td>бесплатные курсы Лектория <a href="/blog/lektorij/trevoga/">«Тревога и как с ней жить»</a>, <a href="/blog/lektorij/son/">«Сон»</a> и <a href="/blog/lektorij/prokrastinaciya-i-motivaciya/">«Прокрастинация и мотивация»</a>; для ежедневной практики — <a href="#fredi-sub" data-go="fredi">Фреди</a></td></tr><tr><td>Нет сил, всё раздражает, перегруз</td><td>бесплатные курсы <a href="/blog/lektorij/psihologiya-peregruzok/">«Психология перегрузок»</a> и <a href="/blog/lektorij/depressiya-i-apatiya/">«Депрессия и апатия»</a>. Если так неделями и не отпускает — это повод идти к врачу или психотерапевту, а не в магазин</td></tr><tr><td>Трудно с ребёнком: истерики, школа, экраны</td><td>бесплатный курс <a href="/blog/lektorij/roditelstvo/">«Родительство»</a></td></tr><tr><td>Трудно со взрослыми детьми или с пожилыми родителями</td><td>бесплатный курс <a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы видим одно и то же по-разному. Отдельного курса пока нет — есть статья <a href="/blog/vzroslye-deti-ne-hotyat-obshchatsya.html">«Взрослые дети не хотят общаться»</a></td></tr><tr><td>Ребёнку не даётся предмет</td><td>родителям старшеклассника — <a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> (с 16 лет, первая запись — 690 ₽); пока — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>: прочитать самим и пересказать</td></tr><tr><td>Вас перебивают, не дослушивают, «мы подумаем» — и тишина</td><td><a href="#standart" data-go="kursy">Пакет «Стандартный»</a> — с разбором ваших ситуаций у автора; или <a href="#kniga-tm" data-go="knigi">книга «Теория манипуляции»</a>, если сначала хочется понять механику</td></tr><tr><td>Не понимаете, почему люди раз за разом поступают одинаково</td><td><a href="#kniga-var" data-go="knigi">книга «Вариатика»</a> и <a href="#var-basic" data-go="igry">игра «Вариатика — Basic»</a></td></tr><tr><td>Ходите по кругу в одной ситуации и не видите выхода</td><td><a href="#kniga-konc" data-go="knigi">книга «Концептикон»</a> — семь способов посмотреть иначе</td></tr><tr><td>Продаёте или ведёте команду</td><td><a href="#standart" data-go="kursy">«Стандартный»</a> — себе; <a href="#marketolog" data-go="igry">игра «Маркетолог»</a> — на планёрку с отделом: учит рассказывать так, чтобы слушали</td></tr><tr><td>Сами работаете с людьми — психолог, коуч, педагог</td><td>книги <a href="#kniga-konc" data-go="knigi">«Концептикон»</a> и <a href="#kniga-var" data-go="knigi">«Вариатика»</a> — увидеть ситуацию клиента с разных сторон</td></tr><tr><td>«Пробовал — бесполезно» стало привычкой</td><td><a href="#proryv" data-go="kursy">живой тренинг «Прорыв»</a></td></tr><tr><td>Нужен собеседник и тренажёр каждый день</td><td><a href="#fredi-sub" data-go="fredi">подписка на Фреди</a></td></tr><tr><td>Хочется наконец понять предмет, который в школе не дался</td><td><a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> — первая запись 690 ₽; бесплатно — курсы <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a> и <a href="/blog/lektorij/logika/">«Логика»</a></td></tr></table>
 </section>
+<p class="shop-terms"><b>Оплата</b> картой на сайте через ЮKassa · <b>возврат</b> 7 дней, если товар
+не использован · <b>доставка</b> СДЭК, оплата при получении · <b>записи «Ключей»</b> приходят
+ссылкой в письме и на странице после оплаты.</p>
 <section class="faq" id="voprosy"><h2>❓ Частые вопросы</h2><h3>Как оплатить и получить заказ?</h3><p>Товар оплачиваете картой на сайте — через ЮKassa, чек приходит на почту. Доставку СДЭК оплачиваете при получении в пункте выдачи, по тарифу СДЭК. После отправки на почту приходит трек-номер. Записи «Ключей» приходят ссылкой сразу после оплаты.</p><h3>С чего начать, если не знаю, что выбрать?</h3><p>Откройте <a href="#vybor" data-go="vybor">«Подобрать под задачу»</a> и найдите строку про себя — бесплатное там стоит первым. Лекторий открыт целиком и без регистрации.</p><h3>Можно ли вернуть пакет «Стандартный»?</h3><p>Да, в течение семи дней после получения, если товар не был в употреблении. Условия — в <a href="/oferta/">оферте</a>.</p><h3>Как устроена покупка записи «Ключей»?</h3><p>Оставляете почту и оплачиваете 690 ₽ картой. Сразу после оплаты на странице и в письме появляется ссылка на прослушивание — с телефона или компьютера. Ссылка личная, пожалуйста, не пересылайте её.</p><h3>Когда выйдут остальные «Ключи»?</h3><p>Серия выходит по одной записи. «Ум-объяснитель» и «Логика» уже продаются. На остальные 45 можно оформить предзаказ — 690 ₽. Срок выхода — до 30 ноября 2026: ссылка придёт на почту в день выхода записи, делать ничего не нужно. О выходе новых записей — в Telegram-канале.</p></section>
 </main>
 
@@ -555,8 +560,9 @@ function closeTips(){document.querySelectorAll('.q').forEach(function(o){o.setAt
 function show(k,scroll){
   closeTips();
   cats.forEach(function(c){c.classList.toggle('on',c.dataset.cat===k);c.setAttribute('aria-pressed',c.dataset.cat===k)});
-  shelves.forEach(function(s){s.classList.toggle('on',s.id===k)});
-  var top=document.getElementById('top');if(top)top.style.display=k?'none':'';
+  /* 07.11.2026: каталог больше не прячется по клику — все секции видны всегда,
+     плитка становится быстрой ссылкой: подсветить себя и прокрутить к разделу. */
+  shelves.forEach(function(s){s.classList.add('on')});
   /* query (utm_*, yclid) не трогаем: Метрика читает его позже, чем срабатывает этот код */
   if(k){try{history.replaceState(null,'',location.pathname+location.search+'#'+k)}catch(e){}
     if(scroll){var s=document.getElementById(k);if(s)s.scrollIntoView({behavior:'smooth',block:'start'})}
