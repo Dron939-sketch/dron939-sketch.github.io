@@ -38,6 +38,18 @@ BOT = "https://t.me/Frederick777bot"
 APP = "https://meysternlp.ru/fredi/"
 
 
+METRIKA = """
+<!-- Счётчик Метрики: без него цели direct_lp_* не срабатывали (07.11.2026). -->
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();
+for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
+ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
+"""
+
 def page_html(slug, title, description, h1, lead, scene, mechanism, steps,
               proof, final_cta, cta_label):
     """Одна посадочная. Стиль — тёмный, как у витрин (главная, Лекторий)."""
@@ -75,6 +87,8 @@ ol.steps li span{{color:var(--muted);font-size:.96rem}}
 .proof{{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:18px 0;font-size:.96rem;color:#cfd5e2}}
 footer{{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;font-size:.88rem;color:var(--muted)}}
 </style>
+
+{metrika}
 </head>
 <body>
 <div class="wrap">
@@ -87,8 +101,8 @@ footer{{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;font-s
   <ol class="steps">{steps}</ol>
   <div class="proof">{proof}</div>
   <a class="cta" href="{bot}" target="_blank" rel="noopener"
-     onclick="try{{yaCounter&&yaCounter.reachGoal('direct_lp_try')}}catch(e){{}}">{cta_label}</a>
-  <a class="cta2" href="{app}" onclick="try{{yaCounter&&yaCounter.reachGoal('direct_lp_fredi')}}catch(e){{}}">
+     onclick="try{{ym(108138656,'reachGoal','direct_lp_try')}}catch(e){{}}">{cta_label}</a>
+  <a class="cta2" href="{app}" onclick="try{{ym(108138656,'reachGoal','direct_lp_fredi')}}catch(e){{}}">
      Поговорить с Фреди в браузере — без установки
   </a>
   <p class="small">Фреди — виртуальный психолог, его разработал Андрей Мейстер.
@@ -106,7 +120,7 @@ footer{{border-top:1px solid var(--line);margin-top:40px;padding-top:18px;font-s
 """.format(
         title=title, description=description, h1=h1, lead=lead,
         scene=scene, mechanism=mechanism, steps=steps_html, proof=proof,
-        final_cta=final_cta, cta_label=cta_label, bot=BOT, app=APP, site=SITE)
+        final_cta=final_cta, cta_label=cta_label, bot=BOT, app=APP, site=SITE, metrika=METRIKA)
 
 
 PAGES = [
