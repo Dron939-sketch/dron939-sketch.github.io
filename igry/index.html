@@ -1250,5 +1250,16 @@ body{overflow-wrap:break-word}</style>
 }
 </script>
 
+
+<!-- Цель Директа: клик к заказу товара со страницы каталога (07.11.2026).
+     Раньше клики уходили в /magazin/zakaz/ без цели, и кампании не видели переходов. -->
+<script>
+(function(){var C=108138656;
+document.addEventListener('click',function(e){
+  var a=e.target&&e.target.closest?e.target.closest('a'):null;if(!a)return;
+  var h=a.getAttribute('href')||'';
+  if(h.indexOf('/magazin/zakaz/')===0){try{if(window.ym)ym(C,'reachGoal','tovar_order',{shop_product:h.split('t=')[1]||''})}catch(err){}}
+},true);})();
+</script>
 </body>
 </html>
