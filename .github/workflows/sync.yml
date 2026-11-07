@@ -36,7 +36,28 @@ jobs:
       # регион Москва_0 лёг вместе с git.msk0.amvera.ru, приложение подняли
       # в Moscow-1, и пуш на старый адрес падал по таймауту подключения:
       # мерж в main до прода не доезжал. Переедет приложение — менять здесь.
-      - name: Deploy to Amvera (push main to master)
+      #
+      # 07.11.2026: git push из раннера перестал доезжать вовсе — Amvera рвёт
+      # соединение (`Recv failure: Connection reset by peer`) на каждом пуше
+      # с 3 ноября, прод остался на сборке 4 ноября. Основным путём стал
+      # MCP-API Amvera: он коммитит файлы в репозиторий проекта и запускает
+      # сборку по токену, без пароля аккаунта. Старый git push оставлен
+      # запасным — он срабатывает, если MCP-шаг упал.
+      - name: Deploy to Amvera (MCP API)
+        id: amvera_mcp
+        timeout-minutes: 14
+        env:
+          AMVERA_MCP_TOKEN: ${{ secrets.AMVERA_MCP_TOKEN }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ -z "$AMVERA_MCP_TOKEN" ]; then
+            echo "AMVERA_MCP_TOKEN не задан — перехожу на запасной git push"
+            exit 1
+          fi
+          python3 tools/deploy_amvera_mcp.py
+
+      - name: Deploy to Amvera (push main to master, запасной путь)
+        if: failure() && steps.amvera_mcp.outcome == 'failure'
         timeout-minutes: 8
         env:
           AM_USER: ${{ secrets.AMVERA_USER }}
