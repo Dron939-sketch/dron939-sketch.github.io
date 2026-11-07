@@ -143,6 +143,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   .hero .offer .btn, .hero .offer .free { width: 100%; text-align: center; font-size: .9rem;
     padding: 10px 12px; }
   .hero .offer .free { margin-top: 2px; }
+  /* Кнопка темы на телефоне уходила на карточку цены — переносим вниз, под большой палец. */
+  .theme-btn { position: fixed; right: 14px; bottom: 14px; top: auto; z-index: 30;
+    width: 34px; height: 34px; opacity: .9; }
   .hero h1 { font-size: clamp(1.45rem, 6.2vw, 1.85rem); margin: 6px 0 8px; }
 }
 </style>
