@@ -43,21 +43,8 @@ jobs:
       # MCP-API Amvera: он коммитит файлы в репозиторий проекта и запускает
       # сборку по токену, без пароля аккаунта. Старый git push оставлен
       # запасным — он срабатывает, если MCP-шаг упал.
-      - name: Deploy to Amvera (MCP API)
-        id: amvera_mcp
-        timeout-minutes: 14
-        env:
-          AMVERA_MCP_TOKEN: ${{ secrets.AMVERA_MCP_TOKEN }}
-          BEFORE_SHA: ${{ github.event.before }}
-        run: |
-          if [ -z "$AMVERA_MCP_TOKEN" ]; then
-            echo "AMVERA_MCP_TOKEN не задан — перехожу на запасной git push"
-            exit 1
-          fi
-          python3 tools/deploy_amvera_mcp.py
-
-      - name: Deploy to Amvera (push main to master, запасной путь)
-        if: failure() && steps.amvera_mcp.outcome == 'failure'
+      - name: Deploy to Amvera (push main to master)
+        id: amvera_push
         timeout-minutes: 8
         env:
           AM_USER: ${{ secrets.AMVERA_USER }}
@@ -71,6 +58,23 @@ jobs:
           git -c http.postBuffer=524288000 \
             push "https://${AM_USER}:${AM_PASS}@git.msk1.amvera.ru/${AM_PATH}" \
             "refs/heads/main:refs/heads/master" --force
+
+      # 08.11.2026: git push снова доходит, MCP оставлен запасным путём. Первый прогон
+      # MCP-шага завис на 14 минут (rebuildProject не ответил) и покрасил прогон в красный,
+      # хотя git push прошёл. Теперь MCP не роняет pipeline: continue-on-error + 6 минут.
+      - name: Deploy to Amvera (MCP API, запасной путь)
+        if: failure() && steps.amvera_push.outcome == 'failure'
+        continue-on-error: true
+        timeout-minutes: 6
+        env:
+          AMVERA_MCP_TOKEN: ${{ secrets.AMVERA_MCP_TOKEN }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ -z "$AMVERA_MCP_TOKEN" ]; then
+            echo "AMVERA_MCP_TOKEN не задан — деплой не удался"
+            exit 1
+          fi
+          python3 tools/deploy_amvera_mcp.py
 
       # Зеркало GitVerse вторично: его сбой (напр. HTTP 413 на большом паке)
       # не должен блокировать деплой на Amvera — потому continue-on-error.
