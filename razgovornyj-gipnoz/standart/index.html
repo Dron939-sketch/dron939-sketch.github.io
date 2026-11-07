@@ -135,7 +135,15 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
   .hero .ctas { margin: 12px 0 6px; display: flex; flex-direction: column; gap: 8px; }
   .hero .ctas .btn { width: 100%; text-align: center; }
   .hero .small { font-size: .82rem; }
-  .hero .offer.on { margin-bottom: 10px; }
+  .hero .offer { padding: 10px 12px; gap: 8px; align-items: flex-start; }
+  .hero .offer img { width: 56px; height: 56px; }
+  .hero .offer b { font-size: .95rem; line-height: 1.25; }
+  .hero .offer span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; font-size: .84rem; line-height: 1.35; }
+  .hero .offer .btn, .hero .offer .free { width: 100%; text-align: center; font-size: .9rem;
+    padding: 10px 12px; }
+  .hero .offer .free { margin-top: 2px; }
+  .hero h1 { font-size: clamp(1.45rem, 6.2vw, 1.85rem); margin: 6px 0 8px; }
 }
 </style>
 </head>
