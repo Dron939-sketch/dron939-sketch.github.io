@@ -120,6 +120,25 @@ main>.wrap:first-child{position:relative}
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
 ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
 </script>
+<!-- Мобильный первый экран (07.11.2026). Было: фото комплекта ставилось первым
+     (order:-1, до 300 px), заголовок начинался на 500-м пикселе, цена и кнопка —
+     за пределами экрана. На рекламе 69 % визитов с телефона и 44,8 % отказов.
+     Стало: заголовок и кнопка в первом экране, фото ниже и компактнее. -->
+<style>
+@media (max-width: 760px) {
+  .hero { gap: 16px; padding: 22px 0 30px; }
+  .hero > img { order: 1; max-width: 240px; margin: 4px auto 0; }
+  .hero h1 { font-size: clamp(1.55rem, 6.8vw, 2rem); line-height: 1.16; margin: 0 0 10px; }
+  .hero p { font-size: .97rem; line-height: 1.5; margin: 0 0 10px; }
+  .hero p:nth-of-type(2) { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+    overflow: hidden; }
+  .hero .ctas { margin: 12px 0 6px; display: flex; flex-direction: column; gap: 8px; }
+  .hero .ctas .btn { width: 100%; text-align: center; }
+  .hero .small { font-size: .82rem; }
+  .hero .offer.on { margin-bottom: 10px; }
+}
+</style>
+</head>
 </head>
 <body>
 <noscript><div><img src="https://mc.yandex.ru/watch/108138656" style="position:absolute;left:-9999px" alt=""></div></noscript>
