@@ -55,6 +55,16 @@
   .msg.bad{display:block;background:#fdecec;color:var(--bad)}
   .msg.info{display:block;background:#fdf6e7;color:var(--warn)}
   .hidden{display:none}
+  .voices{display:grid;gap:6px;max-height:216px;overflow:auto;margin-top:9px}
+  .vrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);
+        border-radius:9px;cursor:pointer;font-size:13.5px}
+  .vrow:hover{background:#f6f9fc}
+  .vrow.on{border-color:var(--accent);background:var(--soft)}
+  .vrow .name{flex:1;min-width:0}
+  .vrow .tags{display:block;color:var(--grey);font-size:11.5px;white-space:nowrap;
+              overflow:hidden;text-overflow:ellipsis}
+  .vplay{width:26px;height:26px;flex:0 0 auto;border:0;border-radius:50%;background:var(--accent);
+         color:#fff;cursor:pointer;font-size:10px;line-height:1}
 </style>
 </head>
 <body>
@@ -77,8 +87,11 @@
     </div>
 
     <div class="field">
-      <div class="label">Голос</div>
-      <select id="voiceSel"></select>
+      <div class="label">Голос <span>— нажмите ▶ чтобы услышать</span></div>
+      <input type="text" id="voiceSearch" placeholder="Поиск голоса: мужской, спокойный, женский…"
+             style="padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit">
+      <div class="voices" id="voiceList"></div>
+      <div class="foot" style="text-align:left;margin-top:6px" id="voiceNote"></div>
     </div>
 
     <div class="field">
@@ -117,6 +130,24 @@
     <div class="msg" id="msg"></div>
   </div>
 
+  <div class="card" id="agentCard" style="display:none;margin-top:14px">
+    <div class="label">Агент в Fish — что звучит в трубке</div>
+    <div class="foot" style="text-align:left;margin:0 0 8px" id="agentState"></div>
+    <textarea id="firstMessage" style="font-family:inherit;font-size:13.5px;min-height:58px"
+              placeholder="Первое сообщение: с него начинается разговор"></textarea>
+    <div class="inline">
+      <select id="langSel" style="flex:0 0 170px">
+        <option value="ru">Русский</option>
+        <option value="en">English</option>
+      </select>
+      <input type="number" id="speedInput" step="0.05" min="0.5" max="2" value="1"
+             title="Скорость речи"
+             style="flex:0 0 96px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit">
+      <div class="mini" id="saveAgent">Сохранить и опубликовать</div>
+    </div>
+    <div class="foot" style="text-align:left;margin-top:6px" id="agentNote"></div>
+  </div>
+
   <div class="more">
     <a href="#" id="moreCampaigns">Мои кампании</a> · <a href="/">На главную</a>
   </div>
@@ -141,7 +172,7 @@ const USER_ID = frediUserId();
 // На проде API живёт на этом же домене. Параметр ?api= нужен для локальной
 // проверки страницы отдельно от бэкенда — в обычной жизни не используется.
 const API_BASE = (new URLSearchParams(location.search).get('api') || '').replace(/\/$/, '');
-const state = { catalog: null, direction: '', campaignId: null };
+const state = { catalog: null, direction: '', campaignId: null, voiceId: '', voiceTitle: '' };
 
 async function api(path, options) {
   const res = await fetch(API_BASE + path, options);
@@ -181,9 +212,6 @@ function fillCatalog(cat) {
   cat.target_actions.forEach(a => actionSel.appendChild(new Option(a.title, a.id)));
   actionSel.addEventListener('change', updateSummary);
 
-  const voiceSel = document.getElementById('voiceSel');
-  cat.voices.forEach(v => voiceSel.appendChild(new Option(v.title, v.id)));
-  voiceSel.addEventListener('change', updateSummary);
 
   const sourceSel = document.getElementById('sourceSel');
   cat.sources.filter(s => s.kind === 'parse').forEach(s => {
@@ -196,12 +224,106 @@ function fillCatalog(cat) {
   updateSummary();
 }
 
+/* ── голоса из Fish ─────────────────────────────────────────────── */
+
+function renderVoices(items) {
+  const box = document.getElementById('voiceList');
+  box.innerHTML = '';
+  if (!items.length) {
+    box.innerHTML = '<div class="vrow">Голоса не нашлись — измените запрос</div>';
+    return;
+  }
+  items.forEach(item => {
+    const row = document.createElement('div');
+    row.className = 'vrow' + (item.id === state.voiceId ? ' on' : '');
+    const name = document.createElement('div');
+    name.className = 'name';
+    name.innerHTML = '<b>' + item.title + '</b><span class="tags">' +
+      (item.tags || []).join(' · ') + '</span>';
+    row.appendChild(name);
+    if (item.sample) {
+      const play = document.createElement('button');
+      play.className = 'vplay';
+      play.textContent = '▶';
+      play.addEventListener('click', e => {
+        e.stopPropagation();
+        new Audio(item.sample).play().catch(() => {});
+      });
+      row.appendChild(play);
+    }
+    row.addEventListener('click', () => {
+      state.voiceId = item.id;
+      state.voiceTitle = item.title;
+      box.querySelectorAll('.vrow').forEach(r => r.classList.remove('on'));
+      row.classList.add('on');
+      updateSummary();
+    });
+    box.appendChild(row);
+  });
+}
+
+async function loadVoices(query) {
+  try {
+    const res = await api('/api/callbot/voices?language=ru&limit=14&q=' + encodeURIComponent(query || ''));
+    renderVoices(res.voices || []);
+    if (!state.voiceId && res.voices && res.voices.length) {
+      state.voiceId = res.voices[0].id;
+      state.voiceTitle = res.voices[0].title;
+      renderVoices(res.voices);
+      updateSummary();
+    }
+  } catch (e) {
+    document.getElementById('voiceNote').textContent = 'Голоса не загрузились: ' + e.message;
+  }
+}
+
+/* ── настройки агента ──────────────────────────────────────────── */
+
+async function loadAgent() {
+  try {
+    const cfg = await api('/api/callbot/agent');
+    document.getElementById('agentCard').style.display = 'block';
+    document.getElementById('agentState').textContent =
+      'Агент «' + cfg.name + '» · ' + cfg.publication_state +
+      ' · язык ' + cfg.speaking_language + ' · модель ' + cfg.tts_model;
+    document.getElementById('firstMessage').value = cfg.first_message || '';
+    document.getElementById('langSel').value = cfg.speaking_language || 'ru';
+    document.getElementById('speedInput').value = cfg.speed || 1;
+    if (cfg.voice_id) {
+      state.voiceId = cfg.voice_id;
+      state.voiceTitle = 'свой голос агента';
+      updateSummary();
+    }
+  } catch (e) {
+    document.getElementById('voiceNote').textContent = 'Настройки агента не загрузились: ' + e.message;
+  }
+}
+
+async function saveAgent() {
+  const note = document.getElementById('agentNote');
+  note.textContent = 'Сохраняю…';
+  try {
+    const res = await api('/api/callbot/agent', {
+      method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        first_message: document.getElementById('firstMessage').value.trim(),
+        voice_id: state.voiceId || '',
+        speaking_language: document.getElementById('langSel').value,
+        speed: parseFloat(document.getElementById('speedInput').value) || 0
+      })
+    });
+    note.textContent = 'Сохранено и опубликовано: версия ' + res.version_number;
+    await loadAgent();
+  } catch (e) {
+    note.textContent = 'Не сохранилось: ' + e.message;
+  }
+}
+
 function updateSummary() {
   if (!state.catalog) return;
   const dir = state.catalog.directions.find(d => d.id === state.direction) || {};
   const act = state.catalog.target_actions.find(a => a.id === document.getElementById('actionSel').value) || {};
-  const voice = state.catalog.voices.find(v => v.id === document.getElementById('voiceSel').value) || {};
-  document.getElementById('sumLabel').textContent = [dir.title, act.title, voice.title]
+  document.getElementById('sumLabel').textContent = [dir.title, act.title, state.voiceTitle]
     .filter(Boolean).join(' · ');
   const count = parseNumbers(document.getElementById('numbers').value).length;
   document.getElementById('sumCount').innerHTML = '<b>' + count + ' номеров</b> · ≈ 7 ₽/мин';
@@ -278,7 +400,7 @@ document.getElementById('goBtn').addEventListener('click', async () => {
         name: dir.title + ' — ' + act.title.toLowerCase(),
         direction_id: state.direction,
         action_id: act.id,
-        voice_id: document.getElementById('voiceSel').value,
+        voice_id: state.voiceId || '',
         city: document.getElementById('findCity').value.trim(),
         user_id: USER_ID,
         followup_channel: 'sms',
@@ -315,6 +437,16 @@ document.getElementById('moreCampaigns').addEventListener('click', async (event)
 });
 
 api('/api/callbot/catalog').then(fillCatalog).catch(e => say('Каталог не загрузился: ' + e.message, 'bad'));
+loadVoices('');
+loadAgent();
+
+let voiceTimer = null;
+document.getElementById('voiceSearch').addEventListener('input', event => {
+  clearTimeout(voiceTimer);
+  const q = event.target.value.trim();
+  voiceTimer = setTimeout(() => loadVoices(q), 400);
+});
+document.getElementById('saveAgent').addEventListener('click', saveAgent);
 </script>
 </body>
 </html>
