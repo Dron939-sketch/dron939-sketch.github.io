@@ -108,6 +108,12 @@
     </div>
 
     <div class="field">
+      <div class="label">Стиль агента <span>— манера разговора, цель не меняется</span></div>
+      <select id="styleSel"></select>
+      <div class="foot" style="text-align:left;margin-top:6px" id="styleNote"></div>
+    </div>
+
+    <div class="field">
       <div class="label">Кому звоним <span>— по одному номеру в строке</span></div>
       <textarea id="numbers" placeholder="+7 916 111-22-33&#10;89162223344;Иван;Коломна"></textarea>
       <div class="inline">
@@ -226,6 +232,18 @@ function fillCatalog(cat) {
     dirBox.appendChild(chip);
   });
   state.direction = cat.directions[0].id;
+
+  const styleSel = document.getElementById('styleSel');
+  (cat.agent_styles || []).forEach(st => {
+    styleSel.appendChild(new Option(st.title, st.id));
+  });
+  styleSel.value = cat.default_style || (cat.agent_styles[0] || {}).id || '';
+  const showStyle = () => {
+    const st = (cat.agent_styles || []).find(x => x.id === styleSel.value);
+    document.getElementById('styleNote').textContent = st ? st.note : '';
+  };
+  styleSel.addEventListener('change', showStyle);
+  showStyle();
 
   const offerSel = document.getElementById('offerSel');
   const actionSel = document.getElementById('actionSel');
@@ -498,6 +516,7 @@ document.getElementById('goBtn').addEventListener('click', async () => {
         direction_id: state.direction,
         action_id: actionId,
         offer: pickedOffer(),
+        style_id: document.getElementById('styleSel').value,
         voice_id: state.voiceId || '',
         city: document.getElementById('findCity').value.trim(),
         user_id: USER_ID,
