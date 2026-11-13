@@ -98,10 +98,9 @@
     </div>
 
     <div class="field">
-      <div class="label">Сообщение после звонка <span>— контакт или ссылка на сайт</span></div>
+      <div class="label">SMS после звонка <span>— контакт или ссылка на сайт</span></div>
       <textarea id="followup" style="font-family:inherit;font-size:13.5px;min-height:64px"></textarea>
       <div class="inline">
-        <select id="channelSel" style="flex:1"></select>
         <input type="text" id="siteLink" placeholder="Ссылка на сайт: https://…"
                style="flex:1;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit">
       </div>
@@ -191,15 +190,8 @@ function fillCatalog(cat) {
     sourceSel.appendChild(new Option(s.title + (s.available ? '' : ' — закрыт'), s.id));
   });
 
-  const channelSel = document.getElementById('channelSel');
-  (cat.message_channels || []).forEach(ch => {
-    channelSel.appendChild(new Option(ch.title, ch.id));
-  });
-  channelSel.addEventListener('change', () => {
-    const ch = (cat.message_channels || []).find(c => c.id === channelSel.value);
-    document.getElementById('channelNote').textContent = ch ? ch.note : '';
-  });
-  channelSel.dispatchEvent(new Event('change'));
+  const smsChannel = (cat.message_channels || [])[0];
+  document.getElementById('channelNote').textContent = smsChannel ? smsChannel.note : '';
   document.getElementById('followup').value = cat.default_followup || '';
   updateSummary();
 }
@@ -289,7 +281,7 @@ document.getElementById('goBtn').addEventListener('click', async () => {
         voice_id: document.getElementById('voiceSel').value,
         city: document.getElementById('findCity').value.trim(),
         user_id: USER_ID,
-        followup_channel: document.getElementById('channelSel').value,
+        followup_channel: 'sms',
         followup_text: document.getElementById('followup').value.trim(),
         site_link: document.getElementById('siteLink').value.trim()
       })
