@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Перекличка — обзвон голосом руководителя | Андрей Мейстер</title>
+<meta name="description" content="Робот-обзвонщик: выбор направления, целевого действия и голоса, загрузка номеров и поиск клиентов.">
+<meta name="robots" content="noindex, follow">
+<style>
+  :root{--ink:#12161c;--ink2:#3c4652;--grey:#6b7787;--line:#e3e8ee;--bg:#f4f6f9;
+        --card:#fff;--accent:#2f5d8a;--soft:#eef3f8;--ok:#1c7c3c;--bad:#a8461c;--warn:#b4691c}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14.5px/1.5 "Segoe UI",system-ui,-apple-system,sans-serif;
+       display:flex;justify-content:center;padding:26px 18px 40px}
+  .wrap{width:100%;max-width:820px}
+  .brand{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(140deg,#3f7fb8,#2f5d8a);
+        display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px}
+  .brand b{font-size:18px;letter-spacing:-.2px}
+  .brand span{color:var(--grey);font-size:13px;margin-left:2px}
+  .lead{color:var(--grey);font-size:13px;margin:0 0 18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .field{margin-bottom:18px}
+  .label{font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:7px;letter-spacing:.2px}
+  .label span{font-weight:400;color:var(--grey)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 13px;
+        font-size:13px;cursor:pointer;white-space:nowrap}
+  .chip.on{border-color:var(--accent);background:var(--soft);color:var(--accent);font-weight:600}
+  select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+         font:inherit;background:#fff;color:var(--ink);appearance:none;
+         background-image:linear-gradient(45deg,transparent 50%,#8a97a6 50%),
+                          linear-gradient(135deg,#8a97a6 50%,transparent 50%);
+         background-position:calc(100% - 20px) 51%,calc(100% - 15px) 51%;
+         background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;
+           font:13px/1.5 Consolas,monospace;min-height:76px;resize:vertical;color:var(--ink)}
+  .inline{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:9px}
+  .mini{border:1px dashed #c9d5e2;background:#fbfcfe;color:var(--accent);border-radius:10px;
+        padding:8px 13px;font-size:13px;cursor:pointer}
+  .sum{margin:14px 0 12px;padding:11px 13px;background:var(--soft);border-radius:10px;
+       font-size:13px;color:var(--ink2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+  .sum b{color:var(--ink)}
+  .go{width:100%;border:0;border-radius:11px;padding:15px;font:inherit;font-size:16px;
+      font-weight:700;background:var(--accent);color:#fff;cursor:pointer;letter-spacing:.2px}
+  .go:hover{background:#27517a}
+  .go:disabled{opacity:.55;cursor:default}
+  .foot{color:var(--grey);font-size:12px;margin-top:9px;text-align:center}
+  .more{margin-top:16px;text-align:center;color:var(--grey);font-size:13px}
+  .more a{color:var(--accent);text-decoration:none;border-bottom:1px solid #c9d8e6}
+  .msg{margin-top:12px;padding:11px 13px;border-radius:10px;font-size:13px;display:none;
+       white-space:pre-line}
+  .msg.ok{display:block;background:#e8f3ec;color:#14572b}
+  .msg.bad{display:block;background:#fdecec;color:var(--bad)}
+  .msg.info{display:block;background:#fdf6e7;color:var(--warn)}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div class="mark">П</div>
+    <b>Перекличка</b><span>обзвон голосом руководителя</span>
+  </div>
+  <p class="lead">Выберите, кому звоним и зачем — остальное робот сделает сам</p>
+
+  <div class="card">
+    <div class="field">
+      <div class="label">Что продаём или о чём звоним</div>
+      <div class="chips" id="directions"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Зачем звоним <span>— что робот должен получить</span></div>
+      <select id="actionSel"></select>
+    </div>
+
+    <div class="field">
+      <div class="label">Голос</div>
+      <select id="voiceSel"></select>
+    </div>
+
+    <div class="field">
+      <div class="label">Кому звоним <span>— по одному номеру в строке</span></div>
+      <textarea id="numbers" placeholder="+7 916 111-22-33&#10;89162223344;Иван;Коломна"></textarea>
+      <div class="inline">
+        <div class="mini" id="uploadBtn">Загрузить файл</div>
+        <div class="mini" id="findBtn">Найти клиентов</div>
+        <input type="file" id="fileInput" class="hidden" accept=".csv,.txt">
+      </div>
+      <div class="inline hidden" id="findBox">
+        <input type="text" id="findCity" placeholder="Город, например Коломна"
+               style="flex:1;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit">
+        <select id="sourceSel" style="flex:1"></select>
+        <div class="mini" id="findGo">Искать</div>
+      </div>
+    </div>
+
+    <div class="sum">
+      <span id="sumLabel">…</span>
+      <span id="sumCount"><b>0 номеров</b> · ≈ 7 ₽/мин</span>
+    </div>
+
+    <button class="go" id="goBtn">Начать обзвон</button>
+    <div class="foot">Перед звонком робот называет себя и спрашивает, удобно ли говорить</div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <div class="more">
+    <a href="#" id="moreCampaigns">Мои кампании</a> · <a href="/">На главную</a>
+  </div>
+</div>
+
+<script>
+// Тот же идентификатор, что у остальных страниц Фреди.
+function frediUserId() {
+  let id = null;
+  try { id = localStorage.getItem('fredi_user_id'); } catch (e) {}
+  if (!id || isNaN(parseInt(id, 10))) {
+    const m = document.cookie.match(/(?:^|; )fredi_uid=([^;]*)/);
+    if (m) id = decodeURIComponent(m[1]);
+  }
+  id = parseInt(id, 10);
+  if (!id || isNaN(id)) { id = Date.now(); }
+  try { localStorage.setItem('fredi_user_id', id); } catch (e) {}
+  return id;
+}
+
+const USER_ID = frediUserId();
+// На проде API живёт на этом же домене. Параметр ?api= нужен для локальной
+// проверки страницы отдельно от бэкенда — в обычной жизни не используется.
+const API_BASE = (new URLSearchParams(location.search).get('api') || '').replace(/\/$/, '');
+const state = { catalog: null, direction: '', campaignId: null };
+
+async function api(path, options) {
+  const res = await fetch(API_BASE + path, options);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const detail = data.detail || data.reason || ('Ошибка ' + res.status);
+    throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+  }
+  return data;
+}
+
+function say(text, kind) {
+  const box = document.getElementById('msg');
+  box.className = 'msg ' + (kind || 'info');
+  box.textContent = text;
+}
+
+function fillCatalog(cat) {
+  state.catalog = cat;
+  const dirBox = document.getElementById('directions');
+  dirBox.innerHTML = '';
+  cat.directions.forEach((d, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (i === 0 ? ' on' : '');
+    chip.textContent = d.title;
+    chip.addEventListener('click', () => {
+      dirBox.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+      state.direction = d.id;
+      updateSummary();
+    });
+    dirBox.appendChild(chip);
+  });
+  state.direction = cat.directions[0].id;
+
+  const actionSel = document.getElementById('actionSel');
+  cat.target_actions.forEach(a => actionSel.appendChild(new Option(a.title, a.id)));
+  actionSel.addEventListener('change', updateSummary);
+
+  const voiceSel = document.getElementById('voiceSel');
+  cat.voices.forEach(v => voiceSel.appendChild(new Option(v.title, v.id)));
+  voiceSel.addEventListener('change', updateSummary);
+
+  const sourceSel = document.getElementById('sourceSel');
+  cat.sources.filter(s => s.kind === 'parse').forEach(s => {
+    sourceSel.appendChild(new Option(s.title + (s.available ? '' : ' — закрыт'), s.id));
+  });
+  updateSummary();
+}
+
+function updateSummary() {
+  if (!state.catalog) return;
+  const dir = state.catalog.directions.find(d => d.id === state.direction) || {};
+  const act = state.catalog.target_actions.find(a => a.id === document.getElementById('actionSel').value) || {};
+  const voice = state.catalog.voices.find(v => v.id === document.getElementById('voiceSel').value) || {};
+  document.getElementById('sumLabel').textContent = [dir.title, act.title, voice.title]
+    .filter(Boolean).join(' · ');
+  const count = parseNumbers(document.getElementById('numbers').value).length;
+  document.getElementById('sumCount').innerHTML = '<b>' + count + ' номеров</b> · ≈ 7 ₽/мин';
+}
+
+function normalizePhone(raw) {
+  const digits = String(raw || '').replace(/\D/g, '');
+  if (digits.length === 11 && '78'.includes(digits[0])) return '+7' + digits.slice(1);
+  if (digits.length === 10) return '+7' + digits;
+  return null;
+}
+
+function parseNumbers(text) {
+  const out = [], seen = new Set();
+  (text || '').split('\n').forEach(line => {
+    line = line.trim();
+    if (!line) return;
+    const phone = normalizePhone(line.split(/[;,\t]/)[0]);
+    if (phone && !seen.has(phone)) { seen.add(phone); out.push(phone); }
+  });
+  return out;
+}
+
+document.getElementById('numbers').addEventListener('input', updateSummary);
+
+document.getElementById('uploadBtn').addEventListener('click', () => {
+  document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const text = await file.text();
+  document.getElementById('numbers').value = text;
+  updateSummary();
+  say('Файл подставлен: ' + parseNumbers(text).length + ' номеров. Нажмите «Начать обзвон».', 'ok');
+});
+
+document.getElementById('findBtn').addEventListener('click', () => {
+  document.getElementById('findBox').classList.toggle('hidden');
+});
+
+document.getElementById('findGo').addEventListener('click', async () => {
+  try {
+    const res = await api('/api/callbot/parse', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source_id: document.getElementById('sourceSel').value,
+        direction_id: state.direction,
+        city: document.getElementById('findCity').value.trim(),
+        limit: 50
+      })
+    });
+    if (res.status === 'ok') {
+      say('Найдено организаций: ' + res.found, 'ok');
+    } else {
+      say(res.reason + ' ' + (res.next || res.alternative || ''), 'info');
+    }
+  } catch (e) {
+    say(e.message, 'info');
+  }
+});
+
+document.getElementById('goBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('goBtn');
+  btn.disabled = true;
+  say('Создаю кампанию…', 'info');
+  try {
+    const dir = state.catalog.directions.find(d => d.id === state.direction);
+    const act = state.catalog.target_actions.find(a => a.id === document.getElementById('actionSel').value);
+    const res = await api('/api/callbot/campaigns', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: dir.title + ' — ' + act.title.toLowerCase(),
+        direction_id: state.direction,
+        action_id: act.id,
+        voice_id: document.getElementById('voiceSel').value,
+        city: document.getElementById('findCity').value.trim(),
+        user_id: USER_ID
+      })
+    });
+    state.campaignId = res.id;
+    const phones = parseNumbers(document.getElementById('numbers').value);
+    if (phones.length) {
+      await api('/api/callbot/campaigns/' + res.id + '/numbers', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: document.getElementById('numbers').value, source: 'manual' })
+      });
+      const started = await api('/api/callbot/campaigns/' + res.id + '/start', { method: 'POST' });
+      say('Кампания ' + res.id + ' готова: ' + started.contacts + ' номеров. ' + started.note, 'ok');
+    } else {
+      say('Кампания ' + res.id + ' создана, но номеров нет — добавьте номера и запустите снова.', 'info');
+    }
+  } catch (e) {
+    say(e.message, 'bad');
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+document.getElementById('moreCampaigns').addEventListener('click', async (event) => {
+  event.preventDefault();
+  try {
+    const res = await api('/api/callbot/campaigns?user_id=' + USER_ID);
+    if (!res.campaigns.length) { say('Кампаний пока нет', 'info'); return; }
+    say(res.campaigns.map(c => '#' + c.id + ' ' + c.name + ' — ' + c.contacts + ' номеров').join('\n'), 'info');
+  } catch (e) { say(e.message, 'bad'); }
+});
+
+api('/api/callbot/catalog').then(fillCatalog).catch(e => say('Каталог не загрузился: ' + e.message, 'bad'));
+</script>
+</body>
+</html>
