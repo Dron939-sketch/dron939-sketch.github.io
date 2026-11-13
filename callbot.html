@@ -185,8 +185,9 @@ function frediUserId() {
 const USER_ID = frediUserId();
 // На проде API живёт на этом же домене. Параметр ?api= нужен для локальной
 // проверки страницы отдельно от бэкенда — в обычной жизни не используется.
-const API_BASE = (new URLSearchParams(location.search).get('api') || '').replace(/\/$/, '');
-const API_BASE = 'https://pereklichka-ddd989.mia0.amvera.tech';
+// API живёт в отдельном приложении; ?api= оставлен для локальной проверки.
+const API_BASE = ((new URLSearchParams(location.search).get('api') || '')
+                  || 'https://pereklichka-ddd989.mia0.amvera.tech').replace(/\/$/, '');
 const state = { catalog: null, direction: '', campaignId: null, voiceId: '',
                 voiceTitle: '', audio: null, audioSrc: '', audioBtn: null };
 window.__voiceState = state;   // для проверки прослушивания из теста
