@@ -61,6 +61,13 @@
   .vrow:hover{background:#f6f9fc}
   .vrow.on{border-color:var(--accent);background:var(--soft)}
   .vrow .name{flex:1;min-width:0}
+  .vrow{display:flex;align-items:center;gap:10px}
+  .vrow .mark{width:18px;height:18px;flex:0 0 auto;border:1px solid #c6d2de;border-radius:4px;
+              display:grid;place-items:center;font-size:11px;color:#fff;background:#fff}
+  .vrow.on .mark{background:var(--accent);border-color:var(--accent)}
+  pre#scriptBox{display:none;margin:12px 0 0;padding:12px;background:#0f1620;color:#d6e2ee;
+                border-radius:6px;font-size:12px;line-height:1.5;white-space:pre-wrap}
+  pre#scriptBox.show{display:block}
   .vrow .tags{display:block;color:var(--grey);font-size:11.5px;white-space:nowrap;
               overflow:hidden;text-overflow:ellipsis}
   .vplay.playing{background:#27517a}
@@ -80,6 +87,11 @@
     <div class="field">
       <div class="label">Что продаём или о чём звоним</div>
       <div class="chips" id="directions"></div>
+    </div>
+
+    <div class="field">
+      <div class="label">Повод звонка <span>— о чём именно говорим</span></div>
+      <select id="offerSel"></select>
     </div>
 
     <div class="field">
@@ -129,6 +141,7 @@
     <button class="go" id="goBtn">Начать обзвон</button>
     <div class="foot">Перед звонком робот называет себя и спрашивает, удобно ли говорить</div>
     <div class="msg" id="msg"></div>
+    <pre id="scriptBox"></pre>
   </div>
 
   <div class="card" id="agentCard" style="display:none;margin-top:14px">
@@ -173,6 +186,7 @@ const USER_ID = frediUserId();
 // На проде API живёт на этом же домене. Параметр ?api= нужен для локальной
 // проверки страницы отдельно от бэкенда — в обычной жизни не используется.
 const API_BASE = (new URLSearchParams(location.search).get('api') || '').replace(/\/$/, '');
+const API_BASE = 'https://pereklichka-ddd989.mia0.amvera.tech';
 const state = { catalog: null, direction: '', campaignId: null, voiceId: '',
                 voiceTitle: '', audio: null, audioSrc: '', audioBtn: null };
 window.__voiceState = state;   // для проверки прослушивания из теста
@@ -205,15 +219,18 @@ function fillCatalog(cat) {
       dirBox.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
       chip.classList.add('on');
       state.direction = d.id;
+      fillOffersAndActions();
       updateSummary();
     });
     dirBox.appendChild(chip);
   });
   state.direction = cat.directions[0].id;
 
+  const offerSel = document.getElementById('offerSel');
   const actionSel = document.getElementById('actionSel');
-  cat.target_actions.forEach(a => actionSel.appendChild(new Option(a.title, a.id)));
+  offerSel.addEventListener('change', updateSummary);
   actionSel.addEventListener('change', updateSummary);
+  fillOffersAndActions();
 
 
   const sourceSel = document.getElementById('sourceSel');
@@ -270,6 +287,26 @@ function toggleVoice(src, btn) {
   audio.play().catch(stopVoice);
 }
 
+function currentDirection() {
+  return (state.catalog.directions || []).find(d => d.id === state.direction) || {};
+}
+
+function fillOffersAndActions() {
+  const dir = currentDirection();
+  const offerSel = document.getElementById('offerSel');
+  const actionSel = document.getElementById('actionSel');
+  offerSel.innerHTML = '';
+  actionSel.innerHTML = '';
+  (dir.offers || []).forEach(o => offerSel.appendChild(new Option(o, o)));
+  (dir.actions || []).forEach(a => actionSel.appendChild(new Option(a.title, a.id)));
+  updateSummary();
+}
+
+function pickedOffer() {
+  const sel = document.getElementById('offerSel');
+  return sel && sel.value ? sel.value : '';
+}
+
 function renderVoices(items) {
   const box = document.getElementById('voiceList');
   box.innerHTML = '';
@@ -280,6 +317,10 @@ function renderVoices(items) {
   items.forEach(item => {
     const row = document.createElement('div');
     row.className = 'vrow' + (item.id === state.voiceId ? ' on' : '');
+    const mark = document.createElement('div');
+    mark.className = 'mark';
+    mark.textContent = item.id === state.voiceId ? '✓' : '';
+    row.appendChild(mark);
     const name = document.createElement('div');
     name.className = 'name';
     name.innerHTML = '<b>' + item.title + '</b><span class="tags">' +
@@ -299,8 +340,14 @@ function renderVoices(items) {
     row.addEventListener('click', () => {
       state.voiceId = item.id;
       state.voiceTitle = item.title;
-      box.querySelectorAll('.vrow').forEach(r => r.classList.remove('on'));
+      box.querySelectorAll('.vrow').forEach(r => {
+        r.classList.remove('on');
+        const m = r.querySelector('.mark');
+        if (m) m.textContent = '';
+      });
       row.classList.add('on');
+      const own = row.querySelector('.mark');
+      if (own) own.textContent = '✓';
       updateSummary();
     });
     box.appendChild(row);
@@ -367,9 +414,11 @@ async function saveAgent() {
 function updateSummary() {
   if (!state.catalog) return;
   const dir = state.catalog.directions.find(d => d.id === state.direction) || {};
-  const act = state.catalog.target_actions.find(a => a.id === document.getElementById('actionSel').value) || {};
-  document.getElementById('sumLabel').textContent = [dir.title, act.title, state.voiceTitle]
-    .filter(Boolean).join(' · ');
+  const dirFull = currentDirection();
+  const actionId = document.getElementById('actionSel').value;
+  const act = (dirFull.actions || []).find(a => a.id === actionId) || {};
+  document.getElementById('sumLabel').textContent =
+    [pickedOffer(), act.title, state.voiceTitle].filter(Boolean).join(' · ');
   const count = parseNumbers(document.getElementById('numbers').value).length;
   document.getElementById('sumCount').innerHTML = '<b>' + count + ' номеров</b> · ≈ 7 ₽/мин';
 }
@@ -437,14 +486,16 @@ document.getElementById('goBtn').addEventListener('click', async () => {
   btn.disabled = true;
   say('Создаю кампанию…', 'info');
   try {
-    const dir = state.catalog.directions.find(d => d.id === state.direction);
-    const act = state.catalog.target_actions.find(a => a.id === document.getElementById('actionSel').value);
+    const dir = currentDirection();
+    const actionId = document.getElementById('actionSel').value;
+    const act = (dir.actions || []).find(a => a.id === actionId) || {};
     const res = await api('/api/callbot/campaigns', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: dir.title + ' — ' + act.title.toLowerCase(),
+        name: (pickedOffer() || dir.title) + ' — ' + (act.title || '').toLowerCase(),
         direction_id: state.direction,
-        action_id: act.id,
+        action_id: actionId,
+        offer: pickedOffer(),
         voice_id: state.voiceId || '',
         city: document.getElementById('findCity').value.trim(),
         user_id: USER_ID,
@@ -454,6 +505,8 @@ document.getElementById('goBtn').addEventListener('click', async () => {
       })
     });
     state.campaignId = res.id;
+    const box = document.getElementById('scriptBox');
+    if (res.script) { box.textContent = res.script; box.classList.add('show'); }
     const phones = parseNumbers(document.getElementById('numbers').value);
     if (phones.length) {
       await api('/api/callbot/campaigns/' + res.id + '/numbers', {
