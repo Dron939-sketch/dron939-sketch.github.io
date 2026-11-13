@@ -293,6 +293,7 @@ function currentDirection() {
 
 function fillOffersAndActions() {
   const dir = currentDirection();
+  loadAgent(state.direction);
   const offerSel = document.getElementById('offerSel');
   const actionSel = document.getElementById('actionSel');
   offerSel.innerHTML = '';
@@ -371,9 +372,9 @@ async function loadVoices(query) {
 
 /* ── настройки агента ──────────────────────────────────────────── */
 
-async function loadAgent() {
+async function loadAgent(directionId) {
   try {
-    const cfg = await api('/api/callbot/agent');
+    const cfg = await api('/api/callbot/agent?direction_id=' + encodeURIComponent(directionId || state.direction || ''));
     document.getElementById('agentCard').style.display = 'block';
     document.getElementById('agentState').textContent =
       'Агент «' + cfg.name + '» · ' + cfg.publication_state +
@@ -536,7 +537,7 @@ document.getElementById('moreCampaigns').addEventListener('click', async (event)
 
 api('/api/callbot/catalog').then(fillCatalog).catch(e => say('Каталог не загрузился: ' + e.message, 'bad'));
 loadVoices('');
-loadAgent();
+loadAgent('');
 
 let voiceTimer = null;
 document.getElementById('voiceSearch').addEventListener('input', event => {
