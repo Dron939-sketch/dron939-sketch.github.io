@@ -97,6 +97,17 @@
       </div>
     </div>
 
+    <div class="field">
+      <div class="label">Сообщение после звонка <span>— контакт или ссылка на сайт</span></div>
+      <textarea id="followup" style="font-family:inherit;font-size:13.5px;min-height:64px"></textarea>
+      <div class="inline">
+        <select id="channelSel" style="flex:1"></select>
+        <input type="text" id="siteLink" placeholder="Ссылка на сайт: https://…"
+               style="flex:1;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit">
+      </div>
+      <div class="foot" style="text-align:left;margin-top:6px" id="channelNote"></div>
+    </div>
+
     <div class="sum">
       <span id="sumLabel">…</span>
       <span id="sumCount"><b>0 номеров</b> · ≈ 7 ₽/мин</span>
@@ -179,6 +190,17 @@ function fillCatalog(cat) {
   cat.sources.filter(s => s.kind === 'parse').forEach(s => {
     sourceSel.appendChild(new Option(s.title + (s.available ? '' : ' — закрыт'), s.id));
   });
+
+  const channelSel = document.getElementById('channelSel');
+  (cat.message_channels || []).forEach(ch => {
+    channelSel.appendChild(new Option(ch.title, ch.id));
+  });
+  channelSel.addEventListener('change', () => {
+    const ch = (cat.message_channels || []).find(c => c.id === channelSel.value);
+    document.getElementById('channelNote').textContent = ch ? ch.note : '';
+  });
+  channelSel.dispatchEvent(new Event('change'));
+  document.getElementById('followup').value = cat.default_followup || '';
   updateSummary();
 }
 
@@ -266,7 +288,10 @@ document.getElementById('goBtn').addEventListener('click', async () => {
         action_id: act.id,
         voice_id: document.getElementById('voiceSel').value,
         city: document.getElementById('findCity').value.trim(),
-        user_id: USER_ID
+        user_id: USER_ID,
+        followup_channel: document.getElementById('channelSel').value,
+        followup_text: document.getElementById('followup').value.trim(),
+        site_link: document.getElementById('siteLink').value.trim()
       })
     });
     state.campaignId = res.id;
