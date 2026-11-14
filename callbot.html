@@ -152,6 +152,18 @@
 
     <button class="go" id="goBtn">Начать обзвон</button>
     <div class="foot">Перед звонком робот называет себя и спрашивает, удобно ли говорить</div>
+    <div class="cardblock" id="callsCard" style="display:none">
+      <div class="label" style="margin-bottom:8px">Звонки и калибровка</div>
+      <div class="mini" id="callStats">Загружаю…</div>
+      <div class="flex" style="margin-top:10px">
+        <button class="mini" id="analyzeCallsBtn" style="cursor:pointer">Разобрать звонки</button>
+        <button class="mini" id="calibrateBtn" style="cursor:pointer">Предложить правки промпта</button>
+      </div>
+      <div class="mini" id="calibNote" style="margin-top:8px"></div>
+      <div id="calibProposals" class="mini" style="margin-top:6px;white-space:pre-wrap"></div>
+      <div id="callsList" class="mini" style="margin-top:8px"></div>
+    </div>
+
     <div class="msg" id="msg"></div>
     <pre id="scriptBox"></pre>
   </div>
@@ -454,6 +466,71 @@ async function loadVoices(query) {
     }
   } catch (e) {
     document.getElementById('voiceNote').textContent = 'Голоса не загрузились: ' + e.message;
+  }
+}
+
+
+/* ── журнал звонков и самокалибровка ───────────────────────────── */
+function renderCalls(data) {
+  const el = document.getElementById('callStats');
+  if (!el) return;
+  const st = data || {};
+  el.textContent = 'Звонков: ' + (st.calls || 0) +
+    ' · цель достигнута: ' + (st.goal_rate || 0) + '%' +
+    ' · средняя длительность: ' + (st.avg_duration_sec || 0) + ' с';
+  const reasons = (st.top_reasons || []).slice(0, 4);
+  document.getElementById('callsList').textContent = reasons.length
+    ? 'Частые причины: ' + reasons.map(function (r) { return r[0] + ' ×' + r[1]; }).join(' · ')
+    : '';
+  const listEl = document.getElementById('callsList');
+  listEl.dataset.reasons = JSON.stringify(reasons);
+}
+
+async function loadCallStats() {
+  try {
+    const st = await api('/api/callbot/calls/stats?days=7');
+    document.getElementById('callsCard').style.display = 'block';
+    renderCalls(st);
+  } catch (e) {
+    const card = document.getElementById('callsCard');
+    if (card) card.style.display = 'block';
+    document.getElementById('callStats').textContent = 'Журнал недоступен: ' + e.message;
+  }
+}
+
+async function analyzeCalls() {
+  const note = document.getElementById('calibNote');
+  note.textContent = 'Разбираю звонки…';
+  try {
+    const r = await api('/api/callbot/calls/analyze', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ limit: 20 })
+    });
+    note.textContent = 'Разобрано: ' + r.analyzed + (r.failed ? ', не удалось: ' + r.failed : '');
+    await loadCallStats();
+  } catch (e) {
+    note.textContent = 'Не получилось: ' + e.message;
+  }
+}
+
+async function proposeCalibration() {
+  const note = document.getElementById('calibNote');
+  const box = document.getElementById('calibProposals');
+  note.textContent = 'Собираю сводку и предложения…';
+  box.textContent = '';
+  try {
+    const r = await api('/api/callbot/calibrate', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ days: 7 })
+    });
+    if (!r.summary) { note.textContent = r.message || 'нет данных'; return; }
+    const props = r.proposals || [];
+    note.textContent = 'Звонков: ' + r.summary.calls + ' · цель: ' + r.summary.goal_rate + '% — предложения ниже';
+    box.textContent = props.length
+      ? props.map(function (p, i) { return (i + 1) + '. ' + (typeof p === 'string' ? p : JSON.stringify(p)); }).join('\n')
+      : 'Модель не предложила правок';
+  } catch (e) {
+    note.textContent = 'Не получилось: ' + e.message;
   }
 }
 
