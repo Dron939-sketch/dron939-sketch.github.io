@@ -715,6 +715,9 @@ api('/api/callbot/catalog').then(fillCatalog).catch(e => say('Каталог н�
 loadVoices('');
 loadAgent('');
 updateKeyState();
+loadCallStats();
+document.getElementById('analyzeCallsBtn').addEventListener('click', analyzeCalls);
+document.getElementById('calibrateBtn').addEventListener('click', proposeCalibration);
 
 let voiceTimer = null;
 document.getElementById('voiceSearch').addEventListener('input', event => {
