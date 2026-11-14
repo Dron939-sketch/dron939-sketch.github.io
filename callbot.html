@@ -114,6 +114,12 @@
     </div>
 
     <div class="field">
+      <div class="label">Подход к разговору <span>— с чего начинаем и на чём держимся</span></div>
+      <select id="approachSel"></select>
+      <div class="foot" style="text-align:left;margin-top:6px" id="approachNote"></div>
+    </div>
+
+    <div class="field">
       <div class="label">Кому звоним <span>— по одному номеру в строке</span></div>
       <textarea id="numbers" placeholder="+7 916 111-22-33&#10;89162223344;Иван;Коломна"></textarea>
       <div class="inline">
@@ -278,6 +284,16 @@ function fillCatalog(cat) {
   };
   styleSel.addEventListener('change', showStyle);
   showStyle();
+
+  const approachSel = document.getElementById('approachSel');
+  (cat.approaches || []).forEach(ap => approachSel.appendChild(new Option(ap.title, ap.id)));
+  approachSel.value = cat.default_approach || (cat.approaches[0] || {}).id || '';
+  const showApproach = () => {
+    const ap = (cat.approaches || []).find(x => x.id === approachSel.value);
+    document.getElementById('approachNote').textContent = ap ? ap.note : '';
+  };
+  approachSel.addEventListener('change', showApproach);
+  showApproach();
 
   const offerSel = document.getElementById('offerSel');
   const actionSel = document.getElementById('actionSel');
@@ -551,6 +567,7 @@ document.getElementById('goBtn').addEventListener('click', async () => {
         action_id: actionId,
         offer: pickedOffer(),
         style_id: document.getElementById('styleSel').value,
+        approach_id: document.getElementById('approachSel').value,
         voice_id: state.voiceId || '',
         city: document.getElementById('findCity').value.trim(),
         user_id: USER_ID,
