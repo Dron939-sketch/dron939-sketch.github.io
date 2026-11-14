@@ -218,7 +218,7 @@ async function api(path, options, retried) {
   if (adminKey()) opts.headers['X-Admin-Key'] = adminKey();
   const res = await fetch(API_BASE + path, opts);
   const data = await res.json().catch(() => ({}));
-  if (res.status === 401 && !retried) {
+  if ((res.status === 401 || res.status === 403) && !retried) {
     const entered = window.prompt('Ключ администратора Переклички (спросите у владельца):', '');
     if (entered && entered.trim()) {
       setAdminKey(entered.trim());
