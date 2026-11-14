@@ -2023,6 +2023,32 @@
                 '<button class="meter-btn meter-btn-secondary" id="meterGameLockClose">Понятно</button>' +
             '</div>';
         document.body.appendChild(overlay);
+        // Статус подписки приезжает асинхронно. На медленном мобильном
+        // асинхронный ответ опаздывает, замок успевает показаться платящему
+        // человеку и — главное — висит, даже когда статус уже пришёл.
+        // 14.11.2026: клиентка с активной подпиской (690 ₽ в тот же день)
+        // видела замок на тренажёре вместо игры.
+        // Лечим: если премиум подтверждается, пока замок на экране, — снимаем
+        // его и запускаем тренажёр, а не просим человека нажать ещё раз.
+        var _lockTries = 0;
+        var _lockWatch = setInterval(function () {
+            if (!document.getElementById('meterGameLock')) { clearInterval(_lockWatch); return; }
+            _lockTries += 1;
+            if (_isPremiumNow()) {
+                clearInterval(_lockWatch);
+                var o = document.getElementById('meterGameLock');
+                if (o) o.remove();
+                _freeGranted[fn] = true;
+                try { _track('game_lock_autoremoved', { game: fn }); } catch (e) {}
+                if (typeof window[fn] === 'function') {
+                    try { window[fn](); } catch (e) {}
+                }
+                return;
+            }
+            if (_lockTries > 14) clearInterval(_lockWatch);
+        }, 700);
+        // Если статус уже известен и он не премиум — следить незачем.
+        if (_isPremiumNow()) { clearInterval(_lockWatch); overlay.remove(); return; }
         document.getElementById('meterGameLockSub').onclick = function () {
             _track('meter_subscribe_clicked', { source: 'game_lock', game: fn });
             overlay.remove();
