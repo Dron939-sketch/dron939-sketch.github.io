@@ -286,14 +286,24 @@ function fillCatalog(cat) {
   showStyle();
 
   const approachSel = document.getElementById('approachSel');
-  (cat.approaches || []).forEach(ap => approachSel.appendChild(new Option(ap.title, ap.id)));
-  approachSel.value = cat.default_approach || (cat.approaches[0] || {}).id || '';
-  const showApproach = () => {
-    const ap = (cat.approaches || []).find(x => x.id === approachSel.value);
+  function fillApproaches() {
+    const dir = (cat.directions || []).find(d => d.id === state.direction) || {};
+    const isPsy = dir.agent === 'psy';
+    const list = isPsy ? (cat.psy_approaches || []) : (cat.approaches || []);
+    const def = isPsy ? cat.default_psy_approach : cat.default_approach;
+    approachSel.innerHTML = '';
+    list.forEach(ap => approachSel.appendChild(new Option(ap.title, ap.id)));
+    approachSel.value = def || (list[0] || {}).id || '';
+    showApproach();
+    approachSel._list = list;
+  }
+  function showApproach() {
+    const list = approachSel._list || cat.approaches || [];
+    const ap = list.find(x => x.id === approachSel.value);
     document.getElementById('approachNote').textContent = ap ? ap.note : '';
-  };
+  }
   approachSel.addEventListener('change', showApproach);
-  showApproach();
+  fillApproaches();
 
   const offerSel = document.getElementById('offerSel');
   const actionSel = document.getElementById('actionSel');
@@ -363,6 +373,7 @@ function currentDirection() {
 function fillOffersAndActions() {
   const dir = currentDirection();
   loadAgent(state.direction);
+  if (typeof fillApproaches === 'function') fillApproaches();
   const offerSel = document.getElementById('offerSel');
   const actionSel = document.getElementById('actionSel');
   offerSel.innerHTML = '';
