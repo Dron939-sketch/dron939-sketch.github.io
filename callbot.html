@@ -164,6 +164,7 @@
              title="Скорость речи"
              style="flex:0 0 96px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font:inherit">
       <div class="mini" id="saveAgent">Сохранить и опубликовать</div>
+      <div class="mini" id="agentKeyState" style="margin-top:4px"></div>
     </div>
     <div class="foot" style="text-align:left;margin-top:6px" id="agentNote"></div>
   </div>
@@ -198,15 +199,48 @@ const state = { catalog: null, direction: '', campaignId: null, voiceId: '',
                 voiceTitle: '', audio: null, audioSrc: '', audioBtn: null };
 window.__voiceState = state;   // для проверки прослушивания из теста
 
-async function api(path, options) {
-  const res = await fetch(API_BASE + path, options);
+const ADMIN_KEY_STORE = 'callbot_admin_key';
+
+function adminKey() {
+  try { return localStorage.getItem(ADMIN_KEY_STORE) || ''; } catch (e) { return ''; }
+}
+
+function setAdminKey(value) {
+  try {
+    if (value) localStorage.setItem(ADMIN_KEY_STORE, value);
+    else localStorage.removeItem(ADMIN_KEY_STORE);
+  } catch (e) {}
+}
+
+async function api(path, options, retried) {
+  const opts = Object.assign({}, options || {});
+  opts.headers = Object.assign({}, opts.headers || {});
+  if (adminKey()) opts.headers['X-Admin-Key'] = adminKey();
+  const res = await fetch(API_BASE + path, opts);
   const data = await res.json().catch(() => ({}));
+  if (res.status === 401 && !retried) {
+    const entered = window.prompt('Ключ администратора Переклички (спросите у владельца):', '');
+    if (entered && entered.trim()) {
+      setAdminKey(entered.trim());
+      updateKeyState();
+      return api(path, options, true);
+    }
+  }
   if (!res.ok) {
     const detail = data.detail || data.reason || ('Ошибка ' + res.status);
     throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
   }
   return data;
 }
+
+function updateKeyState() {
+  const el = document.getElementById('agentKeyState');
+  if (!el) return;
+  el.textContent = adminKey() ? 'ключ сохранён' : 'ключ не задан';
+  el.style.color = adminKey() ? '#1a6b3c' : '#6c7783';
+}
+
+
 
 function say(text, kind) {
   const box = document.getElementById('msg');
@@ -558,6 +592,7 @@ document.getElementById('moreCampaigns').addEventListener('click', async (event)
 api('/api/callbot/catalog').then(fillCatalog).catch(e => say('Каталог не загрузился: ' + e.message, 'bad'));
 loadVoices('');
 loadAgent('');
+updateKeyState();
 
 let voiceTimer = null;
 document.getElementById('voiceSearch').addEventListener('input', event => {
