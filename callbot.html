@@ -389,6 +389,13 @@ function pickedOffer() {
 }
 
 function renderVoices(items) {
+  state.lastVoices = items || [];
+  var av = state.agentVoice;
+  if (av && av.id && !(items || []).some(function (v) { return v.id === av.id; })) {
+    items = [{ id: av.id, title: 'Голос агента: ' + (av.title || av.id),
+               tags: (av.tags || []).concat(['голос агента']), sample: av.sample || '',
+               languages: av.languages || [] }].concat(items || []);
+  }
   const box = document.getElementById('voiceList');
   box.innerHTML = '';
   if (!items.length) {
@@ -464,7 +471,17 @@ async function loadAgent(directionId) {
     document.getElementById('speedInput').value = cfg.speed || 1;
     if (cfg.voice_id) {
       state.voiceId = cfg.voice_id;
-      state.voiceTitle = 'свой голос агента';
+      state.voiceTitle = 'голос агента';
+      updateSummary();
+      // приватный клон не ищется по библиотеке — забираем его данные отдельно
+      try {
+        const info = await api('/api/callbot/voice/' + encodeURIComponent(cfg.voice_id));
+        state.agentVoice = info;
+        state.voiceTitle = info.title || 'голос агента';
+      } catch (e) {
+        state.agentVoice = { id: cfg.voice_id, title: 'голос агента', sample: '' };
+      }
+      renderVoices(state.lastVoices || []);
       updateSummary();
     }
   } catch (e) {
