@@ -148,7 +148,7 @@ const MODES = {
         name: 'БАЗОВЫЙ',
         emoji: '💬',
         color: '#6E6E73',
-        greeting: 'Я Фреди — ваш виртуальный психолог и собеседник.',
+        greeting: 'С чего начнём: тревога, отношения, работа — или просто расскажете, что давит?',
         // Короткая строка для шапки-полосы: длинное приветствие писалось
         // для экрана во всю ширину и в полосе резалось на «Я Фред…».
         heroLine: 'Я Фреди — ваш собеседник',
@@ -766,6 +766,8 @@ async function _chatStreamRequest(text, getBubble) {
     track('ai_response_received', {
         endpoint: '/api/chat/stream',
         text_length: full.length,
+        response_len: full.trim().split(/\s+/).filter(Boolean).length,
+        msg_index: _dashMsgCount,
         latency_ms: Date.now() - started,
         // ради этого всё и затевалось: сколько человек ждёт ПЕРВЫХ слов,
         // а не полного ответа
@@ -786,6 +788,22 @@ let _isLoading = false;
 // Сообщений за сессию через композер (в том числе автовопрос из ссылки).
 // Живёт вне setupDashComposer: дашборд перерисовывается, а счёт нет.
 let _dashMsgCount = 0;
+
+// Сколько сообщений было к концу сессии: видно, на каком обрывается
+// разговор (1-м, 2-м, 3-м), а не только среднее по всем.
+(function () {
+    var _sent = false;
+    function _report() {
+        if (_sent) return;
+        _sent = true;
+        try { track('session_messages', { msg: _dashMsgCount }); } catch (e) {}
+    }
+    window.addEventListener('pagehide', _report);
+    window.addEventListener('beforeunload', _report);
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') _report();
+    });
+})();
 
 // Карточки поверх разговора — не больше одной на три своих реплики
 // (02.10.2026, слово владельца). До этого на третьей реплике шло
