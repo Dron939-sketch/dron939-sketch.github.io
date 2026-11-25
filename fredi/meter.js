@@ -1834,6 +1834,7 @@
         showKalibrGame: 'Калибровка',
         showOshibkaGame: 'Лови ошибку',
         showManipulyaciyaGame: 'Распознай манипуляцию',
+        showRezhisserGame: 'Стань режиссёром',
         showChuvstvaGame: 'Чувства',
         showMyslGame: 'Мысль под допросом',
         showSkazhiNetGame: 'Скажи «нет»',
