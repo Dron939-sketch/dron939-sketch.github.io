@@ -4395,6 +4395,7 @@ document.addEventListener('DOMContentLoaded', function() {
             schet: { fn: 'showSchetGame', src: 'schet.js', chat: 'kontur' }, // «Устный счёт»
             kalibr: { fn: 'showKalibrGame', src: 'kalibr.js', chat: 'kontur' }, // «Калибровка»
             oshibka: { fn: 'showOshibkaGame', src: 'oshibka.js', chat: 'kontur' }, // «Лови ошибку»
+            manipul: { fn: 'showManipulyaciyaGame', src: 'manipulyaciya.js', chat: 'kontur' }, // «Распознай манипуляцию» (курс «Кто управляет смыслом»)
             chuvstva: { fn: 'showChuvstvaGame', src: 'chuvstva.js', chat: 'kontur' }, // «Чувства»
             mysl: { fn: 'showMyslGame', src: 'mysl.js', chat: 'kontur' }, // «Мысль под допросом»
             // /dnevnik-myslej/ и статьи про КПТ ссылались на m=cbt, которого не было:

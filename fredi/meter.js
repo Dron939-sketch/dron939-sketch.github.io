@@ -1833,6 +1833,7 @@
         showSchetGame: 'Устный счёт',
         showKalibrGame: 'Калибровка',
         showOshibkaGame: 'Лови ошибку',
+        showManipulyaciyaGame: 'Распознай манипуляцию',
         showChuvstvaGame: 'Чувства',
         showMyslGame: 'Мысль под допросом',
         showSkazhiNetGame: 'Скажи «нет»',
