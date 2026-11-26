@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Пресс-центр — Чистый слой</title>
+<meta name="description" content="Пресс-центр чемпионата «Чистый слой»: пресс-кит, факт-лист, шаблон пресс-релиза, аккредитация СМИ.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .release { background:#fff; border:1px solid var(--line); border-radius:16px; padding:28px; margin-top:18px; }
+  .release h4 { margin:0 0 6px; font-size:18px; }
+  .release .meta { color:var(--muted); font-size:13.5px; margin-bottom:18px; }
+  .release p { margin:0 0 12px; font-size:15px; }
+  .release .ph { background:#fff5e0; border-bottom:1px dashed #e0b96a; padding:0 4px; color:#7a5200; }
+  .release blockquote { margin:16px 0; padding:14px 18px; border-left:3px solid var(--green); background:var(--soft); font-size:15px; }
+  .kit { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:18px; }
+  .kit a { display:block; border:1px solid var(--line); border-radius:12px; padding:16px; font-weight:700; font-size:14.5px; }
+  .kit a span { display:block; font-weight:400; color:var(--muted); font-size:13px; margin-top:4px; }
+  @media (max-width:860px){ .kit { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="wrap header__in">
+    <a class="logo" href="index.html"><span class="logo__mark">ЧИСТЫЙ<br>СЛОЙ</span><span class="logo__text">Всероссийский чемпионат<small>малярного мастерства</small></span></a>
+    <nav class="nav">
+      <a href="index.html">О движении</a>
+      <a href="championship.html">Чемпионат</a>
+      <a href="competencies.html">Компетенции</a>
+      <a href="documents.html">Документы</a>
+      <a href="press.html" class="active">Пресс-центр</a>
+      <a href="news.html">Новости</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero" style="padding:50px 0 40px">
+    <div class="wrap">
+      <span class="kicker">Пресс-центр</span>
+      <h1 style="font-size:44px">Пресс-центр</h1>
+      <p>Материалы для СМИ: факт-лист, шаблон пресс-релиза, правила аккредитации. Пресс-релиз о победителе публикуется только вместе с протоколом.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:10px">
+    <div class="wrap">
+      <div class="section-head"><div class="eyebrow">Пресс-кит</div><h2>Что доступно журналистам</h2></div>
+      <div class="kit">
+        <a href="#">Факт-лист<span>Кто организатор, где, когда, какие номинации</span></a>
+        <a href="#">Логотипы и фото<span>Вектор и растровые версии, фото площадок</span></a>
+        <a href="#">Положение<span>Официальный документ чемпионата</span></a>
+      </div>
+      <div class="note">Файлы появятся после публикации положения и регистрации организатора. Скачивать «почти готовые» материалы редакциям не предлагаем.</div>
+
+      <div class="section-head" style="margin-top:46px"><div class="eyebrow">Шаблон</div><h2>Пресс-релиз о победителе</h2></div>
+      <p class="muted" style="max-width:760px">Ниже — структура, по которой релиз можно проверить. Поля в жёлтых рамках заполняются только после протокола: дата, место, номинация, результат, цитата, контакты пресс-службы.</p>
+
+      <div class="release">
+        <h4>ПРЕСС-РЕЛИЗ</h4>
+        <div class="meta"><span class="ph">&lt;ДД.ММ.ГГГГ&gt;</span> · <span class="ph">&lt;город, площадка&gt;</span></div>
+        <p><b>Заголовок:</b> <span class="ph">&lt;кто победил + номинация + название чемпионата, одной фразой&gt;</span></p>
+        <p><b>Лид:</b> <span class="ph">&lt;кто, где, когда и в какой номинации победил; сколько участников приехало и из каких регионов&gt;</span></p>
+        <p><b>Что оценивали:</b> <span class="ph">&lt;перечень работ и критериев номинации с весами&gt;</span></p>
+        <p><b>Результат:</b> <span class="ph">&lt;место, балл, номер и дата протокола, состав жюри&gt;</span></p>
+        <blockquote>«<span class="ph">&lt;дословная цитата победителя&gt;</span>» — <span class="ph">&lt;имя, город, место работы&gt;</span></blockquote>
+        <p><b>Что даёт победа:</b> <span class="ph">&lt;диплом, стажировка, приглашение в жюри — только то, что реально предусмотрено положением&gt;</span></p>
+        <p><b>Контакты пресс-службы:</b> <span class="ph">&lt;имя, телефон, почта, срок ответа&gt;</span></p>
+        <p><b>Ссылки:</b> <span class="ph">&lt;протокол, страница номинации, фотографии&gt;</span></p>
+      </div>
+
+      <div class="section-head" style="margin-top:46px"><div class="eyebrow">Правила</div><h2>Что делает релиз проверяемым</h2></div>
+      <table>
+        <tr><th>Поле</th><th>Зачем нужно</th></tr>
+        <tr><td>Дата и место</td><td>Событие можно перепроверить, сопоставить с календарём площадки</td></tr>
+        <tr><td>Организатор и реквизиты</td><td>Кто несёт ответственность за результат</td></tr>
+        <tr><td>Число участников и регионы</td><td>Подтверждается регистрационными списками, а не текстом</td></tr>
+        <tr><td>Протокол с баллами</td><td>Показывает, как считали, а не только итог</td></tr>
+        <tr><td>Состав жюри</td><td>Независимость судейства</td></tr>
+        <tr><td>Дословная цитата</td><td>Её нельзя переписать незаметно, она привязана к человеку</td></tr>
+        <tr><td>Контакты пресс-службы</td><td>Редакция может задать вопрос до публикации</td></tr>
+      </table>
+      <div class="note">Правило сайта: ни одного числа без источника. «117 участников» появится в релизе только после того, как будет список регистрации с 117 фамилиями — иначе это не факт, а рекламный текст.</div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="wrap footer__grid"><div><a class="logo" href="index.html"><span class="logo__mark">ЧИСТЫЙ<br>СЛОЙ</span><span class="logo__text">Всероссийский чемпионат<small>малярного мастерства</small></span></a><small>Проект в стадии запуска. Материалы сайта не являются публичной офертой.</small></div><nav><a href="championship.html">Чемпионат</a><a href="competencies.html">Компетенции</a><a href="documents.html">Документы</a><a href="press.html">Пресс-центр</a><a href="news.html">Новости</a><a href="contacts.html">Контакты</a></nav></div></footer>
+</body>
+</html>

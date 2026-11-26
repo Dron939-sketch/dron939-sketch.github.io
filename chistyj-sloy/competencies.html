@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Компетенции — Чистый слой</title>
+<meta name="description" content="14 компетенций чемпионата «Чистый слой»: диагностика, слесарный ремонт, кузов, сварка, арматура, стёкла и пластик, подготовка, колористика, окраска, полировка, антикор, автоэлектрика, автозвук.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .comp { border: 1px solid var(--line); border-radius: 16px; padding: 26px; margin-bottom: 16px; background: #fff; }
+  .comp__head { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+  .comp__num { font-size: 13px; font-weight: 800; letter-spacing: 1.2px; color: var(--green-dark); }
+  .comp h3 { margin: 0; font-size: 21px; letter-spacing: -.2px; }
+  .comp__who { font-size: 13.5px; color: var(--muted); margin-left: auto; }
+  .comp__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 16px; }
+  .comp ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 14.5px; }
+  .comp li { margin: 5px 0; }
+  .crit { width: 100%; border-collapse: collapse; font-size: 14px; border: 0; }
+  .crit td { padding: 7px 10px; border-bottom: 1px solid var(--line); }
+  .crit td:last-child { text-align: right; font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+  .crit tr:last-child td { border-bottom: 0; }
+  .comp__label { font-size: 11.5px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); font-weight: 700; margin-bottom: 8px; }
+  @media (max-width: 860px) { .comp__cols { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="wrap header__in">
+    <a class="logo" href="index.html"><span class="logo__mark">ЧИСТЫЙ<br>СЛОЙ</span><span class="logo__text">Всероссийский чемпионат<small>малярного мастерства</small></span></a>
+    <nav class="nav">
+      <a href="index.html">О движении</a>
+      <a href="championship.html">Чемпионат</a>
+      <a href="competencies.html" class="active">Компетенции</a>
+      <a href="documents.html">Документы</a>
+      <a href="press.html">Пресс-центр</a>
+      <a href="news.html">Новости</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero" style="padding:50px 0 40px">
+    <div class="wrap">
+      <span class="kicker">14 компетенций</span>
+      <h1 style="font-size:44px">Компетенции</h1>
+      <p>Чемпионат покрывает весь цикл ремонта и окраски автомобиля — от диагностики и слесарного ремонта до автозвука. В каждой номинации свой набор работ, критерии и веса.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:10px">
+    <div class="wrap">
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">01</span><h3>Автодиагностика</h3><span class="comp__who">Автодиагност, мастер-приёмщик</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Считывание и анализ ошибок ЭБУ</li><li>Измерения осциллографом и мультиметром</li><li>Проверка датчиков и исполнительных механизмов</li><li>Дефектовочная ведомость</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Точность диагноза</td><td>35%</td></tr><tr><td>Методика проверки</td><td>20%</td></tr><tr><td>Владение оборудованием</td><td>20%</td></tr><tr><td>Оформление дефектовки</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">02</span><h3>Слесарный ремонт двигателя</h3><span class="comp__who">Слесарь по ремонту, моторист</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Разборка и сборка узлов</li><li>Дефектовка деталей измерительным инструментом</li><li>Замена ГРМ, прокладок, сальников</li><li>Регулировка клапанов, проверка компрессии</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Качество сборки, моменты затяжки</td><td>30%</td></tr><tr><td>Точность измерений</td><td>25%</td></tr><tr><td>Соблюдение технологии</td><td>20%</td></tr><tr><td>Чистота и охрана труда</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">03</span><h3>Ходовая часть и трансмиссия</h3><span class="comp__who">Слесарь-агрегатчик</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Дефектовка подвески и рулевого управления</li><li>Замена элементов подвески и тормозов</li><li>Ремонт сцепления, КПП, приводов</li><li>Проверка на стенде после ремонта</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Правильность дефектовки</td><td>25%</td></tr><tr><td>Качество монтажа</td><td>30%</td></tr><tr><td>Соблюдение технологии</td><td>20%</td></tr><tr><td>Безопасность</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">04</span><h3>Кузовной ремонт (рихтовка)</h3><span class="comp__who">Кузовщик, рихтовщик</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Оценка повреждений и план ремонта</li><li>Вытяжка на стапеле и споттером</li><li>Рихтовка металла</li><li>Контроль геометрии по точкам</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Восстановление геометрии</td><td>35%</td></tr><tr><td>Качество поверхности</td><td>25%</td></tr><tr><td>Владение оборудованием</td><td>15%</td></tr><tr><td>Обоснованность технологии</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">05</span><h3>Сварка и замена кузовных элементов</h3><span class="comp__who">Сварщик кузовного цеха</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Демонтаж повреждённого элемента</li><li>Подгонка нового элемента</li><li>Точечная и полуавтоматическая сварка</li><li>Зачистка, герметизация, антикор швов</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Прочность и качество шва</td><td>30%</td></tr><tr><td>Точность подгонки и зазоры</td><td>25%</td></tr><tr><td>Технология сварки</td><td>20%</td></tr><tr><td>Защита от коррозии</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">06</span><h3>Арматурные работы</h3><span class="comp__who">Арматурщик</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Разборка и сборка навесных элементов</li><li>Регулировка зазоров</li><li>Замена замков и стеклоподъёмников</li><li>Проверка узлов после сборки</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Равномерность зазоров</td><td>30%</td></tr><tr><td>Работоспособность механизмов</td><td>25%</td></tr><tr><td>Целостность крепежа</td><td>20%</td></tr><tr><td>Отсутствие повреждений ЛКП</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">07</span><h3>Стёкла и пластиковые детали</h3><span class="comp__who">Мастер по стёклам и пластику</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Ремонт сколов и трещин стекла</li><li>Сварка пластика</li><li>Восстановление креплений бампера</li><li>Шпатлевание, шлифование, полировка</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Прочность ремонта</td><td>30%</td></tr><tr><td>Визуальное качество</td><td>30%</td></tr><tr><td>Выбор технологии под материал</td><td>20%</td></tr><tr><td>Безопасность</td><td>10%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">08</span><h3>Подготовка к окраске</h3><span class="comp__who">Подготовщик, шпатлёвщик</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Обезжиривание</li><li>Шпатлевание и шлифование по градациям абразива</li><li>Грунтование</li><li>Маскировка, контроль поверхности с проявкой</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Качество поверхности</td><td>35%</td></tr><tr><td>Соблюдение градаций и материалов</td><td>20%</td></tr><tr><td>Качество обезжиривания</td><td>20%</td></tr><tr><td>Качество оклейки</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">09</span><h3>Колористика</h3><span class="comp__who">Колорист</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Определение кода и варианта цвета</li><li>Работа с колеровочной системой и веерами</li><li>Тест-напыл и растирка</li><li>Подбор с учётом перехода, расчёт расхода</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Точность попадания в цвет</td><td>40%</td></tr><tr><td>Техника тест-напыла</td><td>20%</td></tr><tr><td>Обоснование корректировок формулы</td><td>20%</td></tr><tr><td>Расход материалов</td><td>10%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">10</span><h3>Окраска</h3><span class="comp__who">Автомаляр</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Подготовка ЛКМ: вязкость, фильтрация</li><li>Нанесение базы</li><li>Нанесение лака</li><li>Контроль дефектов: потёки, шагрень, пыль</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Отсутствие дефектов</td><td>35%</td></tr><tr><td>Равномерность оттенка и переходов</td><td>25%</td></tr><tr><td>Техника нанесения</td><td>20%</td></tr><tr><td>Расход материалов</td><td>10%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">11</span><h3>Полировка и детейлинг</h3><span class="comp__who">Полировщик, детейлер</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Оценка дефектов ЛКП</li><li>Абразивная полировка</li><li>Финишная антиголограммная полировка</li><li>Восстановление фар, защитные составы</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Глянец, отсутствие голограмм</td><td>40%</td></tr><tr><td>Выбор паст и кругов</td><td>20%</td></tr><tr><td>Сохранность ЛКП</td><td>20%</td></tr><tr><td>Чистота работы</td><td>10%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">12</span><h3>Антикор и шумоизоляция</h3><span class="comp__who">Мастер антикора</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Подготовка скрытых полостей</li><li>Нанесение антикоррозийных составов</li><li>Обработка днища и арок</li><li>Вибродемпфирование, послойная шумоизоляция</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Полнота покрытия полостей</td><td>30%</td></tr><tr><td>Правильность материалов и слоёв</td><td>25%</td></tr><tr><td>Качество раскатки</td><td>20%</td></tr><tr><td>Аккуратность</td><td>15%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">13</span><h3>Автоэлектрика</h3><span class="comp__who">Автоэлектрик</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Чтение электросхем</li><li>Поиск обрывов, КЗ и утечек тока</li><li>Ремонт жгутов: обжим, пайка</li><li>Проверка генератора, стартера, АКБ</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Точность поиска неисправности</td><td>35%</td></tr><tr><td>Качество соединений</td><td>25%</td></tr><tr><td>Соблюдение схем и защита цепей</td><td>20%</td></tr><tr><td>Безопасность</td><td>10%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="comp">
+        <div class="comp__head"><span class="comp__num">14</span><h3>Автозвук</h3><span class="comp__who">Установщик автозвука</span></div>
+        <div class="comp__cols">
+          <div><div class="comp__label">Что входит</div><ul><li>Проектирование системы: схема, расчёт мощностей</li><li>Прокладка кабелей и защита цепей</li><li>Изготовление подиумов и корпуса сабвуфера</li><li>Настройка процессора, кроссоверов, задержек</li><li>Финальный замер и прослушивание</li></ul></div>
+          <div><div class="comp__label">Оценка</div><table class="crit"><tr><td>Качество звука: сцена, тональный баланс</td><td>35%</td></tr><tr><td>Монтаж и кабель-менеджмент</td><td>25%</td></tr><tr><td>Надёжность и безопасность</td><td>20%</td></tr><tr><td>Интеграция в салон</td><td>10%</td></tr><tr><td>Время</td><td>10%</td></tr></table></div>
+        </div>
+      </div>
+
+      <div class="note">Веса критериев едины для всех участников номинации и публикуются до старта. Изменение весов после начала соревнований не допускается.</div>
+    </div>
+  </section>
+</main>
+<footer class="footer"><div class="wrap footer__grid"><div><a class="logo" href="index.html"><span class="logo__mark">ЧИСТЫЙ<br>СЛОЙ</span><span class="logo__text">Всероссийский чемпионат<small>малярного мастерства</small></span></a><small>Проект в стадии запуска. Материалы сайта не являются публичной офертой.</small></div><nav><a href="championship.html">Чемпионат</a><a href="competencies.html">Компетенции</a><a href="documents.html">Документы</a><a href="press.html">Пресс-центр</a><a href="news.html">Новости</a><a href="contacts.html">Контакты</a></nav></div></footer>
+</body>
+</html>
