@@ -681,7 +681,7 @@
         const quarterBtn =
             `<button class="sub-btn sub-btn-secondary" id="subPayQuarterBtn" style="margin-top:8px">` +
                 `3 месяца — ${PLAN_PRICE.quarter} &#8381; ` +
-                `<span style="font-weight:400;opacity:.8">· ${QUARTER_PER_MONTH} &#8381;/мес, выгоднее на ${QUARTER_SAVE_PCT}%</span>` +
+                `<span style="font-weight:400;opacity:.8">· ${QUARTER_PER_MONTH} &#8381;/мес, продление каждые 90 дней</span>` +
             `</button>`;
         const buttonsHtml = trial
             ? `<button class="sub-btn sub-btn-primary" id="subPayBtn">Попробовать 3 дня — ${PLAN_PRICE.trial_week} &#8381;</button>
@@ -693,8 +693,11 @@
             <div class="sub-card">
                 <div class="sub-badge sub-badge-inactive">${isExpired ? 'Истекла' : 'Нет подписки'}</div>
                 <div class="sub-title">Фреди Premium</div>
-                <div class="sub-desc">Разговор по методу психолога Андрея Мейстера, кандидата психологических наук. Что открывается с подпиской:</div>
+                <div class="sub-desc">Продолжайте разговор с Фреди голосом или текстом без счётчика минут.</div>
                 ${priceHtml}
+                ${_accountFieldsHtml()}
+                ${buttonsHtml}
+                <details style="margin-top:16px"><summary style="cursor:pointer">Что входит в Premium</summary>
                 <ul class="sub-features">
                     <li><span class="sub-feature-icon">&#x1F9E0;</span> Фреди помнит каждый разговор и продолжает с того же места</li>
                     <li><span class="sub-feature-icon">&#x1F4DA;</span> Лекторий целиком: все лекции курсов, а не только первые, с озвучкой голосом Фреди</li>
@@ -704,8 +707,7 @@
                     <li><span class="sub-feature-icon">&#x1F3AE;</span> Сильные тренажёры: «Переход», «Опора», «Парус», «Спираль», «Скажи нет»</li>
                     <li><span class="sub-feature-icon">&#x1F4D3;</span> Дневник эмоций, зеркало, разбор переписки, роли по Берну, гипноз и практики</li>
                 </ul>
-                ${_accountFieldsHtml()}
-                ${buttonsHtml}
+                </details>
                 <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-secondary)">Безопасная оплата через ЮKassa. Чек будет отправлен на указанный email.</div>
                 <div style="text-align:center;margin-top:6px;font-size:11px;color:rgba(255,183,59,0.9)">Если у вас включён VPN — отключите его на время оплаты: иначе страница подтверждения банка не откроется.</div>
                 <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--text-secondary)">Оформляя подписку, вы принимаете <a href="/oferta/" target="_blank" rel="noopener" style="color:#3b82ff">Оферту</a> и <a href="/politika-konfidencialnosti/" target="_blank" rel="noopener" style="color:#3b82ff">Политику конфиденциальности</a>.</div>
