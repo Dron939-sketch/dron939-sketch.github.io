@@ -9,7 +9,7 @@
 <meta name="author" content="Андрей Юрьевич Мейстер">
 <link rel="canonical" href="https://meysternlp.ru/magazin/">
 <meta property="og:title" content="Магазин: курсы, книги, игры и записи Андрея Мейстера">
-<meta property="og:description" content="Курс «Разговорный гипноз», книги, игры-тренажёры, Фреди и аудиосерия «Ключи» — для кого каждая вещь и что она даёт.">
+<meta property="og:description" content="Курс «Разговорный гипноз», книги, игры-тренажёры и аудиосерия «Ключи» — для кого каждая вещь и что она даёт.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://meysternlp.ru/magazin/">
 <meta property="og:image" content="https://meysternlp.ru/treningi/komplekt-standart.webp">
@@ -30,21 +30,6 @@
 .shop-intro{padding:clamp(20px,4vw,44px) 0 12px}
 .shop-intro h1{font-size:clamp(2.2rem,6vw,3.75rem);letter-spacing:-.045em;margin:0 0 10px}
 .shop-intro .lead{max-width:38ch}
-.shop-entry{display:flex;flex-wrap:wrap;gap:10px;margin-top:19px}
-.shop-entry a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 16px;border:1px solid #657386;border-radius:9px;color:#fff;font-weight:650;font-size:.94rem}
-.shop-entry a:first-child{background:#fff;border-color:#fff;color:#121b2d}
-.shop-entry a:hover{text-decoration:underline}
-.shop-entry a:focus-visible{outline:3px solid #7eb5ff;outline-offset:3px}
-.shop-featured{margin-top:22px}
-.shop-featured .top-h{margin-bottom:10px}
-.shop-featured .it.main{grid-template-columns:minmax(100px,31%) minmax(0,1fr);align-items:start}
-.shop-featured .it.main .th{width:100%;height:auto;aspect-ratio:1;overflow:hidden}
-.shop-featured .it.main .th img{width:100%;height:100%;object-fit:contain}
-.shop-featured .it.main h3{font-size:clamp(1.15rem,2.5vw,1.5rem)}
-@media(max-width:480px){
-  .shop-featured .it.main{grid-template-columns:1fr}
-  .shop-featured .it.main .th{aspect-ratio:16/9}
-}
 .theme-btn{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .theme-btn:hover{border-color:#3A86FF}.theme-btn .moon{display:inline}.theme-btn .sun{display:none}
 [data-theme=dark] .theme-btn .moon{display:none}[data-theme=dark] .theme-btn .sun{display:inline}
@@ -61,20 +46,6 @@ h1{font-size:clamp(1.8rem,4.5vw,2.6rem);font-weight:700;line-height:1.15;margin:
 h2{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:650;line-height:1.25}
 h3{font-size:1rem;font-weight:620;line-height:1.3}
 .lead{color:var(--muted);max-width:720px}
-/* ярлыки категорий */
-.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:18px 0 8px}
-.cat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 34px 8px 8px;cursor:pointer;color:var(--text);text-align:left;font:inherit;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;min-height:68px}
-.cat:hover,.cat.on{border-color:var(--accent)}
-.cat.on{background:rgba(58,134,255,.1)}
-.cat .ic{width:52px;height:52px;border-radius:10px;object-fit:cover;display:block}
-.cat span.t{display:flex;flex-direction:column;gap:2px;min-width:0}
-.cat b{font-weight:620;font-size:.92rem;line-height:1.25}
-.cat small{color:var(--muted);font-size:.78rem;line-height:1.3}
-.q{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:italic 700 .9rem/1 Georgia,'Times New Roman',serif;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.q:hover,.q[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
-.tip{display:none;grid-column:1/-1;background:var(--card2);border:1px solid rgba(58,134,255,.45);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:.92rem}
-.tip.on{display:block}
-.tip b{color:var(--text)}
 /* витрины */
 .shelf{padding:22px 0 8px}
 .js .shelf{display:block}
@@ -193,6 +164,9 @@ details.all{margin-top:12px}
 details.all>summary{font-size:.95rem;padding:10px 0}
 @media(max-width:560px){table.pick,table.pick tbody,table.pick tr,table.pick td{display:block;width:auto}table.pick tr{border-bottom:1px solid var(--line);padding:10px 0}table.pick td{border:0;padding:2px 0}table.pick td:first-child{width:auto;font-weight:600}}
 @media(max-width:560px){.cats{grid-template-columns:1fr 1fr;gap:8px}.cat{grid-template-columns:40px 1fr;gap:8px;min-height:58px}.cat .ic{width:40px;height:40px}.cat b{font-size:.86rem}.list{grid-template-columns:1fr}.it{grid-template-columns:72px 1fr}.th{width:72px;height:72px}}
+.shop-nav .wrap{flex-wrap:wrap;padding:10px 16px}
+.shelf,.shelf [id]{scroll-margin-top:70px}
+@media(max-width:680px){.shop-nav{position:static}.shelf,.shelf [id]{scroll-margin-top:12px}}
 </style>
 <script type="text/javascript">
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108138656','ym');
@@ -289,12 +263,6 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
      "position": 11,
      "name": "«Вариатика — Progressive»",
      "url": "https://meysternlp.ru/magazin/zakaz/?t=var-progressive"
-    },
-    {
-     "@type": "ListItem",
-     "position": 12,
-     "name": "Фреди: разговор, тесты и тренажёры",
-     "url": "https://meysternlp.ru/virtual-psychologist/"
     }
    ]
   },
@@ -442,19 +410,6 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
    }
   },
   {
-   "@type": "Product",
-   "name": "Фреди: разговор, тесты и тренажёры",
-   "description": "тем, кому нужен собеседник, который не устаёт и не оценивает, — и тренажёр навыков на каждый день.",
-   "image": "https://meysternlp.ru/magazin/img/fredi-razgovor.webp",
-   "offers": {
-    "@type": "Offer",
-    "price": "690",
-    "priceCurrency": "RUB",
-    "availability": "https://schema.org/InStock",
-    "url": "https://meysternlp.ru/virtual-psychologist/"
-   }
-  },
-  {
    "@type": "FAQPage",
    "mainEntity": [
     {
@@ -512,54 +467,19 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <button class="theme-btn" type="button" aria-label="Переключить тему" aria-pressed="false"><span class="moon">☾</span><span class="sun">☀</span></button>
 <div class="shop-intro">
 <h1>Магазин</h1>
-<p class="lead">Курсы, книги и игры Андрея Мейстера о психологии, мышлении и общении. Здесь же Фреди и аудиозаписи.</p>
-<div class="shop-entry">
-<a href="#vybor">Подобрать под задачу</a>
-<a href="#besplatno">Начать бесплатно</a>
-</div>
+<p class="lead">Курсы, книги и игры Андрея Мейстера о психологии, мышлении и общении. В каталоге также есть аудиосерия «Ключи».</p>
 </div>
 </div></div>
-<nav class="shop-nav" aria-label="Разделы магазина"><div class="wrap">
-<a href="#vybor">Подобрать</a><a href="#besplatno">Бесплатно</a><a href="#kursy">Курсы</a>
-<a href="#knigi">Книги</a><a href="#igry">Игры</a><a href="#fredi">Фреди</a><a href="#klyuchi">Ключи</a>
+<nav id="top" class="shop-nav" aria-label="Разделы магазина"><div class="wrap">
+<a href="#vybor">Подобрать под задачу</a><a href="#kursy">Курсы</a>
+<a href="#knigi">Книги</a><a href="#igry">Игры</a><a href="#klyuchi">Ключи</a>
 </div></nav>
 <main class="wrap">
-<section class="top shop-featured" id="top" aria-labelledby="shop-featured-title"><h2 class="top-h" id="shop-featured-title">Курс с печатным комплектом</h2><div class="toprow"><div class="list"><article class="it main" id="standart-top">
- <div class="th"><img src="/magazin/img/standart-razvorot.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
- <div class="tx">
-  <span class="kind">Курс · печатный комплект</span>
-  <h3>Разговорный гипноз. Пакет «Стандартный»</h3>
-  <div class="price">5 900 ₽ <small>· + доставка СДЭК при получении, возврат 7 дней</small></div>
-  <p class="who"><b>Кому:</b> тем, кому важно, чтобы слушали и соглашались: переговоры, совещания, продажи, разговор с подростком.</p>
-  <details open><summary>Что даст</summary><p>за месяц три-четыре приёма, которые срабатывают без подготовки, и умение замечать, когда их применяют к вам. Внутри: книга «Матчасть», 38 видео на год, блокнот с заданиями, игра «Маркетолог». Разбор — автор сам отвечает на ваши вопросы и разбирает ваши ситуации в закрытом Telegram-канале, ответ в течение суток. Доступ к видео и разбору — 12 месяцев, книга и блокнот остаются у вас.</p></details>
-  <div class="btns"><a class="btn btn-buy" data-p="standart-top" href="/razgovornyj-gipnoz/standart/zakaz/">Заказать</a><a class="btn btn-more" href="/razgovornyj-gipnoz/standart/">Подробнее</a></div>
- </div>
-</article></div><aside class="author"><img src="/obo-mne/andrey-meyster-portret.jpg" width="480" height="480" alt="Андрей Мейстер" loading="lazy"><div><b>Андрей Мейстер</b><p>Кандидат психологических наук, когнитивный тренер. Автор «Теории манипуляции», «Вариатики» и виртуального психолога Фреди. Пишу о психологии с 2008 года.</p><a href="/obo-mne/">Об авторе →</a></div></aside></div></section>
-<div class="cats" role="group" aria-label="Категории">
-<div class="cat" role="button" tabindex="0" data-cat="vybor" aria-pressed="false"><img class="ic" src="/magazin/img/cat-vybor.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Подобрать под задачу</b><small>13 ситуаций</small></span><button class="q" type="button" aria-label="Что в категории «Подобрать под задачу»" aria-expanded="false" aria-controls="tip-vybor">i</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="besplatno" aria-pressed="false"><img class="ic" src="/magazin/img/cat-besplatno.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Бесплатно</b><small>7 способов</small></span><button class="q" type="button" aria-label="Что в категории «Бесплатно»" aria-expanded="false" aria-controls="tip-besplatno">i</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="kursy" aria-pressed="false"><img class="ic" src="/magazin/img/cat-kursy.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Курсы и тренинги</b><small>3 товара</small></span><button class="q" type="button" aria-label="Что в категории «Курсы и тренинги»" aria-expanded="false" aria-controls="tip-kursy">i</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="knigi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-knigi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Книги</b><small>4 товара</small></span><button class="q" type="button" aria-label="Что в категории «Книги»" aria-expanded="false" aria-controls="tip-knigi">i</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="igry" aria-pressed="false"><img class="ic" src="/magazin/img/cat-igry.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Игры</b><small>4 товара</small></span><button class="q" type="button" aria-label="Что в категории «Игры»" aria-expanded="false" aria-controls="tip-igry">i</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="fredi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-fredi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Фреди</b><small>программа-собеседник</small></span><button class="q" type="button" aria-label="Что в категории «Фреди»" aria-expanded="false" aria-controls="tip-fredi">i</button></div>
-<div class="cat" role="button" tabindex="0" data-cat="klyuchi" aria-pressed="false"><img class="ic" src="/magazin/img/cat-klyuchi.webp" width="52" height="52" alt="" loading="lazy"><span class="t"><b>Ключи</b><small>аудио, 690 ₽</small></span><button class="q" type="button" aria-label="Что в категории «Ключи»" aria-expanded="false" aria-controls="tip-klyuchi">i</button></div>
-<div class="tip" id="tip-vybor"><b>Подобрать под задачу.</b> Найдите строку про себя — тревога, усталость, дети, работа с людьми, переговоры — и рядом будет то, что с этим работает. Бесплатное — первым.</div>
-<div class="tip" id="tip-besplatno"><b>Бесплатно.</b> С чего начать без денег и регистрации: курсы Лектория — в том числе про тревогу, сон и усталость, — первое занятие курса, игра для печати и разговор с Фреди.</div>
-<div class="tip" id="tip-kursy"><b>Курсы и тренинги.</b> Видео, задания и живая практика. Здесь учатся делать, а не только понимать: приём — упражнение — разбор ошибок.</div>
-<div class="tip" id="tip-knigi"><b>Книги.</b> Механика: как устроены влияние, люди и мышление. Для тех, кто сначала хочет понять, а потом пробовать.</div>
-<div class="tip" id="tip-igry"><b>Игры.</b> Настольные игры и игры-задачники. Навык ставится решением задач — за столом, вдвоём или компанией.</div>
-<div class="tip" id="tip-fredi"><b>Фреди.</b> Фреди — программа-собеседник, виртуальный психолог: разговор, тесты и тренажёры. Бесплатно каждый день — несколько минут разговора и тесты; без ограничений — по подписке.</div>
-<div class="tip" id="tip-klyuchi"><b>Ключи.</b> Аудиозаписи по школьным и вузовским предметам — суггестивная техника с двойным наведением: по записи на предмет — каркас понятий, из которого остальное выводится самому. Две записи — в продаже, остальные — предзаказ, по 690 ₽.</div>
-</div>
-<section class="shelf" id="besplatno" aria-label="Бесплатно">
-<div class="shelf-h"><h2>Бесплатно</h2><button class="back" type="button">← Все категории</button></div>
-<p class="shelf-lead">Без денег и без регистрации — с этого и стоит начать.</p>
-<div class="free"><ul><li><b><a href="/blog/lektorij/trevoga/">Курс «Тревога и как с ней жить»</a></b> — что такое тревога, зачем она нужна и что с ней делать.</li><li><b><a href="/blog/lektorij/son/">Курс «Сон»</a></b> — зачем мы спим, цена недосыпа и что мешает уснуть.</li><li><b><a href="/blog/lektorij/psihologiya-peregruzok/">Курс «Психология перегрузок»</a></b> — почему устаёшь, даже когда ничего тяжёлого не делал.</li><li><b><a href="/razgovornyj-gipnoz/urok-1/">Первое занятие курса «Разговорный гипноз»</a></b> — 13 минут, целиком.</li><li><b><a href="/blog/lektorij/">Весь Лекторий</a></b> — все курсы открыты целиком и без регистрации: отношения, дети, мышление, общение, работа.</li><li><b><a href="/blog/lektorij/kak-uchitsya/">Курс «Как учиться»</a></b> — как запоминать и понимать — себе или чтобы помочь ребёнку.</li><li><b><a href="/virtual-psychologist/">Фреди</a></b> — несколько минут разговора каждый день и тесты; каждое упражнение первый раз бесплатно.</li></ul></div>
-</section>
+
 <section class="shelf" id="kursy" aria-label="Курсы и тренинги">
-<div class="shelf-h"><h2>Курсы и тренинги</h2><button class="back" type="button">← Все категории</button></div>
+<div class="shelf-h"><h2>Курсы и тренинги</h2></div>
 <p class="shelf-lead">Видео и задания — чтобы приём перестал быть текстом и начал срабатывать в разговоре.</p>
-<div class="list"><article class="it main" id="standart">
+<div class="list"><article class="it main" id="standart"><span id="standart-top" aria-hidden="true" style="position:absolute"></span>
  <div class="th"><img src="/magazin/img/standart-razvorot.webp" alt="Разговорный гипноз. Пакет «Стандартный»" loading="lazy" width="84" height="84"></div>
  <div class="tx">
   <span class="kind">Курс · печатный комплект</span>
@@ -594,7 +514,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 </article></div>
 <p class="shelf-lead" style="margin-top:12px"><a href="/treningi/">Все тренинги и программы →</a></p></section>
 <section class="shelf" id="knigi" aria-label="Книги">
-<div class="shelf-h"><h2>Книги</h2><button class="back" type="button">← Все категории</button></div>
+<div class="shelf-h"><h2>Книги</h2></div>
 <p class="shelf-lead">Механика — то, без чего приёмы остаются заученными фразами.</p>
 <div class="list"><article class="it" id="kniga-tm">
  <div class="th"><img src="/magazin/img/kniga-tm.webp" alt="«Теория манипуляции. Разговорный гипноз»" loading="lazy" width="84" height="84"></div>
@@ -642,7 +562,7 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 </article></div>
 <p class="shelf-lead" style="margin-top:12px"><a href="/knigi/">Все книги →</a></p></section>
 <section class="shelf" id="igry" aria-label="Игры">
-<div class="shelf-h"><h2>Игры</h2><button class="back" type="button">← Все категории</button></div>
+<div class="shelf-h"><h2>Игры</h2></div>
 <p class="shelf-lead">Навык ставится решением задач, а не объяснением. Игра — способ решать задачи всей компанией.</p>
 <div class="list"><article class="it" id="marketolog">
  <div class="th"><img src="/magazin/img/igra-marketolog.webp" alt="«Маркетолог»" loading="lazy" width="84" height="84"></div>
@@ -689,23 +609,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
  </div>
 </article></div>
 <p class="shelf-lead" style="margin-top:12px"><a href="/igry/">Все игры и тренажёры →</a></p></section>
-<section class="shelf" id="fredi" aria-label="Фреди — программа-собеседник">
-<div class="shelf-h"><h2>Фреди — программа-собеседник</h2><button class="back" type="button">← Все категории</button></div>
-<div class="list"><article class="it" id="fredi-sub">
- <div class="th"><img src="/magazin/img/fredi-razgovor.webp" alt="Фреди: разговор, тесты и тренажёры" loading="lazy" width="84" height="84"></div>
- <div class="tx">
-  <span class="kind">Подписка</span>
-  <h3>Фреди: разговор, тесты и тренажёры</h3>
-  <div class="price">690 ₽ в месяц <small>· первые 3 дня — 69 ₽, потом 690 ₽ в месяц списываются сами</small></div>
-  <p class="who"><b>Кому:</b> тем, кому нужен собеседник, который не устаёт и не оценивает, — и тренажёр навыков на каждый день.</p>
-  <p class="cancel">Отменить: во Фреди «Настройки подписки» → «Отключить автопродление». Доступ останется до конца оплаченного срока, больше ничего не спишется.</p>
-  <details><summary>Что даст</summary><p>бесплатно каждый день — несколько минут разговора и тесты, каждое упражнение первый раз бесплатно. По подписке — разговор без счётчика, игры-тренажёры и практики без ограничений. На картинке — пример разговора: Фреди не утешает вообще, а готовит к конкретной ситуации.</p></details>
-  <div class="btns"><a class="btn btn-buy" data-p="fredi-sub" href="/virtual-psychologist/">Попробовать Фреди</a><a class="btn btn-more" href="/tarify/">Тарифы</a></div>
- </div>
-</article></div>
-</section>
+
 <section class="shelf" id="klyuchi" aria-label="Аудиосерия «Ключи» — фундамент предметов">
-<div class="shelf-h"><h2>Аудиосерия «Ключи» — фундамент предметов</h2><button class="back" type="button">← Все категории</button></div>
+<div class="shelf-h"><h2>Аудиосерия «Ключи» — фундамент предметов</h2></div>
 <div class="keys"><span class="status">две записи — в продаже · остальные 45 — предзаказ по 690 ₽, выход до 30 ноября 2026</span>
 <p class="shelf-lead">Серия коротких аудиозаписей: одна запись — один предмет, 15–20 минут, два голоса в наушниках. Понять, с чего начать, помогает бесплатный тест ниже.</p>
 <a class="kt-cta" href="/testy/klyuchi-karta-probelov/" onclick="try{ym(108138656,'reachGoal','klyuchi_test_from_shop')}catch(e){}"><b>С какой записи начать?</b><span>Тест «Карта пробелов»: 22 бытовые ситуации, 5–7 минут. Покажет, каких понятий вам не хватает, к чему это ведёт и какие записи закрывают пробел.</span><i>Пройти тест →</i></a>
@@ -786,9 +692,9 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <p class="note">О выходе новых записей — в <a href="https://t.me/meysternlp" target="_blank" rel="noopener">Telegram-канале</a>.</p></div>
 </section>
 <section class="shelf" id="vybor" aria-label="Подобрать под задачу">
-<div class="shelf-h"><h2>Подобрать под задачу</h2><button class="back" type="button">← Все категории</button></div>
+<div class="shelf-h"><h2>Подобрать под задачу</h2></div>
 <p class="shelf-lead">Начните с того, что мешает сейчас, а не с того, что кажется самым полным.</p>
-<table class="pick"><tr><td>Тревожно, плохо сплю, всё откладываю</td><td>бесплатные курсы Лектория <a href="/blog/lektorij/trevoga/">«Тревога и как с ней жить»</a>, <a href="/blog/lektorij/son/">«Сон»</a> и <a href="/blog/lektorij/prokrastinaciya-i-motivaciya/">«Прокрастинация и мотивация»</a>; для ежедневной практики — <a href="#fredi-sub" data-go="fredi">Фреди</a></td></tr><tr><td>Нет сил, всё раздражает, перегруз</td><td>бесплатные курсы <a href="/blog/lektorij/psihologiya-peregruzok/">«Психология перегрузок»</a> и <a href="/blog/lektorij/depressiya-i-apatiya/">«Депрессия и апатия»</a>. Если так неделями и не отпускает — это повод идти к врачу или психотерапевту, а не в магазин</td></tr><tr><td>Трудно с ребёнком: истерики, школа, экраны</td><td>бесплатный курс <a href="/blog/lektorij/roditelstvo/">«Родительство»</a></td></tr><tr><td>Трудно со взрослыми детьми или с пожилыми родителями</td><td>бесплатный курс <a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы видим одно и то же по-разному. Отдельного курса пока нет — есть статья <a href="/blog/vzroslye-deti-ne-hotyat-obshchatsya.html">«Взрослые дети не хотят общаться»</a></td></tr><tr><td>Ребёнку не даётся предмет</td><td>родителям старшеклассника — <a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> (с 16 лет, первая запись — 690 ₽); пока — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>: прочитать самим и пересказать</td></tr><tr><td>Вас перебивают, не дослушивают, «мы подумаем» — и тишина</td><td><a href="#standart" data-go="kursy">Пакет «Стандартный»</a> — с разбором ваших ситуаций у автора; или <a href="#kniga-tm" data-go="knigi">книга «Теория манипуляции»</a>, если сначала хочется понять механику</td></tr><tr><td>Не понимаете, почему люди раз за разом поступают одинаково</td><td><a href="#kniga-var" data-go="knigi">книга «Вариатика»</a> и <a href="#var-basic" data-go="igry">игра «Вариатика — Basic»</a></td></tr><tr><td>Ходите по кругу в одной ситуации и не видите выхода</td><td><a href="#kniga-konc" data-go="knigi">книга «Концептикон»</a> — семь способов посмотреть иначе</td></tr><tr><td>Продаёте или ведёте команду</td><td><a href="#standart" data-go="kursy">«Стандартный»</a> — себе; <a href="#marketolog" data-go="igry">игра «Маркетолог»</a> — на планёрку с отделом: учит рассказывать так, чтобы слушали</td></tr><tr><td>Сами работаете с людьми — психолог, коуч, педагог</td><td>книги <a href="#kniga-konc" data-go="knigi">«Концептикон»</a> и <a href="#kniga-var" data-go="knigi">«Вариатика»</a> — увидеть ситуацию клиента с разных сторон</td></tr><tr><td>«Пробовал — бесполезно» стало привычкой</td><td><a href="#proryv" data-go="kursy">живой тренинг «Прорыв»</a></td></tr><tr><td>Нужен собеседник и тренажёр каждый день</td><td><a href="#fredi-sub" data-go="fredi">подписка на Фреди</a></td></tr><tr><td>Хочется наконец понять предмет, который в школе не дался</td><td><a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> — первая запись 690 ₽; бесплатно — курсы <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a> и <a href="/blog/lektorij/logika/">«Логика»</a></td></tr></table>
+<table class="pick"><tr><td>Тревожно, плохо сплю, всё откладываю</td><td>бесплатные курсы Лектория <a href="/blog/lektorij/trevoga/">«Тревога и как с ней жить»</a>, <a href="/blog/lektorij/son/">«Сон»</a> и <a href="/blog/lektorij/prokrastinaciya-i-motivaciya/">«Прокрастинация и мотивация»</a>; для ежедневной практики — <a href="/virtual-psychologist/">Фреди</a></td></tr><tr><td>Нет сил, всё раздражает, перегруз</td><td>бесплатные курсы <a href="/blog/lektorij/psihologiya-peregruzok/">«Психология перегрузок»</a> и <a href="/blog/lektorij/depressiya-i-apatiya/">«Депрессия и апатия»</a>. Если так неделями и не отпускает — это повод идти к врачу или психотерапевту, а не в магазин</td></tr><tr><td>Трудно с ребёнком: истерики, школа, экраны</td><td>бесплатный курс <a href="/blog/lektorij/roditelstvo/">«Родительство»</a></td></tr><tr><td>Трудно со взрослыми детьми или с пожилыми родителями</td><td>бесплатный курс <a href="/blog/lektorij/pokoleniya/">«Поколения»</a> — почему мы видим одно и то же по-разному. Отдельного курса пока нет — есть статья <a href="/blog/vzroslye-deti-ne-hotyat-obshchatsya.html">«Взрослые дети не хотят общаться»</a></td></tr><tr><td>Ребёнку не даётся предмет</td><td>родителям старшеклассника — <a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> (с 16 лет, первая запись — 690 ₽); пока — бесплатный курс <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a>: прочитать самим и пересказать</td></tr><tr><td>Переговоры: вас перебивают или отвечают «мы подумаем»</td><td><a href="#standart" data-go="kursy">Курс «Разговорный гипноз», пакет «Стандартный»</a> — с разбором ваших ситуаций у автора; или <a href="#kniga-tm" data-go="knigi">книга «Теория манипуляции»</a>, если сначала хочется понять механику</td></tr><tr><td>Не понимаете, почему люди раз за разом поступают одинаково</td><td><a href="#kniga-var" data-go="knigi">книга «Вариатика»</a> и <a href="#var-basic" data-go="igry">игра «Вариатика — Basic»</a></td></tr><tr><td>Ходите по кругу в одной ситуации и не видите выхода</td><td><a href="#kniga-konc" data-go="knigi">книга «Концептикон»</a> — семь способов посмотреть иначе</td></tr><tr><td>Продаёте или ведёте команду</td><td><a href="#standart" data-go="kursy">«Стандартный»</a> — себе; <a href="#marketolog" data-go="igry">игра «Маркетолог»</a> — на планёрку с отделом: учит рассказывать так, чтобы слушали</td></tr><tr><td>Сами работаете с людьми — психолог, коуч, педагог</td><td>книги <a href="#kniga-konc" data-go="knigi">«Концептикон»</a> и <a href="#kniga-var" data-go="knigi">«Вариатика»</a> — увидеть ситуацию клиента с разных сторон</td></tr><tr><td>«Пробовал — бесполезно» стало привычкой</td><td><a href="#proryv" data-go="kursy">живой тренинг «Прорыв»</a></td></tr><tr><td>Нужен собеседник и тренажёр каждый день</td><td><a href="/virtual-psychologist/">подписка на Фреди</a></td></tr><tr><td>Хочется наконец понять предмет, который в школе не дался</td><td><a href="#klyuchi" data-go="klyuchi">аудиосерия «Ключи»</a> — первая запись 690 ₽; бесплатно — курсы <a href="/blog/lektorij/kak-uchitsya/">«Как учиться»</a> и <a href="/blog/lektorij/logika/">«Логика»</a></td></tr></table>
 </section>
 <p class="shop-terms"><b>Оплата</b> картой на сайте через ЮKassa · <b>возврат</b> 7 дней, если товар
 не использован · <b>доставка</b> СДЭК, оплата при получении · <b>записи «Ключей»</b> приходят
@@ -801,41 +707,15 @@ ym(108138656,'init',{ssr:true,webvisor:true,clickmap:true,referrer:document.refe
 <script>
 (function(){
 document.documentElement.classList.add('js');
-var cats=document.querySelectorAll('.cat'),shelves=document.querySelectorAll('.shelf');
-function closeTips(){document.querySelectorAll('.q').forEach(function(o){o.setAttribute('aria-expanded','false')});
-  document.querySelectorAll('.tip').forEach(function(o){o.classList.remove('on')});}
-function show(k,scroll){
-  closeTips();
-  cats.forEach(function(c){c.classList.toggle('on',c.dataset.cat===k);c.setAttribute('aria-pressed',c.dataset.cat===k)});
-  /* 07.11.2026: каталог больше не прячется по клику — все секции видны всегда,
-     плитка становится быстрой ссылкой: подсветить себя и прокрутить к разделу. */
-  shelves.forEach(function(s){s.classList.add('on')});
-  /* query (utm_*, yclid) не трогаем: Метрика читает его позже, чем срабатывает этот код */
-  if(k){try{history.replaceState(null,'',location.pathname+location.search+'#'+k)}catch(e){}
-    if(scroll){var s=document.getElementById(k);if(s)s.scrollIntoView({behavior:'smooth',block:'start'})}
-    try{ym(108138656,'params',{shop_cat:k})}catch(e){}}
-  else{try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+function trackCategory() {
+  var target = document.getElementById(location.hash.slice(1));
+  var shelf = target && target.closest('.shelf');
+  if (shelf && typeof window.ym === 'function') {
+    window.ym(108138656, 'params', {shop_cat: shelf.id});
+  }
 }
-cats.forEach(function(c){c.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&!e.target.closest('.q')){e.preventDefault();c.click();}});});
-cats.forEach(function(c){c.addEventListener('click',function(e){
-  if(e.target.closest('.q'))return;
-  show(c.classList.contains('on')?'':c.dataset.cat,true);})});
-document.querySelectorAll('.q').forEach(function(q){q.addEventListener('click',function(e){
-  e.stopPropagation();var t=document.getElementById(q.getAttribute('aria-controls')),open=q.getAttribute('aria-expanded')==='true';
-  closeTips();
-  if(!open){q.setAttribute('aria-expanded','true');t.classList.add('on');}})});
-document.querySelectorAll('.back').forEach(function(b){b.addEventListener('click',function(){show('',false);
-  document.querySelector('.cats').scrollIntoView({behavior:'smooth',block:'start'})})});
-document.querySelectorAll('a[data-go]').forEach(function(a){a.addEventListener('click',function(e){
-  e.preventDefault();show(a.dataset.go,false);var t=document.querySelector(a.getAttribute('href'));
-  if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth',block:'center'})},30);})});
-function fromHash(){var h=location.hash.slice(1),el=h&&document.getElementById(h);if(!el)return;
-  var sh=el.classList.contains('shelf')?el:el.closest('.shelf');if(!sh)return;show(sh.id,false);
-  setTimeout(function(){el.scrollIntoView({block:sh===el?'start':'center'})},30);}
-window.addEventListener('hashchange',fromHash);
-var h=location.hash.slice(1),byItem=h&&document.getElementById(h)&&document.getElementById(h).closest('.shelf');
-if(byItem){show(byItem.id,false);document.getElementById(h).scrollIntoView({block:'center'})}
-else if(h&&document.querySelector('.shelf#'+CSS.escape(h)))show(h,true);
+window.addEventListener('hashchange', trackCategory);
+trackCategory();
 /* Цель shop_buy с параметром товара: видно, что из магазина берут. */
 document.addEventListener('click',function(e){var a=e.target&&e.target.closest?e.target.closest('a[data-p]'):null;if(!a)return;
   try{ym(108138656,'reachGoal','shop_buy',{shop_product:a.dataset.p});ym(108138656,'params',{shop_product:a.dataset.p})}catch(err){}},true);
