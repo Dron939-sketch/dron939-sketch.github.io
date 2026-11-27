@@ -2723,6 +2723,14 @@ POV: ты на семейном ужине, и мама такая «как у �
         var step4 = f.auto_renew_off || 0;
         if (step4) html += row('↳ Отключили автопродление', step4, step3, true);
         if (!step0 && !step1 && !step2 && !step3) html = '<div class="empty">Нет данных для воронки</div>';
+        if (f.ordered) {
+            var seq = f.ordered;
+            html += '<h3>После показа окна подписки</h3><p>Уникальные пользователи за 7 дней. Каждый шаг учитывается после предыдущего у того же пользователя.</p>';
+            html += row('Увидели окно', seq.shown, seq.shown);
+            html += row('Нажали на подписку', seq.clicked, seq.shown);
+            html += row('Открыли оформление', seq.checkout, seq.clicked);
+            html += row('Активировали подписку', seq.activated, seq.checkout);
+        }
         document.getElementById('funnel').innerHTML = html;
 
         // Segments
