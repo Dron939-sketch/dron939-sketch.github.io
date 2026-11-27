@@ -747,6 +747,21 @@
         }
     }
 
+    var WALL_OFFER_VERSION = 'continue_now_v2';
+
+    function _subscriptionOffer(expired, buttonClass) {
+        var label = expired ? 'Продолжить с Premium — 690 ₽ в месяц'
+            : 'Продолжить с Premium — 69 ₽ за 3 дня';
+        var terms = expired
+            ? '690 ₽ сегодня. Далее — 690 ₽ каждые 30 дней.'
+            : '69 ₽ сегодня. Через 3 дня — 690 ₽, далее 690 ₽ каждые 30 дней.';
+        return '<div class="meter-wall-lead">Сразу после оплаты доступны голосовой чат, ' +
+            'все режимы Фреди и общение без счётчика бесплатных минут.</div>' +
+            '<button class="meter-btn ' + buttonClass + '" id="meterSubscribeBtn">' + label + '</button>' +
+            '<div class="meter-wall-fine">' + terms +
+            ' Автопродление можно отключить в настройках подписки.</div>';
+    }
+
     function _showDailyWall(data) {
         _injectMeterStyles();
         var old = document.getElementById('meterOverlay');
@@ -780,6 +795,7 @@
             minutes_until_reset: minutes,
             block_reason: data.block_reason || 'daily',
             wall_v: variant,
+            offer_version: WALL_OFFER_VERSION,
         });
 
         var clock = _formatResetCountdown(minutes) + ':00';
@@ -790,13 +806,9 @@
                 '<div class="meter-wall-title">' +
                     (did ? 'Вы только что ' + did : 'Пробные дни закончились') + '</div>' +
                 '<div class="meter-wall-lead">Пробный доступ был один раз, и он закончился. ' +
-                    'Разговор сохранён: Фреди продолжит с того же места по подписке — ' +
-                    'голос, все режимы, без счётчика.</div>' +
+                    'Разговор сохранён. По подписке можно продолжить с того же места.</div>' +
                 (_minor(data) ? MINOR_NOTE :
-                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
-                    '▶️ Продолжить — 690 ₽ в месяц</button>' +
-                '<div class="meter-wall-fine">Списывается сегодня, следующее через 30 дней. ' +
-                    'Отключается в один клик в настройках подписки.</div>');
+                _subscriptionOffer(true, 'meter-btn-primary'));
         } else if (variant === 'method') {
             // Факты — только проверяемые: страница «Обо мне» и внешние
             // профили (кандидат наук, «Теория манипуляции», «Вариатика»).
@@ -807,10 +819,7 @@
                     'психолога Андрея Мейстера — кандидата психологических наук, автора ' +
                     '«Теории манипуляции» и «Вариатики». То, что вы сейчас услышали, — его ' +
                     'способ работать с людьми. Продолжить можно прямо сейчас.</div>' +
-                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
-                    '▶️ Продолжить сейчас — 3 дня за 69 ₽</button>' +
-                '<div class="meter-wall-fine">Потом 690 ₽ в месяц, отключается в один клик. ' +
-                    'Голос, все режимы, без счётчика.</div>' +
+                _subscriptionOffer(false, 'meter-btn-primary') +
                 '<div class="meter-wall-wait">Или подождать до ' + resetHhMm + ' — вернутся ' +
                     limit + ' бесплатных минут. Осталось <b id="meterTimer">' + clock + '</b></div>';
         } else if (variant === 'offer_first') {
@@ -820,10 +829,7 @@
                 '<div class="meter-wall-lead">' +
                     (did ? 'Бесплатное время на сегодня вышло. Продолжить можно прямо сейчас.'
                          : 'Продолжить можно прямо сейчас.') + '</div>' +
-                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
-                    '▶️ Продолжить сейчас — 3 дня за 69 ₽</button>' +
-                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 690 ₽ в месяц, отключается в один клик.</div>' +
+                _subscriptionOffer(false, 'meter-btn-primary') +
                 '<div class="meter-wall-wait">Или подождать до ' + resetHhMm + ' — вернутся ' +
                     limit + ' бесплатных минут. Осталось <b id="meterTimer">' + clock + '</b></div>';
         } else {
@@ -833,10 +839,7 @@
                     ' бесплатных минут — в ' + resetHhMm + '. Осталось ждать:</div>' +
                 '<div class="meter-wall-clock" id="meterTimer">' + clock + '</div>' +
                 (_minor(data) ? MINOR_NOTE :
-                '<button class="meter-btn meter-btn-primary" id="meterSubscribeBtn">' +
-                    'Купить пробный период — 69 ₽</button>' +
-                '<div class="meter-wall-fine">Полный доступ: голос, все режимы, ' +
-                    'без счётчика. Потом 690 ₽ в месяц, отключается в один клик.</div>');
+                _subscriptionOffer(false, 'meter-btn-primary'));
         }
 
         var overlay = document.createElement('div');
@@ -862,7 +865,7 @@
 
         var _sbDaily = document.getElementById('meterSubscribeBtn');
         if (_sbDaily) _sbDaily.onclick = function () {
-            _track('meter_subscribe_clicked', { wall_v: variant });
+            _track('meter_subscribe_clicked', { wall_v: variant, offer_version: WALL_OFFER_VERSION });
             _rememberDismiss();
             _closeDailyWall(overlay);
             if (typeof window.openCheckout === 'function') window.openCheckout('paywall');
@@ -1033,6 +1036,7 @@
             free_days_used: daysUsed,
             account_offer: !!gain,
             wall_v: 'what_breaks',
+            offer_version: WALL_OFFER_VERSION,
         });
 
         var emoji, title, mainText, timerHtml;
@@ -1094,12 +1098,7 @@
                       gain.big + ' \u043C\u0438\u043D\u0443\u0442 \u0432 \u0434\u0435\u043D\u044C</button>'
                     : '') +
                 (_minor(data) ? MINOR_NOTE :
-                '<button class="meter-btn ' + (gain ? 'meter-btn-secondary' : 'meter-btn-primary') +
-                    // «Попробовать» ставит человека перед покупкой, «продолжить» —
-                    // перед продолжением того, что он уже делает. Кнопка на стене
-                    // должна называть действие, ради которого он сюда пришёл.
-                    '" id="meterSubscribeBtn">▶️ Продолжить сейчас — 3 дня 69 ₽</button>' +
-                '<div class="meter-price-note" style="font-size:12px;opacity:.65;margin:2px 0 6px">Полный Premium на три дня: голос, все режимы, без счётчика. Потом 690 ₽ в месяц — меньше одной очной консультации; отключить можно в один клик.</div>') +
+                    _subscriptionOffer(false, gain ? 'meter-btn-secondary' : 'meter-btn-primary')) +
                 // Голосовая стена: голос завтра не вернётся, а текст доступен
                 // прямо сейчас — кнопка так и говорит. До 12.09.2026 здесь
                 // стояло «Понятно, до завтра», и вернувшийся с аккаунтом
@@ -1134,7 +1133,7 @@
         };
         var _sbWall = document.getElementById('meterSubscribeBtn');
         if (_sbWall) _sbWall.onclick = function() {
-            _track('meter_subscribe_clicked', { wall_v: 'what_breaks' });
+            _track('meter_subscribe_clicked', { wall_v: 'what_breaks', offer_version: WALL_OFFER_VERSION });
             // Иначе фоновая проверка накрывает стеной открывшийся чекаут.
             _rememberDismiss();
             overlay.remove();
